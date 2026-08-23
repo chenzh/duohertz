@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Job {
+  id            String   @id @default(uuid())
+  apiKeyHash    String?  @map("api_key_hash")
+  mode          String
+  engine        String
+  modelVariant  String?  @map("model_variant")
+  status        String
+  prompt        String?
+  styleTags     String?  @map("style_tags")
+  lyrics        String?
+  durationSec   Int      @map("duration_sec")
+  audioPath     String?  @map("audio_path")
+  audioMime     String   @default("audio/wav") @map("audio_mime")
+  errorCode     String?  @map("error_code")
+  errorMessage  String?  @map("error_message")
+  latencyMs     Int?     @map("latency_ms")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+  completedAt   DateTime? @map("completed_at")
+
+  @@index([apiKeyHash, createdAt(sort: Desc)], map: "idx_jobs_api_key_created")
+  @@index([status], map: "idx_jobs_status")
+  @@map("jobs")
+}
