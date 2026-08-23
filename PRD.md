@@ -3,8 +3,8 @@
 | 字段 | 内容 |
 |------|------|
 | 项目名称 | Local AI Music Platform（暂定） |
-| 文档版本 | v0.1 |
-| 状态 | 立项 |
+| 文档版本 | v0.2 |
+| 状态 | 立项（许可矩阵 v0.2 已核对） |
 | 更新日期 | 2026-08-23 |
 | 产品类型 | **B2B / B2C 音乐 SaaS**（本地 GPU 推理 + Web 多租户服务） |
 
@@ -19,7 +19,35 @@ AI 音乐生成（Suno、Udio 等）已验证「文本/歌词 → 完整歌曲�
 - 游戏配乐场景缺乏分轨、改片段、风格统一等生产向能力
 - 按订阅/按次计费，规模化后边际成本不可控
 
-本项目定位为 **音乐 SaaS**：对外提供 Web 产品、账号体系、计费与 API；对内以 **MacBook Pro M5 Pro（48GB）** 为推理节点，通过 **ACE-Step 1.5（MIT）** 在本地完成生成，兼顾人声音乐与游戏配乐两条业务线。
+本项目定位为 **音乐 SaaS**：对外提供 Web 产品、账号体系、计费与 API；对内以 **MacBook Pro M5 Pro（48GB）** 为推理节点，采用 **双引擎本地推理**——人声整曲与游戏配乐/音效分模型部署，兼顾两条业务线与商用许可清晰度。
+
+---
+
+## 1.1 模型与商用许可矩阵（立项共识）
+
+> 以下整合团队调研结论并经许可核对。**不存在「零风险」**，但可分层选型以降低合规与能力短板。
+
+| 引擎 | 许可 | 商用条件 | 擅长场景 | 短板 | Mac M5 本地 |
+|------|------|----------|----------|------|-------------|
+| **Stable Audio 3**（Small / Medium / **Small SFX**） | Stability **Community License** | 组织年收入 **＜100 万美元** 可免费商用；产出归用户；需在 [community-license](https://stability.ai/community-license) 登记；超 100 万需 Enterprise | 配乐、BGM、氛围、**游戏音效（SFX）**、inpainting | **不擅长完整带人声歌曲** | ✅ 官方 **MLX** 运行时（`optimized/mlx`） |
+| **YuE** | **Apache 2.0** | 允许商用；鼓励署名「YuE by HKUST/M-A-P」 | **完整带人声歌曲**、歌词结构 | Mac 上慢于 ACE-Step；游戏向工作流弱 | ✅ 可部署，性能待 M1 实测 |
+| **ACE-Step 1.5** | **MIT**（非 Apache 2.0） | 允许商用；官方强调合规训练数据 | **整曲+人声**、Repaint/分轨/LoRA、生产向编辑 | 游戏纯 SFX 不如 SA3 Small SFX 专精 | ✅ MLX，M5 Pro 48GB 可满配 |
+| **Meta MusicGen** | 代码 MIT / **权重 CC-BY-NC** | ❌ **禁止商用** | 研究、器乐实验 | 不可用于商业交付 | — |
+
+**避坑（必须遵守）：**
+
+- ❌ 不要把 **MusicGen 权重**用于 SaaS 商业交付（仅代码 MIT 不能覆盖权重 NC 限制）。
+- ❌ **SongGeneration (LeVo)**：开源权重但许可限定 **学术/研究/教育**，禁止生产商用。
+- ⚠️ **ACE-Step 1.5 为 MIT**，与 YuE 的 Apache 2.0 不同；二者均可商用，但免责声明均要求用户自行避免风格抄袭。
+
+**双引擎推荐（本 SaaS 默认架构）：**
+
+```text
+用户任务路由
+├── 人声歌曲 / 歌词整曲     → ACE-Step 1.5（主） / YuE（备选高质量人声）
+├── 游戏 BGM / 氛围 / 循环  → Stable Audio 3 Small / Medium
+└── 游戏音效 SFX            → Stable Audio 3 Small SFX
+```
 
 ---
 
@@ -70,7 +98,7 @@ AI 音乐生成（Suno、Udio 等）已验证「文本/歌词 → 完整歌曲�
 | 人声整曲成功率 | ≥ 85% | 可播放、无明显崩坏 |
 | 游戏 BGM 交付 | 支持 WAV + 分轨包 | 至少 2 轨分离 |
 | 单次生成 P95 时延 | ≤ 120s（4min 曲目） | M5 Pro MLX 实测校准 |
-| 商用合规 | 100% 使用 MIT/Apache 可商用模型 | 不接 NC 许可模型 |
+| 商用合规 | ACE-Step + SA3 Community + YuE 备选；不接 NC/学术仅限模型 | 年收入超 100 万需 SA3 Enterprise |
 
 ### 4.2 产品目标
 
@@ -101,18 +129,21 @@ AI 音乐生成（Suno、Udio 等）已验证「文本/歌词 → 完整歌曲�
 
 **基础设施：**
 
-- [ ] 推理节点：Mac M5 Pro + ACE-Step 1.5（MLX）
-- [ ] 编排参考：**tadpole-studio** 能力（或 ace-step-studio）作为推理与工作流底座
+- [ ] 推理节点：Mac M5 Pro — **ACE-Step 1.5（MLX）** + **Stable Audio 3（MLX）**
+- [ ] 任务路由：按业务类型自动选引擎（人声 vs BGM vs SFX）
+- [ ] 编排参考：**tadpole-studio**（ACE-Step 工作流）+ **stable-audio-3/optimized/mlx**（游戏向）
 - [ ] 对象存储：音频/封面（S3 兼容或 Cloudflare R2）
 - [ ] 数据库：PostgreSQL（用户、任务、曲目、积分）
 
 ### 5.2 v0.2（游戏配乐增强）
 
+- [ ] **Stable Audio 3** inpainting / audio-to-audio（改片段、续写）
+- [ ] **Small SFX** 专用生成模式与音效素材库
 - [ ] 分轨导出（人声/鼓/贝斯等，Demucs 或 ACE-Step Extract）
-- [ ] Repaint：选中时间段重新生成
+- [ ] Repaint：ACE-Step 人声轨 / SA3 器乐轨分别处理
 - [ ] 时长/结构控制：Intro / Loop / Battle 等模板
 - [ ] 项目维度：按游戏项目归档曲目
-- [ ] LoRA 风格包：团队级统一世界观音色
+- [ ] LoRA 风格包：SA3 MLX LoRA + ACE-Step LoRA
 
 ### 5.3 v0.3（商业化 SaaS）
 
@@ -178,9 +209,9 @@ AI 音乐生成（Suno、Udio 等）已验证「文本/歌词 → 完整歌曲�
                                       │ 局域网 HTTP
                     ┌─────────────────▼───────────────────┐
                     │  MacBook Pro M5 Pro（192.168.0.199） │
-                    │  ACE-Step 1.5（MLX）                 │
-                    │  tadpole-studio / 自研 Worker        │
-                    │  分轨 / Repaint / LoRA（v0.2）       │
+                    │  Worker A: ACE-Step 1.5（人声整曲）  │
+                    │  Worker B: Stable Audio 3 MLX（BGM/SFX）│
+                    │  路由层 + tadpole / sa3-gradio 能力    │
                     └─────────────────────────────────────┘
                                       │
                     ┌─────────────────▼───────────────────┐
@@ -206,8 +237,10 @@ AI 音乐生成（Suno、Udio 等）已验证「文本/歌词 → 完整歌曲�
 | 数据库 | PostgreSQL + Prisma | 多租户元数据 |
 | 存储 | Cloudflare R2 / S3 | 音频与封面 |
 | 计费 | Polar.sh（v0.3） | 积分包模式成熟 |
-| 音乐模型 | **ACE-Step 1.5** | MIT、人声+器乐、MLX、生产向编辑 |
-| 工作流底座 | tadpole-studio（演进） | 分轨、Repaint、LoRA |
+| 人声整曲 | **ACE-Step 1.5**（MIT） | 主引擎；人声+编辑工作流 |
+| 游戏 BGM/SFX | **Stable Audio 3**（Community License） | Small/Medium/Small SFX；官方 MLX |
+| 人声备选 | **YuE**（Apache 2.0） | 高质量人声补强 |
+| 工作流 | tadpole-studio + sa3 mlx | 分轨、Repaint、LoRA、inpainting |
 | 歌词/提示词 | 本地 Ollama + Qwen（优先）或 Groq API | 降低外部依赖 |
 | 封面 | SDXL-Turbo on Mac 或 CPU 轻量方案 | 曲库体验 |
 | 推理节点 OS | macOS 26.x，Apple M5 Pro 48GB | 已验证 SSH 与硬件 |
@@ -233,7 +266,7 @@ AI 音乐生成（Suno、Udio 等）已验证「文本/歌词 → 完整歌曲�
 | 风险 | 缓解 |
 |------|------|
 | 生成内容风格相似侵权 | 用户协议声明 + 相似度检测（v0.2）+ 禁止模仿指定艺人 |
-| 模型许可 | 仅 ACE-Step 1.5（MIT）；产出可商用，仍建议法律审阅 |
+| 模型许可 | SA3 需 Community 登记；年收入超 100 万需 Enterprise；不接 MusicGen NC |
 | 推理节点单点 | 队列积压告警；未来多节点注册 |
 | Mac 休眠断服务 | 常开策略或 cron 保活 |
 | 用户数据 | 对象存储私有 + 鉴权下载 |
@@ -274,14 +307,57 @@ GitHub：`huagechen-lab/local-ai-music-platform`（或组织下同名仓库）
 
 ---
 
-## 14. 附录：目标硬件实测清单（M1 前必做）
+## 14. 商用许可核对矩阵（立项核对 2026-08-23）
+
+> **重要：** 不存在「完全零风险、无任何版权纠纷」的模型。以下以**官方 LICENSE 原文**为准；营销话术「commercial-grade」≠ 允许商用。
+
+### 14.1 本项目采用（音乐 SaaS 推理层）
+
+| 引擎 | 许可 | 商用 | 适用场景 | 官方链接 |
+|------|------|------|----------|----------|
+| **ACE-Step 1.5** | **MIT** | ✅ 允许 | 人声整曲、编辑、LoRA | https://github.com/ace-step/ACE-Step-1.5 |
+| **ACE-Step v1** | **Apache 2.0** | ✅ 允许 | 旧版/教程模板常用 | https://github.com/ace-step/ACE-Step |
+| **Stable Audio 3** | **Community License** | ✅ 年收入 &lt;100 万美元免费商用；产出归用户 | BGM、氛围、**Small SFX** | https://github.com/Stability-AI/stable-audio-3 |
+| **YuE** | **Apache 2.0** | ✅ 允许（建议署名） | 人声整曲备选 | https://github.com/multimodal-art-projection/YuE |
+
+**Stable Audio 3 注意：** 商用需在 https://stability.ai/community-license 登记；组织年收入超 **100 万美元** 须购 Enterprise。
+
+### 14.2 常见误传（务必避坑）
+
+| 名称 | 常见误传 | 官方事实 |
+|------|----------|----------|
+| **腾讯 SongGeneration** | 「MIT、零商用限制」 | **仅限学术/研究/教育，禁止任何商业或生产用途**（见 HuggingFace LICENSE） |
+| **Meta MusicGen** | 「代码 MIT 就能商用」 | **权重 CC-BY-NC 4.0，产出不可商用** |
+| **ACE-Step 1.5** | 「Apache 2.0」 | **1.5 为 MIT**；v1 仓库为 Apache 2.0 |
+| **Mureka / MiniMax 云产品** | 与开源权重混谈 | **平台服务条款**决定商用，免费档通常≠可交付商用 |
+
+### 14.3 国产/其他开源（不纳入 MVP 主引擎）
+
+| 名称 | 许可 | 商用 | 说明 |
+|------|------|------|------|
+| **RWKV-4-Music** | Apache 2.0 | ✅ 模型许可允许 | 偏 **MIDI/轻量作曲**，非 Suno 级成品音频，作实验/低配备选 |
+| **MELO / 海绵音乐 / X Studio** | 产品服务条款 | 视平台协议 | **闭源云产品**，非可自托管 SaaS 推理引擎；不适合作为本仓库底层模型 |
+
+### 14.4 双引擎路由（与本 SaaS 业务对齐）
+
+| 用户任务 | 路由引擎 | 原因 |
+|----------|----------|------|
+| 带人声完整歌曲 | ACE-Step 1.5（备选 YuE） | 人声+歌词成熟 |
+| 游戏 BGM / 氛围 | Stable Audio 3 Small/Medium | 器乐强、inpainting、官方 MLX |
+| 游戏音效 SFX | Stable Audio 3 **Small SFX** | 专用音效模型 |
+| 片段修改 / 循环 | SA3 inpainting + ACE Repaint | 游戏生产流 |
+
+---
+
+## 15. 附录：目标硬件实测清单（M1 前必做）
 
 - [ ] MLX 下 ACE-Step 1.5 4B LM 端到端耗时
-- [ ] 48GB 下并发生成（1/2 路）稳定性
+- [ ] Stable Audio 3 MLX：Small / Medium / Small SFX 各模式耗时与显存
+- [ ] 48GB 下双引擎并发（人声 + BGM 队列）稳定性
 - [ ] 局域网 Windows → Mac 推理 API 延迟
 - [ ] 器乐模式无人声泄漏抽检
 - [ ] 连续 24h 生成温升与降频影响
 
 ---
 
-*本文档为立项 PRD v0.1，随技术验证与内测反馈迭代。*
+*本文档为立项 PRD v0.2，随技术验证与内测反馈迭代。*
