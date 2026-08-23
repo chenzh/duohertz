@@ -25,7 +25,7 @@
 
 ## 状态
 
-🟡 立项 — API + Demo 范围已定；docs P0 待编写
+🟢 **立项文档齐全** — 可进入 M1 推理验证 / M2 代码脚手架（见 [docs/MODULES.md](./docs/MODULES.md)）
 
 ## 仓库
 
