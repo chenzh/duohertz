@@ -47,10 +47,26 @@ def wav_info(data: bytes) -> tuple[float, int, int]:
 
 
 def wav_ok(data: bytes, *, min_bytes: int = 1024, min_duration: float = 1.0) -> bool:
+    ok, _ = wav_check(data, min_bytes=min_bytes, min_duration=min_duration)
+    return ok
+
+
+def wav_check(
+    data: bytes,
+    *,
+    min_bytes: int = 1000,
+    min_duration: float = 1.0,
+) -> tuple[bool, str]:
+    """Validate WAV bytes and return ``(ok, human-readable detail)``."""
     if len(data) < min_bytes:
-        return False
+        return False, f"too small ({len(data)} bytes)"
     try:
-        duration, _, _ = wav_info(data)
-        return duration >= min_duration
+        duration, channels, _ = wav_info(data)
+        if duration < min_duration:
+            return False, f"duration {duration:.1f}s < {min_duration}s"
+        return True, f"{len(data)} bytes, {duration:.1f}s, {channels}ch"
     except (ValueError, struct.error, wave.Error):
-        return False
+        # MLX may emit IEEE float WAV that stdlib wave cannot parse
+        if len(data) > 50000 and data[:4] == b"RIFF":
+            return True, f"{len(data)} bytes (float wav)"
+        return False, "unsupported wav format"

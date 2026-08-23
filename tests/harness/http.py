@@ -58,6 +58,9 @@ class HttpClient:
     def post(self, path: str, body: dict, **kwargs: Any) -> tuple[int, dict[str, Any] | bytes]:
         return self.request("POST", path, body=body, **kwargs)
 
+    def poll_job(self, job_id: str, **kwargs: Any) -> dict[str, Any]:
+        return poll_job(self, job_id, **kwargs)
+
 
 def poll_job(
     client: HttpClient,
@@ -65,12 +68,14 @@ def poll_job(
     *,
     timeout_sec: int | None = None,
     interval_sec: float = 2.0,
+    path: str | None = None,
+    base: str | None = None,
 ) -> dict[str, Any]:
     limit = timeout_sec if timeout_sec is not None else client.env.job_poll_timeout
+    job_path = path or f"/v1/jobs/{job_id}"
     start = time.time()
-    last: dict[str, Any] | None = None
     while time.time() - start < limit:
-        code, body = client.get(f"/v1/jobs/{job_id}")
+        code, body = client.get(job_path, base=base)
         if not isinstance(body, dict):
             raise RuntimeError(f"unexpected poll body for {job_id}")
         last = body["data"]
@@ -78,3 +83,31 @@ def poll_job(
             return last
         time.sleep(interval_sec)
     raise TimeoutError(job_id)
+
+
+class DemoClient:
+    """HTTP client for the Demo BFF at ``/demo/api/v1`` (no API key)."""
+
+    def __init__(self, env: HarnessEnv | None = None) -> None:
+        self.env = env or HarnessEnv()
+        self._http = HttpClient(self.env)
+        self.api_base = f"{self.env.demo_base.rstrip('/')}/api/v1"
+
+    def request(
+        self,
+        method: str,
+        path: str,
+        *,
+        body: dict | None = None,
+        timeout: int = 60,
+    ) -> tuple[int, dict[str, Any] | bytes]:
+        return self._http.request(method, path, base=self.api_base, key=None, body=body, timeout=timeout)
+
+    def get(self, path: str, **kwargs: Any) -> tuple[int, dict[str, Any] | bytes]:
+        return self.request("GET", path, **kwargs)
+
+    def post(self, path: str, body: dict, **kwargs: Any) -> tuple[int, dict[str, Any] | bytes]:
+        return self.request("POST", path, body=body, **kwargs)
+
+    def poll_job(self, job_id: str, **kwargs: Any) -> dict[str, Any]:
+        return poll_job(self._http, job_id, path=f"/jobs/{job_id}", base=self.api_base, **kwargs)
