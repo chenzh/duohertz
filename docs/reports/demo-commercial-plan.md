@@ -282,7 +282,7 @@ apps/demo/src/
 | 风险 | 缓解 |
 |------|------|
 | MLX 首次生成慢，路演冷场 | 会前跑 `mac-mlx-test.sh` 预热；C-3 缓存样例兜底 |
-| BGM 仍为 synth，客户质疑 | 输出卡标注「BGM：链路验证 / SA3 MLX 接入中」 |
+| BGM 已为 SA3 MLX | 输出卡标注引擎 Stable Audio 3 · 不同 prompt 音色不同 |
 | 波形库增大包体 | 懒加载 `wavesurfer`；或 Phase B 降为简易 Canvas |
 | 范围膨胀成 SaaS | 本计划 §2.2 边界；每 Phase PR review |
 | 移动端布局返工 | Phase B 先定断点再写组件 |

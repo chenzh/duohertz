@@ -8,6 +8,8 @@ export type InferenceState = {
   aceMode?: string;
   aceApi?: string;
   lmModel?: string;
+  sa3Mode?: string;
+  sa3Mlx?: string;
   workersOk: boolean;
 };
 
@@ -32,6 +34,8 @@ export function useInferenceHealth(pollMs = 15000) {
         aceMode: ace.mode,
         aceApi: ace.ace_api,
         lmModel: ace.lm_model,
+        sa3Mode: sa3.mode,
+        sa3Mlx: sa3.sa3_mlx,
         workersOk,
       });
     } catch {

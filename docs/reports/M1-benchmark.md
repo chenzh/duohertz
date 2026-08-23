@@ -11,7 +11,19 @@
 |------|------|------|
 | ACE API | `http://127.0.0.1:8200` | ok，`models_initialized=true` |
 | ACE Worker | `http://127.0.0.1:8101` | ok，`mode=mlx`，`ace_api=ok` |
-| SA3 Worker | `http://127.0.0.1:8102` | ok（仍为 synth，另项） |
+| SA3 Worker | `http://127.0.0.1:8102` | ok，`mode=mlx`，`sa3_mlx=ok`（`sm-music`） |
+
+## SA3 MLX BGM 基准（15s `game_bgm`）
+
+配置：`SA3_WORKER_MODE=mlx` · `model_variant=small` · `dit=sm-music`
+
+| 运行 | 墙钟 (s) | Worker latency_ms | 说明 |
+|------|----------|-------------------|------|
+| 1（冷启动含 HF 权重） | ~180 | ~180066 | 首次下载模型权重 |
+| 2（权重已缓存） | ~2 | ~850 | 15s 器乐 BGM |
+| **稳态** | **~1–3** | **&lt;2000** | 真实 SA3 MLX（非 synth 占位音） |
+
+验收：`bash scripts/mac-sa3-test.sh` · `python scripts/acceptance-sa3-bgm.py`
 
 ## MLX 人声基准（10s `vocal_lyrics`）
 
@@ -54,4 +66,4 @@ MLX 人声：`bash scripts/mac-mlx-test.sh` → **PASS**（`ok=true`，latency &
 - **根因修复：** Worker 请求 `audio_format: wav`，避免 Mac 无 ffmpeg 时 MP3 保存失败导致空轮询。
 - **路径修复：** `ace_client.py` 解析新版 API 的 `file` 字段（`/v1/audio?path=...`）。
 - **LM 选型：** 开发/测试默认 `acestep-5Hz-lm-0.6B`；生产可切 `1.7B` + `ACE_THINKING=true`。
-- SA3 真实 MLX 仍为 Post-MVP 项。
+- SA3 BGM 真实 MLX 已接入 Mac（`workers/common/sa3_client.py` + `mac-sa3-mlx-bootstrap.sh`）。

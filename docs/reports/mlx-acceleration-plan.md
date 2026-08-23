@@ -258,7 +258,7 @@ Gateway `GET /v1/health/inference` 据此上报。
 
 | 项 | 说明 | 计划版本 |
 |----|------|----------|
-| SA3 BGM 真实 MLX | `workers/sa3` 仍为 synth | API v0.2 |
+| SA3 BGM 真实 MLX | `workers/sa3` MLX 已上线 | ✅ 2026-08-23 |
 | Demo 浏览器 E2E | D-01/D-02 人工验收 | MVP 收尾 |
 | 并发 > 1 | ACE 单路排队，MVP 不改造 | Post-MVP |
 | 模型量化/编译 | `mx.compile=False` for DiT，官方默认 | 观察后决定 |

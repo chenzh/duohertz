@@ -26,6 +26,8 @@ export type WorkerHealth = {
   mode?: string;
   ace_api?: string;
   lm_model?: string;
+  sa3_mlx?: string;
+  model_variant?: string;
 };
 
 export async function fetchInferenceHealth() {

@@ -151,7 +151,7 @@ export function App() {
     if (!activeJobId) return t.statusIdle;
     if (timedOut) return t.statusTimeout;
     if (pollError) return pollError;
-    if (isGenerating) return t.mlxHint;
+    if (isGenerating) return mode === "game_bgm" ? t.bgmMlxHint : t.mlxHint;
     return job?.status ?? "queued";
   })();
 

@@ -131,6 +131,7 @@ run_mlx() {
     return 0
   fi
   "$PY" scripts/acceptance-mlx-vocal.py
+  "$PY" scripts/acceptance-sa3-bgm.py
 }
 
 run_build() {

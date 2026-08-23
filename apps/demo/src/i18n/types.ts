@@ -17,6 +17,7 @@ export type Messages = {
   generate: string;
   generating: string;
   mlxHint: string;
+  bgmMlxHint: string;
   statusIdle: string;
   statusTimeout: string;
   retry: string;
