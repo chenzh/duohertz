@@ -28,7 +28,7 @@
 
 - Mac 已安装 Xcode；Worker 通过 **micromamba** 运行（系统 Python 3.9 无法安装 `numpy==2.2.4`）。
 - 当前 Worker 使用 **本地合成 WAV**（`workers/common/audio.py`）验证全链路；Gateway → Worker 经 LAN，`audio_base64` 回传写入 `AUDIO_STORAGE_PATH`。
-- Mac 从 GitHub clone ACE-Step-1.5 / SA3 MLX 仓库因网络失败（HTTP2/Empty reply）；待网络恢复后按 `INFERENCE.md` 设置 `WORKER_MODE=mlx`。
+- Mac 已 clone **ACE-Step-1.5** 至 `~/workers/ACE-Step-1.5`；`uv sync` 安装 MLX 依赖进行中（见 `/tmp/ace-uv-sync.log`）。
 
 ## 下一步（真实 MLX）
 

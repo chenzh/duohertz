@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
-import type { Job } from "./api";
-import { getJob } from "./api";
+import type { Job } from "../api";
+import { getJob } from "../api";
 
 const MAX_POLL_MS = 10 * 60 * 1000;
 const INTERVAL_MS = 2000;

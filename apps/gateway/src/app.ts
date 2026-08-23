@@ -1,4 +1,7 @@
 import { Hono } from "hono";
+import { serveStatic } from "@hono/node-server/serve-static";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { ERROR_CODES } from "@lamp/shared";
 import { errorResponse } from "./lib/errors.js";
 import { log } from "./lib/logger.js";
@@ -7,6 +10,8 @@ import { rateLimitMiddleware } from "./middleware/rate-limit.js";
 import { demoProxyRoutes } from "./routes/demo-proxy.js";
 import { healthRoutes } from "./routes/health.js";
 import { jobRoutes } from "./routes/jobs.js";
+
+const demoDist = resolve(dirname(fileURLToPath(import.meta.url)), "../../demo/dist");
 
 export function createApp() {
   const app = new Hono();
@@ -26,8 +31,28 @@ export function createApp() {
     }
   });
 
+  app.get("/", (c) =>
+    c.json({
+      data: {
+        service: "local-ai-music-platform-gateway",
+        demo_url: "/demo/",
+        api_health: "/v1/health",
+      },
+      meta: { request_id: crypto.randomUUID() },
+    }),
+  );
+
   app.route("/v1", healthRoutes);
   app.route("/demo/api", demoProxyRoutes);
+
+  app.get("/demo", (c) => c.redirect("/demo/"));
+  app.use(
+    "/demo/*",
+    serveStatic({
+      root: demoDist,
+      rewriteRequestPath: (path) => path.replace(/^\/demo/, "") || "/index.html",
+    }),
+  );
 
   const api = new Hono();
   api.use("*", authMiddleware);
