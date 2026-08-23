@@ -63,9 +63,14 @@ jobRoutes.post("/jobs", async (c) => {
   const rid = requestId();
   const body = createJobSchema.safeParse(await c.req.json().catch(() => ({})));
   if (!body.success) {
+    const modeIssue = body.error.issues.find((i) => i.path[0] === "mode");
     return c.json(
       {
-        ...errorResponse(ERROR_CODES.INVALID_MODE, "Invalid request body", { issues: body.error.issues }),
+        ...errorResponse(
+          modeIssue ? ERROR_CODES.INVALID_MODE : ERROR_CODES.INVALID_MODE,
+          modeIssue ? "Invalid mode" : "Invalid request body",
+          { issues: body.error.issues },
+        ),
         meta: { request_id: rid },
       },
       400,

@@ -11,11 +11,12 @@ demoProxyRoutes.all("/*", async (c) => {
 
   const headers = new Headers(c.req.raw.headers);
   headers.set("X-API-Key", config.apiKey);
+  headers.set("X-Demo-BFF", "1");
   headers.delete("host");
 
   const init: RequestInit = { method: c.req.method, headers };
   if (c.req.method !== "GET" && c.req.method !== "HEAD") {
-    init.body = c.req.raw.body;
+    init.body = await c.req.raw.clone().arrayBuffer();
   }
 
   const res = await fetch(target.toString(), init);

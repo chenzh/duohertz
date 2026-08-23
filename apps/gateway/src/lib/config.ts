@@ -11,6 +11,7 @@ function env(key: string, fallback?: string): string {
 export const config = {
   port: Number(process.env.GATEWAY_PORT ?? 8080),
   apiKey: env("API_KEY", "dev-api-key-change-me"),
+  apiKeyAlt: process.env.API_KEY_ALT ?? "dev-api-key-alt",
   databaseUrl: env("DATABASE_URL", "file:../../data/dev.db"),
   aceWorkerUrl: env("ACE_WORKER_URL", "http://127.0.0.1:8101"),
   sa3WorkerUrl: env("SA3_WORKER_URL", "http://127.0.0.1:8102"),
