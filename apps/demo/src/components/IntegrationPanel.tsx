@@ -1,37 +1,29 @@
 import { useMemo, useState } from "react";
-import type { Mode } from "../api";
+import type { PollEntry } from "../hooks/useJobPoll";
+import { buildJobPayload, buildPythonSnippet, type FormSnapshot } from "../lib/integrationSnippets";
 import type { Messages } from "../i18n";
-
-type FormSnapshot = {
-  mode: Mode;
-  duration_sec: number;
-  prompt?: string;
-  style_tags?: string;
-  lyrics?: string;
-};
 
 export function IntegrationPanel({
   form,
   jobId,
   t,
+  devMode = false,
+  pollLog = [],
+  apiDocsUrl,
 }: {
   form: FormSnapshot;
   jobId: string | null;
   t: Messages;
+  devMode?: boolean;
+  pollLog?: PollEntry[];
+  apiDocsUrl?: string;
 }) {
   const [open, setOpen] = useState(false);
-  const [copied, setCopied] = useState(false);
+  const [tab, setTab] = useState<"curl" | "json" | "python">("json");
+  const [copied, setCopied] = useState<string | null>(null);
 
-  const body = useMemo(() => {
-    const payload: Record<string, unknown> = {
-      mode: form.mode,
-      duration_sec: form.duration_sec,
-    };
-    if (form.prompt) payload.prompt = form.prompt;
-    if (form.style_tags) payload.style_tags = form.style_tags;
-    if (form.lyrics) payload.lyrics = form.lyrics;
-    return JSON.stringify(payload, null, 2);
-  }, [form]);
+  const payload = useMemo(() => buildJobPayload(form), [form]);
+  const body = useMemo(() => JSON.stringify(payload, null, 2), [payload]);
 
   const curl = useMemo(() => {
     const lines = [
@@ -47,10 +39,14 @@ export function IntegrationPanel({
     return lines.join("\n");
   }, [body, jobId]);
 
-  async function copyCurl() {
-    await navigator.clipboard.writeText(curl);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  const python = useMemo(() => buildPythonSnippet(form, jobId), [form, jobId]);
+
+  const activeSnippet = tab === "curl" ? curl : tab === "python" ? python : body;
+
+  async function copy(text: string, key: string) {
+    await navigator.clipboard.writeText(text);
+    setCopied(key);
+    setTimeout(() => setCopied(null), 2000);
   }
 
   return (
@@ -60,13 +56,66 @@ export function IntegrationPanel({
       </button>
       {open && (
         <div className="integration-body">
-          <pre className="code-block">{curl}</pre>
-          <button type="button" className="btn-secondary" onClick={() => void copyCurl()}>
-            {copied ? t.copied : t.copyCurl}
-          </button>
+          <p className="hint integration-lead">{t.apiExplorerHint}</p>
+
+          <div className="integration-tabs" role="tablist">
+            <button
+              type="button"
+              role="tab"
+              className={tab === "json" ? "active" : ""}
+              onClick={() => setTab("json")}
+            >
+              {t.apiExplorerJson}
+            </button>
+            <button
+              type="button"
+              role="tab"
+              className={tab === "curl" ? "active" : ""}
+              onClick={() => setTab("curl")}
+            >
+              cURL
+            </button>
+            <button
+              type="button"
+              role="tab"
+              className={tab === "python" ? "active" : ""}
+              onClick={() => setTab("python")}
+            >
+              Python
+            </button>
+          </div>
+
           <p className="hint">
-            Python: <code>examples/python/minimal_client.py</code>
+            <code>POST /v1/jobs</code>
           </p>
+          <pre className="code-block">{activeSnippet}</pre>
+          <button type="button" className="btn-secondary" onClick={() => void copy(activeSnippet, tab)}>
+            {copied === tab ? t.copied : t.copySnippet}
+          </button>
+
+          {devMode && pollLog.length > 0 && (
+            <div className="poll-debug">
+              <h3>{t.pollDebugTitle}</h3>
+              <ul>
+                {pollLog.map((entry, i) => (
+                  <li key={`${entry.at}-${i}`}>
+                    <code>{entry.at}</code> · <strong>{entry.status}</strong> — {entry.summary}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <div className="integration-footer">
+            {apiDocsUrl && (
+              <a href={apiDocsUrl} target="_blank" rel="noreferrer">
+                {t.apiDocsLink}
+              </a>
+            )}
+            <span className="webhook-placeholder" title={t.webhookHint}>
+              {t.webhookPlaceholder}
+            </span>
+          </div>
         </div>
       )}
     </div>

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import {
   audioUrl,
   createJob,
+  fetchDemoMeta,
   type Mode,
 } from "./api";
 import { OfflineBanner, ErrorBanner } from "./components/Banners";
@@ -32,6 +33,10 @@ export function App() {
     () => new URLSearchParams(window.location.search).get("demo") === "1",
     [],
   );
+  const devMode = useMemo(
+    () => new URLSearchParams(window.location.search).get("dev") === "1",
+    [],
+  );
   const [locale, setLocale] = useState<Locale>(
     () => (localStorage.getItem("demo_locale") as Locale) || "zh",
   );
@@ -47,6 +52,9 @@ export function App() {
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [activeJobId, setActiveJobId] = useState<string | null>(null);
   const [demoUrl, setDemoUrl] = useState(() => window.location.origin + "/demo/");
+  const [apiDocsUrl, setApiDocsUrl] = useState(
+    "https://github.com/chenzh/MusicSaas/blob/main/docs/DATA_API.md",
+  );
   const [tasks, setTasks] = useState<TaskItem[]>(() => {
     try {
       return JSON.parse(sessionStorage.getItem("demo_tasks_v2") ?? "[]");
@@ -56,7 +64,16 @@ export function App() {
   });
 
   const health = useInferenceHealth();
-  const { job, error: pollError, timedOut } = useJobPoll(activeJobId);
+  const { job, error: pollError, timedOut, pollLog } = useJobPoll(activeJobId);
+
+  useEffect(() => {
+    void fetchDemoMeta()
+      .then((meta) => {
+        setDemoUrl(meta.demo_url);
+        if (meta.api_docs_url) setApiDocsUrl(meta.api_docs_url);
+      })
+      .catch(() => undefined);
+  }, []);
 
   const scenePresets = PRESETS.filter((p) => p.scene === scene);
   const workersDown = health.gateway === "ok" && !health.workersOk;
@@ -330,7 +347,14 @@ export function App() {
             )}
           </Card>
 
-          <IntegrationPanel form={formSnapshot} jobId={activeJobId} t={t} />
+          <IntegrationPanel
+            form={formSnapshot}
+            jobId={activeJobId}
+            t={t}
+            devMode={devMode}
+            pollLog={pollLog}
+            apiDocsUrl={apiDocsUrl}
+          />
 
           {workersDown && (
             <Card>

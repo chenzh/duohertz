@@ -40,6 +40,7 @@ export async function fetchInferenceHealth() {
 export type DemoMeta = {
   version: string;
   demo_url: string;
+  api_docs_url?: string;
   compliance: { ace: string; sa3: string };
 };
 

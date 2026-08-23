@@ -53,6 +53,8 @@ export function createApp() {
       data: {
         version: "0.2.0",
         demo_url: `${proto}://${host}/demo/`,
+        api_docs_url:
+          "https://github.com/chenzh/MusicSaas/blob/main/docs/DATA_API.md",
         compliance: {
           ace: "ACE-Step 1.5 · MIT",
           sa3: "Stable Audio 3 · Community License",

@@ -27,6 +27,13 @@ export type Messages = {
   recentWorks: string;
   integration: string;
   copyCurl: string;
+  copySnippet: string;
+  apiExplorerHint: string;
+  apiExplorerJson: string;
+  pollDebugTitle: string;
+  apiDocsLink: string;
+  webhookPlaceholder: string;
+  webhookHint: string;
   footerCompliance: string;
   footerAce: string;
   footerSa3: string;

@@ -316,6 +316,54 @@ select {
   border: 1px solid var(--border);
   border-radius: var(--radius);
 }
+.integration-lead {
+  margin: 0 0 10px;
+}
+.integration-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.integration-tabs button {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  border-radius: 999px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 12px;
+}
+.integration-tabs button.active {
+  color: var(--text);
+  border-color: var(--accent);
+}
+.integration-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-top: 12px;
+  font-size: 12px;
+}
+.webhook-placeholder {
+  color: var(--muted);
+  opacity: 0.7;
+}
+.poll-debug {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+.poll-debug h3 {
+  margin: 0 0 8px;
+  font-size: 13px;
+}
+.poll-debug ul {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 12px;
+  color: var(--muted);
+}
 .code-block {
   overflow-x: auto;
   font-size: 12px;
