@@ -25,7 +25,7 @@ function workerUrl(kind: WorkerKind): string {
 export async function workerHealth(kind: WorkerKind): Promise<{ status: "ok" | "down"; last_check_ms: number }> {
   const start = Date.now();
   try {
-    const res = await fetch(`${workerUrl(kind)}/health`, { signal: AbortSignal.timeout(5000) });
+    const res = await fetch(`${workerUrl(kind)}/health`, { signal: AbortSignal.timeout(10_000) });
     if (!res.ok) return { status: "down", last_check_ms: Date.now() - start };
     const body = (await res.json()) as { status?: string };
     return { status: body.status === "ok" ? "ok" : "down", last_check_ms: Date.now() - start };

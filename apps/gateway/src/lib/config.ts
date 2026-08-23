@@ -1,6 +1,10 @@
 import { createHash, randomUUID } from "node:crypto";
 import { mkdirSync } from "node:fs";
-import { resolve } from "node:path";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+import { config as loadEnv } from "dotenv";
+
+loadEnv({ path: resolve(dirname(fileURLToPath(import.meta.url)), "../../.env") });
 
 function env(key: string, fallback?: string): string {
   const v = process.env[key] ?? fallback;

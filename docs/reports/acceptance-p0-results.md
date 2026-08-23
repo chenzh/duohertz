@@ -8,8 +8,9 @@
 
 | 组件 | 地址 |
 |------|------|
-| Gateway | `http://localhost:8080` (Windows 开发机) |
-| Workers | Mac `127.0.0.1:8101/8102`（SSH 反向隧道 → Windows 推理进程） |
+| Gateway | `http://localhost:8080` (Windows `192.168.0.135`) |
+| Workers | Mac `192.168.0.199:8101/8102`（micromamba 本机进程） |
+| Demo | `http://localhost:3000` |
 | API_KEY | `dev-api-key-change-me` |
 | API_KEY_ALT | `dev-api-key-alt`（J-02 隔离测试） |
 
@@ -28,5 +29,5 @@ H-01, H-02, A-01~03, V-01~06, U-01~04, G-01~03, J-01~04, R-01, D-01-proxy, D-04-
 
 ## 备注
 
-- 当前 Worker 为 **合成 WAV 链路验证**；Mac 安装 Xcode CLT 后可切换官方 MLX 权重（见 `INFERENCE.md`）。
-- `examples/curl/*.sh` 在 **Mac** 上 exit 0（`API_BASE=http://192.168.0.135:8080`）。
+- Gateway 已修复 `.env` 加载（`dotenv`）；`ACE_WORKER_URL` / `SA3_WORKER_URL` 指向 Mac。
+- 当前 Worker 为 **合成 WAV 链路验证**；Mac GitHub clone MLX 仓库待网络恢复（见 `M1-benchmark.md`）。

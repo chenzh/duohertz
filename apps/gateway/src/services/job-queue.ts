@@ -95,7 +95,7 @@ async function runJob(jobId: string, worker: "ace" | "sa3"): Promise<void> {
         : message.includes("unavailable")
           ? ERROR_CODES.WORKER_UNAVAILABLE
           : ERROR_CODES.INTERNAL_ERROR;
-    await prisma.job.update({
+    await prisma.job.updateMany({
       where: { id: jobId },
       data: {
         status: "failed",

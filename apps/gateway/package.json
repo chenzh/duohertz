@@ -17,6 +17,7 @@
     "@hono/node-server": "^1.14.1",
     "@lamp/shared": "workspace:*",
     "@prisma/client": "^6.6.0",
+    "dotenv": "^17.4.2",
     "hono": "^4.7.7",
     "zod": "^3.24.2"
   },
