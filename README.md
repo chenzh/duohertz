@@ -25,7 +25,21 @@
 
 ## 状态
 
-🟢 **立项文档齐全** — 可进入 M1 推理验证 / M2 代码脚手架（见 [docs/MODULES.md](./docs/MODULES.md)）
+🟢 **MVP v0.1 代码已落地** — Gateway + Demo + Workers + examples（见 [docs/MODULES.md](./docs/MODULES.md)）
+
+### 快速启动
+
+```bash
+pnpm install
+cp apps/gateway/.env.example apps/gateway/.env
+pnpm --filter gateway db:push
+# Mac 上启动 Worker（需 Xcode CLT）：scripts/mac-worker-setup.sh
+# 或开发机：python workers/ace-step/server.py & python workers/sa3/server.py
+pnpm --filter gateway dev   # :8080
+pnpm --filter demo dev      # :3000
+```
+
+验收：`pnpm test` · `python scripts/run-benchmark.py` · `docs/reports/M1-benchmark.md`
 
 ## 仓库
 
