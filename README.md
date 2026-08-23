@@ -31,7 +31,7 @@
 |------|------|----------|
 | ACE MLX 人声 (`vocal_lyrics` 10s) | ✅ 实测 PASS | **~3s**（P50） |
 | Gateway → MLX 端到端 | ✅ `acceptance-mlx-vocal.py` PASS | ~10s（30s 音频） |
-| SA3 BGM 真实 MLX | ⏳ synth 链路 | Post-MVP |
+| SA3 BGM 真实 MLX | ✅ Mac `sm-music` | `scripts/mac-sa3-mlx-bootstrap.sh` |
 
 详见 [docs/reports/M1-benchmark.md](./docs/reports/M1-benchmark.md) · [docs/reports/mlx-acceleration-plan.md](./docs/reports/mlx-acceleration-plan.md)
 

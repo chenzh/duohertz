@@ -30,6 +30,8 @@ export type WorkerHealth = {
   mode?: string;
   ace_api?: string;
   lm_model?: string;
+  sa3_mlx?: string;
+  model_variant?: string;
 };
 
 export async function workerHealth(kind: WorkerKind): Promise<WorkerHealth> {
@@ -45,6 +47,8 @@ export async function workerHealth(kind: WorkerKind): Promise<WorkerHealth> {
       mode?: string;
       ace_api?: string;
       lm_model?: string;
+      sa3_mlx?: string;
+      model_variant?: string;
     };
     const health: WorkerHealth = {
       status: body.status === "ok" ? "ok" : "down",
@@ -54,6 +58,11 @@ export async function workerHealth(kind: WorkerKind): Promise<WorkerHealth> {
       if (body.mode) health.mode = body.mode;
       if (body.ace_api) health.ace_api = body.ace_api;
       if (body.lm_model) health.lm_model = body.lm_model;
+    }
+    if (kind === "sa3") {
+      if (body.mode) health.mode = body.mode;
+      if (body.sa3_mlx) health.sa3_mlx = body.sa3_mlx;
+      if (body.model_variant) health.model_variant = body.model_variant;
     }
     return health;
   } catch {
