@@ -15,16 +15,22 @@ for port in 8101 8102; do
 done
 
 run_uvicorn() {
-  local dir="$1" port="$2" log="$3"
+  local dir="$1" port="$2" log="$3" extra_env="$4"
   cd "$dir"
   "$MAMBA" run -n "$ENV_NAME" pip install -q -r requirements.txt
-  nohup env WORKER_MODE="$WORKER_MODE" ACE_API_URL="$ACE_API_URL" ACE_FALLBACK_SYNTH="$ACE_FALLBACK_SYNTH" \
-    ACE_THINKING="$ACE_THINKING" ACE_BATCH_SIZE="$ACE_BATCH_SIZE" \
+  nohup env $extra_env WORKER_SECRET="${WORKER_SECRET:-}" \
     "$MAMBA" run -n "$ENV_NAME" uvicorn server:app --host 0.0.0.0 --port "$port" >"$log" 2>&1 &
 }
 
-run_uvicorn "$MAC_DIR/workers/ace-step" 8101 /tmp/ace-worker.log
-run_uvicorn "$MAC_DIR/workers/sa3" 8102 /tmp/sa3-worker.log
+run_uvicorn "$MAC_DIR/workers/ace-step" 8101 /tmp/ace-worker.log \
+  "WORKER_MODE=$WORKER_MODE ACE_API_URL=$ACE_API_URL ACE_FALLBACK_SYNTH=$ACE_FALLBACK_SYNTH ACE_THINKING=$ACE_THINKING ACE_BATCH_SIZE=$ACE_BATCH_SIZE"
+
+export SA3_WORKER_MODE="${SA3_WORKER_MODE:-mlx}"
+export SA3_REPO="${SA3_REPO:-$HOME/workers/stable-audio-3}"
+export SA3_FALLBACK_SYNTH="${SA3_FALLBACK_SYNTH:-true}"
+
+run_uvicorn "$MAC_DIR/workers/sa3" 8102 /tmp/sa3-worker.log \
+  "SA3_WORKER_MODE=$SA3_WORKER_MODE WORKER_MODE=synth SA3_REPO=$SA3_REPO SA3_FALLBACK_SYNTH=$SA3_FALLBACK_SYNTH SA3_MODEL_VARIANT=${SA3_MODEL_VARIANT:-small}"
 
 sleep 4
 curl -fsS http://127.0.0.1:8101/health
