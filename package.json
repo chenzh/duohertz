@@ -6,8 +6,14 @@
   "scripts": {
     "dev": "pnpm --parallel --filter gateway --filter demo dev",
     "build": "pnpm -r build",
-    "test": "pnpm --filter gateway test",
-    "acceptance": "python scripts/acceptance-p0.py",
+    "test": "bash scripts/harness.sh unit",
+    "test:unit": "bash scripts/harness.sh unit",
+    "test:integration": "bash scripts/harness.sh integration",
+    "test:e2e": "bash scripts/harness.sh e2e",
+    "test:mlx": "bash scripts/harness.sh mlx",
+    "test:all": "bash scripts/harness.sh all",
+    "harness": "bash scripts/harness.sh",
+    "acceptance": "python3 scripts/acceptance-p0.py",
     "lint": "pnpm -r lint"
   },
   "engines": {

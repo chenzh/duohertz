@@ -33,6 +33,9 @@ export type WorkerHealth = {
 };
 
 export async function workerHealth(kind: WorkerKind): Promise<WorkerHealth> {
+  if (config.mockWorkers) {
+    return { status: "ok", last_check_ms: 0, mode: "mock" };
+  }
   const start = Date.now();
   try {
     const res = await fetch(`${workerUrl(kind)}/health`, { signal: AbortSignal.timeout(10_000) });

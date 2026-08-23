@@ -5,27 +5,30 @@ from __future__ import annotations
 
 import json
 import os
-import struct
+import subprocess
 import sys
 import time
-import urllib.error
-import urllib.request
-import wave
+from pathlib import Path
 from typing import Any
 
-API_BASE = os.getenv("API_BASE", "http://localhost:8080")
-API_KEY = os.getenv("API_KEY", "dev-api-key-change-me")
-BAD_KEY = os.getenv("BAD_API_KEY", "wrong-key")
-ALT_KEY = os.getenv("ALT_API_KEY", "dev-api-key-alt")
-INTEGRATION = os.getenv("INTEGRATION", "true").lower() == "true"
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "tests"))
 
-results: list[tuple[str, bool, str]] = []
+from harness import Harness, HarnessEnv, HttpClient, poll_job, wav_duration_sec  # noqa: E402
+
+env = HarnessEnv()
+harness = Harness("acceptance-p0")
+client = HttpClient(env)
+
+API_BASE = env.api_base
+API_KEY = env.api_key
+BAD_KEY = env.bad_api_key
+ALT_KEY = env.alt_api_key
+INTEGRATION = env.integration
 
 
 def record(case_id: str, ok: bool, detail: str = "") -> None:
-    results.append((case_id, ok, detail))
-    mark = "PASS" if ok else "FAIL"
-    print(f"[{mark}] {case_id} {detail}")
+    harness.record(case_id, ok, detail)
 
 
 def request_raw(
@@ -36,45 +39,7 @@ def request_raw(
     body: dict | None = None,
     timeout: int = 60,
 ) -> tuple[int, dict[str, Any] | bytes]:
-    data = None
-    headers: dict[str, str] = {}
-    if key is not None:
-        headers["X-API-Key"] = key
-    if body is not None:
-        data = json.dumps(body).encode()
-        headers["Content-Type"] = "application/json"
-    req = urllib.request.Request(f"{API_BASE}{path}", data=data, headers=headers, method=method)
-    try:
-        with urllib.request.urlopen(req, timeout=timeout) as res:
-            raw = res.read()
-            ctype = res.headers.get("Content-Type", "")
-            if "audio" in ctype:
-                return res.status, raw
-            return res.status, json.loads(raw.decode())
-    except urllib.error.HTTPError as e:
-        raw = e.read()
-        try:
-            return e.code, json.loads(raw.decode())
-        except json.JSONDecodeError:
-            return e.code, {"raw": raw.decode(errors="replace")}
-
-
-def poll_job(job_id: str, timeout_sec: int = 180) -> dict[str, Any]:
-    start = time.time()
-    last = None
-    while time.time() - start < timeout_sec:
-        code, body = request_raw("GET", f"/v1/jobs/{job_id}")
-        assert isinstance(body, dict)
-        last = body["data"]
-        if last["status"] in ("completed", "failed"):
-            return last
-        time.sleep(2)
-    raise TimeoutError(job_id)
-
-
-def wav_duration_sec(data: bytes) -> float:
-    with wave.open(io := __import__("io").BytesIO(data)) as wf:
-        return wf.getnframes() / float(wf.getframerate())
+    return client.request(method, path, key=key, body=body, timeout=timeout)
 
 
 def run_api_cases() -> None:
@@ -145,7 +110,7 @@ def run_api_cases() -> None:
             record("U-01", False, str(created))
         else:
             job_id = created["data"]["job_id"]
-            job = poll_job(job_id, 180)
+            job = poll_job(client, job_id, timeout_sec=180)
             record("U-01", job.get("status") == "completed", job.get("status", ""))
             ac, audio = request_raw("GET", f"/v1/jobs/{job_id}/audio")
             record("U-02", ac == 200 and isinstance(audio, bytes) and len(audio) > 1024, f"bytes={len(audio) if isinstance(audio, bytes) else 0}")
@@ -159,7 +124,7 @@ def run_api_cases() -> None:
         if code != 201:
             record("U-03", False, str(created))
         else:
-            job = poll_job(created["data"]["job_id"], 180)
+            job = poll_job(client, created["data"]["job_id"], timeout_sec=180)
             record("U-03", job.get("status") == "completed")
         time.sleep(2)
 
@@ -171,7 +136,7 @@ def run_api_cases() -> None:
         if code != 201:
             record("U-04", False, str(created))
         else:
-            job = poll_job(created["data"]["job_id"], 180)
+            job = poll_job(client, created["data"]["job_id"], timeout_sec=180)
             record("U-04", job.get("status") == "completed")
         time.sleep(2)
 
@@ -183,7 +148,7 @@ def run_api_cases() -> None:
         if code != 201:
             record("G-01", False, str(created))
         else:
-            job = poll_job(created["data"]["job_id"], 120)
+            job = poll_job(client, created["data"]["job_id"], timeout_sec=120)
             record("G-01", job.get("status") == "completed")
 
             ac, audio = request_raw("GET", f"/v1/jobs/{created['data']['job_id']}/audio")
@@ -198,7 +163,7 @@ def run_api_cases() -> None:
         if code != 201:
             record("G-03", False, str(created))
         else:
-            job = poll_job(created["data"]["job_id"], 180)
+            job = poll_job(client, created["data"]["job_id"], timeout_sec=180)
             ac, audio = request_raw("GET", f"/v1/jobs/{created['data']['job_id']}/audio")
             dur = wav_duration_sec(audio) if isinstance(audio, bytes) else 0
             record("G-03", job.get("status") == "completed" and 55 <= dur <= 65, f"duration={dur:.1f}s")
@@ -225,7 +190,6 @@ def run_api_cases() -> None:
             valid = ["queued", "routing", "generating", "uploading", "completed"]
             record("J-04", statuses == valid[: len(statuses)] or statuses[-1] == "completed", ",".join(statuses))
 
-    # Demo BFF (before rate-limit burst)
     code, body = request_raw("GET", "/demo/api/v1/health/inference", key=None)
     record("D-01-proxy", code == 200 and bool(body.get("data", {}).get("workers")), "bff health")
 
@@ -235,13 +199,14 @@ def run_api_cases() -> None:
     code, body = request_raw("POST", "/v1/jobs", key=None, body={"mode": "game_bgm", "prompt": "x", "duration_sec": 15})
     record("D-06", code == 401)
 
-    # D-05 minimal_client
-    import subprocess
-
-    mc = subprocess.run([sys.executable, os.path.join(os.path.dirname(__file__), "..", "examples", "python", "minimal_client.py")], env={**os.environ, "API_BASE": API_BASE, "API_KEY": API_KEY}, capture_output=True, text=True)
+    mc = subprocess.run(
+        [sys.executable, str(ROOT / "examples" / "python" / "minimal_client.py")],
+        env={**os.environ, "API_BASE": API_BASE, "API_KEY": API_KEY},
+        capture_output=True,
+        text=True,
+    )
     record("D-05", mc.returncode == 0, mc.stdout.strip()[-80:])
 
-    # R-01 burst (valid bodies, expect some 429 when exceeding QPS)
     hits = 0
     for _ in range(8):
         code, _ = request_raw(
@@ -255,14 +220,9 @@ def run_api_cases() -> None:
 
 
 def run_examples() -> None:
-    import subprocess
-
-    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     mac_ssh = os.getenv("MAC_SSH", "192.168.0.199")
     gw_host = os.getenv("GW_HOST", "192.168.0.135")
-    remote_base = (
-        f"export API_BASE=http://{gw_host}:8080 API_KEY={API_KEY} && cd ~/Desktop/MusicSaas"
-    )
+    remote_base = f"export API_BASE=http://{gw_host}:8080 API_KEY={API_KEY} && cd ~/Desktop/MusicSaas"
 
     def ssh(cmd: str) -> int:
         return subprocess.call(["ssh", "-o", "BatchMode=yes", f"zhenhuachen@{mac_ssh}", cmd])
@@ -295,14 +255,7 @@ def main() -> int:
             run_examples()
         except Exception as e:
             record("E-01", False, f"examples error: {e}")
-
-    failed = [c for c, ok, _ in results if not ok]
-    print("\n=== Summary ===")
-    print(f"PASS {sum(1 for _, ok, _ in results if ok)} / {len(results)}")
-    if failed:
-        print("FAILED:", ", ".join(failed))
-        return 1
-    return 0
+    return harness.summary()
 
 
 if __name__ == "__main__":

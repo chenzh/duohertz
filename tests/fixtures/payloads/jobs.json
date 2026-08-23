@@ -1,0 +1,16 @@
+{
+  "vocal_lyrics_valid": {
+    "mode": "vocal_lyrics",
+    "style_tags": "pop, female vocal",
+    "lyrics": "[Verse]\nHarness test\n[Chorus]\nSing",
+    "duration_sec": 30
+  },
+  "game_bgm_valid": {
+    "mode": "game_bgm",
+    "prompt": "dark dungeon ambient tense",
+    "duration_sec": 30
+  },
+  "invalid_mode": {
+    "mode": "invalid"
+  }
+}
