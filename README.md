@@ -1,6 +1,11 @@
 # Local AI Music Platform
 
-**MVP：音乐生成 API 服务** — 本地双引擎推理，REST Job 异步接口。
+**MVP：音乐生成 API + 配套 Demo**
+
+| 组件 | 说明 |
+|------|------|
+| **API** | REST Job 异步接口，双引擎路由 |
+| **Demo** | 单页 Web 试用 + curl/Python 示例 |
 
 | 业务 | 引擎 | MVP `mode` |
 |------|------|------------|
@@ -14,12 +19,13 @@
 
 | 文档 | 说明 |
 |------|------|
-| [PRD.md](./PRD.md) | 产品需求 **v1.1**（MVP = API） |
-| [docs/README.md](./docs/README.md) | Vibe Coding 文档索引与待建清单 |
+| [PRD.md](./PRD.md) | 产品需求 **v1.2** |
+| [docs/DEMO.md](./docs/DEMO.md) | 配套 Demo 规格 |
+| [docs/README.md](./docs/README.md) | 文档索引 |
 
 ## 状态
 
-🟡 立项 — PRD 已定；**docs P0 待编写** → M1 推理验证 → M2 API MVP
+🟡 立项 — API + Demo 范围已定；docs P0 待编写
 
 ## 仓库
 

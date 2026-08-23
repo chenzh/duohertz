@@ -5,8 +5,8 @@
 | 字段 | 内容 |
 |------|------|
 | 项目名称 | Local AI Music Platform（品牌名待定） |
-| 文档版本 | **v1.1** |
-| 状态 | 立项定稿（**MVP = API 服务**） |
+| 文档版本 | **v1.2** |
+| 状态 | 立项定稿（**MVP = API + 配套 Demo**） |
 | 更新日期 | 2026-08-23 |
 | 仓库 | https://github.com/huagechen-lab/local-ai-music-platform |
 | 产品类型 | **音乐生成 API 服务**（MVP）→ 完整 SaaS（后续版本） |
@@ -18,13 +18,14 @@
 | v0.1 | 2026-08-23 | 初版立项 |
 | v0.2 | 2026-08-23 | 补充许可矩阵、Stable Audio 3 |
 | v1.0 | 2026-08-23 | 完善双引擎分工、API/数据模型、版本规划 |
-| **v1.1** | 2026-08-23 | **MVP 收窄为音乐生成 API 服务**，Web/积分/社区延后 |
+| **v1.1** | 2026-08-23 | MVP 收窄为音乐生成 API 服务 |
+| **v1.2** | 2026-08-23 | MVP 增加 **配套 Web Demo** + curl/Python 示例 |
 
 ---
 
 ## 0. 执行摘要
 
-**MVP 定义（v1.1 锁定）：** 提供 **音乐生成 API 服务** — 客户端通过 REST 提交任务、轮询状态、获取音频 URL 或二进制；底层 Mac 本地双引擎推理。**不做** Web 控制台、注册登录、积分计费、社区 Feed（均列入 Post-MVP）。
+**MVP 定义（v1.2 锁定）：** 提供 **音乐生成 API 服务** + **配套 Demo**（单页 Web 试用 + curl/Python 示例）。客户端通过 REST 提交任务、轮询、获取音频；Demo 用于演示、调试与验收。**不做** 注册登录、积分、社区 Feed（Post-MVP SaaS）。
 
 长期愿景仍是 **音乐 SaaS 平台**；API 层作为核心能力先交付，供游戏工作室、内部工具、第三方产品集成。
 
@@ -33,7 +34,8 @@
 - Inference Gateway（路由、鉴权、队列）
 - Mac 双 Worker：ACE-Step 1.5（人声）+ Stable Audio 3（BGM）
 - 异步 Job API + 健康检查
-- 对象存储或临时文件 URL 返回音频
+- 音频返回（URL 或流）
+- **配套 Demo：** `apps/demo` 单页 Web + `examples/curl` + Python 最小客户端（见 [docs/DEMO.md](./docs/DEMO.md)）
 
 **两条业务线（API 能力不变）：**
 
@@ -98,7 +100,7 @@ Suno、Udio、MELO、海绵等验证了 AI 音乐需求，但存在：
 - **对游戏客户：** 「BGM 专用 SA3 路由，避免人声泄漏」
 - **对运营方：** 「算力自持，先 API 验证再扩 SaaS」
 
-**MVP 非目标：** 无 Web UI、无用户注册、无积分/支付、无社区、无封面图生成、无分轨/inpainting（v0.2 API 扩展）。
+**MVP 非目标：** 无完整 SaaS 控制台、无用户注册、无积分/支付、无社区、无封面图 API、无分轨/inpainting（v0.2）。
 
 **长期非目标：** 闭源 API 套壳；DAW 级编辑器；移动端 App。
 
@@ -220,6 +222,7 @@ instrumental_only_legacy → ace-step-1.5        → 仅兼容，默认引导至
 | 双引擎路由 | `vocal_*` → ACE-Step；`game_bgm*` → SA3 |
 | 鉴权 | MVP 默认：`X-API-Key` 静态密钥（环境变量配置） |
 | 队列 | 单 Mac 串行或每引擎 1 并发；超时与失败可观测 |
+| **配套 Demo** | 单页 Web（4 mode 可试、播放、下载）+ curl/Python 示例 |
 
 **MVP 支持的 `mode`（首期 4 个）：**
 
@@ -232,13 +235,17 @@ instrumental_only_legacy → ace-step-1.5        → 仅兼容，默认引导至
 
 **暂缓（Post-MVP API v0.2+）：** `game_sfx`、`game_bgm_inpaint`、Webhook、批量任务、分轨导出。
 
-**永久不做（MVP）：** Web 前端、注册登录、积分、Polar、社区 Feed、封面图 API。
+**永久不做（MVP）：** 注册登录、积分、Polar、社区 Feed、封面图 API、永久作品库。
+
+**Demo 不做（见 DEMO.md）：** 注册、计费、社区、封面；仅会话级最近任务列表。
 
 ### 5.1 功能地图（全产品路线图）
 
 | 模块 | MVP API v0.1 | API v0.2 | SaaS v1.0 |
 |------|--------------|----------|------------|
 | REST Job API | ✅ | Webhook、SFX | — |
+| **配套 Demo Web** | ✅ | 同 API 扩展 | 升级为正式控制台 |
+| curl / Python 示例 | ✅ | 扩展 mode | — |
 | API Key 鉴权 | ✅ 静态 Key | 多 Key、限流 | 用户绑定 Key |
 | 人声生成 | ✅ ACE-Step | YuE 备选 | 作品库 |
 | 游戏 BGM | ✅ SA3 | inpainting | 项目空间 |
@@ -573,9 +580,10 @@ InferenceNode
 
 ## 15. 版本规划
 
-### MVP — API v0.1（当前）
+### MVP — API + Demo v0.1（当前）
 
 - Gateway + 4 个 `mode` + Job 轮询 + API Key + Mac 双 Worker
+- **`apps/demo`** 单页 Web + **`examples/`** curl/Python
 
 ### API v0.2
 
@@ -593,7 +601,7 @@ InferenceNode
 |------|------|------|--------------|
 | **M0 立项** | 2026-08 | PRD v1.0、GitHub 仓库 | — |
 | **M1 推理验证** | +2 周 | Mac 基准测试报告 | ACE 人声 10 首；SA3 BGM 10 + SFX 10 |
-| **M2 API MVP** | +4 周 | 可内测的 Job API + 双引擎 | 端到端 curl 验收 |
+| **M2 API + Demo MVP** | +4 周 | Job API + Web Demo + examples 验收 |
 | **M3 API v0.2** | +3 周 | SFX、inpainting | SA3 扩展 |
 | **M4 SaaS v1.0** | +4 周 | Web 控制台叠在 API 上 | — |
 
@@ -671,4 +679,4 @@ InferenceNode
 
 ---
 
-*v1.1 — MVP 锁定为音乐生成 API 服务。Post-MVP 再叠 SaaS 壳。*
+*v1.2 — MVP = API 服务 + 配套 Demo。SaaS 控制台后续叠加。*
