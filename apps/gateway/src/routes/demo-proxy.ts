@@ -13,6 +13,8 @@ demoProxyRoutes.all("/*", async (c) => {
   headers.set("X-API-Key", config.apiKey);
   headers.set("X-Demo-BFF", "1");
   headers.delete("host");
+  headers.delete("content-length");
+  headers.delete("transfer-encoding");
 
   const init: RequestInit = { method: c.req.method, headers };
   if (c.req.method !== "GET" && c.req.method !== "HEAD") {

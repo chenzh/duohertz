@@ -102,6 +102,7 @@ run_integration() {
   log "tier: integration (gateway + acceptance-p0, INTEGRATION=false)"
   export API_BASE="${API_BASE:-http://127.0.0.1:8080}"
   export INTEGRATION=false
+  export RATE_LIMIT_QPS="${RATE_LIMIT_QPS:-2}"
   start_gateway
   "$PY" scripts/acceptance-p0.py
 }
