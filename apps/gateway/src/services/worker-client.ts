@@ -1,6 +1,8 @@
 import { writeFileSync } from "node:fs";
 import { config } from "../lib/config.js";
 
+const MLX_FETCH_MS = config.jobTimeoutSec * 1000;
+
 export type WorkerKind = "ace" | "sa3";
 
 export type GeneratePayload = {
@@ -48,16 +50,21 @@ export async function callWorkerGenerate(
   const headers: Record<string, string> = { "Content-Type": "application/json" };
   if (config.workerSecret) headers["X-Worker-Secret"] = config.workerSecret;
 
-  const res = await fetch(`${workerUrl(kind)}/internal/generate`, {
-    method: "POST",
-    headers,
-    body: JSON.stringify(payload),
-    signal: AbortSignal.timeout(config.jobTimeoutSec * 1000),
-  });
+  try {
+    const res = await fetch(`${workerUrl(kind)}/internal/generate`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify(payload),
+      signal: AbortSignal.timeout(MLX_FETCH_MS),
+    });
 
-  const body = (await res.json()) as GenerateResult;
-  if (body.ok && "audio_base64" in body && body.audio_base64) {
-    writeFileSync(payload.output_path, Buffer.from(body.audio_base64, "base64"));
+    const body = (await res.json()) as GenerateResult;
+    if (body.ok && "audio_base64" in body && body.audio_base64) {
+      writeFileSync(payload.output_path, Buffer.from(body.audio_base64, "base64"));
+    }
+    return body;
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "fetch failed";
+    return { ok: false, error: message };
   }
-  return body;
 }

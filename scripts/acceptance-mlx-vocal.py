@@ -1,0 +1,88 @@
+#!/usr/bin/env python3
+"""End-to-end vocal_lyrics via Gateway -> Mac MLX worker."""
+
+from __future__ import annotations
+
+import json
+import os
+import sys
+import time
+import urllib.request
+import wave
+from io import BytesIO
+
+API_BASE = os.getenv("API_BASE", "http://127.0.0.1:8080")
+API_KEY = os.getenv("API_KEY", "dev-api-key-change-me")
+TIMEOUT = int(os.getenv("JOB_POLL_TIMEOUT", "1800"))
+
+
+def req(method: str, path: str, body: dict | None = None, timeout: int = 60):
+    headers = {"X-API-Key": API_KEY}
+    data = None
+    if body is not None:
+        data = json.dumps(body).encode()
+        headers["Content-Type"] = "application/json"
+    r = urllib.request.Request(f"{API_BASE}{path}", data=data, headers=headers, method=method)
+    with urllib.request.urlopen(r, timeout=timeout) as res:
+        raw = res.read()
+        if "audio" in res.headers.get("Content-Type", ""):
+            return res.status, raw
+        return res.status, json.loads(raw.decode())
+
+
+def main() -> int:
+    print(f"API_BASE={API_BASE} poll_timeout={TIMEOUT}s")
+    code, health = req("GET", "/v1/health/inference")
+    print("inference health:", json.dumps(health, ensure_ascii=False)[:200])
+    if code != 200:
+        return 1
+
+    body = {
+        "mode": "vocal_lyrics",
+        "style_tags": "pop, female vocal",
+        "lyrics": "hello from gateway mlx test",
+        "duration_sec": 30,
+    }
+    print("creating job...")
+    code, created = req("POST", "/v1/jobs", body)
+    if code != 201:
+        print("create failed:", created)
+        return 1
+    job_id = created["data"]["job_id"]
+    print("job_id:", job_id)
+
+    start = time.time()
+    while time.time() - start < TIMEOUT:
+        _, polled = req("GET", f"/v1/jobs/{job_id}")
+        st = polled["data"]["status"]
+        print(f"  status={st} elapsed={int(time.time()-start)}s")
+        if st == "completed":
+            break
+        if st == "failed":
+            print("failed:", polled)
+            return 1
+        time.sleep(5)
+    else:
+        print("poll timeout")
+        return 1
+
+    ac, audio = req("GET", f"/v1/jobs/{job_id}/audio", timeout=120)
+    if ac != 200 or not isinstance(audio, bytes):
+        print("audio download failed", ac)
+        return 1
+
+    with wave.open(BytesIO(audio)) as wf:
+        dur = wf.getnframes() / wf.getframerate()
+        ch = wf.getnchannels()
+        sr = wf.getframerate()
+
+    out = f"mlx-gateway-{job_id}.wav"
+    with open(out, "wb") as f:
+        f.write(audio)
+
+    print(f"OK wav={out} bytes={len(audio)} duration={dur:.1f}s ch={ch} sr={sr}")
+    return 0 if len(audio) > 50000 and dur >= 5 else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

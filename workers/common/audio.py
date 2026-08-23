@@ -52,7 +52,10 @@ def write_wav(path: str, engine: EngineKind, duration_sec: int, seed_text: str) 
 
 def maybe_run_real_inference(engine: EngineKind, payload: dict) -> bool:
     """Optional hook when official MLX repos are installed on Mac."""
+    if engine != "ace":
+        return False
     if os.getenv("WORKER_MODE", "synth") != "mlx":
         return False
-    repo = os.getenv("ACE_STEP_REPO" if engine == "ace" else "SA3_REPO")
-    return bool(repo and os.path.isdir(repo))
+    if os.getenv("ACE_API_URL") or os.getenv("ACE_STEP_REPO"):
+        return True
+    return False
