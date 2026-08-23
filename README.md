@@ -1,4 +1,4 @@
-# Local AI Music Platform
+# MusicSaas
 
 **MVP：音乐生成 API + 配套 Demo**
 
@@ -43,4 +43,4 @@ pnpm --filter demo dev      # :3000
 
 ## 仓库
 
-https://github.com/huagechen-lab/local-ai-music-platform
+https://github.com/chenzh/MusicSaas

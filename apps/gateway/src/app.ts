@@ -34,7 +34,7 @@ export function createApp() {
   app.get("/", (c) =>
     c.json({
       data: {
-        service: "local-ai-music-platform-gateway",
+        service: "music-saas-gateway",
         demo_url: "/demo/",
         api_health: "/v1/health",
       },

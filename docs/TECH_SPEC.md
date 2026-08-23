@@ -32,7 +32,7 @@
 ## 2. Monorepo 目录结构
 
 ```text
-local-ai-music-platform/
+music-saas/
 ├── apps/
 │   ├── gateway/              # REST API + Demo BFF + Job 调度
 │   │   ├── src/

@@ -4,11 +4,11 @@
 
 | 字段 | 内容 |
 |------|------|
-| 项目名称 | Local AI Music Platform（品牌名待定） |
+| 项目名称 | MusicSaas |
 | 文档版本 | **v1.2** |
 | 状态 | 立项定稿（**MVP = API + 配套 Demo**） |
 | 更新日期 | 2026-08-23 |
-| 仓库 | https://github.com/huagechen-lab/local-ai-music-platform |
+| 仓库 | https://github.com/chenzh/MusicSaas |
 | 产品类型 | **音乐生成 API 服务**（MVP）→ 完整 SaaS（后续版本） |
 
 ### 修订记录
