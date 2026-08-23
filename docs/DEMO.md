@@ -126,13 +126,24 @@ curl -sS -X POST "${API_BASE}/v1/jobs" \
 ## 6. 本地启动（目标体验）
 
 ```text
-1. Mac 上 ACE + SA3 Worker 已启动（见 INFERENCE.md）
-2. 启动 Gateway：localhost:8080
-3. 启动 Demo：localhost:3000（或 Gateway 静态挂载 /demo）
-4. 打开浏览器 → 选 mode → 生成 → 听到音频
+1. bash scripts/mac-sa3-mlx-bootstrap.sh   # 首次：SA3 MLX 仓库 + venv
+2. bash scripts/mac-services-up.sh         # ACE API + Workers + Gateway
+3. bash scripts/mac-stack-verify.sh        # 健康检查
+4. 浏览器打开 http://127.0.0.1:8080/demo/?demo=1
 ```
 
-**一键脚本（OPS.md 细化）：** `scripts/dev-up.sh` 检查 health 后打开 Demo URL。
+| URL 参数 | 用途 |
+|----------|------|
+| `?demo=1` | 路演模式：隐藏 job_id、集成面板细节 |
+| `?dev=1` | 开发者模式：展示最近 5 次 poll 记录 |
+
+**脚本：**
+
+- `scripts/demo-present.sh` — 健康检查 + 打开浏览器
+- `scripts/mac-launchd-install.sh` — 开机自启（ACE / Workers / Gateway）
+- `SMOKE_MLX=1 bash scripts/demo-present.sh` — 附带 MLX 冒烟
+
+开发时也可 `pnpm --filter demo dev`（:3000，代理 Gateway）。
 
 ---
 

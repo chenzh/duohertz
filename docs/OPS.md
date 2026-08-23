@@ -86,20 +86,20 @@ pnpm --filter demo build
 
 ### 5.1 launchd（可选）
 
-模板：`scripts/launchd/com.musicsaas.ace-api.plist`、`com.musicsaas.workers.plist`
+模板：`scripts/launchd/com.musicsaas.{ace-api,workers,gateway}.plist`
 
-安装示例（将 `__MUSICSASS_ROOT__` 替换为仓库绝对路径）：
+一键安装（替换路径并加载三个 LaunchAgent）：
 
 ```bash
-ROOT="$HOME/Desktop/MusicSaas"
-sed "s|__MUSICSASS_ROOT__|$ROOT|g" "$ROOT/scripts/launchd/com.musicsaas.ace-api.plist" \
-  > ~/Library/LaunchAgents/com.musicsaas.ace-api.plist
-launchctl bootstrap "gui/$(id -u)" ~/Library/LaunchAgents/com.musicsaas.ace-api.plist
+bash scripts/mac-launchd-install.sh
+bash scripts/mac-stack-verify.sh
 ```
 
-- `RunAtLoad: true` · `KeepAlive: true`（ACE API）
-- 日志：`/tmp/ace-api.log`、`/tmp/ace-worker.log`
-- 一键启动（非 launchd）：`bash scripts/mac-services-up.sh`
+手动安装时将 `__MUSICSASS_ROOT__`、`__NODE_BIN__` 替换为实际路径（见 `mac-launchd-install.sh`）。
+
+- `RunAtLoad: true` · ACE API / Gateway `KeepAlive: true`
+- 日志：`/tmp/ace-api.log`、`/tmp/musicsaas-workers.log`、`/tmp/musicsaas-gateway.log`
+- 临时启动（非 launchd）：`bash scripts/mac-services-up.sh`
 
 ### 5.2 磁盘
 

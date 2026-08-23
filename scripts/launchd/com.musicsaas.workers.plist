@@ -19,6 +19,12 @@
     <string>1</string>
     <key>ACE_FALLBACK_SYNTH</key>
     <string>true</string>
+    <key>SA3_WORKER_MODE</key>
+    <string>mlx</string>
+    <key>SA3_REPO</key>
+    <string>/Users/zhenhuachen/workers/stable-audio-3</string>
+    <key>SA3_FALLBACK_SYNTH</key>
+    <string>true</string>
   </dict>
   <key>RunAtLoad</key>
   <true/>

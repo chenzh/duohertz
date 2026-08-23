@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.musicsaas.gateway</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>-lc</string>
+    <string>cd __MUSICSASS_ROOT__/apps/gateway &amp;&amp; ./node_modules/.bin/tsx src/index.ts</string>
+  </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>__NODE_BIN__:__MUSICSASS_ROOT__/apps/gateway/node_modules/.bin:/Users/zhenhuachen/bin:/Users/zhenhuachen/.local/bin:/usr/bin:/bin</string>
+  </dict>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+  <key>StandardOutPath</key>
+  <string>/tmp/musicsaas-gateway.log</string>
+  <key>StandardErrorPath</key>
+  <string>/tmp/musicsaas-gateway.log</string>
+</dict>
+</plist>
