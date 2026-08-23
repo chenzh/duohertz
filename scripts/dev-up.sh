@@ -20,10 +20,10 @@ pnpm --filter gateway db:push
 MAC_HOST="${MAC_HOST:-192.168.0.199}"
 if ping -c 1 -W 1 "$MAC_HOST" >/dev/null 2>&1; then
   echo "Syncing workers to Mac ${MAC_HOST}..."
-  ssh -o BatchMode=yes "zhenhuachen@${MAC_HOST}" "mkdir -p ~/local-ai-music-platform/workers"
-  scp -r workers/* "zhenhuachen@${MAC_HOST}:~/local-ai-music-platform/workers/"
-  ssh -o BatchMode=yes "zhenhuachen@${MAC_HOST}" 'cd ~/local-ai-music-platform/workers/ace-step && python3 -m venv .venv && . .venv/bin/activate && pip install -q -r requirements.txt && nohup .venv/bin/uvicorn server:app --host 0.0.0.0 --port 8101 >/tmp/ace-worker.log 2>&1 &'
-  ssh -o BatchMode=yes "zhenhuachen@${MAC_HOST}" 'cd ~/local-ai-music-platform/workers/sa3 && python3 -m venv .venv && . .venv/bin/activate && pip install -q -r requirements.txt && nohup .venv/bin/uvicorn server:app --host 0.0.0.0 --port 8102 >/tmp/sa3-worker.log 2>&1 &'
+  ssh -o BatchMode=yes "zhenhuachen@${MAC_HOST}" "mkdir -p ~/Desktop/MusicSaas/workers"
+  scp -r workers/* "zhenhuachen@${MAC_HOST}:~/Desktop/MusicSaas/workers/"
+  ssh -o BatchMode=yes "zhenhuachen@${MAC_HOST}" 'cd ~/Desktop/MusicSaas/workers/ace-step && python3 -m venv .venv && . .venv/bin/activate && pip install -q -r requirements.txt && nohup .venv/bin/uvicorn server:app --host 0.0.0.0 --port 8101 >/tmp/ace-worker.log 2>&1 &'
+  ssh -o BatchMode=yes "zhenhuachen@${MAC_HOST}" 'cd ~/Desktop/MusicSaas/workers/sa3 && python3 -m venv .venv && . .venv/bin/activate && pip install -q -r requirements.txt && nohup .venv/bin/uvicorn server:app --host 0.0.0.0 --port 8102 >/tmp/sa3-worker.log 2>&1 &'
   sleep 3
   curl -fsS "http://${MAC_HOST}:8101/health" && echo " ACE ok"
   curl -fsS "http://${MAC_HOST}:8102/health" && echo " SA3 ok"

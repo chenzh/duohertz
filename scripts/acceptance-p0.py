@@ -261,7 +261,7 @@ def run_examples() -> None:
     mac_ssh = os.getenv("MAC_SSH", "192.168.0.199")
     gw_host = os.getenv("GW_HOST", "192.168.0.135")
     remote_base = (
-        f"export API_BASE=http://{gw_host}:8080 API_KEY={API_KEY} && cd ~/local-ai-music-platform"
+        f"export API_BASE=http://{gw_host}:8080 API_KEY={API_KEY} && cd ~/Desktop/MusicSaas"
     )
 
     def ssh(cmd: str) -> int:

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Restart Mac workers with MLX ACE backend.
 set -euo pipefail
-MAC_DIR="${MAC_DIR:-$HOME/local-ai-music-platform}"
+MAC_DIR="${MAC_DIR:-$HOME/Desktop/MusicSaas}"
 MAMBA="${MAMBA:-$HOME/bin/micromamba}"
 ENV_NAME="${MAMBA_ENV:-workers}"
 export WORKER_MODE=mlx
@@ -20,8 +20,8 @@ run_uvicorn() {
     "$MAMBA" run -n "$ENV_NAME" uvicorn server:app --host 0.0.0.0 --port "$port" >"$log" 2>&1 &
 }
 
-run_uvicorn "$MAC_DIR/ace-step" 8101 /tmp/ace-worker.log
-run_uvicorn "$MAC_DIR/sa3" 8102 /tmp/sa3-worker.log
+run_uvicorn "$MAC_DIR/workers/ace-step" 8101 /tmp/ace-worker.log
+run_uvicorn "$MAC_DIR/workers/sa3" 8102 /tmp/sa3-worker.log
 
 sleep 4
 curl -fsS http://127.0.0.1:8101/health

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Bootstrap Mac workers (micromamba preferred; falls back to python3 venv).
 set -euo pipefail
-MAC_DIR="${MAC_DIR:-$HOME/local-ai-music-platform}"
+MAC_DIR="${MAC_DIR:-$HOME/Desktop/MusicSaas}"
 MAMBA="${MAMBA:-$HOME/bin/micromamba}"
 ENV_NAME="${MAMBA_ENV:-workers}"
 
@@ -27,8 +27,8 @@ if [[ -x "$MAMBA" ]] && ! "$MAMBA" env list | grep -qE "(^| )${ENV_NAME}( |$)"; 
   "$MAMBA" create -y -n "$ENV_NAME" -c conda-forge python=3.11
 fi
 
-run_uvicorn "$MAC_DIR/ace-step" 8101 /tmp/ace-worker.log
-run_uvicorn "$MAC_DIR/sa3" 8102 /tmp/sa3-worker.log
+run_uvicorn "$MAC_DIR/workers/ace-step" 8101 /tmp/ace-worker.log
+run_uvicorn "$MAC_DIR/workers/sa3" 8102 /tmp/sa3-worker.log
 
 sleep 4
 curl -fsS http://127.0.0.1:8101/health
