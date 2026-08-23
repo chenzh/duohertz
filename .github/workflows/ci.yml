@@ -20,14 +20,8 @@ jobs:
           python-version: "3.12"
       - run: pnpm install
       - run: pip install -r tests/requirements.txt
-      - run: pnpm --filter gateway db:push
-        env:
-          DATABASE_URL: file:./data/test.db
-          MOCK_WORKERS: "true"
-          API_KEY: test-key
       - run: bash scripts/harness.sh unit
         env:
-          DATABASE_URL: file:./data/test.db
           MOCK_WORKERS: "true"
           API_KEY: test-key
 
@@ -61,11 +55,9 @@ jobs:
       - run: pip install -r tests/requirements.txt
       - run: bash scripts/harness.sh integration
         env:
-          DATABASE_URL: file:./data/test.db
           MOCK_WORKERS: "true"
           API_KEY: test-key
           API_KEY_ALT: dev-api-key-alt
           INTEGRATION: "false"
-          AUDIO_STORAGE_PATH: ./data/audio-test
           RATE_LIMIT_QPS: "100"
           RATE_LIMIT_DAILY_JOBS: "10000"

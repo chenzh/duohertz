@@ -9,11 +9,11 @@ TIER="${1:-all}"
 GATEWAY_PID=""
 DEMO_PID=""
 
-export DATABASE_URL="${DATABASE_URL:-file:./data/test.db}"
+export DATABASE_URL="${DATABASE_URL:-file:${ROOT}/data/test.db}"
 export MOCK_WORKERS="${MOCK_WORKERS:-true}"
 export API_KEY="${API_KEY:-test-key}"
 export API_KEY_ALT="${API_KEY_ALT:-dev-api-key-alt}"
-export AUDIO_STORAGE_PATH="${AUDIO_STORAGE_PATH:-./data/audio-test}"
+export AUDIO_STORAGE_PATH="${AUDIO_STORAGE_PATH:-${ROOT}/data/audio-test}"
 export RATE_LIMIT_QPS="${RATE_LIMIT_QPS:-100}"
 export RATE_LIMIT_DAILY_JOBS="${RATE_LIMIT_DAILY_JOBS:-10000}"
 
@@ -91,6 +91,8 @@ trap cleanup EXIT
 run_unit() {
   ensure_py_env
   log "tier: unit (vitest + pytest) via $PY"
+  mkdir -p "${ROOT}/data" "${ROOT}/data/audio-test"
+  pnpm --filter gateway db:push >/dev/null
   pnpm --filter gateway test
   "$PY" -m pytest tests/unit -q
 }
