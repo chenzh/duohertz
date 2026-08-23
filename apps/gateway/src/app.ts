@@ -51,10 +51,16 @@ export function createApp() {
     const proto = c.req.header("x-forwarded-proto") ?? "http";
     return c.json({
       data: {
-        version: "0.2.0",
+        version: "0.3.0",
         demo_url: `${proto}://${host}/demo/`,
         api_docs_url:
           "https://github.com/chenzh/MusicSaas/blob/main/docs/DATA_API.md",
+        showcase_version: 1,
+        features: ["landing", "showcase", "playground", "present", "deep-link"],
+        benchmark: {
+          ace_vocal_10s_sec: 3,
+          sa3_bgm_30s_sec: "待 MLX 实测",
+        },
         compliance: {
           ace: "ACE-Step 1.5 · MIT",
           sa3: "Stable Audio 3 · Community License",

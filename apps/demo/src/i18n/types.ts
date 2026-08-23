@@ -52,4 +52,16 @@ export type Messages = {
   mlx: string;
   latency: string;
   jobId: string;
+  playgroundTitle: string;
+  playgroundLead: string;
+  statusIdleEmpty: string;
+  waited: string;
+  stepScene: string;
+  stepParams: string;
+  stepConfirm: string;
+  stepNext: string;
+  stepAdvancedShow: string;
+  stepAdvancedHide: string;
+  insertLyricTemplate: string;
+  keyboardHelp: string;
 };

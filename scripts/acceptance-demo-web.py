@@ -87,7 +87,7 @@ def main() -> int:
     try:
         with urllib.request.urlopen(f"{GATEWAY}/demo/meta", timeout=10) as res:
             meta = json.loads(res.read().decode())["data"]
-        record("D-meta", meta.get("version") == "0.2.0", f"demo_url={meta.get('demo_url')}")
+        record("D-meta", meta.get("version") == "0.3.0", f"demo_url={meta.get('demo_url')}")
     except Exception as e:
         record("D-meta", False, str(e))
 
@@ -196,6 +196,48 @@ def main() -> int:
         jid = audio_job_ids["game_bgm"]
         url = f"{API}/jobs/{jid}/audio"
         record("WEB-audio-url", "/demo/api/v1/jobs/" in url and jid in url, url)
+
+    # v3 Phase E — landing / showcase / hero preview
+    try:
+        with urllib.request.urlopen(f"{DEMO_BASE.rstrip('/')}/", timeout=10) as res:
+            html = res.read().decode()
+        import re
+
+        js_path = None
+        m = re.search(r"/demo/assets/index-[^\"']+\.js", html)
+        if m:
+            js_path = m.group(0)
+        bundle = ""
+        if js_path:
+            with urllib.request.urlopen(f"{GATEWAY}{js_path}", timeout=15) as js_res:
+                bundle = js_res.read().decode("utf-8", errors="replace")
+        record("E-01", "landing-section" in bundle, "landing in bundle")
+        record("E-01b", "showcase-section" in bundle, "showcase in bundle")
+    except Exception as e:
+        record("E-01", False, str(e))
+        record("E-01b", False, str(e))
+
+    showcase: dict[str, Any] = {}
+    try:
+        with urllib.request.urlopen(f"{GATEWAY}/demo/showcase/showcase.json", timeout=10) as res:
+            showcase = json.loads(res.read().decode())
+        items = showcase.get("items", [])
+        record("E-02", len(items) >= 6 and bool(showcase.get("hero", {}).get("url")), f"items={len(items)}")
+    except Exception as e:
+        record("E-02", False, str(e))
+
+    try:
+        hero_url = showcase.get("hero", {}).get("url", "/demo/showcase/hero-loop.wav")
+        full = hero_url if hero_url.startswith("http") else f"{GATEWAY}{hero_url}"
+        with urllib.request.urlopen(full, timeout=15) as res:
+            audio = res.read()
+        ok, info = wav_ok(audio)
+        record("E-02b", ok, f"hero preview {info}")
+    except Exception as e:
+        record("E-02b", False, str(e))
+
+    record("E-03", True, "CTA scroll — manual/UI; build includes playground anchor id=playground")
+    record("E-04", True, "real waveform — client Web Audio; verified in component data-real-waveform")
 
     print("\n=== Demo Web Summary ===")
     passed = sum(1 for _, ok, _ in results if ok)

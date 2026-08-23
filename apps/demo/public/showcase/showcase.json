@@ -1,0 +1,105 @@
+{
+  "version": 1,
+  "hero": {
+    "id": "hero-loop",
+    "url": "/demo/showcase/hero-loop.wav",
+    "titleZh": "精选 BGM 试听",
+    "titleEn": "Featured BGM preview",
+    "engine": "Stable Audio 3",
+    "durationSec": 30
+  },
+  "items": [
+    {
+      "id": "bgm-dungeon",
+      "scene": "game",
+      "mode": "game_bgm",
+      "url": "/demo/showcase/bgm-dungeon.wav",
+      "titleZh": "暗黑地牢",
+      "titleEn": "Dark Dungeon",
+      "engine": "Stable Audio 3",
+      "gradient": ["#7c3aed", "#2563eb"]
+    },
+    {
+      "id": "bgm-explore",
+      "scene": "game",
+      "mode": "game_bgm",
+      "url": "/demo/showcase/bgm-explore.wav",
+      "titleZh": "草原探索",
+      "titleEn": "Open World",
+      "engine": "Stable Audio 3",
+      "gradient": ["#0ea5e9", "#6366f1"]
+    },
+    {
+      "id": "bgm-boss",
+      "scene": "game",
+      "mode": "game_bgm",
+      "url": "/demo/showcase/bgm-boss.wav",
+      "titleZh": "Boss 战",
+      "titleEn": "Boss Battle",
+      "engine": "Stable Audio 3",
+      "gradient": ["#dc2626", "#7c3aed"]
+    },
+    {
+      "id": "vocal-jpop",
+      "scene": "vocal",
+      "mode": "vocal_lyrics",
+      "url": "/demo/showcase/vocal-jpop.wav",
+      "titleZh": "日系抒情",
+      "titleEn": "J-Pop Ballad",
+      "engine": "ACE-Step 1.5",
+      "gradient": ["#db2777", "#f97316"]
+    },
+    {
+      "id": "vocal-rap",
+      "scene": "vocal",
+      "mode": "vocal_desc",
+      "url": "/demo/showcase/vocal-rap.wav",
+      "titleZh": "说唱描述",
+      "titleEn": "Hip-Hop Desc",
+      "engine": "ACE-Step 1.5",
+      "gradient": ["#f59e0b", "#ef4444"]
+    },
+    {
+      "id": "vocal-ballad",
+      "scene": "vocal",
+      "mode": "vocal_lyrics",
+      "url": "/demo/showcase/vocal-ballad.wav",
+      "titleZh": "抒情人声",
+      "titleEn": "Vocal Ballad",
+      "engine": "ACE-Step 1.5",
+      "gradient": ["#ec4899", "#8b5cf6"]
+    },
+    {
+      "id": "theme-epic",
+      "scene": "vocal",
+      "mode": "game_theme_vocal",
+      "url": "/demo/showcase/theme-epic.wav",
+      "titleZh": "游戏主题曲",
+      "titleEn": "Game Theme",
+      "engine": "ACE-Step 1.5",
+      "gradient": ["#6366f1", "#db2777"]
+    },
+    {
+      "id": "compare-ace",
+      "scene": "vocal",
+      "mode": "vocal_lyrics",
+      "url": "/demo/showcase/vocal-jpop.wav",
+      "titleZh": "ACE 人声引擎",
+      "titleEn": "ACE Vocal Engine",
+      "engine": "ACE-Step 1.5",
+      "gradient": ["#db2777", "#f97316"],
+      "compare": "ace"
+    },
+    {
+      "id": "compare-sa3",
+      "scene": "game",
+      "mode": "game_bgm",
+      "url": "/demo/showcase/bgm-dungeon.wav",
+      "titleZh": "SA3 配乐引擎",
+      "titleEn": "SA3 BGM Engine",
+      "engine": "Stable Audio 3",
+      "gradient": ["#7c3aed", "#2563eb"],
+      "compare": "sa3"
+    }
+  ]
+}

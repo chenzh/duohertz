@@ -41,6 +41,12 @@ export type DemoMeta = {
   version: string;
   demo_url: string;
   api_docs_url?: string;
+  showcase_version?: number;
+  features?: string[];
+  benchmark?: {
+    ace_vocal_10s_sec?: number;
+    sa3_bgm_30s_sec?: string;
+  };
   compliance: { ace: string; sa3: string };
 };
 
