@@ -87,24 +87,37 @@ cd ace-step
 | 许可 | Community License（须登记） |
 | 负责 mode | `game_bgm` |
 
-### 3.1 安装
+### 3.1 安装（推荐：项目脚本）
+
+```bash
+# 克隆 stable-audio-3 并创建 optimized/mlx/.venv（权重首次生成时自动下载）
+bash scripts/mac-sa3-mlx-bootstrap.sh
+```
+
+或官方一键安装：
 
 ```bash
 curl -LsSf https://raw.githubusercontent.com/Stability-AI/stable-audio-3/main/optimized/mlx/bootstrap.sh | bash
-# 或 clone 后按 optimized/mlx/README.md
 ```
+
+默认仓库路径：`~/workers/stable-audio-3`（`SA3_REPO` 可覆盖）。
 
 ### 3.2 Worker 服务
 
 `workers/sa3/server.py`：
 
-- `GET /health`
+- `GET /health` — 含 `mode`、`sa3_mlx`、`model_variant`
 - `POST /internal/generate` — `prompt`, `duration_sec`, `model_variant`（small/medium）
 
 | 变量 | 说明 |
 |------|------|
-| `SA3_MODEL_VARIANT` | `small`（默认） |
+| `SA3_WORKER_MODE` | `mlx`（真实推理）或 `synth`（占位音） |
+| `SA3_REPO` | stable-audio-3 克隆路径 |
+| `SA3_MODEL_VARIANT` | `small`（`sm-music`）或 `medium` |
 | `SA3_WORKER_PORT` | 8102 |
+| `SA3_FALLBACK_SYNTH` | MLX 失败时是否回退占位音（默认 `true`） |
+
+验收：`bash scripts/mac-sa3-test.sh`（15s `game_bgm`，稳态约 1–3s）
 
 ### 3.3 BGM 生成注意
 

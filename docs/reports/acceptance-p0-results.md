@@ -36,7 +36,15 @@ H-01, H-02, A-01~03, V-01~06, U-01~04, G-01~03, J-01~04, R-01, D-01-proxy, D-04-
 
 配置：`audio_format=wav` · `ACE_THINKING=false` · `ACE_BATCH_SIZE=1` · LM `0.6B`
 
+## SA3 BGM + Demo Web（2026-08-23）
+
+| 脚本 | 结果 |
+|------|------|
+| `bash scripts/mac-sa3-test.sh` | **PASS** — 15s BGM **~0.7s**（权重已缓存），立体声 44.1kHz |
+| `python scripts/acceptance-sa3-bgm.py` | **PASS** |
+| `python scripts/acceptance-demo-web.py` | **12/12 PASS** — 四 mode + BFF 代理 |
+
 ## 备注
 
 - Gateway 已修复 `.env` 加载（`dotenv`）；Worker URL 可指向本机 `127.0.0.1` 或 LAN `192.168.0.199`。
-- **ACE MLX 真实推理已上线**；SA3 仍为合成 WAV（见 `M1-benchmark.md`）。
+- **ACE + SA3 均为 Mac MLX 真实推理**（见 `M1-benchmark.md`、`INFERENCE.md`）。

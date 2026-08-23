@@ -11,6 +11,7 @@
     "test:integration": "bash scripts/harness.sh integration",
     "test:e2e": "bash scripts/harness.sh e2e",
     "test:mlx": "bash scripts/harness.sh mlx",
+    "test:sa3": "bash scripts/mac-sa3-test.sh",
     "test:all": "bash scripts/harness.sh all",
     "harness": "bash scripts/harness.sh",
     "acceptance": "python3 scripts/acceptance-p0.py",
