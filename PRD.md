@@ -5,11 +5,11 @@
 | 字段 | 内容 |
 |------|------|
 | 项目名称 | Local AI Music Platform（品牌名待定） |
-| 文档版本 | **v1.0** |
-| 状态 | 立项定稿 |
+| 文档版本 | **v1.1** |
+| 状态 | 立项定稿（**MVP = API 服务**） |
 | 更新日期 | 2026-08-23 |
 | 仓库 | https://github.com/huagechen-lab/local-ai-music-platform |
-| 产品类型 | B2B / B2C **音乐 SaaS**（Web 多租户 + 本地 GPU 推理） |
+| 产品类型 | **音乐生成 API 服务**（MVP）→ 完整 SaaS（后续版本） |
 
 ### 修订记录
 
@@ -17,15 +17,25 @@
 |------|------|------|
 | v0.1 | 2026-08-23 | 初版立项 |
 | v0.2 | 2026-08-23 | 补充许可矩阵、Stable Audio 3 |
-| **v1.0** | 2026-08-23 | 完善双引擎分工、API/数据模型、版本规划，去重合并 |
+| v1.0 | 2026-08-23 | 完善双引擎分工、API/数据模型、版本规划 |
+| **v1.1** | 2026-08-23 | **MVP 收窄为音乐生成 API 服务**，Web/积分/社区延后 |
 
 ---
 
 ## 0. 执行摘要
 
-本项目是一个 **音乐 SaaS 平台**：对外提供 Web 应用、账号体系、任务队列、积分与 API；对内以自有 **MacBook Pro M5 Pro（48GB）** 为推理节点，在局域网/可控环境完成 AI 音乐生成，避免长期依赖 Modal 等云 GPU 与闭源 Suno 类服务的商用限制。
+**MVP 定义（v1.1 锁定）：** 提供 **音乐生成 API 服务** — 客户端通过 REST 提交任务、轮询状态、获取音频 URL 或二进制；底层 Mac 本地双引擎推理。**不做** Web 控制台、注册登录、积分计费、社区 Feed（均列入 Post-MVP）。
 
-**两条业务线：**
+长期愿景仍是 **音乐 SaaS 平台**；API 层作为核心能力先交付，供游戏工作室、内部工具、第三方产品集成。
+
+**MVP 交付物：**
+
+- Inference Gateway（路由、鉴权、队列）
+- Mac 双 Worker：ACE-Step 1.5（人声）+ Stable Audio 3（BGM）
+- 异步 Job API + 健康检查
+- 对象存储或临时文件 URL 返回音频
+
+**两条业务线（API 能力不变）：**
 
 1. **人声音乐** — 描述/歌词 → 带人声完整歌曲（Creator SaaS）
 2. **游戏配乐** — BGM、氛围、音效 SFX、片段修改与工程交付（Game Audio SaaS）
@@ -55,15 +65,15 @@ Suno、Udio、MELO、海绵等验证了 AI 音乐需求，但存在：
 | 游戏生产流 | 缺分轨、SFX、inpainting | SA3 + ACE-Step 编辑能力 |
 | 成本 | 订阅 + 按量，规模越大越贵 | 本地推理，边际成本主要为电费与运维 |
 
-### 1.2 为何是 SaaS 而非单机工具
+### 1.2 为何先做 API 而非完整 SaaS
 
-| 维度 | 单机工具（tadpole-studio 等） | 本音乐 SaaS |
-|------|------------------------------|-------------|
-| 用户 | 单人 | 多租户、可扩展团队 |
-| 接入 | 本机 UI | Web + REST API |
-| 计费 | 无 | 积分 / 订阅（v0.3） |
-| 资产 | 本地文件 | 对象存储 + 权限隔离 + 审计 |
-| 运维 | 无 | 队列、监控、节点健康 |
+| 维度 | MVP（API 服务） | Post-MVP（SaaS） |
+|------|-----------------|------------------|
+| 交付形态 | REST + Job 轮询 | Web App + 作品库 |
+| 用户体系 | API Key / 内网免鉴权（二选一） | 注册登录、多租户 |
+| 计费 | 无（内测）或简单 QPS 限流 | 积分、Polar |
+| 存储 | 任务级音频 URL，可选 TTL | 永久作品库、封面 |
+| 开发量 | 网关 + Worker + 接口字典 | 前端 + 全量 SaaS |
 
 ### 1.3 推理节点（已验证）
 
@@ -80,15 +90,17 @@ Suno、Udio、MELO、海绵等验证了 AI 音乐需求，但存在：
 
 ## 2. 产品定位
 
-**一句话：** 面向创作者与游戏团队的 AI 音乐 SaaS — 本地双引擎推理、许可可商用、同时覆盖人声歌曲与游戏音频生产。
+**一句话：** 可商用的 **本地双引擎音乐生成 API** — 人声走 ACE-Step，游戏 BGM 走 Stable Audio 3；MVP 仅 API，Web SaaS 后续叠加。
 
 **价值主张：**
 
-- **对人声客户：** 「像 Suno，但产出可商用、数据在己方」
-- **对游戏客户：** 「BGM + SFX 一站式，支持改片段与风格统一，非纯玩具生成器」
-- **对运营方：** 「算力自持，不绑云 GPU 账单」
+- **对集成方：** 「一个 API，人声 + 游戏 BGM，许可清晰、数据在己方 Mac」
+- **对游戏客户：** 「BGM 专用 SA3 路由，避免人声泄漏」
+- **对运营方：** 「算力自持，先 API 验证再扩 SaaS」
 
-**非目标：** 不做闭源 API 套壳；首版不做 DAW 级实时协作编辑器；不做移动端原生 App。
+**MVP 非目标：** 无 Web UI、无用户注册、无积分/支付、无社区、无封面图生成、无分轨/inpainting（v0.2 API 扩展）。
+
+**长期非目标：** 闭源 API 套壳；DAW 级编辑器；移动端 App。
 
 ---
 
@@ -194,24 +206,47 @@ instrumental_only_legacy → ace-step-1.5        → 仅兼容，默认引导至
 
 ## 5. 产品功能
 
-### 5.1 功能地图
+### 5.0 MVP 范围（API 服务 v0.1）
 
-| 模块 | v0.1 MVP | v0.2 | v0.3 |
-|------|----------|------|------|
-| 注册 / 登录 | ✅ | | |
-| 人声歌曲生成 | ✅ ACE-Step | YuE 备选 | |
-| 游戏 BGM 生成 | ✅ SA3 | 模板库 | |
-| 游戏 SFX 生成 | | ✅ Small SFX | 素材库分类 |
-| 封面图 | ✅ | | |
-| 作品库 / 播放 / 下载 | ✅ | | |
-| 任务队列与状态 | ✅ | | |
-| 积分扣费 | ✅ | 按模式差异化 | Polar 购买 |
-| 分轨导出 | | ✅ | |
-| SA3 inpainting | | ✅ | |
-| LoRA 风格包 | | ✅ | 团队级 |
-| 社区 Feed | | | ✅ |
-| API Key | | | ✅ |
-| 团队空间 | | | ✅ |
+**必做：**
+
+| 能力 | 说明 |
+|------|------|
+| `POST /v1/jobs` | 创建生成任务（`mode` + `prompt` / `lyrics` + `duration_sec`） |
+| `GET /v1/jobs/{id}` | 任务状态：`queued` → `generating` → `completed` / `failed` |
+| `GET /v1/jobs/{id}/audio` | 完成后下载 WAV/MP3（URL 或流） |
+| `GET /v1/health` | 网关存活 |
+| `GET /v1/health/inference` | ACE / SA3 Worker 状态 |
+| 双引擎路由 | `vocal_*` → ACE-Step；`game_bgm*` → SA3 |
+| 鉴权 | MVP 默认：`X-API-Key` 静态密钥（环境变量配置） |
+| 队列 | 单 Mac 串行或每引擎 1 并发；超时与失败可观测 |
+
+**MVP 支持的 `mode`（首期 4 个）：**
+
+| mode | 引擎 | 说明 |
+|------|------|------|
+| `vocal_lyrics` | ACE-Step 1.5 | 歌词 + 风格标签 → 整曲 |
+| `vocal_desc` | ACE-Step 1.5 | 描述 → 整曲（可选服务端写词 v0.1.1） |
+| `game_bgm` | SA3 Small/Medium | 器乐 BGM |
+| `game_theme_vocal` | ACE-Step 1.5 | 游戏主题曲（有人声） |
+
+**暂缓（Post-MVP API v0.2+）：** `game_sfx`、`game_bgm_inpaint`、Webhook、批量任务、分轨导出。
+
+**永久不做（MVP）：** Web 前端、注册登录、积分、Polar、社区 Feed、封面图 API。
+
+### 5.1 功能地图（全产品路线图）
+
+| 模块 | MVP API v0.1 | API v0.2 | SaaS v1.0 |
+|------|--------------|----------|------------|
+| REST Job API | ✅ | Webhook、SFX | — |
+| API Key 鉴权 | ✅ 静态 Key | 多 Key、限流 | 用户绑定 Key |
+| 人声生成 | ✅ ACE-Step | YuE 备选 | 作品库 |
+| 游戏 BGM | ✅ SA3 | inpainting | 项目空间 |
+| 游戏 SFX | | ✅ Small SFX | 素材库 |
+| 注册 / 登录 | ❌ | ❌ | ✅ |
+| Web 作品库 | ❌ | ❌ | ✅ |
+| 积分 / Polar | ❌ | ❌ | ✅ |
+| 社区 Feed | ❌ | ❌ | ✅ |
 
 ### 5.2 生成模式（面向用户的产品形态）
 
@@ -245,38 +280,50 @@ instrumental_only_legacy → ace-step-1.5        → 仅兼容，默认引导至
 |---------|------|------|------|
 | `game_theme_vocal` | 主题曲（有人声） | 歌词/描述 + 游戏世界观 | 整曲 + 封面 |
 
-### 5.3 SaaS 基础能力
+### 5.3 API 服务能力（MVP）
 
-- **多租户隔离：** 用户只能访问自己的曲目与任务
-- **异步任务：** 提交后立即返回 `job_id`，轮询或 Webhook（v0.2）
-- **积分：** 提交前校验余额；失败任务退还积分
-- **管理后台：** 用户数、队列深度、Mac 节点在线状态、今日生成量
-- **审计：** 任务日志（提示词、引擎、模型版本、耗时、状态）
+- **异步任务：** `POST` 立即返回 `job_id`；客户端轮询 `GET /v1/jobs/{id}`
+- **鉴权：** `X-API-Key`；无 Key 返回 `401`
+- **隔离：** 任务仅 Key 持有者可查询（内存/DB 按 `api_key_id` 隔离）
+- **审计：** 日志记录 `mode`、引擎、耗时、状态（不记录完整 prompt 可选配置）
+- **限流：** MVP 固定 QPS / 日上限（环境变量）
+
+~~SaaS 基础能力（Post-MVP）~~：多租户 Web、积分、管理后台 — 见 SaaS v1.0 路线图。
 
 ---
 
 ## 6. 用户旅程
 
-### 6.1 人声歌曲（Creator）
+### 6.0 MVP：API 客户端旅程（主路径）
 
 ```text
-注册 → 领取赠送积分 → 选择「人声歌曲」
-  → 输入描述或歌词 → 确认扣费 → 排队
-  → 生成中（ACE-Step 1.5）→ 作品库出现条目
-  → 在线播放 → 下载 MP3/WAV → （可选）标注 AI 生成
+集成方持有 API Key
+  → POST /v1/jobs { mode, prompt, duration_sec }
+  → 收到 { job_id, status: "queued" }
+  → 轮询 GET /v1/jobs/{id} 直至 completed
+  → GET /v1/jobs/{id}/audio 下载 WAV
+  → 写入游戏工程 / 自有产品
 ```
 
-### 6.2 游戏 BGM（Game）
+### 6.1 人声歌曲（API：`vocal_*`）
 
 ```text
-注册 → 创建「游戏项目」→ 选择「游戏 BGM」
-  → 选模板（探索/战斗/菜单）或自由描述
-  → 指定时长 → 确认扣费 → 排队
-  → 生成中（SA3）→ 下载 WAV → 导入 Unity / Wwise
-  → （v0.2）对循环不佳处 inpainting 重生成片段
+POST mode=vocal_lyrics → ACE-Step 1.5 生成
+  → 轮询 → 下载音频（无 Web 作品库）
 ```
 
-### 6.3 游戏 SFX（v0.2）
+### 6.2 游戏 BGM（API：`game_bgm`）
+
+```text
+POST mode=game_bgm → SA3 生成器乐
+  → 轮询 → 下载 WAV → 导入 Unity / Wwise
+```
+
+### 6.3 Post-MVP：Web SaaS 旅程（暂缓）
+
+注册、积分、作品库、在线播放等 — 见 SaaS v1.0，不在 MVP API 范围。
+
+### 6.4 游戏 SFX（API v0.2，暂缓）
 
 ```text
 选择「游戏音效」→ 描述（如 metal door slam）→ 短时长
@@ -305,13 +352,16 @@ instrumental_only_legacy → ace-step-1.5        → 仅兼容，默认引导至
 | G-04 | 生成 UI 点击音效 | SA3 Small SFX | 时长 ≤5s，无明显音乐化（v0.2） |
 | G-05 | 游戏主题曲带人声 | ACE-Step 1.5 | 与 G-01 无人声要求区分开 |
 
-### 7.3 SaaS 运营
+### 7.3 API 运营（MVP）
 
 | ID | 故事 | 验收 |
 |----|------|------|
-| S-01 | Mac 离线时任务排队不丢 | 恢复后自动继续 |
-| S-02 | 积分不足拒绝提交 | 前后端双重校验 |
-| S-03 | 管理台可见双引擎健康 | ACE / SA3 分别上报 |
+| S-01 | Mac Worker 离线时任务排队 | 恢复后继续 |
+| S-02 | 无 API Key 拒绝请求 | `401` |
+| S-03 | `GET /v1/health/inference` 区分 ACE/SA3 | 状态准确 |
+| S-04 | 错误 `mode` 路由 | `400` + 明确错误码 |
+
+### 7.4 Post-MVP：SaaS 运营（暂缓）
 
 ---
 
@@ -523,23 +573,17 @@ InferenceNode
 
 ## 15. 版本规划
 
-### v0.1 — SaaS MVP + 双引擎闭环
+### MVP — API v0.1（当前）
 
-- SaaS：注册、积分、队列、作品库、下载
-- 人声：`vocal_*` 全走 ACE-Step 1.5
-- 游戏：`game_bgm` 走 SA3 Small/Medium
-- Mac 双 Worker 联调
+- Gateway + 4 个 `mode` + Job 轮询 + API Key + Mac 双 Worker
 
-### v0.2 — 游戏生产增强
+### API v0.2
 
-- SA3 Small SFX、`game_sfx`
-- SA3 inpainting、游戏项目空间
-- 分轨导出、LoRA 风格包
-- YuE 人声备选 A/B
+- `game_sfx`、inpainting、Webhook、多 Key 限流
 
-### v0.3 — 商业 SaaS
+### SaaS v1.0（Post-MVP）
 
-- Polar 积分购买、API Key、社区 Feed、团队空间
+- Next.js 控制台、注册、作品库、积分、Polar（**复用同一套 API**）
 
 ---
 
@@ -549,9 +593,9 @@ InferenceNode
 |------|------|------|--------------|
 | **M0 立项** | 2026-08 | PRD v1.0、GitHub 仓库 | — |
 | **M1 推理验证** | +2 周 | Mac 基准测试报告 | ACE 人声 10 首；SA3 BGM 10 + SFX 10 |
-| **M2 SaaS MVP** | +4 周 | 可内测的 Web + API | 端到端双引擎路由 |
-| **M3 游戏增强** | +3 周 | inpainting、SFX 库、分轨 | SA3 生产流 |
-| **M4 商业化** | +3 周 | Polar、API Key | — |
+| **M2 API MVP** | +4 周 | 可内测的 Job API + 双引擎 | 端到端 curl 验收 |
+| **M3 API v0.2** | +3 周 | SFX、inpainting | SA3 扩展 |
+| **M4 SaaS v1.0** | +4 周 | Web 控制台叠在 API 上 | — |
 
 ---
 
@@ -627,4 +671,4 @@ InferenceNode
 
 ---
 
-*v1.0 立项定稿。后续变更请更新修订记录并 bump 版本号。*
+*v1.1 — MVP 锁定为音乐生成 API 服务。Post-MVP 再叠 SaaS 壳。*
