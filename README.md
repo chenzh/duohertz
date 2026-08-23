@@ -25,7 +25,15 @@
 
 ## 状态
 
-🟢 **MVP v0.1 代码已落地** — Gateway + Demo + Workers + examples（见 [docs/MODULES.md](./docs/MODULES.md)）
+🟢 **MVP v0.1 + MLX 人声推理已跑通** — Gateway + Demo + Workers + examples（见 [docs/MODULES.md](./docs/MODULES.md)）
+
+| 能力 | 状态 | 预期耗时 |
+|------|------|----------|
+| ACE MLX 人声 (`vocal_lyrics` 10s) | ✅ 实测 PASS | **~3s**（P50） |
+| Gateway → MLX 端到端 | ✅ `acceptance-mlx-vocal.py` PASS | ~10s（30s 音频） |
+| SA3 BGM 真实 MLX | ⏳ synth 链路 | Post-MVP |
+
+详见 [docs/reports/M1-benchmark.md](./docs/reports/M1-benchmark.md) · [docs/reports/mlx-acceleration-plan.md](./docs/reports/mlx-acceleration-plan.md)
 
 ### 快速启动
 
@@ -33,13 +41,14 @@
 pnpm install
 cp apps/gateway/.env.example apps/gateway/.env
 pnpm --filter gateway db:push
-# Mac 上启动 Worker（需 Xcode CLT）：scripts/mac-worker-setup.sh
-# 或开发机：python workers/ace-step/server.py & python workers/sa3/server.py
-pnpm --filter gateway dev   # :8080
+# Mac 上（MLX）：
+bash scripts/mac-services-up.sh
+# 或仅 Workers：scripts/mac-worker-setup.sh
+pnpm --filter gateway dev   # :8080（需 Node 20+）
 pnpm --filter demo dev      # :3000
 ```
 
-验收：`pnpm test` · `python scripts/run-benchmark.py` · `docs/reports/M1-benchmark.md`
+验收：`pnpm test` · `bash scripts/mac-mlx-test.sh` · `python scripts/acceptance-mlx-vocal.py`
 
 ## 仓库
 

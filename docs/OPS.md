@@ -86,12 +86,20 @@ pnpm --filter demo build
 
 ### 5.1 launchd（可选）
 
-`~/Library/LaunchAgents/com.local-ai.ace-worker.plist`  
-`~/Library/LaunchAgents/com.local-ai.sa3-worker.plist`
+模板：`scripts/launchd/com.musicsaas.ace-api.plist`、`com.musicsaas.workers.plist`
 
-- `RunAtLoad: true`
-- `KeepAlive: true`
-- 日志：`~/logs/ace-worker.log`
+安装示例（将 `__MUSICSASS_ROOT__` 替换为仓库绝对路径）：
+
+```bash
+ROOT="$HOME/Desktop/MusicSaas"
+sed "s|__MUSICSASS_ROOT__|$ROOT|g" "$ROOT/scripts/launchd/com.musicsaas.ace-api.plist" \
+  > ~/Library/LaunchAgents/com.musicsaas.ace-api.plist
+launchctl bootstrap "gui/$(id -u)" ~/Library/LaunchAgents/com.musicsaas.ace-api.plist
+```
+
+- `RunAtLoad: true` · `KeepAlive: true`（ACE API）
+- 日志：`/tmp/ace-api.log`、`/tmp/ace-worker.log`
+- 一键启动（非 launchd）：`bash scripts/mac-services-up.sh`
 
 ### 5.2 磁盘
 

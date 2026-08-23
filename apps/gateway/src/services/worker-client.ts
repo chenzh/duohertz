@@ -24,13 +24,35 @@ function workerUrl(kind: WorkerKind): string {
   return kind === "ace" ? config.aceWorkerUrl : config.sa3WorkerUrl;
 }
 
-export async function workerHealth(kind: WorkerKind): Promise<{ status: "ok" | "down"; last_check_ms: number }> {
+export type WorkerHealth = {
+  status: "ok" | "down";
+  last_check_ms: number;
+  mode?: string;
+  ace_api?: string;
+  lm_model?: string;
+};
+
+export async function workerHealth(kind: WorkerKind): Promise<WorkerHealth> {
   const start = Date.now();
   try {
     const res = await fetch(`${workerUrl(kind)}/health`, { signal: AbortSignal.timeout(10_000) });
     if (!res.ok) return { status: "down", last_check_ms: Date.now() - start };
-    const body = (await res.json()) as { status?: string };
-    return { status: body.status === "ok" ? "ok" : "down", last_check_ms: Date.now() - start };
+    const body = (await res.json()) as {
+      status?: string;
+      mode?: string;
+      ace_api?: string;
+      lm_model?: string;
+    };
+    const health: WorkerHealth = {
+      status: body.status === "ok" ? "ok" : "down",
+      last_check_ms: Date.now() - start,
+    };
+    if (kind === "ace") {
+      if (body.mode) health.mode = body.mode;
+      if (body.ace_api) health.ace_api = body.ace_api;
+      if (body.lm_model) health.lm_model = body.lm_model;
+    }
+    return health;
   } catch {
     return { status: "down", last_check_ms: Date.now() - start };
   }

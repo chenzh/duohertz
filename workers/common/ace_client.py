@@ -32,37 +32,58 @@ def _request(method: str, path: str, body: dict | None = None, timeout: int = 12
         return json.loads(res.read().decode())
 
 
+def _common_release_fields(payload: dict) -> dict[str, Any]:
+    duration = float(payload.get("duration_sec", 30))
+    thinking = os.getenv("ACE_THINKING", "false").lower() == "true"
+    batch_size = int(os.getenv("ACE_BATCH_SIZE", "1"))
+    return {
+        "thinking": thinking,
+        "audio_duration": duration,
+        "model": "acestep-v15-turbo",
+        "audio_format": "wav",
+        "batch_size": batch_size,
+    }
+
+
 def _build_release_body(payload: dict) -> dict[str, Any]:
     mode = payload.get("mode", "")
     lyrics = payload.get("lyrics") or ""
     prompt = payload.get("prompt") or ""
     style = payload.get("style_tags") or ""
-    duration = float(payload.get("duration_sec", 30))
+    common = _common_release_fields(payload)
 
     if mode == "vocal_lyrics":
         return {
+            **common,
             "lyrics": lyrics,
             "prompt": style,
-            "thinking": True,
-            "audio_duration": duration,
-            "model": "acestep-v15-turbo",
         }
     if mode == "game_theme_vocal":
         return {
+            **common,
             "lyrics": lyrics,
             "prompt": f"{style}, {prompt}".strip(", "),
-            "thinking": True,
-            "audio_duration": duration,
-            "model": "acestep-v15-turbo",
         }
     # vocal_desc and fallback
     return {
+        **common,
         "lyrics": "",
         "prompt": prompt or style,
-        "thinking": True,
-        "audio_duration": duration,
-        "model": "acestep-v15-turbo",
     }
+
+
+def _resolve_file_field(file_value: str) -> str | None:
+    if not file_value:
+        return None
+    if file_value.startswith("/v1/audio"):
+        parsed = urllib.parse.urlparse(file_value)
+        params = urllib.parse.parse_qs(parsed.query)
+        paths = params.get("path") or []
+        if paths:
+            return urllib.parse.unquote(paths[0])
+    if os.path.isabs(file_value):
+        return file_value
+    return None
 
 
 def _extract_audio_path(result_item: dict[str, Any]) -> str | None:
@@ -83,7 +104,22 @@ def _extract_audio_path(result_item: dict[str, Any]) -> str | None:
     paths = parsed.get("audio_paths") or parsed.get("raw_audio_paths") or []
     if paths:
         return paths[0]
-    return parsed.get("first_audio_path")
+    first = parsed.get("first_audio_path")
+    if first:
+        return first
+    file_field = parsed.get("file")
+    if isinstance(file_field, str):
+        local_path = _resolve_file_field(file_field)
+        if local_path and os.path.isfile(local_path):
+            return local_path
+        if file_field.startswith("/v1/audio"):
+            download_url = f"{_api_base()}{file_field}"
+            tmp_path = f"/tmp/ace-download-{int(time.time() * 1000)}.wav"
+            with urllib.request.urlopen(download_url, timeout=60) as res:
+                with open(tmp_path, "wb") as out:
+                    out.write(res.read())
+            return tmp_path
+    return None
 
 
 def generate_via_ace_api(payload: dict, output_path: str, timeout_sec: int = 1800) -> tuple[bool, int, str | None]:

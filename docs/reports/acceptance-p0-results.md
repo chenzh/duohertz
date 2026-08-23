@@ -27,7 +27,16 @@ H-01, H-02, A-01~03, V-01~06, U-01~04, G-01~03, J-01~04, R-01, D-01-proxy, D-04-
 | D-03 | Worker 离线 UI（需停 Worker 后手测） |
 | P-01~P-04 | 非功能（启动时延/日志脱敏） |
 
+## MLX 人声实测（2026-08-23）
+
+| 脚本 | 结果 |
+|------|------|
+| `bash scripts/mac-mlx-test.sh` | **PASS** — 10s 音频 P50 **~3s**，`ok=true`，非 synth |
+| `python scripts/acceptance-mlx-vocal.py` | **PASS** — Gateway → MLX，30s 音频 ~10s 完成 |
+
+配置：`audio_format=wav` · `ACE_THINKING=false` · `ACE_BATCH_SIZE=1` · LM `0.6B`
+
 ## 备注
 
-- Gateway 已修复 `.env` 加载（`dotenv`）；`ACE_WORKER_URL` / `SA3_WORKER_URL` 指向 Mac。
-- 当前 Worker 为 **合成 WAV 链路验证**；Mac GitHub clone MLX 仓库待网络恢复（见 `M1-benchmark.md`）。
+- Gateway 已修复 `.env` 加载（`dotenv`）；Worker URL 可指向本机 `127.0.0.1` 或 LAN `192.168.0.199`。
+- **ACE MLX 真实推理已上线**；SA3 仍为合成 WAV（见 `M1-benchmark.md`）。

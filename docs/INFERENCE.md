@@ -41,13 +41,30 @@ cd ace-step
 
 `workers/ace-step/server.py`（FastAPI）：
 
-- `GET /health` → `{ "status": "ok", "engine": "ace-step-1.5" }`
+- `GET /health` → `{ "status": "ok", "engine": "ace-step-1.5", "mode": "mlx", "ace_api": "ok", "lm_model": "..." }`
 - `POST /internal/generate` → 见 DATA_API.md §7
+
+**MLX 加速（2026-08-23）：**
+
+| 项 | 推荐值 | 说明 |
+|----|--------|------|
+| `audio_format` | `wav` | Worker 请求体显式指定，避免无 ffmpeg 时 MP3 保存失败 |
+| `ACESTEP_LM_MODEL_PATH` | `acestep-5Hz-lm-0.6B` | 开发/测试默认；生产可切 `1.7B` |
+| `ACE_THINKING` | `false` | 快速模式；探索模式设 `true` |
+| `ACE_BATCH_SIZE` | `1` | 单路生成 |
+| `ACESTEP_NO_INIT` | `false` | 启动时预加载模型，避免首请求懒加载超时 |
+
+可选依赖：`ffmpeg`（MP3 导出）；无 ffmpeg 时仅用 WAV 即可。
 
 环境变量：
 
 | 变量 | 说明 |
 |------|------|
+| `WORKER_MODE` | `mlx`（真实推理）或 `synth`（合成验证） |
+| `ACE_API_URL` | ACE-Step API 地址，默认 `http://127.0.0.1:8200` |
+| `ACE_THINKING` | `true`/`false`，是否开启 LM CoT |
+| `ACE_BATCH_SIZE` | 生成 batch，默认 `1` |
+| `ACE_FALLBACK_SYNTH` | MLX 失败时是否降级合成音频 |
 | `ACE_MODEL_VARIANT` | `turbo`（默认）或 `xl` |
 | `ACE_WORKER_PORT` | 8101 |
 | `ACE_OUTPUT_DIR` | `/Users/zhenhuachen/data/audio` |
@@ -101,9 +118,14 @@ curl -LsSf https://raw.githubusercontent.com/Stability-AI/stable-audio-3/main/op
 ### 4.1 手动启动
 
 ```bash
-# Mac 上两个终端
-cd workers/ace-step && uvicorn server:app --host 0.0.0.0 --port 8101
-cd workers/sa3 && uvicorn server:app --host 0.0.0.0 --port 8102
+# Mac 上一键启动（ACE API + Workers + Gateway）
+bash scripts/mac-services-up.sh
+
+# 或分步：
+bash scripts/mac-ace-api-restart.sh    # :8200，预加载 0.6B LM
+bash scripts/mac-worker-mlx.sh         # :8101 / :8102
+# Gateway（需 pnpm install + Node 20+）
+cd apps/gateway && ./node_modules/.bin/tsx watch src/index.ts
 ```
 
 ### 4.2 保活

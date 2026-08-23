@@ -18,6 +18,9 @@ export async function getInferenceHealth() {
         status: aceFailures >= 3 ? "down" : ace.status === "ok" ? "ok" : "degraded",
         url: config.aceWorkerUrl,
         last_check_ms: ace.last_check_ms,
+        ...(ace.mode ? { mode: ace.mode } : {}),
+        ...(ace.ace_api ? { ace_api: ace.ace_api } : {}),
+        ...(ace.lm_model ? { lm_model: ace.lm_model } : {}),
       },
       sa3: {
         status: sa3Failures >= 3 ? "down" : sa3.status === "ok" ? "ok" : "degraded",

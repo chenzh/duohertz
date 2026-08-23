@@ -16,9 +16,37 @@ export type Job = {
   mode: Mode;
   engine: string;
   duration_sec?: number;
+  latency_ms?: number | null;
   error?: { code: string; message: string } | null;
   audio?: { mime: string; download_url: string };
 };
+
+export type WorkerHealth = {
+  status: string;
+  mode?: string;
+  ace_api?: string;
+  lm_model?: string;
+};
+
+export async function fetchInferenceHealth() {
+  return api<{
+    gateway: string;
+    workers: { ace: WorkerHealth; sa3: WorkerHealth };
+  }>("/health/inference");
+}
+
+export type DemoMeta = {
+  version: string;
+  demo_url: string;
+  compliance: { ace: string; sa3: string };
+};
+
+export async function fetchDemoMeta() {
+  const res = await fetch("/demo/meta");
+  if (!res.ok) throw new Error("meta unavailable");
+  const body = await res.json();
+  return body.data as DemoMeta;
+}
 
 async function api<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`${BASE}${path}`, {
@@ -34,13 +62,6 @@ async function api<T>(path: string, init?: RequestInit): Promise<T> {
 
 export async function fetchHealth() {
   return api<{ status: string }>("/health");
-}
-
-export async function fetchInferenceHealth() {
-  return api<{
-    gateway: string;
-    workers: { ace: { status: string }; sa3: { status: string } };
-  }>("/health/inference");
 }
 
 export async function createJob(payload: Record<string, unknown>) {

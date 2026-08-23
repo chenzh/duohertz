@@ -15,7 +15,12 @@ export function useJobPoll(jobId: string | null) {
     try {
       const data = await getJob(jobId);
       setJob(data);
-      setError(data.status === "failed" ? data.error?.message ?? "failed" : null);
+      if (data.status === "failed") {
+        const err = data.error;
+        setError(err ? `${err.code}: ${err.message}` : "failed");
+      } else {
+        setError(null);
+      }
     } catch (e) {
       setError(e instanceof Error ? e.message : "poll error");
     }

@@ -46,6 +46,21 @@ export function createApp() {
   app.route("/demo/api", demoProxyRoutes);
 
   app.get("/demo", (c) => c.redirect("/demo/"));
+  app.get("/demo/meta", (c) => {
+    const host = c.req.header("host") ?? "localhost:8080";
+    const proto = c.req.header("x-forwarded-proto") ?? "http";
+    return c.json({
+      data: {
+        version: "0.2.0",
+        demo_url: `${proto}://${host}/demo/`,
+        compliance: {
+          ace: "ACE-Step 1.5 · MIT",
+          sa3: "Stable Audio 3 · Community License",
+        },
+      },
+      meta: { request_id: crypto.randomUUID() },
+    });
+  });
   app.use(
     "/demo/*",
     serveStatic({

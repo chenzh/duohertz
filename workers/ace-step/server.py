@@ -4,8 +4,10 @@ from __future__ import annotations
 
 import asyncio
 import base64
+import json
 import os
 import time
+import urllib.request
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -45,9 +47,32 @@ def _check_secret(secret: str | None) -> None:
         raise HTTPException(status_code=401, detail="invalid worker secret")
 
 
+def _ace_api_health() -> tuple[str, str | None]:
+    if os.getenv("WORKER_MODE", "synth") != "mlx":
+        return "n/a", None
+    api_url = os.getenv("ACE_API_URL", "http://127.0.0.1:8200").rstrip("/")
+    try:
+        with urllib.request.urlopen(f"{api_url}/health", timeout=3) as res:
+            body = json.loads(res.read().decode())
+        if body.get("code") != 200:
+            return "down", None
+        data = body.get("data") or {}
+        return "ok", data.get("loaded_lm_model")
+    except OSError:
+        return "down", None
+
+
 @app.get("/health")
 def health():
-    return {"status": "ok", "engine": "ace-step-1.5", "port": PORT}
+    ace_api, lm_model = _ace_api_health()
+    return {
+        "status": "ok",
+        "engine": "ace-step-1.5",
+        "port": PORT,
+        "mode": os.getenv("WORKER_MODE", "synth"),
+        "ace_api": ace_api,
+        "lm_model": lm_model or os.getenv("ACESTEP_LM_MODEL_PATH", "acestep-5Hz-lm-0.6B"),
+    }
 
 
 def _generate_sync(body: GenerateRequest) -> dict:

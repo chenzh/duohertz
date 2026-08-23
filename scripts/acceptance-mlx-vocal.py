@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import json
 import os
+import struct
 import sys
 import time
 import urllib.request
@@ -28,6 +29,32 @@ def req(method: str, path: str, body: dict | None = None, timeout: int = 60):
         if "audio" in res.headers.get("Content-Type", ""):
             return res.status, raw
         return res.status, json.loads(raw.decode())
+
+
+def wav_info(audio: bytes) -> tuple[float, int, int]:
+    try:
+        with wave.open(BytesIO(audio)) as wf:
+            return wf.getnframes() / wf.getframerate(), wf.getnchannels(), wf.getframerate()
+    except wave.Error:
+        pos = 12
+        fmt: bytes | None = None
+        data_size = 0
+        while pos + 8 <= len(audio):
+            chunk_id = audio[pos : pos + 4]
+            size = struct.unpack("<I", audio[pos + 4 : pos + 8])[0]
+            pos += 8
+            if chunk_id == b"fmt ":
+                fmt = audio[pos : pos + size]
+            elif chunk_id == b"data":
+                data_size = size
+                break
+            pos += size + (size % 2)
+        if not fmt or len(fmt) < 16 or data_size <= 0:
+            raise ValueError("unsupported wav")
+        _tag, channels, sample_rate, _byte_rate, block_align, bits = struct.unpack("<HHIIHH", fmt[:16])
+        frame_bytes = max(block_align, channels * (bits // 8))
+        frames = data_size // frame_bytes
+        return frames / sample_rate, channels, sample_rate
 
 
 def main() -> int:
@@ -71,10 +98,7 @@ def main() -> int:
         print("audio download failed", ac)
         return 1
 
-    with wave.open(BytesIO(audio)) as wf:
-        dur = wf.getnframes() / wf.getframerate()
-        ch = wf.getnchannels()
-        sr = wf.getframerate()
+    dur, ch, sr = wav_info(audio)
 
     out = f"mlx-gateway-{job_id}.wav"
     with open(out, "wb") as f:

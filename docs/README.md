@@ -18,7 +18,7 @@ Cursor 开发前阅读顺序：
 | 文档 | 状态 | 说明 |
 |------|------|------|
 | [PRD.md](../PRD.md) | ✅ v1.2 | 产品总纲 |
-| [DEMO.md](./DEMO.md) | ✅ v1.0 | 配套 Demo |
+| Demo Web v2 | ✅ | 商用级演示（见 [reports/demo-commercial-plan.md](./reports/demo-commercial-plan.md)） |
 | [RULES.md](./RULES.md) | ✅ v1.0 | 规则与边界 |
 | [DATA_API.md](./DATA_API.md) | ✅ v1.0 | 接口与数据库 |
 | [TECH_SPEC.md](./TECH_SPEC.md) | ✅ v1.0 | 技术栈与目录 |
@@ -27,6 +27,14 @@ Cursor 开发前阅读顺序：
 | [OPS.md](./OPS.md) | ✅ v1.0 | 部署运维 |
 | [COMPLIANCE.md](./COMPLIANCE.md) | ✅ v1.0 | 商用许可 |
 | [MODULES.md](./MODULES.md) | ✅ v1.0 | 开发顺序 |
+
+## 规划 / 报告
+
+| 文档 | 说明 |
+|------|------|
+| [reports/demo-commercial-plan.md](./reports/demo-commercial-plan.md) | Demo 商用级演示升级计划 |
+| [reports/mlx-acceleration-plan.md](./reports/mlx-acceleration-plan.md) | MLX 推理加速（已完成） |
+| [reports/M1-benchmark.md](./reports/M1-benchmark.md) | 推理基准实测 |
 
 ## 暂缓
 

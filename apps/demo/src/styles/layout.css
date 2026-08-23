@@ -1,0 +1,153 @@
+.app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 20px 40px;
+}
+
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.brand {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  font-size: 22px;
+}
+
+.brand h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.subtitle {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.header-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.health {
+  display: flex;
+  gap: 14px;
+  font-size: 13px;
+}
+
+.locale-select {
+  width: auto;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.hero {
+  margin-bottom: 20px;
+  padding: 16px 18px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(59, 130, 246, 0.08), transparent);
+}
+
+.hero p {
+  margin: 0 0 14px;
+  line-height: 1.5;
+  color: #cbd5e1;
+}
+
+.scene-tabs {
+  display: flex;
+  gap: 10px;
+}
+.scene-tabs button {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.scene-tabs button.active {
+  border-color: transparent;
+  color: white;
+}
+.scene-game .scene-tabs button.active {
+  background: var(--game);
+}
+.scene-vocal .scene-tabs button.active {
+  background: var(--vocal);
+}
+
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0 20px;
+}
+
+@media (min-width: 1024px) {
+  .main-grid {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: #cbd5e1;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: inherit;
+  margin-top: 6px;
+  margin-bottom: 14px;
+}
+
+.site-footer {
+  margin-top: 28px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.site-footer p {
+  margin: 0 0 6px;
+}
+
+.output-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}

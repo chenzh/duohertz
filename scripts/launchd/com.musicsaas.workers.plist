@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.musicsaas.workers</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>__MUSICSASS_ROOT__/scripts/mac-worker-mlx.sh</string>
+  </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/Users/zhenhuachen/bin:/Users/zhenhuachen/.local/bin:/usr/bin:/bin</string>
+    <key>ACE_THINKING</key>
+    <string>false</string>
+    <key>ACE_BATCH_SIZE</key>
+    <string>1</string>
+    <key>ACE_FALLBACK_SYNTH</key>
+    <string>true</string>
+  </dict>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <false/>
+  <key>StandardOutPath</key>
+  <string>/tmp/musicsaas-workers.log</string>
+  <key>StandardErrorPath</key>
+  <string>/tmp/musicsaas-workers.log</string>
+</dict>
+</plist>

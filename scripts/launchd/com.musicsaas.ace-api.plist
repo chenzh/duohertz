@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.musicsaas.ace-api</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>__MUSICSASS_ROOT__/scripts/mac-ace-api-start.sh</string>
+  </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/Users/zhenhuachen/.local/bin:/usr/bin:/bin</string>
+    <key>ACESTEP_LM_MODEL_PATH</key>
+    <string>acestep-5Hz-lm-0.6B</string>
+  </dict>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+  <key>StandardOutPath</key>
+  <string>/tmp/ace-api.log</string>
+  <key>StandardErrorPath</key>
+  <string>/tmp/ace-api.log</string>
+</dict>
+</plist>

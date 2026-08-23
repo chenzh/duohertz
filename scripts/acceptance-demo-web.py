@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import os
 import struct
 import sys
 import time
@@ -13,8 +14,9 @@ import wave
 from io import BytesIO
 from typing import Any
 
-DEMO_BASE = "http://localhost:3000"
-API = f"{DEMO_BASE}/demo/api/v1"
+DEMO_BASE = os.getenv("DEMO_BASE", "http://127.0.0.1:8080/demo")
+API = f"{DEMO_BASE.rstrip('/')}/api/v1"
+GATEWAY = os.getenv("GATEWAY_BASE", "http://127.0.0.1:8080")
 
 results: list[tuple[str, bool, str]] = []
 
@@ -64,25 +66,37 @@ def wav_ok(data: bytes) -> tuple[bool, str]:
         with wave.open(BytesIO(data)) as wf:
             dur = wf.getnframes() / float(wf.getframerate())
             return True, f"{len(data)} bytes, {dur:.1f}s, {wf.getnchannels()}ch"
-    except wave.Error as e:
-        return False, str(e)
+    except wave.Error:
+        # MLX may emit IEEE float WAV
+        if len(data) > 50000 and data[:4] == b"RIFF":
+            return True, f"{len(data)} bytes (float wav)"
+        return False, "unsupported wav format"
 
 
 def main() -> int:
     # Page shell
     try:
-        with urllib.request.urlopen(f"{DEMO_BASE}/", timeout=10) as res:
+        with urllib.request.urlopen(f"{DEMO_BASE.rstrip('/')}/", timeout=10) as res:
             html = res.read().decode()
-        record("WEB-01", "Local AI Music API" in html and 'id="root"' in html, "index.html")
+        record("WEB-01", "MusicSaas" in html and 'id="root"' in html, "index.html")
         record("WEB-02", res.status == 200, f"status={res.status}")
     except Exception as e:
         record("WEB-01", False, str(e))
         record("WEB-02", False, str(e))
 
-    # Vite entry
     try:
-        with urllib.request.urlopen(f"{DEMO_BASE}/src/main.tsx", timeout=10) as res:
-            record("WEB-03", res.status == 200 and b"createRoot" in res.read(), "main.tsx loads")
+        with urllib.request.urlopen(f"{GATEWAY}/demo/meta", timeout=10) as res:
+            meta = json.loads(res.read().decode())["data"]
+        record("D-meta", meta.get("version") == "0.2.0", f"demo_url={meta.get('demo_url')}")
+    except Exception as e:
+        record("D-meta", False, str(e))
+
+    # Built bundle (gateway static)
+    try:
+        with urllib.request.urlopen(f"{DEMO_BASE.rstrip('/')}/", timeout=10) as res:
+            html = res.read().decode()
+        asset = "assets/index-" in html
+        record("WEB-03", asset, "vite bundle referenced")
     except Exception as e:
         record("WEB-03", False, str(e))
 
@@ -157,7 +171,7 @@ def main() -> int:
         body = {"mode": "game_bgm", "prompt": "dark dungeon ambient, tense, instrumental", "duration_sec": 15}
         data = json.dumps(body).encode()
         req = urllib.request.Request(
-            "http://localhost:8080/v1/jobs",
+            f"{GATEWAY}/v1/jobs",
             data=data,
             headers={"Content-Type": "application/json", "X-API-Key": "dev-api-key-change-me"},
             method="POST",
@@ -197,7 +211,7 @@ def poll_job_via_gateway(job_id: str, timeout_sec: int = 120) -> dict:
     start = time.time()
     while time.time() - start < timeout_sec:
         req = urllib.request.Request(
-            f"http://localhost:8080/v1/jobs/{job_id}",
+            f"{GATEWAY}/v1/jobs/{job_id}",
             headers={"X-API-Key": "dev-api-key-change-me"},
         )
         with urllib.request.urlopen(req, timeout=30) as res:

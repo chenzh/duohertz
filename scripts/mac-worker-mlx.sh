@@ -7,6 +7,8 @@ ENV_NAME="${MAMBA_ENV:-workers}"
 export WORKER_MODE=mlx
 export ACE_API_URL="${ACE_API_URL:-http://127.0.0.1:8200}"
 export ACE_FALLBACK_SYNTH="${ACE_FALLBACK_SYNTH:-true}"
+export ACE_THINKING="${ACE_THINKING:-false}"
+export ACE_BATCH_SIZE="${ACE_BATCH_SIZE:-1}"
 
 for port in 8101 8102; do
   lsof -ti :$port | xargs kill -9 2>/dev/null || true
@@ -17,6 +19,7 @@ run_uvicorn() {
   cd "$dir"
   "$MAMBA" run -n "$ENV_NAME" pip install -q -r requirements.txt
   nohup env WORKER_MODE="$WORKER_MODE" ACE_API_URL="$ACE_API_URL" ACE_FALLBACK_SYNTH="$ACE_FALLBACK_SYNTH" \
+    ACE_THINKING="$ACE_THINKING" ACE_BATCH_SIZE="$ACE_BATCH_SIZE" \
     "$MAMBA" run -n "$ENV_NAME" uvicorn server:app --host 0.0.0.0 --port "$port" >"$log" 2>&1 &
 }
 
