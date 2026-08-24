@@ -22,6 +22,15 @@ import {
   type LivePlay,
 } from "../engine/playState";
 import { accuracyPercent } from "../engine/judge";
+import {
+  TouchLaneTracker,
+  isCoarsePointer,
+  isLandscapePhone,
+  laneContains,
+  laneFromClientX,
+  readSafeAreaBottomPx,
+  receptorYFromGeometry,
+} from "../input/touchInput";
 
 type Props = {
   chart: ChartJSON;
@@ -33,21 +42,26 @@ type Props = {
 };
 
 const LEAD_MS = 1400;
-const RECEPTOR_RATIO = 0.85;
 const LANE_COLORS = ["#3DDCFF", "#8B5CF6", "#EC4899", "#F59E0B"];
 
 export function PlayField({ chart, audioUrl, mode, casualSpeed, onFinish, onFail }: Props) {
   const fieldRef = useRef<HTMLDivElement>(null);
+  const touchRef = useRef(new TouchLaneTracker());
   const playerRef = useRef<SongPlayer | null>(null);
   const [play, setPlay] = useState<LivePlay>(() => initPlay(chart, mode));
   const [songMs, setSongMs] = useState(0);
   const [fieldH, setFieldH] = useState(520);
+  const [fieldW, setFieldW] = useState(360);
+  const [safeBottom, setSafeBottom] = useState(0);
   const [countdown, setCountdown] = useState(3);
   const [started, setStarted] = useState(false);
   const [ready, setReady] = useState(false);
   const [loadError, setLoadError] = useState("");
+  const [audioRetry, setAudioRetry] = useState(0);
   const [needsUnlock, setNeedsUnlock] = useState(true);
   const [pressed, setPressed] = useState<Set<number>>(() => new Set());
+  const [touchUi, setTouchUi] = useState(false);
+  const [landscape, setLandscape] = useState(false);
   const playRef = useRef(play);
   const startedRef = useRef(started);
   const pressedRef = useRef(pressed);
@@ -63,8 +77,20 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onFinish, onFail
   const offsetMs = loadOffsetMs() + chart.audio_offset_ms;
   const keys = loadKeys();
   const scrollBias = visualScrollBias(mode, casualSpeed) * (1 + settings.scrollBias);
-  const receptorY = fieldH * RECEPTOR_RATIO;
+  const receptorY = receptorYFromGeometry(fieldH, fieldW, safeBottom);
   const lead = approachLeadMs(chart.ar, LEAD_MS);
+
+  useEffect(() => {
+    setTouchUi(isCoarsePointer());
+    const onOrient = () => setLandscape(isLandscapePhone());
+    onOrient();
+    window.addEventListener("resize", onOrient);
+    window.addEventListener("orientationchange", onOrient);
+    return () => {
+      window.removeEventListener("resize", onOrient);
+      window.removeEventListener("orientationchange", onOrient);
+    };
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -94,7 +120,7 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onFinish, onFail
       cancelled = true;
       playerRef.current?.stop();
     };
-  }, [audioUrl]);
+  }, [audioUrl, audioRetry]);
 
   useEffect(() => {
     setPlay(initPlay(chart, mode));
@@ -102,6 +128,8 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onFinish, onFail
     setCountdown(3);
     setStarted(false);
     setNeedsUnlock(true);
+    touchRef.current.releaseAll();
+    setPressed(new Set());
     playerRef.current?.stop();
   }, [chart, mode, audioUrl]);
 
@@ -138,9 +166,24 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onFinish, onFail
   useEffect(() => {
     const el = fieldRef.current;
     if (!el) return;
-    const ro = new ResizeObserver(() => setFieldH(el.clientHeight));
+    const measure = () => {
+      setFieldH(el.clientHeight);
+      setFieldW(el.clientWidth);
+      setSafeBottom(readSafeAreaBottomPx());
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
     ro.observe(el);
-    return () => ro.disconnect();
+    window.addEventListener("resize", measure);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, []);
+
+  const syncPressedFromTouch = useCallback(() => {
+    const lanes = touchRef.current.activeLanes();
+    setPressed(new Set(lanes));
   }, []);
 
   const tick = useCallback(() => {
@@ -220,7 +263,74 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onFinish, onFail
     };
   }, [keys, handlePress, handleRelease]);
 
+  const fieldRect = useCallback((): DOMRect | null => fieldRef.current?.getBoundingClientRect() ?? null, []);
+
+  const onFieldPointerDown = useCallback(
+    (e: React.PointerEvent<HTMLDivElement>) => {
+      if (e.pointerType === "mouse" && e.button !== 0) return;
+      e.preventDefault();
+      fieldRef.current?.setPointerCapture(e.pointerId);
+      const rect = fieldRect();
+      if (!rect) return;
+      const lane = touchRef.current.press(e.pointerId, laneFromClientX(e.clientX, rect));
+      if (lane !== null) handlePress(lane);
+      syncPressedFromTouch();
+    },
+    [fieldRect, handlePress, syncPressedFromTouch],
+  );
+
+  const onFieldPointerMove = useCallback(
+    (e: React.PointerEvent<HTMLDivElement>) => {
+      const bound = touchRef.current.boundLane(e.pointerId);
+      if (bound === undefined) return;
+      const rect = fieldRect();
+      if (!rect) return;
+      if (!laneContains(bound, e.clientX, rect)) {
+        touchRef.current.release(e.pointerId);
+        handleRelease(bound);
+        syncPressedFromTouch();
+      }
+    },
+    [fieldRect, handleRelease, syncPressedFromTouch],
+  );
+
+  const endPointer = useCallback(
+    (pointerId: number) => {
+      const lane = touchRef.current.release(pointerId);
+      if (lane !== null) handleRelease(lane);
+      syncPressedFromTouch();
+    },
+    [handleRelease, syncPressedFromTouch],
+  );
+
+  const onFieldPointerUp = useCallback(
+    (e: React.PointerEvent<HTMLDivElement>) => {
+      endPointer(e.pointerId);
+      try {
+        fieldRef.current?.releasePointerCapture(e.pointerId);
+      } catch {
+        /* already released */
+      }
+    },
+    [endPointer],
+  );
+
+  const onFieldPointerCancel = useCallback(
+    (e: React.PointerEvent<HTMLDivElement>) => {
+      endPointer(e.pointerId);
+    },
+    [endPointer],
+  );
+
+  const onFieldLostPointerCapture = useCallback(
+    (e: React.PointerEvent<HTMLDivElement>) => {
+      endPointer(e.pointerId);
+    },
+    [endPointer],
+  );
+
   const accPct = accuracyPercent(play.judgments, play.totalNotes);
+  const showKeys = !touchUi;
 
   return (
     <div className="play-wrap">
@@ -232,15 +342,37 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onFinish, onFail
           <div className="hp-bar"><div className="hp-fill" style={{ width: `${play.hp}%` }} /></div>
         )}
       </div>
-      <div className="play-field" ref={fieldRef}>
-        {loadError && <div className="overlay">{loadError}</div>}
+      <div
+        className="play-field"
+        ref={fieldRef}
+        onPointerDown={onFieldPointerDown}
+        onPointerMove={onFieldPointerMove}
+        onPointerUp={onFieldPointerUp}
+        onPointerCancel={onFieldPointerCancel}
+        onLostPointerCapture={onFieldLostPointerCapture}
+      >
+        {landscape && (
+          <div className="overlay rotate-hint" aria-live="polite">
+            <p>Rotate to portrait for the best play experience</p>
+          </div>
+        )}
+        {loadError && (
+          <div className="overlay load-error">
+            <p>{loadError}</p>
+            <button type="button" className="btn primary" onClick={() => setAudioRetry((n) => n + 1)}>
+              Retry audio
+            </button>
+          </div>
+        )}
         {!loadError && !ready && <div className="overlay">Loading audio…</div>}
         {!loadError && ready && needsUnlock && (
           <div className="overlay">
             <button type="button" className="btn primary unlock-btn" onClick={() => void beginRun()}>
               Tap to Start
             </button>
-            <p className="unlock-hint">D · F · J · K when notes hit the line</p>
+            <p className="unlock-hint">
+              {touchUi ? "Tap the four lanes when notes hit the line" : "D · F · J · K when notes hit the line"}
+            </p>
           </div>
         )}
         {!loadError && ready && !needsUnlock && countdown >= 0 && (
@@ -252,12 +384,6 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onFinish, onFail
             key={lane}
             className={`lane ${pressed.has(lane) ? "pressed" : ""}`}
             style={{ "--lane": LANE_COLORS[lane] } as React.CSSProperties}
-            onPointerDown={(e) => {
-              e.preventDefault();
-              handlePress(lane);
-            }}
-            onPointerUp={() => handleRelease(lane)}
-            onPointerLeave={() => handleRelease(lane)}
           >
             {play.notes.map((ns, idx) => {
               const n = ns.note;
@@ -288,7 +414,7 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onFinish, onFail
                 <div key={idx} className="note diamond tap" style={{ top: y }} />
               );
             })}
-            <span className="lane-key">{keys[lane]}</span>
+            {showKeys && <span className="lane-key">{keys[lane]}</span>}
           </div>
         ))}
         {play.popups.map((p) => (
