@@ -15,6 +15,7 @@
     "test:all": "bash scripts/harness.sh all",
     "harness": "bash scripts/harness.sh",
     "acceptance": "python3 scripts/acceptance-p0.py",
+    "audit:beatscape": "python3 scripts/beatscape-audit.py --dir data/beatscape-preview",
     "lint": "pnpm -r lint"
   },
   "engines": {
