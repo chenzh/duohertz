@@ -132,6 +132,50 @@ def snap(t: float, bpm: int, div: float) -> float:
     return round(t / step) * step
 
 
+def measure_peak_nps(notes: list[dict]) -> int:
+    times = sorted(n["t"] for n in notes)
+    peak = 0
+    if not times:
+        return 0
+    j = 0
+    for i, t0 in enumerate(times):
+        while j < len(times) and times[j] <= t0 + 2.0:
+            j += 1
+        peak = max(peak, j - i)
+    return peak
+
+
+def enforce_peak_nps(notes: list[dict], *, max_peak: int = 12) -> list[dict]:
+    """Drop tap notes in the densest 2s windows until peak event count <= max_peak."""
+    kept = list(notes)
+    for _ in range(len(notes)):
+        if measure_peak_nps(kept) <= max_peak:
+            break
+        times = sorted(n["t"] for n in kept)
+        best_i, best_count = 0, 0
+        j = 0
+        for i, t0 in enumerate(times):
+            while j < len(times) and times[j] <= t0 + 2.0:
+                j += 1
+            count = j - i
+            if count > best_count:
+                best_count, best_i = count, i
+        window_start = times[best_i]
+        window_end = window_start + 2.0
+        candidates = [
+            n for n in kept if window_start <= n["t"] <= window_end and n["type"] == "tap"
+        ]
+        if not candidates:
+            candidates = [n for n in kept if window_start <= n["t"] <= window_end]
+        if not candidates:
+            break
+        kept.remove(candidates[len(candidates) // 2])
+    kept.sort(key=lambda n: n["t"])
+    for i, note in enumerate(kept):
+        note["id"] = f"n{i}"
+    return kept
+
+
 def count_notes(notes: list[dict]) -> int:
     n = 0
     for note in notes:
@@ -201,9 +245,12 @@ def build_chart(track: dict, tier: str) -> dict:
         elif density:
             notes.append({"id": f"n{idx}", "t": st, "type": "tap", "lane": lane})
         idx += 1
-        t += step * (0.5 if tier == "hard" else 1)
+        # Hard uses full grid step (not half) so peak 2s NPS stays ≤12 (PRD §4.6, BS-001).
+        t += step
 
     notes.sort(key=lambda n: n["t"])
+    if tier == "hard":
+        notes = enforce_peak_nps(notes, max_peak=12)
     sections = [
         {"id": "intro", "t0": 0.0, "t1": round(dur * 0.12, 2)},
         {"id": "build", "t0": round(dur * 0.12, 2), "t1": round(dur * 0.28, 2)},
