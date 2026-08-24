@@ -1,0 +1,1082 @@
+{
+  "report": {
+    "generated_at": "2026-08-24T21:23:35Z",
+    "input_dir": "/Users/zhenhuachen/Desktop/MusicSaas/apps/beatscape/public",
+    "catalog": "/Users/zhenhuachen/Desktop/MusicSaas/apps/beatscape/public/catalog.json",
+    "tracks": [
+      {
+        "source": "bs-s1-01",
+        "track_id": "bs-s1-01",
+        "title": "Neon Pulse",
+        "checks": [
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`track_id` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`title` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`artist` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`genre` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`bpm` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`duration_sec` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`preset_id` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`engine` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`rights` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`theme` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`audio` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`charts` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.rights",
+            "message": "owned"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.theme",
+            "message": "beatscape"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.theme_kw",
+            "message": "theme keyword present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.chart_path",
+            "message": "easy -> /catalog/bs-s1-01/easy.json"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.chart_path",
+            "message": "standard -> /catalog/bs-s1-01/standard.json"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.chart_path",
+            "message": "hard -> /catalog/bs-s1-01/hard.json"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.audio_path",
+            "message": "/catalog/bs-s1-01/audio.m4a"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.total_notes",
+            "message": "87"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.nps",
+            "message": "nps=1.16 outside [2.0,3.5]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.peak_nps",
+            "message": "peak_2s=3.00"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.hold_pct",
+            "message": "hold_pct=0.00 outside [5,15]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.chord_10s",
+            "message": "chord_per_10s=0.00"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.total_notes",
+            "message": "172"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.nps",
+            "message": "nps=2.29 outside [3.5,5.5]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.peak_nps",
+            "message": "peak_2s=6.00"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.hold_pct",
+            "message": "hold_pct=0.00 outside [10,25]"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.chord_10s",
+            "message": "chord_per_10s=0.00 outside [1,3]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.total_notes",
+            "message": "723"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.nps",
+            "message": "nps=9.16 outside [5.5,8.5]"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.peak_nps",
+            "message": "peak_2s=22.00 outside [0,12]"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.hold_pct",
+            "message": "hold_pct=0.00 outside [15,30]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.chord_10s",
+            "message": "chord_per_10s=4.80"
+          }
+        ],
+        "metrics": {}
+      },
+      {
+        "source": "bs-s1-02",
+        "track_id": "bs-s1-02",
+        "title": "Glass Horizon",
+        "checks": [
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`track_id` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`title` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`artist` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`genre` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`bpm` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`duration_sec` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`preset_id` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`engine` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`rights` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`theme` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`audio` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`charts` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.rights",
+            "message": "owned"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.theme",
+            "message": "beatscape"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.theme_kw",
+            "message": "theme keyword present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.chart_path",
+            "message": "easy -> /catalog/bs-s1-02/easy.json"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.chart_path",
+            "message": "standard -> /catalog/bs-s1-02/standard.json"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.chart_path",
+            "message": "hard -> /catalog/bs-s1-02/hard.json"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.audio_path",
+            "message": "/catalog/bs-s1-02/audio.m4a"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.total_notes",
+            "message": "64"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.nps",
+            "message": "nps=0.85 outside [2.0,3.5]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.peak_nps",
+            "message": "peak_2s=2.00"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.hold_pct",
+            "message": "hold_pct=0.00 outside [5,15]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.chord_10s",
+            "message": "chord_per_10s=0.00"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.total_notes",
+            "message": "127"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.nps",
+            "message": "nps=1.69 outside [3.5,5.5]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.peak_nps",
+            "message": "peak_2s=4.00"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.hold_pct",
+            "message": "hold_pct=0.00 outside [10,25]"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.chord_10s",
+            "message": "chord_per_10s=0.00 outside [1,3]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.total_notes",
+            "message": "506"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.nps",
+            "message": "nps=6.75"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.peak_nps",
+            "message": "peak_2s=16.00 outside [0,12]"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.hold_pct",
+            "message": "hold_pct=0.00 outside [15,30]"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.chord_10s",
+            "message": "chord_per_10s=0.00 outside [3,6]"
+          }
+        ],
+        "metrics": {}
+      },
+      {
+        "source": "bs-s1-03",
+        "track_id": "bs-s1-03",
+        "title": "Night Drive 808",
+        "checks": [
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`track_id` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`title` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`artist` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`genre` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`bpm` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`duration_sec` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`preset_id` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`engine` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`rights` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`theme` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`audio` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`charts` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.rights",
+            "message": "owned"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.theme",
+            "message": "beatscape"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.theme_kw",
+            "message": "theme keyword present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.chart_path",
+            "message": "easy -> /catalog/bs-s1-03/easy.json"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.chart_path",
+            "message": "standard -> /catalog/bs-s1-03/standard.json"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.chart_path",
+            "message": "hard -> /catalog/bs-s1-03/hard.json"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.audio_path",
+            "message": "/catalog/bs-s1-03/audio.m4a"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.total_notes",
+            "message": "51"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.nps",
+            "message": "nps=0.68 outside [2.0,3.5]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.peak_nps",
+            "message": "peak_2s=2.00"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.hold_pct",
+            "message": "hold_pct=0.00 outside [5,15]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.chord_10s",
+            "message": "chord_per_10s=0.00"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.total_notes",
+            "message": "102"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.nps",
+            "message": "nps=1.36 outside [3.5,5.5]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.peak_nps",
+            "message": "peak_2s=4.00"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.hold_pct",
+            "message": "hold_pct=0.00 outside [10,25]"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.chord_10s",
+            "message": "chord_per_10s=0.00 outside [1,3]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.total_notes",
+            "message": "428"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.nps",
+            "message": "nps=5.43 outside [5.5,8.5]"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.peak_nps",
+            "message": "peak_2s=14.00 outside [0,12]"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.hold_pct",
+            "message": "hold_pct=0.00 outside [15,30]"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.chord_10s",
+            "message": "chord_per_10s=2.80 outside [3,6]"
+          }
+        ],
+        "metrics": {}
+      },
+      {
+        "source": "bs-s1-04",
+        "track_id": "bs-s1-04",
+        "title": "Velvet Afterhours",
+        "checks": [
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`track_id` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`title` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`artist` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`genre` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`bpm` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`duration_sec` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`preset_id` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`engine` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`rights` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`theme` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`audio` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`charts` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.rights",
+            "message": "owned"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.theme",
+            "message": "beatscape"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.theme_kw",
+            "message": "theme keyword present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.chart_path",
+            "message": "easy -> /catalog/bs-s1-04/easy.json"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.chart_path",
+            "message": "standard -> /catalog/bs-s1-04/standard.json"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.chart_path",
+            "message": "hard -> /catalog/bs-s1-04/hard.json"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.audio_path",
+            "message": "/catalog/bs-s1-04/audio.m4a"
+          },
+          {
+            "status": "FAIL",
+            "code": "chart.total_notes",
+            "message": "declared 51 != counted 48"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.nps",
+            "message": "nps=0.64 outside [2.0,3.5]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.peak_nps",
+            "message": "peak_2s=2.00"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.hold_pct",
+            "message": "hold_pct=6.25"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.chord_10s",
+            "message": "chord_per_10s=0.00"
+          },
+          {
+            "status": "FAIL",
+            "code": "chart.total_notes",
+            "message": "declared 102 != counted 94"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.nps",
+            "message": "nps=1.25 outside [3.5,5.5]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.peak_nps",
+            "message": "peak_2s=3.00"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.hold_pct",
+            "message": "hold_pct=8.51 outside [10,25]"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.chord_10s",
+            "message": "chord_per_10s=0.00 outside [1,3]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.total_notes",
+            "message": "377"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.nps",
+            "message": "nps=5.03 outside [5.5,8.5]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.peak_nps",
+            "message": "peak_2s=12.00"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.hold_pct",
+            "message": "hold_pct=0.00 outside [15,30]"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.chord_10s",
+            "message": "chord_per_10s=0.00 outside [3,6]"
+          }
+        ],
+        "metrics": {}
+      },
+      {
+        "source": "bs-s1-05",
+        "track_id": "bs-s1-05",
+        "title": "Voltage Drop",
+        "checks": [
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`track_id` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`title` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`artist` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`genre` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`bpm` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`duration_sec` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`preset_id` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`engine` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`rights` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`theme` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`audio` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`charts` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.rights",
+            "message": "owned"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.theme",
+            "message": "beatscape"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.theme_kw",
+            "message": "theme keyword present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.chart_path",
+            "message": "easy -> /catalog/bs-s1-05/easy.json"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.chart_path",
+            "message": "standard -> /catalog/bs-s1-05/standard.json"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.chart_path",
+            "message": "hard -> /catalog/bs-s1-05/hard.json"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.audio_path",
+            "message": "/catalog/bs-s1-05/audio.m4a"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.total_notes",
+            "message": "73"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.nps",
+            "message": "nps=1.22 outside [2.0,3.5]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.peak_nps",
+            "message": "peak_2s=3.00"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.hold_pct",
+            "message": "hold_pct=0.00 outside [5,15]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.chord_10s",
+            "message": "chord_per_10s=0.00"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.total_notes",
+            "message": "145"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.nps",
+            "message": "nps=2.42 outside [3.5,5.5]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.peak_nps",
+            "message": "peak_2s=6.00"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.hold_pct",
+            "message": "hold_pct=0.00 outside [10,25]"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.chord_10s",
+            "message": "chord_per_10s=0.00 outside [1,3]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.total_notes",
+            "message": "610"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.nps",
+            "message": "nps=9.65 outside [5.5,8.5]"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.peak_nps",
+            "message": "peak_2s=24.00 outside [0,12]"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.hold_pct",
+            "message": "hold_pct=0.00 outside [15,30]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.chord_10s",
+            "message": "chord_per_10s=5.17"
+          }
+        ],
+        "metrics": {}
+      },
+      {
+        "source": "bs-s1-06",
+        "track_id": "bs-s1-06",
+        "title": "Chrome Riff",
+        "checks": [
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`track_id` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`title` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`artist` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`genre` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`bpm` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`duration_sec` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`preset_id` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`engine` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`rights` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`theme` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`audio` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`charts` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.rights",
+            "message": "owned"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.theme",
+            "message": "beatscape"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.theme_kw",
+            "message": "theme keyword present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.chart_path",
+            "message": "easy -> /catalog/bs-s1-06/easy.json"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.chart_path",
+            "message": "standard -> /catalog/bs-s1-06/standard.json"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.chart_path",
+            "message": "hard -> /catalog/bs-s1-06/hard.json"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.audio_path",
+            "message": "/catalog/bs-s1-06/audio.m4a"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.total_notes",
+            "message": "71"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.nps",
+            "message": "nps=0.95 outside [2.0,3.5]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.peak_nps",
+            "message": "peak_2s=3.00"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.hold_pct",
+            "message": "hold_pct=0.00 outside [5,15]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.chord_10s",
+            "message": "chord_per_10s=0.00"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.total_notes",
+            "message": "142"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.nps",
+            "message": "nps=1.89 outside [3.5,5.5]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.peak_nps",
+            "message": "peak_2s=5.00"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.hold_pct",
+            "message": "hold_pct=0.00 outside [10,25]"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.chord_10s",
+            "message": "chord_per_10s=0.00 outside [1,3]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.total_notes",
+            "message": "597"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.nps",
+            "message": "nps=7.56"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.peak_nps",
+            "message": "peak_2s=18.00 outside [0,12]"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.hold_pct",
+            "message": "hold_pct=0.00 outside [15,30]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.chord_10s",
+            "message": "chord_per_10s=4.00"
+          }
+        ],
+        "metrics": {}
+      }
+    ],
+    "summary": {
+      "PASS": 155,
+      "WARN": 47,
+      "FAIL": 2
+    }
+  }
+}
