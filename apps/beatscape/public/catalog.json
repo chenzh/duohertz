@@ -1,0 +1,185 @@
+{
+  "version": 1,
+  "tracks": [
+    {
+      "track_id": "bs-s1-01",
+      "title": "Neon Pulse",
+      "artist": "Pulse Atlas",
+      "genre": "EDM",
+      "bpm": 160,
+      "duration_sec": 75,
+      "preset_id": "bs-edm-main",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s1-01",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Hot Chart Style"
+      ],
+      "district": "Pulse Core",
+      "default_mode": "arcade",
+      "default_tier": "standard",
+      "audio": "/catalog/bs-s1-01/audio.m4a",
+      "cover": "/catalog/bs-s1-01/cover.svg",
+      "charts": {
+        "easy": "/catalog/bs-s1-01/easy.json",
+        "standard": "/catalog/bs-s1-01/standard.json",
+        "hard": "/catalog/bs-s1-01/hard.json"
+      },
+      "seo": {
+        "title": "Neon Pulse \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 160 BPM EDM chart."
+      }
+    },
+    {
+      "track_id": "bs-s1-02",
+      "title": "Glass Horizon",
+      "artist": "Soft Circuit",
+      "genre": "Pop",
+      "bpm": 118,
+      "duration_sec": 75,
+      "preset_id": "bs-pop-hook",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s1-02",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Viral Style"
+      ],
+      "district": "Glass Rim",
+      "default_mode": "casual",
+      "default_tier": "easy",
+      "audio": "/catalog/bs-s1-02/audio.m4a",
+      "cover": "/catalog/bs-s1-02/cover.svg",
+      "charts": {
+        "easy": "/catalog/bs-s1-02/easy.json",
+        "standard": "/catalog/bs-s1-02/standard.json",
+        "hard": "/catalog/bs-s1-02/hard.json"
+      },
+      "seo": {
+        "title": "Glass Horizon \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 118 BPM Pop chart."
+      }
+    },
+    {
+      "track_id": "bs-s1-03",
+      "title": "Night Drive 808",
+      "artist": "Low Voltage",
+      "genre": "Hip-hop",
+      "bpm": 95,
+      "duration_sec": 75,
+      "preset_id": "bs-hiphop-808",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s1-03",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Classic Style"
+      ],
+      "district": "Night Grid",
+      "default_mode": "arcade",
+      "default_tier": "standard",
+      "audio": "/catalog/bs-s1-03/audio.m4a",
+      "cover": "/catalog/bs-s1-03/cover.svg",
+      "charts": {
+        "easy": "/catalog/bs-s1-03/easy.json",
+        "standard": "/catalog/bs-s1-03/standard.json",
+        "hard": "/catalog/bs-s1-03/hard.json"
+      },
+      "seo": {
+        "title": "Night Drive 808 \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 95 BPM Hip-hop chart."
+      }
+    },
+    {
+      "track_id": "bs-s1-04",
+      "title": "Velvet Afterhours",
+      "artist": "Mira Lane",
+      "genre": "R&B",
+      "bpm": 88,
+      "duration_sec": 75,
+      "preset_id": "bs-rnb-groove",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s1-04",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Classic Style"
+      ],
+      "district": "Afterhours Lane",
+      "default_mode": "casual",
+      "default_tier": "easy",
+      "audio": "/catalog/bs-s1-04/audio.m4a",
+      "cover": "/catalog/bs-s1-04/cover.svg",
+      "charts": {
+        "easy": "/catalog/bs-s1-04/easy.json",
+        "standard": "/catalog/bs-s1-04/standard.json",
+        "hard": "/catalog/bs-s1-04/hard.json"
+      },
+      "seo": {
+        "title": "Velvet Afterhours \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 88 BPM R&B chart."
+      }
+    },
+    {
+      "track_id": "bs-s1-05",
+      "title": "Voltage Drop",
+      "artist": "Gridline",
+      "genre": "EDM",
+      "bpm": 170,
+      "duration_sec": 60,
+      "preset_id": "bs-edm-climax",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s1-05",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Hot Chart Style"
+      ],
+      "district": "Pulse Core",
+      "default_mode": "arcade",
+      "default_tier": "hard",
+      "audio": "/catalog/bs-s1-05/audio.m4a",
+      "cover": "/catalog/bs-s1-05/cover.svg",
+      "charts": {
+        "easy": "/catalog/bs-s1-05/easy.json",
+        "standard": "/catalog/bs-s1-05/standard.json",
+        "hard": "/catalog/bs-s1-05/hard.json"
+      },
+      "seo": {
+        "title": "Voltage Drop \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 170 BPM EDM chart."
+      }
+    },
+    {
+      "track_id": "bs-s1-06",
+      "title": "Chrome Riff",
+      "artist": "Iron Echo",
+      "genre": "Rock",
+      "bpm": 132,
+      "duration_sec": 75,
+      "preset_id": "bs-rock-drive",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s1-06",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "New Release"
+      ],
+      "district": "Chrome Yard",
+      "default_mode": "arcade",
+      "default_tier": "standard",
+      "audio": "/catalog/bs-s1-06/audio.m4a",
+      "cover": "/catalog/bs-s1-06/cover.svg",
+      "charts": {
+        "easy": "/catalog/bs-s1-06/easy.json",
+        "standard": "/catalog/bs-s1-06/standard.json",
+        "hard": "/catalog/bs-s1-06/hard.json"
+      },
+      "seo": {
+        "title": "Chrome Riff \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 132 BPM Rock chart."
+      }
+    }
+  ]
+}

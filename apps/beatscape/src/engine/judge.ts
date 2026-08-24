@@ -1,0 +1,88 @@
+import type { Judgment, PlayMode } from "../types/chart";
+
+/** BeatScape PRD §4.3 — NOT NeonBeat 22/45/80 */
+const WINDOWS_ARCADE = { perfect: 15, great: 30, good: 50 } as const;
+const WINDOWS_CASUAL = { perfect: 28, great: 55, good: 90 } as const;
+
+export const WINDOWS = WINDOWS_ARCADE;
+
+export function windowsFor(mode: PlayMode) {
+  if (mode === "casual") return WINDOWS_CASUAL;
+  return WINDOWS_ARCADE;
+}
+
+export function judgeDelta(deltaMs: number, mode: PlayMode = "arcade"): Judgment {
+  const w = windowsFor(mode);
+  const abs = Math.abs(deltaMs);
+  if (abs <= w.perfect) return "perfect";
+  if (abs <= w.great) return "great";
+  if (abs <= w.good) return "good";
+  return "miss";
+}
+
+/** Hold tail: Good window + ±20ms snap */
+export function judgeHoldTail(deltaMs: number, mode: PlayMode): Judgment {
+  const w = windowsFor(mode);
+  const abs = Math.abs(deltaMs);
+  if (abs <= w.perfect + 20) return "perfect";
+  if (abs <= w.great + 20) return "great";
+  if (abs <= w.good + 20) return "good";
+  return "miss";
+}
+
+export function goodWindowMs(mode: PlayMode): number {
+  return windowsFor(mode).good;
+}
+
+export function judgmentScore(j: Judgment): number {
+  switch (j) {
+    case "perfect":
+      return 300;
+    case "great":
+      return 200;
+    case "good":
+      return 100;
+    default:
+      return 0;
+  }
+}
+
+export function comboMultiplier(combo: number): number {
+  if (combo >= 200) return 4;
+  if (combo >= 100) return 3;
+  if (combo >= 50) return 2;
+  return 1;
+}
+
+export function gradeFromAccuracy(accuracy: number): "S" | "A" | "B" | "C" | "D" {
+  if (accuracy >= 95) return "S";
+  if (accuracy >= 90) return "A";
+  if (accuracy >= 80) return "B";
+  if (accuracy >= 70) return "C";
+  return "D";
+}
+
+export function hpDelta(j: Judgment, tailMiss = false): number {
+  if (tailMiss) return -5;
+  switch (j) {
+    case "perfect":
+      return 2;
+    case "great":
+      return 1;
+    case "good":
+      return 0;
+    default:
+      return -7;
+  }
+}
+
+export function accuracyPercent(counts: Record<Judgment, number>, totalNotes: number): number {
+  if (!totalNotes) return 0;
+  const weighted =
+    counts.perfect * 1.0 + counts.great * 0.75 + counts.good * 0.4 + counts.miss * 0;
+  return Math.round((weighted / totalNotes) * 10000) / 100;
+}
+
+export function maxScore(totalNotes: number): number {
+  return totalNotes * 300 * 4;
+}
