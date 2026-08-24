@@ -1,6 +1,13 @@
 # 文档索引（Vibe Coding）
 
-**MVP：** 音乐生成 **API + 配套 Demo** · [PRD.md](../PRD.md) v1.2
+**MVP：** 音乐生成 **API + 配套 Demo + BeatScape** · [PRD.md](../PRD.md) v1.2
+
+**Harness（Agent 优先）：**
+
+- [KNOWLEDGE-BASE.md](./KNOWLEDGE-BASE.md) — 知识库 MOC
+- [CODE-INDEX.md](./CODE-INDEX.md) — 代码地图
+- [VAULT-HARNESS.md](./VAULT-HARNESS.md) — Vault 规范快照
+- [../SESSION.md](../SESSION.md) — 项目续作
 
 Cursor 开发前阅读顺序：
 

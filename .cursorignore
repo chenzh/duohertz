@@ -1,0 +1,22 @@
+# MusicSaas — Agent 代码索引边界
+**/node_modules/
+**/.venv/
+**/venv/
+**/__pycache__/
+**/dist/
+**/build/
+**/.cache/
+**/*.tsbuildinfo
+data/
+tmp/
+models/
+checkpoints/
+*.log
+logs/
+**/*.m4a
+**/*.wav
+**/*.mp3
+**/*.dmg
+pnpm-lock.yaml
+package-lock.json
+.DS_Store

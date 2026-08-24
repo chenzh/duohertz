@@ -1,6 +1,9 @@
 # MusicSaas
 
-**MVP：音乐生成 API + 配套 Demo**
+**MVP：音乐生成 API + 配套 Demo + BeatScape Stage1**
+
+> **Harness：** [SESSION.md](./SESSION.md) · [知识库](./docs/KNOWLEDGE-BASE.md) · [代码索引](./docs/CODE-INDEX.md) · [AGENTS.md](./AGENTS.md)  
+> 进展：`bash scripts/print-status.sh`
 
 | 组件 | 说明 |
 |------|------|
@@ -20,6 +23,9 @@
 | 文档 | 说明 |
 |------|------|
 | [PRD.md](./PRD.md) | 产品需求 **v1.2** |
+| [docs/KNOWLEDGE-BASE.md](./docs/KNOWLEDGE-BASE.md) | **Harness 知识库** |
+| [docs/CODE-INDEX.md](./docs/CODE-INDEX.md) | **代码索引** |
+| [docs/PRD-BEATSCAPE.md](./docs/PRD-BEATSCAPE.md) | BeatScape 主 PRD |
 | [docs/DEMO.md](./docs/DEMO.md) | 配套 Demo 规格 |
 | [docs/README.md](./docs/README.md) | 文档索引 |
 

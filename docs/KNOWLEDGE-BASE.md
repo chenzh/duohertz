@@ -1,0 +1,100 @@
+# MusicSaas 知识库（Harness Basic）
+
+> **slug:** `musicsaas` · **Vault:** `10-SYSTEM/HARNESS/projects/musicsaas.md`  
+> Agent 进仓后 **60 秒内** 应读完本页 + [CODE-INDEX.md](./CODE-INDEX.md)。
+
+---
+
+## 1. 项目是什么
+
+**MusicSaas** = 音乐生成 API（双引擎 MLX）+ Demo Web + 节奏游戏 **BeatScape**。
+
+| 子系统 | 路径 | 说明 |
+|--------|------|------|
+| Gateway API | `apps/gateway/` | REST Job 异步、鉴权、Worker 调度 |
+| Demo Web | `apps/demo/` | 四 mode 试用页，BFF 代理 |
+| ACE Worker | `workers/ace-step/` | 人声 / 主题曲（ACE-Step 1.5 MLX） |
+| SA3 Worker | `workers/sa3/` | 游戏 BGM（Stable Audio 3 MLX） |
+| BeatScape | `apps/beatscape/` | Stage1 可玩 Web 节奏游戏 |
+| NeonBeat | `apps/neonbeat/` | 节奏游戏参考实现（非主产品） |
+
+**远程：** https://github.com/chenzh/MusicSaas  
+**推理节点：** MacBook Pro M5 Pro 48GB · `192.168.0.199`
+
+---
+
+## 2. 读文档顺序（写代码前）
+
+### API / 平台（MVP v0.2）
+
+1. [PRD.md](../PRD.md) — 产品总纲 v1.2
+2. [docs/RULES.md](./RULES.md) — 规则与边界
+3. [docs/DATA_API.md](./DATA_API.md) — 接口与数据库
+4. [docs/TECH_SPEC.md](./TECH_SPEC.md) — 技术栈与目录
+5. [docs/MODULES.md](./MODULES.md) — 模块拆分与开发顺序
+6. [docs/INFERENCE.md](./INFERENCE.md) — Mac 双 Worker 部署
+7. [docs/ACCEPTANCE.md](./ACCEPTANCE.md) — 验收用例
+
+### BeatScape（Stage1）
+
+1. [docs/PRD-BEATSCAPE.md](./PRD-BEATSCAPE.md) — 主产品 PRD
+2. [docs/PRD-WEB-RHYTHM-GAME.md](./PRD-WEB-RHYTHM-GAME.md) — NeonBeat 参考
+3. 内容流水线见 PRD-BEATSCAPE §6.0 · `catalog.json` · `scripts/beatscape-*`
+
+### Harness / 续作
+
+1. [SESSION.md](../SESSION.md) — 项目级战略 todo（唯一真相）
+2. [docs/VAULT-HARNESS.md](./VAULT-HARNESS.md) — Vault 规范快照
+3. [AGENTS.md](../AGENTS.md) — Agent 导航
+4. Vault `04-PROJECTS/2026-08-23-project-musicsaas.md` — 第二大脑项目 MOC
+
+---
+
+## 3. 双引擎速查
+
+| 业务 | `mode` | 引擎 |
+|------|--------|------|
+| 人声（歌词） | `vocal_lyrics` | ACE-Step 1.5 |
+| 人声（描述） | `vocal_desc` | ACE-Step 1.5 |
+| 游戏 BGM | `game_bgm` | Stable Audio 3 |
+| 游戏主题曲 | `game_theme_vocal` | ACE-Step 1.5 |
+
+---
+
+## 4. 常用命令
+
+```bash
+# API 栈
+pnpm install
+bash scripts/mac-services-up.sh      # Mac MLX 全栈
+bash scripts/harness.sh all          # unit + build + integration
+
+# BeatScape
+pnpm dev:beatscape                   # http://127.0.0.1:5175/beatscape/
+pnpm audit:beatscape                 # Stage1 内容 QA
+python3 scripts/beatscape-ingest-stage1.py
+
+# 进展
+bash scripts/print-status.sh
+```
+
+---
+
+## 5. 已知约束 / 踩坑
+
+- **Worker 分离**：Gateway 禁止内嵌 PyTorch；推理走 `workers/*`
+- **BeatScape 谱面**：Stage1 为 BPM 占位网格，待接 MusicSaas 自动谱 + QA
+- **npm 证书**：`apps/beatscape` 独立 `npm install` 可能 SSL 失败；可复用 neonbeat `node_modules`
+- **预览音频**：`data/beatscape-preview/` gitignore；Range 服务 `serve.py`
+- **秘密**：`.env` 禁止 commit / 写入 Vault
+
+---
+
+## 6. Vault 连接
+
+```
+.secondbrain → https://github.com/chenzh/SecondBrain
+registry slug: musicsaas · profile: generic
+```
+
+口令：`同步第二大脑规则` · `同步项目规范到全部外接仓库` · `打包第二大脑上下文：musicsaas`

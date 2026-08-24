@@ -1,7 +1,5 @@
 # Vault Harness Snapshot
-> slug: musicsaas
-[OK] harness stub -> projects/musicsaas.md
-musicsaas · generated: 2026-08-23 19:02
+> slug: musicsaas · generated: 2026-08-24 18:51
 
 ---
 
@@ -82,13 +80,98 @@ tags:
 
 ---
 
-## Profile: 
+## Profile: generic
 
-*(missing: /Users/zhenhuachen/Documents/SecondBrain/10-SYSTEM/HARNESS/profiles/.md)*
+---
+type: system
+status: active
+created: 2026-06-30
+tags:
+  - harness
+  - profile
+---
+
+# Profile: generic
+
+未匹配专用 profile 时的默认栈规范。
+
+## 约定
+
+- 读项目根 `README.md` / `AGENTS.md`（若有）
+- 沿用现有 linter / formatter / CI
+- 改前先 `search-vault` 项目名，避免重复踩坑
+
+## 构建门禁
+
+- 项目文档声明的 build/test 命令通过再交付
+
 ---
 
 ## Project: musicsaas
-[OK] harness stub -> projects/musicsaas.md
-musicsaas
 
-*(missing: /Users/zhenhuachen/Documents/SecondBrain/10-SYSTEM/HARNESS/)*
+---
+type: project
+status: active
+created: 2026-08-23
+updated: 2026-08-24
+tags:
+  - harness
+  - musicsaas
+project: musicsaas
+---
+
+# Harness: MusicSaas
+
+## 项目
+
+- **名称**：MusicSaas — 音乐生成 API + Demo + BeatScape
+- **路径**：`/Users/zhenhuachen/Desktop/MusicSaas`
+- **远程**：`chenzh/MusicSaas` · https://github.com/chenzh/MusicSaas
+- **Profile**：`generic`
+
+## 架构（Monorepo）
+
+| 模块 | 路径 | 说明 |
+|------|------|------|
+| Gateway | `apps/gateway/` | Hono REST · Job 队列 · Demo BFF |
+| Demo | `apps/demo/` | Vite React 四 mode 试用 |
+| BeatScape | `apps/beatscape/` | Stage1 节奏游戏（主产品前端） |
+| NeonBeat | `apps/neonbeat/` | 参考实现，勿混用判定常量 |
+| ACE Worker | `workers/ace-step/` | 人声 MLX |
+| SA3 Worker | `workers/sa3/` | BGM MLX |
+
+## 仓内知识库 / 索引（Basic Harness）
+
+| 文件 | 职责 |
+|------|------|
+| `docs/KNOWLEDGE-BASE.md` | 知识库 MOC |
+| `docs/CODE-INDEX.md` | 代码地图 |
+| `AGENTS.md` | Agent 入口 |
+| `.cursor/rules/code-index.mdc` | 索引边界规则 |
+| `.cursorignore` | Cursor 跳过路径 |
+| `SESSION.md` | 项目续作真相 |
+
+## 约定
+
+- 写代码前读：`KNOWLEDGE-BASE` → `CODE-INDEX` → `SESSION`
+- BeatScape 判定窗 **15/30/50**（PRD-BEATSCAPE）；NeonBeat 为参考
+- Gateway 禁止内嵌 PyTorch；推理走 Worker
+- 构建/验收通过再交付：`pnpm test` · `bash scripts/harness.sh all`
+
+## Tier 2（本仓扩展）
+
+| 文件 | 职责 |
+|------|------|
+| `docs/PRD-BEATSCAPE.md` | BeatScape 主 PRD |
+| `scripts/beatscape-audit.py` | Stage1 内容 QA |
+| `scripts/harness.sh` | 统一测试 harness |
+| `worklog/` | 日流水 |
+
+## 推理节点
+
+MacBook Pro M5 Pro 48GB · `192.168.0.199` · MLX 双引擎已跑通
+
+## 连接
+
+- Vault MOC：`04-PROJECTS/2026-08-23-project-musicsaas.md`
+- [[repo-contract]] · [[session-protocol]]
