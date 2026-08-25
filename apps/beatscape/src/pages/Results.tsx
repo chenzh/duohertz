@@ -1,5 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "../router";
+import { getTrack } from "../catalog/loadCatalog";
+import type { CatalogTrack } from "../types/catalog";
+import { StreamFullCTA } from "../components/StreamFullCTA";
 import {
   readLastRun,
   shareResultsCopy,
@@ -12,6 +15,12 @@ export function ResultsPage() {
   const preferLocal = params.get("run") === "local";
   const run = readLastRun(preferLocal);
   const [copied, setCopied] = useState(false);
+  const [track, setTrack] = useState<CatalogTrack | null>(null);
+
+  useEffect(() => {
+    if (!run?.track_id) return;
+    void getTrack(run.track_id).then((t) => setTrack(t ?? null));
+  }, [run?.track_id]);
 
   if (!run) {
     return (
@@ -23,15 +32,14 @@ export function ResultsPage() {
   }
 
   const pb = getPersonalBest(run.track_id, run.tier, run.mode);
-  // True new record: this run beat the standing best captured before it was saved.
   const isRecord = run.prevBestScore != null ? run.score > run.prevBestScore : true;
   const counts = run.counts;
   const totalJ = counts.perfect + counts.great + counts.good + counts.miss || 1;
   const dist = [
-    { label: "Perfect", n: counts.perfect, color: "#25F4EE" },
+    { label: "Perfect", n: counts.perfect, color: "#C8F542" },
     { label: "Great", n: counts.great, color: "#FFFFFF" },
-    { label: "Good", n: counts.good, color: "#9AA0A6" },
-    { label: "Miss", n: counts.miss, color: "#FE2C55" },
+    { label: "Good", n: counts.good, color: "#9B9BB0" },
+    { label: "Miss", n: counts.miss, color: "#FF6B4A" },
   ];
 
   async function onCopyLink() {
@@ -77,6 +85,7 @@ export function ResultsPage() {
       <p>
         {run.title} · {run.artist} · {run.tier} · {run.mode}
       </p>
+      {track && <StreamFullCTA track={track} />}
       {isRecord && run.prevBestScore != null ? (
         <p className="pb">Previous best {run.prevBestScore.toLocaleString()} — beaten!</p>
       ) : (

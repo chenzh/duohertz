@@ -1,6 +1,6 @@
 # BeatScape QA Audit Report
 
-- Generated: 2026-08-25T07:48:03Z
+- Generated: 2026-08-25T09:46:00Z
 - Input: `/Users/zhenhuachen/Desktop/MusicSaas/apps/beatscape/public`
 - Catalog: `/Users/zhenhuachen/Desktop/MusicSaas/apps/beatscape/public/catalog.json`
 
@@ -8,7 +8,7 @@
 
 | PASS | WARN | FAIL |
 |------|------|------|
-| 217 | 41 | 0 |
+| 223 | 41 | 0 |
 
 ## Human sign-off (required)
 
@@ -38,6 +38,7 @@
 - ✅ `catalog.chart_path` — standard -> /catalog/bs-s1-01/standard.json
 - ✅ `catalog.chart_path` — hard -> /catalog/bs-s1-01/hard.json
 - ✅ `catalog.audio_path` — /catalog/bs-s1-01/audio.m4a
+- ✅ `catalog.stream_planned` — planned stream 198s (Stage1 teaser ok)
 - ✅ `chart.total_notes` — 92
 - ⚠️ `chart.density.nps` — nps=1.08 outside [2.0,3.5]
 - ✅ `chart.density.peak_nps` — peak_2s=5.00
@@ -83,6 +84,7 @@
 - ✅ `catalog.chart_path` — standard -> /catalog/bs-s1-02/standard.json
 - ✅ `catalog.chart_path` — hard -> /catalog/bs-s1-02/hard.json
 - ✅ `catalog.audio_path` — /catalog/bs-s1-02/audio.m4a
+- ✅ `catalog.stream_planned` — planned stream 198s (Stage1 teaser ok)
 - ✅ `chart.total_notes` — 136
 - ⚠️ `chart.density.nps` — nps=1.64 outside [2.0,3.5]
 - ✅ `chart.density.peak_nps` — peak_2s=5.00
@@ -128,6 +130,7 @@
 - ✅ `catalog.chart_path` — standard -> /catalog/bs-s1-03/standard.json
 - ✅ `catalog.chart_path` — hard -> /catalog/bs-s1-03/hard.json
 - ✅ `catalog.audio_path` — /catalog/bs-s1-03/audio.m4a
+- ✅ `catalog.stream_planned` — planned stream 198s (Stage1 teaser ok)
 - ✅ `chart.total_notes` — 125
 - ⚠️ `chart.density.nps` — nps=1.47 outside [2.0,3.5]
 - ✅ `chart.density.peak_nps` — peak_2s=5.00
@@ -173,6 +176,7 @@
 - ✅ `catalog.chart_path` — standard -> /catalog/bs-s1-04/standard.json
 - ✅ `catalog.chart_path` — hard -> /catalog/bs-s1-04/hard.json
 - ✅ `catalog.audio_path` — /catalog/bs-s1-04/audio.m4a
+- ✅ `catalog.stream_planned` — planned stream 198s (Stage1 teaser ok)
 - ✅ `chart.total_notes` — 134
 - ⚠️ `chart.density.nps` — nps=1.57 outside [2.0,3.5]
 - ✅ `chart.density.peak_nps` — peak_2s=5.00
@@ -218,6 +222,7 @@
 - ✅ `catalog.chart_path` — standard -> /catalog/bs-s1-05/standard.json
 - ✅ `catalog.chart_path` — hard -> /catalog/bs-s1-05/hard.json
 - ✅ `catalog.audio_path` — /catalog/bs-s1-05/audio.m4a
+- ✅ `catalog.stream_planned` — planned stream 180s (Stage1 teaser ok)
 - ✅ `chart.total_notes` — 103
 - ⚠️ `chart.density.nps` — nps=1.57 outside [2.0,3.5]
 - ✅ `chart.density.peak_nps` — peak_2s=5.00
@@ -263,6 +268,7 @@
 - ✅ `catalog.chart_path` — standard -> /catalog/bs-s1-06/standard.json
 - ✅ `catalog.chart_path` — hard -> /catalog/bs-s1-06/hard.json
 - ✅ `catalog.audio_path` — /catalog/bs-s1-06/audio.m4a
+- ✅ `catalog.stream_planned` — planned stream 198s (Stage1 teaser ok)
 - ✅ `chart.total_notes` — 138
 - ⚠️ `chart.density.nps` — nps=1.63 outside [2.0,3.5]
 - ✅ `chart.density.peak_nps` — peak_2s=5.00

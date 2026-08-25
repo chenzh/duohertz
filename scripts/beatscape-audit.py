@@ -549,6 +549,39 @@ def audit_catalog_entry(entry: dict[str, Any], base: Path) -> TrackReport:
         else:
             report.checks.append(Check("PASS", "catalog.audio_path", str(audio_rel)))
 
+    duration_sec = float(entry.get("duration_sec") or 0)
+    stream_audio = entry.get("stream_audio")
+    stream_dur = entry.get("stream_duration_sec")
+    track_id = str(entry.get("track_id", ""))
+    is_stage2_plus = track_id.startswith("bs-s2-") or track_id.startswith("bs-s3-")
+
+    if stream_audio:
+        sp = base / str(stream_audio).lstrip("/")
+        if not sp.is_file():
+            report.checks.append(Check("FAIL", "catalog.stream_audio", f"missing {stream_audio}"))
+        else:
+            report.checks.append(Check("PASS", "catalog.stream_audio", str(stream_audio)))
+        if not stream_dur:
+            report.checks.append(Check("FAIL", "catalog.stream_duration", "stream_audio set but stream_duration_sec missing"))
+        elif duration_sec and float(stream_dur) < duration_sec * 1.8:
+            report.checks.append(
+                Check(
+                    "FAIL",
+                    "catalog.stream_duration",
+                    f"stream_duration_sec={stream_dur} < game×1.8 ({duration_sec * 1.8:.0f})",
+                )
+            )
+        else:
+            report.checks.append(Check("PASS", "catalog.stream_duration", f"stream {stream_dur}s vs game {duration_sec}s"))
+    elif is_stage2_plus:
+        report.checks.append(Check("FAIL", "catalog.stream_dual", "Stage2+ requires stream_audio + stream_duration_sec"))
+    elif stream_dur and duration_sec and float(stream_dur) < duration_sec * 1.8:
+        report.checks.append(
+            Check("WARN", "catalog.stream_planned", f"planned stream {stream_dur}s < game×1.8 (full master not ingested)")
+        )
+    elif stream_dur:
+        report.checks.append(Check("PASS", "catalog.stream_planned", f"planned stream {stream_dur}s (Stage1 teaser ok)"))
+
     return report
 
 

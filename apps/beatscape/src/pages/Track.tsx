@@ -4,6 +4,7 @@ import { assetUrl, getTrack } from "../catalog/loadCatalog";
 import type { CatalogTrack } from "../types/catalog";
 import type { ChartTier, PlayMode } from "../types/chart";
 import { toggleFavorite, loadFavorites } from "../storage/settings";
+import { StreamFullCTA } from "../components/StreamFullCTA";
 
 export function TrackPage() {
   const { id } = useParams();
@@ -35,7 +36,8 @@ export function TrackPage() {
         <p className="meta">
           {track.genre} · {track.bpm} BPM · {track.district}
         </p>
-        <p className="rights">AI Original · Owned Rights</p>
+        <p className="rights">AI Original · Owned Rights · Game clip {track.duration_sec}s</p>
+        <StreamFullCTA track={track} />
         <div className="pickers">
           <label>
             Tier

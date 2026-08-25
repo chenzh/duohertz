@@ -2,7 +2,7 @@
 
 | 字段 | 值 |
 |------|-----|
-| **phase** | MVP v0.2 稳定 + BeatScape Stage1 跟拍谱面 |
+| **phase** | MVP v0.2 稳定 + BeatScape Stage1 跟拍谱面 + 双资产 CTA |
 | **updated** | 2026-08-25 |
 | **slug** | musicsaas |
 
@@ -17,6 +17,7 @@
 - [x] **三难度生成**：Easy / Standard / Hard 已重跑
 - [x] **QA 闸门**：`beatscape-audit.py` — `chart.onset.align` / `first_beat` / `audio_offset`
 - [x] **Stage1 六首重跑**：`pnpm chart:beatscape` → `pnpm audit:beatscape`（PASS 217 · WARN 41 · FAIL 0）
+- [x] **PRD §6.0.27 落地**：`stream_duration_sec` / `StreamFullCTA` / `beatscape-ingest-stream.py` / audit 双资产闸门
 - [ ] **人工试听微调**：耳检每曲 Arcade 一局，必要时调 flux / tier 密度
 - [ ] **（后续）MusicSaas job 输出 beat map**：生成流水线一并出谱
 

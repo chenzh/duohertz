@@ -17,6 +17,7 @@
     "acceptance": "python3 scripts/acceptance-p0.py",
     "audit:beatscape": "python3 scripts/beatscape-audit.py --dir apps/beatscape/public --catalog apps/beatscape/public/catalog.json",
     "chart:beatscape": "python3 scripts/beatscape-chartgen.py",
+    "ingest:beatscape-stream": "python3 scripts/beatscape-ingest-stream.py",
     "dev:beatscape": "pnpm --filter @musicsaas/beatscape dev",
     "build:beatscape": "pnpm --filter @musicsaas/beatscape build",
     "lint": "pnpm -r lint"

@@ -1,6 +1,6 @@
 {
   "report": {
-    "generated_at": "2026-08-25T07:48:03Z",
+    "generated_at": "2026-08-25T09:46:00Z",
     "input_dir": "/Users/zhenhuachen/Desktop/MusicSaas/apps/beatscape/public",
     "catalog": "/Users/zhenhuachen/Desktop/MusicSaas/apps/beatscape/public/catalog.json",
     "tracks": [
@@ -103,6 +103,11 @@
             "status": "PASS",
             "code": "catalog.audio_path",
             "message": "/catalog/bs-s1-01/audio.m4a"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.stream_planned",
+            "message": "planned stream 198s (Stage1 teaser ok)"
           },
           {
             "status": "PASS",
@@ -329,6 +334,11 @@
           },
           {
             "status": "PASS",
+            "code": "catalog.stream_planned",
+            "message": "planned stream 198s (Stage1 teaser ok)"
+          },
+          {
+            "status": "PASS",
             "code": "chart.total_notes",
             "message": "136"
           },
@@ -549,6 +559,11 @@
             "status": "PASS",
             "code": "catalog.audio_path",
             "message": "/catalog/bs-s1-03/audio.m4a"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.stream_planned",
+            "message": "planned stream 198s (Stage1 teaser ok)"
           },
           {
             "status": "PASS",
@@ -775,6 +790,11 @@
           },
           {
             "status": "PASS",
+            "code": "catalog.stream_planned",
+            "message": "planned stream 198s (Stage1 teaser ok)"
+          },
+          {
+            "status": "PASS",
             "code": "chart.total_notes",
             "message": "134"
           },
@@ -995,6 +1015,11 @@
             "status": "PASS",
             "code": "catalog.audio_path",
             "message": "/catalog/bs-s1-05/audio.m4a"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.stream_planned",
+            "message": "planned stream 180s (Stage1 teaser ok)"
           },
           {
             "status": "PASS",
@@ -1221,6 +1246,11 @@
           },
           {
             "status": "PASS",
+            "code": "catalog.stream_planned",
+            "message": "planned stream 198s (Stage1 teaser ok)"
+          },
+          {
+            "status": "PASS",
             "code": "chart.total_notes",
             "message": "138"
           },
@@ -1344,7 +1374,7 @@
       }
     ],
     "summary": {
-      "PASS": 217,
+      "PASS": 223,
       "WARN": 41,
       "FAIL": 0
     }
