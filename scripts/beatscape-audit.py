@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import argparse
 import array
+import importlib.util
 import json
 import math
 import re
@@ -22,6 +23,8 @@ from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Literal
+
+ROOT = Path(__file__).resolve().parents[1]
 
 Status = Literal["PASS", "WARN", "FAIL"]
 
@@ -346,6 +349,101 @@ def tier_nps(notes: list[dict[str, Any]], duration: float) -> tuple[float, float
     return nps, float(peak), hold_pct, chord_per_10s
 
 
+def _load_audio_module():
+    spec = importlib.util.spec_from_file_location("beatscape_audio", ROOT / "scripts" / "beatscape-audio.py")
+    assert spec and spec.loader
+    mod = importlib.util.module_from_spec(spec)
+    sys.modules["beatscape_audio"] = mod
+    spec.loader.exec_module(mod)
+    return mod
+
+
+_audio_mod: Any | None = None
+
+
+def audio_module():
+    global _audio_mod
+    if _audio_mod is None:
+        _audio_mod = _load_audio_module()
+    return _audio_mod
+
+
+def audit_chart_onset_alignment(
+    chart: dict[str, Any],
+    audio_path: Path,
+    bpm_hint: float,
+) -> list[Check]:
+    checks: list[Check] = []
+    beat_map = chart.get("beat_map") or {}
+    if beat_map.get("source") != "onset-v1":
+        checks.append(Check("WARN", "chart.beat_map", "missing onset-v1 beat_map — legacy grid chart?"))
+        return checks
+
+    try:
+        analysis = audio_module().analyze_audio(audio_path, bpm_hint)
+    except Exception as exc:
+        checks.append(Check("WARN", "chart.onset.audio", f"cannot analyze audio: {exc}"))
+        return checks
+
+    onsets = analysis.onsets_sec
+    notes = chart.get("notes") or []
+    head_times = [float(n["t"]) for n in notes if n.get("type") in ("tap", "hold", "chord")]
+    if not head_times:
+        checks.append(Check("FAIL", "chart.onset.empty", "no note heads to align"))
+        return checks
+
+    dists = [audio_module().nearest_onset_distance(t, onsets) for t in head_times]
+    dists.sort()
+    median = dists[len(dists) // 2]
+    p90 = dists[int(len(dists) * 0.9)]
+    coverage = sum(1 for d in dists if d <= 80) / len(dists)
+
+    if median <= 55 and p90 <= 120 and coverage >= 0.75:
+        checks.append(
+            Check(
+                "PASS",
+                "chart.onset.align",
+                f"median {median:.0f}ms · p90 {p90:.0f}ms · coverage {coverage * 100:.0f}%",
+            )
+        )
+    elif median <= 90 and p90 <= 180:
+        checks.append(
+            Check(
+                "WARN",
+                "chart.onset.align",
+                f"loose align median {median:.0f}ms · p90 {p90:.0f}ms · coverage {coverage * 100:.0f}%",
+            )
+        )
+    else:
+        checks.append(
+            Check(
+                "FAIL",
+                "chart.onset.align",
+                f"poor align median {median:.0f}ms · p90 {p90:.0f}ms · coverage {coverage * 100:.0f}%",
+            )
+        )
+
+    offset = int(chart.get("audio_offset_ms") or 0)
+    if offset != 0:
+        checks.append(Check("WARN", "chart.audio_offset", f"audio_offset_ms={offset} (onset charts expect 0)"))
+    else:
+        checks.append(Check("PASS", "chart.audio_offset", "0 (file-timeline notes)"))
+
+    first_beat = beat_map.get("first_beat_ms")
+    if first_beat is not None and abs(int(first_beat) - analysis.audio_offset_ms) > 120:
+        checks.append(
+            Check(
+                "WARN",
+                "chart.first_beat",
+                f"beat_map {first_beat}ms vs analysis {analysis.audio_offset_ms}ms",
+            )
+        )
+    else:
+        checks.append(Check("PASS", "chart.first_beat", f"{analysis.audio_offset_ms}ms"))
+
+    return checks
+
+
 def audit_chart(path: Path, *, stage: int, duration_sec: float) -> list[Check]:
     checks: list[Check] = []
     try:
@@ -534,11 +632,20 @@ def run_audit(args: argparse.Namespace) -> AuditReport:
             stage = 1 if str(entry.get("track_id", "")).startswith("bs-s1-") else 2
             charts = entry.get("charts") or {}
             dur = float(entry.get("duration_sec") or 75)
+            bpm_hint = float(entry.get("bpm") or 120)
+            audio_rel = entry.get("audio")
+            audio_path = base / str(audio_rel).lstrip("/") if audio_rel else None
             for tier, rel in charts.items():
                 cp = base / str(rel).lstrip("/")
                 if cp.is_file():
                     chart_checks = audit_chart(cp, stage=stage, duration_sec=dur)
                     tr.checks.extend(chart_checks)
+                    if audio_path and audio_path.is_file():
+                        try:
+                            chart = json.loads(cp.read_text(encoding="utf-8"))
+                            tr.checks.extend(audit_chart_onset_alignment(chart, audio_path, bpm_hint))
+                        except Exception as exc:
+                            tr.checks.append(Check("WARN", "chart.onset", str(exc)))
 
     if args.audio:
         audio_files = [Path(p).resolve() for p in args.audio]

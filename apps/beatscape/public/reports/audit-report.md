@@ -1,6 +1,6 @@
 # BeatScape QA Audit Report
 
-- Generated: 2026-08-24T21:23:35Z
+- Generated: 2026-08-25T07:48:03Z
 - Input: `/Users/zhenhuachen/Desktop/MusicSaas/apps/beatscape/public`
 - Catalog: `/Users/zhenhuachen/Desktop/MusicSaas/apps/beatscape/public/catalog.json`
 
@@ -8,7 +8,7 @@
 
 | PASS | WARN | FAIL |
 |------|------|------|
-| 155 | 47 | 2 |
+| 217 | 41 | 0 |
 
 ## Human sign-off (required)
 
@@ -38,21 +38,30 @@
 - ✅ `catalog.chart_path` — standard -> /catalog/bs-s1-01/standard.json
 - ✅ `catalog.chart_path` — hard -> /catalog/bs-s1-01/hard.json
 - ✅ `catalog.audio_path` — /catalog/bs-s1-01/audio.m4a
-- ✅ `chart.total_notes` — 87
-- ⚠️ `chart.density.nps` — nps=1.16 outside [2.0,3.5]
-- ✅ `chart.density.peak_nps` — peak_2s=3.00
-- ⚠️ `chart.density.hold_pct` — hold_pct=0.00 outside [5,15]
+- ✅ `chart.total_notes` — 92
+- ⚠️ `chart.density.nps` — nps=1.08 outside [2.0,3.5]
+- ✅ `chart.density.peak_nps` — peak_2s=5.00
+- ✅ `chart.density.hold_pct` — hold_pct=13.58
 - ✅ `chart.density.chord_10s` — chord_per_10s=0.00
-- ✅ `chart.total_notes` — 172
-- ⚠️ `chart.density.nps` — nps=2.29 outside [3.5,5.5]
-- ✅ `chart.density.peak_nps` — peak_2s=6.00
-- ⚠️ `chart.density.hold_pct` — hold_pct=0.00 outside [10,25]
-- ⚠️ `chart.density.chord_10s` — chord_per_10s=0.00 outside [1,3]
-- ✅ `chart.total_notes` — 723
-- ⚠️ `chart.density.nps` — nps=9.16 outside [5.5,8.5]
-- ⚠️ `chart.density.peak_nps` — peak_2s=22.00 outside [0,12]
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 100ms
+- ✅ `chart.total_notes` — 190
+- ⚠️ `chart.density.nps` — nps=2.15 outside [3.5,5.5]
+- ✅ `chart.density.peak_nps` — peak_2s=7.00
+- ⚠️ `chart.density.hold_pct` — hold_pct=3.11 outside [10,25]
+- ⚠️ `chart.density.chord_10s` — chord_per_10s=3.20 outside [1,3]
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 100ms
+- ✅ `chart.total_notes` — 326
+- ⚠️ `chart.density.nps` — nps=3.12 outside [5.5,8.5]
+- ✅ `chart.density.peak_nps` — peak_2s=11.00
 - ⚠️ `chart.density.hold_pct` — hold_pct=0.00 outside [15,30]
-- ✅ `chart.density.chord_10s` — chord_per_10s=4.80
+- ⚠️ `chart.density.chord_10s` — chord_per_10s=8.80 outside [3,6]
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 100ms
 
 ### Glass Horizon (`bs-s1-02`) — **WARN**
 - ✅ `catalog.field` — `track_id` present
@@ -74,21 +83,30 @@
 - ✅ `catalog.chart_path` — standard -> /catalog/bs-s1-02/standard.json
 - ✅ `catalog.chart_path` — hard -> /catalog/bs-s1-02/hard.json
 - ✅ `catalog.audio_path` — /catalog/bs-s1-02/audio.m4a
-- ✅ `chart.total_notes` — 64
-- ⚠️ `chart.density.nps` — nps=0.85 outside [2.0,3.5]
-- ✅ `chart.density.peak_nps` — peak_2s=2.00
-- ⚠️ `chart.density.hold_pct` — hold_pct=0.00 outside [5,15]
+- ✅ `chart.total_notes` — 136
+- ⚠️ `chart.density.nps` — nps=1.64 outside [2.0,3.5]
+- ✅ `chart.density.peak_nps` — peak_2s=5.00
+- ✅ `chart.density.hold_pct` — hold_pct=10.57
 - ✅ `chart.density.chord_10s` — chord_per_10s=0.00
-- ✅ `chart.total_notes` — 127
-- ⚠️ `chart.density.nps` — nps=1.69 outside [3.5,5.5]
-- ✅ `chart.density.peak_nps` — peak_2s=4.00
-- ⚠️ `chart.density.hold_pct` — hold_pct=0.00 outside [10,25]
-- ⚠️ `chart.density.chord_10s` — chord_per_10s=0.00 outside [1,3]
-- ✅ `chart.total_notes` — 506
-- ✅ `chart.density.nps` — nps=6.75
-- ⚠️ `chart.density.peak_nps` — peak_2s=16.00 outside [0,12]
-- ⚠️ `chart.density.hold_pct` — hold_pct=0.00 outside [15,30]
-- ⚠️ `chart.density.chord_10s` — chord_per_10s=0.00 outside [3,6]
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 250ms
+- ✅ `chart.total_notes` — 233
+- ⚠️ `chart.density.nps` — nps=2.77 outside [3.5,5.5]
+- ✅ `chart.density.peak_nps` — peak_2s=8.00
+- ⚠️ `chart.density.hold_pct` — hold_pct=2.40 outside [10,25]
+- ✅ `chart.density.chord_10s` — chord_per_10s=2.67
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 250ms
+- ✅ `chart.total_notes` — 380
+- ⚠️ `chart.density.nps` — nps=3.77 outside [5.5,8.5]
+- ✅ `chart.density.peak_nps` — peak_2s=11.00
+- ⚠️ `chart.density.hold_pct` — hold_pct=0.35 outside [15,30]
+- ⚠️ `chart.density.chord_10s` — chord_per_10s=9.73 outside [3,6]
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 250ms
 
 ### Night Drive 808 (`bs-s1-03`) — **WARN**
 - ✅ `catalog.field` — `track_id` present
@@ -110,23 +128,32 @@
 - ✅ `catalog.chart_path` — standard -> /catalog/bs-s1-03/standard.json
 - ✅ `catalog.chart_path` — hard -> /catalog/bs-s1-03/hard.json
 - ✅ `catalog.audio_path` — /catalog/bs-s1-03/audio.m4a
-- ✅ `chart.total_notes` — 51
-- ⚠️ `chart.density.nps` — nps=0.68 outside [2.0,3.5]
-- ✅ `chart.density.peak_nps` — peak_2s=2.00
-- ⚠️ `chart.density.hold_pct` — hold_pct=0.00 outside [5,15]
+- ✅ `chart.total_notes` — 125
+- ⚠️ `chart.density.nps` — nps=1.47 outside [2.0,3.5]
+- ✅ `chart.density.peak_nps` — peak_2s=5.00
+- ✅ `chart.density.hold_pct` — hold_pct=13.64
 - ✅ `chart.density.chord_10s` — chord_per_10s=0.00
-- ✅ `chart.total_notes` — 102
-- ⚠️ `chart.density.nps` — nps=1.36 outside [3.5,5.5]
-- ✅ `chart.density.peak_nps` — peak_2s=4.00
-- ⚠️ `chart.density.hold_pct` — hold_pct=0.00 outside [10,25]
-- ⚠️ `chart.density.chord_10s` — chord_per_10s=0.00 outside [1,3]
-- ✅ `chart.total_notes` — 428
-- ⚠️ `chart.density.nps` — nps=5.43 outside [5.5,8.5]
-- ⚠️ `chart.density.peak_nps` — peak_2s=14.00 outside [0,12]
-- ⚠️ `chart.density.hold_pct` — hold_pct=0.00 outside [15,30]
-- ⚠️ `chart.density.chord_10s` — chord_per_10s=2.80 outside [3,6]
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 170ms
+- ✅ `chart.total_notes` — 222
+- ⚠️ `chart.density.nps` — nps=2.56 outside [3.5,5.5]
+- ✅ `chart.density.peak_nps` — peak_2s=7.00
+- ⚠️ `chart.density.hold_pct` — hold_pct=3.12 outside [10,25]
+- ⚠️ `chart.density.chord_10s` — chord_per_10s=3.20 outside [1,3]
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 170ms
+- ✅ `chart.total_notes` — 396
+- ⚠️ `chart.density.nps` — nps=4.01 outside [5.5,8.5]
+- ✅ `chart.density.peak_nps` — peak_2s=12.00
+- ⚠️ `chart.density.hold_pct` — hold_pct=0.66 outside [15,30]
+- ⚠️ `chart.density.chord_10s` — chord_per_10s=9.33 outside [3,6]
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 170ms
 
-### Velvet Afterhours (`bs-s1-04`) — **FAIL**
+### Velvet Afterhours (`bs-s1-04`) — **WARN**
 - ✅ `catalog.field` — `track_id` present
 - ✅ `catalog.field` — `title` present
 - ✅ `catalog.field` — `artist` present
@@ -146,21 +173,30 @@
 - ✅ `catalog.chart_path` — standard -> /catalog/bs-s1-04/standard.json
 - ✅ `catalog.chart_path` — hard -> /catalog/bs-s1-04/hard.json
 - ✅ `catalog.audio_path` — /catalog/bs-s1-04/audio.m4a
-- ❌ `chart.total_notes` — declared 51 != counted 48
-- ⚠️ `chart.density.nps` — nps=0.64 outside [2.0,3.5]
-- ✅ `chart.density.peak_nps` — peak_2s=2.00
-- ✅ `chart.density.hold_pct` — hold_pct=6.25
+- ✅ `chart.total_notes` — 134
+- ⚠️ `chart.density.nps` — nps=1.57 outside [2.0,3.5]
+- ✅ `chart.density.peak_nps` — peak_2s=5.00
+- ✅ `chart.density.hold_pct` — hold_pct=13.56
 - ✅ `chart.density.chord_10s` — chord_per_10s=0.00
-- ❌ `chart.total_notes` — declared 102 != counted 94
-- ⚠️ `chart.density.nps` — nps=1.25 outside [3.5,5.5]
-- ✅ `chart.density.peak_nps` — peak_2s=3.00
-- ⚠️ `chart.density.hold_pct` — hold_pct=8.51 outside [10,25]
-- ⚠️ `chart.density.chord_10s` — chord_per_10s=0.00 outside [1,3]
-- ✅ `chart.total_notes` — 377
-- ⚠️ `chart.density.nps` — nps=5.03 outside [5.5,8.5]
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 10ms
+- ✅ `chart.total_notes` — 235
+- ⚠️ `chart.density.nps` — nps=2.79 outside [3.5,5.5]
+- ✅ `chart.density.peak_nps` — peak_2s=8.00
+- ⚠️ `chart.density.hold_pct` — hold_pct=1.44 outside [10,25]
+- ⚠️ `chart.density.chord_10s` — chord_per_10s=3.07 outside [1,3]
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 10ms
+- ✅ `chart.total_notes` — 436
+- ⚠️ `chart.density.nps` — nps=4.39 outside [5.5,8.5]
 - ✅ `chart.density.peak_nps` — peak_2s=12.00
-- ⚠️ `chart.density.hold_pct` — hold_pct=0.00 outside [15,30]
-- ⚠️ `chart.density.chord_10s` — chord_per_10s=0.00 outside [3,6]
+- ⚠️ `chart.density.hold_pct` — hold_pct=0.61 outside [15,30]
+- ⚠️ `chart.density.chord_10s` — chord_per_10s=10.13 outside [3,6]
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 10ms
 
 ### Voltage Drop (`bs-s1-05`) — **WARN**
 - ✅ `catalog.field` — `track_id` present
@@ -182,21 +218,30 @@
 - ✅ `catalog.chart_path` — standard -> /catalog/bs-s1-05/standard.json
 - ✅ `catalog.chart_path` — hard -> /catalog/bs-s1-05/hard.json
 - ✅ `catalog.audio_path` — /catalog/bs-s1-05/audio.m4a
-- ✅ `chart.total_notes` — 73
-- ⚠️ `chart.density.nps` — nps=1.22 outside [2.0,3.5]
-- ✅ `chart.density.peak_nps` — peak_2s=3.00
-- ⚠️ `chart.density.hold_pct` — hold_pct=0.00 outside [5,15]
+- ✅ `chart.total_notes` — 103
+- ⚠️ `chart.density.nps` — nps=1.57 outside [2.0,3.5]
+- ✅ `chart.density.peak_nps` — peak_2s=5.00
+- ✅ `chart.density.hold_pct` — hold_pct=9.57
 - ✅ `chart.density.chord_10s` — chord_per_10s=0.00
-- ✅ `chart.total_notes` — 145
-- ⚠️ `chart.density.nps` — nps=2.42 outside [3.5,5.5]
-- ✅ `chart.density.peak_nps` — peak_2s=6.00
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 200ms
+- ✅ `chart.total_notes` — 200
+- ⚠️ `chart.density.nps` — nps=2.92 outside [3.5,5.5]
+- ✅ `chart.density.peak_nps` — peak_2s=8.00
 - ⚠️ `chart.density.hold_pct` — hold_pct=0.00 outside [10,25]
-- ⚠️ `chart.density.chord_10s` — chord_per_10s=0.00 outside [1,3]
-- ✅ `chart.total_notes` — 610
-- ⚠️ `chart.density.nps` — nps=9.65 outside [5.5,8.5]
-- ⚠️ `chart.density.peak_nps` — peak_2s=24.00 outside [0,12]
+- ⚠️ `chart.density.chord_10s` — chord_per_10s=4.17 outside [1,3]
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 200ms
+- ✅ `chart.total_notes` — 368
+- ⚠️ `chart.density.nps` — nps=4.50 outside [5.5,8.5]
+- ✅ `chart.density.peak_nps` — peak_2s=12.00
 - ⚠️ `chart.density.hold_pct` — hold_pct=0.00 outside [15,30]
-- ✅ `chart.density.chord_10s` — chord_per_10s=5.17
+- ⚠️ `chart.density.chord_10s` — chord_per_10s=10.83 outside [3,6]
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 200ms
 
 ### Chrome Riff (`bs-s1-06`) — **WARN**
 - ✅ `catalog.field` — `track_id` present
@@ -218,18 +263,27 @@
 - ✅ `catalog.chart_path` — standard -> /catalog/bs-s1-06/standard.json
 - ✅ `catalog.chart_path` — hard -> /catalog/bs-s1-06/hard.json
 - ✅ `catalog.audio_path` — /catalog/bs-s1-06/audio.m4a
-- ✅ `chart.total_notes` — 71
-- ⚠️ `chart.density.nps` — nps=0.95 outside [2.0,3.5]
-- ✅ `chart.density.peak_nps` — peak_2s=3.00
-- ⚠️ `chart.density.hold_pct` — hold_pct=0.00 outside [5,15]
-- ✅ `chart.density.chord_10s` — chord_per_10s=0.00
-- ✅ `chart.total_notes` — 142
-- ⚠️ `chart.density.nps` — nps=1.89 outside [3.5,5.5]
+- ✅ `chart.total_notes` — 138
+- ⚠️ `chart.density.nps` — nps=1.63 outside [2.0,3.5]
 - ✅ `chart.density.peak_nps` — peak_2s=5.00
-- ⚠️ `chart.density.hold_pct` — hold_pct=0.00 outside [10,25]
-- ⚠️ `chart.density.chord_10s` — chord_per_10s=0.00 outside [1,3]
-- ✅ `chart.total_notes` — 597
-- ✅ `chart.density.nps` — nps=7.56
-- ⚠️ `chart.density.peak_nps` — peak_2s=18.00 outside [0,12]
+- ✅ `chart.density.hold_pct` — hold_pct=13.11
+- ✅ `chart.density.chord_10s` — chord_per_10s=0.00
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 40ms
+- ✅ `chart.total_notes` — 285
+- ⚠️ `chart.density.nps` — nps=3.36 outside [3.5,5.5]
+- ✅ `chart.density.peak_nps` — peak_2s=8.00
+- ⚠️ `chart.density.hold_pct` — hold_pct=0.79 outside [10,25]
+- ⚠️ `chart.density.chord_10s` — chord_per_10s=4.13 outside [1,3]
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 40ms
+- ✅ `chart.total_notes` — 416
+- ⚠️ `chart.density.nps` — nps=4.17 outside [5.5,8.5]
+- ✅ `chart.density.peak_nps` — peak_2s=11.00
 - ⚠️ `chart.density.hold_pct` — hold_pct=0.00 outside [15,30]
-- ✅ `chart.density.chord_10s` — chord_per_10s=4.00
+- ⚠️ `chart.density.chord_10s` — chord_per_10s=10.13 outside [3,6]
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 40ms

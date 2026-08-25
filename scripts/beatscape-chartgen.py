@@ -1,75 +1,51 @@
 #!/usr/bin/env python3
-"""BeatScape chart generator — groove-based (replaces the metronome generator).
+"""BeatScape chart generator — onset-based auto-chart from catalog audio.
 
-Design goals (see PRD §4.6, §4.10):
-  * Musical rhythm, not a metronome: notes are placed by an accent-weighted
-    groove grid (downbeats > quarter beats > 8th off-beats > 16th syncopation),
-    so the chart breathes with the song instead of hitting every tick.
-  * Section intensity arcs: intro < build < drop > groove > outro, matching the
-    generated song structure (sections are already stored in each chart).
-  * Note variety: taps + holds + chords (Stage1 forbids slides — audit gate).
-  * Playable lanes: a two-hand flow model avoids impossible overlaps and
-    three-in-a-row pokes, and creates left/right runs that feel like motion.
-  * Readable approach: AR is back-computed per track/tier so a note is on
-    screen ~`approach` seconds (PRD §4.10 approach = 3000/(AR*BPM)).
+Analyzes each track's m4a (BPM, first-beat offset, onsets) and places notes on
+real hit points instead of a synthetic BPM grid. Regenerates chart JSON + updates
+catalog BPM when detection diverges from hint.
 
-Regenerates apps/beatscape/public/catalog/<id>/<tier>.json in place.
-Audio / covers / og are untouched. Deterministic per (track, tier) seed.
-
-Usage: python3 scripts/beatscape-chartgen.py
+Usage:
+  python3 scripts/beatscape-chartgen.py
+  python3 scripts/beatscape-chartgen.py --track bs-s1-02
+  python3 scripts/beatscape-chartgen.py --analyze-only
 """
+
 from __future__ import annotations
 
+import argparse
+import importlib.util
 import json
 import random
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG_DIR = ROOT / "apps" / "beatscape" / "public" / "catalog"
+CATALOG_JSON = CATALOG_DIR.parent / "catalog.json"
 
-# Target average density (notes/sec) per tier, kept just under peak/2 so the
-# 2s-peak cap doesn't shave the average back below the PRD band floor.
+# Load beatscape-audio from same directory (no package install required)
+_spec = importlib.util.spec_from_file_location(
+    "beatscape_audio", ROOT / "scripts" / "beatscape-audio.py"
+)
+assert _spec and _spec.loader
+_audio = importlib.util.module_from_spec(_spec)
+sys.modules["beatscape_audio"] = _audio
+_spec.loader.exec_module(_audio)
+analyze_audio = _audio.analyze_audio
+AudioAnalysis = _audio.AudioAnalysis
+
 TIER_SPEC = {
-    "easy": {"approach": 1.35, "sub": 2, "nps": 2.5, "peak": 5, "hold_p": 0.12, "chord_p": 0.0},
-    "standard": {"approach": 1.20, "sub": 4, "nps": 4.5, "peak": 8, "hold_p": 0.24, "chord_p": 0.16},
-    "hard": {"approach": 1.00, "sub": 4, "nps": 6.4, "peak": 12, "hold_p": 0.30, "chord_p": 0.34},
+    "easy": {"approach": 1.35, "min_gap": 0.38, "nps": 2.5, "peak": 5, "hold_p": 0.12, "chord_p": 0.0},
+    "standard": {"approach": 1.20, "min_gap": 0.22, "nps": 4.5, "peak": 8, "hold_p": 0.24, "chord_p": 0.16},
+    "hard": {"approach": 1.00, "min_gap": 0.14, "nps": 6.4, "peak": 12, "hold_p": 0.30, "chord_p": 0.34},
 }
 
-# Section intensity arc (fraction of duration -> density multiplier). Gentle
-# enough that the 2s peak stays under cap while the drop still feels bigger.
-SECTION_ARC = [
-    (0.00, 0.12, 0.80),  # intro
-    (0.12, 0.28, 0.92),  # build
-    (0.28, 0.55, 1.00),  # drop — densest
-    (0.55, 0.78, 0.92),  # groove
-    (0.78, 1.01, 0.82),  # outro
-]
-
-# Chord shapes. 2-note on standard, up to 3-note on hard.
 CHORD_SHAPES = [(0, 3), (1, 2), (0, 2), (1, 3)]
 CHORD_SHAPES_HARD = [(0, 3), (1, 2), (0, 3), (0, 1, 2), (1, 2, 3)]
 
 
-def section_mult(phase: float) -> float:
-    for t0, t1, m in SECTION_ARC:
-        if t0 <= phase < t1:
-            return m
-    return 0.7
-
-
-def accent_weight(slot: int, sub: int) -> float:
-    """How strong a rhythmic position is (drives placement probability)."""
-    if slot == 0:
-        return 1.0  # bar downbeat
-    if slot % sub == 0:
-        return 0.88  # quarter-note beats
-    if slot % (sub // 2) == 0:
-        return 0.66  # 8th off-beats
-    return 0.46  # 16th syncopation
-
-
 def enforce_peak_nps(notes: list[dict], max_peak: int) -> list[dict]:
-    """Drop tap notes in the densest 2s windows until peak event count <= max_peak."""
     def peak(ns: list[dict]) -> int:
         times = sorted(n["t"] for n in ns)
         best = 0
@@ -102,111 +78,89 @@ def enforce_peak_nps(notes: list[dict], max_peak: int) -> list[dict]:
     return kept
 
 
-def build_chart(track: dict, tier: str) -> dict:
-    bpm = track["bpm"]
-    dur = float(track["duration_sec"])
+def select_onsets(analysis: AudioAnalysis, tier: str, dur: float) -> list[tuple[float, int, float]]:
+    """Pick onset subset for tier: (t_sec, lane, energy)."""
     spec = TIER_SPEC[tier]
-    sub = spec["sub"]
-    beat = 60.0 / bpm
-    step = beat / sub  # grid resolution (8th for easy, 16th otherwise)
-    slots_per_bar = 4 * sub
-
-    rng = random.Random(f"{track['track_id']}::{tier}::groove-v3")
-
-    # Normalize the section arc so the average density lands on target nps.
-    mean_section = sum(m * (t1 - t0) for t0, t1, m in SECTION_ARC)
-
-    notes: list[dict] = []
-    busy_until = [0.0, 0.0, 0.0, 0.0]
-    last_lane = -1
-    same_run = 0
-    hand = 0
-    idx = 0
-
-    def pick_lane(t: float) -> int:
-        nonlocal last_lane, same_run, hand
-        if rng.random() < 0.42:
-            hand ^= 1
-        pool = [0, 1] if hand == 0 else [2, 3]
-        free = [l for l in pool if t >= busy_until[l] - 1e-6]
-        if not free:
-            free = [l for l in range(4) if t >= busy_until[l] - 1e-6]
-        if not free:
-            return -1
-        cand = [l for l in free if not (l == last_lane and same_run >= 2)] or free
-        lane = rng.choice(cand)
-        if lane == last_lane:
-            same_run += 1
-        else:
-            same_run = 1
-        last_lane = lane
-        return lane
-
-    # Per-bar quota placed on the strongest-accent slots: even density (no
-    # random clusters to trip the peak cap) with a real groove and section arc.
-    bar_dur = 4 * beat
-    lead = 2.0
-    end_limit = dur - beat * 1.5
-    acc = 0.0
-    bar = 0
-    while True:
-        bar_start = lead + bar * bar_dur
-        if bar_start >= end_limit:
+    min_gap = spec["min_gap"]
+    target = int(dur * spec["nps"] * 0.92)
+    ranked = sorted(
+        zip(analysis.onsets_sec, analysis.onset_lanes, analysis.onset_energies),
+        key=lambda x: -x[2],
+    )
+    picked: list[tuple[float, int, float]] = []
+    for t, lane, e in ranked:
+        if len(picked) >= target:
             break
-        phase = bar_start / dur
-        rel = section_mult(phase) / mean_section
-        acc += spec["nps"] * bar_dur * rel
-        quota = int(acc)
-        acc -= quota
+        if any(abs(t - p[0]) < min_gap for p in picked):
+            continue
+        picked.append((t, lane, e))
+    picked.sort(key=lambda x: x[0])
+    if len(picked) < 12:
+        # fallback: take every Nth onset
+        step = max(1, len(analysis.onsets_sec) // max(12, target))
+        picked = [
+            (analysis.onsets_sec[i], analysis.onset_lanes[i], analysis.onset_energies[i])
+            for i in range(0, len(analysis.onsets_sec), step)
+        ][: target]
+    return picked
 
-        # Strongest-accent slots first, with jitter so bars don't repeat identically.
-        cand = sorted(
-            range(slots_per_bar),
-            key=lambda s: -(accent_weight(s, sub) + rng.random() * 0.18),
-        )
-        placed = 0
-        for s in cand:
-            if placed >= quota:
-                break
-            t = round(bar_start + s * step, 3)
-            if t >= end_limit:
-                break
-            strong = s % sub == 0
-            if spec["chord_p"] > 0 and strong and phase > 0.26 and rng.random() < spec["chord_p"]:
-                shapes = CHORD_SHAPES_HARD if tier == "hard" else CHORD_SHAPES
-                shape = list(rng.choice(shapes))
-                if all(t >= busy_until[l] - 1e-6 for l in shape):
-                    notes.append({"id": f"n{idx}", "t": t, "type": "chord", "lanes": shape})
-                    for l in shape:
-                        busy_until[l] = t + step
-                    idx += 1
-                    placed += 1
-                    continue
-            if strong and phase > 0.18 and rng.random() < spec["hold_p"]:
-                lane = pick_lane(t)
-                if lane >= 0:
-                    hold_beats = rng.choice([1, 2]) if bpm < 120 else rng.choice([2, 3])
-                    end_t = round(t + max(0.45, hold_beats * beat), 3)
-                    if end_t < end_limit:
-                        notes.append(
-                            {"id": f"n{idx}", "t": t, "type": "hold", "lane": lane, "end": end_t}
-                        )
-                        busy_until[lane] = end_t + step
-                        idx += 1
-                        placed += 1
-                        continue
-            lane = pick_lane(t)
-            if lane >= 0:
-                notes.append({"id": f"n{idx}", "t": t, "type": "tap", "lane": lane})
-                busy_until[lane] = t + step
-                idx += 1
-                placed += 1
-        bar += 1
+
+def build_chart_from_onsets(
+    track: dict,
+    tier: str,
+    analysis: AudioAnalysis,
+) -> dict:
+    bpm = analysis.bpm
+    dur = analysis.duration_sec
+    spec = TIER_SPEC[tier]
+    beat = 60.0 / bpm
+    rng = random.Random(f"{track['track_id']}::{tier}::onset-v1")
+
+    candidates = select_onsets(analysis, tier, dur)
+    notes: list[dict] = []
+    idx = 0
+    i = 0
+    hold_budget = int(len(candidates) * spec["hold_p"])
+
+    while i < len(candidates):
+        t, lane, _e = candidates[i]
+        phase = t / dur
+
+        if (
+            spec["chord_p"] > 0
+            and phase > 0.26
+            and rng.random() < spec["chord_p"]
+            and i + 1 < len(candidates)
+        ):
+            shapes = CHORD_SHAPES_HARD if tier == "hard" else CHORD_SHAPES
+            shape = list(rng.choice(shapes))
+            notes.append({"id": f"n{idx}", "t": round(t, 3), "type": "chord", "lanes": shape})
+            idx += 1
+            i += 1
+            continue
+
+        if (
+            hold_budget > 0
+            and i + 1 < len(candidates)
+            and candidates[i + 1][1] == lane
+            and 0.45 <= candidates[i + 1][0] - t <= 0.85
+            and rng.random() < 0.55
+        ):
+            end_t = round(candidates[i + 1][0], 3)
+            notes.append({"id": f"n{idx}", "t": round(t, 3), "type": "hold", "lane": lane, "end": end_t})
+            hold_budget -= 1
+            idx += 1
+            i += 2
+            continue
+
+        notes.append({"id": f"n{idx}", "t": round(t, 3), "type": "tap", "lane": lane})
+        idx += 1
+        i += 1
 
     notes = enforce_peak_nps(notes, spec["peak"])
     notes.sort(key=lambda n: n["t"])
-    for i, n in enumerate(notes):
-        n["id"] = f"n{i}"
+    for j, n in enumerate(notes):
+        n["id"] = f"n{j}"
 
     sections = [
         {"id": "intro", "t0": 0.0, "t1": round(dur * 0.12, 2)},
@@ -225,37 +179,87 @@ def build_chart(track: dict, tier: str) -> dict:
         "track_id": track["track_id"],
         "tier": tier,
         "format": 1,
-        "bpm": bpm,
+        "bpm": round(bpm, 1),
         "audio_offset_ms": 0,
         "ar": ar,
         "total_notes": total,
         "sections": sections,
         "notes": notes,
+        "beat_map": {
+            "source": "onset-v1",
+            "onset_count": len(analysis.onsets_sec),
+            "detected_bpm": round(bpm, 1),
+            "first_beat_ms": analysis.audio_offset_ms,
+        },
     }
 
 
 def stats(chart: dict) -> str:
     notes = chart["notes"]
-    kinds = {}
+    kinds: dict[str, int] = {}
     for n in notes:
         kinds[n["type"]] = kinds.get(n["type"], 0) + 1
-    dur = max(n["t"] for n in notes) - min(n["t"] for n in notes) if notes else 1
     return (
         f"n={len(notes)} taps={kinds.get('tap', 0)} holds={kinds.get('hold', 0)} "
-        f"chords={kinds.get('chord', 0)} ar={chart['ar']} approach={3000/(chart['ar']*chart['bpm']):.2f}s"
+        f"chords={kinds.get('chord', 0)} first_beat={chart.get('beat_map', {}).get('first_beat_ms', 0)}ms "
+        f"ar={chart['ar']}"
     )
 
 
-def main() -> None:
-    catalog = json.loads((CATALOG_DIR.parent / "catalog.json").read_text(encoding="utf-8"))
+def audio_path_for_track(track: dict, base: Path) -> Path:
+    rel = str(track.get("audio", "")).lstrip("/")
+    return base / rel
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="BeatScape onset auto-chart")
+    parser.add_argument("--track", help="Only regenerate one track_id")
+    parser.add_argument("--analyze-only", action="store_true", help="Print analysis, no writes")
+    parser.add_argument("--no-catalog-bpm", action="store_true", help="Do not update catalog.json bpm")
+    args = parser.parse_args()
+
+    catalog = json.loads(CATALOG_JSON.read_text(encoding="utf-8"))
+    base = CATALOG_JSON.parent
+    changed_bpm = False
+
     for tr in catalog["tracks"]:
         tid = tr["track_id"]
+        if args.track and tid != args.track:
+            continue
+        ap = audio_path_for_track(tr, base)
+        if not ap.is_file():
+            print(f"SKIP {tid}: missing audio {ap}", file=sys.stderr)
+            continue
+
+        hint = float(tr.get("bpm", 120))
+        print(f"\n=== {tid} {tr.get('title', '')} ===")
+        analysis = analyze_audio(ap, hint)
+        print(
+            f"  audio: {analysis.duration_sec:.1f}s · bpm {analysis.bpm:.1f} "
+            f"(hint {hint}) · offset {analysis.audio_offset_ms}ms · "
+            f"onsets {len(analysis.onsets_sec)}"
+        )
+
+        if args.analyze_only:
+            continue
+
+        if abs(analysis.bpm - hint) > 0.5 and not args.no_catalog_bpm:
+            tr["bpm"] = round(analysis.bpm)
+            changed_bpm = True
+            print(f"  catalog bpm {hint} -> {tr['bpm']}")
+
         for tier in ("easy", "standard", "hard"):
-            chart = build_chart(tr, tier)
+            chart = build_chart_from_onsets(tr, tier, analysis)
             out = CATALOG_DIR / tid / f"{tier}.json"
             out.write_text(json.dumps(chart, indent=2) + "\n", encoding="utf-8")
-            print(f"{tid:9s} {tier:8s} {stats(chart)}")
+            print(f"  {tier:8s} {stats(chart)}")
+
+    if changed_bpm and not args.analyze_only:
+        CATALOG_JSON.write_text(json.dumps(catalog, indent=2) + "\n", encoding="utf-8")
+        print(f"\nUpdated {CATALOG_JSON}")
+
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

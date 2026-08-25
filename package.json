@@ -15,7 +15,8 @@
     "test:all": "bash scripts/harness.sh all",
     "harness": "bash scripts/harness.sh",
     "acceptance": "python3 scripts/acceptance-p0.py",
-    "audit:beatscape": "python3 scripts/beatscape-audit.py --dir data/beatscape-preview",
+    "audit:beatscape": "python3 scripts/beatscape-audit.py --dir apps/beatscape/public --catalog apps/beatscape/public/catalog.json",
+    "chart:beatscape": "python3 scripts/beatscape-chartgen.py",
     "dev:beatscape": "pnpm --filter @musicsaas/beatscape dev",
     "build:beatscape": "pnpm --filter @musicsaas/beatscape build",
     "lint": "pnpm -r lint"

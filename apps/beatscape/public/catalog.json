@@ -6,7 +6,7 @@
       "title": "Neon Pulse",
       "artist": "Pulse Atlas",
       "genre": "EDM",
-      "bpm": 160,
+      "bpm": 162,
       "duration_sec": 75,
       "preset_id": "bs-edm-main",
       "engine": "stable-audio-3",
@@ -27,7 +27,7 @@
         "hard": "/catalog/bs-s1-01/hard.json"
       },
       "seo": {
-        "title": "Neon Pulse — BeatScape AI Original",
+        "title": "Neon Pulse \u2014 BeatScape AI Original",
         "description": "Own the Scape. 160 BPM EDM chart."
       },
       "og": "/catalog/bs-s1-01/og.png"
@@ -58,7 +58,7 @@
         "hard": "/catalog/bs-s1-02/hard.json"
       },
       "seo": {
-        "title": "Glass Horizon — BeatScape AI Original",
+        "title": "Glass Horizon \u2014 BeatScape AI Original",
         "description": "Own the Scape. 118 BPM Pop chart."
       },
       "og": "/catalog/bs-s1-02/og.png"
@@ -89,7 +89,7 @@
         "hard": "/catalog/bs-s1-03/hard.json"
       },
       "seo": {
-        "title": "Night Drive 808 — BeatScape AI Original",
+        "title": "Night Drive 808 \u2014 BeatScape AI Original",
         "description": "Own the Scape. 95 BPM Hip-hop chart."
       },
       "og": "/catalog/bs-s1-03/og.png"
@@ -120,7 +120,7 @@
         "hard": "/catalog/bs-s1-04/hard.json"
       },
       "seo": {
-        "title": "Velvet Afterhours — BeatScape AI Original",
+        "title": "Velvet Afterhours \u2014 BeatScape AI Original",
         "description": "Own the Scape. 88 BPM R&B chart."
       },
       "og": "/catalog/bs-s1-04/og.png"
@@ -130,7 +130,7 @@
       "title": "Voltage Drop",
       "artist": "Gridline",
       "genre": "EDM",
-      "bpm": 170,
+      "bpm": 171,
       "duration_sec": 60,
       "preset_id": "bs-edm-climax",
       "engine": "stable-audio-3",
@@ -151,7 +151,7 @@
         "hard": "/catalog/bs-s1-05/hard.json"
       },
       "seo": {
-        "title": "Voltage Drop — BeatScape AI Original",
+        "title": "Voltage Drop \u2014 BeatScape AI Original",
         "description": "Own the Scape. 170 BPM EDM chart."
       },
       "og": "/catalog/bs-s1-05/og.png"
@@ -182,7 +182,7 @@
         "hard": "/catalog/bs-s1-06/hard.json"
       },
       "seo": {
-        "title": "Chrome Riff — BeatScape AI Original",
+        "title": "Chrome Riff \u2014 BeatScape AI Original",
         "description": "Own the Scape. 132 BPM Rock chart."
       },
       "og": "/catalog/bs-s1-06/og.png"
