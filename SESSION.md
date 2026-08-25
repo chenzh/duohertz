@@ -14,7 +14,7 @@
 - [x] Stage3 曲库扩至 25 首（`catalog:beatscape --stage 3` → **25/25**）
 - [x] 自动化验收：`earcheck` **25/25 PASS** · `audit` **FAIL=0 WARN=0** · vitest **17/17**
 - [x] 曲库页 **Preview 试听** · PlayField `key` 防串曲
-- [ ] #05 Voltage Drop 实机 60fps 复测（T1-A4 人工，唯一未自动化项）
+- [x] #05 Voltage Drop 实机 60fps 复测（T1-A4 · rAF 12s：avg 8.3ms · 0 帧 >16ms）
 
 ## 冲刺已完成（2026-08-25）
 

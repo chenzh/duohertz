@@ -14,7 +14,7 @@
 | T6–T8 Stage2 | ✅ | Slide City · **10/10** |
 | T9–T12 工具/CI | ✅ | pipeline · vitest · CI job |
 | 内容 QA | ✅ | `audit:beatscape` **FAIL=0 WARN=0** |
-| T1-A4 #05 60fps | ⏳ | 人工实机（唯一未自动化） |
+| T1-A4 #05 60fps | ✅ | rAF 12s smoke：est **120fps** · p95 **9.3ms** · 0 帧 >16ms |
 
 **一键复验（Stage3）**
 
