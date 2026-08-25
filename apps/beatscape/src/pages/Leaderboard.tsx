@@ -1,7 +1,32 @@
-import { loadBoard } from "../storage/session";
+import { useEffect, useState } from "react";
+import { loadCatalog } from "../catalog/loadCatalog";
+import { loadBoard, type BoardEntry } from "../storage/session";
+
+function trackLabel(entry: BoardEntry, titles: Record<string, string>): string {
+  return entry.title || titles[entry.track_id] || entry.track_id;
+}
 
 export function LeaderboardPage() {
   const board = loadBoard();
+  const [titles, setTitles] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    let cancelled = false;
+    loadCatalog()
+      .then((cat) => {
+        if (cancelled) return;
+        const map: Record<string, string> = {};
+        for (const t of cat.tracks) map[t.track_id] = t.title;
+        setTitles(map);
+      })
+      .catch(() => {
+        /* keep track_id fallback */
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   return (
     <section className="leaderboard">
       <h1>Local Board</h1>
@@ -21,7 +46,7 @@ export function LeaderboardPage() {
           {board.map((e, i) => (
             <tr key={`${e.at}-${i}`}>
               <td>{i + 1}</td>
-              <td>{e.track_id}</td>
+              <td>{trackLabel(e, titles)}</td>
               <td>{e.tier}</td>
               <td>{e.score.toLocaleString()}</td>
               <td>{e.accuracy}%</td>

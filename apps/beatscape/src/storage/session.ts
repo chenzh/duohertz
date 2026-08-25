@@ -3,8 +3,13 @@ import type { CatalogTrack } from "../types/catalog";
 import { maxScore } from "../engine/judge";
 import { saveScore } from "./settings";
 
+const SESSION_RUN_KEY = "bs_last_run";
+/** Survives new-tab share links (`?run=local`, PRD §6.0.24). */
+const LOCAL_RUN_KEY = "bs_last_run_local";
+
 export type BoardEntry = {
   track_id: string;
+  title?: string;
   tier: string;
   score: number;
   accuracy: number;
@@ -32,6 +37,15 @@ export function getDisplayName(): string {
   return localStorage.getItem("bs_display_name") || "Player";
 }
 
+function parseRun(raw: string | null): LastRun | null {
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw) as LastRun;
+  } catch {
+    return null;
+  }
+}
+
 export function writeLastRun(
   track: CatalogTrack,
   tier: string,
@@ -57,7 +71,9 @@ export function writeLastRun(
     durationMs,
     endedAt: new Date().toISOString(),
   };
-  sessionStorage.setItem("bs_last_run", JSON.stringify(run));
+  const payload = JSON.stringify(run);
+  sessionStorage.setItem(SESSION_RUN_KEY, payload);
+  localStorage.setItem(LOCAL_RUN_KEY, payload);
 
   const ceiling = maxScore(result.totalNotes) * 1.01;
   if (result.score <= ceiling && mode === "arcade" && !result.failed) {
@@ -71,6 +87,7 @@ export function writeLastRun(
     });
     saveBoardEntry({
       track_id: track.track_id,
+      title: track.title,
       tier,
       score: result.score,
       accuracy: result.accuracy,
@@ -80,12 +97,19 @@ export function writeLastRun(
   }
 }
 
-export function readLastRun(): LastRun | null {
-  try {
-    const raw = sessionStorage.getItem("bs_last_run");
-    if (!raw) return null;
-    return JSON.parse(raw) as LastRun;
-  } catch {
-    return null;
+/** Prefer session (same tab); fall back to localStorage for share deep links. */
+export function readLastRun(preferLocal = false): LastRun | null {
+  if (preferLocal) {
+    return parseRun(localStorage.getItem(LOCAL_RUN_KEY)) ?? parseRun(sessionStorage.getItem(SESSION_RUN_KEY));
   }
+  return parseRun(sessionStorage.getItem(SESSION_RUN_KEY)) ?? parseRun(localStorage.getItem(LOCAL_RUN_KEY));
+}
+
+export function shareResultsUrl(origin = typeof window !== "undefined" ? window.location.origin : ""): string {
+  const base = (import.meta.env.BASE_URL || "/beatscape/").replace(/\/$/, "");
+  return `${origin}${base}/results?run=local`;
+}
+
+export function shareResultsCopy(run: LastRun, url: string): string {
+  return `I just ran ${run.title} on BeatScape — ${run.accuracy}% ${run.grade}. Feel the Beat, Own the Scape. ${url}`;
 }

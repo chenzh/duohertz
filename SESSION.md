@@ -3,7 +3,7 @@
 | 字段 | 值 |
 |------|-----|
 | **phase** | MVP v0.2 稳定 + BeatScape Stage1 可玩 |
-| **updated** | 2026-08-24 |
+| **updated** | 2026-08-25 |
 | **slug** | musicsaas |
 
 ## next
@@ -18,6 +18,7 @@
 
 ## 近期完成
 
+- LOCA-15：Results 分享闭环（`?run=local`）+ 全曲 `og.png` + Local Board 曲名
 - BeatScape Stage1：6 首 catalog + 可玩 Web（判定 15/30/50）
 - 可玩性修复：Tap to Start · 首音符 ~2s · 路由 query 同步
 - Harness Basic：知识库 + 代码索引 + SESSION

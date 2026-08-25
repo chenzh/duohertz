@@ -20,6 +20,8 @@ export type CatalogTrack = {
   audio_master?: string;
   preview?: string;
   cover: string;
+  /** Open Graph 1200×630 (PRD §6.0.24) */
+  og?: string;
   charts: Record<ChartTier, string>;
   seo?: { title: string; description: string };
   artist_bio?: string;

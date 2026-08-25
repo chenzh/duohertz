@@ -76,7 +76,7 @@ export function PlayPage() {
       nav("/");
       return;
     }
-    nav("/results");
+    nav("/results?run=local");
   };
 
   const exitPlay = () => {
