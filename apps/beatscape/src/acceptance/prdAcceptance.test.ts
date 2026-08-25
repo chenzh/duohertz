@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 import { judgeDelta, windowsFor, maxScore } from "../engine/judge";
 import { countTotalNotes, initPlay, finalize } from "../engine/playState";
@@ -63,5 +65,18 @@ describe("BeatScape PRD acceptance", () => {
   it("mobile touch debounce and receptor geometry match PRD §4.12/§4.14", () => {
     expect(LANE_DEBOUNCE_MS).toBe(20);
     expect(receptorYFromGeometry(600, 375, 0)).toBeCloseTo(600 - 375 * 0.15);
+  });
+
+  it("Stage2 Slide City standard chart includes valid slide notes (T8/G1)", () => {
+    const chartPath = resolve(__dirname, "../../public/catalog/bs-s2-01/standard.json");
+    const chart = JSON.parse(readFileSync(chartPath, "utf-8"));
+    const slides = chart.notes.filter((n: { type: string }) => n.type === "slide");
+    expect(slides.length).toBeGreaterThan(0);
+    for (const s of slides) {
+      expect(Math.abs(s.to - s.lane)).toBe(1);
+      expect(s.end).toBeGreaterThan(s.t);
+    }
+    const introEnd = chart.sections.find((s: { id: string }) => s.id === "intro")?.t1 ?? 0;
+    expect(slides.every((s: { t: number }) => s.t >= introEnd)).toBe(true);
   });
 });

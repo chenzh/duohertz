@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#0b0f14"/>
+  <polygon points="256,80 380,256 256,432 132,256" fill="none" stroke="#7CFFB2" stroke-width="4" opacity="0.9" transform="rotate(205 256 256)"/>
+  <text x="256" y="480" text-anchor="middle" fill="#8b9bb0" font-family="system-ui" font-size="22">Slide City</text>
+</svg>

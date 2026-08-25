@@ -31,7 +31,9 @@
         "description": "Own the Scape. 160 BPM EDM chart."
       },
       "og": "/catalog/bs-s1-01/og.png",
-      "stream_duration_sec": 198
+      "stream_duration_sec": 198,
+      "stream_audio": "/catalog/bs-s1-01/stream.m4a",
+      "preview": "/catalog/bs-s1-01/preview_48s.m4a"
     },
     {
       "track_id": "bs-s1-02",
@@ -63,7 +65,9 @@
         "description": "Own the Scape. 118 BPM Pop chart."
       },
       "og": "/catalog/bs-s1-02/og.png",
-      "stream_duration_sec": 198
+      "stream_duration_sec": 198,
+      "stream_audio": "/catalog/bs-s1-02/stream.m4a",
+      "preview": "/catalog/bs-s1-02/preview_48s.m4a"
     },
     {
       "track_id": "bs-s1-03",
@@ -95,7 +99,9 @@
         "description": "Own the Scape. 95 BPM Hip-hop chart."
       },
       "og": "/catalog/bs-s1-03/og.png",
-      "stream_duration_sec": 198
+      "stream_duration_sec": 198,
+      "stream_audio": "/catalog/bs-s1-03/stream.m4a",
+      "preview": "/catalog/bs-s1-03/preview_48s.m4a"
     },
     {
       "track_id": "bs-s1-04",
@@ -127,7 +133,9 @@
         "description": "Own the Scape. 88 BPM R&B chart."
       },
       "og": "/catalog/bs-s1-04/og.png",
-      "stream_duration_sec": 198
+      "stream_duration_sec": 198,
+      "stream_audio": "/catalog/bs-s1-04/stream.m4a",
+      "preview": "/catalog/bs-s1-04/preview_48s.m4a"
     },
     {
       "track_id": "bs-s1-05",
@@ -159,7 +167,9 @@
         "description": "Own the Scape. 170 BPM EDM chart."
       },
       "og": "/catalog/bs-s1-05/og.png",
-      "stream_duration_sec": 180
+      "stream_duration_sec": 180,
+      "stream_audio": "/catalog/bs-s1-05/stream.m4a",
+      "preview": "/catalog/bs-s1-05/preview_48s.m4a"
     },
     {
       "track_id": "bs-s1-06",
@@ -191,7 +201,145 @@
         "description": "Own the Scape. 132 BPM Rock chart."
       },
       "og": "/catalog/bs-s1-06/og.png",
-      "stream_duration_sec": 198
+      "stream_duration_sec": 198,
+      "stream_audio": "/catalog/bs-s1-06/stream.m4a",
+      "preview": "/catalog/bs-s1-06/preview_48s.m4a"
+    },
+    {
+      "track_id": "bs-s2-01",
+      "title": "Slide City",
+      "artist": "Vector Bloom",
+      "genre": "EDM",
+      "bpm": 140,
+      "duration_sec": 90,
+      "stream_duration_sec": 198,
+      "preset_id": "bs-edm-main",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s2-01",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Hot Chart Style"
+      ],
+      "district": "Slide District",
+      "default_mode": "arcade",
+      "default_tier": "standard",
+      "allows_slide": true,
+      "audio": "/catalog/bs-s2-01/audio.m4a",
+      "cover": "/catalog/bs-s2-01/cover.svg",
+      "og": "/catalog/bs-s2-01/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s2-01/easy.json",
+        "standard": "/catalog/bs-s2-01/standard.json",
+        "hard": "/catalog/bs-s2-01/hard.json"
+      },
+      "seo": {
+        "title": "Slide City \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 140 BPM EDM chart."
+      },
+      "stream_audio": "/catalog/bs-s2-01/stream.m4a"
+    },
+    {
+      "track_id": "bs-s2-02",
+      "title": "Skyline Hook",
+      "artist": "Ada North",
+      "genre": "Pop",
+      "bpm": 133,
+      "duration_sec": 90,
+      "stream_duration_sec": 198,
+      "preset_id": "bs-theme-en",
+      "engine": "ace-step",
+      "job_id": "local-preview-bs-s2-02",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Viral Style"
+      ],
+      "district": "Skyline Hook",
+      "default_mode": "casual",
+      "default_tier": "standard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s2-02/audio.m4a",
+      "cover": "/catalog/bs-s2-02/cover.svg",
+      "og": "/catalog/bs-s2-02/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s2-02/easy.json",
+        "standard": "/catalog/bs-s2-02/standard.json",
+        "hard": "/catalog/bs-s2-02/hard.json"
+      },
+      "seo": {
+        "title": "Skyline Hook \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 128 BPM Pop chart."
+      },
+      "stream_audio": "/catalog/bs-s2-02/stream.m4a"
+    },
+    {
+      "track_id": "bs-s2-03",
+      "title": "Blue Hour Loop",
+      "artist": "Quiet Neon",
+      "genre": "Pop",
+      "bpm": 120,
+      "duration_sec": 90,
+      "stream_duration_sec": 198,
+      "preset_id": "bs-chill-pop",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s2-03",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Classic Style"
+      ],
+      "district": "Glass Rim",
+      "default_mode": "casual",
+      "default_tier": "easy",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s2-03/audio.m4a",
+      "cover": "/catalog/bs-s2-03/cover.svg",
+      "og": "/catalog/bs-s2-03/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s2-03/easy.json",
+        "standard": "/catalog/bs-s2-03/standard.json",
+        "hard": "/catalog/bs-s2-03/hard.json"
+      },
+      "seo": {
+        "title": "Blue Hour Loop \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 120 BPM Pop chart."
+      },
+      "stream_audio": "/catalog/bs-s2-03/stream.m4a"
+    },
+    {
+      "track_id": "bs-s2-04",
+      "title": "Asphalt Anthem",
+      "artist": "Redline Co.",
+      "genre": "Rock",
+      "bpm": 150,
+      "duration_sec": 90,
+      "stream_duration_sec": 198,
+      "preset_id": "bs-rock-drive",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s2-04",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Hot Chart Style"
+      ],
+      "district": "Chrome Yard",
+      "default_mode": "arcade",
+      "default_tier": "hard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s2-04/audio.m4a",
+      "cover": "/catalog/bs-s2-04/cover.svg",
+      "og": "/catalog/bs-s2-04/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s2-04/easy.json",
+        "standard": "/catalog/bs-s2-04/standard.json",
+        "hard": "/catalog/bs-s2-04/hard.json"
+      },
+      "seo": {
+        "title": "Asphalt Anthem \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 148 BPM Rock chart."
+      },
+      "stream_audio": "/catalog/bs-s2-04/stream.m4a"
     }
   ]
 }

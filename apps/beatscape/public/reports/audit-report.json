@@ -1,6 +1,6 @@
 {
   "report": {
-    "generated_at": "2026-08-25T09:46:00Z",
+    "generated_at": "2026-08-25T10:13:43Z",
     "input_dir": "/Users/zhenhuachen/Desktop/MusicSaas/apps/beatscape/public",
     "catalog": "/Users/zhenhuachen/Desktop/MusicSaas/apps/beatscape/public/catalog.json",
     "tracks": [
@@ -106,18 +106,23 @@
           },
           {
             "status": "PASS",
-            "code": "catalog.stream_planned",
-            "message": "planned stream 198s (Stage1 teaser ok)"
+            "code": "catalog.stream_audio",
+            "message": "/catalog/bs-s1-01/stream.m4a"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.stream_duration",
+            "message": "stream 198s vs game 75.0s"
           },
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "92"
+            "message": "90"
           },
           {
             "status": "WARN",
             "code": "chart.density.nps",
-            "message": "nps=1.08 outside [2.0,3.5]"
+            "message": "nps=1.07 outside [2.0,3.5]"
           },
           {
             "status": "PASS",
@@ -127,7 +132,7 @@
           {
             "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=13.58"
+            "message": "hold_pct=12.50"
           },
           {
             "status": "PASS",
@@ -152,12 +157,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "190"
+            "message": "186"
           },
           {
             "status": "WARN",
             "code": "chart.density.nps",
-            "message": "nps=2.15 outside [3.5,5.5]"
+            "message": "nps=2.09 outside [3.5,5.5]"
           },
           {
             "status": "PASS",
@@ -167,7 +172,7 @@
           {
             "status": "WARN",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=3.11 outside [10,25]"
+            "message": "hold_pct=3.18 outside [10,25]"
           },
           {
             "status": "WARN",
@@ -192,12 +197,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "326"
+            "message": "322"
           },
           {
             "status": "WARN",
             "code": "chart.density.nps",
-            "message": "nps=3.12 outside [5.5,8.5]"
+            "message": "nps=3.07 outside [5.5,8.5]"
           },
           {
             "status": "PASS",
@@ -334,18 +339,23 @@
           },
           {
             "status": "PASS",
-            "code": "catalog.stream_planned",
-            "message": "planned stream 198s (Stage1 teaser ok)"
+            "code": "catalog.stream_audio",
+            "message": "/catalog/bs-s1-02/stream.m4a"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.stream_duration",
+            "message": "stream 198s vs game 75.0s"
           },
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "136"
+            "message": "134"
           },
           {
             "status": "WARN",
             "code": "chart.density.nps",
-            "message": "nps=1.64 outside [2.0,3.5]"
+            "message": "nps=1.61 outside [2.0,3.5]"
           },
           {
             "status": "PASS",
@@ -355,7 +365,7 @@
           {
             "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=10.57"
+            "message": "hold_pct=10.74"
           },
           {
             "status": "PASS",
@@ -380,12 +390,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "233"
+            "message": "231"
           },
           {
             "status": "WARN",
             "code": "chart.density.nps",
-            "message": "nps=2.77 outside [3.5,5.5]"
+            "message": "nps=2.75 outside [3.5,5.5]"
           },
           {
             "status": "PASS",
@@ -395,7 +405,7 @@
           {
             "status": "WARN",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=2.40 outside [10,25]"
+            "message": "hold_pct=2.43 outside [10,25]"
           },
           {
             "status": "PASS",
@@ -420,12 +430,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "380"
+            "message": "378"
           },
           {
             "status": "WARN",
             "code": "chart.density.nps",
-            "message": "nps=3.77 outside [5.5,8.5]"
+            "message": "nps=3.75 outside [5.5,8.5]"
           },
           {
             "status": "PASS",
@@ -435,7 +445,7 @@
           {
             "status": "WARN",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=0.35 outside [15,30]"
+            "message": "hold_pct=0.36 outside [15,30]"
           },
           {
             "status": "WARN",
@@ -562,13 +572,18 @@
           },
           {
             "status": "PASS",
-            "code": "catalog.stream_planned",
-            "message": "planned stream 198s (Stage1 teaser ok)"
+            "code": "catalog.stream_audio",
+            "message": "/catalog/bs-s1-03/stream.m4a"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.stream_duration",
+            "message": "stream 198s vs game 75.0s"
           },
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "125"
+            "message": "124"
           },
           {
             "status": "WARN",
@@ -583,7 +598,7 @@
           {
             "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=13.64"
+            "message": "hold_pct=12.73"
           },
           {
             "status": "PASS",
@@ -608,12 +623,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "222"
+            "message": "221"
           },
           {
             "status": "WARN",
             "code": "chart.density.nps",
-            "message": "nps=2.56 outside [3.5,5.5]"
+            "message": "nps=2.53 outside [3.5,5.5]"
           },
           {
             "status": "PASS",
@@ -623,12 +638,12 @@
           {
             "status": "WARN",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=3.12 outside [10,25]"
+            "message": "hold_pct=3.16 outside [10,25]"
           },
           {
             "status": "WARN",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=3.20 outside [1,3]"
+            "message": "chord_per_10s=3.33 outside [1,3]"
           },
           {
             "status": "PASS",
@@ -648,12 +663,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "396"
+            "message": "392"
           },
           {
             "status": "WARN",
             "code": "chart.density.nps",
-            "message": "nps=4.01 outside [5.5,8.5]"
+            "message": "nps=3.96 outside [5.5,8.5]"
           },
           {
             "status": "PASS",
@@ -663,7 +678,7 @@
           {
             "status": "WARN",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=0.66 outside [15,30]"
+            "message": "hold_pct=0.67 outside [15,30]"
           },
           {
             "status": "WARN",
@@ -790,18 +805,23 @@
           },
           {
             "status": "PASS",
-            "code": "catalog.stream_planned",
-            "message": "planned stream 198s (Stage1 teaser ok)"
+            "code": "catalog.stream_audio",
+            "message": "/catalog/bs-s1-04/stream.m4a"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.stream_duration",
+            "message": "stream 198s vs game 75.0s"
           },
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "134"
+            "message": "131"
           },
           {
             "status": "WARN",
             "code": "chart.density.nps",
-            "message": "nps=1.57 outside [2.0,3.5]"
+            "message": "nps=1.55 outside [2.0,3.5]"
           },
           {
             "status": "PASS",
@@ -811,7 +831,7 @@
           {
             "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=13.56"
+            "message": "hold_pct=12.93"
           },
           {
             "status": "PASS",
@@ -836,12 +856,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "235"
+            "message": "232"
           },
           {
             "status": "WARN",
             "code": "chart.density.nps",
-            "message": "nps=2.79 outside [3.5,5.5]"
+            "message": "nps=2.75 outside [3.5,5.5]"
           },
           {
             "status": "PASS",
@@ -851,7 +871,7 @@
           {
             "status": "WARN",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=1.44 outside [10,25]"
+            "message": "hold_pct=1.46 outside [10,25]"
           },
           {
             "status": "WARN",
@@ -876,12 +896,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "436"
+            "message": "431"
           },
           {
             "status": "WARN",
             "code": "chart.density.nps",
-            "message": "nps=4.39 outside [5.5,8.5]"
+            "message": "nps=4.32 outside [5.5,8.5]"
           },
           {
             "status": "PASS",
@@ -891,7 +911,7 @@
           {
             "status": "WARN",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=0.61 outside [15,30]"
+            "message": "hold_pct=0.62 outside [15,30]"
           },
           {
             "status": "WARN",
@@ -1018,18 +1038,23 @@
           },
           {
             "status": "PASS",
-            "code": "catalog.stream_planned",
-            "message": "planned stream 180s (Stage1 teaser ok)"
+            "code": "catalog.stream_audio",
+            "message": "/catalog/bs-s1-05/stream.m4a"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.stream_duration",
+            "message": "stream 180s vs game 60.0s"
           },
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "103"
+            "message": "101"
           },
           {
             "status": "WARN",
             "code": "chart.density.nps",
-            "message": "nps=1.57 outside [2.0,3.5]"
+            "message": "nps=1.53 outside [2.0,3.5]"
           },
           {
             "status": "PASS",
@@ -1039,7 +1064,7 @@
           {
             "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=9.57"
+            "message": "hold_pct=9.78"
           },
           {
             "status": "PASS",
@@ -1064,12 +1089,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "200"
+            "message": "197"
           },
           {
             "status": "WARN",
             "code": "chart.density.nps",
-            "message": "nps=2.92 outside [3.5,5.5]"
+            "message": "nps=2.87 outside [3.5,5.5]"
           },
           {
             "status": "PASS",
@@ -1104,12 +1129,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "368"
+            "message": "363"
           },
           {
             "status": "WARN",
             "code": "chart.density.nps",
-            "message": "nps=4.50 outside [5.5,8.5]"
+            "message": "nps=4.42 outside [5.5,8.5]"
           },
           {
             "status": "PASS",
@@ -1246,18 +1271,23 @@
           },
           {
             "status": "PASS",
-            "code": "catalog.stream_planned",
-            "message": "planned stream 198s (Stage1 teaser ok)"
+            "code": "catalog.stream_audio",
+            "message": "/catalog/bs-s1-06/stream.m4a"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.stream_duration",
+            "message": "stream 198s vs game 75.0s"
           },
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "138"
+            "message": "136"
           },
           {
             "status": "WARN",
             "code": "chart.density.nps",
-            "message": "nps=1.63 outside [2.0,3.5]"
+            "message": "nps=1.60 outside [2.0,3.5]"
           },
           {
             "status": "PASS",
@@ -1267,7 +1297,7 @@
           {
             "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=13.11"
+            "message": "hold_pct=13.33"
           },
           {
             "status": "PASS",
@@ -1292,12 +1322,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "285"
+            "message": "282"
           },
           {
             "status": "WARN",
             "code": "chart.density.nps",
-            "message": "nps=3.36 outside [3.5,5.5]"
+            "message": "nps=3.32 outside [3.5,5.5]"
           },
           {
             "status": "PASS",
@@ -1307,7 +1337,7 @@
           {
             "status": "WARN",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=0.79 outside [10,25]"
+            "message": "hold_pct=0.80 outside [10,25]"
           },
           {
             "status": "WARN",
@@ -1332,12 +1362,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "416"
+            "message": "412"
           },
           {
             "status": "WARN",
             "code": "chart.density.nps",
-            "message": "nps=4.17 outside [5.5,8.5]"
+            "message": "nps=4.12 outside [5.5,8.5]"
           },
           {
             "status": "PASS",
@@ -1371,11 +1401,953 @@
           }
         ],
         "metrics": {}
+      },
+      {
+        "source": "bs-s2-01",
+        "track_id": "bs-s2-01",
+        "title": "Slide City",
+        "checks": [
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`track_id` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`title` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`artist` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`genre` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`bpm` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`duration_sec` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`preset_id` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`engine` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`rights` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`theme` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`audio` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`charts` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.rights",
+            "message": "owned"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.theme",
+            "message": "beatscape"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.theme_kw",
+            "message": "theme keyword present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.chart_path",
+            "message": "easy -> /catalog/bs-s2-01/easy.json"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.chart_path",
+            "message": "standard -> /catalog/bs-s2-01/standard.json"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.chart_path",
+            "message": "hard -> /catalog/bs-s2-01/hard.json"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.audio_path",
+            "message": "/catalog/bs-s2-01/audio.m4a"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.stream_audio",
+            "message": "/catalog/bs-s2-01/stream.m4a"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.stream_duration",
+            "message": "stream 198s vs game 90.0s"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.total_notes",
+            "message": "154"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.nps",
+            "message": "nps=1.54 outside [2.0,3.5]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.peak_nps",
+            "message": "peak_2s=5.00"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.hold_pct",
+            "message": "hold_pct=10.79"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.chord_10s",
+            "message": "chord_per_10s=0.00"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.onset.align",
+            "message": "median 0ms · p90 0ms · coverage 100%"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.audio_offset",
+            "message": "0 (file-timeline notes)"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.first_beat",
+            "message": "210ms"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.total_notes",
+            "message": "243"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.slide",
+            "message": "2 slide(s)"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.nps",
+            "message": "nps=2.39 outside [3.5,5.5]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.peak_nps",
+            "message": "peak_2s=7.00"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.hold_pct",
+            "message": "hold_pct=3.72 outside [10,25]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.chord_10s",
+            "message": "chord_per_10s=2.22"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.onset.align",
+            "message": "median 0ms · p90 0ms · coverage 100%"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.audio_offset",
+            "message": "0 (file-timeline notes)"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.first_beat",
+            "message": "210ms"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.total_notes",
+            "message": "440"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.slide",
+            "message": "8 slide(s)"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.nps",
+            "message": "nps=3.78 outside [5.5,8.5]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.peak_nps",
+            "message": "peak_2s=11.00"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.hold_pct",
+            "message": "hold_pct=0.29 outside [15,30]"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.chord_10s",
+            "message": "chord_per_10s=7.78 outside [3,6]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.onset.align",
+            "message": "median 0ms · p90 0ms · coverage 100%"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.audio_offset",
+            "message": "0 (file-timeline notes)"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.first_beat",
+            "message": "210ms"
+          }
+        ],
+        "metrics": {}
+      },
+      {
+        "source": "bs-s2-02",
+        "track_id": "bs-s2-02",
+        "title": "Skyline Hook",
+        "checks": [
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`track_id` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`title` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`artist` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`genre` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`bpm` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`duration_sec` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`preset_id` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`engine` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`rights` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`theme` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`audio` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`charts` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.rights",
+            "message": "owned"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.theme",
+            "message": "beatscape"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.theme_kw",
+            "message": "theme keyword present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.chart_path",
+            "message": "easy -> /catalog/bs-s2-02/easy.json"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.chart_path",
+            "message": "standard -> /catalog/bs-s2-02/standard.json"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.chart_path",
+            "message": "hard -> /catalog/bs-s2-02/hard.json"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.audio_path",
+            "message": "/catalog/bs-s2-02/audio.m4a"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.stream_audio",
+            "message": "/catalog/bs-s2-02/stream.m4a"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.stream_duration",
+            "message": "stream 198s vs game 90.0s"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.total_notes",
+            "message": "155"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.nps",
+            "message": "nps=1.53 outside [2.0,3.5]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.peak_nps",
+            "message": "peak_2s=5.00"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.hold_pct",
+            "message": "hold_pct=12.32"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.chord_10s",
+            "message": "chord_per_10s=0.00"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.onset.align",
+            "message": "median 0ms · p90 0ms · coverage 100%"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.audio_offset",
+            "message": "0 (file-timeline notes)"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.first_beat",
+            "message": "60ms"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.total_notes",
+            "message": "307"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.nps",
+            "message": "nps=2.97 outside [3.5,5.5]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.peak_nps",
+            "message": "peak_2s=8.00"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.hold_pct",
+            "message": "hold_pct=1.12 outside [10,25]"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.chord_10s",
+            "message": "chord_per_10s=4.11 outside [1,3]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.onset.align",
+            "message": "median 0ms · p90 0ms · coverage 100%"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.audio_offset",
+            "message": "0 (file-timeline notes)"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.first_beat",
+            "message": "60ms"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.total_notes",
+            "message": "428"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.nps",
+            "message": "nps=3.60 outside [5.5,8.5]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.peak_nps",
+            "message": "peak_2s=11.00"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.hold_pct",
+            "message": "hold_pct=1.54 outside [15,30]"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.chord_10s",
+            "message": "chord_per_10s=8.22 outside [3,6]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.onset.align",
+            "message": "median 0ms · p90 0ms · coverage 100%"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.audio_offset",
+            "message": "0 (file-timeline notes)"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.first_beat",
+            "message": "60ms"
+          }
+        ],
+        "metrics": {}
+      },
+      {
+        "source": "bs-s2-03",
+        "track_id": "bs-s2-03",
+        "title": "Blue Hour Loop",
+        "checks": [
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`track_id` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`title` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`artist` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`genre` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`bpm` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`duration_sec` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`preset_id` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`engine` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`rights` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`theme` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`audio` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`charts` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.rights",
+            "message": "owned"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.theme",
+            "message": "beatscape"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.theme_kw",
+            "message": "theme keyword present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.chart_path",
+            "message": "easy -> /catalog/bs-s2-03/easy.json"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.chart_path",
+            "message": "standard -> /catalog/bs-s2-03/standard.json"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.chart_path",
+            "message": "hard -> /catalog/bs-s2-03/hard.json"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.audio_path",
+            "message": "/catalog/bs-s2-03/audio.m4a"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.stream_audio",
+            "message": "/catalog/bs-s2-03/stream.m4a"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.stream_duration",
+            "message": "stream 198s vs game 90.0s"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.total_notes",
+            "message": "155"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.nps",
+            "message": "nps=1.53 outside [2.0,3.5]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.peak_nps",
+            "message": "peak_2s=5.00"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.hold_pct",
+            "message": "hold_pct=12.32"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.chord_10s",
+            "message": "chord_per_10s=0.00"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.onset.align",
+            "message": "median 0ms · p90 0ms · coverage 100%"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.audio_offset",
+            "message": "0 (file-timeline notes)"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.first_beat",
+            "message": "10ms"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.total_notes",
+            "message": "295"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.nps",
+            "message": "nps=2.96 outside [3.5,5.5]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.peak_nps",
+            "message": "peak_2s=8.00"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.hold_pct",
+            "message": "hold_pct=1.88 outside [10,25]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.chord_10s",
+            "message": "chord_per_10s=2.67"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.onset.align",
+            "message": "median 0ms · p90 0ms · coverage 100%"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.audio_offset",
+            "message": "0 (file-timeline notes)"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.first_beat",
+            "message": "10ms"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.total_notes",
+            "message": "490"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.nps",
+            "message": "nps=3.87 outside [5.5,8.5]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.peak_nps",
+            "message": "peak_2s=11.00"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.hold_pct",
+            "message": "hold_pct=0.57 outside [15,30]"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.chord_10s",
+            "message": "chord_per_10s=11.33 outside [3,6]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.onset.align",
+            "message": "median 0ms · p90 0ms · coverage 100%"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.audio_offset",
+            "message": "0 (file-timeline notes)"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.first_beat",
+            "message": "10ms"
+          }
+        ],
+        "metrics": {}
+      },
+      {
+        "source": "bs-s2-04",
+        "track_id": "bs-s2-04",
+        "title": "Asphalt Anthem",
+        "checks": [
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`track_id` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`title` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`artist` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`genre` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`bpm` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`duration_sec` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`preset_id` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`engine` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`rights` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`theme` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`audio` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.field",
+            "message": "`charts` present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.rights",
+            "message": "owned"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.theme",
+            "message": "beatscape"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.theme_kw",
+            "message": "theme keyword present"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.chart_path",
+            "message": "easy -> /catalog/bs-s2-04/easy.json"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.chart_path",
+            "message": "standard -> /catalog/bs-s2-04/standard.json"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.chart_path",
+            "message": "hard -> /catalog/bs-s2-04/hard.json"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.audio_path",
+            "message": "/catalog/bs-s2-04/audio.m4a"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.stream_audio",
+            "message": "/catalog/bs-s2-04/stream.m4a"
+          },
+          {
+            "status": "PASS",
+            "code": "catalog.stream_duration",
+            "message": "stream 198s vs game 90.0s"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.total_notes",
+            "message": "157"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.nps",
+            "message": "nps=1.63 outside [2.0,3.5]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.peak_nps",
+            "message": "peak_2s=5.00"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.hold_pct",
+            "message": "hold_pct=6.80"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.chord_10s",
+            "message": "chord_per_10s=0.00"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.onset.align",
+            "message": "median 0ms · p90 0ms · coverage 100%"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.audio_offset",
+            "message": "0 (file-timeline notes)"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.first_beat",
+            "message": "3640ms"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.total_notes",
+            "message": "255"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.nps",
+            "message": "nps=2.51 outside [3.5,5.5]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.peak_nps",
+            "message": "peak_2s=7.00"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.hold_pct",
+            "message": "hold_pct=1.77 outside [10,25]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.chord_10s",
+            "message": "chord_per_10s=2.78"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.onset.align",
+            "message": "median 0ms · p90 0ms · coverage 100%"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.audio_offset",
+            "message": "0 (file-timeline notes)"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.first_beat",
+            "message": "3640ms"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.total_notes",
+            "message": "463"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.nps",
+            "message": "nps=3.78 outside [5.5,8.5]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.density.peak_nps",
+            "message": "peak_2s=11.00"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.hold_pct",
+            "message": "hold_pct=0.00 outside [15,30]"
+          },
+          {
+            "status": "WARN",
+            "code": "chart.density.chord_10s",
+            "message": "chord_per_10s=9.56 outside [3,6]"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.onset.align",
+            "message": "median 0ms · p90 0ms · coverage 100%"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.audio_offset",
+            "message": "0 (file-timeline notes)"
+          },
+          {
+            "status": "PASS",
+            "code": "chart.first_beat",
+            "message": "3640ms"
+          }
+        ],
+        "metrics": {}
       }
     ],
     "summary": {
-      "PASS": 223,
-      "WARN": 41,
+      "PASS": 386,
+      "WARN": 66,
       "FAIL": 0
     }
   }

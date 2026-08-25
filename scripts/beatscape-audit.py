@@ -80,6 +80,44 @@ STAGE1_BY_SLUG: dict[str, dict[str, Any]] = {
     },
 }
 
+STAGE2_BY_SLUG: dict[str, dict[str, Any]] = {
+    "07-slide-city": {
+        "track_id": "bs-s2-01",
+        "title": "Slide City",
+        "bpm": 140,
+        "duration_sec": 90,
+        "genre": "EDM",
+        "stage": 2,
+        "allows_slide": True,
+    },
+    "08-skyline-hook": {
+        "track_id": "bs-s2-02",
+        "title": "Skyline Hook",
+        "bpm": 128,
+        "duration_sec": 90,
+        "genre": "Pop",
+        "stage": 2,
+    },
+    "09-blue-hour-loop": {
+        "track_id": "bs-s2-03",
+        "title": "Blue Hour Loop",
+        "bpm": 120,
+        "duration_sec": 90,
+        "genre": "Pop",
+        "stage": 2,
+    },
+    "10-asphalt-anthem": {
+        "track_id": "bs-s2-04",
+        "title": "Asphalt Anthem",
+        "bpm": 148,
+        "duration_sec": 90,
+        "genre": "Rock",
+        "stage": 2,
+    },
+}
+
+LOCKED_BY_SLUG = {**STAGE1_BY_SLUG, **STAGE2_BY_SLUG}
+
 # PRD §4.6 density windows (NPS average, peak 2s, hold %, chord per 10s)
 DENSITY_SPEC: dict[str, dict[str, tuple[float, float]]] = {
     "easy": {"nps": (2.0, 3.5), "peak_nps": (0, 5), "hold_pct": (5, 15), "chord_10s": (0, 1)},
@@ -103,7 +141,7 @@ CATALOG_REQUIRED = (
 )
 
 THEME_KEYWORDS = re.compile(
-    r"\b(neon|scape|pulse|glass|horizon|grid|chrome|velvet|voltage|skyline|afterhours|beat)\b",
+    r"\b(neon|scape|pulse|glass|horizon|grid|chrome|velvet|voltage|skyline|afterhours|beat|slide|asphalt|blue|quiet|anthem)\b",
     re.I,
 )
 
@@ -149,14 +187,26 @@ def slug_from_stem(stem: str) -> str:
     return stem.lower().replace("_", "-")
 
 
+def stage_from_track_id(track_id: str) -> int:
+    for prefix, stage in (
+        ("bs-s1-", 1),
+        ("bs-s2-", 2),
+        ("bs-s3-", 3),
+        ("bs-s4-", 4),
+        ("bs-s5-", 5),
+    ):
+        if track_id.startswith(prefix):
+            return stage
+    return 0
+
+
 def resolve_spec(stem: str, meta: dict[str, Any] | None) -> dict[str, Any] | None:
     if meta:
         return meta
     slug = slug_from_stem(stem)
-    if slug in STAGE1_BY_SLUG:
-        return STAGE1_BY_SLUG[slug]
-    # bs-s1-01 style
-    for spec in STAGE1_BY_SLUG.values():
+    if slug in LOCKED_BY_SLUG:
+        return LOCKED_BY_SLUG[slug]
+    for spec in LOCKED_BY_SLUG.values():
         if spec["track_id"] == stem:
             return spec
     return None
@@ -487,6 +537,10 @@ def audit_chart(path: Path, *, stage: int, duration_sec: float) -> list[Check]:
             if lane not in (0, 1, 2, 3):
                 checks.append(Check("FAIL", "chart.tap", f"invalid lane (note #{i})"))
 
+    slide_count = sum(1 for n in notes if n.get("type") == "slide")
+    if tier in ("standard", "hard") and stage >= 2 and slide_count:
+        checks.append(Check("PASS", "chart.slide", f"{slide_count} slide(s)"))
+
     if tier in DENSITY_SPEC:
         spec = DENSITY_SPEC[tier]
         nps, peak, hold_pct, chord_10s = tier_nps(notes, duration_sec)
@@ -662,7 +716,7 @@ def run_audit(args: argparse.Namespace) -> AuditReport:
             if entry.get("track_id"):
                 catalog_by_id[entry["track_id"]] = entry
             # charts
-            stage = 1 if str(entry.get("track_id", "")).startswith("bs-s1-") else 2
+            stage = stage_from_track_id(str(entry.get("track_id", ""))) or 2
             charts = entry.get("charts") or {}
             dur = float(entry.get("duration_sec") or 75)
             bpm_hint = float(entry.get("bpm") or 120)
@@ -677,6 +731,18 @@ def run_audit(args: argparse.Namespace) -> AuditReport:
                         try:
                             chart = json.loads(cp.read_text(encoding="utf-8"))
                             tr.checks.extend(audit_chart_onset_alignment(chart, audio_path, bpm_hint))
+                            if (
+                                str(entry.get("track_id")) == "bs-s2-01"
+                                and tier in ("standard", "hard")
+                                and not any(n.get("type") == "slide" for n in chart.get("notes", []))
+                            ):
+                                tr.checks.append(
+                                    Check(
+                                        "WARN",
+                                        "chart.slide.required",
+                                        f"{tier} chart should include slide notes (Slide City)",
+                                    )
+                                )
                         except Exception as exc:
                             tr.checks.append(Check("WARN", "chart.onset", str(exc)))
 

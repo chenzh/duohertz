@@ -41,15 +41,15 @@ MASTERS = PREVIEW / "masters"
 CATALOG_PATH = ROOT / "apps" / "beatscape" / "public" / "catalog.json"
 PUBLIC = ROOT / "apps" / "beatscape" / "public"
 
-# Align preview stems with beatscape-ingest-stage1.py
-TRACK_PREVIEW: dict[str, str] = {
-    "bs-s1-01": "01-Neon-Pulse",
-    "bs-s1-02": "02-Glass-Horizon",
-    "bs-s1-03": "03-Night-Drive-808",
-    "bs-s1-04": "04-Velvet-Afterhours",
-    "bs-s1-05": "05-Voltage-Drop",
-    "bs-s1-06": "06-Chrome-Riff",
-}
+# Align preview stems with beatscape-track-registry.py
+_spec = importlib.util.spec_from_file_location(
+    "beatscape_track_registry", ROOT / "scripts" / "beatscape-track-registry.py"
+)
+_reg = importlib.util.module_from_spec(_spec)
+sys.modules["beatscape_track_registry"] = _reg
+assert _spec.loader is not None
+_spec.loader.exec_module(_reg)
+TRACK_PREVIEW: dict[str, str] = _reg.PREVIEW_STEM_BY_ID
 
 MIN_STREAM_RATIO = 1.8  # stream_duration_sec >= duration_sec * ratio (Stage2+ gate)
 
@@ -86,6 +86,7 @@ def find_stream_source(track_id: str) -> Path | None:
         candidates.append(STREAM_DIR / f"{stem}-stream.m4a")
         candidates.append(MASTERS / f"{stem}.wav")
         candidates.append(PREVIEW / f"{stem}-full.m4a")
+    candidates.append(MASTERS / f"{track_id}.wav")
     for p in candidates:
         if p.is_file():
             return p

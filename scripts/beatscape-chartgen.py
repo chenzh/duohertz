@@ -36,13 +36,27 @@ analyze_audio = _audio.analyze_audio
 AudioAnalysis = _audio.AudioAnalysis
 
 TIER_SPEC = {
-    "easy": {"approach": 1.35, "min_gap": 0.38, "nps": 2.5, "peak": 5, "hold_p": 0.12, "chord_p": 0.0},
-    "standard": {"approach": 1.20, "min_gap": 0.22, "nps": 4.5, "peak": 8, "hold_p": 0.24, "chord_p": 0.16},
-    "hard": {"approach": 1.00, "min_gap": 0.14, "nps": 6.4, "peak": 12, "hold_p": 0.30, "chord_p": 0.34},
+    "easy": {"approach": 1.35, "min_gap": 0.38, "nps": 2.5, "peak": 5, "hold_p": 0.12, "chord_p": 0.0, "slide_max": 0},
+    "standard": {"approach": 1.20, "min_gap": 0.22, "nps": 4.5, "peak": 8, "hold_p": 0.24, "chord_p": 0.16, "slide_max": 2},
+    "hard": {"approach": 1.00, "min_gap": 0.14, "nps": 6.4, "peak": 12, "hold_p": 0.30, "chord_p": 0.34, "slide_max": 8},
 }
 
 CHORD_SHAPES = [(0, 3), (1, 2), (0, 2), (1, 3)]
 CHORD_SHAPES_HARD = [(0, 3), (1, 2), (0, 3), (0, 1, 2), (1, 2, 3)]
+
+
+def track_allows_slide(track: dict) -> bool:
+    if track.get("allows_slide"):
+        return True
+    tid = str(track.get("track_id", ""))
+    return tid == "bs-s2-01"
+
+
+def make_slide(rng: random.Random, t: float, lane: int, beat: float) -> dict | None:
+    candidates = [lane - 1, lane + 1]
+    to_lane = rng.choice([c for c in candidates if 0 <= c <= 3])
+    end_t = round(t + min(0.55, max(0.35, beat * 0.5)), 3)
+    return {"id": "slide", "t": round(t, 3), "type": "slide", "lane": lane, "to": to_lane, "end": end_t}
 
 
 def enforce_peak_nps(notes: list[dict], max_peak: int) -> list[dict]:
@@ -95,12 +109,15 @@ def select_onsets(analysis: AudioAnalysis, tier: str, dur: float) -> list[tuple[
             continue
         picked.append((t, lane, e))
     picked.sort(key=lambda x: x[0])
+    # PRD §6.0.8: first playable note 1.0–2.5s after chart t=0 (post-countdown)
+    picked = [p for p in picked if p[0] >= 1.0]
     if len(picked) < 12:
         # fallback: take every Nth onset
         step = max(1, len(analysis.onsets_sec) // max(12, target))
         picked = [
             (analysis.onsets_sec[i], analysis.onset_lanes[i], analysis.onset_energies[i])
             for i in range(0, len(analysis.onsets_sec), step)
+            if analysis.onsets_sec[i] >= 1.0
         ][: target]
     return picked
 
@@ -121,10 +138,30 @@ def build_chart_from_onsets(
     idx = 0
     i = 0
     hold_budget = int(len(candidates) * spec["hold_p"])
+    slides_used = 0
+    allow_slide = track_allows_slide(track)
 
     while i < len(candidates):
         t, lane, _e = candidates[i]
         phase = t / dur
+
+        if (
+            allow_slide
+            and slides_used < spec["slide_max"]
+            and tier != "easy"
+            and phase > 0.28
+            and phase < 0.78
+            and rng.random() < (0.22 if tier == "standard" else 0.35)
+            and i + 1 < len(candidates)
+        ):
+            slide = make_slide(rng, t, lane, beat)
+            if slide:
+                slide["id"] = f"n{idx}"
+                notes.append(slide)
+                slides_used += 1
+                idx += 1
+                i += 1
+                continue
 
         if (
             spec["chord_p"] > 0
@@ -172,7 +209,13 @@ def build_chart_from_onsets(
 
     ar = round(3000.0 / (spec["approach"] * bpm), 1)
     total = sum(
-        (2 if n["type"] == "hold" else len(n["lanes"]) if n["type"] == "chord" else 1)
+        (
+            2
+            if n["type"] == "hold"
+            else len(n["lanes"])
+            if n["type"] == "chord"
+            else 1
+        )
         for n in notes
     )
     return {
@@ -201,7 +244,7 @@ def stats(chart: dict) -> str:
         kinds[n["type"]] = kinds.get(n["type"], 0) + 1
     return (
         f"n={len(notes)} taps={kinds.get('tap', 0)} holds={kinds.get('hold', 0)} "
-        f"chords={kinds.get('chord', 0)} first_beat={chart.get('beat_map', {}).get('first_beat_ms', 0)}ms "
+        f"chords={kinds.get('chord', 0)} slides={kinds.get('slide', 0)} first_beat={chart.get('beat_map', {}).get('first_beat_ms', 0)}ms "
         f"ar={chart['ar']}"
     )
 
