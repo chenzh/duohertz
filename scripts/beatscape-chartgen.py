@@ -96,7 +96,7 @@ def select_onsets(analysis: AudioAnalysis, tier: str, dur: float) -> list[tuple[
     """Pick onset subset for tier: (t_sec, lane, energy)."""
     spec = TIER_SPEC[tier]
     min_gap = spec["min_gap"]
-    target = int(dur * spec["nps"] * 0.92)
+    target = int(dur * spec["nps"] * 1.05)
     ranked = sorted(
         zip(analysis.onsets_sec, analysis.onset_lanes, analysis.onset_energies),
         key=lambda x: -x[2],
@@ -111,15 +111,56 @@ def select_onsets(analysis: AudioAnalysis, tier: str, dur: float) -> list[tuple[
     picked.sort(key=lambda x: x[0])
     # PRD §6.0.8: first playable note 1.0–2.5s after chart t=0 (post-countdown)
     picked = [p for p in picked if p[0] >= 1.0]
+    if len(picked) < max(12, int(target * 0.85)):
+        fill_gap = min_gap * 0.72
+        for t, lane, e in ranked:
+            if len(picked) >= target:
+                break
+            if t < 1.0:
+                continue
+            if any(abs(t - p[0]) < fill_gap for p in picked):
+                continue
+            picked.append((t, lane, e))
+        picked.sort(key=lambda x: x[0])
     if len(picked) < 12:
-        # fallback: take every Nth onset
         step = max(1, len(analysis.onsets_sec) // max(12, target))
         picked = [
             (analysis.onsets_sec[i], analysis.onset_lanes[i], analysis.onset_energies[i])
             for i in range(0, len(analysis.onsets_sec), step)
             if analysis.onsets_sec[i] >= 1.0
-        ][: target]
+        ][:target]
     return picked
+
+
+def build_sections(analysis: AudioAnalysis, dur: float, track: dict) -> list[dict]:
+    """Section map; Instant/Hot Chart tracks get an early drop (≤8s)."""
+    tags = [str(t) for t in track.get("tags") or []]
+    instant = track.get("track_id") == "bs-s1-01" or any(
+        "Instant" in t or "Hot Chart" in t for t in tags
+    )
+    if instant and dur >= 60:
+        pairs = list(zip(analysis.onsets_sec, analysis.onset_energies))
+        win = [(t, e) for t, e in pairs if 4.0 <= t <= 8.0]
+        drop_t0 = round(max(win, key=lambda x: x[1])[0], 2) if win else 6.0
+        drop_t0 = min(drop_t0, 7.8)
+        intro_t1 = round(max(1.0, drop_t0 - 3.5), 2)
+        drop_t1 = round(min(dur * 0.55, drop_t0 + dur * 0.24), 2)
+        groove_t0 = drop_t1
+        groove_t1 = round(dur * 0.78, 2)
+        return [
+            {"id": "intro", "t0": 0.0, "t1": intro_t1},
+            {"id": "build", "t0": intro_t1, "t1": drop_t0},
+            {"id": "drop", "t0": drop_t0, "t1": drop_t1},
+            {"id": "groove", "t0": groove_t0, "t1": groove_t1},
+            {"id": "outro", "t0": groove_t1, "t1": float(dur)},
+        ]
+    return [
+        {"id": "intro", "t0": 0.0, "t1": round(dur * 0.12, 2)},
+        {"id": "build", "t0": round(dur * 0.12, 2), "t1": round(dur * 0.28, 2)},
+        {"id": "drop", "t0": round(dur * 0.28, 2), "t1": round(dur * 0.55, 2)},
+        {"id": "groove", "t0": round(dur * 0.55, 2), "t1": round(dur * 0.78, 2)},
+        {"id": "outro", "t0": round(dur * 0.78, 2), "t1": float(dur)},
+    ]
 
 
 def build_chart_from_onsets(
@@ -199,13 +240,7 @@ def build_chart_from_onsets(
     for j, n in enumerate(notes):
         n["id"] = f"n{j}"
 
-    sections = [
-        {"id": "intro", "t0": 0.0, "t1": round(dur * 0.12, 2)},
-        {"id": "build", "t0": round(dur * 0.12, 2), "t1": round(dur * 0.28, 2)},
-        {"id": "drop", "t0": round(dur * 0.28, 2), "t1": round(dur * 0.55, 2)},
-        {"id": "groove", "t0": round(dur * 0.55, 2), "t1": round(dur * 0.78, 2)},
-        {"id": "outro", "t0": round(dur * 0.78, 2), "t1": float(dur)},
-    ]
+    sections = build_sections(analysis, dur, track)
 
     ar = round(3000.0 / (spec["approach"] * bpm), 1)
     total = sum(

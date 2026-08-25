@@ -542,6 +542,27 @@ h2,
   color: var(--muted);
 }
 
+.track-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 12px 0 4px;
+}
+
+.track-preview-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.track-preview audio {
+  width: 100%;
+  max-width: 360px;
+  height: 36px;
+}
+
 .pickers {
   display: flex;
   gap: 16px;

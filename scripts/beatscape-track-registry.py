@@ -197,6 +197,7 @@ STAGE2_TRACKS: list[dict[str, Any]] = [
         "default_mode": "arcade",
         "default_tier": "hard",
         "allows_slide": False,
+        "clip_t0": 3.5,
         "play_role": "高速摇滚",
         "prompt": (
             "Rock rhythm game track, 148 BPM, asphalt anthem, electric guitar, tight drums, "

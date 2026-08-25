@@ -156,7 +156,10 @@ def main() -> int:
     if args.all_stage3:
         tracks.extend(STAGE3)
     if args.track:
-        hit = next((t for t in STAGE1 + STAGE2 if t["track_id"] == args.track), None)
+        hit = next(
+            (t for t in STAGE1 + STAGE2 + STAGE3 if t["track_id"] == args.track),
+            None,
+        )
         if not hit:
             raise SystemExit(f"unknown track: {args.track}")
         tracks = [hit]

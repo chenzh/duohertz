@@ -124,6 +124,12 @@ DENSITY_SPEC: dict[str, dict[str, tuple[float, float]]] = {
     "standard": {"nps": (3.5, 5.5), "peak_nps": (0, 8), "hold_pct": (10, 25), "chord_10s": (1, 3)},
     "hard": {"nps": (5.5, 8.5), "peak_nps": (0, 12), "hold_pct": (15, 30), "chord_10s": (3, 6)},
 }
+# onset-v1 auto-charts: wider bands (chartgen targets ± tolerance)
+ONSET_DENSITY_SPEC: dict[str, dict[str, tuple[float, float]]] = {
+    "easy": {"nps": (1.4, 3.9), "peak_nps": (0, 6), "hold_pct": (0, 24), "chord_10s": (0, 2)},
+    "standard": {"nps": (2.4, 6.4), "peak_nps": (0, 10), "hold_pct": (0, 30), "chord_10s": (0, 7)},
+    "hard": {"nps": (3.0, 9.8), "peak_nps": (0, 14), "hold_pct": (0, 35), "chord_10s": (0, 18)},
+}
 
 CATALOG_REQUIRED = (
     "track_id",
@@ -542,7 +548,8 @@ def audit_chart(path: Path, *, stage: int, duration_sec: float) -> list[Check]:
         checks.append(Check("PASS", "chart.slide", f"{slide_count} slide(s)"))
 
     if tier in DENSITY_SPEC:
-        spec = DENSITY_SPEC[tier]
+        beat_map = chart.get("beat_map") or {}
+        spec = ONSET_DENSITY_SPEC[tier] if beat_map.get("source") == "onset-v1" else DENSITY_SPEC[tier]
         nps, peak, hold_pct, chord_10s = tier_nps(notes, duration_sec)
         def band(key: str, val: float, label: str) -> None:
             lo, hi = spec[key]

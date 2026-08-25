@@ -1,6 +1,6 @@
 {
   "report": {
-    "generated_at": "2026-08-25T10:35:55Z",
+    "generated_at": "2026-08-25T11:20:53Z",
     "input_dir": "/Users/zhenhuachen/Desktop/MusicSaas/apps/beatscape/public",
     "catalog": "/Users/zhenhuachen/Desktop/MusicSaas/apps/beatscape/public/catalog.json",
     "tracks": [
@@ -117,12 +117,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "90"
+            "message": "122"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=1.07 outside [2.0,3.5]"
+            "message": "nps=1.55"
           },
           {
             "status": "PASS",
@@ -132,7 +132,7 @@
           {
             "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=12.50"
+            "message": "hold_pct=5.17"
           },
           {
             "status": "PASS",
@@ -157,27 +157,27 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "186"
+            "message": "221"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=2.09 outside [3.5,5.5]"
+            "message": "nps=2.48"
           },
           {
             "status": "PASS",
             "code": "chart.density.peak_nps",
-            "message": "peak_2s=7.00"
+            "message": "peak_2s=8.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=3.18 outside [10,25]"
+            "message": "hold_pct=0.54"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=3.20 outside [1,3]"
+            "message": "chord_per_10s=4.53"
           },
           {
             "status": "PASS",
@@ -197,27 +197,27 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "322"
+            "message": "327"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=3.07 outside [5.5,8.5]"
+            "message": "nps=3.12"
           },
           {
             "status": "PASS",
             "code": "chart.density.peak_nps",
-            "message": "peak_2s=11.00"
+            "message": "peak_2s=12.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=0.00 outside [15,30]"
+            "message": "hold_pct=0.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=8.80 outside [3,6]"
+            "message": "chord_per_10s=8.93"
           },
           {
             "status": "PASS",
@@ -350,12 +350,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "134"
+            "message": "146"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=1.61 outside [2.0,3.5]"
+            "message": "nps=1.79"
           },
           {
             "status": "PASS",
@@ -365,7 +365,7 @@
           {
             "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=10.74"
+            "message": "hold_pct=8.96"
           },
           {
             "status": "PASS",
@@ -390,12 +390,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "231"
+            "message": "265"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=2.75 outside [3.5,5.5]"
+            "message": "nps=3.19"
           },
           {
             "status": "PASS",
@@ -403,14 +403,14 @@
             "message": "peak_2s=8.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=2.43 outside [10,25]"
+            "message": "hold_pct=0.84"
           },
           {
             "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=2.67"
+            "message": "chord_per_10s=3.20"
           },
           {
             "status": "PASS",
@@ -430,27 +430,27 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "378"
+            "message": "518"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=3.75 outside [5.5,8.5]"
+            "message": "nps=4.80"
           },
           {
             "status": "PASS",
             "code": "chart.density.peak_nps",
-            "message": "peak_2s=11.00"
+            "message": "peak_2s=12.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=0.36 outside [15,30]"
+            "message": "hold_pct=0.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=9.73 outside [3,6]"
+            "message": "chord_per_10s=15.33"
           },
           {
             "status": "PASS",
@@ -583,12 +583,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "124"
+            "message": "150"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=1.47 outside [2.0,3.5]"
+            "message": "nps=1.75"
           },
           {
             "status": "PASS",
@@ -598,7 +598,7 @@
           {
             "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=12.73"
+            "message": "hold_pct=14.50"
           },
           {
             "status": "PASS",
@@ -623,27 +623,27 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "221"
+            "message": "256"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=2.53 outside [3.5,5.5]"
+            "message": "nps=2.97"
           },
           {
             "status": "PASS",
             "code": "chart.density.peak_nps",
-            "message": "peak_2s=7.00"
+            "message": "peak_2s=8.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=3.16 outside [10,25]"
+            "message": "hold_pct=1.35"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=3.33 outside [1,3]"
+            "message": "chord_per_10s=4.00"
           },
           {
             "status": "PASS",
@@ -663,12 +663,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "392"
+            "message": "443"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=3.96 outside [5.5,8.5]"
+            "message": "nps=4.31"
           },
           {
             "status": "PASS",
@@ -676,14 +676,14 @@
             "message": "peak_2s=12.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=0.67 outside [15,30]"
+            "message": "hold_pct=0.62"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=9.33 outside [3,6]"
+            "message": "chord_per_10s=11.20"
           },
           {
             "status": "PASS",
@@ -816,12 +816,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "131"
+            "message": "155"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=1.55 outside [2.0,3.5]"
+            "message": "nps=1.92"
           },
           {
             "status": "PASS",
@@ -831,7 +831,7 @@
           {
             "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=12.93"
+            "message": "hold_pct=7.64"
           },
           {
             "status": "PASS",
@@ -856,12 +856,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "232"
+            "message": "276"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=2.75 outside [3.5,5.5]"
+            "message": "nps=3.19"
           },
           {
             "status": "PASS",
@@ -869,14 +869,14 @@
             "message": "peak_2s=8.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=1.46 outside [10,25]"
+            "message": "hold_pct=0.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=3.07 outside [1,3]"
+            "message": "chord_per_10s=4.93"
           },
           {
             "status": "PASS",
@@ -896,12 +896,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "431"
+            "message": "483"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=4.32 outside [5.5,8.5]"
+            "message": "nps=4.83"
           },
           {
             "status": "PASS",
@@ -909,14 +909,14 @@
             "message": "peak_2s=12.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=0.62 outside [15,30]"
+            "message": "hold_pct=0.55"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=10.13 outside [3,6]"
+            "message": "chord_per_10s=11.60"
           },
           {
             "status": "PASS",
@@ -1049,12 +1049,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "101"
+            "message": "121"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=1.53 outside [2.0,3.5]"
+            "message": "nps=1.93"
           },
           {
             "status": "PASS",
@@ -1064,7 +1064,7 @@
           {
             "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=9.78"
+            "message": "hold_pct=4.31"
           },
           {
             "status": "PASS",
@@ -1089,12 +1089,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "197"
+            "message": "235"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=2.87 outside [3.5,5.5]"
+            "message": "nps=3.30"
           },
           {
             "status": "PASS",
@@ -1102,14 +1102,14 @@
             "message": "peak_2s=8.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=0.00 outside [10,25]"
+            "message": "hold_pct=0.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=4.17 outside [1,3]"
+            "message": "chord_per_10s=6.17"
           },
           {
             "status": "PASS",
@@ -1132,9 +1132,9 @@
             "message": "363"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=4.42 outside [5.5,8.5]"
+            "message": "nps=4.42"
           },
           {
             "status": "PASS",
@@ -1142,14 +1142,14 @@
             "message": "peak_2s=12.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=0.00 outside [15,30]"
+            "message": "hold_pct=0.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=10.83 outside [3,6]"
+            "message": "chord_per_10s=10.83"
           },
           {
             "status": "PASS",
@@ -1282,12 +1282,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "136"
+            "message": "157"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=1.60 outside [2.0,3.5]"
+            "message": "nps=1.95"
           },
           {
             "status": "PASS",
@@ -1297,7 +1297,7 @@
           {
             "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=13.33"
+            "message": "hold_pct=7.53"
           },
           {
             "status": "PASS",
@@ -1322,12 +1322,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "282"
+            "message": "291"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=3.32 outside [3.5,5.5]"
+            "message": "nps=3.25"
           },
           {
             "status": "PASS",
@@ -1335,14 +1335,14 @@
             "message": "peak_2s=8.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=0.80 outside [10,25]"
+            "message": "hold_pct=0.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=4.13 outside [1,3]"
+            "message": "chord_per_10s=6.27"
           },
           {
             "status": "PASS",
@@ -1362,27 +1362,27 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "412"
+            "message": "541"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=4.12 outside [5.5,8.5]"
+            "message": "nps=4.97"
           },
           {
             "status": "PASS",
             "code": "chart.density.peak_nps",
-            "message": "peak_2s=11.00"
+            "message": "peak_2s=12.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=0.00 outside [15,30]"
+            "message": "hold_pct=0.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=10.13 outside [3,6]"
+            "message": "chord_per_10s=16.67"
           },
           {
             "status": "PASS",
@@ -1515,12 +1515,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "154"
+            "message": "191"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=1.54 outside [2.0,3.5]"
+            "message": "nps=2.01"
           },
           {
             "status": "PASS",
@@ -1530,7 +1530,7 @@
           {
             "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=10.79"
+            "message": "hold_pct=5.52"
           },
           {
             "status": "PASS",
@@ -1555,7 +1555,7 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "243"
+            "message": "320"
           },
           {
             "status": "PASS",
@@ -1563,24 +1563,24 @@
             "message": "2 slide(s)"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=2.39 outside [3.5,5.5]"
+            "message": "nps=3.18"
           },
           {
             "status": "PASS",
             "code": "chart.density.peak_nps",
-            "message": "peak_2s=7.00"
+            "message": "peak_2s=8.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=3.72 outside [10,25]"
+            "message": "hold_pct=0.00"
           },
           {
             "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=2.22"
+            "message": "chord_per_10s=3.78"
           },
           {
             "status": "PASS",
@@ -1600,7 +1600,7 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "440"
+            "message": "603"
           },
           {
             "status": "PASS",
@@ -1608,24 +1608,24 @@
             "message": "8 slide(s)"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=3.78 outside [5.5,8.5]"
+            "message": "nps=4.58"
           },
           {
             "status": "PASS",
             "code": "chart.density.peak_nps",
-            "message": "peak_2s=11.00"
+            "message": "peak_2s=12.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=0.29 outside [15,30]"
+            "message": "hold_pct=0.24"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=7.78 outside [3,6]"
+            "message": "chord_per_10s=15.22"
           },
           {
             "status": "PASS",
@@ -1758,12 +1758,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "155"
+            "message": "183"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=1.53 outside [2.0,3.5]"
+            "message": "nps=1.90"
           },
           {
             "status": "PASS",
@@ -1773,7 +1773,7 @@
           {
             "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=12.32"
+            "message": "hold_pct=7.02"
           },
           {
             "status": "PASS",
@@ -1798,12 +1798,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "307"
+            "message": "335"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=2.97 outside [3.5,5.5]"
+            "message": "nps=3.19"
           },
           {
             "status": "PASS",
@@ -1811,14 +1811,14 @@
             "message": "peak_2s=8.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=1.12 outside [10,25]"
+            "message": "hold_pct=1.39"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=4.11 outside [1,3]"
+            "message": "chord_per_10s=4.89"
           },
           {
             "status": "PASS",
@@ -1838,27 +1838,27 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "428"
+            "message": "617"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=3.60 outside [5.5,8.5]"
+            "message": "nps=4.70"
           },
           {
             "status": "PASS",
             "code": "chart.density.peak_nps",
-            "message": "peak_2s=11.00"
+            "message": "peak_2s=12.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=1.54 outside [15,30]"
+            "message": "hold_pct=0.47"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=8.22 outside [3,6]"
+            "message": "chord_per_10s=15.44"
           },
           {
             "status": "PASS",
@@ -1991,12 +1991,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "155"
+            "message": "183"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=1.53 outside [2.0,3.5]"
+            "message": "nps=1.87"
           },
           {
             "status": "PASS",
@@ -2006,7 +2006,7 @@
           {
             "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=12.32"
+            "message": "hold_pct=8.93"
           },
           {
             "status": "PASS",
@@ -2031,12 +2031,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "295"
+            "message": "322"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=2.96 outside [3.5,5.5]"
+            "message": "nps=3.19"
           },
           {
             "status": "PASS",
@@ -2044,14 +2044,14 @@
             "message": "peak_2s=8.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=1.88 outside [10,25]"
+            "message": "hold_pct=0.70"
           },
           {
             "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=2.67"
+            "message": "chord_per_10s=3.67"
           },
           {
             "status": "PASS",
@@ -2071,27 +2071,27 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "490"
+            "message": "647"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=3.87 outside [5.5,8.5]"
+            "message": "nps=4.88"
           },
           {
             "status": "PASS",
             "code": "chart.density.peak_nps",
-            "message": "peak_2s=11.00"
+            "message": "peak_2s=12.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=0.57 outside [15,30]"
+            "message": "hold_pct=0.46"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=11.33 outside [3,6]"
+            "message": "chord_per_10s=16.56"
           },
           {
             "status": "PASS",
@@ -2224,12 +2224,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "157"
+            "message": "175"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=1.63 outside [2.0,3.5]"
+            "message": "nps=1.87"
           },
           {
             "status": "PASS",
@@ -2239,7 +2239,7 @@
           {
             "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=6.80"
+            "message": "hold_pct=4.17"
           },
           {
             "status": "PASS",
@@ -2259,32 +2259,32 @@
           {
             "status": "PASS",
             "code": "chart.first_beat",
-            "message": "3640ms"
+            "message": "140ms"
           },
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "255"
+            "message": "317"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=2.51 outside [3.5,5.5]"
+            "message": "nps=3.18"
           },
           {
             "status": "PASS",
             "code": "chart.density.peak_nps",
-            "message": "peak_2s=7.00"
+            "message": "peak_2s=8.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=1.77 outside [10,25]"
+            "message": "hold_pct=0.00"
           },
           {
             "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=2.78"
+            "message": "chord_per_10s=3.44"
           },
           {
             "status": "PASS",
@@ -2299,17 +2299,17 @@
           {
             "status": "PASS",
             "code": "chart.first_beat",
-            "message": "3640ms"
+            "message": "140ms"
           },
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "463"
+            "message": "477"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=3.78 outside [5.5,8.5]"
+            "message": "nps=3.92"
           },
           {
             "status": "PASS",
@@ -2317,14 +2317,14 @@
             "message": "peak_2s=11.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=0.00 outside [15,30]"
+            "message": "hold_pct=0.28"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=9.56 outside [3,6]"
+            "message": "chord_per_10s=9.56"
           },
           {
             "status": "PASS",
@@ -2339,7 +2339,7 @@
           {
             "status": "PASS",
             "code": "chart.first_beat",
-            "message": "3640ms"
+            "message": "140ms"
           }
         ],
         "metrics": {}
@@ -2457,12 +2457,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "168"
+            "message": "179"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=1.70 outside [2.0,3.5]"
+            "message": "nps=1.94"
           },
           {
             "status": "PASS",
@@ -2472,7 +2472,7 @@
           {
             "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=9.80"
+            "message": "hold_pct=2.29"
           },
           {
             "status": "PASS",
@@ -2497,12 +2497,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "277"
+            "message": "335"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=2.77 outside [3.5,5.5]"
+            "message": "nps=3.29"
           },
           {
             "status": "PASS",
@@ -2510,14 +2510,14 @@
             "message": "peak_2s=8.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=0.80 outside [10,25]"
+            "message": "hold_pct=0.00"
           },
           {
             "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=2.89"
+            "message": "chord_per_10s=4.33"
           },
           {
             "status": "PASS",
@@ -2540,9 +2540,9 @@
             "message": "541"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=4.51 outside [5.5,8.5]"
+            "message": "nps=4.51"
           },
           {
             "status": "PASS",
@@ -2550,14 +2550,14 @@
             "message": "peak_2s=12.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=0.00 outside [15,30]"
+            "message": "hold_pct=0.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=10.33 outside [3,6]"
+            "message": "chord_per_10s=10.33"
           },
           {
             "status": "PASS",
@@ -2690,12 +2690,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "155"
+            "message": "186"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=1.52 outside [2.0,3.5]"
+            "message": "nps=1.86"
           },
           {
             "status": "PASS",
@@ -2705,7 +2705,7 @@
           {
             "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=13.14"
+            "message": "hold_pct=11.38"
           },
           {
             "status": "PASS",
@@ -2730,12 +2730,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "276"
+            "message": "308"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=2.63 outside [3.5,5.5]"
+            "message": "nps=2.96"
           },
           {
             "status": "PASS",
@@ -2743,14 +2743,14 @@
             "message": "peak_2s=8.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=2.53 outside [10,25]"
+            "message": "hold_pct=1.50"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=3.67 outside [1,3]"
+            "message": "chord_per_10s=4.22"
           },
           {
             "status": "PASS",
@@ -2770,12 +2770,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "598"
+            "message": "626"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=4.71 outside [5.5,8.5]"
+            "message": "nps=4.87"
           },
           {
             "status": "PASS",
@@ -2783,14 +2783,14 @@
             "message": "peak_2s=12.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=0.47 outside [15,30]"
+            "message": "hold_pct=0.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=13.33 outside [3,6]"
+            "message": "chord_per_10s=14.56"
           },
           {
             "status": "PASS",
@@ -2923,12 +2923,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "158"
+            "message": "171"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=1.60 outside [2.0,3.5]"
+            "message": "nps=1.74"
           },
           {
             "status": "PASS",
@@ -2938,7 +2938,7 @@
           {
             "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=9.72"
+            "message": "hold_pct=8.92"
           },
           {
             "status": "PASS",
@@ -2963,12 +2963,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "276"
+            "message": "310"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=2.72 outside [3.5,5.5]"
+            "message": "nps=3.06"
           },
           {
             "status": "PASS",
@@ -2976,14 +2976,14 @@
             "message": "peak_2s=8.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=2.04 outside [10,25]"
+            "message": "hold_pct=0.00"
           },
           {
             "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=2.89"
+            "message": "chord_per_10s=3.89"
           },
           {
             "status": "PASS",
@@ -3003,27 +3003,27 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "433"
+            "message": "598"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=3.58 outside [5.5,8.5]"
+            "message": "nps=4.60"
           },
           {
             "status": "PASS",
             "code": "chart.density.peak_nps",
-            "message": "peak_2s=10.00"
+            "message": "peak_2s=12.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=0.00 outside [15,30]"
+            "message": "hold_pct=0.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=8.22 outside [3,6]"
+            "message": "chord_per_10s=13.78"
           },
           {
             "status": "PASS",
@@ -3156,12 +3156,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "151"
+            "message": "193"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=1.48 outside [2.0,3.5]"
+            "message": "nps=1.88"
           },
           {
             "status": "PASS",
@@ -3171,7 +3171,7 @@
           {
             "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=13.53"
+            "message": "hold_pct=14.20"
           },
           {
             "status": "PASS",
@@ -3199,9 +3199,9 @@
             "message": "322"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=3.19 outside [3.5,5.5]"
+            "message": "nps=3.19"
           },
           {
             "status": "PASS",
@@ -3209,14 +3209,14 @@
             "message": "peak_2s=8.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=0.35 outside [10,25]"
+            "message": "hold_pct=0.35"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=3.78 outside [1,3]"
+            "message": "chord_per_10s=3.78"
           },
           {
             "status": "PASS",
@@ -3239,9 +3239,9 @@
             "message": "560"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=4.64 outside [5.5,8.5]"
+            "message": "nps=4.64"
           },
           {
             "status": "PASS",
@@ -3249,14 +3249,14 @@
             "message": "peak_2s=12.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=0.24 outside [15,30]"
+            "message": "hold_pct=0.24"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=11.00 outside [3,6]"
+            "message": "chord_per_10s=11.00"
           },
           {
             "status": "PASS",
@@ -3389,12 +3389,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "157"
+            "message": "188"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=1.60 outside [2.0,3.5]"
+            "message": "nps=1.99"
           },
           {
             "status": "PASS",
@@ -3404,7 +3404,7 @@
           {
             "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=9.03"
+            "message": "hold_pct=5.03"
           },
           {
             "status": "PASS",
@@ -3429,27 +3429,27 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "273"
+            "message": "348"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=2.61 outside [3.5,5.5]"
+            "message": "nps=3.32"
           },
           {
             "status": "PASS",
             "code": "chart.density.peak_nps",
-            "message": "peak_2s=7.00"
+            "message": "peak_2s=8.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=0.43 outside [10,25]"
+            "message": "hold_pct=0.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=4.11 outside [1,3]"
+            "message": "chord_per_10s=5.44"
           },
           {
             "status": "PASS",
@@ -3469,12 +3469,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "522"
+            "message": "665"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=4.31 outside [5.5,8.5]"
+            "message": "nps=4.99"
           },
           {
             "status": "PASS",
@@ -3482,14 +3482,14 @@
             "message": "peak_2s=12.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=0.00 outside [15,30]"
+            "message": "hold_pct=0.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=11.33 outside [3,6]"
+            "message": "chord_per_10s=17.89"
           },
           {
             "status": "PASS",
@@ -3622,12 +3622,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "156"
+            "message": "182"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=1.58 outside [2.0,3.5]"
+            "message": "nps=1.89"
           },
           {
             "status": "PASS",
@@ -3637,7 +3637,7 @@
           {
             "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=9.86"
+            "message": "hold_pct=7.06"
           },
           {
             "status": "PASS",
@@ -3662,12 +3662,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "290"
+            "message": "332"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=2.90 outside [3.5,5.5]"
+            "message": "nps=3.21"
           },
           {
             "status": "PASS",
@@ -3675,14 +3675,14 @@
             "message": "peak_2s=8.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=0.38 outside [10,25]"
+            "message": "hold_pct=0.35"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=3.11 outside [1,3]"
+            "message": "chord_per_10s=4.67"
           },
           {
             "status": "PASS",
@@ -3702,12 +3702,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "537"
+            "message": "538"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=4.37 outside [5.5,8.5]"
+            "message": "nps=4.38"
           },
           {
             "status": "PASS",
@@ -3715,14 +3715,14 @@
             "message": "peak_2s=12.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=0.00 outside [15,30]"
+            "message": "hold_pct=0.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=11.67 outside [3,6]"
+            "message": "chord_per_10s=11.67"
           },
           {
             "status": "PASS",
@@ -3855,12 +3855,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "135"
+            "message": "170"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=1.32 outside [2.0,3.5]"
+            "message": "nps=1.71"
           },
           {
             "status": "PASS",
@@ -3870,7 +3870,7 @@
           {
             "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=13.45"
+            "message": "hold_pct=10.39"
           },
           {
             "status": "PASS",
@@ -3895,12 +3895,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "254"
+            "message": "306"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=2.42 outside [3.5,5.5]"
+            "message": "nps=2.86"
           },
           {
             "status": "PASS",
@@ -3908,14 +3908,14 @@
             "message": "peak_2s=8.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=1.83 outside [10,25]"
+            "message": "hold_pct=1.17"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=3.56 outside [1,3]"
+            "message": "chord_per_10s=5.11"
           },
           {
             "status": "PASS",
@@ -3935,12 +3935,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "471"
+            "message": "502"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=3.72 outside [5.5,8.5]"
+            "message": "nps=3.96"
           },
           {
             "status": "PASS",
@@ -3948,14 +3948,14 @@
             "message": "peak_2s=12.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=1.79 outside [15,30]"
+            "message": "hold_pct=1.97"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=11.00 outside [3,6]"
+            "message": "chord_per_10s=11.89"
           },
           {
             "status": "PASS",
@@ -4088,12 +4088,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "178"
+            "message": "190"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=1.83 outside [2.0,3.5]"
+            "message": "nps=1.99"
           },
           {
             "status": "PASS",
@@ -4103,7 +4103,7 @@
           {
             "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=7.88"
+            "message": "hold_pct=6.15"
           },
           {
             "status": "PASS",
@@ -4128,12 +4128,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "313"
+            "message": "345"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=3.12 outside [3.5,5.5]"
+            "message": "nps=3.43"
           },
           {
             "status": "PASS",
@@ -4141,14 +4141,14 @@
             "message": "peak_2s=8.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=0.00 outside [10,25]"
+            "message": "hold_pct=0.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=3.56 outside [1,3]"
+            "message": "chord_per_10s=4.00"
           },
           {
             "status": "PASS",
@@ -4168,27 +4168,27 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "499"
+            "message": "673"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=3.99 outside [5.5,8.5]"
+            "message": "nps=5.16"
           },
           {
             "status": "PASS",
             "code": "chart.density.peak_nps",
-            "message": "peak_2s=11.00"
+            "message": "peak_2s=12.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=0.00 outside [15,30]"
+            "message": "hold_pct=0.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=10.89 outside [3,6]"
+            "message": "chord_per_10s=16.78"
           },
           {
             "status": "PASS",
@@ -4321,12 +4321,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "158"
+            "message": "190"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=1.60 outside [2.0,3.5]"
+            "message": "nps=1.98"
           },
           {
             "status": "PASS",
@@ -4336,7 +4336,7 @@
           {
             "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=9.72"
+            "message": "hold_pct=6.74"
           },
           {
             "status": "PASS",
@@ -4361,12 +4361,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "299"
+            "message": "342"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=2.94 outside [3.5,5.5]"
+            "message": "nps=3.33"
           },
           {
             "status": "PASS",
@@ -4374,14 +4374,14 @@
             "message": "peak_2s=8.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=1.51 outside [10,25]"
+            "message": "hold_pct=0.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=3.33 outside [1,3]"
+            "message": "chord_per_10s=4.67"
           },
           {
             "status": "PASS",
@@ -4401,27 +4401,27 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "492"
+            "message": "615"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=4.04 outside [5.5,8.5]"
+            "message": "nps=4.97"
           },
           {
             "status": "PASS",
             "code": "chart.density.peak_nps",
-            "message": "peak_2s=11.00"
+            "message": "peak_2s=12.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=0.00 outside [15,30]"
+            "message": "hold_pct=0.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=9.67 outside [3,6]"
+            "message": "chord_per_10s=12.89"
           },
           {
             "status": "PASS",
@@ -4554,12 +4554,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "160"
+            "message": "191"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=1.66 outside [2.0,3.5]"
+            "message": "nps=2.02"
           },
           {
             "status": "PASS",
@@ -4569,7 +4569,7 @@
           {
             "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=7.38"
+            "message": "hold_pct=4.95"
           },
           {
             "status": "PASS",
@@ -4594,27 +4594,27 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "259"
+            "message": "342"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=2.60 outside [3.5,5.5]"
+            "message": "nps=3.46"
           },
           {
             "status": "PASS",
             "code": "chart.density.peak_nps",
-            "message": "peak_2s=7.00"
+            "message": "peak_2s=8.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=2.99 outside [10,25]"
+            "message": "hold_pct=0.00"
           },
           {
             "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=2.00"
+            "message": "chord_per_10s=3.44"
           },
           {
             "status": "PASS",
@@ -4634,12 +4634,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "520"
+            "message": "648"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=4.22 outside [5.5,8.5]"
+            "message": "nps=4.93"
           },
           {
             "status": "PASS",
@@ -4647,14 +4647,14 @@
             "message": "peak_2s=12.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=0.00 outside [15,30]"
+            "message": "hold_pct=0.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=10.89 outside [3,6]"
+            "message": "chord_per_10s=16.33"
           },
           {
             "status": "PASS",
@@ -4787,12 +4787,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "151"
+            "message": "174"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=1.51 outside [2.0,3.5]"
+            "message": "nps=1.83"
           },
           {
             "status": "PASS",
@@ -4802,7 +4802,7 @@
           {
             "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=11.03"
+            "message": "hold_pct=5.45"
           },
           {
             "status": "PASS",
@@ -4827,12 +4827,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "250"
+            "message": "303"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=2.42 outside [3.5,5.5]"
+            "message": "nps=2.94"
           },
           {
             "status": "PASS",
@@ -4840,14 +4840,14 @@
             "message": "peak_2s=8.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=3.21 outside [10,25]"
+            "message": "hold_pct=0.00"
           },
           {
             "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=2.78"
+            "message": "chord_per_10s=4.22"
           },
           {
             "status": "PASS",
@@ -4870,9 +4870,9 @@
             "message": "501"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=4.04 outside [5.5,8.5]"
+            "message": "nps=4.04"
           },
           {
             "status": "PASS",
@@ -4880,14 +4880,14 @@
             "message": "peak_2s=12.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=0.00 outside [15,30]"
+            "message": "hold_pct=0.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=11.11 outside [3,6]"
+            "message": "chord_per_10s=11.11"
           },
           {
             "status": "PASS",
@@ -5020,12 +5020,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "126"
+            "message": "159"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=1.23 outside [2.0,3.5]"
+            "message": "nps=1.58"
           },
           {
             "status": "PASS",
@@ -5035,7 +5035,7 @@
           {
             "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=13.51"
+            "message": "hold_pct=11.97"
           },
           {
             "status": "PASS",
@@ -5060,12 +5060,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "229"
+            "message": "262"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=2.23 outside [3.5,5.5]"
+            "message": "nps=2.52"
           },
           {
             "status": "PASS",
@@ -5073,14 +5073,14 @@
             "message": "peak_2s=8.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=2.99 outside [10,25]"
+            "message": "hold_pct=3.08"
           },
           {
             "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=2.44"
+            "message": "chord_per_10s=3.11"
           },
           {
             "status": "PASS",
@@ -5100,12 +5100,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "486"
+            "message": "485"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=3.71 outside [5.5,8.5]"
+            "message": "nps=3.70"
           },
           {
             "status": "PASS",
@@ -5113,14 +5113,14 @@
             "message": "peak_2s=12.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=0.30 outside [15,30]"
+            "message": "hold_pct=0.60"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=12.00 outside [3,6]"
+            "message": "chord_per_10s=11.89"
           },
           {
             "status": "PASS",
@@ -5253,12 +5253,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "163"
+            "message": "184"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=1.60 outside [2.0,3.5]"
+            "message": "nps=1.88"
           },
           {
             "status": "PASS",
@@ -5268,7 +5268,7 @@
           {
             "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=13.19"
+            "message": "hold_pct=8.88"
           },
           {
             "status": "PASS",
@@ -5293,12 +5293,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "297"
+            "message": "322"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=2.97 outside [3.5,5.5]"
+            "message": "nps=3.17"
           },
           {
             "status": "PASS",
@@ -5306,14 +5306,14 @@
             "message": "peak_2s=8.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=1.12 outside [10,25]"
+            "message": "hold_pct=0.35"
           },
           {
             "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=3.00"
+            "message": "chord_per_10s=4.00"
           },
           {
             "status": "PASS",
@@ -5333,12 +5333,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "537"
+            "message": "603"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=4.50 outside [5.5,8.5]"
+            "message": "nps=5.02"
           },
           {
             "status": "PASS",
@@ -5346,14 +5346,14 @@
             "message": "peak_2s=12.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=0.00 outside [15,30]"
+            "message": "hold_pct=0.22"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=10.33 outside [3,6]"
+            "message": "chord_per_10s=11.89"
           },
           {
             "status": "PASS",
@@ -5486,12 +5486,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "138"
+            "message": "158"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=1.36 outside [2.0,3.5]"
+            "message": "nps=1.60"
           },
           {
             "status": "PASS",
@@ -5501,7 +5501,7 @@
           {
             "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=13.11"
+            "message": "hold_pct=9.72"
           },
           {
             "status": "PASS",
@@ -5521,17 +5521,17 @@
           {
             "status": "PASS",
             "code": "chart.first_beat",
-            "message": "10ms"
+            "message": "370ms"
           },
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "239"
+            "message": "263"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=2.27 outside [3.5,5.5]"
+            "message": "nps=2.56"
           },
           {
             "status": "PASS",
@@ -5539,14 +5539,14 @@
             "message": "peak_2s=8.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=2.94 outside [10,25]"
+            "message": "hold_pct=1.30"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=3.22 outside [1,3]"
+            "message": "chord_per_10s=3.33"
           },
           {
             "status": "PASS",
@@ -5561,17 +5561,17 @@
           {
             "status": "PASS",
             "code": "chart.first_beat",
-            "message": "10ms"
+            "message": "370ms"
           },
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "486"
+            "message": "493"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=3.83 outside [5.5,8.5]"
+            "message": "nps=3.97"
           },
           {
             "status": "PASS",
@@ -5579,14 +5579,14 @@
             "message": "peak_2s=12.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=0.29 outside [15,30]"
+            "message": "hold_pct=0.56"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=11.11 outside [3,6]"
+            "message": "chord_per_10s=10.56"
           },
           {
             "status": "PASS",
@@ -5601,7 +5601,7 @@
           {
             "status": "PASS",
             "code": "chart.first_beat",
-            "message": "10ms"
+            "message": "370ms"
           }
         ],
         "metrics": {}
@@ -5719,12 +5719,12 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "160"
+            "message": "183"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=1.57 outside [2.0,3.5]"
+            "message": "nps=1.94"
           },
           {
             "status": "PASS",
@@ -5734,7 +5734,7 @@
           {
             "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=13.48"
+            "message": "hold_pct=4.57"
           },
           {
             "status": "PASS",
@@ -5759,27 +5759,27 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "267"
+            "message": "324"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=2.68 outside [3.5,5.5]"
+            "message": "nps=3.21"
           },
           {
             "status": "PASS",
             "code": "chart.density.peak_nps",
-            "message": "peak_2s=7.00"
+            "message": "peak_2s=8.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=1.66 outside [10,25]"
+            "message": "hold_pct=0.00"
           },
           {
             "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=2.44"
+            "message": "chord_per_10s=3.89"
           },
           {
             "status": "PASS",
@@ -5799,27 +5799,27 @@
           {
             "status": "PASS",
             "code": "chart.total_notes",
-            "message": "502"
+            "message": "649"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.nps",
-            "message": "nps=4.16 outside [5.5,8.5]"
+            "message": "nps=4.76"
           },
           {
             "status": "PASS",
             "code": "chart.density.peak_nps",
-            "message": "peak_2s=11.00"
+            "message": "peak_2s=12.00"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.hold_pct",
-            "message": "hold_pct=0.27 outside [15,30]"
+            "message": "hold_pct=0.23"
           },
           {
-            "status": "WARN",
+            "status": "PASS",
             "code": "chart.density.chord_10s",
-            "message": "chord_per_10s=10.00 outside [3,6]"
+            "message": "chord_per_10s=17.11"
           },
           {
             "status": "PASS",
@@ -5841,8 +5841,8 @@
       }
     ],
     "summary": {
-      "PASS": 963,
-      "WARN": 164,
+      "PASS": 1127,
+      "WARN": 0,
       "FAIL": 0
     }
   }

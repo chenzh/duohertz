@@ -98,6 +98,7 @@ export function PlayPage() {
         </button>
       </div>
       <PlayField
+        key={track.track_id}
         chart={chart}
         audioUrl={assetUrl(track.audio)}
         mode={mode}

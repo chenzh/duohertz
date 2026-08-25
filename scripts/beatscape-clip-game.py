@@ -91,7 +91,7 @@ def wav_to_m4a(src: Path, dest: Path) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Clip BeatScape game slice from master WAV")
     parser.add_argument("--track", required=True, help="track_id e.g. bs-s1-01")
-    parser.add_argument("--t0", type=float, default=0.0, help="Clip start (seconds)")
+    parser.add_argument("--t0", type=float, default=None, help="Clip start (seconds); default 0 or track clip_t0")
     parser.add_argument("--duration", type=float, help="Clip length (default: catalog duration_sec)")
     parser.add_argument("--out", type=Path, help="Output m4a (default: preview/{stem}.m4a)")
     parser.add_argument("--copy-catalog", action="store_true", help="Also copy to public/catalog/{id}/audio.m4a")
@@ -117,11 +117,15 @@ def main() -> int:
         if dur is None:
             dur = float(meta.get("duration_sec", 75))
 
+    t0 = 0.0 if args.t0 is None else args.t0
+    if args.t0 is None and meta.get("clip_t0") is not None:
+        t0 = float(meta["clip_t0"])
+
     out_m4a = args.out or (PREVIEW / meta.get("preview_file", f"{stem}.m4a"))
     tmp_wav = PREVIEW / "clips" / f"{stem}-game.wav"
-    clipped = clip_wav(master, tmp_wav, args.t0, dur)
+    clipped = clip_wav(master, tmp_wav, t0, dur)
     wav_to_m4a(tmp_wav, out_m4a)
-    print(f"OK {args.track}: {clipped:.2f}s -> {out_m4a}")
+    print(f"OK {args.track}: {clipped:.2f}s (t0={t0}) -> {out_m4a}")
 
     if args.copy_catalog:
         dest = ROOT / "apps" / "beatscape" / "public" / "catalog" / args.track / "audio.m4a"

@@ -1,29 +1,28 @@
 # BeatScape 待办与验收标准
 
-> **更新**：2026-08-25（冲刺完成）  
+> **更新**：2026-08-25（Stage3 验收）  
 > **进度入口**：`SESSION.md` · `pnpm catalog:beatscape`  
 > **权威 PRD**：`docs/PRD-BEATSCAPE.md`
 
-## 冲刺状态（2026-08-25）
+## 冲刺状态（Stage3 · 2026-08-25）
 
 | 任务 | 状态 | 证据 |
 |------|------|------|
-| T1 耳检 | ✅ | `earcheck:beatscape` · [worklog](../worklog/2026-08-25.md) |
-| T2–T5 Stage1 双资产 | ✅ | 6/6 `stream.m4a` · audit FAIL=0 |
-| T6–T8 Stage2 | ✅ | `catalog:beatscape --stage 2` → **10/10** · Slide vitest |
-| T9 精剪/拼接脚本 | ✅ | `beatscape-clip-game.py` · `beatscape-stitch-stream.py` |
-| T10 引流 | ✅ | `preview_48s.m4a` · `.env.example` |
-| T11 push | ⏳ | 本地改动待 commit；remote push 进行中 |
-| T12 CI | ✅ | `.github/workflows/ci.yml` beatscape job |
-| L1–L5 远期 | — | 不在本次冲刺范围 |
+| L1 曲库 25 首 | ✅ | `catalog:beatscape --stage 3` → **25/25** |
+| T1 耳检 | ✅ | `earcheck:beatscape` **25/25 PASS** |
+| T2–T5 Stage1 双资产 | ✅ | 6/6 `stream.m4a` |
+| T6–T8 Stage2 | ✅ | Slide City · **10/10** |
+| T9–T12 工具/CI | ✅ | pipeline · vitest · CI job |
+| 内容 QA | ✅ | `audit:beatscape` **FAIL=0 WARN=0** |
+| T1-A4 #05 60fps | ⏳ | 人工实机（唯一未自动化） |
 
-**一键复验**
+**一键复验（Stage3）**
 
 ```bash
-pnpm audit:beatscape          # FAIL=0
-pnpm catalog:beatscape -- --stage 2   # 10/10
-pnpm earcheck:beatscape
-pnpm --filter @musicsaas/beatscape test   # 17/17
+pnpm catalog:beatscape -- --stage 3   # 25/25
+pnpm audit:beatscape                # FAIL=0
+pnpm earcheck:beatscape             # 25/25 PASS
+npm --prefix apps/beatscape test    # 17/17
 ```
 
 ---

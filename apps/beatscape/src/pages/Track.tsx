@@ -5,6 +5,7 @@ import type { CatalogTrack } from "../types/catalog";
 import type { ChartTier, PlayMode } from "../types/chart";
 import { toggleFavorite, loadFavorites } from "../storage/settings";
 import { StreamFullCTA } from "../components/StreamFullCTA";
+import { TrackAudioPreview } from "../components/TrackAudioPreview";
 
 export function TrackPage() {
   const { id } = useParams();
@@ -37,6 +38,7 @@ export function TrackPage() {
           {track.genre} · {track.bpm} BPM · {track.district}
         </p>
         <p className="rights">AI Original · Owned Rights · Game clip {track.duration_sec}s</p>
+        <TrackAudioPreview trackId={track.track_id} audioPath={track.audio} title={track.title} />
         <StreamFullCTA track={track} />
         <div className="pickers">
           <label>

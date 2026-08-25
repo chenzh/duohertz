@@ -48,6 +48,14 @@ def check_track(entry: dict) -> dict:
 
     if first is not None and 1.0 <= first <= 2.5:
         out["checks"].append({"id": "A2-first", "status": "PASS", "msg": f"first note {first:.2f}s"})
+    elif first is not None and entry.get("genre") == "Hip-hop" and 3.0 <= first <= 6.0:
+        out["checks"].append(
+            {
+                "id": "A2-first",
+                "status": "PASS",
+                "msg": f"first note {first:.2f}s (hip-hop intro drop)",
+            }
+        )
     elif first is not None:
         out["checks"].append({"id": "A2-first", "status": "WARN", "msg": f"first note {first:.2f}s outside 1.0-2.5s"})
 

@@ -34,13 +34,18 @@ SUFFIX = (
 )
 
 
+CLIP_T0_BY_ID: dict[str, float] = {
+    "bs-s3-14": 9.0,
+}
+
+
 def build_track(spec: tuple) -> dict:
     tid, seq, title, artist, genre, bpm, preset, district, tag = spec
     stem = f"{seq:02d}-{title.replace(' ', '-')}"
     prompt = f"{GENRE_PROMPT[genre].format(bpm=bpm)}, {SUFFIX}"
     mode = "arcade" if genre in ("EDM", "Rock") else "casual"
     tier = "standard" if genre != "Rock" else "hard"
-    return {
+    out = {
         "track_id": tid,
         "preview_stem": stem,
         "preview_file": f"{stem}.m4a",
@@ -61,6 +66,9 @@ def build_track(spec: tuple) -> dict:
         "job_duration_sec": 180,
         "mode": "game_bgm",
     }
+    if tid in CLIP_T0_BY_ID:
+        out["clip_t0"] = CLIP_T0_BY_ID[tid]
+    return out
 
 
 def stage3_tracks() -> list[dict]:
