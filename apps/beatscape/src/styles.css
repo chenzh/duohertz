@@ -20,6 +20,9 @@ body {
   background: radial-gradient(1200px 600px at 20% -10%, #1a2a3a, var(--bg));
   color: var(--text);
   min-height: 100vh;
+  min-height: 100dvh;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
+    env(safe-area-inset-left);
 }
 
 h1,
@@ -197,12 +200,40 @@ h1,
   margin: 0 auto;
 }
 
+body.play-immersive .site-header,
+body.play-immersive .site-footer {
+  display: none;
+}
+
+body.play-immersive .app-shell {
+  max-width: none;
+  padding-left: max(8px, env(safe-area-inset-left));
+  padding-right: max(8px, env(safe-area-inset-right));
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+body.play-immersive .play-page {
+  max-width: none;
+  margin: 0;
+}
+
 .play-meta {
   display: flex;
   gap: 12px;
   align-items: center;
   margin-bottom: 8px;
   font-size: 14px;
+  flex-wrap: wrap;
+}
+
+.play-meta-tier {
+  color: var(--muted);
+}
+
+.btn.compact {
+  padding: 6px 10px;
+  font-size: 12px;
+  margin-left: auto;
 }
 
 .play-wrap {
@@ -241,12 +272,16 @@ h1,
 .play-field {
   position: relative;
   height: min(70vh, 560px);
+  height: min(70dvh, 560px);
   background: linear-gradient(180deg, #0e141c 0%, #121a24 100%);
   border: 1px solid #1e2a3a;
   border-radius: 12px;
   overflow: hidden;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .lane {
@@ -319,6 +354,24 @@ h1,
 .overlay .unlock-btn {
   font-size: 1.1rem;
   padding: 14px 28px;
+}
+
+.overlay.load-error p {
+  margin: 0 16px 12px;
+  text-align: center;
+  color: #f87171;
+}
+
+.overlay.rotate-hint {
+  background: rgba(11, 15, 20, 0.92);
+  text-align: center;
+  padding: 24px;
+}
+
+.overlay.rotate-hint p {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--text);
 }
 
 .unlock-hint {
@@ -409,7 +462,68 @@ td {
 }
 
 @media (max-width: 640px) {
+  .app-shell {
+    padding-left: max(12px, env(safe-area-inset-left));
+    padding-right: max(12px, env(safe-area-inset-right));
+    padding-bottom: max(24px, env(safe-area-inset-bottom));
+  }
+
+  .site-header {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .site-header nav a {
+    margin-left: 12px;
+    font-size: 14px;
+  }
+
   .track-detail {
     grid-template-columns: 1fr;
+  }
+
+  .cover-lg {
+    width: min(200px, 100%);
+    justify-self: center;
+  }
+
+  .track-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cta-row .btn {
+    flex: 1 1 auto;
+    text-align: center;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .play-field {
+    height: min(72dvh, 640px);
+    border-radius: 8px;
+  }
+
+  .play-hud {
+    font-size: 12px;
+    gap: 10px;
+  }
+
+  .grade-big {
+    font-size: 3.5rem;
+  }
+
+  .filters {
+    flex-direction: column;
+  }
+
+  .filters input,
+  .filters select {
+    width: 100%;
+  }
+
+  .pickers {
+    flex-direction: column;
   }
 }

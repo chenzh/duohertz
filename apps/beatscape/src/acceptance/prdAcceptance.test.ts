@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { judgeDelta, windowsFor, maxScore } from "../engine/judge";
 import { countTotalNotes, initPlay, finalize } from "../engine/playState";
+import { LANE_DEBOUNCE_MS, receptorYFromGeometry } from "../input/touchInput";
 
 describe("BeatScape PRD acceptance", () => {
   it("Arcade judge windows are 15/30/50", () => {
@@ -57,5 +58,10 @@ describe("BeatScape PRD acceptance", () => {
 
   it("judge at 51ms is miss in arcade", () => {
     expect(judgeDelta(51, "arcade")).toBe("miss");
+  });
+
+  it("mobile touch debounce and receptor geometry match PRD §4.12/§4.14", () => {
+    expect(LANE_DEBOUNCE_MS).toBe(20);
+    expect(receptorYFromGeometry(600, 375, 0)).toBeCloseTo(600 - 375 * 0.15);
   });
 });
