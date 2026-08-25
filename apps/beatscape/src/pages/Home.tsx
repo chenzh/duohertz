@@ -3,6 +3,7 @@ import { Link } from "../router";
 import { assetUrl, loadCatalog } from "../catalog/loadCatalog";
 import type { CatalogTrack } from "../types/catalog";
 import { isOnboarded } from "../storage/settings";
+import { FEATURED_TRACK_IDS, SCAPE_COPY } from "../constants/scape";
 
 const KEYS = ["D", "F", "J", "K"] as const;
 
@@ -20,16 +21,17 @@ export function HomePage() {
   }, []);
 
   const heroTrack = tracks.find((t) => t.track_id === "bs-s1-01") ?? tracks[0];
-  const stackTracks = tracks.filter((t) =>
-    ["bs-s1-01", "bs-s1-02", "bs-s1-05"].includes(t.track_id),
-  );
-  const trending = tracks.length ? tracks : [];
+  const featured = FEATURED_TRACK_IDS.map((id) => tracks.find((t) => t.track_id === id)).filter(
+    Boolean,
+  ) as CatalogTrack[];
+  const featuredSet = new Set<string>(FEATURED_TRACK_IDS);
+  const explore = tracks.filter((t) => !featuredSet.has(t.track_id));
 
   return (
     <section className="home">
       <div className="hero-split">
         <div className="hero-copy">
-          <p className="eyebrow">AI originals · 4-lane rhythm · play in browser</p>
+          <p className="eyebrow">{SCAPE_COPY.rightsShort} · 4-lane rhythm · play in browser</p>
           <h1>
             Feel the Beat.
             <br />
@@ -50,7 +52,7 @@ export function HomePage() {
           <div className="cta-row">
             {heroTrack && (
               <Link className="btn primary" to={playHref(heroTrack, onboarded)}>
-                Play Now
+                {SCAPE_COPY.playNow}
               </Link>
             )}
             <Link className="btn ghost" to="/library">
@@ -59,14 +61,14 @@ export function HomePage() {
           </div>
         </div>
 
-        <div className="hero-visual" aria-hidden={!stackTracks.length}>
-          {stackTracks.map((t, i) => (
+        <div className="hero-visual" aria-hidden={!featured.length}>
+          {featured.map((t, i) => (
             <div
               key={t.track_id}
               className="hero-cover-card"
               style={{
                 backgroundImage: `url(${assetUrl(t.cover)})`,
-                zIndex: stackTracks.length - i,
+                zIndex: featured.length - i,
               }}
             />
           ))}
@@ -75,13 +77,13 @@ export function HomePage() {
 
       <section className="trending-section">
         <div className="section-head">
-          <h2>Trending now</h2>
+          <h2>Featured in the Scape</h2>
           <Link to="/library" className="section-link">
             See all
           </Link>
         </div>
         <div className="trending-scroll">
-          {trending.map((t) => (
+          {featured.map((t) => (
             <Link key={t.track_id} to={`/track/${t.track_id}`} className="trend-card">
               <div className="trend-cover" style={{ backgroundImage: `url(${assetUrl(t.cover)})` }}>
                 <span className="trend-bpm">{t.bpm} BPM</span>
@@ -90,15 +92,34 @@ export function HomePage() {
                 <strong>{t.title}</strong>
                 <span>{t.artist}</span>
                 <div className="tier-chips">
-                  <span className="chip">Easy</span>
-                  <span className="chip">Std</span>
-                  <span className="chip">Hard</span>
+                  <span className="chip">{t.district}</span>
                 </div>
               </div>
             </Link>
           ))}
         </div>
       </section>
+
+      {explore.length > 0 && (
+        <section className="trending-section">
+          <div className="section-head">
+            <h2>Explore the city</h2>
+          </div>
+          <div className="trending-scroll">
+            {explore.map((t) => (
+              <Link key={t.track_id} to={`/track/${t.track_id}`} className="trend-card">
+                <div className="trend-cover" style={{ backgroundImage: `url(${assetUrl(t.cover)})` }}>
+                  <span className="trend-bpm">{t.bpm} BPM</span>
+                </div>
+                <div className="trend-meta">
+                  <strong>{t.title}</strong>
+                  <span>{t.artist}</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
     </section>
   );
 }

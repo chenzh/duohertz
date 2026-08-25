@@ -4,6 +4,7 @@ import { unlockAudio } from "../audio/context";
 import { playHit } from "../audio/hitsounds";
 import { getAudioContext } from "../audio/context";
 import { saveOffsetMs } from "../storage/settings";
+import { SCAPE_COPY } from "../constants/scape";
 
 const BEAT_MS = 60000 / 120;
 const LANES = ["D", "F", "J", "K"];
@@ -59,8 +60,11 @@ export function CalibrationPage() {
 
   return (
     <section className="calibrate">
-      <h1>Tap the beat</h1>
-      <p className="tagline">Press D F J K when each lane flashes — one step, 8 beats.</p>
+      <Link to="/" className="back-link">
+        Back
+      </Link>
+      <h1>{SCAPE_COPY.calibrateTitle}</h1>
+      <p className="tagline">{SCAPE_COPY.calibrateHint}</p>
       {phase === "intro" && (
         <button type="button" className="btn primary" onClick={() => setPhase("playing")}>
           Start
@@ -80,18 +84,15 @@ export function CalibrationPage() {
       )}
       {phase === "done" && (
         <div>
-          <p>
-            Offset ≈ {Math.round(median)} ms (clamped ±200)
-          </p>
+          <p>{SCAPE_COPY.calibrateDone}</p>
           <button type="button" className="btn primary" onClick={() => finish(Math.round(median))}>
             Save &amp; play Glass Horizon
           </button>
         </div>
       )}
-      <button type="button" className="btn linkish" onClick={() => finish(0)}>
+      <button type="button" className="btn linkish" onClick={() => finish(0)} title={SCAPE_COPY.calibrateSkip}>
         Skip (offset 0)
       </button>
-      <Link to="/">Back</Link>
     </section>
   );
 }

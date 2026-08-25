@@ -35,14 +35,14 @@ STAGE2_TRACKS = _reg.STAGE2_TRACKS
 DISTRICT_COLORS = _reg.DISTRICT_COLORS
 
 
-def cover_svg(track_id: str, district: str, title: str) -> str:
-    color = DISTRICT_COLORS.get(district, "#3DDCFF")
-    seed = sum(ord(c) for c in track_id) % 360
-    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
-  <rect width="512" height="512" fill="#0b0f14"/>
-  <polygon points="256,80 380,256 256,432 132,256" fill="none" stroke="{color}" stroke-width="4" opacity="0.9" transform="rotate({seed} 256 256)"/>
-  <text x="256" y="480" text-anchor="middle" fill="#8b9bb0" font-family="system-ui" font-size="22">{title}</text>
-</svg>"""
+def cover_svg(track_id: str, district: str, title: str, artist: str = "", genre: str = "", bpm: int | None = None) -> str:
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("beatscape_cover", ROOT / "scripts" / "beatscape-cover.py")
+    assert spec and spec.loader
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod.render_cover_svg(track_id, title, artist, district, genre, bpm)
 
 
 def catalog_entry(tr: dict) -> dict:
@@ -117,7 +117,8 @@ def main() -> int:
         dest.mkdir(parents=True, exist_ok=True)
         shutil.copy2(src, dest / "audio.m4a")
         (dest / "cover.svg").write_text(
-            cover_svg(tid, tr["district"], tr["title"]), encoding="utf-8"
+            cover_svg(tid, tr["district"], tr["title"], tr["artist"], tr["genre"], tr["bpm"]),
+            encoding="utf-8",
         )
         by_id[tid] = catalog_entry(tr)
         ingested += 1

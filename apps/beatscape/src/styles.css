@@ -1,24 +1,35 @@
 :root {
-  --bg: #0b0b0f;
-  --bg2: #14141c;
-  --bg-elevated: #1a1a24;
-  --text: #f4f4f8;
-  --muted: #9b9bb0;
-  --accent: #8b5cf6;
-  --accent2: #ff6b4a;
-  --lime: #c8f542;
-  --lane0: #8b5cf6;
-  --lane1: #ff6b4a;
-  --lane2: #c8f542;
-  --lane3: #f5c542;
-  --glow-violet: 0 0 24px rgba(139, 92, 246, 0.45);
-  --glow-coral: 0 0 24px rgba(255, 107, 74, 0.4);
-  --radius-lg: 20px;
-  --radius-md: 14px;
-  --radius-sm: 10px;
-  --gradient-cta: linear-gradient(135deg, #8b5cf6 0%, #ff6b4a 100%);
-  --glass: rgba(20, 20, 28, 0.72);
-  --border: rgba(255, 255, 255, 0.08);
+  /* PRD §7.5 Scape tokens */
+  --scape-bg-0: #0b0f14;
+  --scape-bg-1: #121a24;
+  --scape-line: #1e2a3a;
+  --scape-text: #e8eef7;
+  --scape-muted: #8b9bb0;
+  --scape-accent: #3ddcff;
+  --scape-accent-2: #7cffb2;
+  --scape-warn: #ff5c7a;
+  --scape-gold: #f5c542;
+
+  --bg: var(--scape-bg-0);
+  --bg2: var(--scape-bg-1);
+  --bg-elevated: #182230;
+  --text: var(--scape-text);
+  --muted: var(--scape-muted);
+  --accent: var(--scape-accent);
+  --accent2: var(--scape-warn);
+  --lime: var(--scape-accent-2);
+  --lane0: #3ddcff;
+  --lane1: #7cffb2;
+  --lane2: #f5c542;
+  --lane3: #ff5c7a;
+  --glow-accent: 0 0 28px rgba(61, 220, 255, 0.35);
+  --glow-mint: 0 0 24px rgba(124, 255, 178, 0.28);
+  --radius-lg: 18px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+  --gradient-cta: linear-gradient(135deg, #3ddcff 0%, #7cffb2 55%, #3ddcff 100%);
+  --glass: rgba(18, 26, 36, 0.78);
+  --border: rgba(232, 238, 247, 0.08);
 }
 
 * {
@@ -27,7 +38,7 @@
 
 body {
   margin: 0;
-  font-family: "DM Sans", system-ui, sans-serif;
+  font-family: "IBM Plex Sans", system-ui, sans-serif;
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
@@ -36,10 +47,21 @@ body {
     env(safe-area-inset-left);
 }
 
+.site-main a:not([class]) {
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.15s ease;
+}
+
+.site-main a:not([class]):hover {
+  color: var(--text);
+}
+
 h1,
 h2,
 .logo {
-  font-family: Outfit, "DM Sans", system-ui, sans-serif;
+  font-family: Sora, "IBM Plex Sans", system-ui, sans-serif;
 }
 
 .app-shell {
@@ -64,9 +86,9 @@ h2,
   pointer-events: none;
   overflow: hidden;
   background:
-    radial-gradient(900px 600px at 8% -10%, rgba(139, 92, 246, 0.18), transparent 58%),
-    radial-gradient(800px 520px at 92% 0%, rgba(255, 107, 74, 0.12), transparent 55%),
-    radial-gradient(600px 400px at 50% 100%, rgba(200, 245, 66, 0.06), transparent 60%),
+    radial-gradient(900px 600px at 8% -10%, rgba(61, 220, 255, 0.14), transparent 58%),
+    radial-gradient(800px 520px at 92% 0%, rgba(124, 255, 178, 0.08), transparent 55%),
+    radial-gradient(600px 400px at 50% 100%, rgba(245, 197, 66, 0.05), transparent 60%),
     var(--bg);
 }
 .bg-fx::before {
@@ -82,8 +104,8 @@ h2,
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(480px 480px at 20% 35%, rgba(139, 92, 246, 0.08), transparent 70%),
-    radial-gradient(520px 520px at 78% 62%, rgba(255, 107, 74, 0.07), transparent 70%);
+    radial-gradient(480px 480px at 20% 35%, rgba(61, 220, 255, 0.07), transparent 70%),
+    radial-gradient(520px 520px at 78% 62%, rgba(124, 255, 178, 0.06), transparent 70%);
   animation: glowDrift 14s ease-in-out infinite alternate;
 }
 @keyframes glowDrift {
@@ -225,7 +247,7 @@ h2,
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow:
     0 24px 60px rgba(0, 0, 0, 0.55),
-    0 0 0 1px rgba(139, 92, 246, 0.15);
+    0 0 0 1px rgba(61, 220, 255, 0.12);
 }
 .hero-cover-card:nth-child(1) {
   top: 8%;
@@ -271,6 +293,31 @@ h2,
   font-weight: 600;
 }
 
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 20px;
+  padding: 8px 0;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  transition: color 0.15s ease;
+}
+
+.back-link:hover {
+  color: var(--text);
+}
+
+.back-link::before {
+  content: "←";
+  font-size: 15px;
+  line-height: 1;
+  opacity: 0.85;
+}
+
 .trending-scroll {
   display: flex;
   gap: 16px;
@@ -297,7 +344,7 @@ h2,
 .trend-card:hover {
   transform: translateY(-3px);
   border-color: rgba(139, 92, 246, 0.45);
-  box-shadow: var(--glow-violet);
+  box-shadow: var(--glow-accent);
 }
 
 .trend-cover {
@@ -369,15 +416,15 @@ h2,
   max-width: 520px;
   padding: 16px 18px;
   border-radius: var(--radius-lg);
-  border: 1px solid rgba(139, 92, 246, 0.35);
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.12), rgba(255, 107, 74, 0.08));
+  border: 1px solid rgba(61, 220, 255, 0.35);
+  background: linear-gradient(135deg, rgba(61, 220, 255, 0.12), rgba(124, 255, 178, 0.08));
   text-align: left;
 }
 
 .stream-cta-icon {
   font-size: 28px;
   line-height: 1;
-  color: var(--accent-violet);
+  color: var(--accent);
   flex-shrink: 0;
 }
 
@@ -412,7 +459,7 @@ h2,
 }
 
 .stream-cta-link {
-  color: var(--accent-violet);
+  color: var(--accent);
   margin-left: 8px;
   font-weight: 600;
 }
@@ -483,7 +530,7 @@ h2,
 .track-card:hover {
   transform: translateY(-2px);
   border-color: rgba(139, 92, 246, 0.5);
-  box-shadow: var(--glow-violet);
+  box-shadow: var(--glow-accent);
 }
 
 .track-card img {
@@ -561,6 +608,49 @@ h2,
   width: 100%;
   max-width: 360px;
   height: 36px;
+}
+
+.district-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--district-color, var(--accent));
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--district-color, var(--accent)) 45%, transparent);
+  background: color-mix(in srgb, var(--district-color, var(--accent)) 12%, transparent);
+}
+
+.artist-bio {
+  margin: 8px 0 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted);
+  max-width: 42ch;
+}
+
+.library-empty {
+  grid-column: 1 / -1;
+  padding: 32px 16px;
+  text-align: center;
+  color: var(--muted);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-md);
+}
+
+.track-card .district-badge {
+  margin-top: 6px;
+}
+
+.track-card-cover-wrap {
+  position: relative;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border-bottom: 2px solid var(--district-color, var(--accent));
 }
 
 .pickers {
@@ -708,7 +798,7 @@ body.play-immersive .play-page {
 
 .pause-btn:hover {
   border-color: var(--accent);
-  box-shadow: var(--glow-violet);
+  box-shadow: var(--glow-accent);
 }
 
 .overlay {
@@ -733,14 +823,14 @@ body.play-immersive .play-page {
   font-weight: 700;
   border: none;
   border-radius: 999px;
-  box-shadow: var(--glow-violet);
+  box-shadow: var(--glow-accent);
   cursor: pointer;
 }
 
 .overlay.load-error p {
   margin: 0 16px 12px;
   text-align: center;
-  color: #f87171;
+  color: var(--scape-warn);
 }
 
 .unlock-hint {
@@ -758,30 +848,45 @@ body.play-immersive .play-page {
   padding: 24px 0 40px;
 }
 
+.results-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.results-rights {
+  margin-top: 28px;
+  font-size: 12px;
+}
+
 .grade-big {
-  font-family: Outfit, sans-serif;
+  font-family: Sora, "IBM Plex Sans", system-ui, sans-serif;
   font-size: 6rem;
   color: var(--accent);
   line-height: 1;
-  text-shadow: var(--glow-violet);
+  text-shadow: var(--glow-accent);
   animation: gradeReveal 0.6s cubic-bezier(0.2, 1.4, 0.4, 1) both;
 }
 .grade-S {
-  color: var(--lime);
-  text-shadow: 0 0 30px rgba(200, 245, 66, 0.55);
+  color: var(--scape-gold);
+  text-shadow: 0 0 30px rgba(245, 197, 66, 0.45);
 }
 .grade-A {
-  color: #c4b5fd;
+  color: var(--scape-accent-2);
 }
 .grade-B {
-  color: var(--accent2);
-  text-shadow: var(--glow-coral);
+  color: var(--accent);
+  text-shadow: var(--glow-mint);
 }
 .grade-C {
   color: var(--muted);
 }
 .grade-D {
-  color: #f87171;
+  color: var(--scape-warn);
 }
 @keyframes gradeReveal {
   from {
@@ -924,7 +1029,7 @@ body.play-immersive .play-page {
 
 .calib-lane.flash {
   border-color: var(--accent);
-  box-shadow: var(--glow-violet);
+  box-shadow: var(--glow-accent);
 }
 
 table {

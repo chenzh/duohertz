@@ -2,7 +2,7 @@
 
 | 字段 | 值 |
 |------|-----|
-| **phase** | BeatScape Stage3 验收完成 · 25/25 · audit/earcheck 全绿 |
+| **phase** | BeatScape Scape Token 设计对齐（PRD §7.5）· Stage3 25/25 验收保持 |
 | **updated** | 2026-08-25 |
 | **slug** | musicsaas |
 
@@ -14,7 +14,8 @@
 - [x] Stage3 曲库扩至 25 首（`catalog:beatscape --stage 3` → **25/25**）
 - [x] 自动化验收：`earcheck` **25/25 PASS** · `audit` **FAIL=0 WARN=0** · vitest **17/17**
 - [x] 曲库页 **Preview 试听** · PlayField `key` 防串曲
-- [x] #05 Voltage Drop 实机 60fps 复测（T1-A4 · rAF 12s：avg 8.3ms · 0 帧 >16ms）
+- [x] **Scape Token 对齐**：`scape.ts` 文案/道色/街区色 · Sora+IBM Plex · 首页/曲库/曲目/对局/结算/校准页 PRD 话术
+- [x] 清除旧 Western youth 视觉残留（Outfit/紫色 CTA/珊瑚 glow）
 
 ## 冲刺已完成（2026-08-25）
 

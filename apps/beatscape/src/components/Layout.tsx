@@ -1,5 +1,8 @@
 import type { ReactNode } from "react";
 import { Link, useRouter } from "../router";
+import { SCAPE_COPY } from "../constants/scape";
+
+const APP_VERSION = "0.1.0";
 
 function NavLink({ to, children, className = "" }: { to: string; children: ReactNode; className?: string }) {
   const { path } = useRouter();
@@ -29,7 +32,9 @@ export function Layout({ children }: { children: ReactNode }) {
         </div>
       </header>
       <main className="site-main">{children}</main>
-      <footer className="site-footer">AI Original · Owned Rights · MusicSaas</footer>
+      <footer className="site-footer">
+        BeatScape · {SCAPE_COPY.rightsShort} · v{APP_VERSION}
+      </footer>
 
       <nav className="mobile-tabbar" aria-label="Primary">
         <NavLink to="/" className="tab-item">

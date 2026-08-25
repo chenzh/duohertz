@@ -6,6 +6,8 @@ import type { ChartTier, PlayMode } from "../types/chart";
 import { toggleFavorite, loadFavorites } from "../storage/settings";
 import { StreamFullCTA } from "../components/StreamFullCTA";
 import { TrackAudioPreview } from "../components/TrackAudioPreview";
+import { DistrictBadge } from "../components/DistrictBadge";
+import { SCAPE_COPY, artistBio } from "../constants/scape";
 
 export function TrackPage() {
   const { id } = useParams();
@@ -26,18 +28,22 @@ export function TrackPage() {
     });
   }, [id]);
 
-  if (!track) return <p>Loading…</p>;
+  if (!track) return <p className="loading">{SCAPE_COPY.weakNetwork}</p>;
+
+  const bio = track.artist_bio ?? artistBio(track.artist);
 
   return (
     <section className="track-detail">
       <img className="cover-lg" src={assetUrl(track.cover)} alt="" />
       <div>
+        <DistrictBadge district={track.district} />
         <h1>{track.title}</h1>
         <p className="artist">{track.artist}</p>
+        {bio && <p className="artist-bio">{bio}</p>}
         <p className="meta">
-          {track.genre} · {track.bpm} BPM · {track.district}
+          {track.genre} · {track.bpm} BPM · {track.duration_sec}s clip
         </p>
-        <p className="rights">AI Original · Owned Rights · Game clip {track.duration_sec}s</p>
+        <p className="rights">{SCAPE_COPY.rights}</p>
         <TrackAudioPreview trackId={track.track_id} audioPath={track.audio} title={track.title} />
         <StreamFullCTA track={track} />
         <div className="pickers">
@@ -60,7 +66,7 @@ export function TrackPage() {
         </div>
         <div className="cta-row">
           <Link className="btn primary" to={`/play/${track.track_id}?tier=${tier}&mode=${mode}`}>
-            Play
+            {SCAPE_COPY.play}
           </Link>
           <button
             type="button"

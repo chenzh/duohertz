@@ -7,13 +7,7 @@ import { approachSec, noteScreenY } from "../engine/geometry";
 import { receptorYFromGeometry, laneFromX } from "../input/touchInput";
 import { loadKeys, loadOffsetMs, loadSettings } from "../storage/settings";
 
-const LANE_COLORS = ["#8B5CF6", "#FF6B4A", "#C8F542", "#F5C542"];
-const LANE_RGB: Array<[number, number, number]> = [
-  [139, 92, 246],
-  [255, 107, 74],
-  [200, 245, 66],
-  [245, 197, 66],
-];
+import { JUDGE_COLORS, LANE_COLORS, LANE_RGB, SCAPE_COPY } from "../constants/scape";
 const COUNTDOWN_MS = 3000;
 const LANE_FLASH_MS = 180;
 const JUDGE_LABEL: Record<string, string> = {
@@ -22,12 +16,7 @@ const JUDGE_LABEL: Record<string, string> = {
   good: "GOOD",
   miss: "MISS",
 };
-const JUDGE_COLOR: Record<string, string> = {
-  perfect: "#C8F542",
-  great: "#FFFFFF",
-  good: "#9B9BB0",
-  miss: "#FF6B4A",
-};
+const JUDGE_COLOR: Record<string, string> = { ...JUDGE_COLORS };
 const COMBO_MILESTONES = [10, 25, 50, 100, 150, 200, 300];
 
 type Props = {
@@ -630,7 +619,7 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onFinish }: Prop
       {!loading && !error && needsStart && (
         <div className="overlay">
           <button type="button" className="btn primary unlock-btn" onClick={() => void startRun()}>
-            Tap to Start
+            {SCAPE_COPY.tapToEnter}
           </button>
           <p className="unlock-hint">{keys.join(" · ")} when notes hit the line</p>
         </div>

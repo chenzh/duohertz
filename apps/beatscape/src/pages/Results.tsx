@@ -3,6 +3,8 @@ import { Link, useSearchParams } from "../router";
 import { getTrack } from "../catalog/loadCatalog";
 import type { CatalogTrack } from "../types/catalog";
 import { StreamFullCTA } from "../components/StreamFullCTA";
+import { DistrictBadge } from "../components/DistrictBadge";
+import { JUDGE_COLORS, SCAPE_COPY } from "../constants/scape";
 import {
   readLastRun,
   shareResultsCopy,
@@ -26,7 +28,9 @@ export function ResultsPage() {
     return (
       <section>
         <p>No recent run.</p>
-        <Link to="/">Home</Link>
+        <Link to="/" className="back-link">
+          Home
+        </Link>
       </section>
     );
   }
@@ -36,10 +40,10 @@ export function ResultsPage() {
   const counts = run.counts;
   const totalJ = counts.perfect + counts.great + counts.good + counts.miss || 1;
   const dist = [
-    { label: "Perfect", n: counts.perfect, color: "#C8F542" },
-    { label: "Great", n: counts.great, color: "#FFFFFF" },
-    { label: "Good", n: counts.good, color: "#9B9BB0" },
-    { label: "Miss", n: counts.miss, color: "#FF6B4A" },
+    { label: "Perfect", n: counts.perfect, color: JUDGE_COLORS.perfect },
+    { label: "Great", n: counts.great, color: JUDGE_COLORS.great },
+    { label: "Good", n: counts.good, color: JUDGE_COLORS.good },
+    { label: "Miss", n: counts.miss, color: JUDGE_COLORS.miss },
   ];
 
   async function onCopyLink() {
@@ -82,8 +86,15 @@ export function ResultsPage() {
         ))}
       </div>
 
-      <p>
-        {run.title} · {run.artist} · {run.tier} · {run.mode}
+      <p className="results-meta">
+        {run.title} · {run.artist}
+        {track && (
+          <>
+            {" "}
+            · <DistrictBadge district={track.district} />
+          </>
+        )}{" "}
+        · {run.tier} · {run.mode}
       </p>
       {track && <StreamFullCTA track={track} />}
       {isRecord && run.prevBestScore != null ? (
@@ -109,6 +120,7 @@ export function ResultsPage() {
           Play Now
         </Link>
       </div>
+      <p className="rights results-rights">{SCAPE_COPY.rights}</p>
     </section>
   );
 }
