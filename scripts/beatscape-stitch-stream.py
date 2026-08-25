@@ -37,6 +37,15 @@ PREVIEW_STEM = _reg.PREVIEW_STEM_BY_ID
 STAGE1 = _reg.STAGE1_TRACKS
 STAGE2 = _reg.STAGE2_TRACKS
 
+_s3 = importlib.util.spec_from_file_location(
+    "beatscape_stage3_specs", ROOT / "scripts" / "beatscape-stage3-specs.py"
+)
+_m3 = importlib.util.module_from_spec(_s3)
+sys.modules["beatscape_stage3_specs"] = _m3
+assert _s3.loader is not None
+_s3.loader.exec_module(_m3)
+STAGE3 = _m3.stage3_tracks()
+
 
 def find_master(track_id: str, stem: str) -> Path | None:
     for p in (
@@ -130,6 +139,7 @@ def main() -> int:
     parser.add_argument("--track", help="Single track_id")
     parser.add_argument("--all-stage1", action="store_true")
     parser.add_argument("--all-stage2", action="store_true")
+    parser.add_argument("--all-stage3", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
 
@@ -143,6 +153,8 @@ def main() -> int:
         tracks.extend(STAGE1)
     if args.all_stage2:
         tracks.extend(STAGE2)
+    if args.all_stage3:
+        tracks.extend(STAGE3)
     if args.track:
         hit = next((t for t in STAGE1 + STAGE2 if t["track_id"] == args.track), None)
         if not hit:

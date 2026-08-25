@@ -5,6 +5,7 @@ Imported by ingest / stream / audit / chartgen scripts (no package install).
 
 from __future__ import annotations
 
+from pathlib import Path
 from typing import Any
 
 STAGE1_TRACKS: list[dict[str, Any]] = [
@@ -220,9 +221,48 @@ PREVIEW_STEM_BY_ID: dict[str, str] = {
     t["track_id"]: t["preview_stem"] for t in STAGE1_TRACKS + STAGE2_TRACKS
 }
 
+# Stage3 stems loaded lazily by ingest/stitch via beatscape-stage3-specs.py
+
+
+def all_locked_tracks() -> list[dict[str, Any]]:
+    import importlib.util
+
+    tracks = list(STAGE1_TRACKS) + list(STAGE2_TRACKS)
+    spec = importlib.util.spec_from_file_location(
+        "beatscape_stage3_specs",
+        Path(__file__).resolve().parent / "beatscape-stage3-specs.py",
+    )
+    if spec and spec.loader:
+        m = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(m)
+        tracks.extend(m.stage3_tracks())
+        for t in m.stage3_tracks():
+            PREVIEW_STEM_BY_ID[t["track_id"]] = t["preview_stem"]
+    return tracks
+
+
 LOCKED_BY_ID: dict[str, dict[str, Any]] = {
     t["track_id"]: t for t in STAGE1_TRACKS + STAGE2_TRACKS
 }
+
+
+def _merge_stage3_locked() -> None:
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location(
+        "beatscape_stage3_specs",
+        Path(__file__).resolve().parent / "beatscape-stage3-specs.py",
+    )
+    if not spec or not spec.loader:
+        return
+    m = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(m)
+    for t in m.stage3_tracks():
+        LOCKED_BY_ID[t["track_id"]] = t
+        PREVIEW_STEM_BY_ID[t["track_id"]] = t["preview_stem"]
+
+
+_merge_stage3_locked()
 
 
 def stage_from_track_id(track_id: str) -> int:
