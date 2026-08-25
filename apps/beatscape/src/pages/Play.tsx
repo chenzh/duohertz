@@ -6,8 +6,7 @@ import type { ChartJSON, ChartTier, PlayMode, PlayResult } from "../types/chart"
 import type { CatalogTrack } from "../types/catalog";
 import { writeLastRun } from "../storage/session";
 import { isOnboarded, loadSettings, setOnboarded } from "../storage/settings";
-
-const GUIDE_TRACK = "bs-s1-02";
+import { trackEvent } from "../lib/analytics";
 
 export function PlayPage() {
   const { id } = useParams();
@@ -23,10 +22,6 @@ export function PlayPage() {
 
   useEffect(() => {
     if (!id) return;
-    if (!isOnboarded() && id !== GUIDE_TRACK) {
-      nav(`/play/${GUIDE_TRACK}?tier=easy&mode=casual`, { replace: true });
-      return;
-    }
     let cancelled = false;
     void (async () => {
       setLoadError("");
@@ -50,16 +45,14 @@ export function PlayPage() {
     return () => {
       cancelled = true;
     };
-  }, [id, tier, nav]);
+  }, [id, tier]);
 
   const finish = (result: PlayResult) => {
     if (!track) return;
-    writeLastRun(track, tier, mode, result, performance.now() - startedAt);
-    if (!isOnboarded() && track.track_id === GUIDE_TRACK) {
-      setOnboarded();
-      nav("/");
-      return;
-    }
+    trackEvent("play_finish", { track: track.track_id, grade: result.grade, accuracy: result.accuracy });
+    const isDaily = params.get("daily") === "1";
+    writeLastRun(track, tier, mode, result, performance.now() - startedAt, { daily: isDaily });
+    if (!isOnboarded()) setOnboarded();
     nav("/results");
   };
 
@@ -98,11 +91,12 @@ export function PlayPage() {
         </button>
       </div>
       <PlayField
-        key={track.track_id}
+        key={`${track.track_id}-${tier}-${mode}`}
         chart={chart}
         audioUrl={assetUrl(track.audio)}
         mode={mode}
         casualSpeed={settings.casualSpeed}
+        onStart={() => trackEvent("play_start", { track: track.track_id, tier, mode })}
         onFinish={finish}
       />
     </section>

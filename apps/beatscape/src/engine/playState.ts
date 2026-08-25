@@ -61,6 +61,7 @@ export class GameSession {
   maxCombo = 0;
   hp = 100;
   judgments: Record<Judgment, number> = ZERO_COUNTS();
+  missEvents: Array<{ tMs: number; lane: number }> = [];
   failed = false;
   consecutiveMiss = 0;
 
@@ -139,7 +140,7 @@ export class GameSession {
     const sub = bestSub;
     const delta = sub === "tail" ? songMs - chosen.endMs : songMs - chosen.tMs;
     const j: Judgment = sub === "tail" ? judgeHoldTail(delta, this.mode) : judgeDelta(delta, this.mode);
-    this.register(j);
+    this.register(j, j === "miss" ? { lane, tMs: songMs } : undefined);
 
     if (sub === "head") {
       chosen.head = j;
@@ -164,7 +165,7 @@ export class GameSession {
       if (n.def.lane !== lane || n.head === null || n.tail !== null) continue;
       const delta = songMs - n.endMs;
       const j: Judgment = Math.abs(delta) <= good + 20 ? judgeHoldTail(delta, this.mode) : "miss";
-      this.register(j);
+      this.register(j, j === "miss" ? { lane, tMs: songMs } : undefined);
       n.tail = j;
       n.done = true;
       return { lane, judgment: j };
@@ -184,14 +185,14 @@ export class GameSession {
         if (n.head === null && songMs - n.tMs > good) {
           n.head = "miss";
           n.done = true;
-          this.register("miss");
+          this.register("miss", { lane: d.lane, tMs: songMs });
           applied.push({ lane: d.lane, judgment: "miss" });
         }
       } else if (d.type === "chord") {
         for (const l of d.lanes) {
           if (n.chord[l] == null && songMs - n.tMs > good) {
             n.chord[l] = "miss";
-            this.register("miss");
+            this.register("miss", { lane: l, tMs: songMs });
             applied.push({ lane: l, judgment: "miss" });
           }
         }
@@ -201,25 +202,25 @@ export class GameSession {
           n.head = "miss";
           n.tail = "miss";
           n.done = true;
-          this.register("miss");
-          this.register("miss");
+          this.register("miss", { lane: d.lane, tMs: songMs });
+          this.register("miss", { lane: d.lane, tMs: songMs });
           applied.push({ lane: d.lane, judgment: "miss" });
         } else if (n.head !== null && n.tail === null && songMs - n.endMs > good + 20) {
           n.tail = "miss";
           n.done = true;
-          this.register("miss");
+          this.register("miss", { lane: d.lane, tMs: songMs });
           applied.push({ lane: d.lane, judgment: "miss" });
         }
       } else if (d.type === "slide") {
         if (n.head === null && songMs - n.tMs > good) {
           n.head = "miss";
           n.done = true;
-          this.register("miss");
+          this.register("miss", { lane: d.lane, tMs: songMs });
           applied.push({ lane: d.lane, judgment: "miss" });
         } else if (n.head !== null && n.tail === null && songMs - n.endMs > good + 20) {
           n.tail = "miss";
           n.done = true;
-          this.register("miss");
+          this.register("miss", { lane: d.to, tMs: songMs });
           applied.push({ lane: d.to, judgment: "miss" });
         }
       }
@@ -242,11 +243,15 @@ export class GameSession {
       failed: this.failed,
       judgments: { ...this.judgments },
       totalNotes: this.totalNotes,
+      missEvents: [...this.missEvents],
     };
   }
 
-  private register(j: Judgment): void {
+  private register(j: Judgment, meta?: { lane: number; tMs: number }): void {
     this.judgments[j]++;
+    if (j === "miss" && meta) {
+      this.missEvents.push({ lane: meta.lane, tMs: meta.tMs });
+    }
     if (j === "miss" || j === "good") {
       this.combo = 0;
       this.consecutiveMiss = 0; // a non-miss breaks the consecutive-miss streak

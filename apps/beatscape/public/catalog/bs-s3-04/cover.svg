@@ -80,6 +80,6 @@
   <text x="40" y="438" fill="#E8EEF7" font-family="Sora, IBM Plex Sans, system-ui, sans-serif" font-size="26" font-weight="700" letter-spacing="-0.02em">Velvet Scape</text>
   <text x="40" y="468" fill="#8B9BB0" font-family="IBM Plex Sans, system-ui, sans-serif" font-size="15" font-weight="500">Mira Lane</text>
   <text x="40" y="492" fill="#C4A484" font-family="IBM Plex Sans, system-ui, sans-serif" font-size="11" font-weight="600" letter-spacing="0.12em">AFTERHOURS LANE</text>
-  <text x="432" y="44" text-anchor="end" fill="#8B9BB0" font-family="IBM Plex Sans, system-ui, sans-serif" font-size="13" font-weight="600">200 BPM</text>
+  <text x="432" y="44" text-anchor="end" fill="#8B9BB0" font-family="IBM Plex Sans, system-ui, sans-serif" font-size="13" font-weight="600">90 BPM</text>
   <rect x="40" y="404" width="48" height="3" fill="#C4A484" opacity="0.85" rx="1.5"/>
 </svg>

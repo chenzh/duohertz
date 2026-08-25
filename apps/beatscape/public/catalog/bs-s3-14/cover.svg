@@ -98,6 +98,6 @@
   <text x="40" y="438" fill="#E8EEF7" font-family="Sora, IBM Plex Sans, system-ui, sans-serif" font-size="26" font-weight="700" letter-spacing="-0.02em">808 Horizon</text>
   <text x="40" y="468" fill="#8B9BB0" font-family="IBM Plex Sans, system-ui, sans-serif" font-size="15" font-weight="500">Low Voltage</text>
   <text x="40" y="492" fill="#6B5B95" font-family="IBM Plex Sans, system-ui, sans-serif" font-size="11" font-weight="600" letter-spacing="0.12em">NIGHT GRID</text>
-  <text x="432" y="44" text-anchor="end" fill="#8B9BB0" font-family="IBM Plex Sans, system-ui, sans-serif" font-size="13" font-weight="600">97 BPM</text>
+  <text x="432" y="44" text-anchor="end" fill="#8B9BB0" font-family="IBM Plex Sans, system-ui, sans-serif" font-size="13" font-weight="600">96 BPM</text>
   <rect x="40" y="404" width="48" height="3" fill="#6B5B95" opacity="0.85" rx="1.5"/>
 </svg>

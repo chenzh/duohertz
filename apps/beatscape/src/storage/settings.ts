@@ -106,6 +106,15 @@ export function saveScore(entry: ScoreEntry) {
   localStorage.setItem("bs_scores", JSON.stringify(next));
 }
 
+export function saveDisplayName(name: string) {
+  const trimmed = name.trim().slice(0, 24) || "Player";
+  localStorage.setItem("bs_display_name", trimmed);
+}
+
+export function loadDisplayName(): string {
+  return localStorage.getItem("bs_display_name") || "Player";
+}
+
 export function getPersonalBest(trackId: string, tier: string, mode: string): ScoreEntry | null {
   const all = loadScores().filter((e) => e.track_id === trackId && e.tier === tier && e.mode === mode);
   if (!all.length) return null;

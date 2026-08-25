@@ -4,7 +4,7 @@ import { Conductor, unlockAudio } from "../audio/playback";
 import { playBreak, playCountdownTick, playHit, playKeyTick } from "../audio/hitsounds";
 import { GameSession, type JudgeFx } from "../engine/playState";
 import { approachSec, noteScreenY } from "../engine/geometry";
-import { receptorYFromGeometry, laneFromX } from "../input/touchInput";
+import { receptorYFromGeometry, laneFromClientX, TouchLaneTracker } from "../input/touchInput";
 import { loadKeys, loadOffsetMs, loadSettings } from "../storage/settings";
 
 import { JUDGE_COLORS, LANE_COLORS, LANE_RGB, SCAPE_COPY } from "../constants/scape";
@@ -24,18 +24,20 @@ type Props = {
   audioUrl: string;
   mode: PlayMode;
   casualSpeed: number;
+  onStart?: () => void;
   onFinish: (result: PlayResult) => void;
 };
 
 type Fx = { lane: number; judgment: JudgeFx["judgment"]; born: number };
 
-export function PlayField({ chart, audioUrl, mode, casualSpeed, onFinish }: Props) {
+export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinish }: Props) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const conductorRef = useRef<Conductor | null>(null);
   const sessionRef = useRef<GameSession | null>(null);
   const pressedRef = useRef<Set<number>>(new Set());
   const pointerLane = useRef<Map<number, number>>(new Map());
+  const touchTracker = useRef(new TouchLaneTracker());
   const fxRef = useRef<Fx[]>([]);
   const finishedRef = useRef(false);
   const lastComboRef = useRef(0);
@@ -130,6 +132,12 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onFinish }: Prop
     conductor.begin(COUNTDOWN_MS);
     setNeedsStart(false);
     setPaused(false);
+    onStart?.();
+    try {
+      await document.documentElement.requestFullscreen?.();
+    } catch {
+      /* optional */
+    }
   };
 
   const togglePause = () => {
@@ -588,7 +596,10 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onFinish }: Prop
     const wrap = wrapRef.current;
     if (!wrap) return;
     const rect = wrap.getBoundingClientRect();
-    const lane = laneFromX(e.clientX - rect.left, rect.width);
+    const localX = e.clientX - rect.left;
+    const lane = laneFromClientX(localX, rect);
+    if (lane == null) return;
+    if (touchTracker.current.press(e.pointerId, lane, performance.now()) === null) return;
     (e.target as Element).setPointerCapture?.(e.pointerId);
     pointerLane.current.set(e.pointerId, lane);
     handlePress(lane);
@@ -617,8 +628,8 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onFinish }: Prop
         </div>
       )}
       {!loading && !error && needsStart && (
-        <div className="overlay">
-          <button type="button" className="btn primary unlock-btn" onClick={() => void startRun()}>
+        <div className="overlay overlay-tap" role="button" tabIndex={0} onClick={() => void startRun()} onKeyDown={(e) => e.key === "Enter" && void startRun()}>
+          <button type="button" className="btn primary unlock-btn" onClick={(e) => { e.stopPropagation(); void startRun(); }}>
             {SCAPE_COPY.tapToEnter}
           </button>
           <p className="unlock-hint">{keys.join(" · ")} when notes hit the line</p>

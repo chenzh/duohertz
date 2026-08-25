@@ -121,7 +121,17 @@ export function useSearchParams(): [URLSearchParams, (q: URLSearchParams) => voi
   return [new URLSearchParams(search), setSearch];
 }
 
-export function Link({ to, children, className }: { to: string; children: ReactNode; className?: string }) {
+export function Link({
+  to,
+  children,
+  className,
+  onClick,
+}: {
+  to: string;
+  children: ReactNode;
+  className?: string;
+  onClick?: () => void;
+}) {
   const { navigate } = useLocation();
   return (
     <a
@@ -129,6 +139,7 @@ export function Link({ to, children, className }: { to: string; children: ReactN
       className={className}
       onClick={(e) => {
         e.preventDefault();
+        onClick?.();
         navigate(to);
       }}
     >

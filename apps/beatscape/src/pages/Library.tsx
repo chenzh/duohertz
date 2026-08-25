@@ -4,7 +4,7 @@ import { assetUrl, loadCatalog } from "../catalog/loadCatalog";
 import type { CatalogTrack } from "../types/catalog";
 import { loadFavorites } from "../storage/settings";
 import { DistrictBadge } from "../components/DistrictBadge";
-import { SCAPE_COPY, districtColor } from "../constants/scape";
+import { SCAPE_COPY, districtColor, SHOWCASE_TRACK_IDS } from "../constants/scape";
 
 export function LibraryPage() {
   const [tracks, setTracks] = useState<CatalogTrack[]>([]);
@@ -35,6 +35,18 @@ export function LibraryPage() {
     <section className="library">
       <h1>Library</h1>
       <p className="tagline">Search the Scape — filter by genre, district, or favorites.</p>
+      <div className="showcase-chips">
+        <span className="chip">Showcase charts:</span>
+        {SHOWCASE_TRACK_IDS.map((id) => {
+          const t = tracks.find((tr) => tr.track_id === id);
+          if (!t) return null;
+          return (
+            <Link key={id} to={`/track/${id}`} className="chip chip-link">
+              {t.title}
+            </Link>
+          );
+        })}
+      </div>
       <div className="filters">
         <input placeholder="Search tracks…" value={q} onChange={(e) => setQ(e.target.value)} />
         <select value={genre} onChange={(e) => setGenre(e.target.value)}>

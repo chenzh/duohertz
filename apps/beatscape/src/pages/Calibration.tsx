@@ -3,8 +3,9 @@ import { Link, useNavigate } from "../router";
 import { unlockAudio } from "../audio/context";
 import { playHit } from "../audio/hitsounds";
 import { getAudioContext } from "../audio/context";
-import { saveOffsetMs } from "../storage/settings";
+import { saveOffsetMs, setOnboarded } from "../storage/settings";
 import { SCAPE_COPY } from "../constants/scape";
+import { firstPlayHref } from "../lib/firstPlay";
 
 const BEAT_MS = 60000 / 120;
 const LANES = ["D", "F", "J", "K"];
@@ -52,7 +53,8 @@ export function CalibrationPage() {
 
   const finish = (offset: number) => {
     saveOffsetMs(offset);
-    nav("/play/bs-s1-02?tier=easy&mode=casual");
+    setOnboarded();
+    nav(firstPlayHref());
   };
 
   const median =
@@ -86,7 +88,7 @@ export function CalibrationPage() {
         <div>
           <p>{SCAPE_COPY.calibrateDone}</p>
           <button type="button" className="btn primary" onClick={() => finish(Math.round(median))}>
-            Save &amp; play Glass Horizon
+            Save &amp; play Neon Pulse
           </button>
         </div>
       )}

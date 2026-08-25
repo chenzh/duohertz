@@ -1,14 +1,36 @@
 import { useState } from "react";
-import { loadKeys, loadOffsetMs, loadSettings, saveKeys, saveOffsetMs, saveSettings } from "../storage/settings";
+import { Link } from "../router";
+import {
+  loadKeys,
+  loadOffsetMs,
+  loadSettings,
+  loadDisplayName,
+  saveDisplayName,
+  saveKeys,
+  saveOffsetMs,
+  saveSettings,
+} from "../storage/settings";
+import { SCAPE_COPY_EXTRA } from "../constants/scape";
 
 export function SettingsPage() {
   const [settings, setSettings] = useState(loadSettings);
   const [offset, setOffset] = useState(loadOffsetMs);
   const [keys, setKeys] = useState(loadKeys);
+  const [displayName, setDisplayName] = useState(loadDisplayName);
 
   return (
     <section className="settings">
       <h1>Settings</h1>
+      <p className="tagline">{SCAPE_COPY_EXTRA.offsetHint}</p>
+      <label>
+        {SCAPE_COPY_EXTRA.playerName}
+        <input
+          type="text"
+          maxLength={24}
+          value={displayName}
+          onChange={(e) => setDisplayName(e.target.value)}
+        />
+      </label>
       <label>
         Global offset (ms)
         <input
@@ -54,17 +76,23 @@ export function SettingsPage() {
           </label>
         ))}
       </div>
-      <button
-        type="button"
-        className="btn primary"
-        onClick={() => {
-          saveSettings(settings);
-          saveOffsetMs(offset);
-          saveKeys(keys);
-        }}
-      >
-        Save
-      </button>
+      <div className="cta-row">
+        <button
+          type="button"
+          className="btn primary"
+          onClick={() => {
+            saveSettings(settings);
+            saveOffsetMs(offset);
+            saveKeys(keys);
+            saveDisplayName(displayName);
+          }}
+        >
+          Save
+        </button>
+        <Link className="btn ghost" to="/calibrate">
+          {SCAPE_COPY_EXTRA.recalibrate}
+        </Link>
+      </div>
     </section>
   );
 }

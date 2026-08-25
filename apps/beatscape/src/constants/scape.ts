@@ -66,3 +66,15 @@ export function artistBio(artist: string): string | undefined {
 }
 
 export const FEATURED_TRACK_IDS = ["bs-s1-01", "bs-s1-02", "bs-s1-05"] as const;
+
+/** High-density / showcase charts for marketing clips (slide · hold · drop). */
+export const SHOWCASE_TRACK_IDS = ["bs-s1-01", "bs-s1-05", "bs-s2-01", "bs-s1-04", "bs-s3-06"] as const;
+
+export const SCAPE_COPY_EXTRA = {
+  dailyChallenge: "Today's Scape Challenge",
+  dailyPlay: "Play Daily Challenge",
+  offsetHint: "Feeling late? Adjust offset in Settings or run a quick calibrate.",
+  recalibrate: "Recalibrate timing",
+  sharePoster: "Download poster",
+  playerName: "Board name",
+} as const;

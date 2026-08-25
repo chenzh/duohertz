@@ -350,7 +350,7 @@
       "title": "Grid Voltage",
       "artist": "Neon Arc",
       "genre": "EDM",
-      "bpm": 155,
+      "bpm": 154,
       "duration_sec": 90,
       "stream_duration_sec": 198,
       "preset_id": "bs-edm-main",
@@ -377,8 +377,7 @@
         "title": "Grid Voltage \u2014 BeatScape AI Original",
         "description": "Own the Scape. 155 BPM EDM chart."
       },
-      "stream_audio": "/catalog/bs-s3-01/stream.m4a",
-      "preview": "/catalog/bs-s3-01/preview_48s.m4a"
+      "stream_audio": "/catalog/bs-s3-01/stream.m4a"
     },
     {
       "track_id": "bs-s3-02",
@@ -412,8 +411,7 @@
         "title": "Night Pulse 808 \u2014 BeatScape AI Original",
         "description": "Own the Scape. 98 BPM Hip-hop chart."
       },
-      "stream_audio": "/catalog/bs-s3-02/stream.m4a",
-      "preview": "/catalog/bs-s3-02/preview_48s.m4a"
+      "stream_audio": "/catalog/bs-s3-02/stream.m4a"
     },
     {
       "track_id": "bs-s3-03",
@@ -447,15 +445,14 @@
         "title": "Soft Horizon \u2014 BeatScape AI Original",
         "description": "Own the Scape. 122 BPM Pop chart."
       },
-      "stream_audio": "/catalog/bs-s3-03/stream.m4a",
-      "preview": "/catalog/bs-s3-03/preview_48s.m4a"
+      "stream_audio": "/catalog/bs-s3-03/stream.m4a"
     },
     {
       "track_id": "bs-s3-04",
       "title": "Velvet Scape",
       "artist": "Mira Lane",
       "genre": "R&B",
-      "bpm": 200,
+      "bpm": 90,
       "duration_sec": 90,
       "stream_duration_sec": 198,
       "preset_id": "bs-rnb-groove",
@@ -482,15 +479,14 @@
         "title": "Velvet Scape \u2014 BeatScape AI Original",
         "description": "Own the Scape. 90 BPM R&B chart."
       },
-      "stream_audio": "/catalog/bs-s3-04/stream.m4a",
-      "preview": "/catalog/bs-s3-04/preview_48s.m4a"
+      "stream_audio": "/catalog/bs-s3-04/stream.m4a"
     },
     {
       "track_id": "bs-s3-05",
       "title": "Chrome Grid",
       "artist": "Iron Echo",
       "genre": "Rock",
-      "bpm": 138,
+      "bpm": 140,
       "duration_sec": 90,
       "stream_duration_sec": 198,
       "preset_id": "bs-rock-drive",
@@ -517,15 +513,14 @@
         "title": "Chrome Grid \u2014 BeatScape AI Original",
         "description": "Own the Scape. 138 BPM Rock chart."
       },
-      "stream_audio": "/catalog/bs-s3-05/stream.m4a",
-      "preview": "/catalog/bs-s3-05/preview_48s.m4a"
+      "stream_audio": "/catalog/bs-s3-05/stream.m4a"
     },
     {
       "track_id": "bs-s3-06",
       "title": "Pulse Overload",
       "artist": "Gridline",
       "genre": "EDM",
-      "bpm": 171,
+      "bpm": 167,
       "duration_sec": 90,
       "stream_duration_sec": 198,
       "preset_id": "bs-edm-climax",
@@ -552,8 +547,7 @@
         "title": "Pulse Overload \u2014 BeatScape AI Original",
         "description": "Own the Scape. 168 BPM EDM chart."
       },
-      "stream_audio": "/catalog/bs-s3-06/stream.m4a",
-      "preview": "/catalog/bs-s3-06/preview_48s.m4a"
+      "stream_audio": "/catalog/bs-s3-06/stream.m4a"
     },
     {
       "track_id": "bs-s3-07",
@@ -587,15 +581,14 @@
         "title": "Low Grid Flow \u2014 BeatScape AI Original",
         "description": "Own the Scape. 92 BPM Hip-hop chart."
       },
-      "stream_audio": "/catalog/bs-s3-07/stream.m4a",
-      "preview": "/catalog/bs-s3-07/preview_48s.m4a"
+      "stream_audio": "/catalog/bs-s3-07/stream.m4a"
     },
     {
       "track_id": "bs-s3-08",
       "title": "Blue Loop Hour",
       "artist": "Quiet Neon",
       "genre": "Pop",
-      "bpm": 118,
+      "bpm": 162,
       "duration_sec": 90,
       "stream_duration_sec": 198,
       "preset_id": "bs-chill-pop",
@@ -622,8 +615,7 @@
         "title": "Blue Loop Hour \u2014 BeatScape AI Original",
         "description": "Own the Scape. 118 BPM Pop chart."
       },
-      "stream_audio": "/catalog/bs-s3-08/stream.m4a",
-      "preview": "/catalog/bs-s3-08/preview_48s.m4a"
+      "stream_audio": "/catalog/bs-s3-08/stream.m4a"
     },
     {
       "track_id": "bs-s3-09",
@@ -657,15 +649,14 @@
         "title": "Afterhours Pulse \u2014 BeatScape AI Original",
         "description": "Own the Scape. 86 BPM R&B chart."
       },
-      "stream_audio": "/catalog/bs-s3-09/stream.m4a",
-      "preview": "/catalog/bs-s3-09/preview_48s.m4a"
+      "stream_audio": "/catalog/bs-s3-09/stream.m4a"
     },
     {
       "track_id": "bs-s3-10",
       "title": "Riff Voltage",
       "artist": "Redline Co.",
       "genre": "Rock",
-      "bpm": 142,
+      "bpm": 182,
       "duration_sec": 90,
       "stream_duration_sec": 198,
       "preset_id": "bs-rock-drive",
@@ -692,8 +683,7 @@
         "title": "Riff Voltage \u2014 BeatScape AI Original",
         "description": "Own the Scape. 142 BPM Rock chart."
       },
-      "stream_audio": "/catalog/bs-s3-10/stream.m4a",
-      "preview": "/catalog/bs-s3-10/preview_48s.m4a"
+      "stream_audio": "/catalog/bs-s3-10/stream.m4a"
     },
     {
       "track_id": "bs-s3-11",
@@ -727,8 +717,7 @@
         "title": "Neon Gridline \u2014 BeatScape AI Original",
         "description": "Own the Scape. 158 BPM EDM chart."
       },
-      "stream_audio": "/catalog/bs-s3-11/stream.m4a",
-      "preview": "/catalog/bs-s3-11/preview_48s.m4a"
+      "stream_audio": "/catalog/bs-s3-11/stream.m4a"
     },
     {
       "track_id": "bs-s3-12",
@@ -762,8 +751,7 @@
         "title": "Trap Grid \u2014 BeatScape AI Original",
         "description": "Own the Scape. 100 BPM Hip-hop chart."
       },
-      "stream_audio": "/catalog/bs-s3-12/stream.m4a",
-      "preview": "/catalog/bs-s3-12/preview_48s.m4a"
+      "stream_audio": "/catalog/bs-s3-12/stream.m4a"
     },
     {
       "track_id": "bs-s3-13",
@@ -797,15 +785,14 @@
         "title": "Scape Velvet \u2014 BeatScape AI Original",
         "description": "Own the Scape. 88 BPM R&B chart."
       },
-      "stream_audio": "/catalog/bs-s3-13/stream.m4a",
-      "preview": "/catalog/bs-s3-13/preview_48s.m4a"
+      "stream_audio": "/catalog/bs-s3-13/stream.m4a"
     },
     {
       "track_id": "bs-s3-14",
       "title": "808 Horizon",
       "artist": "Low Voltage",
       "genre": "Hip-hop",
-      "bpm": 97,
+      "bpm": 200,
       "duration_sec": 90,
       "stream_duration_sec": 198,
       "preset_id": "bs-hiphop-808",
@@ -832,8 +819,7 @@
         "title": "808 Horizon \u2014 BeatScape AI Original",
         "description": "Own the Scape. 96 BPM Hip-hop chart."
       },
-      "stream_audio": "/catalog/bs-s3-14/stream.m4a",
-      "preview": "/catalog/bs-s3-14/preview_48s.m4a"
+      "stream_audio": "/catalog/bs-s3-14/stream.m4a"
     },
     {
       "track_id": "bs-s3-15",
@@ -867,8 +853,7 @@
         "title": "Anthem Chrome \u2014 BeatScape AI Original",
         "description": "Own the Scape. 136 BPM Rock chart."
       },
-      "stream_audio": "/catalog/bs-s3-15/stream.m4a",
-      "preview": "/catalog/bs-s3-15/preview_48s.m4a"
+      "stream_audio": "/catalog/bs-s3-15/stream.m4a"
     }
   ]
 }

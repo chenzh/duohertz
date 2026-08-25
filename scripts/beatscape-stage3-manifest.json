@@ -20,7 +20,7 @@
       "default_mode": "arcade",
       "default_tier": "standard",
       "allows_slide": false,
-      "prompt": "EDM rhythm game track, 155 BPM, clear 4/4 beat, neon pulse grid atmosphere, instrumental, no vocals, chart-friendly drums, beatscape original, owned rights, loop-friendly",
+      "prompt": "EDM rhythm game, 155 BPM, sidechain pulse, cyan grid voltage, sharp kick, neon scape, instrumental, no vocals, beatscape original, owned rights",
       "engine": "stable-audio-3",
       "job_duration_sec": 180,
       "mode": "game_bgm"
@@ -43,7 +43,7 @@
       "default_mode": "casual",
       "default_tier": "standard",
       "allows_slide": false,
-      "prompt": "Hip-hop rhythm game track, 98 BPM, 808 bass, crisp hats, night grid voltage atmosphere, instrumental, no vocals, chart-friendly drums, beatscape original, owned rights, loop-friendly",
+      "prompt": "Hip-hop rhythm game, 98 BPM, deep 808 sub, sparse hats, night grid alley, vinyl crackle texture, instrumental, no vocals, beatscape original, owned rights",
       "engine": "stable-audio-3",
       "job_duration_sec": 180,
       "mode": "game_bgm"
@@ -66,7 +66,7 @@
       "default_mode": "casual",
       "default_tier": "standard",
       "allows_slide": false,
-      "prompt": "English pop rhythm game track, 122 BPM, bright synth, glass horizon scape atmosphere, instrumental, no vocals, chart-friendly drums, beatscape original, owned rights, loop-friendly",
+      "prompt": "English pop rhythm game, 122 BPM, glassy synth bells, soft horizon pads, bright hook energy, instrumental, no vocals, beatscape original, owned rights",
       "engine": "stable-audio-3",
       "job_duration_sec": 180,
       "mode": "game_bgm"
@@ -89,7 +89,7 @@
       "default_mode": "casual",
       "default_tier": "standard",
       "allows_slide": false,
-      "prompt": "R&B rhythm game track, 90 BPM, smooth groove, velvet afterhours scape atmosphere, instrumental, no vocals, chart-friendly drums, beatscape original, owned rights, loop-friendly",
+      "prompt": "R&B rhythm game, 90 BPM, velvet keys, warm afterhours groove, smooth bass, instrumental, no vocals, beatscape original, owned rights",
       "engine": "stable-audio-3",
       "job_duration_sec": 180,
       "mode": "game_bgm"
@@ -112,7 +112,7 @@
       "default_mode": "arcade",
       "default_tier": "hard",
       "allows_slide": false,
-      "prompt": "Rock rhythm game track, 138 BPM, electric guitar riff, chrome yard energy, instrumental, no vocals, chart-friendly drums, beatscape original, owned rights, loop-friendly",
+      "prompt": "Rock rhythm game, 138 BPM, distorted guitar riff, chrome warehouse drums, anthem drive, instrumental, no vocals, beatscape original, owned rights",
       "engine": "stable-audio-3",
       "job_duration_sec": 180,
       "mode": "game_bgm"
@@ -135,7 +135,7 @@
       "default_mode": "arcade",
       "default_tier": "standard",
       "allows_slide": false,
-      "prompt": "EDM rhythm game track, 168 BPM, clear 4/4 beat, neon pulse grid atmosphere, instrumental, no vocals, chart-friendly drums, beatscape original, owned rights, loop-friendly",
+      "prompt": "EDM climax track, 168 BPM, overload drop, hard supersaw, pulse core energy, instrumental, no vocals, beatscape original, owned rights",
       "engine": "stable-audio-3",
       "job_duration_sec": 180,
       "mode": "game_bgm"
@@ -158,7 +158,7 @@
       "default_mode": "casual",
       "default_tier": "standard",
       "allows_slide": false,
-      "prompt": "Hip-hop rhythm game track, 92 BPM, 808 bass, crisp hats, night grid voltage atmosphere, instrumental, no vocals, chart-friendly drums, beatscape original, owned rights, loop-friendly",
+      "prompt": "Hip-hop rhythm game, 92 BPM, lazy 808 glide, lo-fi grid texture, chill night flow, instrumental, no vocals, beatscape original, owned rights",
       "engine": "stable-audio-3",
       "job_duration_sec": 180,
       "mode": "game_bgm"
@@ -181,7 +181,7 @@
       "default_mode": "casual",
       "default_tier": "standard",
       "allows_slide": false,
-      "prompt": "English pop rhythm game track, 118 BPM, bright synth, glass horizon scape atmosphere, instrumental, no vocals, chart-friendly drums, beatscape original, owned rights, loop-friendly",
+      "prompt": "Chill pop rhythm game, 118 BPM, blue hour arpeggio, quiet neon loop, soft beat, instrumental, no vocals, beatscape original, owned rights",
       "engine": "stable-audio-3",
       "job_duration_sec": 180,
       "mode": "game_bgm"
@@ -204,7 +204,7 @@
       "default_mode": "casual",
       "default_tier": "standard",
       "allows_slide": false,
-      "prompt": "R&B rhythm game track, 86 BPM, smooth groove, velvet afterhours scape atmosphere, instrumental, no vocals, chart-friendly drums, beatscape original, owned rights, loop-friendly",
+      "prompt": "R&B rhythm game, 86 BPM, late night pulse, silky chords, minimal drums, instrumental, no vocals, beatscape original, owned rights",
       "engine": "stable-audio-3",
       "job_duration_sec": 180,
       "mode": "game_bgm"
@@ -227,7 +227,7 @@
       "default_mode": "arcade",
       "default_tier": "hard",
       "allows_slide": false,
-      "prompt": "Rock rhythm game track, 142 BPM, electric guitar riff, chrome yard energy, instrumental, no vocals, chart-friendly drums, beatscape original, owned rights, loop-friendly",
+      "prompt": "Rock rhythm game, 142 BPM, redline guitar, asphalt drums, chrome yard anthem, instrumental, no vocals, beatscape original, owned rights",
       "engine": "stable-audio-3",
       "job_duration_sec": 180,
       "mode": "game_bgm"
@@ -250,7 +250,7 @@
       "default_mode": "arcade",
       "default_tier": "standard",
       "allows_slide": false,
-      "prompt": "EDM rhythm game track, 158 BPM, clear 4/4 beat, neon pulse grid atmosphere, instrumental, no vocals, chart-friendly drums, beatscape original, owned rights, loop-friendly",
+      "prompt": "EDM rhythm game, 158 BPM, neon gridline arp, tight four-on-floor, skyline pulse, instrumental, no vocals, beatscape original, owned rights",
       "engine": "stable-audio-3",
       "job_duration_sec": 180,
       "mode": "game_bgm"
@@ -273,7 +273,7 @@
       "default_mode": "casual",
       "default_tier": "standard",
       "allows_slide": false,
-      "prompt": "Hip-hop rhythm game track, 100 BPM, 808 bass, crisp hats, night grid voltage atmosphere, instrumental, no vocals, chart-friendly drums, beatscape original, owned rights, loop-friendly",
+      "prompt": "Trap rhythm game, 100 BPM, trap hats roll, sub bass grid, dark voltage, instrumental, no vocals, beatscape original, owned rights",
       "engine": "stable-audio-3",
       "job_duration_sec": 180,
       "mode": "game_bgm"
@@ -296,7 +296,7 @@
       "default_mode": "casual",
       "default_tier": "standard",
       "allows_slide": false,
-      "prompt": "R&B rhythm game track, 88 BPM, smooth groove, velvet afterhours scape atmosphere, instrumental, no vocals, chart-friendly drums, beatscape original, owned rights, loop-friendly",
+      "prompt": "R&B rhythm game, 88 BPM, scape velvet pads, intimate groove, warm rim light, instrumental, no vocals, beatscape original, owned rights",
       "engine": "stable-audio-3",
       "job_duration_sec": 180,
       "mode": "game_bgm"
@@ -319,10 +319,11 @@
       "default_mode": "casual",
       "default_tier": "standard",
       "allows_slide": false,
-      "prompt": "Hip-hop rhythm game track, 96 BPM, 808 bass, crisp hats, night grid voltage atmosphere, instrumental, no vocals, chart-friendly drums, beatscape original, owned rights, loop-friendly",
+      "prompt": "Hip-hop rhythm game, 96 BPM, 808 horizon swell, wide stereo hats, night drive, instrumental, no vocals, beatscape original, owned rights",
       "engine": "stable-audio-3",
       "job_duration_sec": 180,
-      "mode": "game_bgm"
+      "mode": "game_bgm",
+      "clip_t0": 9.0
     },
     {
       "track_id": "bs-s3-15",
@@ -342,7 +343,7 @@
       "default_mode": "arcade",
       "default_tier": "hard",
       "allows_slide": false,
-      "prompt": "Rock rhythm game track, 136 BPM, electric guitar riff, chrome yard energy, instrumental, no vocals, chart-friendly drums, beatscape original, owned rights, loop-friendly",
+      "prompt": "Rock rhythm game, 136 BPM, anthem chrome riff, stadium drums, electric edge, instrumental, no vocals, beatscape original, owned rights",
       "engine": "stable-audio-3",
       "job_duration_sec": 180,
       "mode": "game_bgm"

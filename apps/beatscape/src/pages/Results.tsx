@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "../router";
-import { getTrack } from "../catalog/loadCatalog";
+import { getTrack, loadChart } from "../catalog/loadCatalog";
 import type { CatalogTrack } from "../types/catalog";
+import type { ChartJSON } from "../types/chart";
 import { StreamFullCTA } from "../components/StreamFullCTA";
 import { DistrictBadge } from "../components/DistrictBadge";
-import { JUDGE_COLORS, SCAPE_COPY } from "../constants/scape";
+import { MissReplayPanel } from "../components/MissReplayPanel";
+import { JUDGE_COLORS, SCAPE_COPY, SCAPE_COPY_EXTRA } from "../constants/scape";
+import { downloadBlob, renderSharePoster } from "../lib/sharePoster";
+import { trackEvent } from "../lib/analytics";
 import {
   readLastRun,
   shareResultsCopy,
@@ -17,17 +21,30 @@ export function ResultsPage() {
   const preferLocal = params.get("run") === "local";
   const run = readLastRun(preferLocal);
   const [copied, setCopied] = useState(false);
+  const [posterBusy, setPosterBusy] = useState(false);
   const [track, setTrack] = useState<CatalogTrack | null>(null);
+  const [chart, setChart] = useState<ChartJSON | null>(null);
 
   useEffect(() => {
     if (!run?.track_id) return;
-    void getTrack(run.track_id).then((t) => setTrack(t ?? null));
-  }, [run?.track_id]);
+    void getTrack(run.track_id).then(async (t) => {
+      setTrack(t ?? null);
+      if (t) {
+        try {
+          const c = await loadChart(t, run.tier);
+          setChart(c);
+        } catch {
+          setChart(null);
+        }
+      }
+    });
+  }, [run?.track_id, run?.tier]);
 
   if (!run) {
     return (
-      <section>
-        <p>No recent run.</p>
+      <section className="results">
+        <p>No recent run on this device.</p>
+        <p className="tagline">Open a share link with <code>?run=local</code> or finish a chart first.</p>
         <Link to="/" className="back-link">
           Home
         </Link>
@@ -45,31 +62,48 @@ export function ResultsPage() {
     { label: "Good", n: counts.good, color: JUDGE_COLORS.good },
     { label: "Miss", n: counts.miss, color: JUDGE_COLORS.miss },
   ];
+  const missEvents = run.missEvents ?? [];
 
   async function onCopyLink() {
+    if (!run) return;
     const url = shareResultsUrl();
-    const text = shareResultsCopy(run!, url);
+    const text = shareResultsCopy(run, url);
     try {
       await navigator.clipboard.writeText(text);
     } catch {
       await navigator.clipboard.writeText(url);
     }
+    trackEvent("share_copy", { track: run.track_id, grade: run.grade });
     setCopied(true);
     window.setTimeout(() => setCopied(false), 2000);
   }
 
+  async function onDownloadPoster() {
+    if (!run) return;
+    setPosterBusy(true);
+    try {
+      const blob = await renderSharePoster(run, track?.district ?? "");
+      downloadBlob(blob, `beatscape-${run.track_id}-${run.grade}.png`);
+      trackEvent("share_poster", { track: run.track_id, grade: run.grade });
+    } finally {
+      setPosterBusy(false);
+    }
+  }
+
   return (
     <section className="results">
-      <div className={`grade-big grade-${run.grade}`}>{run.grade}</div>
-      <div className="badges">
-        {run.fc && <span className="badge">FC</span>}
-        {run.ap && <span className="badge ap">AP</span>}
-        {isRecord && <span className="badge record">NEW RECORD</span>}
+      <div className={`results-hero-card grade-border-${run.grade}`}>
+        <div className={`grade-big grade-${run.grade}`}>{run.grade}</div>
+        <div className="badges">
+          {run.fc && <span className="badge">FC</span>}
+          {run.ap && <span className="badge ap">AP</span>}
+          {isRecord && <span className="badge record">NEW RECORD</span>}
+        </div>
+        <h1>
+          {run.score.toLocaleString()} pts · {run.accuracy}% Acc
+        </h1>
+        <p>Max Combo {run.maxCombo}x</p>
       </div>
-      <h1>
-        {run.score.toLocaleString()} pts · {run.accuracy}% Acc
-      </h1>
-      <p>Max Combo {run.maxCombo}x</p>
 
       <div className="judge-bars">
         {dist.map((d, i) => (
@@ -85,6 +119,8 @@ export function ResultsPage() {
           </div>
         ))}
       </div>
+
+      <MissReplayPanel missEvents={missEvents} sections={chart?.sections} />
 
       <p className="results-meta">
         {run.title} · {run.artist}
@@ -112,6 +148,9 @@ export function ResultsPage() {
         </Link>
         <button type="button" className="btn" onClick={onCopyLink}>
           {copied ? "Copied!" : "Copy link"}
+        </button>
+        <button type="button" className="btn" onClick={() => void onDownloadPoster()} disabled={posterBusy}>
+          {posterBusy ? "Rendering…" : SCAPE_COPY_EXTRA.sharePoster}
         </button>
         <Link className="btn" to="/library">
           Library

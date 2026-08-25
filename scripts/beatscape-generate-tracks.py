@@ -72,11 +72,11 @@ def wav_duration(audio: bytes) -> float:
         return (data_size // frame_bytes) / sample_rate
 
 
-def generate_one(entry: dict, dry_run: bool = False) -> bool:
+def generate_one(entry: dict, dry_run: bool = False, force: bool = False) -> bool:
     track_id = entry["track_id"]
     stem = entry.get("preview_stem", track_id)
     mode = entry.get("mode", "game_bgm")
-    duration = int(entry.get("duration_sec", 180))
+    duration = int(entry.get("job_duration_sec", entry.get("duration_sec", 180)))
     prompt = entry.get("prompt", "")
     body: dict = {"duration_sec": duration}
     if mode == "vocal_lyrics":
@@ -91,9 +91,11 @@ def generate_one(entry: dict, dry_run: bool = False) -> bool:
         body["model_variant"] = "small"
 
     out_wav = MASTERS / f"{stem}.wav"
-    if out_wav.is_file() and out_wav.stat().st_size > 500_000:
+    if not force and out_wav.is_file() and out_wav.stat().st_size > 500_000:
         print(f"SKIP {track_id}: master exists {out_wav}")
         return True
+    if force and out_wav.is_file():
+        print(f"FORCE {track_id}: overwrite {out_wav}")
 
     if dry_run:
         print(f"WOULD generate {track_id} {duration}s mode={mode}")
@@ -145,6 +147,7 @@ def main() -> int:
     parser.add_argument("--manifest", type=Path, default=DEFAULT_MANIFEST)
     parser.add_argument("--track", help="Single track_id from manifest")
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--force", action="store_true", help="Overwrite existing master WAV")
     args = parser.parse_args()
 
     manifest = json.loads(args.manifest.read_text(encoding="utf-8"))
@@ -154,7 +157,7 @@ def main() -> int:
     if not tracks:
         raise SystemExit("no tracks to generate")
 
-    ok = sum(1 for t in tracks if generate_one(t, dry_run=args.dry_run))
+    ok = sum(1 for t in tracks if generate_one(t, dry_run=args.dry_run, force=args.force))
     return 0 if ok == len(tracks) else 1
 
 

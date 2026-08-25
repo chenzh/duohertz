@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { Link, useRouter } from "../router";
 import { SCAPE_COPY } from "../constants/scape";
+import { firstPlayHref } from "../lib/firstPlay";
 
 const APP_VERSION = "0.1.0";
 
@@ -49,7 +50,7 @@ export function Layout({ children }: { children: ReactNode }) {
           </span>
           Library
         </NavLink>
-        <NavLink to="/play/bs-s1-01" className="tab-item tab-play">
+        <NavLink to={firstPlayHref()} className="tab-item tab-play">
           <span className="tab-icon tab-icon-play" aria-hidden>
             ▶
           </span>
