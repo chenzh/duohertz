@@ -274,6 +274,7 @@ def main() -> None:
                 "default_tier": tr["default_tier"],
                 "audio": f"/catalog/{tid}/audio.m4a",
                 "cover": f"/catalog/{tid}/cover.svg",
+                "og": f"/catalog/{tid}/og.png",
                 "charts": charts,
                 "seo": {
                     "title": f"{tr['title']} — BeatScape AI Original",
@@ -289,6 +290,12 @@ def main() -> None:
         encoding="utf-8",
     )
     print(f"Wrote {OUT / 'catalog.json'} ({len(catalog_tracks)} tracks)")
+
+    # PRD §6.0.24 / §6.0.26 — og.png next to cover
+    import runpy
+
+    ns = runpy.run_path(str(ROOT / "scripts" / "beatscape-generate-og.py"))
+    ns["main"]()
 
 
 if __name__ == "__main__":

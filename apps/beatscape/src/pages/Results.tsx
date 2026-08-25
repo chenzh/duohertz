@@ -1,9 +1,18 @@
-import { Link } from "../router";
-import { readLastRun } from "../storage/session";
+import { useState } from "react";
+import { Link, useSearchParams } from "../router";
+import {
+  readLastRun,
+  shareResultsCopy,
+  shareResultsUrl,
+} from "../storage/session";
 import { getPersonalBest } from "../storage/settings";
 
 export function ResultsPage() {
-  const run = readLastRun();
+  const [params] = useSearchParams();
+  const preferLocal = params.get("run") === "local";
+  const run = readLastRun(preferLocal);
+  const [copied, setCopied] = useState(false);
+
   if (!run) {
     return (
       <section>
@@ -14,6 +23,18 @@ export function ResultsPage() {
   }
 
   const pb = getPersonalBest(run.track_id, run.tier, run.mode);
+
+  async function onCopyLink() {
+    const url = shareResultsUrl();
+    const text = shareResultsCopy(run!, url);
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch {
+      await navigator.clipboard.writeText(url);
+    }
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 2000);
+  }
 
   return (
     <section className="results">
@@ -42,6 +63,9 @@ export function ResultsPage() {
         <Link className="btn primary" to={`/play/${run.track_id}?tier=${run.tier}&mode=${run.mode}`}>
           Replay
         </Link>
+        <button type="button" className="btn" onClick={onCopyLink}>
+          {copied ? "Copied!" : "Copy link"}
+        </button>
         <Link className="btn" to="/library">
           Library
         </Link>

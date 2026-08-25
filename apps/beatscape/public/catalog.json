@@ -29,7 +29,8 @@
       "seo": {
         "title": "Neon Pulse \u2014 BeatScape AI Original",
         "description": "Own the Scape. 160 BPM EDM chart."
-      }
+      },
+      "og": "/catalog/bs-s1-01/og.png"
     },
     {
       "track_id": "bs-s1-02",
@@ -59,7 +60,8 @@
       "seo": {
         "title": "Glass Horizon \u2014 BeatScape AI Original",
         "description": "Own the Scape. 118 BPM Pop chart."
-      }
+      },
+      "og": "/catalog/bs-s1-02/og.png"
     },
     {
       "track_id": "bs-s1-03",
@@ -89,7 +91,8 @@
       "seo": {
         "title": "Night Drive 808 \u2014 BeatScape AI Original",
         "description": "Own the Scape. 95 BPM Hip-hop chart."
-      }
+      },
+      "og": "/catalog/bs-s1-03/og.png"
     },
     {
       "track_id": "bs-s1-04",
@@ -119,7 +122,8 @@
       "seo": {
         "title": "Velvet Afterhours \u2014 BeatScape AI Original",
         "description": "Own the Scape. 88 BPM R&B chart."
-      }
+      },
+      "og": "/catalog/bs-s1-04/og.png"
     },
     {
       "track_id": "bs-s1-05",
@@ -149,7 +153,8 @@
       "seo": {
         "title": "Voltage Drop \u2014 BeatScape AI Original",
         "description": "Own the Scape. 170 BPM EDM chart."
-      }
+      },
+      "og": "/catalog/bs-s1-05/og.png"
     },
     {
       "track_id": "bs-s1-06",
@@ -179,7 +184,8 @@
       "seo": {
         "title": "Chrome Riff \u2014 BeatScape AI Original",
         "description": "Own the Scape. 132 BPM Rock chart."
-      }
+      },
+      "og": "/catalog/bs-s1-06/og.png"
     }
   ]
 }

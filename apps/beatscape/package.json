@@ -9,7 +9,8 @@
     "preview": "vite preview --host 127.0.0.1 --port 5175",
     "test": "vitest run",
     "test:prd": "vitest run src/acceptance/prdAcceptance.test.ts",
-    "ingest:stage1": "python3 ../../scripts/beatscape-ingest-stage1.py"
+    "ingest:stage1": "python3 ../../scripts/beatscape-ingest-stage1.py",
+    "generate:og": "python3 ../../scripts/beatscape-generate-og.py"
   },
   "dependencies": {
     "react": "^19.0.0",
