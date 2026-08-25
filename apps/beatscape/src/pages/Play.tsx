@@ -6,7 +6,6 @@ import type { ChartJSON, ChartTier, PlayMode, PlayResult } from "../types/chart"
 import type { CatalogTrack } from "../types/catalog";
 import { writeLastRun } from "../storage/session";
 import { isOnboarded, loadSettings, setOnboarded } from "../storage/settings";
-import { isCoarsePointer } from "../input/touchInput";
 
 const GUIDE_TRACK = "bs-s1-02";
 
@@ -20,52 +19,37 @@ export function PlayPage() {
   const [chart, setChart] = useState<ChartJSON | null>(null);
   const [loadError, setLoadError] = useState("");
   const [startedAt] = useState(() => performance.now());
-  const [touchUi] = useState(() => isCoarsePointer());
   const settings = loadSettings();
 
   useEffect(() => {
-    document.body.classList.add("play-immersive");
-    return () => document.body.classList.remove("play-immersive");
-  }, []);
-
-  const enterFullscreen = async () => {
-    const el = document.documentElement;
-    try {
-      if (el.requestFullscreen) await el.requestFullscreen();
-      else if ("webkitRequestFullscreen" in el) {
-        await (el as HTMLElement & { webkitRequestFullscreen: () => Promise<void> }).webkitRequestFullscreen();
-      }
-    } catch {
-      /* user dismissed or unsupported */
-    }
-  };
-
-  useEffect(() => {
-    if (!isOnboarded()) {
-      if (id !== GUIDE_TRACK) {
-        nav(`/play/${GUIDE_TRACK}?tier=easy&mode=casual`, { replace: true });
-        return;
-      }
-    } else if (!id) {
+    if (!id) return;
+    if (!isOnboarded() && id !== GUIDE_TRACK) {
+      nav(`/play/${GUIDE_TRACK}?tier=easy&mode=casual`, { replace: true });
       return;
     }
-    if (!id) return;
+    let cancelled = false;
     void (async () => {
       setLoadError("");
       setTrack(null);
       setChart(null);
       const t = await getTrack(id);
       if (!t) {
-        setLoadError(`Track not found: ${id}`);
+        if (!cancelled) setLoadError(`Track not found: ${id}`);
         return;
       }
-      setTrack(t);
       try {
-        setChart(await loadChart(t, tier));
+        const c = await loadChart(t, tier);
+        if (!cancelled) {
+          setTrack(t);
+          setChart(c);
+        }
       } catch (e) {
-        setLoadError(e instanceof Error ? e.message : "Chart load failed");
+        if (!cancelled) setLoadError(e instanceof Error ? e.message : "Chart load failed");
       }
     })();
+    return () => {
+      cancelled = true;
+    };
   }, [id, tier, nav]);
 
   const finish = (result: PlayResult) => {
@@ -76,11 +60,11 @@ export function PlayPage() {
       nav("/");
       return;
     }
-    nav("/results?run=local");
+    nav("/results");
   };
 
   const exitPlay = () => {
-    if (!window.confirm("Leave the Scape? This run will be discarded.")) return;
+    if (!window.confirm("Leave the Scape? This run won't be saved.")) return;
     nav(track ? `/track/${track.track_id}` : "/library");
   };
 
@@ -104,12 +88,7 @@ export function PlayPage() {
         <span className="play-meta-tier">
           {tier} · {mode}
         </span>
-        {touchUi && (
-          <button type="button" className="btn compact" onClick={() => void enterFullscreen()}>
-            Fullscreen
-          </button>
-        )}
-        <button type="button" className="btn linkish" onClick={exitPlay}>
+        <button type="button" className="btn compact" onClick={exitPlay}>
           Exit
         </button>
       </div>
@@ -119,7 +98,6 @@ export function PlayPage() {
         mode={mode}
         casualSpeed={settings.casualSpeed}
         onFinish={finish}
-        onFail={finish}
       />
     </section>
   );

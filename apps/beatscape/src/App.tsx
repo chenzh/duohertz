@@ -10,11 +10,9 @@ import { LeaderboardPage } from "./pages/Leaderboard";
 import { Router } from "./router";
 
 export default function App() {
-  const base = import.meta.env.BASE_URL.replace(/\/$/, "") || "/beatscape";
   return (
     <Layout>
       <Router
-        base={base}
         routes={[
           { path: "/", element: <HomePage /> },
           { path: "/library", element: <LibraryPage /> },

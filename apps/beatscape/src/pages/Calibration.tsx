@@ -1,10 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "../router";
-import { resumeAudio, playHit } from "../audio/hitsounds";
+import { unlockAudio } from "../audio/context";
+import { playHit } from "../audio/hitsounds";
+import { getAudioContext } from "../audio/context";
 import { saveOffsetMs } from "../storage/settings";
 
 const BEAT_MS = 60000 / 120;
 const LANES = ["D", "F", "J", "K"];
+const COUNT = 8;
 
 export function CalibrationPage() {
   const nav = useNavigate();
@@ -16,13 +19,13 @@ export function CalibrationPage() {
 
   useEffect(() => {
     if (phase !== "playing") return;
-    t0.current = performance.now();
+    t0.current = getAudioContext().currentTime * 1000;
     beat.current = 0;
     const id = window.setInterval(() => {
       beat.current++;
-      setFlash(beat.current % 4);
+      setFlash(beat.current % COUNT);
       window.setTimeout(() => setFlash(-1), 120);
-      if (beat.current >= 8) {
+      if (beat.current >= COUNT) {
         clearInterval(id);
         setPhase("done");
       }
@@ -36,10 +39,11 @@ export function CalibrationPage() {
       const lane = LANES.findIndex((k) => k.toLowerCase() === e.key.toLowerCase());
       if (lane < 0) return;
       e.preventDefault();
-      void resumeAudio();
+      void unlockAudio();
       playHit("perfect");
       const expected = t0.current + beat.current * BEAT_MS;
-      setHits((h) => [...h, performance.now() - expected]);
+      const delta = getAudioContext().currentTime * 1000 - expected;
+      setHits((h) => [...h, delta]);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -51,17 +55,15 @@ export function CalibrationPage() {
   };
 
   const median =
-    hits.length >= 3
-      ? [...hits].sort((a, b) => a - b)[Math.floor(hits.length / 2)]!
-      : 0;
+    hits.length >= 3 ? [...hits].sort((a, b) => a - b)[Math.floor(hits.length / 2)]! : 0;
 
   return (
     <section className="calibrate">
-      <h1>Tap with the pulse</h1>
-      <p>8 beats @ 120 BPM · use D F J K · median offset saved to bs_offset_ms</p>
+      <h1>Tap the beat</h1>
+      <p className="tagline">Press D F J K when each lane flashes — one step, 8 beats.</p>
       {phase === "intro" && (
         <button type="button" className="btn primary" onClick={() => setPhase("playing")}>
-          Start calibration
+          Start
         </button>
       )}
       {phase === "playing" && (
@@ -71,14 +73,18 @@ export function CalibrationPage() {
               {k}
             </div>
           ))}
-          <p>Beat {Math.min(beat.current + 1, 8)} / 8 · hits {hits.length}</p>
+          <p>
+            Beat {Math.min(beat.current + 1, COUNT)} / {COUNT} · hits {hits.length}
+          </p>
         </div>
       )}
       {phase === "done" && (
         <div>
-          <p>Offset ≈ {Math.round(median)} ms (clamped ±200)</p>
+          <p>
+            Offset ≈ {Math.round(median)} ms (clamped ±200)
+          </p>
           <button type="button" className="btn primary" onClick={() => finish(Math.round(median))}>
-            Save & enter the Scape
+            Save &amp; play Glass Horizon
           </button>
         </div>
       )}
