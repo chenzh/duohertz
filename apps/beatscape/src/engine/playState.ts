@@ -100,47 +100,57 @@ export class GameSession {
     let bestSub: SubJudgment = "head";
     let bestDelta = Infinity;
 
-    const consider = (n: RTNote, sub: SubJudgment, delta: number) => {
-      if (Math.abs(delta) > good) return;
+    for (const n of this.notes) {
+      if (n.done) continue;
+      const d = n.def;
+      let sub: SubJudgment | null = null;
+      let delta = 0;
+      if (d.type === "tap" || d.type === "hold") {
+        if (d.lane === lane && n.head === null) {
+          sub = "head";
+          delta = songMs - n.tMs;
+        }
+      } else if (d.type === "chord") {
+        if (d.lanes.includes(lane as 0 | 1 | 2 | 3) && n.chord[lane] == null) {
+          sub = "chord";
+          delta = songMs - n.tMs;
+        }
+      } else if (d.type === "slide") {
+        if (n.head === null && d.lane === lane) {
+          sub = "head";
+          delta = songMs - n.tMs;
+        } else if (n.head !== null && n.tail === null && d.to === lane) {
+          sub = "tail";
+          delta = songMs - n.endMs;
+        }
+      }
+      if (sub === null) continue;
+      if (Math.abs(delta) > good) continue;
       if (Math.abs(delta) < Math.abs(bestDelta)) {
         best = n;
         bestSub = sub;
         bestDelta = delta;
       }
-    };
-
-    for (const n of this.notes) {
-      if (n.done) continue;
-      const d = n.def;
-      if (d.type === "tap" || d.type === "hold") {
-        if (d.lane !== lane || n.head !== null) continue;
-        consider(n, "head", songMs - n.tMs);
-      } else if (d.type === "chord") {
-        if (!d.lanes.includes(lane as 0 | 1 | 2 | 3) || n.chord[lane] != null) continue;
-        consider(n, "chord", songMs - n.tMs);
-      } else if (d.type === "slide") {
-        if (n.head === null && d.lane === lane) consider(n, "head", songMs - n.tMs);
-        else if (n.head !== null && n.tail === null && d.to === lane)
-          consider(n, "tail", songMs - n.endMs);
-      }
     }
 
     if (!best) return null; // empty press → no penalty, no combo break
 
-    const delta = bestSub === "tail" ? songMs - best.endMs : songMs - best.tMs;
-    const j: Judgment = bestSub === "tail" ? judgeHoldTail(delta, this.mode) : judgeDelta(delta, this.mode);
+    const chosen = best;
+    const sub = bestSub;
+    const delta = sub === "tail" ? songMs - chosen.endMs : songMs - chosen.tMs;
+    const j: Judgment = sub === "tail" ? judgeHoldTail(delta, this.mode) : judgeDelta(delta, this.mode);
     this.register(j);
 
-    if (bestSub === "head") {
-      best.head = j;
-      if (best.def.type === "tap" || best.def.type === "slide") best.done = true;
-    } else if (bestSub === "chord") {
-      best.chord[lane] = j;
-      if (best.def.type === "chord" && best.def.lanes.every((l) => best!.chord[l] != null))
-        best.done = true;
+    if (sub === "head") {
+      chosen.head = j;
+      if (chosen.def.type === "tap" || chosen.def.type === "slide") chosen.done = true;
+    } else if (sub === "chord") {
+      chosen.chord[lane] = j;
+      if (chosen.def.type === "chord" && chosen.def.lanes.every((l) => chosen.chord[l] != null))
+        chosen.done = true;
     } else {
-      best.tail = j;
-      best.done = true;
+      chosen.tail = j;
+      chosen.done = true;
     }
     return { lane, judgment: j };
   }

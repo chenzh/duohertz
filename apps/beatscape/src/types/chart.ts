@@ -78,4 +78,6 @@ export type LastRun = {
   totalNotes: number;
   durationMs: number;
   endedAt: string;
+  /** PB score captured before this run was saved — used to flag a true new record. */
+  prevBestScore?: number;
 };

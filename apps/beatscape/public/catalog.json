@@ -20,14 +20,14 @@
       "default_mode": "arcade",
       "default_tier": "standard",
       "audio": "/catalog/bs-s1-01/audio.m4a",
-      "cover": "/catalog/bs-s1-01/cover.svg",
+      "cover": "/catalog/bs-s1-01/cover.png",
       "charts": {
         "easy": "/catalog/bs-s1-01/easy.json",
         "standard": "/catalog/bs-s1-01/standard.json",
         "hard": "/catalog/bs-s1-01/hard.json"
       },
       "seo": {
-        "title": "Neon Pulse \u2014 BeatScape AI Original",
+        "title": "Neon Pulse — BeatScape AI Original",
         "description": "Own the Scape. 160 BPM EDM chart."
       },
       "og": "/catalog/bs-s1-01/og.png"
@@ -51,14 +51,14 @@
       "default_mode": "casual",
       "default_tier": "easy",
       "audio": "/catalog/bs-s1-02/audio.m4a",
-      "cover": "/catalog/bs-s1-02/cover.svg",
+      "cover": "/catalog/bs-s1-02/cover.png",
       "charts": {
         "easy": "/catalog/bs-s1-02/easy.json",
         "standard": "/catalog/bs-s1-02/standard.json",
         "hard": "/catalog/bs-s1-02/hard.json"
       },
       "seo": {
-        "title": "Glass Horizon \u2014 BeatScape AI Original",
+        "title": "Glass Horizon — BeatScape AI Original",
         "description": "Own the Scape. 118 BPM Pop chart."
       },
       "og": "/catalog/bs-s1-02/og.png"
@@ -82,14 +82,14 @@
       "default_mode": "arcade",
       "default_tier": "standard",
       "audio": "/catalog/bs-s1-03/audio.m4a",
-      "cover": "/catalog/bs-s1-03/cover.svg",
+      "cover": "/catalog/bs-s1-03/cover.png",
       "charts": {
         "easy": "/catalog/bs-s1-03/easy.json",
         "standard": "/catalog/bs-s1-03/standard.json",
         "hard": "/catalog/bs-s1-03/hard.json"
       },
       "seo": {
-        "title": "Night Drive 808 \u2014 BeatScape AI Original",
+        "title": "Night Drive 808 — BeatScape AI Original",
         "description": "Own the Scape. 95 BPM Hip-hop chart."
       },
       "og": "/catalog/bs-s1-03/og.png"
@@ -113,14 +113,14 @@
       "default_mode": "casual",
       "default_tier": "easy",
       "audio": "/catalog/bs-s1-04/audio.m4a",
-      "cover": "/catalog/bs-s1-04/cover.svg",
+      "cover": "/catalog/bs-s1-04/cover.png",
       "charts": {
         "easy": "/catalog/bs-s1-04/easy.json",
         "standard": "/catalog/bs-s1-04/standard.json",
         "hard": "/catalog/bs-s1-04/hard.json"
       },
       "seo": {
-        "title": "Velvet Afterhours \u2014 BeatScape AI Original",
+        "title": "Velvet Afterhours — BeatScape AI Original",
         "description": "Own the Scape. 88 BPM R&B chart."
       },
       "og": "/catalog/bs-s1-04/og.png"
@@ -144,14 +144,14 @@
       "default_mode": "arcade",
       "default_tier": "hard",
       "audio": "/catalog/bs-s1-05/audio.m4a",
-      "cover": "/catalog/bs-s1-05/cover.svg",
+      "cover": "/catalog/bs-s1-05/cover.png",
       "charts": {
         "easy": "/catalog/bs-s1-05/easy.json",
         "standard": "/catalog/bs-s1-05/standard.json",
         "hard": "/catalog/bs-s1-05/hard.json"
       },
       "seo": {
-        "title": "Voltage Drop \u2014 BeatScape AI Original",
+        "title": "Voltage Drop — BeatScape AI Original",
         "description": "Own the Scape. 170 BPM EDM chart."
       },
       "og": "/catalog/bs-s1-05/og.png"
@@ -175,14 +175,14 @@
       "default_mode": "arcade",
       "default_tier": "standard",
       "audio": "/catalog/bs-s1-06/audio.m4a",
-      "cover": "/catalog/bs-s1-06/cover.svg",
+      "cover": "/catalog/bs-s1-06/cover.png",
       "charts": {
         "easy": "/catalog/bs-s1-06/easy.json",
         "standard": "/catalog/bs-s1-06/standard.json",
         "hard": "/catalog/bs-s1-06/hard.json"
       },
       "seo": {
-        "title": "Chrome Riff \u2014 BeatScape AI Original",
+        "title": "Chrome Riff — BeatScape AI Original",
         "description": "Own the Scape. 132 BPM Rock chart."
       },
       "og": "/catalog/bs-s1-06/og.png"

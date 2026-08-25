@@ -18,24 +18,40 @@ export function HomePage() {
 
   return (
     <section className="home">
-      <h1>Feel the Beat, Own the Scape.</h1>
-      {!isOnboarded() ? (
-        <p className="tagline">New here? Tap Play Now — calibrate, then try Glass Horizon first.</p>
-      ) : (
-        <p className="tagline">English pop & EDM rhythm game · Owned AI originals</p>
-      )}
-      <div className="cta-row">
-        {playNow && (
-          <Link
-            className="btn primary"
-            to={isOnboarded() ? `/play/${playNow.track_id}?tier=standard&mode=arcade` : "/calibrate"}
-          >
-            Play Now — D F J K
-          </Link>
-        )}
-        <Link className="btn" to="/library">
-          Enter Library
-        </Link>
+      <div
+        className="hero"
+        style={
+          playNow ? { backgroundImage: `url(${assetUrl(playNow.cover)})` } : undefined
+        }
+      >
+        <div className="hero-scrim" />
+        <div className="hero-content">
+          <h1>Feel the Beat, Own the Scape.</h1>
+          {!isOnboarded() ? (
+            <p className="tagline">
+              New here? Tap Play Now — calibrate, then try Glass Horizon first.
+            </p>
+          ) : (
+            <p className="tagline">English pop & EDM rhythm game · Owned AI originals</p>
+          )}
+          <div className="cta-row">
+            {playNow && (
+              <Link
+                className="btn primary"
+                to={
+                  isOnboarded()
+                    ? `/play/${playNow.track_id}?tier=standard&mode=arcade`
+                    : "/calibrate"
+                }
+              >
+                Play Now — D F J K
+              </Link>
+            )}
+            <Link className="btn" to="/library">
+              Enter Library
+            </Link>
+          </div>
+        </div>
       </div>
       <h2>Featured</h2>
       <div className="track-grid">

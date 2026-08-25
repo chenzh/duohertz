@@ -4,6 +4,7 @@ import { Link } from "../router";
 export function Layout({ children }: { children: ReactNode }) {
   return (
     <div className="app-shell">
+      <div className="bg-fx" aria-hidden />
       <header className="site-header">
         <Link to="/" className="logo">
           BeatScape

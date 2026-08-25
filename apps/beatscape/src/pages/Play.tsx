@@ -83,6 +83,11 @@ export function PlayPage() {
 
   return (
     <section className="play-page">
+      <div
+        className="play-bg"
+        aria-hidden
+        style={{ backgroundImage: `url(${assetUrl(track.cover)})` }}
+      />
       <div className="play-meta">
         <strong>{track.title}</strong>
         <span className="play-meta-tier">

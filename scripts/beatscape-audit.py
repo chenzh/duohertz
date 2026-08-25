@@ -300,11 +300,16 @@ def audit_audio(path: Path, spec: dict[str, Any]) -> TrackReport:
 
 
 def note_count(notes: list[dict[str, Any]]) -> int:
+    """Total judgment objects (PRD §4.4): hold = head+tail = 2, slide = 1,
+    chord = len(lanes), tap = 1. Matches the runtime engine countTotalNotes so
+    chart.total_notes is the correct accuracy denominator."""
     total = 0
     for n in notes:
         t = n.get("type")
         if t == "chord":
             total += len(n.get("lanes") or [])
+        elif t == "hold":
+            total += 2
         else:
             total += 1
     return total

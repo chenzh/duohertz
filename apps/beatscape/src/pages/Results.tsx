@@ -23,6 +23,16 @@ export function ResultsPage() {
   }
 
   const pb = getPersonalBest(run.track_id, run.tier, run.mode);
+  // True new record: this run beat the standing best captured before it was saved.
+  const isRecord = run.prevBestScore != null ? run.score > run.prevBestScore : true;
+  const counts = run.counts;
+  const totalJ = counts.perfect + counts.great + counts.good + counts.miss || 1;
+  const dist = [
+    { label: "Perfect", n: counts.perfect, color: "#25F4EE" },
+    { label: "Great", n: counts.great, color: "#FFFFFF" },
+    { label: "Good", n: counts.good, color: "#9AA0A6" },
+    { label: "Miss", n: counts.miss, color: "#FE2C55" },
+  ];
 
   async function onCopyLink() {
     const url = shareResultsUrl();
@@ -38,26 +48,43 @@ export function ResultsPage() {
 
   return (
     <section className="results">
-      <div className="grade-big">{run.grade}</div>
+      <div className={`grade-big grade-${run.grade}`}>{run.grade}</div>
       <div className="badges">
         {run.fc && <span className="badge">FC</span>}
         {run.ap && <span className="badge ap">AP</span>}
+        {isRecord && <span className="badge record">NEW RECORD</span>}
       </div>
       <h1>
         {run.score.toLocaleString()} pts · {run.accuracy}% Acc
       </h1>
       <p>Max Combo {run.maxCombo}x</p>
-      <div className="counts">
-        P {run.counts.perfect} · Gr {run.counts.great} · Go {run.counts.good} · M {run.counts.miss}
+
+      <div className="judge-bars">
+        {dist.map((d, i) => (
+          <div className="judge-row" key={d.label} style={{ animationDelay: `${0.15 + i * 0.09}s` }}>
+            <span className="judge-label">{d.label}</span>
+            <span className="judge-track">
+              <span
+                className="judge-fill"
+                style={{ width: `${(d.n / totalJ) * 100}%`, background: d.color }}
+              />
+            </span>
+            <span className="judge-n">{d.n}</span>
+          </div>
+        ))}
       </div>
+
       <p>
         {run.title} · {run.artist} · {run.tier} · {run.mode}
       </p>
-      {pb && (
-        <p className="pb">
-          Personal Best: {pb.score.toLocaleString()} ({pb.accuracy}%)
-          {run.score > pb.score && " · New Record!"}
-        </p>
+      {isRecord && run.prevBestScore != null ? (
+        <p className="pb">Previous best {run.prevBestScore.toLocaleString()} — beaten!</p>
+      ) : (
+        pb && (
+          <p className="pb">
+            Personal Best: {pb.score.toLocaleString()} ({pb.accuracy}%)
+          </p>
+        )
       )}
       <div className="cta-row">
         <Link className="btn primary" to={`/play/${run.track_id}?tier=${run.tier}&mode=${run.mode}`}>
@@ -73,7 +100,6 @@ export function ResultsPage() {
           Play Now
         </Link>
       </div>
-      <p className="rights">AI Original · Owned Rights · Generated with MusicSaas</p>
     </section>
   );
 }

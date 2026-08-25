@@ -45,7 +45,13 @@ function matchPath(pattern: string, path: string): Record<string, string> | null
   return params;
 }
 
-export function Router({ routes }: { routes: RouteDef[] }) {
+export function Router({
+  routes,
+  layout,
+}: {
+  routes: RouteDef[];
+  layout?: (child: ReactNode) => ReactNode;
+}) {
   const [loc, setLoc] = useState(readLocation);
 
   useEffect(() => {
@@ -72,7 +78,8 @@ export function Router({ routes }: { routes: RouteDef[] }) {
     const params = matchPath(r.path, loc.path);
     if (params !== null) {
       const value: LocationValue = { path: loc.path, search: loc.search, params, navigate, setSearch };
-      return <LocationCtx.Provider value={value}>{r.element}</LocationCtx.Provider>;
+      const body = layout ? layout(r.element) : r.element;
+      return <LocationCtx.Provider value={value}>{body}</LocationCtx.Provider>;
     }
   }
 
@@ -83,11 +90,11 @@ export function Router({ routes }: { routes: RouteDef[] }) {
     navigate,
     setSearch,
   };
-  return (
-    <LocationCtx.Provider value={fallback}>
-      {routes.find((r) => r.path === "/")?.element ?? null}
-    </LocationCtx.Provider>
-  );
+  const fallbackBody =
+    layout && routes.find((r) => r.path === "/")?.element
+      ? layout(routes.find((r) => r.path === "/")!.element!)
+      : routes.find((r) => r.path === "/")?.element ?? null;
+  return <LocationCtx.Provider value={fallback}>{fallbackBody}</LocationCtx.Provider>;
 }
 
 function useLocation(): LocationValue {

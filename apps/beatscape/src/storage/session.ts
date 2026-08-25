@@ -1,7 +1,7 @@
 import type { LastRun, PlayResult } from "../types/chart";
 import type { CatalogTrack } from "../types/catalog";
 import { maxScore } from "../engine/judge";
-import { saveScore } from "./settings";
+import { saveScore, getPersonalBest } from "./settings";
 
 const SESSION_RUN_KEY = "bs_last_run";
 /** Survives new-tab share links (`?run=local`, PRD §6.0.24). */
@@ -53,6 +53,8 @@ export function writeLastRun(
   result: PlayResult,
   durationMs: number,
 ) {
+  // Capture the standing record BEFORE this run is saved, so Results can flag a true new best.
+  const prevBest = getPersonalBest(track.track_id, tier, mode);
   const run: LastRun = {
     v: 1,
     track_id: track.track_id,
@@ -70,6 +72,7 @@ export function writeLastRun(
     totalNotes: result.totalNotes,
     durationMs,
     endedAt: new Date().toISOString(),
+    prevBestScore: prevBest?.score,
   };
   const payload = JSON.stringify(run);
   sessionStorage.setItem(SESSION_RUN_KEY, payload);

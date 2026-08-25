@@ -11,19 +11,18 @@ import { Router } from "./router";
 
 export default function App() {
   return (
-    <Layout>
-      <Router
-        routes={[
-          { path: "/", element: <HomePage /> },
-          { path: "/library", element: <LibraryPage /> },
-          { path: "/track/:id", element: <TrackPage /> },
-          { path: "/play/:id", element: <PlayPage /> },
-          { path: "/results", element: <ResultsPage /> },
-          { path: "/calibrate", element: <CalibrationPage /> },
-          { path: "/settings", element: <SettingsPage /> },
-          { path: "/leaderboard", element: <LeaderboardPage /> },
-        ]}
-      />
-    </Layout>
+    <Router
+      layout={(child) => <Layout>{child}</Layout>}
+      routes={[
+        { path: "/", element: <HomePage /> },
+        { path: "/library", element: <LibraryPage /> },
+        { path: "/track/:id", element: <TrackPage /> },
+        { path: "/play/:id", element: <PlayPage /> },
+        { path: "/results", element: <ResultsPage /> },
+        { path: "/calibrate", element: <CalibrationPage /> },
+        { path: "/settings", element: <SettingsPage /> },
+        { path: "/leaderboard", element: <LeaderboardPage /> },
+      ]}
+    />
   );
 }
