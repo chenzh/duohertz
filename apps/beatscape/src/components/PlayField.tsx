@@ -7,12 +7,12 @@ import { approachSec, noteScreenY } from "../engine/geometry";
 import { receptorYFromGeometry, laneFromX } from "../input/touchInput";
 import { loadKeys, loadOffsetMs, loadSettings } from "../storage/settings";
 
-const LANE_COLORS = ["#25F4EE", "#FE2C55", "#B388FF", "#FFD60A"];
+const LANE_COLORS = ["#8B5CF6", "#FF6B4A", "#C8F542", "#F5C542"];
 const LANE_RGB: Array<[number, number, number]> = [
-  [37, 244, 238],
-  [254, 44, 85],
-  [179, 136, 255],
-  [255, 214, 10],
+  [139, 92, 246],
+  [255, 107, 74],
+  [200, 245, 66],
+  [245, 197, 66],
 ];
 const COUNTDOWN_MS = 3000;
 const LANE_FLASH_MS = 180;
@@ -23,10 +23,10 @@ const JUDGE_LABEL: Record<string, string> = {
   miss: "MISS",
 };
 const JUDGE_COLOR: Record<string, string> = {
-  perfect: "#25F4EE",
+  perfect: "#C8F542",
   great: "#FFFFFF",
-  good: "#9AA0A6",
-  miss: "#FE2C55",
+  good: "#9B9BB0",
+  miss: "#FF6B4A",
 };
 const COMBO_MILESTONES = [10, 25, 50, 100, 150, 200, 300];
 
@@ -285,7 +285,7 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onFinish }: Prop
 
       // receptor line (neon)
       ctx2d.save();
-      ctx2d.shadowColor = "#25F4EE";
+      ctx2d.shadowColor = "#8B5CF6";
       ctx2d.shadowBlur = 10;
       ctx2d.strokeStyle = "rgba(255,255,255,0.92)";
       ctx2d.lineWidth = 2;
@@ -381,7 +381,7 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onFinish }: Prop
           ctx2d.textAlign = "center";
           ctx2d.fillStyle = JUDGE_COLOR[f.judgment] || "#FFFFFF";
           if (isP) {
-            ctx2d.shadowColor = "#25F4EE";
+            ctx2d.shadowColor = "#8B5CF6";
             ctx2d.shadowBlur = 14;
           }
           ctx2d.fillText(label, 0, 0);
@@ -405,7 +405,7 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onFinish }: Prop
         const bw = w - 28;
         ctx2d.fillStyle = "rgba(255,255,255,0.10)";
         ctx2d.fillRect(14, 38, bw, 6);
-        ctx2d.fillStyle = session.hp <= 30 ? "#FE2C55" : "#25F4EE";
+        ctx2d.fillStyle = session.hp <= 30 ? "#FF6B4A" : "#8B5CF6";
         ctx2d.fillRect(14, 38, (bw * session.hp) / 100, 6);
       }
 
@@ -413,7 +413,7 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onFinish }: Prop
         // combo escalates in size + color as it climbs
         const tier = session.combo >= 100 ? 3 : session.combo >= 50 ? 2 : session.combo >= 10 ? 1 : 0;
         const sizes = [30, 38, 48, 58];
-        const cols = ["#FFFFFF", "#25F4EE", "#B388FF", "#FFD60A"];
+        const cols = ["#FFFFFF", "#8B5CF6", "#FF6B4A", "#C8F542"];
         const pulse = 1 + Math.min(0.18, (nowPerf % 600) / 600 / 6);
         ctx2d.save();
         ctx2d.textAlign = "center";
