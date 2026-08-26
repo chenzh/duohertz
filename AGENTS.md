@@ -29,6 +29,7 @@ Vault 权威规范：`docs/VAULT-HARNESS.md`（由 `sync-all-harness` 生成）
 | BeatScape | `apps/beatscape/` |
 | MLX 推理 | `workers/ace-step/` · `workers/sa3/` |
 | 内容流水线 | `scripts/beatscape-*` · `data/beatscape-preview/` |
+| **AI 公司交付** | `.delivery/beatscape/` · `agent-safe` Issue 队列 |
 
 ## 常用命令
 

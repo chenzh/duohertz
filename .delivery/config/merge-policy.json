@@ -1,0 +1,24 @@
+{
+  "$schema": "MusicSaas agent delivery — deny wins. BeatScape UI-only auto-merge.",
+  "autoMergeEnabled": true,
+  "requireLabels": ["agent-safe"],
+  "branchNamePrefix": "cursor/",
+  "allow": [
+    "apps/beatscape/**",
+    "docs/BEATSCAPE*.md",
+    "**/*.test.ts",
+    "**/*.test.tsx"
+  ],
+  "deny": [
+    "workers/**",
+    "apps/gateway/**",
+    "apps/demo/**",
+    "scripts/beatscape-ingest*",
+    "scripts/beatscape-*pipeline*",
+    "scripts/beatscape-regenerate*",
+    "PRD.md",
+    "**/.env*",
+    "**/migrations/**",
+    ".github/workflows/deploy*.yml"
+  ]
+}
