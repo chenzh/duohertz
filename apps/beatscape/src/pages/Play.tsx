@@ -7,6 +7,7 @@ import type { CatalogTrack } from "../types/catalog";
 import { writeLastRun } from "../storage/session";
 import { isOnboarded, loadSettings, setOnboarded } from "../storage/settings";
 import { isCoarsePointer } from "../input/touchInput";
+import { buildPlayPageMeta, usePageMeta } from "../seo/pageMeta";
 
 const GUIDE_TRACK = "bs-s1-02";
 
@@ -22,6 +23,7 @@ export function PlayPage() {
   const [startedAt] = useState(() => performance.now());
   const [touchUi] = useState(() => isCoarsePointer());
   const settings = loadSettings();
+  usePageMeta(track ? buildPlayPageMeta(track, tier, mode) : null);
 
   useEffect(() => {
     document.body.classList.add("play-immersive");
