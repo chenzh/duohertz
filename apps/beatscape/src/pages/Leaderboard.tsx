@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { loadCatalog } from "../catalog/loadCatalog";
+import { getMessages } from "../i18n";
 import { loadBoard, type BoardEntry } from "../storage/session";
 
 function trackLabel(entry: BoardEntry, titles: Record<string, string>): string {
@@ -7,6 +8,7 @@ function trackLabel(entry: BoardEntry, titles: Record<string, string>): string {
 }
 
 export function LeaderboardPage() {
+  const m = getMessages();
   const board = loadBoard();
   const [titles, setTitles] = useState<Record<string, string>>({});
 
@@ -55,7 +57,11 @@ export function LeaderboardPage() {
           ))}
         </tbody>
       </table>
-      {!board.length && <p>No scores yet — play Arcade to rank locally.</p>}
+      {!board.length && (
+        <p className="leaderboard-empty" role="status">
+          {m.leaderboard.emptyState}
+        </p>
+      )}
     </section>
   );
 }
