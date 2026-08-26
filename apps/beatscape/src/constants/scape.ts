@@ -25,9 +25,9 @@ export const LANE_RGB: Array<[number, number, number]> = [
 ];
 
 export const JUDGE_COLORS = {
-  perfect: "#7CFFB2",
+  perfect: "#FFD60A",
   great: "#E8EEF7",
-  good: "#8B9BB0",
+  good: "#7CFFB2",
   miss: "#FF5C7A",
 } as const;
 

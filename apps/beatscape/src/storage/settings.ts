@@ -3,6 +3,8 @@ export type BsSettings = {
   fancyFx: boolean;
   scrollBias: number;
   casualSpeed: number;
+  musicVolume: number;
+  sfxVolume: number;
 };
 
 const DEFAULT: BsSettings = {
@@ -10,6 +12,8 @@ const DEFAULT: BsSettings = {
   fancyFx: true,
   scrollBias: 0,
   casualSpeed: 1,
+  musicVolume: 0.7,
+  sfxVolume: 0.55,
 };
 
 export function loadSettings(): BsSettings {

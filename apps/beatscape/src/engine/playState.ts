@@ -37,6 +37,8 @@ interface RTNote {
 export interface JudgeFx {
   lane: number;
   judgment: Judgment;
+  /** Signed ms: negative = early, positive = late. */
+  deltaMs: number;
 }
 
 const ZERO_COUNTS = (): Record<Judgment, number> => ({
@@ -144,7 +146,8 @@ export class GameSession {
 
     if (sub === "head") {
       chosen.head = j;
-      if (chosen.def.type === "tap" || chosen.def.type === "slide") chosen.done = true;
+      if (chosen.def.type === "tap") chosen.done = true;
+      if (chosen.def.type === "slide" && j === "miss") chosen.done = true;
     } else if (sub === "chord") {
       chosen.chord[lane] = j;
       if (chosen.def.type === "chord" && chosen.def.lanes.every((l) => chosen.chord[l] != null))
@@ -153,7 +156,7 @@ export class GameSession {
       chosen.tail = j;
       chosen.done = true;
     }
-    return { lane, judgment: j };
+    return { lane, judgment: j, deltaMs: delta };
   }
 
   /** Releasing a key only matters for holds (tail). */
@@ -168,7 +171,7 @@ export class GameSession {
       this.register(j, j === "miss" ? { lane, tMs: songMs } : undefined);
       n.tail = j;
       n.done = true;
-      return { lane, judgment: j };
+      return { lane, judgment: j, deltaMs: delta };
     }
     return null;
   }
@@ -186,14 +189,14 @@ export class GameSession {
           n.head = "miss";
           n.done = true;
           this.register("miss", { lane: d.lane, tMs: songMs });
-          applied.push({ lane: d.lane, judgment: "miss" });
+          applied.push({ lane: d.lane, judgment: "miss", deltaMs: songMs - n.tMs });
         }
       } else if (d.type === "chord") {
         for (const l of d.lanes) {
           if (n.chord[l] == null && songMs - n.tMs > good) {
             n.chord[l] = "miss";
             this.register("miss", { lane: l, tMs: songMs });
-            applied.push({ lane: l, judgment: "miss" });
+            applied.push({ lane: l, judgment: "miss", deltaMs: songMs - n.tMs });
           }
         }
         if (d.lanes.every((l) => n.chord[l] != null)) n.done = true;
@@ -204,24 +207,24 @@ export class GameSession {
           n.done = true;
           this.register("miss", { lane: d.lane, tMs: songMs });
           this.register("miss", { lane: d.lane, tMs: songMs });
-          applied.push({ lane: d.lane, judgment: "miss" });
+          applied.push({ lane: d.lane, judgment: "miss", deltaMs: songMs - n.tMs });
         } else if (n.head !== null && n.tail === null && songMs - n.endMs > good + 20) {
           n.tail = "miss";
           n.done = true;
           this.register("miss", { lane: d.lane, tMs: songMs });
-          applied.push({ lane: d.lane, judgment: "miss" });
+          applied.push({ lane: d.lane, judgment: "miss", deltaMs: songMs - n.endMs });
         }
       } else if (d.type === "slide") {
         if (n.head === null && songMs - n.tMs > good) {
           n.head = "miss";
           n.done = true;
           this.register("miss", { lane: d.lane, tMs: songMs });
-          applied.push({ lane: d.lane, judgment: "miss" });
+          applied.push({ lane: d.lane, judgment: "miss", deltaMs: songMs - n.tMs });
         } else if (n.head !== null && n.tail === null && songMs - n.endMs > good + 20) {
           n.tail = "miss";
           n.done = true;
           this.register("miss", { lane: d.to, tMs: songMs });
-          applied.push({ lane: d.to, judgment: "miss" });
+          applied.push({ lane: d.to, judgment: "miss", deltaMs: songMs - n.endMs });
         }
       }
     }
@@ -254,17 +257,18 @@ export class GameSession {
     }
     if (j === "miss" || j === "good") {
       this.combo = 0;
-      this.consecutiveMiss = 0; // a non-miss breaks the consecutive-miss streak
       if (this.mode === "arcade") {
         this.hp = Math.max(0, Math.min(100, this.hp + hpDelta(j)));
         if (this.hp <= 0) this.failed = true;
       }
-      if (this.mode === "practice" && j === "miss") {
+      if (j === "miss" && this.mode === "practice") {
         this.consecutiveMiss++;
         if (this.consecutiveMiss >= 3) {
           this.slowPending = true;
           this.consecutiveMiss = 0;
         }
+      } else {
+        this.consecutiveMiss = 0;
       }
     } else {
       this.combo++;

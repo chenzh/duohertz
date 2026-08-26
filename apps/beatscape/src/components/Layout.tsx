@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { Link, useRouter } from "../router";
 import { SCAPE_COPY } from "../constants/scape";
 import { firstPlayHref } from "../lib/firstPlay";
+import { loadDisplayName } from "../storage/settings";
 
 const APP_VERSION = "0.1.0";
 
@@ -15,12 +16,24 @@ function NavLink({ to, children, className = "" }: { to: string; children: React
   );
 }
 
+function playerInitials(): string {
+  const name = loadDisplayName().trim();
+  if (!name) return "BS";
+  const parts = name.split(/\s+/).filter(Boolean);
+  if (parts.length >= 2) return (parts[0]![0]! + parts[1]![0]!).toUpperCase();
+  return name.slice(0, 2).toUpperCase();
+}
+
 export function Layout({ children }: { children: ReactNode }) {
+  const initials = playerInitials();
   return (
     <div className="app-shell">
       <div className="bg-fx" aria-hidden />
       <header className="site-header">
         <Link to="/" className="logo">
+          <span className="logo-mark" aria-hidden>
+            ◆
+          </span>
           BeatScape
         </Link>
         <nav className="site-nav">
@@ -28,8 +41,8 @@ export function Layout({ children }: { children: ReactNode }) {
           <NavLink to="/leaderboard">Local Board</NavLink>
           <NavLink to="/settings">Settings</NavLink>
         </nav>
-        <div className="header-avatar" title="Guest player" aria-hidden>
-          BS
+        <div className="header-avatar" title={loadDisplayName()} aria-hidden>
+          {initials}
         </div>
       </header>
       <main className="site-main">{children}</main>

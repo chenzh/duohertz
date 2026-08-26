@@ -28,53 +28,70 @@ export function TrackPage() {
     });
   }, [id]);
 
-  if (!track) return <p className="loading">{SCAPE_COPY.weakNetwork}</p>;
+  if (!track) {
+    return (
+      <div className="loading-state">
+        <div className="loading-spinner" aria-hidden />
+        <p>{SCAPE_COPY.weakNetwork}</p>
+      </div>
+    );
+  }
 
   const bio = track.artist_bio ?? artistBio(track.artist);
 
   return (
     <section className="track-detail">
-      <img className="cover-lg" src={assetUrl(track.cover)} alt="" />
-      <div>
-        <DistrictBadge district={track.district} />
-        <h1>{track.title}</h1>
-        <p className="artist">{track.artist}</p>
-        {bio && <p className="artist-bio">{bio}</p>}
-        <p className="meta">
-          {track.genre} · {track.bpm} BPM · {track.duration_sec}s clip
-        </p>
-        <p className="rights">{SCAPE_COPY.rights}</p>
-        <TrackAudioPreview trackId={track.track_id} audioPath={track.audio} title={track.title} />
-        <StreamFullCTA track={track} />
-        <div className="pickers">
-          <label>
-            Tier
-            <select value={tier} onChange={(e) => setTier(e.target.value as ChartTier)}>
-              <option value="easy">Easy</option>
-              <option value="standard">Standard</option>
-              <option value="hard">Hard</option>
-            </select>
-          </label>
-          <label>
-            Mode
-            <select value={mode} onChange={(e) => setMode(e.target.value as PlayMode)}>
-              <option value="arcade">Arcade</option>
-              <option value="casual">Casual</option>
-              <option value="practice">Practice</option>
-            </select>
-          </label>
+      <Link to="/library" className="back-link">
+        Library
+      </Link>
+
+      <div className="track-hero">
+        <div className="track-hero-cover">
+          <img src={assetUrl(track.cover)} alt="" />
         </div>
-        <div className="cta-row">
-          <Link className="btn primary" to={`/play/${track.track_id}?tier=${tier}&mode=${mode}`}>
-            {SCAPE_COPY.play}
-          </Link>
-          <button
-            type="button"
-            className="btn"
-            onClick={() => setFav(toggleFavorite(track.track_id).includes(track.track_id))}
-          >
-            {fav ? "★ Favorited" : "☆ Favorite"}
-          </button>
+        <div className="track-hero-body">
+          <DistrictBadge district={track.district} />
+          <h1>{track.title}</h1>
+          <p className="artist">{track.artist}</p>
+          {bio && <p className="artist-bio">{bio}</p>}
+          <p className="meta">
+            {track.genre} · {track.bpm} BPM · {track.duration_sec}s clip
+          </p>
+          <p className="rights">{SCAPE_COPY.rights}</p>
+          <TrackAudioPreview trackId={track.track_id} audioPath={track.audio} title={track.title} />
+          <StreamFullCTA track={track} />
+
+          <div className="track-pickers">
+            <label className="picker-pill">
+              Tier
+              <select value={tier} onChange={(e) => setTier(e.target.value as ChartTier)}>
+                <option value="easy">Easy</option>
+                <option value="standard">Standard</option>
+                <option value="hard">Hard</option>
+              </select>
+            </label>
+            <label className="picker-pill">
+              Mode
+              <select value={mode} onChange={(e) => setMode(e.target.value as PlayMode)}>
+                <option value="arcade">Arcade</option>
+                <option value="casual">Casual</option>
+                <option value="practice">Practice</option>
+              </select>
+            </label>
+          </div>
+
+          <div className="cta-row">
+            <Link className="btn primary" to={`/play/${track.track_id}?tier=${tier}&mode=${mode}`}>
+              {SCAPE_COPY.play}
+            </Link>
+            <button
+              type="button"
+              className={`btn ${fav ? "primary" : "ghost"}`}
+              onClick={() => setFav(toggleFavorite(track.track_id).includes(track.track_id))}
+            >
+              {fav ? "★ Favorited" : "☆ Favorite"}
+            </button>
+          </div>
         </div>
       </div>
     </section>

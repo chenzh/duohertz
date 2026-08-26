@@ -23,6 +23,18 @@ export function noteScreenY(
   approach: number,
 ): number {
   const spawnTime = noteTimeSec - approach;
-  const progress = (songTimeSec - spawnTime) / approach;
+  let progress = (songTimeSec - spawnTime) / approach;
+  progress = Math.max(0, Math.min(1, progress));
+  // Visual ease-in near receptor — timing unchanged, only scroll feel.
+  if (progress > 0.88) {
+    const t = (progress - 0.88) / 0.12;
+    progress = 0.88 + (1 - (1 - t) ** 3) * 0.12;
+  }
   return progress * receptorY;
+}
+
+/** 0 at spawn, 1 when note sits on the receptor — drives size/brightness. */
+export function noteProximityFactor(noteY: number, receptorY: number, bandPx = 64): number {
+  const dist = Math.abs(noteY - receptorY);
+  return Math.max(0, 1 - dist / bandPx);
 }

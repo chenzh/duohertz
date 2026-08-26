@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import type { ChartJSON, PlayMode, PlayResult } from "../types/chart";
 import { Conductor, unlockAudio } from "../audio/playback";
-import { playBreak, playCountdownTick, playHit, playKeyTick } from "../audio/hitsounds";
+import { playBreak, playCountdownTick, playHit, playKeyTick, setSfxVolume } from "../audio/hitsounds";
 import { GameSession, type JudgeFx } from "../engine/playState";
-import { approachSec, noteScreenY } from "../engine/geometry";
+import { approachSec, noteProximityFactor, noteScreenY } from "../engine/geometry";
+import { comboMultiplier, judgmentScore } from "../engine/judge";
 import { receptorYFromGeometry, laneFromClientX, TouchLaneTracker } from "../input/touchInput";
 import { loadKeys, loadOffsetMs, loadSettings } from "../storage/settings";
 
@@ -28,7 +29,14 @@ type Props = {
   onFinish: (result: PlayResult) => void;
 };
 
-type Fx = { lane: number; judgment: JudgeFx["judgment"]; born: number };
+type Fx = { lane: number; judgment: JudgeFx["judgment"]; born: number; deltaMs: number };
+type ScorePop = { x: number; y: number; text: string; born: number; color: string };
+
+function fancyFxOn(settings: { fancyFx: boolean }): boolean {
+  if (!settings.fancyFx) return false;
+  if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return false;
+  return true;
+}
 
 export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinish }: Props) {
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -52,6 +60,8 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
   const particlesRef = useRef<Array<{ x: number; y: number; vx: number; vy: number; born: number; life: number; r: number; g: number; b: number; size: number }>>([]);
   const shakeRef = useRef<{ mag: number; until: number }>({ mag: 0, until: 0 });
   const milestoneRef = useRef<{ text: string; born: number } | null>(null);
+  const scorePopsRef = useRef<ScorePop[]>([]);
+  const comboBreakRef = useRef(0);
   const prevComboRef = useRef(0);
   const onFinishRef = useRef(onFinish);
   onFinishRef.current = onFinish;
@@ -85,6 +95,8 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
     pressedRef.current.clear();
 
     const conductor = new Conductor();
+    conductor.setMusicVolume(settings.musicVolume);
+    setSfxVolume(settings.sfxVolume);
     conductorRef.current = conductor;
     const session = new GameSession(chart, mode);
     sessionRef.current = session;
@@ -115,7 +127,7 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
       conductorRef.current = null;
       sessionRef.current = null;
     };
-  }, [chart, mode, audioUrl, casualSpeed, settings.scrollBias]);
+  }, [chart, mode, audioUrl, casualSpeed, settings.scrollBias, settings.musicVolume, settings.sfxVolume]);
 
   // Reset state when the chart changes.
   useEffect(() => {
@@ -159,27 +171,36 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
     const receptorY = receptorYFromGeometry(h, Math.min(w, h));
     const laneW = w / 4;
     const cx = (lane + 0.5) * laneW;
-    const [r, g, b] = judgment === "miss" ? [254, 44, 85] : LANE_RGB[lane];
-    const count =
-      judgment === "perfect" ? 18 : judgment === "great" ? 12 : judgment === "good" ? 6 : 6;
-    for (let i = 0; i < count; i++) {
-      const ang = Math.random() * Math.PI * 2;
-      const sp = 2 + Math.random() * 5;
-      particlesRef.current.push({
-        x: cx,
-        y: receptorY,
-        vx: Math.cos(ang) * sp,
-        vy: Math.sin(ang) * sp - 2.4,
-        born: performance.now(),
-        life: 380 + Math.random() * 260,
-        r,
-        g,
-        b,
-        size: 1.6 + Math.random() * 2.4,
-      });
+    const isPerfect = judgment === "perfect";
+    const [r, g, b] =
+      judgment === "miss"
+        ? [254, 44, 85]
+        : isPerfect
+          ? [255, 214, 10]
+          : LANE_RGB[lane];
+    if (fancyFxOn(settings)) {
+      const count =
+        judgment === "perfect" ? 22 : judgment === "great" ? 14 : judgment === "good" ? 8 : 8;
+      for (let i = 0; i < count; i++) {
+        const ang = Math.random() * Math.PI * 2;
+        const sp = 2 + Math.random() * (isPerfect ? 6.5 : 5);
+        particlesRef.current.push({
+          x: cx,
+          y: receptorY,
+          vx: Math.cos(ang) * sp,
+          vy: Math.sin(ang) * sp - 2.4,
+          born: performance.now(),
+          life: 380 + Math.random() * 260,
+          r,
+          g,
+          b,
+          size: 1.6 + Math.random() * (isPerfect ? 3.2 : 2.4),
+        });
+      }
+      const mag =
+        judgment === "perfect" ? 6 : judgment === "great" ? 3.5 : judgment === "good" ? 2 : 7;
+      shakeRef.current = { mag, until: performance.now() + 150 };
     }
-    const mag = judgment === "perfect" ? 5 : judgment === "great" ? 3.5 : judgment === "good" ? 2 : 7;
-    shakeRef.current = { mag, until: performance.now() + 150 };
   };
 
   // Auto-pause when the tab is hidden; user resumes on return (PRD §4.11).
@@ -208,11 +229,18 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
     // dense charts. The Douyin neon look is baked into the sprite.
     spritesRef.current = LANE_COLORS.map((c) => makeNoteSprite(c, 120));
 
-    const drawNote = (lane: number, x: number, y: number, size: number, alpha: number) => {
+    const drawNote = (lane: number, x: number, y: number, size: number, alpha: number, receptorY: number) => {
       const sp = spritesRef.current[lane];
       if (!sp) return;
-      ctx2d.globalAlpha = alpha;
-      ctx2d.drawImage(sp, x - size / 2, y - size / 2, size, size);
+      const prox = noteProximityFactor(y, receptorY);
+      const drawSize = size * (1 + prox * 0.14);
+      const drawAlpha = Math.min(1, alpha * (0.78 + prox * 0.22));
+      ctx2d.globalAlpha = drawAlpha;
+      ctx2d.drawImage(sp, x - drawSize / 2, y - drawSize / 2, drawSize, drawSize);
+      if (prox > 0.55 && fancyFxOn(settings)) {
+        ctx2d.globalAlpha = prox * 0.35;
+        ctx2d.drawImage(sp, x - drawSize * 0.62, y - drawSize * 0.62, drawSize * 1.24, drawSize * 1.24);
+      }
       ctx2d.globalAlpha = 1;
     };
 
@@ -242,6 +270,15 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
       const nowPerf = performance.now();
 
       ctx2d.clearRect(0, 0, w, h);
+
+      const beatPhase = ((songSec * chart.bpm) / 60) % 1;
+      const beatPulse = 0.12 + 0.18 * Math.max(0, Math.cos(beatPhase * Math.PI * 2));
+      const bgGrad = ctx2d.createRadialGradient(w / 2, h, 0, w / 2, h, h * 0.95);
+      bgGrad.addColorStop(0, `rgba(61,220,255,${0.05 + beatPulse * 0.07})`);
+      bgGrad.addColorStop(0.45, `rgba(139,92,246,${0.02 + beatPulse * 0.04})`);
+      bgGrad.addColorStop(1, "rgba(11,15,20,0)");
+      ctx2d.fillStyle = bgGrad;
+      ctx2d.fillRect(0, 0, w, h);
 
       // screen shake: decaying random offset applied to the gameplay layer
       let shx = 0;
@@ -280,12 +317,12 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
         ctx2d.stroke();
       }
 
-      // receptor line (neon)
+      // receptor line (neon) + BPM beat pulse
       ctx2d.save();
       ctx2d.shadowColor = "#8B5CF6";
-      ctx2d.shadowBlur = 10;
-      ctx2d.strokeStyle = "rgba(255,255,255,0.92)";
-      ctx2d.lineWidth = 2;
+      ctx2d.shadowBlur = 10 + beatPulse * 18;
+      ctx2d.strokeStyle = `rgba(255,255,255,${0.82 + beatPulse * 0.18})`;
+      ctx2d.lineWidth = 2 + beatPulse * 1.5;
       ctx2d.beginPath();
       ctx2d.moveTo(0, receptorY);
       ctx2d.lineTo(w, receptorY);
@@ -293,8 +330,11 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
       ctx2d.restore();
       for (let i = 0; i < 4; i++) {
         const cx = (i + 0.5) * laneW;
+        const laneBeat = pressedRef.current.has(i) ? 1 : beatPulse * 0.55;
         ctx2d.fillStyle = LANE_COLORS[i];
-        ctx2d.fillRect(cx - laneW * 0.18, receptorY - 2, laneW * 0.36, 4);
+        ctx2d.globalAlpha = 0.65 + laneBeat * 0.35;
+        ctx2d.fillRect(cx - laneW * 0.18, receptorY - 2, laneW * 0.36, 4 + laneBeat * 3);
+        ctx2d.globalAlpha = 1;
       }
 
       // notes
@@ -306,51 +346,69 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
         }
         if (d.type === "tap") {
           if (n.done) continue;
-          drawNote(d.lane, (d.lane + 0.5) * laneW, yHead, noteW, 1);
+          drawNote(d.lane, (d.lane + 0.5) * laneW, yHead, noteW, 1, receptorY);
         } else if (d.type === "hold") {
           if (n.done) continue;
           const yTail = noteScreenY(n.endMs / 1000, songSec, receptorY, approach);
           const top = Math.min(yHead, yTail);
           const bodyH = Math.abs(yTail - yHead);
-          ctx2d.fillStyle = `rgba(${LANE_RGB[d.lane][0]},${LANE_RGB[d.lane][1]},${LANE_RGB[d.lane][2]},0.45)`;
+          const holding = pressedRef.current.has(d.lane) && n.head !== null && n.tail === null;
+          ctx2d.fillStyle = `rgba(${LANE_RGB[d.lane][0]},${LANE_RGB[d.lane][1]},${LANE_RGB[d.lane][2]},${holding ? 0.62 : 0.45})`;
           ctx2d.fillRect((d.lane + 0.5) * laneW - noteW * 0.22, top, noteW * 0.44, bodyH);
+          if (holding) {
+            ctx2d.strokeStyle = `rgba(${LANE_RGB[d.lane][0]},${LANE_RGB[d.lane][1]},${LANE_RGB[d.lane][2]},0.85)`;
+            ctx2d.lineWidth = 2;
+            ctx2d.strokeRect((d.lane + 0.5) * laneW - noteW * 0.28, top, noteW * 0.56, bodyH);
+          }
           const headAlpha = n.head ? 0.35 : 1;
-          drawNote(d.lane, (d.lane + 0.5) * laneW, yHead, noteW, headAlpha);
+          drawNote(d.lane, (d.lane + 0.5) * laneW, yHead, noteW, headAlpha, receptorY);
         } else if (d.type === "chord") {
           if (n.done) continue;
           for (const l of d.lanes) {
             const a = n.chord[l] != null ? 0.35 : 1;
-            drawNote(l, (l + 0.5) * laneW, yHead, noteW, a);
+            drawNote(l, (l + 0.5) * laneW, yHead, noteW, a, receptorY);
           }
         } else if (d.type === "slide") {
           if (n.done) continue;
-          drawNote(d.lane, (d.lane + 0.5) * laneW, yHead, noteW, 1);
+          const headDone = n.head !== null;
+          drawNote(d.lane, (d.lane + 0.5) * laneW, yHead, noteW, headDone ? 0.35 : 1, receptorY);
           const yTail = noteScreenY(n.endMs / 1000, songSec, receptorY, approach);
+          const slideAlpha = headDone ? 0.95 : 0.55;
           ctx2d.strokeStyle = LANE_COLORS[d.to];
+          ctx2d.globalAlpha = slideAlpha;
+          ctx2d.lineWidth = headDone ? 3 : 2;
           ctx2d.setLineDash([6, 6]);
           ctx2d.beginPath();
           ctx2d.moveTo((d.lane + 0.5) * laneW, yHead);
           ctx2d.lineTo((d.to + 0.5) * laneW, yTail);
           ctx2d.stroke();
           ctx2d.setLineDash([]);
+          ctx2d.globalAlpha = 1;
+          if (headDone && n.tail === null) {
+            drawNote(d.to, (d.to + 0.5) * laneW, yTail, noteW * 0.92, 1, receptorY);
+          }
         }
       }
 
       // hit particles (physics: gravity + fade)
-      particlesRef.current = particlesRef.current.filter((p) => nowPerf - p.born < p.life);
-      for (const p of particlesRef.current) {
-        const age = (nowPerf - p.born) / p.life;
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vy += 0.14;
-        p.vx *= 0.985;
-        ctx2d.globalAlpha = Math.max(0, 1 - age);
-        ctx2d.fillStyle = `rgb(${p.r},${p.g},${p.b})`;
-        ctx2d.beginPath();
-        ctx2d.arc(p.x, p.y, p.size * (1 - age * 0.5), 0, Math.PI * 2);
-        ctx2d.fill();
+      if (fancyFxOn(settings)) {
+        particlesRef.current = particlesRef.current.filter((p) => nowPerf - p.born < p.life);
+        for (const p of particlesRef.current) {
+          const age = (nowPerf - p.born) / p.life;
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.14;
+          p.vx *= 0.985;
+          ctx2d.globalAlpha = Math.max(0, 1 - age);
+          ctx2d.fillStyle = `rgb(${p.r},${p.g},${p.b})`;
+          ctx2d.beginPath();
+          ctx2d.arc(p.x, p.y, p.size * (1 - age * 0.5), 0, Math.PI * 2);
+          ctx2d.fill();
+        }
+        ctx2d.globalAlpha = 1;
+      } else {
+        particlesRef.current = [];
       }
-      ctx2d.globalAlpha = 1;
 
       // FX flashes
       fxRef.current = fxRef.current.filter((f) => nowPerf - f.born < 360);
@@ -370,23 +428,49 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
         if (label) {
           const pop = age < 0.18 ? 0.5 + (age / 0.18) * 0.7 : 1.2 - (age - 0.18) * 0.24;
           const isP = f.judgment === "perfect";
+          const skewX = Math.max(-18, Math.min(18, f.deltaMs * 0.35));
           ctx2d.save();
           ctx2d.globalAlpha = Math.max(0, 1 - age * age);
-          ctx2d.translate(cx, receptorY - 46 - age * 22);
+          ctx2d.translate(cx + skewX, receptorY - 46 - age * 22);
           ctx2d.scale(pop, pop);
           ctx2d.font = `800 ${isP ? 19 : 15}px 'Sora', sans-serif`;
           ctx2d.textAlign = "center";
           ctx2d.fillStyle = JUDGE_COLOR[f.judgment] || "#FFFFFF";
           if (isP) {
-            ctx2d.shadowColor = "#8B5CF6";
-            ctx2d.shadowBlur = 14;
+            ctx2d.shadowColor = "#FFD60A";
+            ctx2d.shadowBlur = 16;
           }
           ctx2d.fillText(label, 0, 0);
+          if (f.judgment !== "miss" && Math.abs(f.deltaMs) >= 8) {
+            ctx2d.font = "600 10px 'IBM Plex Sans', sans-serif";
+            ctx2d.fillStyle = "rgba(255,255,255,0.72)";
+            ctx2d.fillText(f.deltaMs < 0 ? "EARLY" : "LATE", 0, 14);
+          }
           ctx2d.restore();
         }
       }
 
       ctx2d.restore(); // end gameplay (shaken) layer — HUD stays stable
+
+      // combo-break vignette (HUD layer, stable)
+      if (nowPerf < comboBreakRef.current) {
+        const t = (comboBreakRef.current - nowPerf) / 320;
+        ctx2d.fillStyle = `rgba(255,92,122,${0.28 * t})`;
+        ctx2d.fillRect(0, 0, w, h);
+      }
+
+      // floating score pops
+      scorePopsRef.current = scorePopsRef.current.filter((p) => nowPerf - p.born < 520);
+      for (const p of scorePopsRef.current) {
+        const age = (nowPerf - p.born) / 520;
+        ctx2d.save();
+        ctx2d.globalAlpha = Math.max(0, 1 - age);
+        ctx2d.fillStyle = p.color;
+        ctx2d.font = "700 14px 'IBM Plex Sans', sans-serif";
+        ctx2d.textAlign = "center";
+        ctx2d.fillText(p.text, p.x, p.y - age * 36);
+        ctx2d.restore();
+      }
 
       // HUD
       ctx2d.fillStyle = "#FFFFFF";
@@ -429,7 +513,7 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
       }
 
       // combo milestone flash (center, big, quick)
-      if (milestoneRef.current) {
+      if (fancyFxOn(settings) && milestoneRef.current) {
         const age = (nowPerf - milestoneRef.current.born) / 700;
         if (age >= 1) {
           milestoneRef.current = null;
@@ -481,16 +565,21 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
         const eff = st - offsetMsRef.current;
         const misses = session.tick(eff);
         for (const m of misses) {
-          addFx(m.lane, m.judgment);
+          addFx(m.lane, m.judgment, m.deltaMs);
           if (settings.hitsound) playHit(m.judgment);
         }
         if (session.consumeSlowTrigger()) conductor.setRate(0.5, 5000);
 
         // combo-break sound + combo milestone celebration
-        if (session.combo === 0 && lastComboRef.current > 0 && settings.hitsound) playBreak();
+        if (session.combo === 0 && lastComboRef.current > 0) {
+          if (settings.hitsound) playBreak();
+          comboBreakRef.current = performance.now() + 320;
+        }
         if (session.combo > prevComboRef.current && COMBO_MILESTONES.includes(session.combo)) {
-          milestoneRef.current = { text: `${session.combo} COMBO!`, born: performance.now() };
-          shakeRef.current = { mag: 9, until: performance.now() + 240 };
+          if (fancyFxOn(settings)) {
+            milestoneRef.current = { text: `${session.combo} COMBO!`, born: performance.now() };
+            shakeRef.current = { mag: 9, until: performance.now() + 240 };
+          }
         }
         prevComboRef.current = session.combo;
         lastComboRef.current = session.combo;
@@ -526,9 +615,24 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
       raf = requestAnimationFrame(loop);
     };
 
-    const addFx = (lane: number, judgment: JudgeFx["judgment"]) => {
-      fxRef.current.push({ lane, judgment, born: performance.now() });
+    const addFx = (lane: number, judgment: JudgeFx["judgment"], deltaMs = 0) => {
+      fxRef.current.push({ lane, judgment, born: performance.now(), deltaMs });
       spawnHitFx(lane, judgment);
+      const session = sessionRef.current;
+      const { w } = dimRef.current;
+      if (session && w && judgment !== "miss" && judgment !== "good") {
+        const gain = judgmentScore(judgment) * comboMultiplier(session.combo);
+        if (gain > 0) {
+          const receptorY = receptorYFromGeometry(dimRef.current.h, Math.min(w, dimRef.current.h));
+          scorePopsRef.current.push({
+            x: (lane + 0.5) * (w / 4),
+            y: receptorY - 78,
+            text: `+${gain}`,
+            born: performance.now(),
+            color: JUDGE_COLOR[judgment] ?? "#FFFFFF",
+          });
+        }
+      }
     };
 
     raf = requestAnimationFrame(loop);
@@ -536,7 +640,7 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
       cancelAnimationFrame(raf);
       ro.disconnect();
     };
-  }, [mode, settings.hitsound, keys]);
+  }, [mode, settings.hitsound, settings.fancyFx, keys, chart.bpm]);
 
   const handlePress = (lane: number) => {
     const conductor = conductorRef.current;
@@ -548,7 +652,7 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
     const eff = conductor.songTimeMs() - offsetMsRef.current;
     const fx = session.press(lane, eff);
     if (fx) {
-      fxRef.current.push({ lane: fx.lane, judgment: fx.judgment, born: performance.now() });
+      fxRef.current.push({ lane: fx.lane, judgment: fx.judgment, born: performance.now(), deltaMs: fx.deltaMs });
       spawnHitFx(fx.lane, fx.judgment);
       if (settings.hitsound) playHit(fx.judgment);
     } else if (settings.hitsound) {
@@ -564,7 +668,7 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
     const eff = conductor.songTimeMs() - offsetMsRef.current;
     const fx = session.release(lane, eff);
     if (fx) {
-      fxRef.current.push({ lane: fx.lane, judgment: fx.judgment, born: performance.now() });
+      fxRef.current.push({ lane: fx.lane, judgment: fx.judgment, born: performance.now(), deltaMs: fx.deltaMs });
       spawnHitFx(fx.lane, fx.judgment);
       if (settings.hitsound) playHit(fx.judgment);
     }
@@ -604,6 +708,18 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
     pointerLane.current.set(e.pointerId, lane);
     handlePress(lane);
   };
+  const onPointerMove = (e: ReactPointerEvent) => {
+    const wrap = wrapRef.current;
+    if (!wrap || !pointerLane.current.has(e.pointerId)) return;
+    const rect = wrap.getBoundingClientRect();
+    const lane = laneFromClientX(e.clientX - rect.left, rect);
+    if (lane == null) return;
+    const prev = pointerLane.current.get(e.pointerId);
+    if (prev === lane) return;
+    if (prev != null) handleRelease(prev);
+    pointerLane.current.set(e.pointerId, lane);
+    handlePress(lane);
+  };
   const onPointerUp = (e: ReactPointerEvent) => {
     const lane = pointerLane.current.get(e.pointerId);
     if (lane != null) {
@@ -618,6 +734,7 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
         ref={canvasRef}
         className="play-canvas"
         onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
         onPointerCancel={onPointerUp}
       />

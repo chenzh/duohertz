@@ -72,7 +72,14 @@ export function PlayPage() {
     );
   }
 
-  if (!track || !chart) return <p className="loading">Loading chart…</p>;
+  if (!track || !chart) {
+    return (
+      <div className="loading-state">
+        <div className="loading-spinner" aria-hidden />
+        <p>Loading chart…</p>
+      </div>
+    );
+  }
 
   return (
     <section className="play-page">

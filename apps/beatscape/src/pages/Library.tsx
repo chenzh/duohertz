@@ -33,8 +33,12 @@ export function LibraryPage() {
 
   return (
     <section className="library">
-      <h1>Library</h1>
-      <p className="tagline">Search the Scape — filter by genre, district, or favorites.</p>
+      <header className="page-header">
+        <h1>Library</h1>
+        <p className="tagline">Search the Scape — filter by genre, district, or favorites.</p>
+        {tracks.length > 0 && <span className="page-count">{filtered.length} of {tracks.length} tracks</span>}
+      </header>
+
       <div className="showcase-chips">
         <span className="chip">Showcase charts:</span>
         {SHOWCASE_TRACK_IDS.map((id) => {
@@ -47,9 +51,10 @@ export function LibraryPage() {
           );
         })}
       </div>
-      <div className="filters">
-        <input placeholder="Search tracks…" value={q} onChange={(e) => setQ(e.target.value)} />
-        <select value={genre} onChange={(e) => setGenre(e.target.value)}>
+
+      <div className="filters-bar">
+        <input placeholder="Search tracks…" value={q} onChange={(e) => setQ(e.target.value)} aria-label="Search" />
+        <select value={genre} onChange={(e) => setGenre(e.target.value)} aria-label="Genre">
           <option value="">All genres</option>
           {genres.map((g) => (
             <option key={g} value={g}>
@@ -57,7 +62,7 @@ export function LibraryPage() {
             </option>
           ))}
         </select>
-        <select value={district} onChange={(e) => setDistrict(e.target.value)}>
+        <select value={district} onChange={(e) => setDistrict(e.target.value)} aria-label="District">
           <option value="">All districts</option>
           {districts.map((d) => (
             <option key={d} value={d}>
@@ -65,10 +70,12 @@ export function LibraryPage() {
             </option>
           ))}
         </select>
-        <label>
-          <input type="checkbox" checked={favOnly} onChange={(e) => setFavOnly(e.target.checked)} /> Favorites
+        <label className="filter-toggle">
+          <input type="checkbox" checked={favOnly} onChange={(e) => setFavOnly(e.target.checked)} />
+          Favorites only
         </label>
       </div>
+
       <div className="track-grid">
         {filtered.length === 0 && (
           <p className="library-empty">
@@ -81,7 +88,7 @@ export function LibraryPage() {
               className="track-card-cover-wrap"
               style={{ ["--district-color" as string]: districtColor(t.district) }}
             >
-              <img src={assetUrl(t.cover)} alt="" />
+              <img src={assetUrl(t.cover)} alt="" loading="lazy" />
             </div>
             <div>
               <strong>{t.title}</strong>

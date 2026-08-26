@@ -63,6 +63,8 @@ export function ResultsPage() {
     { label: "Miss", n: counts.miss, color: JUDGE_COLORS.miss },
   ];
   const missEvents = run.missEvents ?? [];
+  const chartDurationMs =
+    chart?.notes.reduce((max, n) => Math.max(max, ("end" in n && n.end ? n.end : n.t) * 1000), 0) ?? 0;
 
   async function onCopyLink() {
     if (!run) return;
@@ -99,10 +101,23 @@ export function ResultsPage() {
           {run.ap && <span className="badge ap">AP</span>}
           {isRecord && <span className="badge record">NEW RECORD</span>}
         </div>
-        <h1>
-          {run.score.toLocaleString()} pts · {run.accuracy}% Acc
-        </h1>
-        <p>Max Combo {run.maxCombo}x</p>
+        <h1>{run.title}</h1>
+        <p className="tagline">{run.artist}</p>
+      </div>
+
+      <div className="results-stats">
+        <div className="stat-pill">
+          <span>Score</span>
+          <strong>{run.score.toLocaleString()}</strong>
+        </div>
+        <div className="stat-pill">
+          <span>Accuracy</span>
+          <strong>{run.accuracy}%</strong>
+        </div>
+        <div className="stat-pill">
+          <span>Max Combo</span>
+          <strong>{run.maxCombo}×</strong>
+        </div>
       </div>
 
       <div className="judge-bars">
@@ -120,7 +135,7 @@ export function ResultsPage() {
         ))}
       </div>
 
-      <MissReplayPanel missEvents={missEvents} sections={chart?.sections} />
+      <MissReplayPanel missEvents={missEvents} sections={chart?.sections} durationMs={chartDurationMs} />
 
       <p className="results-meta">
         {run.title} · {run.artist}

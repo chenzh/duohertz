@@ -37,6 +37,11 @@ export class Conductor {
     this.gain.connect(this.ctx.destination);
   }
 
+  /** Set music bus gain (0–1, PRD §6.0.13 default 0.70). */
+  setMusicVolume(v: number): void {
+    this.gain.gain.value = Math.max(0, Math.min(1, v));
+  }
+
   get durationMs(): number {
     return this._durationMs;
   }
