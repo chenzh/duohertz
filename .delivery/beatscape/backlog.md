@@ -2,25 +2,21 @@
 
 仅 **agent-safe**；推理/Gateway 见 `human-only-queue.md`。
 
-### TICKET-B01 [agent-safe] 补齐 Play 页 SEO title/description
+### ~~TICKET-B01~~ [done] Play 页 SEO title/description
 
-- **What:** `apps/beatscape` 路由级 metadata 或 `index.html`  
-- **AC:** AC-B2、AC-B3  
+- **Done:** GitHub #6 · PR #12 merged
 
-### TICKET-B02 [agent-safe] Settings 页隐私链接检查
+### ~~TICKET-B02~~ [in PR] Settings 页隐私链接
 
-- **What:** 确保 Settings 含 Privacy/Terms 外链或路由  
-- **AC:** AC-B2  
+- **PR:** https://github.com/chenzh/MusicSaas/pull/14 （Closes #9）
 
-### TICKET-B03 [agent-safe] 修复/补全 playState 单测回归
+### ~~TICKET-B03~~ [done / N/A] playState 单测回归
 
-- **What:** `apps/beatscape/src/engine/playState.test.ts` 若 CI 红则修  
-- **AC:** AC-B2、AC-B4  
+- **Done:** #7 / #10 CLOSED；重复 #8 已关
 
-### TICKET-B04 [agent-safe] Leaderboard 空状态文案 i18n-ready
+### ~~TICKET-B04~~ [done] Leaderboard 空状态文案 i18n-ready
 
-- **What:** 空列表英文文案 + 预留 i18n 结构（不必全量翻译）  
-- **AC:** AC-B2  
+- **Done:** GitHub #11 · PR #13 merged
 
 ### TICKET-B05 [agent-assisted] Reddit 启动页 CTA 文案（docs/BEATSCAPE-REDDIT-LAUNCH.md）
 
