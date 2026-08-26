@@ -57,11 +57,11 @@ export function CalibrationPage() {
 
   return (
     <section className="calibrate">
-      <h1>Tap with the pulse</h1>
-      <p>8 beats @ 120 BPM · use D F J K · median offset saved to bs_offset_ms</p>
+      <h1>Tap the beat</h1>
+      <p className="tagline">Press D F J K when each lane flashes — one step, 8 beats.</p>
       {phase === "intro" && (
         <button type="button" className="btn primary" onClick={() => setPhase("playing")}>
-          Start calibration
+          Start
         </button>
       )}
       {phase === "playing" && (
@@ -78,7 +78,7 @@ export function CalibrationPage() {
         <div>
           <p>Offset ≈ {Math.round(median)} ms (clamped ±200)</p>
           <button type="button" className="btn primary" onClick={() => finish(Math.round(median))}>
-            Save & enter the Scape
+            Save & play Glass Horizon
           </button>
         </div>
       )}

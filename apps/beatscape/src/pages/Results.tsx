@@ -23,6 +23,7 @@ export function ResultsPage() {
   }
 
   const pb = getPersonalBest(run.track_id, run.tier, run.mode);
+  const casualClear = run.mode === "casual";
 
   async function onCopyLink() {
     const url = shareResultsUrl();
@@ -42,7 +43,13 @@ export function ResultsPage() {
       <div className="badges">
         {run.fc && <span className="badge">FC</span>}
         {run.ap && <span className="badge ap">AP</span>}
+        {casualClear && <span className="badge beginner">Clear</span>}
       </div>
+      {casualClear && (
+        <p className="encourage">
+          You cleared the Scape — every beat still counts. No HP pressure in Casual; keep the pulse alive.
+        </p>
+      )}
       <h1>
         {run.score.toLocaleString()} pts · {run.accuracy}% Acc
       </h1>
@@ -66,6 +73,9 @@ export function ResultsPage() {
         <button type="button" className="btn" onClick={onCopyLink}>
           {copied ? "Copied!" : "Copy link"}
         </button>
+        <Link className="btn" to={`/play/${run.track_id}?tier=easy&mode=practice`}>
+          Practice
+        </Link>
         <Link className="btn" to="/library">
           Library
         </Link>

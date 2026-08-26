@@ -4,6 +4,8 @@ import { assetUrl, loadCatalog } from "../catalog/loadCatalog";
 import type { CatalogTrack } from "../types/catalog";
 import { loadFavorites } from "../storage/settings";
 
+const BEGINNER_TAG = "Beginner Pick";
+
 export function LibraryPage() {
   const [tracks, setTracks] = useState<CatalogTrack[]>([]);
   const [q, setQ] = useState("");
@@ -29,6 +31,7 @@ export function LibraryPage() {
   return (
     <section className="library">
       <h1>Library</h1>
+      <p className="tagline">Default path: Casual · Easy · no HP fail</p>
       <div className="filters">
         <input placeholder="Search…" value={q} onChange={(e) => setQ(e.target.value)} />
         <select value={genre} onChange={(e) => setGenre(e.target.value)}>
@@ -49,6 +52,7 @@ export function LibraryPage() {
             <img src={assetUrl(t.cover)} alt="" />
             <div>
               <strong>{t.title}</strong>
+              {t.tags.includes(BEGINNER_TAG) && <span className="badge beginner">Beginner Pick</span>}
               <span>
                 {t.artist} · {t.bpm} BPM · {t.genre}
               </span>

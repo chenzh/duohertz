@@ -4,7 +4,7 @@
   "format": 1,
   "bpm": 88,
   "audio_offset_ms": 0,
-  "ar": 34,
+  "ar": 32,
   "total_notes": 189,
   "sections": [
     {
@@ -1037,133 +1037,133 @@
       "lane": 0
     },
     {
-      "id": "n167",
+      "id": "n168",
       "t": 59.318,
       "type": "tap",
       "lane": 1
     },
     {
-      "id": "n168",
+      "id": "n170",
       "t": 60.0,
       "type": "tap",
       "lane": 0
     },
     {
-      "id": "n169",
+      "id": "n172",
       "t": 60.682,
       "type": "tap",
       "lane": 3
     },
     {
-      "id": "n170",
+      "id": "n174",
       "t": 61.364,
       "type": "tap",
       "lane": 0
     },
     {
-      "id": "n171",
+      "id": "n176",
       "t": 62.045,
       "type": "tap",
       "lane": 1
     },
     {
-      "id": "n172",
+      "id": "n178",
       "t": 62.727,
       "type": "tap",
       "lane": 0
     },
     {
-      "id": "n173",
+      "id": "n180",
       "t": 63.409,
       "type": "tap",
       "lane": 3
     },
     {
-      "id": "n174",
+      "id": "n182",
       "t": 64.091,
       "type": "tap",
       "lane": 0
     },
     {
-      "id": "n175",
+      "id": "n184",
       "t": 64.773,
       "type": "tap",
       "lane": 1
     },
     {
-      "id": "n176",
+      "id": "n186",
       "t": 65.455,
       "type": "tap",
       "lane": 0
     },
     {
-      "id": "n177",
+      "id": "n188",
       "t": 66.136,
       "type": "tap",
       "lane": 3
     },
     {
-      "id": "n178",
+      "id": "n190",
       "t": 66.818,
       "type": "tap",
       "lane": 0
     },
     {
-      "id": "n179",
+      "id": "n192",
       "t": 67.5,
       "type": "tap",
       "lane": 1
     },
     {
-      "id": "n180",
+      "id": "n194",
       "t": 68.182,
       "type": "tap",
       "lane": 0
     },
     {
-      "id": "n181",
+      "id": "n196",
       "t": 68.864,
       "type": "tap",
       "lane": 3
     },
     {
-      "id": "n182",
+      "id": "n198",
       "t": 69.545,
       "type": "tap",
       "lane": 0
     },
     {
-      "id": "n183",
+      "id": "n200",
       "t": 70.227,
       "type": "tap",
       "lane": 1
     },
     {
-      "id": "n184",
+      "id": "n202",
       "t": 70.909,
       "type": "tap",
       "lane": 0
     },
     {
-      "id": "n185",
+      "id": "n204",
       "t": 71.591,
       "type": "tap",
       "lane": 3
     },
     {
-      "id": "n186",
+      "id": "n206",
       "t": 72.273,
       "type": "tap",
       "lane": 0
     },
     {
-      "id": "n187",
+      "id": "n208",
       "t": 72.955,
       "type": "tap",
       "lane": 1
     },
     {
-      "id": "n188",
+      "id": "n210",
       "t": 73.636,
       "type": "tap",
       "lane": 0

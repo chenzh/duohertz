@@ -8,6 +8,7 @@ import {
   loadSettings,
 } from "../storage/settings";
 import {
+  approachLeadFor,
   approachLeadMs,
   audioRate,
   finalize,
@@ -18,6 +19,7 @@ import {
   pressLane,
   releaseLane,
   tickMisses,
+  visualArFor,
   visualScrollBias,
   type LivePlay,
 } from "../engine/playState";
@@ -78,7 +80,8 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onFinish, onFail
   const keys = loadKeys();
   const scrollBias = visualScrollBias(mode, casualSpeed) * (1 + settings.scrollBias);
   const receptorY = receptorYFromGeometry(fieldH, fieldW, safeBottom);
-  const lead = approachLeadMs(chart.ar, LEAD_MS);
+  const visualAr = visualArFor(chart, mode);
+  const lead = approachLeadMs(visualAr, approachLeadFor(chart, mode, LEAD_MS));
 
   useEffect(() => {
     setTouchUi(isCoarsePointer());
@@ -390,14 +393,14 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onFinish, onFail
               const lanes = noteLanes(n);
               if (!lanes.includes(lane as 0 | 1 | 2 | 3)) return null;
               const t = noteTime(n);
-              const y = noteY(t, songMs, receptorY, lead, chart.ar, scrollBias);
+              const y = noteY(t, songMs, receptorY, lead, visualAr, scrollBias);
               if (y < -40 || y > fieldH + 40) return null;
               const judged =
                 n.type === "chord"
                   ? ns.chordLanes?.[lane as 0 | 1 | 2 | 3]
                   : ns.headJudged;
               if (n.type === "hold" && ns.headJudged && !ns.tailJudged) {
-                const yEnd = noteY(n.end, songMs, receptorY, lead, chart.ar, scrollBias);
+                const yEnd = noteY(n.end, songMs, receptorY, lead, visualAr, scrollBias);
                 return (
                   <div key={`${idx}-body`}>
                     <div

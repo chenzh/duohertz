@@ -14,11 +14,12 @@
       "rights": "owned",
       "theme": "beatscape",
       "tags": [
-        "Hot Chart Style"
+        "Hot Chart Style",
+        "Beginner Pick"
       ],
       "district": "Pulse Core",
-      "default_mode": "arcade",
-      "default_tier": "standard",
+      "default_mode": "casual",
+      "default_tier": "easy",
       "audio": "/catalog/bs-s1-01/audio.m4a",
       "cover": "/catalog/bs-s1-01/cover.svg",
       "charts": {
@@ -45,7 +46,8 @@
       "rights": "owned",
       "theme": "beatscape",
       "tags": [
-        "Viral Style"
+        "Viral Style",
+        "Beginner Pick"
       ],
       "district": "Glass Rim",
       "default_mode": "casual",
@@ -79,8 +81,8 @@
         "Classic Style"
       ],
       "district": "Night Grid",
-      "default_mode": "arcade",
-      "default_tier": "standard",
+      "default_mode": "casual",
+      "default_tier": "easy",
       "audio": "/catalog/bs-s1-03/audio.m4a",
       "cover": "/catalog/bs-s1-03/cover.svg",
       "charts": {
@@ -107,7 +109,8 @@
       "rights": "owned",
       "theme": "beatscape",
       "tags": [
-        "Classic Style"
+        "Classic Style",
+        "Beginner Pick"
       ],
       "district": "Afterhours Lane",
       "default_mode": "casual",
@@ -141,8 +144,8 @@
         "Hot Chart Style"
       ],
       "district": "Pulse Core",
-      "default_mode": "arcade",
-      "default_tier": "hard",
+      "default_mode": "casual",
+      "default_tier": "easy",
       "audio": "/catalog/bs-s1-05/audio.m4a",
       "cover": "/catalog/bs-s1-05/cover.svg",
       "charts": {
@@ -172,8 +175,8 @@
         "New Release"
       ],
       "district": "Chrome Yard",
-      "default_mode": "arcade",
-      "default_tier": "standard",
+      "default_mode": "casual",
+      "default_tier": "easy",
       "audio": "/catalog/bs-s1-06/audio.m4a",
       "cover": "/catalog/bs-s1-06/cover.svg",
       "charts": {

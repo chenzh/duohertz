@@ -9,7 +9,7 @@ const DEFAULT: BsSettings = {
   hitsound: true,
   fancyFx: true,
   scrollBias: 0,
-  casualSpeed: 1,
+  casualSpeed: 0.75,
 };
 
 export function loadSettings(): BsSettings {

@@ -15,8 +15,8 @@ export function PlayPage() {
   const { id } = useParams();
   const [params] = useSearchParams();
   const nav = useNavigate();
-  const tier = (params.get("tier") as ChartTier) || "standard";
-  const mode = (params.get("mode") as PlayMode) || "arcade";
+  const tier = (params.get("tier") as ChartTier) || "easy";
+  const mode = (params.get("mode") as PlayMode) || "casual";
   const [track, setTrack] = useState<CatalogTrack | null>(null);
   const [chart, setChart] = useState<ChartJSON | null>(null);
   const [loadError, setLoadError] = useState("");

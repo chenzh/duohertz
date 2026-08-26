@@ -297,6 +297,24 @@ export function approachLeadMs(ar: number, leadMs = 1400): number {
   return leadMs / (ar / 24);
 }
 
+/** Extra lead + lower visual AR for Easy / Casual readability */
+export function approachLeadFor(chart: ChartJSON, mode: PlayMode, baseLead = 1400): number {
+  let lead = baseLead;
+  if (chart.tier === "easy") lead *= 1.45;
+  if (chart.tier === "standard") lead *= 1.15;
+  if (mode === "casual") lead *= 1.25;
+  if (mode === "practice") lead *= 1.1;
+  return lead;
+}
+
+export function visualArFor(chart: ChartJSON, mode: PlayMode): number {
+  let ar = chart.ar;
+  if (chart.tier === "easy") ar = Math.min(ar, 20);
+  if (chart.tier === "standard") ar = Math.min(ar, 26);
+  if (mode === "casual") ar = Math.max(14, ar - 2);
+  return ar;
+}
+
 export function noteY(
   noteMs: number,
   songMs: number,

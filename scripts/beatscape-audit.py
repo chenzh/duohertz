@@ -305,6 +305,8 @@ def note_count(notes: list[dict[str, Any]]) -> int:
         t = n.get("type")
         if t == "chord":
             total += len(n.get("lanes") or [])
+        elif t == "hold":
+            total += 2
         else:
             total += 1
     return total

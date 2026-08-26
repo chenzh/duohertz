@@ -4,7 +4,7 @@
   "format": 1,
   "bpm": 118,
   "audio_offset_ms": 0,
-  "ar": 34,
+  "ar": 32,
   "total_notes": 253,
   "sections": [
     {
@@ -1373,181 +1373,181 @@
       "lane": 1
     },
     {
-      "id": "n223",
+      "id": "n224",
       "t": 58.983,
       "type": "tap",
       "lane": 0
     },
     {
-      "id": "n224",
+      "id": "n226",
       "t": 59.492,
       "type": "tap",
       "lane": 3
     },
     {
-      "id": "n225",
+      "id": "n228",
       "t": 60.0,
       "type": "tap",
       "lane": 0
     },
     {
-      "id": "n226",
+      "id": "n230",
       "t": 60.508,
       "type": "tap",
       "lane": 1
     },
     {
-      "id": "n227",
+      "id": "n232",
       "t": 61.017,
       "type": "tap",
       "lane": 0
     },
     {
-      "id": "n228",
+      "id": "n234",
       "t": 61.525,
       "type": "tap",
       "lane": 3
     },
     {
-      "id": "n229",
+      "id": "n236",
       "t": 62.034,
       "type": "tap",
       "lane": 0
     },
     {
-      "id": "n230",
+      "id": "n238",
       "t": 62.542,
       "type": "tap",
       "lane": 1
     },
     {
-      "id": "n231",
+      "id": "n240",
       "t": 63.051,
       "type": "tap",
       "lane": 0
     },
     {
-      "id": "n232",
+      "id": "n242",
       "t": 63.559,
       "type": "tap",
       "lane": 3
     },
     {
-      "id": "n233",
+      "id": "n244",
       "t": 64.068,
       "type": "tap",
       "lane": 0
     },
     {
-      "id": "n234",
+      "id": "n246",
       "t": 64.576,
       "type": "tap",
       "lane": 1
     },
     {
-      "id": "n235",
+      "id": "n248",
       "t": 65.085,
       "type": "tap",
       "lane": 0
     },
     {
-      "id": "n236",
+      "id": "n250",
       "t": 65.593,
       "type": "tap",
       "lane": 3
     },
     {
-      "id": "n237",
+      "id": "n252",
       "t": 66.102,
       "type": "tap",
       "lane": 0
     },
     {
-      "id": "n238",
+      "id": "n254",
       "t": 66.61,
       "type": "tap",
       "lane": 1
     },
     {
-      "id": "n239",
+      "id": "n256",
       "t": 67.119,
       "type": "tap",
       "lane": 0
     },
     {
-      "id": "n240",
+      "id": "n258",
       "t": 67.627,
       "type": "tap",
       "lane": 3
     },
     {
-      "id": "n241",
+      "id": "n260",
       "t": 68.136,
       "type": "tap",
       "lane": 0
     },
     {
-      "id": "n242",
+      "id": "n262",
       "t": 68.644,
       "type": "tap",
       "lane": 1
     },
     {
-      "id": "n243",
+      "id": "n264",
       "t": 69.153,
       "type": "tap",
       "lane": 0
     },
     {
-      "id": "n244",
+      "id": "n266",
       "t": 69.661,
       "type": "tap",
       "lane": 3
     },
     {
-      "id": "n245",
+      "id": "n268",
       "t": 70.169,
       "type": "tap",
       "lane": 0
     },
     {
-      "id": "n246",
+      "id": "n270",
       "t": 70.678,
       "type": "tap",
       "lane": 1
     },
     {
-      "id": "n247",
+      "id": "n272",
       "t": 71.186,
       "type": "tap",
       "lane": 0
     },
     {
-      "id": "n248",
+      "id": "n274",
       "t": 71.695,
       "type": "tap",
       "lane": 3
     },
     {
-      "id": "n249",
+      "id": "n276",
       "t": 72.203,
       "type": "tap",
       "lane": 0
     },
     {
-      "id": "n250",
+      "id": "n278",
       "t": 72.712,
       "type": "tap",
       "lane": 1
     },
     {
-      "id": "n251",
+      "id": "n280",
       "t": 73.22,
       "type": "tap",
       "lane": 0
     },
     {
-      "id": "n252",
+      "id": "n282",
       "t": 73.729,
       "type": "tap",
       "lane": 3

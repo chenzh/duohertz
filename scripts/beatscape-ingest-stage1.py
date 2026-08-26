@@ -23,11 +23,12 @@ TRACKS = [
         "preset_id": "bs-edm-main",
         "district": "Pulse Core",
         "tags": ["Hot Chart Style"],
-        "default_mode": "arcade",
-        "default_tier": "standard",
+        "default_mode": "casual",
+        "default_tier": "easy",
         "preview_file": "01-Neon-Pulse.m4a",
         "hold_bias": 0.1,
-        "chord_bias": 0.08,
+        "chord_bias": 0.04,
+        "beginner_pick": True,
     },
     {
         "track_id": "bs-s1-02",
@@ -44,6 +45,8 @@ TRACKS = [
         "preview_file": "02-Glass-Horizon.m4a",
         "hold_bias": 0.12,
         "chord_bias": 0.0,
+        "beginner_pick": True,
+        "guide_duration_sec": 45,
     },
     {
         "track_id": "bs-s1-03",
@@ -55,11 +58,11 @@ TRACKS = [
         "preset_id": "bs-hiphop-808",
         "district": "Night Grid",
         "tags": ["Classic Style"],
-        "default_mode": "arcade",
-        "default_tier": "standard",
+        "default_mode": "casual",
+        "default_tier": "easy",
         "preview_file": "03-Night-Drive-808.m4a",
         "hold_bias": 0.08,
-        "chord_bias": 0.06,
+        "chord_bias": 0.03,
     },
     {
         "track_id": "bs-s1-04",
@@ -76,6 +79,7 @@ TRACKS = [
         "preview_file": "04-Velvet-Afterhours.m4a",
         "hold_bias": 0.35,
         "chord_bias": 0.0,
+        "beginner_pick": True,
     },
     {
         "track_id": "bs-s1-05",
@@ -87,11 +91,11 @@ TRACKS = [
         "preset_id": "bs-edm-climax",
         "district": "Pulse Core",
         "tags": ["Hot Chart Style"],
-        "default_mode": "arcade",
-        "default_tier": "hard",
+        "default_mode": "casual",
+        "default_tier": "easy",
         "preview_file": "05-Voltage-Drop.m4a",
         "hold_bias": 0.08,
-        "chord_bias": 0.12,
+        "chord_bias": 0.06,
     },
     {
         "track_id": "bs-s1-06",
@@ -103,18 +107,18 @@ TRACKS = [
         "preset_id": "bs-rock-drive",
         "district": "Chrome Yard",
         "tags": ["New Release"],
-        "default_mode": "arcade",
-        "default_tier": "standard",
+        "default_mode": "casual",
+        "default_tier": "easy",
         "preview_file": "06-Chrome-Riff.m4a",
         "hold_bias": 0.1,
-        "chord_bias": 0.07,
+        "chord_bias": 0.04,
     },
 ]
 
 TIER = {
-    "easy": {"ar": 22, "grid": 2, "hold_mul": 1.2},
-    "standard": {"ar": 28, "grid": 1, "hold_mul": 1.0},
-    "hard": {"ar": 34, "grid": 0.5, "hold_mul": 0.85},
+    "easy": {"ar": 18, "grid": 1, "hold_mul": 1.0, "step_mul": 1.0, "peak_cap": 5},
+    "standard": {"ar": 24, "grid": 1, "hold_mul": 1.0, "step_mul": 1.15, "peak_cap": 8},
+    "hard": {"ar": 32, "grid": 0.5, "hold_mul": 0.85, "step_mul": 1.0, "peak_cap": 12},
 }
 
 DISTRICT_COLORS = {
@@ -189,9 +193,16 @@ def count_notes(notes: list[dict]) -> int:
     return n
 
 
+def peak_nps_at(notes: list[dict], center_t: float, window = 2.0) -> float:
+    count = sum(1 for n in notes if center_t - window <= n["t"] <= center_t + window)
+    return count / window
+
+
 def build_chart(track: dict, tier: str) -> dict:
     bpm = track["bpm"]
     dur = track["duration_sec"]
+    if tier == "easy" and track.get("guide_duration_sec"):
+        dur = min(dur, track["guide_duration_sec"])
     spec = TIER[tier]
     beat = 60.0 / bpm
     step = beat * spec["grid"]
@@ -201,17 +212,36 @@ def build_chart(track: dict, tier: str) -> dict:
     idx = 0
     while t < dur - beat * 2:
         phase = t / dur
-        # Density by section — always spawn something after 2s
-        if phase < 0.12:
-            density = 1  # intro: sparse but visible
-        elif phase < 0.28:
-            density = 1 if idx % 2 == 0 else 1
-        elif phase < 0.55:
-            density = 2 if tier == "hard" else 1
-        elif phase < 0.78:
-            density = 1
+        # Density by section — tier-tuned for audit ranges + newbie readability
+        if tier == "easy":
+            if phase < 0.2:
+                density = 1 if idx % 3 != 2 else 0
+            elif phase < 0.55:
+                density = 1 if idx % 2 == 0 else 0
+            else:
+                density = 1 if idx % 3 == 0 else 0
+        elif tier == "standard":
+            if phase < 0.12:
+                density = 1
+            elif phase < 0.28:
+                density = 1 if idx % 2 == 0 else 1
+            elif phase < 0.55:
+                density = 2 if idx % 4 == 0 else 1
+            elif phase < 0.78:
+                density = 1
+            else:
+                density = 1 if idx % 2 == 0 else 0
         else:
-            density = 1 if idx % 2 == 0 else 0
+            if phase < 0.12:
+                density = 1
+            elif phase < 0.28:
+                density = 1 if idx % 2 == 0 else 1
+            elif phase < 0.55:
+                density = 2 if tier == "hard" else 1
+            elif phase < 0.78:
+                density = 1
+            else:
+                density = 1 if idx % 2 == 0 else 0
 
         # PRD §6.0.25: kick→0, snare→3, hats→1/2
         beat_i = round(t / beat)
@@ -223,6 +253,10 @@ def build_chart(track: dict, tier: str) -> dict:
             lane = 1 if beat_i % 2 else 2
 
         st = round(snap(t, bpm, spec["grid"]), 3)
+        peak = peak_nps_at(notes, st)
+        if peak >= spec["peak_cap"]:
+            density = 0
+
         if (
             density
             and idx % 9 == 0
@@ -240,13 +274,27 @@ def build_chart(track: dict, tier: str) -> dict:
                     "end": round(snap(t + hold_dur, bpm, spec["grid"]), 3),
                 }
             )
-        elif density >= 2 and track["chord_bias"] > 0 and tier == "hard" and idx % 6 == 0:
+        elif (
+            density >= 2
+            and track["chord_bias"] > 0
+            and tier == "hard"
+            and idx % 8 == 0
+            and peak < spec["peak_cap"] - 1
+        ):
             notes.append({"id": f"n{idx}", "t": st, "type": "chord", "lanes": [0, 3]})
         elif density:
             notes.append({"id": f"n{idx}", "t": st, "type": "tap", "lane": lane})
         idx += 1
-        # Hard uses full grid step (not half) so peak 2s NPS stays ≤12 (PRD §4.6, BS-001).
-        t += step
+        # Hard: full grid step (BS-001); Easy/Standard: LOCA-21 step_mul spacing.
+        step_mul = spec["step_mul"]
+        if tier == "hard":
+            t += step
+        else:
+            if tier == "easy" and track.get("guide_duration_sec"):
+                step_mul *= 1.2
+            elif tier == "easy":
+                step_mul *= 0.85
+            t += step * step_mul
 
     notes.sort(key=lambda n: n["t"])
     if tier == "hard":
@@ -315,7 +363,7 @@ def main() -> None:
                 "job_id": f"local-preview-{tid}",
                 "rights": "owned",
                 "theme": "beatscape",
-                "tags": tr["tags"],
+                "tags": tr["tags"] + (["Beginner Pick"] if tr.get("beginner_pick") else []),
                 "district": tr["district"],
                 "default_mode": tr["default_mode"],
                 "default_tier": tr["default_tier"],
