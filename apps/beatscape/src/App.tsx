@@ -7,6 +7,7 @@ import { ResultsPage } from "./pages/Results";
 import { CalibrationPage } from "./pages/Calibration";
 import { SettingsPage } from "./pages/Settings";
 import { LeaderboardPage } from "./pages/Leaderboard";
+import { LegalPage } from "./pages/Legal";
 import { Router } from "./router";
 
 export default function App() {
@@ -24,6 +25,8 @@ export default function App() {
           { path: "/calibrate", element: <CalibrationPage /> },
           { path: "/settings", element: <SettingsPage /> },
           { path: "/leaderboard", element: <LeaderboardPage /> },
+          { path: "/privacy", element: <LegalPage kind="privacy" /> },
+          { path: "/terms", element: <LegalPage kind="terms" /> },
         ]}
       />
     </Layout>

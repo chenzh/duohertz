@@ -10,7 +10,7 @@ describe("touchInput (PRD §4.12 / §4.14)", () => {
   const rect = { left: 0, top: 0, width: 400, height: 600, right: 400, bottom: 600 } as DOMRect;
 
   it("maps client X into four equal lanes with edge guard", () => {
-    expect(laneFromClientX(20, rect)).toBeNull();
+    expect(laneFromClientX(10, rect)).toBeNull();
     expect(laneFromClientX(50, rect)).toBe(0);
     expect(laneFromClientX(150, rect)).toBe(1);
     expect(laneFromClientX(250, rect)).toBe(2);

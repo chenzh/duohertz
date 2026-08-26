@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "../router";
 import { loadKeys, loadOffsetMs, loadSettings, saveKeys, saveOffsetMs, saveSettings } from "../storage/settings";
 
 export function SettingsPage() {
@@ -65,6 +66,14 @@ export function SettingsPage() {
       >
         Save
       </button>
+      <nav className="settings-legal" aria-label="Legal">
+        <Link to="/privacy">Privacy</Link>
+        <span aria-hidden="true"> · </span>
+        <Link to="/terms">Terms</Link>
+      </nav>
+      <p className="settings-legal-note">
+        Scores and settings stay on this device. No account required (PRD §9.4).
+      </p>
     </section>
   );
 }

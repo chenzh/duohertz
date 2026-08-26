@@ -65,8 +65,10 @@ export class TouchLaneTracker {
   /** Returns lane when press is accepted; null when debounced or edge. */
   press(pointerId: number, lane: LaneIndex | null, now = performance.now()): LaneIndex | null {
     if (lane === null) return null;
-    const last = this.lastPressAt.get(lane) ?? 0;
-    if (now - last < LANE_DEBOUNCE_MS) return null;
+    if (this.lastPressAt.has(lane)) {
+      const last = this.lastPressAt.get(lane)!;
+      if (now - last < LANE_DEBOUNCE_MS) return null;
+    }
     this.lastPressAt.set(lane, now);
     this.pointerLanes.set(pointerId, lane);
     return lane;

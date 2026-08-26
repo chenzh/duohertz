@@ -15,7 +15,14 @@ export function Layout({ children }: { children: ReactNode }) {
         </nav>
       </header>
       <main className="site-main">{children}</main>
-      <footer className="site-footer">AI Original · Owned Rights · Generated with MusicSaas</footer>
+      <footer className="site-footer">
+        <span>AI Original · Owned Rights · Generated with MusicSaas</span>
+        <span className="site-footer-legal">
+          <Link to="/privacy">Privacy</Link>
+          <span aria-hidden="true"> · </span>
+          <Link to="/terms">Terms</Link>
+        </span>
+      </footer>
     </div>
   );
 }
