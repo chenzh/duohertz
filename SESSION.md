@@ -8,26 +8,22 @@
 
 ## next
 
-- [ ] 处理 PR #5 Stage3 catalog（25 首）冲突后合入
+- [ ] 处理 PR #5 Stage3 catalog（25 首）冲突 + CI 红后合入
 - [ ] BeatScape：MusicSaas 自动谱替换 BPM 占位网格 + 鼓点对齐 QA
 - [ ] Stage2+：Slide 音符；曲库扩至 50；TICKET-B05 Reddit CTA
-- [ ] BeatScape LOCA-22：全站 UI 视觉焕新
 
 ## blockers
 
-- **blockers**: none
+- （无）
 
 ## 近期完成
 
-- LOCA-23 Stage2：击中 FX / 连击里程碑 / 音符可读性 / HUD·倒计时·暂停 / 结算仪式感（PR #16）
-- TICKET-B02 Privacy/Terms（PR #14）；LOCA-21 难度降级（PR #15）
-- LOCA-15：Results 分享闭环（`?run=local`）+ 全曲 `og.png` + Local Board 曲名
-- BeatScape Stage1：6 首 catalog + 可玩 Web（判定 15/30/50）
-- 可玩性修复：Tap to Start · 首音符 ~2s · 路由 query 同步
-- Harness Basic：知识库 + 代码索引 + SESSION
+- TICKET-B01/#6 → PR #12；B02/#9 → PR #14；B03 清理；B04/#11 → PR #13（均已合）
+- LOCA-23 Stage2 手感 PR #16；LOCA-21 难度降级 PR #15；Privacy/Terms PR #14
+- LOCA-15 分享/OG/Local Board；移动端；Hard 密度
+- Delivery harness + agent-safe 队列跑通（本地 CLI 派单）
 
 ## 链接
 
-- [docs/KNOWLEDGE-BASE.md](docs/KNOWLEDGE-BASE.md)
-- [docs/CODE-INDEX.md](docs/CODE-INDEX.md)
-- [docs/PRD-BEATSCAPE.md](docs/PRD-BEATSCAPE.md)
+- Workbench: `bash ~/Projects/multica/scripts/ai-company/ceo-workbench.sh` → http://127.0.0.1:9477
+- OPC bridge: `~/Projects/multica/.ai-company/docs/13-opc-bridge.md`
