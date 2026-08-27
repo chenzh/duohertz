@@ -2,11 +2,13 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "../router";
 import { assetUrl, loadCatalog } from "../catalog/loadCatalog";
 import type { CatalogTrack } from "../types/catalog";
+import { LIBRARY_PAGE_META, usePageMeta } from "../seo/pageMeta";
 import { loadFavorites } from "../storage/settings";
 
 const BEGINNER_TAG = "Beginner Pick";
 
 export function LibraryPage() {
+  usePageMeta(LIBRARY_PAGE_META);
   const [tracks, setTracks] = useState<CatalogTrack[]>([]);
   const [q, setQ] = useState("");
   const [genre, setGenre] = useState("");

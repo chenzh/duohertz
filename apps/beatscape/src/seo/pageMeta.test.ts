@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { CatalogTrack } from "../types/catalog";
-import { buildPlayPageMeta, DEFAULT_PAGE_META } from "./pageMeta";
+import { buildPlayPageMeta, DEFAULT_PAGE_META, LIBRARY_PAGE_META } from "./pageMeta";
 
 const baseTrack: CatalogTrack = {
   track_id: "bs-s1-01",
@@ -51,5 +51,17 @@ describe("buildPlayPageMeta", () => {
 
   it("default site meta matches index.html title", () => {
     expect(DEFAULT_PAGE_META.title).toBe("BeatScape — Feel the Beat, Own the Scape");
+  });
+});
+
+describe("LIBRARY_PAGE_META", () => {
+  it("sets library title", () => {
+    expect(LIBRARY_PAGE_META.title).toBe("Library — BeatScape");
+  });
+
+  it("includes browse semantics and site tagline", () => {
+    expect(LIBRARY_PAGE_META.description).toContain("Browse owned AI originals");
+    expect(LIBRARY_PAGE_META.description).toContain("Search tracks");
+    expect(LIBRARY_PAGE_META.description).toContain("Feel the Beat, Own the Scape.");
   });
 });

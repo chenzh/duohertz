@@ -13,6 +13,12 @@ export type PageMeta = {
   description: string;
 };
 
+export const LIBRARY_PAGE_META: PageMeta = {
+  title: "Library — BeatScape",
+  description:
+    "Browse owned AI originals. Search tracks, filter by genre, and save favorites. Feel the Beat, Own the Scape.",
+};
+
 export function setPageMeta(meta: PageMeta): void {
   document.title = meta.title;
   let el = document.querySelector('meta[name="description"]');
