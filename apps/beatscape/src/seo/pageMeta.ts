@@ -19,6 +19,12 @@ export const LIBRARY_PAGE_META: PageMeta = {
     "Browse owned AI originals. Search tracks, filter by genre, and save favorites. Feel the Beat, Own the Scape.",
 };
 
+export const CALIBRATION_PAGE_META: PageMeta = {
+  title: "Calibration — BeatScape",
+  description:
+    "Tap D F J K on each lane flash across 8 beats. Save your timing offset or skip to play. Feel the Beat, Own the Scape.",
+};
+
 export function setPageMeta(meta: PageMeta): void {
   document.title = meta.title;
   let el = document.querySelector('meta[name="description"]');

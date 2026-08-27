@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "../router";
 import { resumeAudio, playHit } from "../audio/hitsounds";
+import { CALIBRATION_PAGE_META, usePageMeta } from "../seo/pageMeta";
 import { saveOffsetMs } from "../storage/settings";
 
 const BEAT_MS = 60000 / 120;
 const LANES = ["D", "F", "J", "K"];
 
 export function CalibrationPage() {
+  usePageMeta(CALIBRATION_PAGE_META);
   const nav = useNavigate();
   const [phase, setPhase] = useState<"intro" | "playing" | "done">("intro");
   const [hits, setHits] = useState<number[]>([]);

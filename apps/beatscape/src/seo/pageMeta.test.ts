@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest";
 import type { CatalogTrack } from "../types/catalog";
-import { buildPlayPageMeta, DEFAULT_PAGE_META, LIBRARY_PAGE_META } from "./pageMeta";
+import {
+  buildPlayPageMeta,
+  CALIBRATION_PAGE_META,
+  DEFAULT_PAGE_META,
+  LIBRARY_PAGE_META,
+} from "./pageMeta";
 
 const baseTrack: CatalogTrack = {
   track_id: "bs-s1-01",
@@ -63,5 +68,17 @@ describe("LIBRARY_PAGE_META", () => {
     expect(LIBRARY_PAGE_META.description).toContain("Browse owned AI originals");
     expect(LIBRARY_PAGE_META.description).toContain("Search tracks");
     expect(LIBRARY_PAGE_META.description).toContain("Feel the Beat, Own the Scape.");
+  });
+});
+
+describe("CALIBRATION_PAGE_META", () => {
+  it("sets calibration title", () => {
+    expect(CALIBRATION_PAGE_META.title).toBe("Calibration — BeatScape");
+  });
+
+  it("includes tap/offset semantics and site tagline", () => {
+    expect(CALIBRATION_PAGE_META.description).toContain("Tap D F J K");
+    expect(CALIBRATION_PAGE_META.description).toContain("timing offset");
+    expect(CALIBRATION_PAGE_META.description).toContain("Feel the Beat, Own the Scape.");
   });
 });
