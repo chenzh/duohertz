@@ -5,6 +5,9 @@ import {
   CALIBRATION_PAGE_META,
   DEFAULT_PAGE_META,
   LIBRARY_PAGE_META,
+  PRIVACY_PAGE_META,
+  SETTINGS_PAGE_META,
+  TERMS_PAGE_META,
 } from "./pageMeta";
 
 const baseTrack: CatalogTrack = {
@@ -80,5 +83,32 @@ describe("CALIBRATION_PAGE_META", () => {
     expect(CALIBRATION_PAGE_META.description).toContain("Tap D F J K");
     expect(CALIBRATION_PAGE_META.description).toContain("timing offset");
     expect(CALIBRATION_PAGE_META.description).toContain("Feel the Beat, Own the Scape.");
+  });
+});
+
+describe("SETTINGS_PAGE_META", () => {
+  it("sets settings title", () => {
+    expect(SETTINGS_PAGE_META.title).toBe("Settings — BeatScape");
+  });
+
+  it("includes calibration and local storage semantics", () => {
+    expect(SETTINGS_PAGE_META.description).toContain("global offset");
+    expect(SETTINGS_PAGE_META.description).toContain("hitsound");
+    expect(SETTINGS_PAGE_META.description).toContain("stay on this device");
+    expect(SETTINGS_PAGE_META.description).toContain("Feel the Beat, Own the Scape.");
+  });
+});
+
+describe("LEGAL page meta", () => {
+  it("sets privacy title and local-only semantics", () => {
+    expect(PRIVACY_PAGE_META.title).toBe("Privacy — BeatScape");
+    expect(PRIVACY_PAGE_META.description).toContain("browser only");
+    expect(PRIVACY_PAGE_META.description).toContain("No account");
+  });
+
+  it("sets terms title and service semantics", () => {
+    expect(TERMS_PAGE_META.title).toBe("Terms of Use — BeatScape");
+    expect(TERMS_PAGE_META.description).toContain("browser rhythm game");
+    expect(TERMS_PAGE_META.description).toContain("Feel the Beat, Own the Scape.");
   });
 });

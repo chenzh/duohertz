@@ -1,4 +1,5 @@
 import { Link } from "../router";
+import { PRIVACY_PAGE_META, TERMS_PAGE_META, usePageMeta } from "../seo/pageMeta";
 
 type LegalKind = "privacy" | "terms";
 
@@ -52,7 +53,13 @@ const COPY: Record<
   },
 };
 
+const LEGAL_PAGE_META = {
+  privacy: PRIVACY_PAGE_META,
+  terms: TERMS_PAGE_META,
+} as const;
+
 export function LegalPage({ kind }: { kind: LegalKind }) {
+  usePageMeta(LEGAL_PAGE_META[kind]);
   const doc = COPY[kind];
   return (
     <section className="legal-page" data-legal={kind}>

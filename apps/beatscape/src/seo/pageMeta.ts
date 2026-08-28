@@ -25,6 +25,24 @@ export const CALIBRATION_PAGE_META: PageMeta = {
     "Tap D F J K on each lane flash across 8 beats. Save your timing offset or skip to play. Feel the Beat, Own the Scape.",
 };
 
+export const SETTINGS_PAGE_META: PageMeta = {
+  title: "Settings — BeatScape",
+  description:
+    "Adjust global offset, hitsound, lane keys, and casual speed. Scores and preferences stay on this device. Feel the Beat, Own the Scape.",
+};
+
+export const PRIVACY_PAGE_META: PageMeta = {
+  title: "Privacy — BeatScape",
+  description:
+    "BeatScape stores play records, scores, and settings in your browser only. No account, no ad trackers, no server upload in Stage1–3. Feel the Beat, Own the Scape.",
+};
+
+export const TERMS_PAGE_META: PageMeta = {
+  title: "Terms of Use — BeatScape",
+  description:
+    "BeatScape browser rhythm game terms: owned AI originals, acceptable use, and entertainment disclaimer. Feel the Beat, Own the Scape.",
+};
+
 export function setPageMeta(meta: PageMeta): void {
   document.title = meta.title;
   let el = document.querySelector('meta[name="description"]');

@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Link } from "../router";
+import { SETTINGS_PAGE_META, usePageMeta } from "../seo/pageMeta";
 import { loadKeys, loadOffsetMs, loadSettings, saveKeys, saveOffsetMs, saveSettings } from "../storage/settings";
 
 export function SettingsPage() {
+  usePageMeta(SETTINGS_PAGE_META);
   const [settings, setSettings] = useState(loadSettings);
   const [offset, setOffset] = useState(loadOffsetMs);
   const [keys, setKeys] = useState(loadKeys);
