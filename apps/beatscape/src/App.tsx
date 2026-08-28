@@ -8,6 +8,7 @@ import { CalibrationPage } from "./pages/Calibration";
 import { SettingsPage } from "./pages/Settings";
 import { LeaderboardPage } from "./pages/Leaderboard";
 import { LegalPage } from "./pages/Legal";
+import { NotFoundPage } from "./pages/NotFound";
 import { Router } from "./router";
 
 export default function App() {
@@ -28,6 +29,7 @@ export default function App() {
           { path: "/privacy", element: <LegalPage kind="privacy" /> },
           { path: "/terms", element: <LegalPage kind="terms" /> },
         ]}
+        fallback={<NotFoundPage />}
       />
     </Layout>
   );

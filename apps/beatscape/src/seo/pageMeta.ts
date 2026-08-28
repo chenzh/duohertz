@@ -43,6 +43,12 @@ export const TERMS_PAGE_META: PageMeta = {
     "BeatScape browser rhythm game terms: owned AI originals, acceptable use, and entertainment disclaimer. Feel the Beat, Own the Scape.",
 };
 
+export const NOT_FOUND_PAGE_META: PageMeta = {
+  title: "Page Not Found — BeatScape",
+  description:
+    "This page does not exist. Return to BeatScape home or browse the library. Feel the Beat, Own the Scape.",
+};
+
 export function setPageMeta(meta: PageMeta): void {
   document.title = meta.title;
   let el = document.querySelector('meta[name="description"]');

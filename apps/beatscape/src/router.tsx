@@ -49,7 +49,15 @@ export function useRouter(base = "/beatscape") {
   return { path, navigate, search };
 }
 
-export function Router({ base, routes }: { base?: string; routes: RouteDef[] }) {
+export function Router({
+  base,
+  routes,
+  fallback = null,
+}: {
+  base?: string;
+  routes: RouteDef[];
+  fallback?: ReactNode;
+}) {
   const { path } = useRouter(base);
   for (const r of routes) {
     const params = matchPath(r.path, path);
@@ -57,7 +65,7 @@ export function Router({ base, routes }: { base?: string; routes: RouteDef[] }) 
       return <RouteParamsProvider params={params}>{r.element}</RouteParamsProvider>;
     }
   }
-  return <>{routes.find((r) => r.path === "/")?.element ?? null}</>;
+  return <>{fallback}</>;
 }
 
 const ParamsCtx = { current: {} as Record<string, string> };

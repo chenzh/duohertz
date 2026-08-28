@@ -5,6 +5,7 @@ import {
   CALIBRATION_PAGE_META,
   DEFAULT_PAGE_META,
   LIBRARY_PAGE_META,
+  NOT_FOUND_PAGE_META,
   PRIVACY_PAGE_META,
   SETTINGS_PAGE_META,
   TERMS_PAGE_META,
@@ -110,5 +111,16 @@ describe("LEGAL page meta", () => {
     expect(TERMS_PAGE_META.title).toBe("Terms of Use — BeatScape");
     expect(TERMS_PAGE_META.description).toContain("browser rhythm game");
     expect(TERMS_PAGE_META.description).toContain("Feel the Beat, Own the Scape.");
+  });
+});
+
+describe("NOT_FOUND_PAGE_META", () => {
+  it("sets not-found title with site name", () => {
+    expect(NOT_FOUND_PAGE_META.title).toBe("Page Not Found — BeatScape");
+  });
+
+  it("includes not-found semantics and site tagline", () => {
+    expect(NOT_FOUND_PAGE_META.description).toContain("This page does not exist");
+    expect(NOT_FOUND_PAGE_META.description).toContain("Feel the Beat, Own the Scape.");
   });
 });
