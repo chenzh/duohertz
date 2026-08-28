@@ -3,6 +3,8 @@ export type BsSettings = {
   fancyFx: boolean;
   scrollBias: number;
   casualSpeed: number;
+  musicVolume: number;
+  sfxVolume: number;
 };
 
 const DEFAULT: BsSettings = {
@@ -10,6 +12,8 @@ const DEFAULT: BsSettings = {
   fancyFx: true,
   scrollBias: 0,
   casualSpeed: 1,
+  musicVolume: 0.7,
+  sfxVolume: 0.55,
 };
 
 export function loadSettings(): BsSettings {
@@ -104,6 +108,15 @@ export function saveScore(entry: ScoreEntry) {
   if (existing && existing.score >= entry.score) return;
   const next = [...filtered.filter((e) => `${e.track_id}|${e.tier}|${e.mode}` !== key), entry].slice(-200);
   localStorage.setItem("bs_scores", JSON.stringify(next));
+}
+
+export function saveDisplayName(name: string) {
+  const trimmed = name.trim().slice(0, 24) || "Player";
+  localStorage.setItem("bs_display_name", trimmed);
+}
+
+export function loadDisplayName(): string {
+  return localStorage.getItem("bs_display_name") || "Player";
 }
 
 export function getPersonalBest(trackId: string, tier: string, mode: string): ScoreEntry | null {

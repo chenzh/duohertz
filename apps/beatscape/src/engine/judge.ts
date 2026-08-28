@@ -1,16 +1,16 @@
 import type { Judgment, PlayMode } from "../types/chart";
 
-/** BeatScape PRD §4.3 — NOT NeonBeat 22/45/80 */
-const WINDOWS_ARCADE = { perfect: 15, great: 30, good: 50 } as const;
-const WINDOWS_CASUAL = { perfect: 28, great: 55, good: 90 } as const;
+// BeatScape PRD §4.3 — these are the BeatScape truth values, NOT NeonBeat 22/45/80.
+export const WINDOWS_ARCADE = { perfect: 15, great: 30, good: 50 } as const;
+export const WINDOWS_CASUAL = { perfect: 28, great: 55, good: 90 } as const;
 
-export const WINDOWS = WINDOWS_ARCADE;
+export type Windows = { perfect: number; great: number; good: number };
 
-export function windowsFor(mode: PlayMode) {
-  if (mode === "casual") return WINDOWS_CASUAL;
-  return WINDOWS_ARCADE;
+export function windowsFor(mode: PlayMode): Windows {
+  return mode === "casual" ? WINDOWS_CASUAL : WINDOWS_ARCADE;
 }
 
+/** Classify a press delta (ms) against the active windows. */
 export function judgeDelta(deltaMs: number, mode: PlayMode = "arcade"): Judgment {
   const w = windowsFor(mode);
   const abs = Math.abs(deltaMs);
@@ -20,7 +20,7 @@ export function judgeDelta(deltaMs: number, mode: PlayMode = "arcade"): Judgment
   return "miss";
 }
 
-/** Hold tail: Good window + ±20ms snap */
+/** Hold tail gets a +20ms snap on top of the Good window (PRD §4.2). */
 export function judgeHoldTail(deltaMs: number, mode: PlayMode): Judgment {
   const w = windowsFor(mode);
   const abs = Math.abs(deltaMs);
@@ -62,6 +62,7 @@ export function gradeFromAccuracy(accuracy: number): "S" | "A" | "B" | "C" | "D"
   return "D";
 }
 
+/** HP change per judgment object (Arcade only). Tail miss uses -5. */
 export function hpDelta(j: Judgment, tailMiss = false): number {
   if (tailMiss) return -5;
   switch (j) {
@@ -83,6 +84,7 @@ export function accuracyPercent(counts: Record<Judgment, number>, totalNotes: nu
   return Math.round((weighted / totalNotes) * 10000) / 100;
 }
 
+/** Theoretical max for leaderboard sanity checks (PRD §4.4). */
 export function maxScore(totalNotes: number): number {
   return totalNotes * 300 * 4;
 }

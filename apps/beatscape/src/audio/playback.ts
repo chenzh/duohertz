@@ -1,58 +1,160 @@
-/** Low-latency Web Audio playback for tight chart sync */
-export class SongPlayer {
+import { getAudioContext, unlockAudio } from "./context";
+
+/**
+ * Conductor — the single source of truth for song time.
+ *
+ * Everything is driven by the Web Audio clock (`AudioContext.currentTime`), never
+ * by frame time or `setTimeout`. The 3s countdown is part of the same timeline
+ * (song time runs negative during the countdown), so notes start approaching in
+ * perfect sync and GO lands exactly on t=0 of the audio.
+ *
+ * Supports pause/resume (freezes the clock), background self-heal, and the
+ * Practice mode slow-down (changes playback rate without desyncing).
+ */
+export class Conductor {
   private ctx: AudioContext;
-  private buffer: AudioBuffer;
-  private source: AudioBufferSourceNode | null = null;
   private gain: GainNode;
-  private startedAt = 0;
-  private offsetSec = 0;
+  private buffer: AudioBuffer | null = null;
+  private source: AudioBufferSourceNode | null = null;
+
+  private _accumMs = 0; // song time; negative during countdown
+  private _lastCtx = 0;
   private _rate = 1;
   private _playing = false;
-  private _ended = false;
+  private _paused = false;
+  private _finished = false;
+  private _durationMs = 0;
+
+  /** performance.now() timestamp when an active slow-down ends (0 = none). */
+  pendingRateUntil = 0;
+
   onEnded: (() => void) | null = null;
 
-  constructor(ctx: AudioContext, buffer: AudioBuffer) {
-    this.ctx = ctx;
-    this.buffer = buffer;
-    this.gain = ctx.createGain();
-    this.gain.connect(ctx.destination);
+  constructor() {
+    this.ctx = getAudioContext();
+    this.gain = this.ctx.createGain();
+    this.gain.gain.value = 0.85;
+    this.gain.connect(this.ctx.destination);
   }
 
-  get playing() {
-    return this._playing;
+  /** Set music bus gain (0–1, PRD §6.0.13 default 0.70). */
+  setMusicVolume(v: number): void {
+    this.gain.gain.value = Math.max(0, Math.min(1, v));
   }
 
-  get ended() {
-    return this._ended;
+  get durationMs(): number {
+    return this._durationMs;
   }
 
-  async resume() {
+  get playing(): boolean {
+    return this._playing && !this._paused;
+  }
+
+  get isPaused(): boolean {
+    return this._paused;
+  }
+
+  get finished(): boolean {
+    return this._finished;
+  }
+
+  async load(url: string): Promise<void> {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`Audio load failed (${res.status})`);
+    const ab = await res.arrayBuffer();
+    this.buffer = await this.ctx.decodeAudioData(ab.slice(0));
+    this._durationMs = this.buffer.duration * 1000;
+  }
+
+  /** Resume the AudioContext inside a user gesture. */
+  async unlock(): Promise<void> {
     if (this.ctx.state === "suspended") await this.ctx.resume();
   }
 
-  play(fromSec = 0) {
-    this.stop();
-    this._ended = false;
-    this.offsetSec = fromSec;
-    this.source = this.ctx.createBufferSource();
-    this.source.buffer = this.buffer;
-    this.source.playbackRate.value = this._rate;
-    this.source.connect(this.gain);
-    this.source.onended = () => {
-      if (this._playing) {
-        this._playing = false;
-        this._ended = true;
+  /** Begin playback with a `countdownMs` lead-in (song time starts negative). */
+  begin(countdownMs = 3000): void {
+    if (!this.buffer) return;
+    this.stopSource();
+    this._accumMs = -countdownMs;
+    this._lastCtx = this.ctx.currentTime;
+    this._rate = 1;
+    this._playing = true;
+    this._paused = false;
+    this._finished = false;
+    this.pendingRateUntil = 0;
+    this.startSource(this._accumMs < 0 ? -this._accumMs / 1000 : 0);
+  }
+
+  /** Authoritative song time in milliseconds (negative during countdown). */
+  songTimeMs(): number {
+    this.update();
+    return this._accumMs;
+  }
+
+  private update(): void {
+    const now = this.ctx.currentTime;
+    const dt = (now - this._lastCtx) * 1000;
+    if (this._playing && !this._paused) {
+      this._accumMs += dt * this._rate;
+      if (this.pendingRateUntil && performance.now() >= this.pendingRateUntil) {
+        this.pendingRateUntil = 0;
+        this.setRate(1);
+      }
+    }
+    this._lastCtx = now;
+  }
+
+  /** Practice slow-down: 0.5× for `durationMs` real milliseconds. */
+  setRate(rate: number, durationMs = 0): void {
+    this._rate = rate;
+    if (this.source) this.source.playbackRate.value = rate;
+    this.pendingRateUntil = durationMs > 0 ? performance.now() + durationMs : 0;
+  }
+
+  pause(): void {
+    if (!this._playing || this._paused) return;
+    this.update();
+    this._paused = true;
+    this.stopSource();
+  }
+
+  resume(): void {
+    if (!this._playing || !this._paused) return;
+    this._paused = false;
+    this._lastCtx = this.ctx.currentTime;
+    const offsetSec = Math.max(0, this._accumMs / 1000);
+    const delaySec = this._accumMs < 0 ? -this._accumMs / 1000 : 0;
+    this.startSource(delaySec, offsetSec);
+  }
+
+  /** Stop everything (leave the run). */
+  stop(): void {
+    this._playing = false;
+    this._paused = false;
+    this.stopSource();
+  }
+
+  private startSource(delaySec: number, offsetSec = 0): void {
+    if (!this.buffer) return;
+    const src = this.ctx.createBufferSource();
+    src.buffer = this.buffer;
+    src.playbackRate.value = this._rate;
+    src.connect(this.gain);
+    src.onended = () => {
+      if (this._playing && !this._paused) {
+        this._finished = true;
         this.onEnded?.();
       }
     };
-    this.startedAt = this.ctx.currentTime;
-    this.source.start(0, fromSec);
-    this._playing = true;
+    this.source = src;
+    const when = this.ctx.currentTime + Math.max(0, delaySec);
+    src.start(when, Math.max(0, offsetSec));
   }
 
-  stop() {
+  private stopSource(): void {
     if (this.source) {
       try {
+        this.source.onended = null;
         this.source.stop();
       } catch {
         /* already stopped */
@@ -60,26 +162,7 @@ export class SongPlayer {
       this.source.disconnect();
       this.source = null;
     }
-    this._playing = false;
-  }
-
-  setRate(rate: number) {
-    this._rate = rate;
-    if (this.source) this.source.playbackRate.value = rate;
-  }
-
-  currentMs(): number {
-    if (!this._playing) return this.offsetSec * 1000;
-    return (this.offsetSec + (this.ctx.currentTime - this.startedAt) * this._rate) * 1000;
-  }
-
-  get durationMs() {
-    return this.buffer.duration * 1000;
   }
 }
 
-export async function decodeAudioUrl(ctx: AudioContext, url: string): Promise<AudioBuffer> {
-  const res = await fetch(url);
-  const ab = await res.arrayBuffer();
-  return ctx.decodeAudioData(ab.slice(0));
-}
+export { unlockAudio };

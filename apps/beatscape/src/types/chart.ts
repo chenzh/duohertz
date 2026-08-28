@@ -2,6 +2,8 @@ export type ChartTier = "easy" | "standard" | "hard";
 export type PlayMode = "casual" | "arcade" | "practice";
 export type Judgment = "perfect" | "great" | "good" | "miss";
 
+export type MissEvent = { tMs: number; lane: number };
+
 export type TapNote = {
   id: string;
   t: number;
@@ -59,6 +61,7 @@ export type PlayResult = {
   failed: boolean;
   judgments: Record<Judgment, number>;
   totalNotes: number;
+  missEvents: MissEvent[];
 };
 
 export type LastRun = {
@@ -76,6 +79,9 @@ export type LastRun = {
   ap: boolean;
   counts: Record<Judgment, number>;
   totalNotes: number;
+  missEvents?: MissEvent[];
   durationMs: number;
   endedAt: string;
+  /** PB score captured before this run was saved — used to flag a true new record. */
+  prevBestScore?: number;
 };

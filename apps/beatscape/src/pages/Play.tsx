@@ -8,6 +8,7 @@ import { writeLastRun } from "../storage/session";
 import { isOnboarded, loadSettings, setOnboarded } from "../storage/settings";
 import { isCoarsePointer } from "../input/touchInput";
 import { buildPlayPageMeta, usePageMeta } from "../seo/pageMeta";
+import { trackEvent } from "../lib/analytics";
 
 const GUIDE_TRACK = "bs-s1-02";
 
@@ -26,9 +27,56 @@ export function PlayPage() {
   usePageMeta(track ? buildPlayPageMeta(track, tier, mode) : null);
 
   useEffect(() => {
-    document.body.classList.add("play-immersive");
-    return () => document.body.classList.remove("play-immersive");
-  }, []);
+    if (!isOnboarded()) {
+      if (id !== GUIDE_TRACK) {
+        nav(`/play/${GUIDE_TRACK}?tier=easy&mode=casual`, { replace: true });
+        return;
+      }
+    }
+    if (!id) return;
+    let cancelled = false;
+    void (async () => {
+      setLoadError("");
+      setTrack(null);
+      setChart(null);
+      const t = await getTrack(id);
+      if (!t) {
+        if (!cancelled) setLoadError(`Track not found: ${id}`);
+        return;
+      }
+      try {
+        const c = await loadChart(t, tier);
+        if (!cancelled) {
+          setTrack(t);
+          setChart(c);
+        }
+      } catch (e) {
+        if (!cancelled) setLoadError(e instanceof Error ? e.message : "Chart load failed");
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [id, tier, nav]);
+
+  const finish = (result: PlayResult) => {
+    if (!track) return;
+    trackEvent("play_finish", { track: track.track_id, grade: result.grade, accuracy: result.accuracy });
+    const isDaily = params.get("daily") === "1";
+    writeLastRun(track, tier, mode, result, performance.now() - startedAt, { daily: isDaily });
+    if (!isOnboarded() && track.track_id === GUIDE_TRACK) {
+      setOnboarded();
+      nav("/");
+      return;
+    }
+    if (!isOnboarded()) setOnboarded();
+    nav("/results");
+  };
+
+  const exitPlay = () => {
+    if (!window.confirm("Leave the Scape? This run won't be saved.")) return;
+    nav(track ? `/track/${track.track_id}` : "/library");
+  };
 
   const enterFullscreen = async () => {
     const el = document.documentElement;
@@ -42,50 +90,6 @@ export function PlayPage() {
     }
   };
 
-  useEffect(() => {
-    if (!isOnboarded()) {
-      if (id !== GUIDE_TRACK) {
-        nav(`/play/${GUIDE_TRACK}?tier=easy&mode=casual`, { replace: true });
-        return;
-      }
-    } else if (!id) {
-      return;
-    }
-    if (!id) return;
-    void (async () => {
-      setLoadError("");
-      setTrack(null);
-      setChart(null);
-      const t = await getTrack(id);
-      if (!t) {
-        setLoadError(`Track not found: ${id}`);
-        return;
-      }
-      setTrack(t);
-      try {
-        setChart(await loadChart(t, tier));
-      } catch (e) {
-        setLoadError(e instanceof Error ? e.message : "Chart load failed");
-      }
-    })();
-  }, [id, tier, nav]);
-
-  const finish = (result: PlayResult) => {
-    if (!track) return;
-    writeLastRun(track, tier, mode, result, performance.now() - startedAt);
-    if (!isOnboarded() && track.track_id === GUIDE_TRACK) {
-      setOnboarded();
-      nav("/");
-      return;
-    }
-    nav("/results?run=local");
-  };
-
-  const exitPlay = () => {
-    if (!window.confirm("Leave the Scape? This run will be discarded.")) return;
-    nav(track ? `/track/${track.track_id}` : "/library");
-  };
-
   if (loadError) {
     return (
       <section className="play-page">
@@ -97,10 +101,22 @@ export function PlayPage() {
     );
   }
 
-  if (!track || !chart) return <p className="loading">Loading chart…</p>;
+  if (!track || !chart) {
+    return (
+      <div className="loading-state">
+        <div className="loading-spinner" aria-hidden />
+        <p>Loading chart…</p>
+      </div>
+    );
+  }
 
   return (
     <section className="play-page">
+      <div
+        className="play-bg"
+        aria-hidden
+        style={{ backgroundImage: `url(${assetUrl(track.cover)})` }}
+      />
       <div className="play-meta">
         <strong>{track.title}</strong>
         <span className="play-meta-tier">
@@ -111,17 +127,18 @@ export function PlayPage() {
             Fullscreen
           </button>
         )}
-        <button type="button" className="btn linkish" onClick={exitPlay}>
+        <button type="button" className="btn compact" onClick={exitPlay}>
           Exit
         </button>
       </div>
       <PlayField
+        key={`${track.track_id}-${tier}-${mode}`}
         chart={chart}
         audioUrl={assetUrl(track.audio)}
         mode={mode}
         casualSpeed={settings.casualSpeed}
+        onStart={() => trackEvent("play_start", { track: track.track_id, tier, mode })}
         onFinish={finish}
-        onFail={finish}
       />
     </section>
   );

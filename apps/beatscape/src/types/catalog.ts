@@ -17,8 +17,13 @@ export type CatalogTrack = {
   default_mode: PlayMode;
   default_tier: ChartTier;
   audio: string;
+  /** Game clip length (seconds); charts align to `audio` */
   audio_master?: string;
   preview?: string;
+  /** Streaming app full version (PRD §6.0.27) */
+  stream_audio?: string;
+  stream_duration_sec?: number;
+  stream_app_url?: string;
   cover: string;
   /** Open Graph 1200×630 (PRD §6.0.24) */
   og?: string;

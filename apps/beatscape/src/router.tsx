@@ -1,6 +1,35 @@
-import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from "react";
+
+const APP_BASE = (import.meta.env.BASE_URL || "/beatscape/").replace(/\/$/, "") || "/beatscape";
 
 type RouteDef = { path: string; element: ReactNode };
+
+interface LocationValue {
+  path: string;
+  search: string;
+  params: Record<string, string>;
+  navigate: (to: string, opts?: { replace?: boolean }) => void;
+  setSearch: (q: URLSearchParams) => void;
+}
+
+const LocationCtx = createContext<LocationValue | null>(null);
+
+function toUrl(to: string): string {
+  return to.startsWith("/") ? `${APP_BASE}${to}` : `${APP_BASE}/${to}`;
+}
+
+function readLocation(): { path: string; search: string } {
+  const raw = window.location.pathname.replace(/\/$/, "") || "/";
+  const path = raw.startsWith(APP_BASE) ? raw.slice(APP_BASE.length) || "/" : raw;
+  return { path, search: window.location.search };
+}
 
 function matchPath(pattern: string, path: string): Record<string, string> | null {
   const patParts = pattern.split("/").filter(Boolean);
@@ -16,72 +45,102 @@ function matchPath(pattern: string, path: string): Record<string, string> | null
   return params;
 }
 
-export function useRouter(base = "/beatscape") {
-  const readPath = useCallback(() => {
-    const raw = window.location.pathname.replace(/\/$/, "") || "/";
-    return raw.startsWith(base) ? raw.slice(base.length) || "/" : raw;
-  }, [base]);
-
-  const readSearch = useCallback(() => window.location.search, []);
-
-  const [path, setPath] = useState(readPath);
-  const [search, setSearch] = useState(readSearch);
+export function Router({
+  routes,
+  layout,
+}: {
+  routes: RouteDef[];
+  layout?: (child: ReactNode) => ReactNode;
+}) {
+  const [loc, setLoc] = useState(readLocation);
 
   useEffect(() => {
-    const onPop = () => {
-      setPath(readPath());
-      setSearch(readSearch());
-    };
+    const onPop = () => setLoc(readLocation());
     window.addEventListener("popstate", onPop);
     return () => window.removeEventListener("popstate", onPop);
-  }, [readPath, readSearch]);
+  }, []);
 
-  const navigate = useCallback(
-    (to: string) => {
-      const dest = to.startsWith("/") ? `${base}${to}` : `${base}/${to}`;
-      window.history.pushState({}, "", dest);
-      setPath(readPath());
-      setSearch(readSearch());
-    },
-    [base, readPath, readSearch],
-  );
+  const navigate = useCallback((to: string, opts?: { replace?: boolean }) => {
+    const href = toUrl(to);
+    if (opts?.replace) window.history.replaceState({}, "", href);
+    else window.history.pushState({}, "", href);
+    setLoc(readLocation());
+  }, []);
 
+  const setSearch = useCallback((q: URLSearchParams) => {
+    const base = window.location.pathname;
+    const qs = q.toString();
+    window.history.replaceState({}, "", qs ? `${base}?${qs}` : base);
+    setLoc(readLocation());
+  }, []);
+
+  for (const r of routes) {
+    const params = matchPath(r.path, loc.path);
+    if (params !== null) {
+      const value: LocationValue = { path: loc.path, search: loc.search, params, navigate, setSearch };
+      const body = layout ? layout(r.element) : r.element;
+      return <LocationCtx.Provider value={value}>{body}</LocationCtx.Provider>;
+    }
+  }
+
+  const fallback: LocationValue = {
+    path: loc.path,
+    search: loc.search,
+    params: {},
+    navigate,
+    setSearch,
+  };
+  const fallbackBody =
+    layout && routes.find((r) => r.path === "/")?.element
+      ? layout(routes.find((r) => r.path === "/")!.element!)
+      : routes.find((r) => r.path === "/")?.element ?? null;
+  return <LocationCtx.Provider value={fallback}>{fallbackBody}</LocationCtx.Provider>;
+}
+
+function useLocation(): LocationValue {
+  const ctx = useContext(LocationCtx);
+  if (!ctx) throw new Error("Router components must be used inside <Router>");
+  return ctx;
+}
+
+export function useParams(): Record<string, string> {
+  return useLocation().params;
+}
+
+export function useNavigate(): (to: string, opts?: { replace?: boolean }) => void {
+  return useLocation().navigate;
+}
+
+export function useRouter(): { path: string; navigate: LocationValue["navigate"]; search: string } {
+  const { path, navigate, search } = useLocation();
   return { path, navigate, search };
 }
 
-export function Router({ base, routes }: { base?: string; routes: RouteDef[] }) {
-  const { path } = useRouter(base);
-  for (const r of routes) {
-    const params = matchPath(r.path, path);
-    if (params !== null) {
-      return <RouteParamsProvider params={params}>{r.element}</RouteParamsProvider>;
-    }
-  }
-  return <>{routes.find((r) => r.path === "/")?.element ?? null}</>;
+export function useSearchParams(): [URLSearchParams, (q: URLSearchParams) => void] {
+  const { search, setSearch } = useLocation();
+  return [new URLSearchParams(search), setSearch];
 }
 
-const ParamsCtx = { current: {} as Record<string, string> };
-
-function RouteParamsProvider({ params, children }: { params: Record<string, string>; children: ReactNode }) {
-  ParamsCtx.current = params;
-  return <>{children}</>;
-}
-
-export function useParams() {
-  return ParamsCtx.current;
-}
-
-export function Link({ to, children, className }: { to: string; children: ReactNode; className?: string }) {
-  const base = import.meta.env.BASE_URL.replace(/\/$/, "") || "/beatscape";
-  const href = to.startsWith("/") ? `${base}${to}` : `${base}/${to}`;
+export function Link({
+  to,
+  children,
+  className,
+  onClick,
+}: {
+  to: string;
+  children: ReactNode;
+  className?: string;
+  onClick?: () => void;
+}) {
+  const { navigate } = useLocation();
   return (
     <a
-      href={href}
+      href={toUrl(to)}
       className={className}
       onClick={(e) => {
         e.preventDefault();
-        window.history.pushState({}, "", href);
-        window.dispatchEvent(new PopStateEvent("popstate"));
+        onClick?.();
+        navigate(to);
       }}
     >
       {children}
@@ -90,33 +149,11 @@ export function Link({ to, children, className }: { to: string; children: ReactN
 }
 
 export function Navigate({ to }: { to: string }) {
-  const base = import.meta.env.BASE_URL.replace(/\/$/, "") || "/beatscape";
+  const { navigate } = useLocation();
   useEffect(() => {
-    const href = to.startsWith("/") ? `${base}${to}` : `${base}/${to}`;
-    window.history.replaceState({}, "", href);
-    window.dispatchEvent(new PopStateEvent("popstate"));
-  }, [to, base]);
+    navigate(to, { replace: true });
+  }, [to, navigate]);
   return null;
 }
 
-export function useNavigate() {
-  const base = import.meta.env.BASE_URL.replace(/\/$/, "") || "/beatscape";
-  return (to: string, opts?: { replace?: boolean }) => {
-    const href = to.startsWith("/") ? `${base}${to}` : `${base}/${to}`;
-    if (opts?.replace) window.history.replaceState({}, "", href);
-    else window.history.pushState({}, "", href);
-    window.dispatchEvent(new PopStateEvent("popstate"));
-  };
-}
-
-export function useSearchParams(): [URLSearchParams, (q: URLSearchParams) => void] {
-  const { search } = useRouter();
-  const params = useMemo(() => new URLSearchParams(search), [search]);
-  const setParams = (q: URLSearchParams) => {
-    const base = window.location.pathname;
-    const qs = q.toString();
-    window.history.replaceState({}, "", qs ? `${base}?${qs}` : base);
-    window.dispatchEvent(new PopStateEvent("popstate"));
-  };
-  return [params, setParams];
-}
+export { APP_BASE };

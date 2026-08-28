@@ -71,11 +71,15 @@ MusicSaas/
 | `src/engine/judge.ts` | 判定窗 15/30/50 ms |
 | `src/storage/settings.ts` | `bs_*` localStorage |
 | `public/catalog.json` | Stage1 曲库元数据 |
+| `catalog-roadmap.json` | 正式版 50 首槽位 · Stage/曲风配额真值 |
 | `public/catalog/bs-s1-*/` | 每曲 m4a + easy/standard/hard JSON + cover |
 
 **脚本：**
 
-- `scripts/beatscape-ingest-stage1.py` — 预览 → public catalog
+- `scripts/beatscape-ingest-stage1.py` — Stage1 预览 → public catalog
+- `scripts/beatscape-ingest-stage2.py` — Stage2 合并入库（#07–#10）
+- `scripts/beatscape-track-registry.py` — Stage1+2 锁定元数据
+- `scripts/beatscape-stage2-manifest.json` — Stage2 生成 Job 草案
 - `scripts/beatscape-audit.py` — 时长/元数据 QA
 
 **预览：** `pnpm dev:beatscape` · base `/beatscape/`
@@ -123,6 +127,9 @@ Mac 启停：`scripts/mac-services-up.sh` · `scripts/mac-stack-verify.sh`
 | `pnpm test:e2e` | demo web acceptance |
 | `pnpm test:mlx` | Mac MLX（不可达则 skip） |
 | `pnpm audit:beatscape` | Stage1 catalog QA |
+| `pnpm catalog:beatscape` | 路线图 vs 已上架缺口统计 |
+
+BeatScape 待办与验收：[BEATSCAPE-TODO-ACCEPTANCE.md](./BEATSCAPE-TODO-ACCEPTANCE.md)
 
 ---
 

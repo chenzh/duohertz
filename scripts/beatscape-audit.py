@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import argparse
 import array
+import importlib.util
 import json
 import math
 import re
@@ -22,6 +23,8 @@ from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Literal
+
+ROOT = Path(__file__).resolve().parents[1]
 
 Status = Literal["PASS", "WARN", "FAIL"]
 
@@ -77,11 +80,55 @@ STAGE1_BY_SLUG: dict[str, dict[str, Any]] = {
     },
 }
 
+STAGE2_BY_SLUG: dict[str, dict[str, Any]] = {
+    "07-slide-city": {
+        "track_id": "bs-s2-01",
+        "title": "Slide City",
+        "bpm": 140,
+        "duration_sec": 90,
+        "genre": "EDM",
+        "stage": 2,
+        "allows_slide": True,
+    },
+    "08-skyline-hook": {
+        "track_id": "bs-s2-02",
+        "title": "Skyline Hook",
+        "bpm": 128,
+        "duration_sec": 90,
+        "genre": "Pop",
+        "stage": 2,
+    },
+    "09-blue-hour-loop": {
+        "track_id": "bs-s2-03",
+        "title": "Blue Hour Loop",
+        "bpm": 120,
+        "duration_sec": 90,
+        "genre": "Pop",
+        "stage": 2,
+    },
+    "10-asphalt-anthem": {
+        "track_id": "bs-s2-04",
+        "title": "Asphalt Anthem",
+        "bpm": 148,
+        "duration_sec": 90,
+        "genre": "Rock",
+        "stage": 2,
+    },
+}
+
+LOCKED_BY_SLUG = {**STAGE1_BY_SLUG, **STAGE2_BY_SLUG}
+
 # PRD §4.6 density windows (NPS average, peak 2s, hold %, chord per 10s)
 DENSITY_SPEC: dict[str, dict[str, tuple[float, float]]] = {
     "easy": {"nps": (2.0, 3.5), "peak_nps": (0, 5), "hold_pct": (5, 15), "chord_10s": (0, 1)},
     "standard": {"nps": (3.5, 5.5), "peak_nps": (0, 8), "hold_pct": (10, 25), "chord_10s": (1, 3)},
     "hard": {"nps": (5.5, 8.5), "peak_nps": (0, 12), "hold_pct": (15, 30), "chord_10s": (3, 6)},
+}
+# onset-v1 auto-charts: wider bands (chartgen targets ± tolerance)
+ONSET_DENSITY_SPEC: dict[str, dict[str, tuple[float, float]]] = {
+    "easy": {"nps": (1.4, 3.9), "peak_nps": (0, 6), "hold_pct": (0, 24), "chord_10s": (0, 2)},
+    "standard": {"nps": (2.4, 6.4), "peak_nps": (0, 10), "hold_pct": (0, 30), "chord_10s": (0, 7)},
+    "hard": {"nps": (3.0, 9.8), "peak_nps": (0, 14), "hold_pct": (0, 35), "chord_10s": (0, 18)},
 }
 
 CATALOG_REQUIRED = (
@@ -100,7 +147,7 @@ CATALOG_REQUIRED = (
 )
 
 THEME_KEYWORDS = re.compile(
-    r"\b(neon|scape|pulse|glass|horizon|grid|chrome|velvet|voltage|skyline|afterhours|beat)\b",
+    r"\b(neon|scape|pulse|glass|horizon|grid|chrome|velvet|voltage|skyline|afterhours|beat|slide|asphalt|blue|quiet|anthem)\b",
     re.I,
 )
 
@@ -146,14 +193,26 @@ def slug_from_stem(stem: str) -> str:
     return stem.lower().replace("_", "-")
 
 
+def stage_from_track_id(track_id: str) -> int:
+    for prefix, stage in (
+        ("bs-s1-", 1),
+        ("bs-s2-", 2),
+        ("bs-s3-", 3),
+        ("bs-s4-", 4),
+        ("bs-s5-", 5),
+    ):
+        if track_id.startswith(prefix):
+            return stage
+    return 0
+
+
 def resolve_spec(stem: str, meta: dict[str, Any] | None) -> dict[str, Any] | None:
     if meta:
         return meta
     slug = slug_from_stem(stem)
-    if slug in STAGE1_BY_SLUG:
-        return STAGE1_BY_SLUG[slug]
-    # bs-s1-01 style
-    for spec in STAGE1_BY_SLUG.values():
+    if slug in LOCKED_BY_SLUG:
+        return LOCKED_BY_SLUG[slug]
+    for spec in LOCKED_BY_SLUG.values():
         if spec["track_id"] == stem:
             return spec
     return None
@@ -300,11 +359,16 @@ def audit_audio(path: Path, spec: dict[str, Any]) -> TrackReport:
 
 
 def note_count(notes: list[dict[str, Any]]) -> int:
+    """Total judgment objects (PRD §4.4): hold = head+tail = 2, slide = 1,
+    chord = len(lanes), tap = 1. Matches the runtime engine countTotalNotes so
+    chart.total_notes is the correct accuracy denominator."""
     total = 0
     for n in notes:
         t = n.get("type")
         if t == "chord":
             total += len(n.get("lanes") or [])
+        elif t == "hold":
+            total += 2
         else:
             total += 1
     return total
@@ -339,6 +403,101 @@ def tier_nps(notes: list[dict[str, Any]], duration: float) -> tuple[float, float
                 j += 1
             peak = max(peak, j - i)
     return nps, float(peak), hold_pct, chord_per_10s
+
+
+def _load_audio_module():
+    spec = importlib.util.spec_from_file_location("beatscape_audio", ROOT / "scripts" / "beatscape-audio.py")
+    assert spec and spec.loader
+    mod = importlib.util.module_from_spec(spec)
+    sys.modules["beatscape_audio"] = mod
+    spec.loader.exec_module(mod)
+    return mod
+
+
+_audio_mod: Any | None = None
+
+
+def audio_module():
+    global _audio_mod
+    if _audio_mod is None:
+        _audio_mod = _load_audio_module()
+    return _audio_mod
+
+
+def audit_chart_onset_alignment(
+    chart: dict[str, Any],
+    audio_path: Path,
+    bpm_hint: float,
+) -> list[Check]:
+    checks: list[Check] = []
+    beat_map = chart.get("beat_map") or {}
+    if beat_map.get("source") != "onset-v1":
+        checks.append(Check("WARN", "chart.beat_map", "missing onset-v1 beat_map — legacy grid chart?"))
+        return checks
+
+    try:
+        analysis = audio_module().analyze_audio(audio_path, bpm_hint)
+    except Exception as exc:
+        checks.append(Check("WARN", "chart.onset.audio", f"cannot analyze audio: {exc}"))
+        return checks
+
+    onsets = analysis.onsets_sec
+    notes = chart.get("notes") or []
+    head_times = [float(n["t"]) for n in notes if n.get("type") in ("tap", "hold", "chord")]
+    if not head_times:
+        checks.append(Check("FAIL", "chart.onset.empty", "no note heads to align"))
+        return checks
+
+    dists = [audio_module().nearest_onset_distance(t, onsets) for t in head_times]
+    dists.sort()
+    median = dists[len(dists) // 2]
+    p90 = dists[int(len(dists) * 0.9)]
+    coverage = sum(1 for d in dists if d <= 80) / len(dists)
+
+    if median <= 55 and p90 <= 120 and coverage >= 0.75:
+        checks.append(
+            Check(
+                "PASS",
+                "chart.onset.align",
+                f"median {median:.0f}ms · p90 {p90:.0f}ms · coverage {coverage * 100:.0f}%",
+            )
+        )
+    elif median <= 90 and p90 <= 180:
+        checks.append(
+            Check(
+                "WARN",
+                "chart.onset.align",
+                f"loose align median {median:.0f}ms · p90 {p90:.0f}ms · coverage {coverage * 100:.0f}%",
+            )
+        )
+    else:
+        checks.append(
+            Check(
+                "FAIL",
+                "chart.onset.align",
+                f"poor align median {median:.0f}ms · p90 {p90:.0f}ms · coverage {coverage * 100:.0f}%",
+            )
+        )
+
+    offset = int(chart.get("audio_offset_ms") or 0)
+    if offset != 0:
+        checks.append(Check("WARN", "chart.audio_offset", f"audio_offset_ms={offset} (onset charts expect 0)"))
+    else:
+        checks.append(Check("PASS", "chart.audio_offset", "0 (file-timeline notes)"))
+
+    first_beat = beat_map.get("first_beat_ms")
+    if first_beat is not None and abs(int(first_beat) - analysis.audio_offset_ms) > 120:
+        checks.append(
+            Check(
+                "WARN",
+                "chart.first_beat",
+                f"beat_map {first_beat}ms vs analysis {analysis.audio_offset_ms}ms",
+            )
+        )
+    else:
+        checks.append(Check("PASS", "chart.first_beat", f"{analysis.audio_offset_ms}ms"))
+
+    return checks
 
 
 def audit_chart(path: Path, *, stage: int, duration_sec: float) -> list[Check]:
@@ -384,8 +543,13 @@ def audit_chart(path: Path, *, stage: int, duration_sec: float) -> list[Check]:
             if lane not in (0, 1, 2, 3):
                 checks.append(Check("FAIL", "chart.tap", f"invalid lane (note #{i})"))
 
+    slide_count = sum(1 for n in notes if n.get("type") == "slide")
+    if tier in ("standard", "hard") and stage >= 2 and slide_count:
+        checks.append(Check("PASS", "chart.slide", f"{slide_count} slide(s)"))
+
     if tier in DENSITY_SPEC:
-        spec = DENSITY_SPEC[tier]
+        beat_map = chart.get("beat_map") or {}
+        spec = ONSET_DENSITY_SPEC[tier] if beat_map.get("source") == "onset-v1" else DENSITY_SPEC[tier]
         nps, peak, hold_pct, chord_10s = tier_nps(notes, duration_sec)
         def band(key: str, val: float, label: str) -> None:
             lo, hi = spec[key]
@@ -445,6 +609,39 @@ def audit_catalog_entry(entry: dict[str, Any], base: Path) -> TrackReport:
             report.checks.append(Check("FAIL", "catalog.audio_path", f"missing {audio_rel}"))
         else:
             report.checks.append(Check("PASS", "catalog.audio_path", str(audio_rel)))
+
+    duration_sec = float(entry.get("duration_sec") or 0)
+    stream_audio = entry.get("stream_audio")
+    stream_dur = entry.get("stream_duration_sec")
+    track_id = str(entry.get("track_id", ""))
+    is_stage2_plus = track_id.startswith("bs-s2-") or track_id.startswith("bs-s3-")
+
+    if stream_audio:
+        sp = base / str(stream_audio).lstrip("/")
+        if not sp.is_file():
+            report.checks.append(Check("FAIL", "catalog.stream_audio", f"missing {stream_audio}"))
+        else:
+            report.checks.append(Check("PASS", "catalog.stream_audio", str(stream_audio)))
+        if not stream_dur:
+            report.checks.append(Check("FAIL", "catalog.stream_duration", "stream_audio set but stream_duration_sec missing"))
+        elif duration_sec and float(stream_dur) < duration_sec * 1.8:
+            report.checks.append(
+                Check(
+                    "FAIL",
+                    "catalog.stream_duration",
+                    f"stream_duration_sec={stream_dur} < game×1.8 ({duration_sec * 1.8:.0f})",
+                )
+            )
+        else:
+            report.checks.append(Check("PASS", "catalog.stream_duration", f"stream {stream_dur}s vs game {duration_sec}s"))
+    elif is_stage2_plus:
+        report.checks.append(Check("FAIL", "catalog.stream_dual", "Stage2+ requires stream_audio + stream_duration_sec"))
+    elif stream_dur and duration_sec and float(stream_dur) < duration_sec * 1.8:
+        report.checks.append(
+            Check("WARN", "catalog.stream_planned", f"planned stream {stream_dur}s < game×1.8 (full master not ingested)")
+        )
+    elif stream_dur:
+        report.checks.append(Check("PASS", "catalog.stream_planned", f"planned stream {stream_dur}s (Stage1 teaser ok)"))
 
     return report
 
@@ -526,14 +723,35 @@ def run_audit(args: argparse.Namespace) -> AuditReport:
             if entry.get("track_id"):
                 catalog_by_id[entry["track_id"]] = entry
             # charts
-            stage = 1 if str(entry.get("track_id", "")).startswith("bs-s1-") else 2
+            stage = stage_from_track_id(str(entry.get("track_id", ""))) or 2
             charts = entry.get("charts") or {}
             dur = float(entry.get("duration_sec") or 75)
+            bpm_hint = float(entry.get("bpm") or 120)
+            audio_rel = entry.get("audio")
+            audio_path = base / str(audio_rel).lstrip("/") if audio_rel else None
             for tier, rel in charts.items():
                 cp = base / str(rel).lstrip("/")
                 if cp.is_file():
                     chart_checks = audit_chart(cp, stage=stage, duration_sec=dur)
                     tr.checks.extend(chart_checks)
+                    if audio_path and audio_path.is_file():
+                        try:
+                            chart = json.loads(cp.read_text(encoding="utf-8"))
+                            tr.checks.extend(audit_chart_onset_alignment(chart, audio_path, bpm_hint))
+                            if (
+                                str(entry.get("track_id")) == "bs-s2-01"
+                                and tier in ("standard", "hard")
+                                and not any(n.get("type") == "slide" for n in chart.get("notes", []))
+                            ):
+                                tr.checks.append(
+                                    Check(
+                                        "WARN",
+                                        "chart.slide.required",
+                                        f"{tier} chart should include slide notes (Slide City)",
+                                    )
+                                )
+                        except Exception as exc:
+                            tr.checks.append(Check("WARN", "chart.onset", str(exc)))
 
     if args.audio:
         audio_files = [Path(p).resolve() for p in args.audio]

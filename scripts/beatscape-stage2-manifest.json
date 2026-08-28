@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "stage": 2,
+  "target_total": 10,
+  "notes": "MusicSaas generation jobs for BeatScape Stage2 (#07–#10). Master 180s → clip 90s game slice.",
+  "tracks": [
+    {
+      "seq": 7,
+      "track_id": "bs-s2-01",
+      "preview_stem": "07-Slide-City",
+      "title": "Slide City",
+      "mode": "game_bgm",
+      "engine": "stable-audio-3",
+      "preset_id": "bs-edm-main",
+      "duration_sec": 180,
+      "game_clip_sec": 90,
+      "stream_duration_sec": 198,
+      "prompt": "EDM rhythm game track, 140 BPM, clear 4/4 beat, sidechain sweep, slide city atmosphere, instrumental, no vocals, chart-friendly for slide notes, beatscape original, owned rights"
+    },
+    {
+      "seq": 8,
+      "track_id": "bs-s2-02",
+      "preview_stem": "08-Skyline-Hook",
+      "title": "Skyline Hook",
+      "mode": "vocal_lyrics",
+      "engine": "ace-step",
+      "preset_id": "bs-theme-en",
+      "duration_sec": 180,
+      "game_clip_sec": 90,
+      "stream_duration_sec": 198,
+      "style_tags": "english pop, neon skyline, clear beat, instrumental hooks, beatscape original",
+      "lyrics": "[Verse]\nNeon on the glass, I follow the line\nPulse in the grid, the city is mine\n[Chorus]\nOwn the scape, feel the beat tonight\nSkyline hook — we light the height",
+      "prompt": "English pop vocal rhythm theme, 128 BPM, skyline hook, neon scape lyrics, clear beat, beatscape original, owned rights",
+      "lyrics_hint": "See PRD §6.0.12"
+    },
+    {
+      "seq": 9,
+      "track_id": "bs-s2-03",
+      "preview_stem": "09-Blue-Hour-Loop",
+      "title": "Blue Hour Loop",
+      "mode": "game_bgm",
+      "engine": "stable-audio-3",
+      "preset_id": "bs-chill-pop",
+      "duration_sec": 180,
+      "game_clip_sec": 90,
+      "stream_duration_sec": 198,
+      "prompt": "Chill pop rhythm game track, 120 BPM, soft pads, blue hour neon loop, clear beat, instrumental, no vocals, practice-friendly, beatscape original, owned rights"
+    },
+    {
+      "seq": 10,
+      "track_id": "bs-s2-04",
+      "preview_stem": "10-Asphalt-Anthem",
+      "title": "Asphalt Anthem",
+      "mode": "game_bgm",
+      "engine": "stable-audio-3",
+      "preset_id": "bs-rock-drive",
+      "duration_sec": 180,
+      "game_clip_sec": 90,
+      "stream_duration_sec": 198,
+      "prompt": "Rock rhythm game track, 148 BPM, asphalt anthem, electric guitar, tight drums, clear 4/4, chrome yard energy, instrumental, no vocals, beatscape original, owned rights"
+    }
+  ]
+}
