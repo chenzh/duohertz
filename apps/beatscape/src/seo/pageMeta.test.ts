@@ -56,7 +56,19 @@ describe("buildPlayPageMeta", () => {
   it("falls back when track has no seo block", () => {
     const { seo: _, ...noSeo } = baseTrack;
     const meta = buildPlayPageMeta(noSeo, "easy", "practice");
+    expect(meta.title).toBe("Play Neon Pulse — BeatScape");
+    expect(meta.description).toContain("Neon Pulse · easy · practice.");
     expect(meta.description).toContain("Own the Scape. 160 BPM EDM chart.");
+    expect(meta.description).toContain("Feel the Beat, Own the Scape.");
+  });
+
+  it("treats explicit seo undefined the same as missing seo", () => {
+    const trackWithoutSeo: CatalogTrack = { ...baseTrack, seo: undefined };
+    const meta = buildPlayPageMeta(trackWithoutSeo, "standard", "arcade");
+    expect(meta.title).toBe("Play Neon Pulse — BeatScape");
+    expect(meta.description).toContain("Neon Pulse · standard · arcade.");
+    expect(meta.description).toContain("Own the Scape. 160 BPM EDM chart.");
+    expect(meta.description).toContain("Feel the Beat, Own the Scape.");
   });
 
   it("default site meta matches index.html title", () => {
