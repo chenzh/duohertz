@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "../router";
 import { assetUrl, loadCatalog } from "../catalog/loadCatalog";
 import type { CatalogTrack } from "../types/catalog";
+import { HOME_PAGE_META, usePageMeta } from "../seo/pageMeta";
 import { isOnboarded } from "../storage/settings";
 
 const BEGINNER_TAG = "Beginner Pick";
@@ -12,6 +13,7 @@ function playUrl(track: CatalogTrack) {
 }
 
 export function HomePage() {
+  usePageMeta(HOME_PAGE_META);
   const [tracks, setTracks] = useState<CatalogTrack[]>([]);
 
   useEffect(() => {

@@ -4,6 +4,7 @@ import {
   buildPlayPageMeta,
   CALIBRATION_PAGE_META,
   DEFAULT_PAGE_META,
+  HOME_PAGE_META,
   LIBRARY_PAGE_META,
   NOT_FOUND_PAGE_META,
   PRIVACY_PAGE_META,
@@ -60,6 +61,22 @@ describe("buildPlayPageMeta", () => {
 
   it("default site meta matches index.html title", () => {
     expect(DEFAULT_PAGE_META.title).toBe("BeatScape — Feel the Beat, Own the Scape");
+  });
+});
+
+describe("HOME_PAGE_META", () => {
+  it("sets home title matching index.html", () => {
+    expect(HOME_PAGE_META.title).toBe("BeatScape — Feel the Beat, Own the Scape");
+  });
+
+  it("includes rhythm game semantics and site tagline", () => {
+    expect(HOME_PAGE_META.description).toContain("English pop & EDM browser rhythm game");
+    expect(HOME_PAGE_META.description).toContain("owned AI originals");
+    expect(HOME_PAGE_META.description).toContain("Feel the Beat, Own the Scape.");
+  });
+
+  it("matches default site meta", () => {
+    expect(HOME_PAGE_META).toBe(DEFAULT_PAGE_META);
   });
 });
 

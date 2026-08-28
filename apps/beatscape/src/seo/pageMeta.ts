@@ -13,6 +13,8 @@ export type PageMeta = {
   description: string;
 };
 
+export const HOME_PAGE_META: PageMeta = DEFAULT_PAGE_META;
+
 export const LIBRARY_PAGE_META: PageMeta = {
   title: "Library — BeatScape",
   description:
