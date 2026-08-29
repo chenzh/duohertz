@@ -1,6 +1,9 @@
 # BeatScape Stage 4 · RESONANCE 声波批次（10 首规划）
 
-> **⚠️ 已合并至权威文档** [`BEATSCAPE-STAGE4-RESONANCE-MUSIC.md`](./BEATSCAPE-STAGE4-RESONANCE-MUSIC.md)（曲名 / preset / 流水线以此为准）。  
+> **⚠️ 已合并** — 权威文档：  
+> - 声波真值：[`BEATSCAPE-SONIC-DIRECTION.md`](./BEATSCAPE-SONIC-DIRECTION.md)  
+> - 曲目表 / Prompt：[`BEATSCAPE-STAGE4-RESONANCE-MUSIC.md`](./BEATSCAPE-STAGE4-RESONANCE-MUSIC.md)  
+> 本文件仅作历史草稿留存，**勿按本文件曲名生成**。  
 > 本文件保留早期 brainstorm，**勿按本表曲名生成**。
 
 > **状态**：文档定稿 · **待生成**（human-only 流水线）  

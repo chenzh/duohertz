@@ -1,17 +1,20 @@
-# BeatScape Stage 4 — RESONANCE 气质补曲规划（10 首）
+# BeatScape Stage 4 — RESONANCE 声波补曲（10 首）
 
 > **状态**：文档定稿 · **待生成**（human-only 流水线）  
 > **更新**：2026-08-29  
 > **槽位**：`bs-s4-01` … `bs-s4-10`（Stage 4 第一波，25 → **35** 首）  
+> **声波真值**：[`BEATSCAPE-SONIC-DIRECTION.md`](./BEATSCAPE-SONIC-DIRECTION.md) — 全曲库 **车载 + 都市爵士战斗感**（对内参照女神异闻录气质，对外 RESONANCE）  
 > **关联**：[`RESONANCE-VISUAL-PLAN.md`](./RESONANCE-VISUAL-PLAN.md) · [`RESONANCE-BLINDTEST.md`](./RESONANCE-BLINDTEST.md) · [`PRD-BEATSCAPE.md`](./PRD-BEATSCAPE.md) §6.0 · [`catalog-roadmap.json`](../apps/beatscape/catalog-roadmap.json)
 
 ---
 
 ## 1. 为什么要做这一波
 
-RESONANCE 视觉已把 BeatScape 拉到「高对比漫画 / 都市律动」气质。现有 25 首以 **欧美流行 + EDM 主仓** 为主，**律动复杂度与 funk/jazz-fusion 色彩不足**，和 UI 的「夜间都市战斗感」不够齐。
+RESONANCE 视觉已把 BeatScape 拉到「高对比漫画 / 都市夜行」气质。**产品声波方向**已定为：全曲库追求 **车载级宽声场** + **都市爵士战斗感**（funk / acid jazz / neo-soul / brass），见 [`BEATSCAPE-SONIC-DIRECTION.md`](./BEATSCAPE-SONIC-DIRECTION.md)。
 
-目标：**补 10 首「听感上更燃、更 groove、更有戏剧性」的 AI 原创**，让玩家感到「像那类都市节奏游戏的劲道」，但：
+现有 25 首以欧美流行 + EDM 主仓为主，**律动复杂度与 jazz-fusion 色彩不足**，和 UI 的「夜间都市战斗感」不够齐。本波 **10 首** 是声波方向的首批完全对齐批次。
+
+目标：**补 10 首「听感上更燃、更 groove、更有戏剧性」的 AI 原创**——玩家感到「像深夜开车听 stylish urban RPG BGM 那种劲道」，但：
 
 - **不采样、不仿旋律、不碰 J-pop / 动漫 OP 语感**
 - **不出现任何第三方 IP、曲目名、角色名、系列名**
@@ -21,7 +24,8 @@ RESONANCE 视觉已把 BeatScape 拉到「高对比漫画 / 都市律动」气�
 
 ## 2. 音乐侧法律边界（必读）
 
-与视觉盲测同理，音乐风险在 **「是否会被误认为某首已知曲」**，而非「是否用了同一种风格」。
+与视觉盲测同理，音乐风险在 **「是否会被误认为某首已知曲」**，而非「是否用了同一种风格」。  
+完整红线与耳检规程见 [`BEATSCAPE-SONIC-DIRECTION.md`](./BEATSCAPE-SONIC-DIRECTION.md) §2 · §6。
 
 ### 2.1 可以借（公共技法 / 类型）
 
@@ -54,18 +58,20 @@ RESONANCE 视觉已把 BeatScape 拉到「高对比漫画 / 都市律动」气�
 
 ---
 
-## 3. 「Persona 气质」在本项目中的可操作定义
+## 3. 「车载 × 都市爵士战斗感」在本批中的定义
 
-对外 **禁止** 使用「Persona 风」「女神异闻录」等字样；对内用下表对齐生成 Prompt：
+> **对内**可说「女神异闻录战斗/探索曲那类气质」；**对外与 Prompt** 禁止 Persona / 女神异闻录等字样。  
+> 权威对照表：[`BEATSCAPE-SONIC-DIRECTION.md`](./BEATSCAPE-SONIC-DIRECTION.md) §3–§4。
 
 | 玩家口头描述 | 生成 Prompt 应写成 | 避免写成 |
 |--------------|-------------------|----------|
+| 「开车听很带劲」 | `night drive mix, wide stereo, punchy bass, clear downbeat` | highway anime, city pop japan |
 | 「打怪盗团那种劲」 | `syncopated funk groove, confident urban night drive` | phantom thief, rebellion anthem |
 | 「爵士味战斗曲」 | `jazz-funk rhythm, brass stabs, chart-friendly 4/4` | boss battle anime, tokyo jazz club |
 | 「踩点很骚」 | `off-beat hi-hats, tight snare, clear downbeat for rhythm game` | shuffle anime fight |
-| 「很潮的都市夜」 | `neon cityscape, afterhours energy, western pop production` | shibuya, japanese city pop |
+| 「很潮的都市夜」 | `neon cityscape, afterhours energy, western production` | shibuya, japanese city pop |
 
-**一句话**：借 **funk / jazz-fusion / neo-soul / nu-disco 的律动语法**，输出 **欧美制作审美的器乐曲**，锚在 BeatScape 幻境城市词表。
+**一句话**：借 **funk / jazz-fusion / neo-soul / nu-disco 的律动语法** + **车载宽声场混音**，输出 **欧美制作审美的器乐曲**，锚在 BeatScape 幻境城市词表。
 
 ---
 
@@ -85,8 +91,9 @@ RESONANCE 视觉已把 BeatScape 拉到「高对比漫画 / 都市律动」气�
 **通用后缀（每首强制）**：
 
 ```text
-clear 4/4 beat, [scape keyword x2], beatscape original, rhythm game chart music,
-owned rights, instrumental, no vocals, loop-friendly, western production
+clear 4/4 beat, night drive energy, wide stereo mix, [scape keyword x2],
+beatscape original, rhythm game chart music, owned rights, instrumental,
+no vocals, loop-friendly, western production
 ```
 
 **禁止词**：`persona, atlus, anime, j-pop, japanese, vocaloid, tarot, velvet room, megaten`
@@ -128,8 +135,9 @@ owned rights, instrumental, no vocals, loop-friendly, western production
 
 ```text
 EDM rhythm game track, 160 BPM, clear 4/4 kick, brass stab hooks, neon pulse energy,
-urban scape at night, build-up and drop within 8 seconds, chart-friendly drums,
-instrumental, no vocals, beatscape original, owned rights, loop-friendly, western production
+urban scape at night, night drive wide mix, build-up and drop within 8 seconds,
+chart-friendly drums, instrumental, no vocals, beatscape original, owned rights,
+loop-friendly, western production
 ```
 
 ### bs-s4-02 · Syncopated Grid

@@ -41,11 +41,12 @@
 2. [docs/PRD-WEB-RHYTHM-GAME.md](./PRD-WEB-RHYTHM-GAME.md) — NeonBeat 参考
 3. [docs/BEATSCAPE-STAGE1-DUAL-ASSET.md](./BEATSCAPE-STAGE1-DUAL-ASSET.md) — Stage1 双资产改造清单
 4. [docs/BEATSCAPE-CATALOG-ROADMAP.md](./BEATSCAPE-CATALOG-ROADMAP.md) — 正式版 50 首路线图与缺口
-5. [docs/BEATSCAPE-STAGE4-RESONANCE-MUSIC.md](./BEATSCAPE-STAGE4-RESONANCE-MUSIC.md) — Stage4 第一波 10 首 RESONANCE 气质补曲（待生成）
-6. [docs/BEATSCAPE-RESONANCE-PRESETS.md](./BEATSCAPE-RESONANCE-PRESETS.md) — RESONANCE 风格包附录（待合入 PRD）
-7. [docs/BEATSCAPE-STAGE2-DELIVERY.md](./BEATSCAPE-STAGE2-DELIVERY.md) — Stage2 #07–#10 交付清单
-6. [docs/BEATSCAPE-TODO-ACCEPTANCE.md](./BEATSCAPE-TODO-ACCEPTANCE.md) — **待办 + 验收标准（SESSION 镜像）**
-7. 内容流水线见 PRD-BEATSCAPE §6.0 · `catalog.json` · `catalog-roadmap.json` · `scripts/beatscape-*`
+5. [docs/BEATSCAPE-SONIC-DIRECTION.md](./BEATSCAPE-SONIC-DIRECTION.md) — **全曲库声波真值**（车载 + 都市爵士战斗感 · 侵权规避）
+6. [docs/BEATSCAPE-STAGE4-RESONANCE-MUSIC.md](./BEATSCAPE-STAGE4-RESONANCE-MUSIC.md) — Stage4 第一波 10 首补曲（待生成）
+7. [docs/BEATSCAPE-RESONANCE-PRESETS.md](./BEATSCAPE-RESONANCE-PRESETS.md) — RESONANCE 风格包附录（待合入 PRD）
+8. [docs/BEATSCAPE-STAGE2-DELIVERY.md](./BEATSCAPE-STAGE2-DELIVERY.md) — Stage2 #07–#10 交付清单
+9. [docs/BEATSCAPE-TODO-ACCEPTANCE.md](./BEATSCAPE-TODO-ACCEPTANCE.md) — **待办 + 验收标准（SESSION 镜像）**
+10. 内容流水线见 PRD-BEATSCAPE §6.0 · `catalog.json` · `catalog-roadmap.json` · `scripts/beatscape-*`
 
 ### Harness / 续作
 

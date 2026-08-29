@@ -18,7 +18,7 @@ npm run build
 
 ## 差异化一句话（帖文用）
 
-> **BeatScape** — browser 4-lane rhythm game with **15/30/50 ms** judge windows, **AI-original** English catalog (25 tracks), no download. Tap Play → **Neon Pulse** in under 10 seconds.
+> **BeatScape** — browser 4-lane rhythm game with **15/30/50 ms** judge windows, **AI-original** night-drive groove catalog (25 tracks → 35), no download. Funk, jazz-fusion, neo-soul textures — **not** licensed hits. Tap Play → **Neon Pulse** in under 10 seconds.
 
 ## 建议标题模板
 

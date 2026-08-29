@@ -2,6 +2,7 @@
 
 > **机器真值**：`apps/beatscape/catalog-roadmap.json`  
 > **权威 PRD**：`docs/PRD-BEATSCAPE.md` §6.0.1 · §6.0.5 · §6.0.14  
+> **声波真值**：[`BEATSCAPE-SONIC-DIRECTION.md`](./BEATSCAPE-SONIC-DIRECTION.md) — 全曲库 **车载 + 都市爵士战斗感**  
 > **缺口命令**：`pnpm catalog:beatscape`
 
 ---
@@ -20,6 +21,13 @@
 
 - 每周：手感修 + 0～1 首替补  
 - 每月：候选 8～12 首 → QA 过关入库 **2～4** 首  
+
+---
+
+## 1.5 声波方向（全曲库）
+
+BeatScape **全部音乐**统一为 **车载级宽声场** + **都市爵士战斗感**（对内可称女神异闻录气质，对外 RESONANCE 声波）。  
+不采样、不仿旋律、不出现第三方 IP。详见 [`BEATSCAPE-SONIC-DIRECTION.md`](./BEATSCAPE-SONIC-DIRECTION.md)。
 
 ---
 
@@ -105,7 +113,7 @@ pnpm catalog:beatscape -- --json
 python3 scripts/beatscape-catalog-status.py --stage 2
 ```
 
-**当前基线**（2026-08-29）：**25/50 shipped** · Stage 4 规划 **10 首 RESONANCE 气质**（见 [`BEATSCAPE-STAGE4-RESONANCE-MUSIC.md`](./BEATSCAPE-STAGE4-RESONANCE-MUSIC.md)）· 正式版缺口 **25**。
+**当前基线**（2026-08-29）：**25/50 shipped** · 声波方向见 [`BEATSCAPE-SONIC-DIRECTION.md`](./BEATSCAPE-SONIC-DIRECTION.md) · Stage 4 第一波 10 首见 [`BEATSCAPE-STAGE4-RESONANCE-MUSIC.md`](./BEATSCAPE-STAGE4-RESONANCE-MUSIC.md) · 正式版缺口 **25**。
 
 ---
 
