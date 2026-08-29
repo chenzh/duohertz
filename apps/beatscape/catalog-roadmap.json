@@ -1,7 +1,7 @@
 {
   "version": 1,
   "authority": "docs/PRD-BEATSCAPE.md \u00a76.0.1 \u00b7 \u00a76.0.5 \u00b7 \u00a76.0.14",
-  "updated": "2026-08-25",
+  "updated": "2026-08-29",
   "stage_targets": {
     "1": 6,
     "2": 10,
@@ -399,10 +399,14 @@
       "seq": 26,
       "genre": "EDM",
       "status": "planned",
-      "title": null,
-      "preset_id": "bs-edm-main",
+      "title": "Brass Scape Rush",
+      "artist": "Neon Arc",
+      "preset_id": "bs-resonance-brass",
+      "district": "Pulse Core",
+      "tags": ["Hot Chart Style"],
       "game_duration_sec": 120,
-      "batch": "s4-wave-1"
+      "batch": "s4-resonance-1",
+      "play_role": "Brass stabs + drop≤8s demo"
     },
     {
       "track_id": "bs-s4-02",
@@ -410,10 +414,14 @@
       "seq": 27,
       "genre": "Hip-hop",
       "status": "planned",
-      "title": null,
-      "preset_id": "bs-hiphop-808",
+      "title": "Syncopated Grid",
+      "artist": "Subline",
+      "preset_id": "bs-resonance-funkhop",
+      "district": "Night Grid",
+      "tags": ["Classic Style"],
       "game_duration_sec": 120,
-      "batch": "s4-wave-1"
+      "batch": "s4-resonance-1",
+      "play_role": "Syncopated groove practice"
     },
     {
       "track_id": "bs-s4-03",
@@ -421,10 +429,14 @@
       "seq": 28,
       "genre": "Pop",
       "status": "planned",
-      "title": null,
-      "preset_id": "bs-pop-hook",
+      "title": "Halftone Drive",
+      "artist": "Luma Rim",
+      "preset_id": "bs-resonance-rhodes",
+      "district": "Glass Rim",
+      "tags": ["Viral Style"],
       "game_duration_sec": 120,
-      "batch": "s4-wave-1"
+      "batch": "s4-resonance-1",
+      "play_role": "Rhodes hook in first 10s"
     },
     {
       "track_id": "bs-s4-04",
@@ -432,10 +444,14 @@
       "seq": 29,
       "genre": "R&B",
       "status": "planned",
-      "title": null,
-      "preset_id": "bs-rnb-groove",
+      "title": "Satin Afterpulse",
+      "artist": "Mira Lane",
+      "preset_id": "bs-resonance-neosoul",
+      "district": "Afterhours Lane",
+      "tags": ["Classic Style"],
       "game_duration_sec": 120,
-      "batch": "s4-wave-1"
+      "batch": "s4-resonance-1",
+      "play_role": "Wide-window friendly low density"
     },
     {
       "track_id": "bs-s4-05",
@@ -443,10 +459,14 @@
       "seq": 30,
       "genre": "Rock",
       "status": "planned",
-      "title": null,
-      "preset_id": "bs-rock-drive",
+      "title": "Ink Stomp Riff",
+      "artist": "Iron Echo",
+      "preset_id": "bs-resonance-stomp",
+      "district": "Chrome Yard",
+      "tags": ["Hot Chart Style"],
       "game_duration_sec": 120,
-      "batch": "s4-wave-1"
+      "batch": "s4-resonance-1",
+      "play_role": "Guitar riff density chart"
     },
     {
       "track_id": "bs-s4-06",
@@ -454,10 +474,14 @@
       "seq": 31,
       "genre": "EDM",
       "status": "planned",
-      "title": null,
-      "preset_id": "bs-edm-climax",
+      "title": "Resonance Overload",
+      "artist": "Gridline",
+      "preset_id": "bs-resonance-climax",
+      "district": "Pulse Core",
+      "tags": ["Hot Chart Style"],
       "game_duration_sec": 120,
-      "batch": "s4-wave-2"
+      "batch": "s4-resonance-1",
+      "play_role": "High density Hard acceptance"
     },
     {
       "track_id": "bs-s4-07",
@@ -465,10 +489,14 @@
       "seq": 32,
       "genre": "Hip-hop",
       "status": "planned",
-      "title": null,
-      "preset_id": "bs-hiphop-808",
+      "title": "Lane Shuffle Flow",
+      "artist": "Low Voltage",
+      "preset_id": "bs-resonance-funkhop",
+      "district": "Night Grid",
+      "tags": ["Viral Style"],
       "game_duration_sec": 120,
-      "batch": "s4-wave-2"
+      "batch": "s4-resonance-1",
+      "play_role": "Shuffle feel mid BPM"
     },
     {
       "track_id": "bs-s4-08",
@@ -476,10 +504,14 @@
       "seq": 33,
       "genre": "Pop",
       "status": "planned",
-      "title": null,
-      "preset_id": "bs-chill-pop",
+      "title": "Crimson Hookline",
+      "artist": "Ada North",
+      "preset_id": "bs-resonance-rhodes",
+      "district": "Glass Rim",
+      "tags": ["New Release"],
       "game_duration_sec": 120,
-      "batch": "s4-wave-2"
+      "batch": "s4-resonance-1",
+      "play_role": "Strong chorus hook"
     },
     {
       "track_id": "bs-s4-09",
@@ -487,10 +519,14 @@
       "seq": 34,
       "genre": "R&B",
       "status": "planned",
-      "title": null,
-      "preset_id": "bs-rnb-groove",
+      "title": "Moonlit Groove",
+      "artist": "Quiet Neon",
+      "preset_id": "bs-resonance-neosoul",
+      "district": "Afterhours Lane",
+      "tags": ["Classic Style"],
       "game_duration_sec": 120,
-      "batch": "s4-wave-2"
+      "batch": "s4-resonance-1",
+      "play_role": "Hold-friendly legato pockets"
     },
     {
       "track_id": "bs-s4-10",
@@ -498,10 +534,15 @@
       "seq": 35,
       "genre": "Rock",
       "status": "planned",
-      "title": null,
-      "preset_id": "bs-rock-drive",
+      "title": "Strike Vector",
+      "artist": "Redline Co.",
+      "preset_id": "bs-resonance-stomp",
+      "district": "Slide District",
+      "tags": ["Hot Chart Style"],
       "game_duration_sec": 120,
-      "batch": "s4-wave-2"
+      "batch": "s4-resonance-1",
+      "play_role": "Slide chart showcase Std/Hard",
+      "allows_slide": true
     },
     {
       "track_id": "bs-s4-11",

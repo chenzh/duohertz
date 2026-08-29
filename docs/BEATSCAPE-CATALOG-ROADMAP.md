@@ -61,8 +61,8 @@ EDM 为音游主仓，正式版可略超配（≤12 已锁定在路线图）。
 
 ### 待命名槽位（40 首）
 
-- **Stage 3**：`bs-s3-01` … `bs-s3-15`（分 3 波生成，每波 5 风交错）  
-- **Stage 4**：`bs-s4-01` … `bs-s4-15`  
+- **Stage 3**：`bs-s3-01` … `bs-s3-15`（分 3 波生成，每波 5 风交错）— **已上架 25/25**  
+- **Stage 4**：`bs-s4-01` … `bs-s4-15` — **第一波 10 首定名见** [`BEATSCAPE-STAGE4-RESONANCE-MUSIC.md`](./BEATSCAPE-STAGE4-RESONANCE-MUSIC.md)  
 - **Stage 5**：`bs-s5-01` … `bs-s5-10`（正式版收官补齐）  
 
 完整槽位表见 `catalog-roadmap.json` → `slots[]`。
@@ -105,7 +105,7 @@ pnpm catalog:beatscape -- --json
 python3 scripts/beatscape-catalog-status.py --stage 2
 ```
 
-**当前基线**（2026-08-25）：**6/50 shipped** · Stage 2 缺口 **4** · 正式版缺口 **44**。
+**当前基线**（2026-08-29）：**25/50 shipped** · Stage 4 规划 **10 首 RESONANCE 气质**（见 [`BEATSCAPE-STAGE4-RESONANCE-MUSIC.md`](./BEATSCAPE-STAGE4-RESONANCE-MUSIC.md)）· 正式版缺口 **25**。
 
 ---
 

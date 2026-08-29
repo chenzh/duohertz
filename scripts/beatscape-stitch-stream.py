@@ -46,6 +46,15 @@ assert _s3.loader is not None
 _s3.loader.exec_module(_m3)
 STAGE3 = _m3.stage3_tracks()
 
+_s4 = importlib.util.spec_from_file_location(
+    "beatscape_stage4_specs", ROOT / "scripts" / "beatscape-stage4-specs.py"
+)
+_m4 = importlib.util.module_from_spec(_s4)
+sys.modules["beatscape_stage4_specs"] = _m4
+assert _s4.loader is not None
+_s4.loader.exec_module(_m4)
+STAGE4 = _m4.stage4_tracks()
+
 
 def find_master(track_id: str, stem: str) -> Path | None:
     for p in (
@@ -140,6 +149,7 @@ def main() -> int:
     parser.add_argument("--all-stage1", action="store_true")
     parser.add_argument("--all-stage2", action="store_true")
     parser.add_argument("--all-stage3", action="store_true")
+    parser.add_argument("--all-stage4", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
 
@@ -155,16 +165,18 @@ def main() -> int:
         tracks.extend(STAGE2)
     if args.all_stage3:
         tracks.extend(STAGE3)
+    if args.all_stage4:
+        tracks.extend(STAGE4)
     if args.track:
         hit = next(
-            (t for t in STAGE1 + STAGE2 + STAGE3 if t["track_id"] == args.track),
+            (t for t in STAGE1 + STAGE2 + STAGE3 + STAGE4 if t["track_id"] == args.track),
             None,
         )
         if not hit:
             raise SystemExit(f"unknown track: {args.track}")
         tracks = [hit]
     if not tracks:
-        parser.error("specify --track, --all-stage1, or --all-stage2")
+        parser.error("specify --track, --all-stage1, --all-stage2, --all-stage3, or --all-stage4")
 
     ok = 0
     for tr in tracks:
