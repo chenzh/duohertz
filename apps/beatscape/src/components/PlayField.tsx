@@ -29,6 +29,12 @@ type Props = {
   casualSpeed: number;
   onStart?: () => void;
   onFinish: (result: PlayResult) => void;
+  /** Home hero embed — no immersive chrome / fullscreen. */
+  variant?: "full" | "hero";
+  /** When true, music + SFX stay silent (home default). */
+  muted?: boolean;
+  /** Skip unlock overlay and start as soon as audio is ready (user gesture already unlocked audio). */
+  autoStart?: boolean;
 };
 
 type Fx = { lane: number; judgment: JudgeFx["judgment"]; born: number; deltaMs: number };
@@ -40,7 +46,17 @@ function fancyFxOn(settings: { fancyFx: boolean }): boolean {
   return true;
 }
 
-export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinish }: Props) {
+export function PlayField({
+  chart,
+  audioUrl,
+  mode,
+  casualSpeed,
+  onStart,
+  onFinish,
+  variant = "full",
+  muted = false,
+  autoStart = false,
+}: Props) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const conductorRef = useRef<Conductor | null>(null);
@@ -71,7 +87,8 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
   const settings = useMemo(loadSettings, []);
   // Stable reference: the keyboard effect below keys off this array.
   const keys = useMemo(loadKeys, []);
-  const keyHint = useMemo(() => keyLabels(keys).join(" · "), [keys]);
+  const keyHint = useMemo(() => keyLabels(keys), [keys]);
+  const keyHintJoined = useMemo(() => keyHint.join(" · "), [keyHint]);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -86,11 +103,12 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
   needsStartRef.current = needsStart;
   pausedRef.current = paused;
 
-  // Immersive: hide site chrome while playing.
+  // Immersive: hide site chrome while playing (full page only).
   useEffect(() => {
+    if (variant !== "full") return;
     document.body.classList.add("play-immersive");
     return () => document.body.classList.remove("play-immersive");
-  }, []);
+  }, [variant]);
 
   // Load audio + build the session once per chart.
   useEffect(() => {
@@ -102,8 +120,9 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
     pressedRef.current.clear();
 
     const conductor = new Conductor();
-    conductor.setMusicVolume(settings.musicVolume);
-    setSfxVolume(settings.sfxVolume);
+    // Initial bus levels; live mute toggles via the effect below.
+    conductor.setMusicVolume(muted ? 0 : settings.musicVolume);
+    setSfxVolume(muted || !settings.hitsound ? 0 : settings.sfxVolume);
     conductorRef.current = conductor;
     const session = new GameSession(chart, mode, { chordAssist });
     sessionRef.current = session;
@@ -134,7 +153,16 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
       conductorRef.current = null;
       sessionRef.current = null;
     };
-  }, [chart, mode, audioUrl, casualSpeed, chordAssist, settings.scrollBias, settings.musicVolume, settings.sfxVolume]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- muted is applied live below; remounting on mute would restart the chart
+  }, [chart, mode, audioUrl, casualSpeed, chordAssist, settings.scrollBias, settings.musicVolume, settings.sfxVolume, settings.hitsound]);
+
+  // Live mute toggle (home sound button) without remounting the chart.
+  useEffect(() => {
+    const conductor = conductorRef.current;
+    if (!conductor) return;
+    conductor.setMusicVolume(muted ? 0 : settings.musicVolume);
+    setSfxVolume(muted || !settings.hitsound ? 0 : settings.sfxVolume);
+  }, [muted, settings.musicVolume, settings.sfxVolume, settings.hitsound]);
 
   // Reset state when the chart changes.
   useEffect(() => {
@@ -152,12 +180,26 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
     setNeedsStart(false);
     setPaused(false);
     onStart?.();
-    try {
-      await document.documentElement.requestFullscreen?.();
-    } catch {
-      /* optional */
+    if (variant === "full") {
+      try {
+        await document.documentElement.requestFullscreen?.();
+      } catch {
+        /* optional */
+      }
     }
   };
+
+  // Home combined Play+Sound already unlocked AudioContext — start when ready.
+  const autoStartedRef = useRef(false);
+  useEffect(() => {
+    autoStartedRef.current = false;
+  }, [chart, mode, audioUrl]);
+  useEffect(() => {
+    if (!autoStart || loading || error || !needsStart || autoStartedRef.current) return;
+    autoStartedRef.current = true;
+    void startRun();
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- one-shot after load
+  }, [autoStart, loading, error, needsStart]);
 
   const togglePause = () => {
     const conductor = conductorRef.current;
@@ -677,7 +719,7 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
           const ci = Math.ceil(-st / 1000);
           if (ci !== lastCountInt.current) {
             lastCountInt.current = ci;
-            if (settings.hitsound) playCountdownTick();
+            if (settings.hitsound) playCountdownTick(ci);
           }
         }
 
@@ -817,7 +859,7 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
   };
 
   return (
-    <div className="play-wrap" ref={wrapRef}>
+    <div className={`play-wrap${variant === "hero" ? " play-wrap-hero" : ""}`} ref={wrapRef}>
       <canvas
         ref={canvasRef}
         className="play-canvas"
@@ -826,22 +868,59 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
         onPointerUp={onPointerUp}
         onPointerCancel={onPointerUp}
       />
-      {loading && !error && <div className="overlay">Loading audio…</div>}
+      {loading && !error && (
+        <div className="overlay">
+          <p className="overlay-kicker">Loading</p>
+          <p className="overlay-title">Cueing audio</p>
+        </div>
+      )}
       {error && (
         <div className="overlay load-error">
+          <p className="overlay-kicker">Signal lost</p>
           <p>{error}</p>
         </div>
       )}
-      {!loading && !error && needsStart && (
-        <div className="overlay overlay-tap" role="button" tabIndex={0} onClick={() => void startRun()} onKeyDown={(e) => e.key === "Enter" && void startRun()}>
-          <button type="button" className="btn primary unlock-btn" onClick={(e) => { e.stopPropagation(); void startRun(); }}>
-            {SCAPE_COPY.tapToEnter}
+      {!loading && !error && needsStart && !autoStart && (
+        <div
+          className="overlay overlay-tap"
+          role="button"
+          tabIndex={0}
+          onClick={() => void startRun()}
+          onKeyDown={(e) => e.key === "Enter" && void startRun()}
+        >
+          <p className="overlay-kicker">
+            {variant === "hero" ? SCAPE_COPY.heroPlayKicker : SCAPE_COPY.rightsShort}
+          </p>
+          <button
+            type="button"
+            className="btn primary unlock-btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              void startRun();
+            }}
+          >
+            {variant === "hero" ? SCAPE_COPY.play : SCAPE_COPY.tapToEnter}
           </button>
+          {!touchUi && (
+            <div className="unlock-keys" aria-hidden>
+              {keyHint.map((k, i) => (
+                <span key={i} className="key-chip">
+                  {k}
+                </span>
+              ))}
+            </div>
+          )}
           <p className="unlock-hint">
             {touchUi
-              ? "Thumbs on the bottom lanes — tap as the notes land"
-              : `${keyHint} when notes hit the line`}
+              ? SCAPE_COPY.heroPlayHintTouch
+              : `${SCAPE_COPY.heroPlayHintKeys} · ${keyHintJoined}`}
           </p>
+        </div>
+      )}
+      {!loading && !error && needsStart && autoStart && (
+        <div className="overlay">
+          <p className="overlay-kicker">{SCAPE_COPY.heroPlayKicker}</p>
+          <p className="overlay-title">Cueing…</p>
         </div>
       )}
       {!loading && !error && !needsStart && !paused && (
@@ -851,9 +930,9 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
       )}
       {paused && (
         <div className="overlay">
-          <p>Scape paused</p>
-          <button type="button" className="btn primary" onClick={togglePause}>
-            Resume
+          <p className="overlay-title">{SCAPE_COPY.pauseTitle}</p>
+          <button type="button" className="btn primary unlock-btn" onClick={togglePause}>
+            {SCAPE_COPY.resume}
           </button>
         </div>
       )}

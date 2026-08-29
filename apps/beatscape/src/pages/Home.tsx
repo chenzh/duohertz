@@ -3,8 +3,8 @@ import { Link } from "../router";
 import { assetUrl, loadCatalog } from "../catalog/loadCatalog";
 import type { CatalogTrack } from "../types/catalog";
 import { FEATURED_TRACK_IDS, SCAPE_COPY, SCAPE_COPY_EXTRA } from "../constants/scape";
-import { HeroGameplayPreview } from "../components/HeroGameplayPreview";
-import { firstPlayHref } from "../lib/firstPlay";
+import { HomeHeroPlay } from "../components/HomeHeroPlay";
+import { FIRST_PLAY_TRACK_ID, firstPlayHref } from "../lib/firstPlay";
 import { dailyPlayHref, getDailyChallenge } from "../lib/dailyChallenge";
 import { trackEvent } from "../lib/analytics";
 import { keyLabels } from "../input/keyMap";
@@ -42,7 +42,7 @@ export function HomePage() {
     void loadCatalog().then((c) => setTracks(c.tracks));
   }, []);
 
-  const heroTrack = tracks.find((t) => t.track_id === "bs-s1-01") ?? tracks[0];
+  const heroTrack = tracks.find((t) => t.track_id === FIRST_PLAY_TRACK_ID) ?? tracks[0];
   const featured = FEATURED_TRACK_IDS.map((id) => tracks.find((t) => t.track_id === id)).filter(
     Boolean,
   ) as CatalogTrack[];
@@ -62,7 +62,8 @@ export function HomePage() {
             Own the Scape.
           </h1>
           <p className="tagline">
-            English pop &amp; EDM originals — hit Play and land in Neon Pulse in seconds. Calibrate anytime in Settings.
+            English pop &amp; EDM originals — tap Play on the right to hit Strike Vector with sound.
+            Until then the lanes demo behind the mask. Calibrate anytime in Settings.
           </p>
           <div className="key-chips" aria-label="Keyboard lanes">
             {keys.map((k, i) => (
@@ -90,18 +91,8 @@ export function HomePage() {
           </div>
         </div>
 
-        <div className="hero-visual">
-          <HeroGameplayPreview keyHints={keys} />
-          {featured.slice(0, 2).map((t, i) => (
-            <div
-              key={t.track_id}
-              className="hero-cover-card hero-cover-card-float"
-              style={{
-                backgroundImage: `url(${assetUrl(t.cover)})`,
-                zIndex: 2 - i,
-              }}
-            />
-          ))}
+        <div className="hero-visual hero-visual-play">
+          <HomeHeroPlay />
         </div>
       </div>
 

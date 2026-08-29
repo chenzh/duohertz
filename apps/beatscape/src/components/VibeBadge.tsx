@@ -1,4 +1,5 @@
 import type { TrackVibe } from "../types/catalog";
+import { VIBE_LABELS } from "../catalog/trackVibe";
 
 type Props = {
   vibe: TrackVibe;

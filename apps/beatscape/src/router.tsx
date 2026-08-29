@@ -125,17 +125,23 @@ export function Link({
   children,
   className,
   onClick,
+  title,
+  "aria-label": ariaLabel,
 }: {
   to: string;
   children: ReactNode;
   className?: string;
   onClick?: () => void;
+  title?: string;
+  "aria-label"?: string;
 }) {
   const { navigate } = useLocation();
   return (
     <a
       href={toUrl(to)}
       className={className}
+      title={title}
+      aria-label={ariaLabel}
       onClick={(e) => {
         e.preventDefault();
         onClick?.();

@@ -1,0 +1,6 @@
+name = "beatscape"
+compatibility_date = "2026-08-26"
+pages_build_output_dir = "dist"
+
+# Cloudflare Pages — BeatScape static SPA
+# Deploy: pnpm --filter @musicsaas/beatscape build:cf && npx wrangler pages deploy dist --project-name=beatscape

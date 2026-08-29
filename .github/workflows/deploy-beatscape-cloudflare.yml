@@ -1,0 +1,46 @@
+name: Deploy BeatScape (Cloudflare Pages)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "apps/beatscape/**"
+      - ".github/workflows/deploy-beatscape-cloudflare.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: beatscape-cloudflare-pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: apps/beatscape/package-lock.json
+
+      - name: Install & build
+        working-directory: apps/beatscape
+        env:
+          # Cloudflare Pages project root URL (https://beatscape.pages.dev/)
+          VITE_BASE: /
+        run: |
+          if [ -f package-lock.json ]; then npm ci; else npm install; fi
+          npm test
+          npm run build
+
+      - name: Publish to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: apps/beatscape
+          command: pages deploy dist --project-name=beatscape --branch=main --commit-dirty=true

@@ -107,7 +107,7 @@ export function CalibrationPage() {
           <p>{SCAPE_COPY.calibrateDone}</p>
           <p className="tagline">Suggested offset: {Math.round(median)} ms</p>
           <button type="button" className="btn primary" onClick={() => finish(Math.round(median))}>
-            Save &amp; play Neon Pulse
+            Save &amp; play Strike Vector
           </button>
         </div>
       )}

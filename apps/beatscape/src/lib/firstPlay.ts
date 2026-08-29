@@ -1,7 +1,8 @@
 import type { ChartTier, PlayMode } from "../types/chart";
 
-/** PRD first-run path — Neon Pulse Casual Easy (no calibration gate). */
-export const FIRST_PLAY_TRACK_ID = "bs-s1-01";
+/** Home hero + first-run CTA — Strike Vector Casual Easy. */
+export const HOME_HERO_TRACK_ID = "bs-s4-10";
+export const FIRST_PLAY_TRACK_ID = HOME_HERO_TRACK_ID;
 export const FIRST_PLAY_TIER: ChartTier = "easy";
 export const FIRST_PLAY_MODE: PlayMode = "casual";
 

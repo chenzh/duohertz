@@ -1,6 +1,9 @@
 export type AnalyticsEvent =
   | "home_view"
   | "home_play_click"
+  | "home_sound_toggle"
+  | "home_hero_play_start"
+  | "home_hero_play_finish"
   | "daily_challenge_click"
   | "play_start"
   | "play_finish"

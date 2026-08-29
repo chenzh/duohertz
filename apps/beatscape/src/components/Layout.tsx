@@ -50,9 +50,14 @@ export function Layout({ children }: { children: ReactNode }) {
           <NavLink to="/leaderboard">Local Board</NavLink>
           <NavLink to="/settings">Settings</NavLink>
         </nav>
-        <div className="header-avatar" title={loadDisplayName()} aria-hidden>
+        <Link
+          to="/settings"
+          className="header-avatar"
+          title={loadDisplayName()}
+          aria-label={`Player ${loadDisplayName()} — Settings`}
+        >
           {initials}
-        </div>
+        </Link>
       </header>
       <main className="site-main">{children}</main>
       <footer className="site-footer">
