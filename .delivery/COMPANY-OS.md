@@ -1,9 +1,19 @@
 # Company OS pointer
 
-AI 公司级文档不在本仓库内复制，请阅读 Multica 仓：
+**Read norms in this repo first:** `.delivery/company-os/README.md`
 
-- `.ai-company/README.md` — 宪法与索引
-- `.ai-company/runbooks/onboard-new-project.md` — 接入清单
-- `.ai-company/examples/` — 产品线示例 brief
+Snapshot synced from multica `e66bb8a` at `2026-08-29T00:18:56Z`.
 
-本仓库仅保留 **执行 harness**（`.delivery/`、agents、workflows、scripts）。
+| Layer | Location |
+|-------|----------|
+| **Norms (this repo)** | `.delivery/company-os/` |
+| **HQ truth (CEO machine)** | multica `.ai-company/` |
+| **Execution harness** | `.delivery/` · `.cursor/agents/` · workflows |
+
+Refresh norms:
+
+```bash
+bash /path/to/multica/scripts/ai-company/sync-company-norms.sh --id <project-id>
+```
+
+Full playbook: `.delivery/company-os/docs/27-norm-sync.md` (after sync).
