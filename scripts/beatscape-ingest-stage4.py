@@ -56,6 +56,7 @@ def catalog_entry(tr: dict) -> dict:
         "rights": "owned",
         "theme": "beatscape",
         "tags": tr["tags"],
+        "vibe": tr.get("vibe"),
         "district": tr["district"],
         "default_mode": tr["default_mode"],
         "default_tier": tr["default_tier"],

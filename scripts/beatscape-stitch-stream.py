@@ -119,10 +119,12 @@ def wav_to_m4a(src: Path, dest: Path) -> None:
 
 
 def stream_target_sec(track: dict) -> int:
-    if track.get("stream_duration_sec"):
-        return int(track["stream_duration_sec"])
     game = int(track.get("duration_sec", 75))
-    return 180 if game < 70 else 198
+    min_stream = max(180, int(game * 1.8 + 0.999))
+    planned = int(track.get("stream_duration_sec") or 0)
+    if planned >= min_stream:
+        return planned
+    return min_stream
 
 
 def stitch_track(track_id: str, meta: dict, dry_run: bool = False) -> bool:

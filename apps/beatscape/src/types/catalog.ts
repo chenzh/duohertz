@@ -1,5 +1,7 @@
 import type { ChartTier, PlayMode } from "./chart";
 
+export type TrackVibe = "night-drive" | "groove" | "battle" | "chill";
+
 export type CatalogTrack = {
   track_id: string;
   title: string;
@@ -13,6 +15,8 @@ export type CatalogTrack = {
   rights: "owned";
   theme: "beatscape";
   tags: string[];
+  /** Player mood filter — night-drive · groove · battle · chill */
+  vibe?: TrackVibe;
   district: string;
   default_mode: PlayMode;
   default_tier: ChartTier;

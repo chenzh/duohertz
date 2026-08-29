@@ -1,6 +1,6 @@
 # BeatScape QA Audit Report
 
-- Generated: 2026-08-25T14:55:03Z
+- Generated: 2026-08-29T07:03:39Z
 - Input: `/Users/zhenhuachen/Desktop/MusicSaas/apps/beatscape/public`
 - Catalog: `/Users/zhenhuachen/Desktop/MusicSaas/apps/beatscape/public/catalog.json`
 
@@ -8,7 +8,7 @@
 
 | PASS | WARN | FAIL |
 |------|------|------|
-| 1120 | 7 | 0 |
+| 1566 | 13 | 0 |
 
 ## Human sign-off (required)
 
@@ -1194,3 +1194,475 @@
 - ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
 - ✅ `chart.audio_offset` — 0 (file-timeline notes)
 - ✅ `chart.first_beat` — 90ms
+
+### Brass Scape Rush (`bs-s4-01`) — **PASS**
+- ✅ `catalog.field` — `track_id` present
+- ✅ `catalog.field` — `title` present
+- ✅ `catalog.field` — `artist` present
+- ✅ `catalog.field` — `genre` present
+- ✅ `catalog.field` — `bpm` present
+- ✅ `catalog.field` — `duration_sec` present
+- ✅ `catalog.field` — `preset_id` present
+- ✅ `catalog.field` — `engine` present
+- ✅ `catalog.field` — `rights` present
+- ✅ `catalog.field` — `theme` present
+- ✅ `catalog.field` — `audio` present
+- ✅ `catalog.field` — `charts` present
+- ✅ `catalog.rights` — owned
+- ✅ `catalog.theme` — beatscape
+- ✅ `catalog.theme_kw` — theme keyword present
+- ✅ `catalog.chart_path` — easy -> /catalog/bs-s4-01/easy.json
+- ✅ `catalog.chart_path` — standard -> /catalog/bs-s4-01/standard.json
+- ✅ `catalog.chart_path` — hard -> /catalog/bs-s4-01/hard.json
+- ✅ `catalog.audio_path` — /catalog/bs-s4-01/audio.m4a
+- ✅ `catalog.stream_audio` — /catalog/bs-s4-01/stream.m4a
+- ✅ `catalog.stream_duration` — stream 216s vs game 120.0s
+- ✅ `chart.total_notes` — 251
+- ✅ `chart.density.nps` — nps=1.97
+- ✅ `chart.density.peak_nps` — peak_2s=5.00
+- ✅ `chart.density.hold_pct` — hold_pct=6.36
+- ✅ `chart.density.chord_10s` — chord_per_10s=0.00
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 10ms
+- ✅ `chart.total_notes` — 471
+- ✅ `chart.density.nps` — nps=3.31
+- ✅ `chart.density.peak_nps` — peak_2s=8.00
+- ✅ `chart.density.hold_pct` — hold_pct=0.00
+- ✅ `chart.density.chord_10s` — chord_per_10s=6.17
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 10ms
+- ✅ `chart.total_notes` — 757
+- ✅ `chart.density.nps` — nps=4.68
+- ✅ `chart.density.peak_nps` — peak_2s=12.00
+- ✅ `chart.density.hold_pct` — hold_pct=0.00
+- ✅ `chart.density.chord_10s` — chord_per_10s=11.58
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 10ms
+
+### Syncopated Grid (`bs-s4-02`) — **PASS**
+- ✅ `catalog.field` — `track_id` present
+- ✅ `catalog.field` — `title` present
+- ✅ `catalog.field` — `artist` present
+- ✅ `catalog.field` — `genre` present
+- ✅ `catalog.field` — `bpm` present
+- ✅ `catalog.field` — `duration_sec` present
+- ✅ `catalog.field` — `preset_id` present
+- ✅ `catalog.field` — `engine` present
+- ✅ `catalog.field` — `rights` present
+- ✅ `catalog.field` — `theme` present
+- ✅ `catalog.field` — `audio` present
+- ✅ `catalog.field` — `charts` present
+- ✅ `catalog.rights` — owned
+- ✅ `catalog.theme` — beatscape
+- ✅ `catalog.theme_kw` — theme keyword present
+- ✅ `catalog.chart_path` — easy -> /catalog/bs-s4-02/easy.json
+- ✅ `catalog.chart_path` — standard -> /catalog/bs-s4-02/standard.json
+- ✅ `catalog.chart_path` — hard -> /catalog/bs-s4-02/hard.json
+- ✅ `catalog.audio_path` — /catalog/bs-s4-02/audio.m4a
+- ✅ `catalog.stream_audio` — /catalog/bs-s4-02/stream.m4a
+- ✅ `catalog.stream_duration` — stream 216s vs game 120.0s
+- ✅ `chart.total_notes` — 256
+- ✅ `chart.density.nps` — nps=1.86
+- ✅ `chart.density.peak_nps` — peak_2s=5.00
+- ✅ `chart.density.hold_pct` — hold_pct=14.80
+- ✅ `chart.density.chord_10s` — chord_per_10s=0.00
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 10ms
+- ✅ `chart.total_notes` — 461
+- ✅ `chart.density.nps` — nps=3.30
+- ✅ `chart.density.peak_nps` — peak_2s=8.00
+- ✅ `chart.density.hold_pct` — hold_pct=1.01
+- ✅ `chart.density.chord_10s` — chord_per_10s=5.08
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 10ms
+- ✅ `chart.total_notes` — 805
+- ✅ `chart.density.nps` — nps=5.01
+- ✅ `chart.density.peak_nps` — peak_2s=12.00
+- ✅ `chart.density.hold_pct` — hold_pct=0.00
+- ✅ `chart.density.chord_10s` — chord_per_10s=12.42
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 10ms
+
+### Halftone Drive (`bs-s4-03`) — **WARN**
+- ✅ `catalog.field` — `track_id` present
+- ✅ `catalog.field` — `title` present
+- ✅ `catalog.field` — `artist` present
+- ✅ `catalog.field` — `genre` present
+- ✅ `catalog.field` — `bpm` present
+- ✅ `catalog.field` — `duration_sec` present
+- ✅ `catalog.field` — `preset_id` present
+- ✅ `catalog.field` — `engine` present
+- ✅ `catalog.field` — `rights` present
+- ✅ `catalog.field` — `theme` present
+- ✅ `catalog.field` — `audio` present
+- ✅ `catalog.field` — `charts` present
+- ✅ `catalog.rights` — owned
+- ✅ `catalog.theme` — beatscape
+- ⚠️ `catalog.theme_kw` — title/artist lack scape keyword (manual review)
+- ✅ `catalog.chart_path` — easy -> /catalog/bs-s4-03/easy.json
+- ✅ `catalog.chart_path` — standard -> /catalog/bs-s4-03/standard.json
+- ✅ `catalog.chart_path` — hard -> /catalog/bs-s4-03/hard.json
+- ✅ `catalog.audio_path` — /catalog/bs-s4-03/audio.m4a
+- ✅ `catalog.stream_audio` — /catalog/bs-s4-03/stream.m4a
+- ✅ `catalog.stream_duration` — stream 216s vs game 120.0s
+- ✅ `chart.total_notes` — 249
+- ✅ `chart.density.nps` — nps=1.95
+- ✅ `chart.density.peak_nps` — peak_2s=5.00
+- ✅ `chart.density.hold_pct` — hold_pct=6.41
+- ✅ `chart.density.chord_10s` — chord_per_10s=0.00
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 10ms
+- ✅ `chart.total_notes` — 468
+- ✅ `chart.density.nps` — nps=3.38
+- ✅ `chart.density.peak_nps` — peak_2s=8.00
+- ✅ `chart.density.hold_pct` — hold_pct=0.00
+- ✅ `chart.density.chord_10s` — chord_per_10s=5.25
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 10ms
+- ✅ `chart.total_notes` — 892
+- ✅ `chart.density.nps` — nps=5.07
+- ✅ `chart.density.peak_nps` — peak_2s=12.00
+- ✅ `chart.density.hold_pct` — hold_pct=0.00
+- ✅ `chart.density.chord_10s` — chord_per_10s=16.33
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 10ms
+
+### Satin Afterpulse (`bs-s4-04`) — **WARN**
+- ✅ `catalog.field` — `track_id` present
+- ✅ `catalog.field` — `title` present
+- ✅ `catalog.field` — `artist` present
+- ✅ `catalog.field` — `genre` present
+- ✅ `catalog.field` — `bpm` present
+- ✅ `catalog.field` — `duration_sec` present
+- ✅ `catalog.field` — `preset_id` present
+- ✅ `catalog.field` — `engine` present
+- ✅ `catalog.field` — `rights` present
+- ✅ `catalog.field` — `theme` present
+- ✅ `catalog.field` — `audio` present
+- ✅ `catalog.field` — `charts` present
+- ✅ `catalog.rights` — owned
+- ✅ `catalog.theme` — beatscape
+- ⚠️ `catalog.theme_kw` — title/artist lack scape keyword (manual review)
+- ✅ `catalog.chart_path` — easy -> /catalog/bs-s4-04/easy.json
+- ✅ `catalog.chart_path` — standard -> /catalog/bs-s4-04/standard.json
+- ✅ `catalog.chart_path` — hard -> /catalog/bs-s4-04/hard.json
+- ✅ `catalog.audio_path` — /catalog/bs-s4-04/audio.m4a
+- ✅ `catalog.stream_audio` — /catalog/bs-s4-04/stream.m4a
+- ✅ `catalog.stream_duration` — stream 216s vs game 120.0s
+- ✅ `chart.total_notes` — 249
+- ✅ `chart.density.nps` — nps=1.97
+- ✅ `chart.density.peak_nps` — peak_2s=5.00
+- ✅ `chart.density.hold_pct` — hold_pct=5.51
+- ✅ `chart.density.chord_10s` — chord_per_10s=0.00
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 10ms
+- ✅ `chart.total_notes` — 450
+- ✅ `chart.density.nps` — nps=3.23
+- ✅ `chart.density.peak_nps` — peak_2s=8.00
+- ✅ `chart.density.hold_pct` — hold_pct=0.26
+- ✅ `chart.density.chord_10s` — chord_per_10s=5.17
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 10ms
+- ✅ `chart.total_notes` — 828
+- ✅ `chart.density.nps` — nps=5.09
+- ✅ `chart.density.peak_nps` — peak_2s=12.00
+- ✅ `chart.density.hold_pct` — hold_pct=0.00
+- ✅ `chart.density.chord_10s` — chord_per_10s=13.00
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 10ms
+
+### Ink Stomp Riff (`bs-s4-05`) — **WARN**
+- ✅ `catalog.field` — `track_id` present
+- ✅ `catalog.field` — `title` present
+- ✅ `catalog.field` — `artist` present
+- ✅ `catalog.field` — `genre` present
+- ✅ `catalog.field` — `bpm` present
+- ✅ `catalog.field` — `duration_sec` present
+- ✅ `catalog.field` — `preset_id` present
+- ✅ `catalog.field` — `engine` present
+- ✅ `catalog.field` — `rights` present
+- ✅ `catalog.field` — `theme` present
+- ✅ `catalog.field` — `audio` present
+- ✅ `catalog.field` — `charts` present
+- ✅ `catalog.rights` — owned
+- ✅ `catalog.theme` — beatscape
+- ⚠️ `catalog.theme_kw` — title/artist lack scape keyword (manual review)
+- ✅ `catalog.chart_path` — easy -> /catalog/bs-s4-05/easy.json
+- ✅ `catalog.chart_path` — standard -> /catalog/bs-s4-05/standard.json
+- ✅ `catalog.chart_path` — hard -> /catalog/bs-s4-05/hard.json
+- ✅ `catalog.audio_path` — /catalog/bs-s4-05/audio.m4a
+- ✅ `catalog.stream_audio` — /catalog/bs-s4-05/stream.m4a
+- ✅ `catalog.stream_duration` — stream 216s vs game 120.0s
+- ✅ `chart.total_notes` — 248
+- ✅ `chart.density.nps` — nps=1.95
+- ✅ `chart.density.peak_nps` — peak_2s=5.00
+- ✅ `chart.density.hold_pct` — hold_pct=5.98
+- ✅ `chart.density.chord_10s` — chord_per_10s=0.00
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 10ms
+- ✅ `chart.total_notes` — 463
+- ✅ `chart.density.nps` — nps=3.32
+- ✅ `chart.density.peak_nps` — peak_2s=8.00
+- ✅ `chart.density.hold_pct` — hold_pct=0.25
+- ✅ `chart.density.chord_10s` — chord_per_10s=5.33
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 10ms
+- ✅ `chart.total_notes` — 894
+- ✅ `chart.density.nps` — nps=5.00
+- ✅ `chart.density.peak_nps` — peak_2s=12.00
+- ✅ `chart.density.hold_pct` — hold_pct=0.00
+- ✅ `chart.density.chord_10s` — chord_per_10s=17.08
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 10ms
+
+### Resonance Overload (`bs-s4-06`) — **WARN**
+- ✅ `catalog.field` — `track_id` present
+- ✅ `catalog.field` — `title` present
+- ✅ `catalog.field` — `artist` present
+- ✅ `catalog.field` — `genre` present
+- ✅ `catalog.field` — `bpm` present
+- ✅ `catalog.field` — `duration_sec` present
+- ✅ `catalog.field` — `preset_id` present
+- ✅ `catalog.field` — `engine` present
+- ✅ `catalog.field` — `rights` present
+- ✅ `catalog.field` — `theme` present
+- ✅ `catalog.field` — `audio` present
+- ✅ `catalog.field` — `charts` present
+- ✅ `catalog.rights` — owned
+- ✅ `catalog.theme` — beatscape
+- ⚠️ `catalog.theme_kw` — title/artist lack scape keyword (manual review)
+- ✅ `catalog.chart_path` — easy -> /catalog/bs-s4-06/easy.json
+- ✅ `catalog.chart_path` — standard -> /catalog/bs-s4-06/standard.json
+- ✅ `catalog.chart_path` — hard -> /catalog/bs-s4-06/hard.json
+- ✅ `catalog.audio_path` — /catalog/bs-s4-06/audio.m4a
+- ✅ `catalog.stream_audio` — /catalog/bs-s4-06/stream.m4a
+- ✅ `catalog.stream_duration` — stream 216s vs game 120.0s
+- ✅ `chart.total_notes` — 241
+- ✅ `chart.density.nps` — nps=1.88
+- ✅ `chart.density.peak_nps` — peak_2s=5.00
+- ✅ `chart.density.hold_pct` — hold_pct=7.11
+- ✅ `chart.density.chord_10s` — chord_per_10s=0.00
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 30ms
+- ✅ `chart.total_notes` — 453
+- ✅ `chart.density.nps` — nps=3.24
+- ✅ `chart.density.peak_nps` — peak_2s=8.00
+- ✅ `chart.density.hold_pct` — hold_pct=0.00
+- ✅ `chart.density.chord_10s` — chord_per_10s=5.33
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 30ms
+- ✅ `chart.total_notes` — 746
+- ✅ `chart.density.nps` — nps=4.59
+- ✅ `chart.density.peak_nps` — peak_2s=12.00
+- ✅ `chart.density.hold_pct` — hold_pct=0.00
+- ✅ `chart.density.chord_10s` — chord_per_10s=11.42
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 30ms
+
+### Lane Shuffle Flow (`bs-s4-07`) — **PASS**
+- ✅ `catalog.field` — `track_id` present
+- ✅ `catalog.field` — `title` present
+- ✅ `catalog.field` — `artist` present
+- ✅ `catalog.field` — `genre` present
+- ✅ `catalog.field` — `bpm` present
+- ✅ `catalog.field` — `duration_sec` present
+- ✅ `catalog.field` — `preset_id` present
+- ✅ `catalog.field` — `engine` present
+- ✅ `catalog.field` — `rights` present
+- ✅ `catalog.field` — `theme` present
+- ✅ `catalog.field` — `audio` present
+- ✅ `catalog.field` — `charts` present
+- ✅ `catalog.rights` — owned
+- ✅ `catalog.theme` — beatscape
+- ✅ `catalog.theme_kw` — theme keyword present
+- ✅ `catalog.chart_path` — easy -> /catalog/bs-s4-07/easy.json
+- ✅ `catalog.chart_path` — standard -> /catalog/bs-s4-07/standard.json
+- ✅ `catalog.chart_path` — hard -> /catalog/bs-s4-07/hard.json
+- ✅ `catalog.audio_path` — /catalog/bs-s4-07/audio.m4a
+- ✅ `catalog.stream_audio` — /catalog/bs-s4-07/stream.m4a
+- ✅ `catalog.stream_duration` — stream 216s vs game 120.0s
+- ✅ `chart.total_notes` — 251
+- ✅ `chart.density.nps` — nps=2.00
+- ✅ `chart.density.peak_nps` — peak_2s=5.00
+- ✅ `chart.density.hold_pct` — hold_pct=4.58
+- ✅ `chart.density.chord_10s` — chord_per_10s=0.00
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 10ms
+- ✅ `chart.total_notes` — 451
+- ✅ `chart.density.nps` — nps=3.25
+- ✅ `chart.density.peak_nps` — peak_2s=8.00
+- ✅ `chart.density.hold_pct` — hold_pct=0.51
+- ✅ `chart.density.chord_10s` — chord_per_10s=4.92
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 10ms
+- ✅ `chart.total_notes` — 822
+- ✅ `chart.density.nps` — nps=4.93
+- ✅ `chart.density.peak_nps` — peak_2s=12.00
+- ✅ `chart.density.hold_pct` — hold_pct=0.00
+- ✅ `chart.density.chord_10s` — chord_per_10s=12.75
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 10ms
+
+### Crimson Hookline (`bs-s4-08`) — **WARN**
+- ✅ `catalog.field` — `track_id` present
+- ✅ `catalog.field` — `title` present
+- ✅ `catalog.field` — `artist` present
+- ✅ `catalog.field` — `genre` present
+- ✅ `catalog.field` — `bpm` present
+- ✅ `catalog.field` — `duration_sec` present
+- ✅ `catalog.field` — `preset_id` present
+- ✅ `catalog.field` — `engine` present
+- ✅ `catalog.field` — `rights` present
+- ✅ `catalog.field` — `theme` present
+- ✅ `catalog.field` — `audio` present
+- ✅ `catalog.field` — `charts` present
+- ✅ `catalog.rights` — owned
+- ✅ `catalog.theme` — beatscape
+- ⚠️ `catalog.theme_kw` — title/artist lack scape keyword (manual review)
+- ✅ `catalog.chart_path` — easy -> /catalog/bs-s4-08/easy.json
+- ✅ `catalog.chart_path` — standard -> /catalog/bs-s4-08/standard.json
+- ✅ `catalog.chart_path` — hard -> /catalog/bs-s4-08/hard.json
+- ✅ `catalog.audio_path` — /catalog/bs-s4-08/audio.m4a
+- ✅ `catalog.stream_audio` — /catalog/bs-s4-08/stream.m4a
+- ✅ `catalog.stream_duration` — stream 216s vs game 120.0s
+- ✅ `chart.total_notes` — 249
+- ✅ `chart.density.nps` — nps=1.98
+- ✅ `chart.density.peak_nps` — peak_2s=5.00
+- ✅ `chart.density.hold_pct` — hold_pct=4.62
+- ✅ `chart.density.chord_10s` — chord_per_10s=0.00
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 20ms
+- ✅ `chart.total_notes` — 456
+- ✅ `chart.density.nps` — nps=3.34
+- ✅ `chart.density.peak_nps` — peak_2s=8.00
+- ✅ `chart.density.hold_pct` — hold_pct=0.50
+- ✅ `chart.density.chord_10s` — chord_per_10s=4.42
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 20ms
+- ✅ `chart.total_notes` — 886
+- ✅ `chart.density.nps` — nps=4.97
+- ✅ `chart.density.peak_nps` — peak_2s=12.00
+- ✅ `chart.density.hold_pct` — hold_pct=0.00
+- ✅ `chart.density.chord_10s` — chord_per_10s=17.08
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 20ms
+
+### Moonlit Groove (`bs-s4-09`) — **PASS**
+- ✅ `catalog.field` — `track_id` present
+- ✅ `catalog.field` — `title` present
+- ✅ `catalog.field` — `artist` present
+- ✅ `catalog.field` — `genre` present
+- ✅ `catalog.field` — `bpm` present
+- ✅ `catalog.field` — `duration_sec` present
+- ✅ `catalog.field` — `preset_id` present
+- ✅ `catalog.field` — `engine` present
+- ✅ `catalog.field` — `rights` present
+- ✅ `catalog.field` — `theme` present
+- ✅ `catalog.field` — `audio` present
+- ✅ `catalog.field` — `charts` present
+- ✅ `catalog.rights` — owned
+- ✅ `catalog.theme` — beatscape
+- ✅ `catalog.theme_kw` — theme keyword present
+- ✅ `catalog.chart_path` — easy -> /catalog/bs-s4-09/easy.json
+- ✅ `catalog.chart_path` — standard -> /catalog/bs-s4-09/standard.json
+- ✅ `catalog.chart_path` — hard -> /catalog/bs-s4-09/hard.json
+- ✅ `catalog.audio_path` — /catalog/bs-s4-09/audio.m4a
+- ✅ `catalog.stream_audio` — /catalog/bs-s4-09/stream.m4a
+- ✅ `catalog.stream_duration` — stream 216s vs game 120.0s
+- ✅ `chart.total_notes` — 226
+- ✅ `chart.density.nps` — nps=1.73
+- ✅ `chart.density.peak_nps` — peak_2s=5.00
+- ✅ `chart.density.hold_pct` — hold_pct=8.65
+- ✅ `chart.density.chord_10s` — chord_per_10s=0.00
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 10ms
+- ✅ `chart.total_notes` — 441
+- ✅ `chart.density.nps` — nps=3.06
+- ✅ `chart.density.peak_nps` — peak_2s=8.00
+- ✅ `chart.density.hold_pct` — hold_pct=0.54
+- ✅ `chart.density.chord_10s` — chord_per_10s=6.00
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 10ms
+- ✅ `chart.total_notes` — 750
+- ✅ `chart.density.nps` — nps=4.41
+- ✅ `chart.density.peak_nps` — peak_2s=12.00
+- ✅ `chart.density.hold_pct` — hold_pct=0.57
+- ✅ `chart.density.chord_10s` — chord_per_10s=13.50
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 10ms
+
+### Strike Vector (`bs-s4-10`) — **WARN**
+- ✅ `catalog.field` — `track_id` present
+- ✅ `catalog.field` — `title` present
+- ✅ `catalog.field` — `artist` present
+- ✅ `catalog.field` — `genre` present
+- ✅ `catalog.field` — `bpm` present
+- ✅ `catalog.field` — `duration_sec` present
+- ✅ `catalog.field` — `preset_id` present
+- ✅ `catalog.field` — `engine` present
+- ✅ `catalog.field` — `rights` present
+- ✅ `catalog.field` — `theme` present
+- ✅ `catalog.field` — `audio` present
+- ✅ `catalog.field` — `charts` present
+- ✅ `catalog.rights` — owned
+- ✅ `catalog.theme` — beatscape
+- ⚠️ `catalog.theme_kw` — title/artist lack scape keyword (manual review)
+- ✅ `catalog.chart_path` — easy -> /catalog/bs-s4-10/easy.json
+- ✅ `catalog.chart_path` — standard -> /catalog/bs-s4-10/standard.json
+- ✅ `catalog.chart_path` — hard -> /catalog/bs-s4-10/hard.json
+- ✅ `catalog.audio_path` — /catalog/bs-s4-10/audio.m4a
+- ✅ `catalog.stream_audio` — /catalog/bs-s4-10/stream.m4a
+- ✅ `catalog.stream_duration` — stream 216s vs game 120.0s
+- ✅ `chart.total_notes` — 249
+- ✅ `chart.density.nps` — nps=1.95
+- ✅ `chart.density.peak_nps` — peak_2s=5.00
+- ✅ `chart.density.hold_pct` — hold_pct=6.41
+- ✅ `chart.density.chord_10s` — chord_per_10s=0.00
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 10ms
+- ✅ `chart.total_notes` — 457
+- ✅ `chart.slide` — 2 slide(s)
+- ✅ `chart.density.nps` — nps=3.37
+- ✅ `chart.density.peak_nps` — peak_2s=8.00
+- ✅ `chart.density.hold_pct` — hold_pct=0.00
+- ✅ `chart.density.chord_10s` — chord_per_10s=4.42
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 10ms
+- ✅ `chart.total_notes` — 894
+- ✅ `chart.slide` — 8 slide(s)
+- ✅ `chart.density.nps` — nps=5.04
+- ✅ `chart.density.peak_nps` — peak_2s=12.00
+- ✅ `chart.density.hold_pct` — hold_pct=0.00
+- ✅ `chart.density.chord_10s` — chord_per_10s=17.33
+- ✅ `chart.onset.align` — median 0ms · p90 0ms · coverage 100%
+- ✅ `chart.audio_offset` — 0 (file-timeline notes)
+- ✅ `chart.first_beat` — 10ms

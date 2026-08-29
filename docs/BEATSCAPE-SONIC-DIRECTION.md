@@ -17,7 +17,24 @@ BeatScape **全部音乐**统一追求两种听感叠合：
 
 ---
 
-## 2. 为什么可以追求这种气质，又不侵权
+## 1.5 玩家向 Vibe 分类（Library 筛选）
+
+在保留 **5 genre**（运营配额）之外，面向欧美玩家增加 **4 个听感 Vibe**（`catalog.json` → `vibe` 字段）：
+
+| vibe | 英文标签 | 听感 | 典型曲目 |
+|------|----------|------|----------|
+| `night-drive` | Night Drive | 车载宽声场、夜行 groove | Night Drive 808、808 Horizon |
+| `groove` | Groove | 切分放克、Pop/Rhodes 钩子 | Glass Horizon、Syncopated Grid |
+| `battle` | Battle | 高张力 drop、摇滚/EDM 展示 | Neon Pulse、Resonance Overload |
+| `chill` | Chill | 宽窗练习、neo-soul 松弛 | Velvet Afterhours、Moonlit Groove |
+
+**真值文件**：`scripts/beatscape-track-vibes.json` · UI：`apps/beatscape/src/catalog/trackVibe.ts`
+
+**Library 快捷筛**：Vibe chip · Beginner · With vocals · Favorites · Genre 下拉（**已移除 district 重复下拉**）。
+
+**对外文案**：使用 Night Drive / Groove / Battle / Chill，**禁止** Persona / 女神异闻录字样。
+
+---
 
 与视觉相同，法律关心的是 **具体表达是否可被误认**，不是「能不能做爵士放克」。
 

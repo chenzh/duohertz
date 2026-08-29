@@ -1,9 +1,18 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "../router";
 import { assetUrl, loadCatalog } from "../catalog/loadCatalog";
-import type { CatalogTrack } from "../types/catalog";
+import {
+  TRACK_VIBES,
+  VIBE_HINTS,
+  VIBE_LABELS,
+  isBeginnerTrack,
+  resolveTrackVibe,
+  trackHasVocals,
+} from "../catalog/trackVibe";
+import type { CatalogTrack, TrackVibe } from "../types/catalog";
 import { loadFavorites } from "../storage/settings";
 import { DistrictBadge } from "../components/DistrictBadge";
+import { VibeBadge } from "../components/VibeBadge";
 import { SCAPE_COPY, districtColor, SHOWCASE_TRACK_IDS } from "../constants/scape";
 import { LIBRARY_PAGE_META, usePageMeta } from "../seo/pageMeta";
 
@@ -12,7 +21,9 @@ export function LibraryPage() {
   const [tracks, setTracks] = useState<CatalogTrack[]>([]);
   const [q, setQ] = useState("");
   const [genre, setGenre] = useState("");
-  const [district, setDistrict] = useState("");
+  const [vibe, setVibe] = useState<TrackVibe | "">("");
+  const [beginnerOnly, setBeginnerOnly] = useState(false);
+  const [vocalsOnly, setVocalsOnly] = useState(false);
   const [favOnly, setFavOnly] = useState(false);
   const [favorites, setFavorites] = useState<string[]>([]);
 
@@ -22,14 +33,16 @@ export function LibraryPage() {
   }, []);
 
   const genres = useMemo(() => [...new Set(tracks.map((t) => t.genre))].sort(), [tracks]);
-  const districts = useMemo(() => [...new Set(tracks.map((t) => t.district))].sort(), [tracks]);
 
   const filtered = tracks.filter((t) => {
     if (genre && t.genre !== genre) return false;
-    if (district && t.district !== district) return false;
+    if (vibe && resolveTrackVibe(t) !== vibe) return false;
+    if (beginnerOnly && !isBeginnerTrack(t)) return false;
+    if (vocalsOnly && !trackHasVocals(t)) return false;
     if (favOnly && !favorites.includes(t.track_id)) return false;
     if (!q) return true;
-    const hay = `${t.title} ${t.artist} ${t.district} ${t.tags.join(" ")}`.toLowerCase();
+    const v = resolveTrackVibe(t);
+    const hay = `${t.title} ${t.artist} ${t.district} ${t.genre} ${VIBE_LABELS[v]} ${t.tags.join(" ")}`.toLowerCase();
     return hay.includes(q.toLowerCase());
   });
 
@@ -37,7 +50,7 @@ export function LibraryPage() {
     <section className="library">
       <header className="page-header">
         <h1>Library</h1>
-        <p className="tagline">Search the Scape — filter by genre, district, or favorites.</p>
+        <p className="tagline">Find your scape — filter by vibe, genre, or mood.</p>
         {tracks.length > 0 && <span className="page-count">{filtered.length} of {tracks.length} tracks</span>}
       </header>
 
@@ -54,6 +67,57 @@ export function LibraryPage() {
         })}
       </div>
 
+      <div className="filter-chips" role="group" aria-label="Vibe">
+        <span className="filter-chips-label">Vibe</span>
+        <button
+          type="button"
+          className={`filter-chip ${vibe === "" ? "active" : ""}`}
+          aria-pressed={vibe === ""}
+          onClick={() => setVibe("")}
+        >
+          All
+        </button>
+        {TRACK_VIBES.map((v) => (
+          <button
+            key={v}
+            type="button"
+            className={`filter-chip vibe-${v} ${vibe === v ? "active" : ""}`}
+            aria-pressed={vibe === v}
+            title={VIBE_HINTS[v]}
+            onClick={() => setVibe(vibe === v ? "" : v)}
+          >
+            {VIBE_LABELS[v]}
+          </button>
+        ))}
+      </div>
+
+      <div className="filter-chips filter-chips-secondary" role="group" aria-label="Quick filters">
+        <button
+          type="button"
+          className={`filter-chip ${beginnerOnly ? "active" : ""}`}
+          aria-pressed={beginnerOnly}
+          onClick={() => setBeginnerOnly((b) => !b)}
+        >
+          Beginner
+        </button>
+        <button
+          type="button"
+          className={`filter-chip ${vocalsOnly ? "active" : ""}`}
+          aria-pressed={vocalsOnly}
+          onClick={() => setVocalsOnly((v) => !v)}
+        >
+          With vocals
+        </button>
+        <button
+          type="button"
+          className={`filter-chip ${favOnly ? "active" : ""}`}
+          aria-pressed={favOnly}
+          onClick={() => setFavOnly((f) => !f)}
+        >
+          Favorites
+        </button>
+      </div>
+
       <div className="filters-bar">
         <input placeholder="Search tracks…" value={q} onChange={(e) => setQ(e.target.value)} aria-label="Search" />
         <select value={genre} onChange={(e) => setGenre(e.target.value)} aria-label="Genre">
@@ -64,18 +128,6 @@ export function LibraryPage() {
             </option>
           ))}
         </select>
-        <select value={district} onChange={(e) => setDistrict(e.target.value)} aria-label="District">
-          <option value="">All districts</option>
-          {districts.map((d) => (
-            <option key={d} value={d}>
-              {d}
-            </option>
-          ))}
-        </select>
-        <label className="filter-toggle">
-          <input type="checkbox" checked={favOnly} onChange={(e) => setFavOnly(e.target.checked)} />
-          Favorites only
-        </label>
       </div>
 
       <div className="track-grid">
@@ -97,7 +149,12 @@ export function LibraryPage() {
               <span>
                 {t.artist} · {t.bpm} BPM · {t.genre}
               </span>
-              <DistrictBadge district={t.district} />
+              <div className="track-card-badges">
+                <VibeBadge vibe={resolveTrackVibe(t)} />
+                <DistrictBadge district={t.district} />
+                {isBeginnerTrack(t) && <span className="chip">Beginner</span>}
+                {trackHasVocals(t) && <span className="chip">Vocals</span>}
+              </div>
             </div>
           </Link>
         ))}

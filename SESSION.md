@@ -2,7 +2,7 @@
 
 | 字段 | 值 |
 |------|-----|
-| **phase** | Stage4 RESONANCE 流水线就绪 · 待 MLX 跑批 10 首 |
+| **phase** | MVP 曲库 **35/35** · Stage4 RESONANCE 第一波已入库 |
 | **updated** | 2026-08-29 |
 | **slug** | musicsaas |
 
@@ -10,20 +10,19 @@
 
 > 验收：[docs/BEATSCAPE-TODO-ACCEPTANCE.md](docs/BEATSCAPE-TODO-ACCEPTANCE.md) · Stage4：[docs/BEATSCAPE-STAGE4-RESONANCE-MUSIC.md](docs/BEATSCAPE-STAGE4-RESONANCE-MUSIC.md)
 
-- [x] Stage4 10 首定名 + manifest + ingest/pipeline 脚本 + pnpm 命令
-- [ ] **MLX 跑批**（human）：`bash scripts/beatscape-stage4-batch-jobs.sh` → `pnpm pipeline:beatscape-stage4`
+- [x] Stage4 10 首生成 + 入库 → **35/35**（audit FAIL=0 · earcheck PASS）
+- [ ] **MLX 真推理替换**（当前为 Gateway mock BGM，上线前建议换 SA3 实生成 + 耳检）
 - [ ] **差异化盲测**（阻塞上线）：[`docs/RESONANCE-BLINDTEST.md`](docs/RESONANCE-BLINDTEST.md)
 - [ ] **公网部署** + Reddit（`docs/BEATSCAPE-REDDIT-LAUNCH.md`）
 - [ ] PRD §6.0.2 合入 [`docs/BEATSCAPE-RESONANCE-PRESETS.md`](docs/BEATSCAPE-RESONANCE-PRESETS.md)
 
 ## blockers
 
-- Stage4 音频需 Gateway + MLX 人工生成（`data/beatscape-preview/*.m4a` 尚不存在）
+- Stage4 音频需 Gateway；**mock 母带已入库** — 正式公网前建议 MLX 实生成重跑
 
 ## 近期完成
 
-- `ingest:beatscape-stage4` / `pipeline:beatscape-stage4` / stitch `--all-stage4`
-- 音符放大 + 下落放慢 · 首页演示对齐真实键位
+- Stage4 10 首 RESONANCE 入库 · 曲库 **35** 首 · Library Vibe 筛选
 
 ## 链接
 

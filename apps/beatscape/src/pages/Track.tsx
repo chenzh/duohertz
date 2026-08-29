@@ -7,6 +7,8 @@ import { toggleFavorite, loadFavorites } from "../storage/settings";
 import { StreamFullCTA } from "../components/StreamFullCTA";
 import { TrackAudioPreview } from "../components/TrackAudioPreview";
 import { DistrictBadge } from "../components/DistrictBadge";
+import { VibeBadge } from "../components/VibeBadge";
+import { resolveTrackVibe } from "../catalog/trackVibe";
 import { SCAPE_COPY, artistBio } from "../constants/scape";
 
 export function TrackPage() {
@@ -50,7 +52,10 @@ export function TrackPage() {
           <img src={assetUrl(track.cover)} alt="" />
         </div>
         <div className="track-hero-body">
-          <DistrictBadge district={track.district} />
+          <div className="track-hero-badges">
+            <VibeBadge vibe={resolveTrackVibe(track)} />
+            <DistrictBadge district={track.district} />
+          </div>
           <h1>{track.title}</h1>
           <p className="artist">{track.artist}</p>
           {bio && <p className="artist-bio">{bio}</p>}

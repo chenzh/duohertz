@@ -20,13 +20,14 @@
       "tags": [
         "Hot Chart Style"
       ],
+      "vibe": "battle",
       "default_mode": "arcade",
       "default_tier": "standard",
       "allows_slide": false,
       "play_role": "Brass stabs + drop\u22648s demo",
       "prompt": "EDM rhythm game track, 160 BPM, clear 4/4 kick, brass stab hooks, neon pulse energy, urban scape at night, build-up and drop within 8 seconds, chart-friendly drums, instrumental, no vocals, beatscape original, owned rights, loop-friendly, western production",
       "engine": "stable-audio-3",
-      "job_duration_sec": 210,
+      "job_duration_sec": 180,
       "mode": "game_bgm"
     },
     {
@@ -44,13 +45,14 @@
       "tags": [
         "Classic Style"
       ],
+      "vibe": "groove",
       "default_mode": "casual",
       "default_tier": "easy",
       "allows_slide": false,
       "play_role": "Syncopated groove practice",
       "prompt": "hip-hop rhythm game track, 98 BPM, syncopated funk groove, 808 bass, off-beat hi-hats, night grid atmosphere, clear downbeat for charts, instrumental, no vocals, beatscape original, owned rights, loop-friendly, western production",
       "engine": "stable-audio-3",
-      "job_duration_sec": 210,
+      "job_duration_sec": 180,
       "mode": "game_bgm"
     },
     {
@@ -68,13 +70,14 @@
       "tags": [
         "Viral Style"
       ],
+      "vibe": "groove",
       "default_mode": "arcade",
       "default_tier": "standard",
       "allows_slide": false,
       "play_role": "Rhodes hook in first 10s",
       "prompt": "pop rhythm game track, 122 BPM, rhodes electric piano hook, funky groove, bright snare, glass horizon mood, clear 4/4 beat, instrumental, no vocals, beatscape original, owned rights, loop-friendly, western production",
       "engine": "stable-audio-3",
-      "job_duration_sec": 210,
+      "job_duration_sec": 180,
       "mode": "game_bgm"
     },
     {
@@ -92,13 +95,14 @@
       "tags": [
         "Classic Style"
       ],
+      "vibe": "chill",
       "default_mode": "casual",
       "default_tier": "easy",
       "allows_slide": false,
       "play_role": "Wide-window friendly low density",
       "prompt": "R&B rhythm game track, 92 BPM, neo-soul groove, warm bass, soft kick, spacious mix, afterhours pulse, clear downbeat, instrumental, no vocals, beatscape original, owned rights, loop-friendly, western production",
       "engine": "stable-audio-3",
-      "job_duration_sec": 210,
+      "job_duration_sec": 180,
       "mode": "game_bgm"
     },
     {
@@ -116,13 +120,14 @@
       "tags": [
         "Hot Chart Style"
       ],
+      "vibe": "battle",
       "default_mode": "arcade",
       "default_tier": "standard",
       "allows_slide": false,
       "play_role": "Guitar riff density chart",
       "prompt": "rock rhythm game track, 132 BPM, funk rock electric guitar riff, stomp drum pattern, chrome edge energy, tight 4/4 kit, instrumental, no vocals, beatscape original, owned rights, loop-friendly, western production",
       "engine": "stable-audio-3",
-      "job_duration_sec": 210,
+      "job_duration_sec": 180,
       "mode": "game_bgm"
     },
     {
@@ -140,13 +145,14 @@
       "tags": [
         "Hot Chart Style"
       ],
+      "vibe": "battle",
       "default_mode": "arcade",
       "default_tier": "hard",
       "allows_slide": false,
       "play_role": "High density Hard acceptance",
       "prompt": "EDM rhythm game track, 168 BPM, intense drop, filtered nu-disco layer, dramatic tension, pulse core overload, chart-friendly dense drums, instrumental, no vocals, beatscape original, owned rights, loop-friendly, western production",
       "engine": "stable-audio-3",
-      "job_duration_sec": 210,
+      "job_duration_sec": 180,
       "mode": "game_bgm"
     },
     {
@@ -164,13 +170,14 @@
       "tags": [
         "Viral Style"
       ],
+      "vibe": "groove",
       "default_mode": "arcade",
       "default_tier": "standard",
       "allows_slide": false,
       "play_role": "Shuffle feel mid BPM",
       "prompt": "hip-hop rhythm game track, 102 BPM, shuffle groove, funk bass line, crisp snare, lane grid syncopation, clear beat for rhythm game, instrumental, no vocals, beatscape original, owned rights, loop-friendly, western production",
       "engine": "stable-audio-3",
-      "job_duration_sec": 210,
+      "job_duration_sec": 180,
       "mode": "game_bgm"
     },
     {
@@ -188,13 +195,14 @@
       "tags": [
         "New Release"
       ],
+      "vibe": "groove",
       "default_mode": "arcade",
       "default_tier": "standard",
       "allows_slide": false,
       "play_role": "Strong chorus hook",
       "prompt": "pop rhythm game track, 126 BPM, catchy synth hook, funky bass, driving 4/4, crimson night skyline, bright production, instrumental, no vocals, beatscape original, owned rights, loop-friendly, western production",
       "engine": "stable-audio-3",
-      "job_duration_sec": 210,
+      "job_duration_sec": 180,
       "mode": "game_bgm"
     },
     {
@@ -212,13 +220,14 @@
       "tags": [
         "Classic Style"
       ],
+      "vibe": "chill",
       "default_mode": "casual",
       "default_tier": "easy",
       "allows_slide": false,
       "play_role": "Hold-friendly legato pockets",
       "prompt": "R&B rhythm game track, 94 BPM, neo-soul chords, smooth groove, legato-friendly pockets, moonlit afterhours scape, clear kick and snare, instrumental, no vocals, beatscape original, owned rights, loop-friendly, western production",
       "engine": "stable-audio-3",
-      "job_duration_sec": 210,
+      "job_duration_sec": 180,
       "mode": "game_bgm"
     },
     {
@@ -236,13 +245,14 @@
       "tags": [
         "Hot Chart Style"
       ],
+      "vibe": "battle",
       "default_mode": "arcade",
       "default_tier": "hard",
       "allows_slide": true,
       "play_role": "Slide chart showcase Std/Hard",
       "prompt": "rock rhythm game track, 134 BPM, funk rock drive, wah guitar accents, brass hits optional, slide district energy, tight drums for lane charts, instrumental, no vocals, beatscape original, owned rights, loop-friendly, western production",
       "engine": "stable-audio-3",
-      "job_duration_sec": 210,
+      "job_duration_sec": 180,
       "mode": "game_bgm"
     }
   ]

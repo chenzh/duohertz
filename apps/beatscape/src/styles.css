@@ -1941,6 +1941,116 @@ td {
 }
 
 /* Library filters bar */
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.filter-chips-secondary {
+  margin-bottom: 16px;
+}
+
+.filter-chips-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin-right: 4px;
+}
+
+.filter-chip {
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--muted);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+
+.filter-chip:hover {
+  color: var(--text);
+  border-color: rgba(242, 228, 201, 0.25);
+}
+
+.filter-chip.active {
+  color: var(--text);
+  border-color: rgba(226, 61, 61, 0.55);
+  background: rgba(226, 61, 61, 0.12);
+}
+
+.filter-chip.vibe-night-drive.active {
+  border-color: rgba(91, 141, 239, 0.55);
+  background: rgba(91, 141, 239, 0.12);
+}
+
+.filter-chip.vibe-groove.active {
+  border-color: rgba(255, 176, 32, 0.55);
+  background: rgba(255, 176, 32, 0.1);
+}
+
+.filter-chip.vibe-battle.active {
+  border-color: rgba(226, 61, 61, 0.55);
+  background: rgba(226, 61, 61, 0.12);
+}
+
+.filter-chip.vibe-chill.active {
+  border-color: rgba(176, 118, 90, 0.55);
+  background: rgba(176, 118, 90, 0.12);
+}
+
+.vibe-badge {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+
+.vibe-badge.vibe-night-drive {
+  border-color: rgba(91, 141, 239, 0.35);
+  color: #9bb8f5;
+}
+
+.vibe-badge.vibe-groove {
+  border-color: rgba(255, 176, 32, 0.35);
+  color: #ffc857;
+}
+
+.vibe-badge.vibe-battle {
+  border-color: rgba(226, 61, 61, 0.4);
+  color: #f08080;
+}
+
+.vibe-badge.vibe-chill {
+  border-color: rgba(176, 118, 90, 0.4);
+  color: #c9a088;
+}
+
+.track-card-badges,
+.track-hero-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+  align-items: center;
+}
+
+.track-hero-badges {
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
 .filters-bar {
   display: flex;
   flex-wrap: wrap;

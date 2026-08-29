@@ -18,7 +18,7 @@ export const HOME_PAGE_META: PageMeta = DEFAULT_PAGE_META;
 export const LIBRARY_PAGE_META: PageMeta = {
   title: "Library — BeatScape",
   description:
-    "Browse owned AI originals. Search tracks, filter by genre, and save favorites. Feel the Beat, Own the Scape.",
+    "Browse owned AI originals. Filter by night-drive vibe, groove, battle energy, or genre. Feel the Beat, Own the Scape.",
 };
 
 export const CALIBRATION_PAGE_META: PageMeta = {

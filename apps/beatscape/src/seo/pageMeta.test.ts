@@ -99,7 +99,7 @@ describe("LIBRARY_PAGE_META", () => {
 
   it("includes browse semantics and site tagline", () => {
     expect(LIBRARY_PAGE_META.description).toContain("Browse owned AI originals");
-    expect(LIBRARY_PAGE_META.description).toContain("Search tracks");
+    expect(LIBRARY_PAGE_META.description).toContain("Filter by");
     expect(LIBRARY_PAGE_META.description).toContain("Feel the Beat, Own the Scape.");
   });
 });

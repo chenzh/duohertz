@@ -2,7 +2,12 @@
 
 from __future__ import annotations
 
-# track_id, seq, title, artist, genre, bpm, preset_id, district, tag, allows_slide
+import json
+from pathlib import Path
+
+_VIBES: dict[str, str] = json.loads(
+    (Path(__file__).parent / "beatscape-track-vibes.json").read_text(encoding="utf-8")
+)
 STAGE4_RESONANCE_SPECS: list[tuple] = [
     ("bs-s4-01", 26, "Brass Scape Rush", "Neon Arc", "EDM", 160, "bs-resonance-brass", "Pulse Core", "Hot Chart Style", False),
     ("bs-s4-02", 27, "Syncopated Grid", "Subline", "Hip-hop", 98, "bs-resonance-funkhop", "Night Grid", "Classic Style", False),
@@ -51,7 +56,7 @@ RESONANCE_PRESETS: dict[str, dict[str, str | int]] = {
 }
 
 GAME_DURATION_SEC = 120
-STREAM_DURATION_SEC = 198
+STREAM_DURATION_SEC = 216
 
 
 def build_track(spec: tuple) -> dict:
@@ -77,13 +82,14 @@ def build_track(spec: tuple) -> dict:
         "preset_id": preset,
         "district": district,
         "tags": [tag],
+        "vibe": _VIBES[tid],
         "default_mode": mode,
         "default_tier": tier,
         "allows_slide": allows_slide,
         "play_role": _play_role(tid),
         "prompt": prompt,
         "engine": "stable-audio-3",
-        "job_duration_sec": 210,
+        "job_duration_sec": 180,
         "mode": "game_bgm",
     }
 
