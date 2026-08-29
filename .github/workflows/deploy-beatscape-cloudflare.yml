@@ -24,16 +24,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
-          cache-dependency-path: apps/beatscape/package-lock.json
 
       - name: Install & build
         working-directory: apps/beatscape
         env:
-          # Cloudflare Pages project root URL (https://beatscape.pages.dev/)
           VITE_BASE: /
         run: |
-          if [ -f package-lock.json ]; then npm ci; else npm install; fi
+          npm install
           npm test
           npm run build
 
