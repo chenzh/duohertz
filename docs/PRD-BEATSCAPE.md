@@ -1207,44 +1207,93 @@ BeatScape 曲库与 **MusicSaas 音乐流媒体 App** 共用同一 `track_id` �
 
 ### 7.5 设计 Token（内容视觉真值）
 
+> **v2.0 · RESONANCE 视觉改版（2026-08-29）**
+> 霓虹青色板整组替换为「RESONANCE」高对比漫画色板。配色属内容视觉真值，故在此留档。
+> **本次只改视觉**：判定窗 15/30/50、菱形音符、曲库内容、玩法一律不变。
+
 | Token | 值 | 用途 |
 |-------|-----|------|
-| `--scape-bg-0` | `#0B0F14` | 页面深底 |
-| `--scape-bg-1` | `#121A24` | 次级底 / 曲库卡片底 |
-| `--scape-line` | `#1E2A3A` | 分割线、网格 |
-| `--scape-text` | `#E8EEF7` | 主文案 |
-| `--scape-muted` | `#8B9BB0` | 次文案 |
-| `--scape-accent` | `#3DDCFF` | 主强调（霓虹青） |
-| `--scape-accent-2` | `#7CFFB2` | Perfect / 正向 |
-| `--scape-warn` | `#FF5C7A` | Miss / 危险 |
-| `--scape-gold` | `#F5C542` | S / AP |
-| Font display | **Sora**（Google Fonts；唯一标题字体） | 禁止再用 Outfit/Inter/Roboto 做品牌标题 |
-| Font body | **IBM Plex Sans** | 数据与 UI |
-| 封面构图 | 60% 几何 + 40% 留黑；**Stage1–2 程序化**（seed=`track_id`）；无人物脸 | — |
+| `--scape-bg-0` | `#12100F` | 页面墨底（去蓝味） |
+| `--scape-bg-1` | `#1C1717` | 次级底 / 曲库卡片底 |
+| `--scape-line` | `#000000` | 分割线、漫画框线 |
+| `--scape-text` | `#F5EFE6` | 主文案（微暖） |
+| `--scape-muted` | `#A8928B` | 次文案 |
+| `--scape-accent` | `#E23D3D` | 主强调（朱红） |
+| `--scape-accent-2` | `#F2E4C9` | Perfect / 正向（米白） |
+| `--scape-warn` | `#FFB020` | Good / 警示（琥珀） |
+| `--scape-gold` | `#FFB020` | S / AP |
+| Font display | **Anton**（Google Fonts；OFL） | 标题、HUD 数字、判定文案 |
+| Font secondary | **Sora**（Google Fonts；OFL） | 次级标题、强调标签 |
+| Font body | **IBM Plex Sans**（OFL） | 数据与 UI |
+| 封面构图 | 60% 几何 + 40% 留黑；**Stage1–3 程序化**（seed=`track_id`）；无人物脸 | — |
 | 海报模板 | 上曲名/艺人 · 中 Accuracy+Grade · 下 Owned Rights 条 | 统一可截图 |
+
+字体**只许使用 SIL OFL / Apache 授权**字体，授权文本归档 `docs/licenses/`。
+理由：美国字体形状不受著作权保护但字体软件受保护；**中国独创性高的字体单字可作为美术作品受保护**，
+字库按计算机软件保护（方正诉暴雪，最高法判赔 205 万）。风险按最严口径管理。
 
 **四道颜色（对局固定）**
 
-| Lane | 色值 |
-|------|------|
-| 0 | `#3DDCFF` |
-| 1 | `#7CFFB2` |
-| 2 | `#F5C542` |
-| 3 | `#FF5C7A` |
+| Lane | 色值 | 说明 |
+|------|------|------|
+| 0 | `#E23D3D` | 朱红，与主强调同系 |
+| 1 | `#F2E4C9` | 米白，靠明度而非色相与道 0 拉开 |
+| 2 | `#FFB020` | 琥珀 |
+| 3 | `#5B8DEF` | 钢蓝 —— **刻意保留冷色**。全暖配色会让四道在高速下落时糊成一片，属可用性要求 |
 
-判定线 `#E8EEF7` @ 0.85 透明。
+判定线 `#F5EFE6` @ 0.9 透明。
 
 **街区染色（封面主色倾向）**
 
 | District | 主色倾向 |
 |----------|----------|
-| Pulse Core | cyan `#3DDCFF` |
-| Glass Rim | silver-blue `#A8C0D8` |
-| Night Grid | violet-dim `#6B5B95` |
-| Afterhours Lane | warm-dim `#C4A484` |
-| Chrome Yard | steel `#9AA3AD` |
-| Slide District | mint `#7CFFB2` |
-| Skyline Hook | amber `#F5C542` |
+| Pulse Core | crimson `#E23D3D` |
+| Glass Rim | bone `#E4D8C4` |
+| Night Grid | oxblood `#6E2426` |
+| Afterhours Lane | clay `#B0765A` |
+| Chrome Yard | ash `#8C8079` |
+| Slide District | amber `#FFB020` |
+| Skyline Hook | steel-blue `#5B8DEF` |
+
+### 7.6 RESONANCE 视觉语言
+
+**风格命名**：RESONANCE（共振）。对外一律使用本名，**禁止在代码、文案、素材命名中出现任何第三方作品名**。
+
+**五条语法**
+
+1. **平涂硬边** —— 不用渐变、柔光、霓虹辉光；色块刀切。
+2. **粗描边** —— UI 容器、卡片、按钮 2–3px 纯黑描边，如漫画分格框线。
+3. **高对比三色结构** —— 墨黑底 → 大面积朱红 → 米白文字，中间色调尽量少。
+4. **漫画符码** —— 放射线、半调网点、集中线、爆炸星形气泡、斜切矩形。均为公共领域技法。
+5. **自创 motif：共振菱形** —— 四个同心菱形由内向外扩散、中心实心。用于 logo、封面、
+   判定特效、加载动画。它是 BeatScape 的符号，**不得替换为任何第三方作品的标志性图形**。
+
+**与「极简高级」的关系**（§12 产品定位）：极简指**布局不堆砌**，漫画指**视觉语言**。
+两者共存 —— 用极简的版面承载漫画的笔触，不做信息密度堆叠。
+
+**判定文案排版**：允许美式波普风格的强调排版（英文单词 + 粗描边 + 轻微倾斜，
+如 `PERFECT` `GREAT` 做成漫画强调字）。**维持 §7.4 禁令：禁止日文／二次元拟声词与表情贴纸**。
+美式波普源自 Lichtenstein 一脉的公共领域传统，日文拟声词则属第三方作品强识别符号。
+
+### 7.7 差异化红线（法务约束，不可协商）
+
+改造的取舍依据是：`Tetris Holding v. Xio Interactive`（2012）——
+被告使用**全新绘制**的美术资产仍被判侵权，因整体 *look and feel* 易被误认，
+且以当时技术条件**本可做出区分而未做**。`Spry Fox v. Lolapps`（2012）结论相同。
+由此得出：**「素材全部重画」不构成免责，必须主动差异化。**
+
+| 禁止项 | 说明 |
+|--------|------|
+| 第三方作品名称、logo、系列徽记 | 含字体造型上的模仿 |
+| 任何具体角色 | 形象、剪影、配色组合 |
+| 人格面具 / 塔罗牌 / 天鹅绒房间等强识别 motif | 见 §7.6，一律用共振菱形替代 |
+| 原曲旋律、采样、音效 | 曲库保持 100% MusicSaas 自研 AI 原创 |
+| 官方美术资产与定制字体文件 | 一张不用 |
+| 非 OFL/Apache 字体 | 见 §7.5 字体条款 |
+| 日文／二次元拟声词与表情贴纸 | 见 §7.6 |
+
+**上线前必须通过差异化盲测**（§11.4）：找 5–10 名**不玩日式 RPG** 的观察者，
+只给截图、不给提示，问"这看起来像哪款游戏"。**任一人说出来源作品即判定不通过**，退回重做差异化。
 
 ---
 
@@ -1337,6 +1386,12 @@ BeatScape 曲库与 **MusicSaas 音乐流媒体 App** 共用同一 `track_id` �
 - [ ] m4a 可玩；Local Board；校准为唯一 offset 源  
 - [ ] Kick→0 / Snare→3；`bs_last_run` schema  
 - [ ] §4.18 Stage1 冻结；§6.0.22 清单勾选完毕  
+- [x] **RESONANCE v2.0 视觉**：色板与代码一致（§7.5）；共振菱形为唯一 motif（§7.6）  
+  *2026-08-29 已验：`src/` `scripts/` `dist/` 全仓终扫无残留旧色板（青 `#3DDCFF`／薄荷 `#7CFFB2`／粉 `#FF5C7A`／旧金 `#F5C542`）；25/25 封面为程序化 SVG。*
+- [x] **红线自检**：§7.7 表格逐项通过；字体全部 OFL 且授权文本已归档  
+  *2026-08-29 已验：见 [`docs/licenses/README.md`](licenses/README.md) §4；OFL 文本归档于 `docs/licenses/fonts/`。*
+- [ ] **差异化盲测**：5–10 名非日式 RPG 玩家，无人识别出来源作品（§7.7）  
+  **⬅ 上线前唯一未通过项。** 规程与记录表见 [`docs/RESONANCE-BLINDTEST.md`](RESONANCE-BLINDTEST.md)。
 
 ---
 

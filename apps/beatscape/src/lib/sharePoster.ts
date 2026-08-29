@@ -28,69 +28,87 @@ export async function renderSharePoster(run: LastRun, district = ""): Promise<Bl
   const ctx = canvas.getContext("2d");
   if (!ctx) throw new Error("Canvas unsupported");
 
-  ctx.fillStyle = "#0B0F14";
+  // PRD §7.5 v2.0 · RESONANCE: flat ink ground, halftone dots, hard strokes.
+  ctx.fillStyle = "#12100F";
   ctx.fillRect(0, 0, W, H);
 
-  const glow = ctx.createRadialGradient(W * 0.72, H * 0.28, 0, W * 0.72, H * 0.28, W * 0.55);
-  glow.addColorStop(0, "rgba(61,220,255,0.22)");
-  glow.addColorStop(1, "rgba(11,15,20,0)");
-  ctx.fillStyle = glow;
-  ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = "rgba(226,61,61,0.14)";
+  for (let x = 8; x < W; x += 8) {
+    for (let y = 8; y < H; y += 8) {
+      ctx.fillRect(x, y, 1.6, 1.6);
+    }
+  }
 
+  ctx.strokeStyle = "rgba(0,0,0,0.55)";
+  ctx.lineWidth = 1;
   for (let x = 0; x < W; x += 48) {
-    ctx.strokeStyle = "rgba(30,42,58,0.35)";
     ctx.beginPath();
     ctx.moveTo(x, 0);
     ctx.lineTo(x, H);
     ctx.stroke();
   }
   for (let y = 0; y < H; y += 48) {
-    ctx.strokeStyle = "rgba(30,42,58,0.35)";
     ctx.beginPath();
     ctx.moveTo(0, y);
     ctx.lineTo(W, y);
     ctx.stroke();
   }
 
-  ctx.strokeStyle = "#3DDCFF";
-  ctx.lineWidth = 6;
+  // Resonance motif: concentric diamonds, outlined outer + solid core.
   const cx = W * 0.72;
   const cy = H * 0.48;
-  const r = 180;
-  ctx.beginPath();
-  ctx.moveTo(cx, cy - r);
-  ctx.lineTo(cx + r * 0.75, cy);
-  ctx.lineTo(cx, cy + r);
-  ctx.lineTo(cx - r * 0.75, cy);
-  ctx.closePath();
-  ctx.stroke();
+  const rings = [
+    { r: 190, fill: null, stroke: "#E23D3D", w: 6 },
+    { r: 130, fill: null, stroke: "#F2E4C9", w: 4 },
+    { r: 78, fill: "#E23D3D", stroke: null, w: 0 },
+  ];
+  for (const ring of rings) {
+    ctx.beginPath();
+    ctx.moveTo(cx, cy - ring.r);
+    ctx.lineTo(cx + ring.r * 0.75, cy);
+    ctx.lineTo(cx, cy + ring.r);
+    ctx.lineTo(cx - ring.r * 0.75, cy);
+    ctx.closePath();
+    if (ring.fill) {
+      ctx.fillStyle = ring.fill;
+      ctx.fill();
+    }
+    if (ring.stroke) {
+      ctx.strokeStyle = ring.stroke;
+      ctx.lineWidth = ring.w;
+      ctx.stroke();
+    }
+  }
 
-  ctx.fillStyle = "#E8EEF7";
-  ctx.font = "bold 64px system-ui, sans-serif";
+  ctx.fillStyle = "#F5EFE6";
+  ctx.font = "400 68px Anton, system-ui, sans-serif";
   ctx.fillText(run.title, 72, 160);
-  ctx.fillStyle = "#8B9BB0";
+  ctx.fillStyle = "#A8928B";
   ctx.font = "32px system-ui, sans-serif";
   ctx.fillText(run.artist, 72, 220);
   if (district) {
-    ctx.fillStyle = "#3DDCFF";
+    ctx.fillStyle = "#E23D3D";
     ctx.font = "600 24px system-ui, sans-serif";
     ctx.fillText(`${district} · BeatScape`, 72, 268);
   }
 
-  ctx.fillStyle = run.grade === "S" ? "#F5C542" : "#3DDCFF";
-  ctx.font = "bold 120px system-ui, sans-serif";
-  ctx.fillText(run.grade, 72, 400);
-  ctx.fillStyle = "#E8EEF7";
+  ctx.fillStyle = run.grade === "S" ? "#FFB020" : "#E23D3D";
+  ctx.font = "400 132px Anton, system-ui, sans-serif";
+  ctx.fillText(run.grade, 72, 408);
+  ctx.fillStyle = "#F5EFE6";
   ctx.font = "36px system-ui, sans-serif";
-  ctx.fillText(`${run.accuracy}% Acc · ${run.score.toLocaleString()} pts`, 72, 460);
-  ctx.fillStyle = "#8B9BB0";
+  ctx.fillText(`${run.accuracy}% Acc · ${run.score.toLocaleString()} pts`, 72, 468);
+  ctx.fillStyle = "#A8928B";
   ctx.font = "28px system-ui, sans-serif";
-  ctx.fillText(`Max Combo ${run.maxCombo}x`, 72, 510);
+  ctx.fillText(`Max Combo ${run.maxCombo}x`, 72, 518);
 
-  roundRect(ctx, 72, H - 88, W - 144, 48, 12);
-  ctx.fillStyle = "#121A24";
+  roundRect(ctx, 72, H - 88, W - 144, 48, 10);
+  ctx.fillStyle = "#1C1717";
   ctx.fill();
-  ctx.fillStyle = "#8B9BB0";
+  ctx.strokeStyle = "#000000";
+  ctx.lineWidth = 2;
+  ctx.stroke();
+  ctx.fillStyle = "#A8928B";
   ctx.font = "22px system-ui, sans-serif";
   ctx.fillText(SCAPE_COPY.rightsShort + " · Feel the Beat, Own the Scape.", 96, H - 54);
 

@@ -9,6 +9,20 @@ export function isCoarsePointer(): boolean {
   return window.matchMedia("(pointer: coarse)").matches;
 }
 
+/**
+ * Which thumb owns a lane under the standard two-thumb grip:
+ * lanes 0–1 to the left thumb, 2–3 to the right.
+ *
+ * This is what separates a chord a phone can actually play from one it can't.
+ * A chord split across hands (1+2, or 0+3) is fine — each thumb takes one.
+ * A chord stacked on one hand (0+1, or 2+3) asks a single thumb to hold two
+ * lanes at once, which is the single biggest source of unfair misses on
+ * touch. See `chordAssist` in the play session.
+ */
+export function laneHand(lane: number): "left" | "right" {
+  return lane <= 1 ? "left" : "right";
+}
+
 /** Receptor sits this fraction of the field's short side above the bottom (PRD §4.12). */
 const RECEPTOR_RATIO = 0.15;
 

@@ -32,7 +32,16 @@ export function Layout({ children }: { children: ReactNode }) {
       <header className="site-header">
         <Link to="/" className="logo">
           <span className="logo-mark" aria-hidden>
-            ◆
+            {/* Resonance motif: concentric diamonds, outlined outer + solid core (PRD §7.6). */}
+            <svg viewBox="0 0 24 24" width="17" height="17" focusable="false">
+              <polygon
+                points="12,2 22,12 12,22 2,12"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+              />
+              <polygon points="12,8.5 15.5,12 12,15.5 8.5,12" fill="currentColor" />
+            </svg>
           </span>
           BeatScape
         </Link>
@@ -79,7 +88,7 @@ export function Layout({ children }: { children: ReactNode }) {
           <span className="tab-icon" aria-hidden>
             ⚙
           </span>
-          Profile
+          Settings
         </NavLink>
       </nav>
     </div>

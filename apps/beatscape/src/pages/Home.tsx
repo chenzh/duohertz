@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "../router";
 import { assetUrl, loadCatalog } from "../catalog/loadCatalog";
 import type { CatalogTrack } from "../types/catalog";
@@ -7,8 +7,8 @@ import { HeroGameplayPreview } from "../components/HeroGameplayPreview";
 import { firstPlayHref } from "../lib/firstPlay";
 import { dailyPlayHref, getDailyChallenge } from "../lib/dailyChallenge";
 import { trackEvent } from "../lib/analytics";
-
-const KEYS = ["D", "F", "J", "K"] as const;
+import { keyLabels } from "../input/keyMap";
+import { loadKeys } from "../storage/settings";
 
 function FeaturedCard({ track }: { track: CatalogTrack }) {
   const preview = track.preview ?? track.audio;
@@ -33,6 +33,7 @@ function FeaturedCard({ track }: { track: CatalogTrack }) {
 
 export function HomePage() {
   const [tracks, setTracks] = useState<CatalogTrack[]>([]);
+  const keys = useMemo(() => keyLabels(loadKeys()), []);
 
   useEffect(() => {
     trackEvent("home_view");
@@ -62,8 +63,8 @@ export function HomePage() {
             English pop &amp; EDM originals — hit Play and land in Neon Pulse in seconds. Calibrate anytime in Settings.
           </p>
           <div className="key-chips" aria-label="Keyboard lanes">
-            {KEYS.map((k) => (
-              <span key={k} className="key-chip">
+            {keys.map((k, i) => (
+              <span key={i} className="key-chip">
                 {k}
               </span>
             ))}

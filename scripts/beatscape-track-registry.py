@@ -208,14 +208,15 @@ STAGE2_TRACKS: list[dict[str, Any]] = [
     },
 ]
 
+# PRD §7.5 v2.0 · RESONANCE district accents
 DISTRICT_COLORS: dict[str, str] = {
-    "Pulse Core": "#3DDCFF",
-    "Glass Rim": "#A8C4E8",
-    "Night Grid": "#5B6EFF",
-    "Afterhours Lane": "#C084FC",
-    "Chrome Yard": "#94A3B8",
-    "Slide District": "#7CFFB2",
-    "Skyline Hook": "#FFB86C",
+    "Pulse Core": "#E23D3D",
+    "Glass Rim": "#E4D8C4",
+    "Night Grid": "#6E2426",
+    "Afterhours Lane": "#B0765A",
+    "Chrome Yard": "#8C8079",
+    "Slide District": "#FFB020",
+    "Skyline Hook": "#5B8DEF",
 }
 
 PREVIEW_STEM_BY_ID: dict[str, str] = {

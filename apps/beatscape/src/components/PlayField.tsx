@@ -1,11 +1,12 @@
-import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import type { ChartJSON, PlayMode, PlayResult } from "../types/chart";
 import { Conductor, unlockAudio } from "../audio/playback";
 import { playBreak, playCountdownTick, playHit, playKeyTick, setSfxVolume } from "../audio/hitsounds";
 import { GameSession, type JudgeFx } from "../engine/playState";
 import { approachSec, noteProximityFactor, noteScreenY } from "../engine/geometry";
-import { comboMultiplier, judgmentScore } from "../engine/judge";
-import { receptorYFromGeometry, laneFromClientX, TouchLaneTracker } from "../input/touchInput";
+import { accuracyPercent, comboMultiplier, judgmentScore } from "../engine/judge";
+import { receptorYFromGeometry, laneFromClientX, isCoarsePointer, TouchLaneTracker } from "../input/touchInput";
+import { keyLabels, laneFromKeyEvent } from "../input/keyMap";
 import { loadKeys, loadOffsetMs, loadSettings } from "../storage/settings";
 
 import { JUDGE_COLORS, LANE_COLORS, LANE_RGB, SCAPE_COPY } from "../constants/scape";
@@ -66,13 +67,18 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
   const onFinishRef = useRef(onFinish);
   onFinishRef.current = onFinish;
 
-  const settings = loadSettings();
-  const keys = loadKeys();
+  const settings = useMemo(loadSettings, []);
+  // Stable reference: the keyboard effect below keys off this array.
+  const keys = useMemo(loadKeys, []);
+  const keyHint = useMemo(() => keyLabels(keys).join(" · "), [keys]);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [needsStart, setNeedsStart] = useState(true);
   const [paused, setPaused] = useState(false);
+  // Two-thumb grip needs forgiveness for chords stacked on one hand (touch only).
+  const [touchUi] = useState(isCoarsePointer);
+  const chordAssist = touchUi && settings.chordAssist;
 
   const needsStartRef = useRef(needsStart);
   const pausedRef = useRef(paused);
@@ -98,7 +104,7 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
     conductor.setMusicVolume(settings.musicVolume);
     setSfxVolume(settings.sfxVolume);
     conductorRef.current = conductor;
-    const session = new GameSession(chart, mode);
+    const session = new GameSession(chart, mode, { chordAssist });
     sessionRef.current = session;
 
     const scrollBiasMult = (1 + settings.scrollBias) * (mode === "casual" ? casualSpeed : 1);
@@ -127,7 +133,7 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
       conductorRef.current = null;
       sessionRef.current = null;
     };
-  }, [chart, mode, audioUrl, casualSpeed, settings.scrollBias, settings.musicVolume, settings.sfxVolume]);
+  }, [chart, mode, audioUrl, casualSpeed, chordAssist, settings.scrollBias, settings.musicVolume, settings.sfxVolume]);
 
   // Reset state when the chart changes.
   useEffect(() => {
@@ -264,6 +270,7 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
       const receptorY = receptorYFromGeometry(h, Math.min(w, h));
       const laneW = w / 4;
       const noteW = Math.min(laneW * 0.66, 42);
+      const keyHints = keyLabels(keys);
       const session = sessionRef.current!;
       const approach = approachRef.current;
       const songSec = effMs / 1000;
@@ -273,11 +280,12 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
 
       const beatPhase = ((songSec * chart.bpm) / 60) % 1;
       const beatPulse = 0.12 + 0.18 * Math.max(0, Math.cos(beatPhase * Math.PI * 2));
-      const bgGrad = ctx2d.createRadialGradient(w / 2, h, 0, w / 2, h, h * 0.95);
-      bgGrad.addColorStop(0, `rgba(61,220,255,${0.05 + beatPulse * 0.07})`);
-      bgGrad.addColorStop(0.45, `rgba(139,92,246,${0.02 + beatPulse * 0.04})`);
-      bgGrad.addColorStop(1, "rgba(11,15,20,0)");
-      ctx2d.fillStyle = bgGrad;
+
+      // Flat ink ground with one faint crimson beat wash. No coloured gradient,
+      // no glow — the whole point of the v2.0 language.
+      ctx2d.fillStyle = "#12100F";
+      ctx2d.fillRect(0, 0, w, h);
+      ctx2d.fillStyle = `rgba(226,61,61,${0.05 + beatPulse * 0.06})`;
       ctx2d.fillRect(0, 0, w, h);
 
       // screen shake: decaying random offset applied to the gameplay layer
@@ -301,28 +309,30 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
         }
         const flash = Math.max(0, 1 - (nowPerf - laneFlashRef.current[i]) / LANE_FLASH_MS);
         if (flash > 0) {
-          const grad = ctx2d.createLinearGradient(0, receptorY, 0, 0);
-          grad.addColorStop(
-            0,
-            `rgba(${LANE_RGB[i][0]},${LANE_RGB[i][1]},${LANE_RGB[i][2]},${0.55 * flash})`,
-          );
-          grad.addColorStop(1, `rgba(${LANE_RGB[i][0]},${LANE_RGB[i][1]},${LANE_RGB[i][2]},0)`);
-          ctx2d.fillStyle = grad;
-          ctx2d.fillRect(x, 0, laneW, receptorY);
+          // Hard-edged band instead of a fading gradient.
+          const bandH = Math.min(receptorY, h * 0.3);
+          ctx2d.fillStyle = `rgba(${LANE_RGB[i][0]},${LANE_RGB[i][1]},${LANE_RGB[i][2]},${0.34 * flash})`;
+          ctx2d.fillRect(x, receptorY - bandH, laneW, bandH);
         }
-        ctx2d.strokeStyle = "rgba(255,255,255,0.06)";
+        // Lane dividers are ink rules, not faint white lines.
+        ctx2d.strokeStyle = "rgba(0,0,0,0.85)";
+        ctx2d.lineWidth = 2;
         ctx2d.beginPath();
         ctx2d.moveTo(x, 0);
         ctx2d.lineTo(x, h);
         ctx2d.stroke();
       }
 
-      // receptor line (neon) + BPM beat pulse
+      // Receptor: a thick black rail with a bone-white edge on top. No glow.
       ctx2d.save();
-      ctx2d.shadowColor = "#8B5CF6";
-      ctx2d.shadowBlur = 10 + beatPulse * 18;
-      ctx2d.strokeStyle = `rgba(255,255,255,${0.82 + beatPulse * 0.18})`;
-      ctx2d.lineWidth = 2 + beatPulse * 1.5;
+      ctx2d.lineWidth = 6 + beatPulse * 2;
+      ctx2d.strokeStyle = "#000000";
+      ctx2d.beginPath();
+      ctx2d.moveTo(0, receptorY);
+      ctx2d.lineTo(w, receptorY);
+      ctx2d.stroke();
+      ctx2d.lineWidth = 2;
+      ctx2d.strokeStyle = `rgba(245,239,230,${0.85 + beatPulse * 0.15})`;
       ctx2d.beginPath();
       ctx2d.moveTo(0, receptorY);
       ctx2d.lineTo(w, receptorY);
@@ -400,10 +410,10 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
           p.vy += 0.14;
           p.vx *= 0.985;
           ctx2d.globalAlpha = Math.max(0, 1 - age);
+          // Square debris shards read as comic impact; circles read as sparks.
+          const s2 = p.size * (1 - age * 0.5) * 1.8;
           ctx2d.fillStyle = `rgb(${p.r},${p.g},${p.b})`;
-          ctx2d.beginPath();
-          ctx2d.arc(p.x, p.y, p.size * (1 - age * 0.5), 0, Math.PI * 2);
-          ctx2d.fill();
+          ctx2d.fillRect(p.x - s2 / 2, p.y - s2 / 2, s2, s2);
         }
         ctx2d.globalAlpha = 1;
       } else {
@@ -415,15 +425,29 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
       for (const f of fxRef.current) {
         const age = (nowPerf - f.born) / 360;
         const cx = (f.lane + 0.5) * laneW;
-        const [r, g, b] = f.judgment === "miss" ? [254, 44, 85] : LANE_RGB[f.lane];
+        const [r, g, b] = f.judgment === "miss" ? LANE_RGB[0] : LANE_RGB[f.lane];
+
+        // Comic starburst instead of an expanding ring.
+        const spikes = f.judgment === "miss" ? 7 : f.judgment === "perfect" ? 12 : 9;
+        const rad = (10 + age * 34) * (f.judgment === "perfect" ? 1.3 : 1);
+        const inner = rad * 0.58;
+        ctx2d.beginPath();
+        for (let s = 0; s < spikes * 2; s++) {
+          const rr = s % 2 === 0 ? rad : inner;
+          const a = (s / (spikes * 2)) * Math.PI * 2 - Math.PI / 2;
+          const sx = cx + Math.cos(a) * rr;
+          const sy = receptorY + Math.sin(a) * rr;
+          if (s === 0) ctx2d.moveTo(sx, sy);
+          else ctx2d.lineTo(sx, sy);
+        }
+        ctx2d.closePath();
+        ctx2d.lineJoin = "miter";
         ctx2d.strokeStyle = `rgba(${r},${g},${b},${1 - age})`;
         ctx2d.lineWidth = 3;
-        ctx2d.beginPath();
-        ctx2d.arc(cx, receptorY, 10 + age * 34, 0, Math.PI * 2);
         ctx2d.stroke();
         ctx2d.lineWidth = 1;
 
-        // floating judgment label — pops in with an overshoot, then settles
+        // Judgment label — Anton slab wrapped in a hard ink outline.
         const label = JUDGE_LABEL[f.judgment];
         if (label) {
           const pop = age < 0.18 ? 0.5 + (age / 0.18) * 0.7 : 1.2 - (age - 0.18) * 0.24;
@@ -433,18 +457,15 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
           ctx2d.globalAlpha = Math.max(0, 1 - age * age);
           ctx2d.translate(cx + skewX, receptorY - 46 - age * 22);
           ctx2d.scale(pop, pop);
-          ctx2d.font = `800 ${isP ? 19 : 15}px 'Sora', sans-serif`;
           ctx2d.textAlign = "center";
-          ctx2d.fillStyle = JUDGE_COLOR[f.judgment] || "#FFFFFF";
-          if (isP) {
-            ctx2d.shadowColor = "#FFD60A";
-            ctx2d.shadowBlur = 16;
-          }
-          ctx2d.fillText(label, 0, 0);
+          const fs = isP ? 23 : 17;
+          ctx2d.font = `400 ${fs}px Anton, 'Sora', sans-serif`;
+          ctx2d.lineWidth = Math.max(3, fs * 0.2);
+          inkedText(ctx2d, label, 0, 0, JUDGE_COLOR[f.judgment] || "#F5EFE6");
           if (f.judgment !== "miss" && Math.abs(f.deltaMs) >= 8) {
             ctx2d.font = "600 10px 'IBM Plex Sans', sans-serif";
-            ctx2d.fillStyle = "rgba(255,255,255,0.72)";
-            ctx2d.fillText(f.deltaMs < 0 ? "EARLY" : "LATE", 0, 14);
+            ctx2d.lineWidth = 3;
+            inkedText(ctx2d, f.deltaMs < 0 ? "EARLY" : "LATE", 0, 15, "#F5EFE6");
           }
           ctx2d.restore();
         }
@@ -455,7 +476,7 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
       // combo-break vignette (HUD layer, stable)
       if (nowPerf < comboBreakRef.current) {
         const t = (comboBreakRef.current - nowPerf) / 320;
-        ctx2d.fillStyle = `rgba(255,92,122,${0.28 * t})`;
+        ctx2d.fillStyle = `rgba(226,61,61,${0.3 * t})`;
         ctx2d.fillRect(0, 0, w, h);
       }
 
@@ -472,44 +493,71 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
         ctx2d.restore();
       }
 
-      // HUD
-      ctx2d.fillStyle = "#FFFFFF";
-      ctx2d.font = "600 20px 'IBM Plex Sans', sans-serif";
+      // HUD — skewed ink panels rather than bare floating text.
+      const panel = (x: number, y: number, pw: number, ph: number, fill: string, skew = 8) => {
+        skewPath(ctx2d, x, y, pw, ph, skew);
+        ctx2d.fillStyle = fill;
+        ctx2d.fill();
+        ctx2d.lineWidth = 2;
+        ctx2d.strokeStyle = "#000000";
+        ctx2d.stroke();
+      };
+
+      const scoreText = session.score.toLocaleString();
+      ctx2d.font = "600 18px 'IBM Plex Sans', sans-serif";
+      const scoreW = Math.min(w * 0.5, ctx2d.measureText(scoreText).width + 34);
+      panel(10, 10, scoreW, 30, "#1C1717");
+      ctx2d.fillStyle = "#F5EFE6";
       ctx2d.textAlign = "left";
-      ctx2d.fillText(session.score.toLocaleString(), 14, 28);
+      ctx2d.textBaseline = "middle";
+      ctx2d.fillText(scoreText, 26, 26);
+
+      // accuracyPercent() direct — getResult() allocates a fresh object per frame.
+      const accText = `${accuracyPercent(session.judgments, session.totalNotes).toFixed(2)}%`;
+      ctx2d.font = "600 15px 'IBM Plex Sans', sans-serif";
+      const accW = ctx2d.measureText(accText).width + 30;
+      panel(w - 10 - accW, 10, accW, 30, "#1C1717");
+      ctx2d.fillStyle = "#A8928B";
       ctx2d.textAlign = "right";
-      ctx2d.fillStyle = "#9AA0A6";
-      ctx2d.font = "600 16px 'IBM Plex Sans', sans-serif";
-      ctx2d.fillText(`${session.getResult().accuracy.toFixed(2)}%`, w - 14, 28);
+      ctx2d.fillText(accText, w - 24, 26);
+      ctx2d.textBaseline = "alphabetic";
 
       if (mode === "arcade") {
+        const bx = 14;
+        const by = 46;
         const bw = w - 28;
-        ctx2d.fillStyle = "rgba(255,255,255,0.10)";
-        ctx2d.fillRect(14, 38, bw, 6);
-        ctx2d.fillStyle = session.hp <= 30 ? "#FF6B4A" : "#8B5CF6";
-        ctx2d.fillRect(14, 38, (bw * session.hp) / 100, 6);
+        const bh = 12;
+        panel(bx, by, bw, bh, "#12100F", 6);
+        const innerW = ((bw - 6) * Math.max(0, session.hp)) / 100;
+        if (innerW > 0) {
+          ctx2d.save();
+          ctx2d.beginPath();
+          ctx2d.rect(bx + 3, by + 3, innerW, bh - 6);
+          ctx2d.clip();
+          ctx2d.fillStyle = session.hp <= 30 ? "#E23D3D" : "#FFB020";
+          ctx2d.fillRect(bx + 3, by + 3, bw, bh - 6);
+          ctx2d.restore();
+        }
       }
 
       if (session.combo >= 2) {
-        // combo escalates in size + color as it climbs
+        // Combo escalates in size and heat as it climbs, always ink-outlined.
         const tier = session.combo >= 100 ? 3 : session.combo >= 50 ? 2 : session.combo >= 10 ? 1 : 0;
-        const sizes = [30, 38, 48, 58];
-        const cols = ["#FFFFFF", "#8B5CF6", "#FF6B4A", "#C8F542"];
+        const sizes = [34, 44, 56, 68];
+        const cols = ["#F5EFE6", "#F2E4C9", "#FFB020", "#E23D3D"];
         const pulse = 1 + Math.min(0.18, (nowPerf % 600) / 600 / 6);
         ctx2d.save();
         ctx2d.textAlign = "center";
         ctx2d.translate(w / 2, receptorY * 0.42);
         ctx2d.scale(pulse, pulse);
-        ctx2d.fillStyle = cols[tier];
-        ctx2d.shadowColor = cols[tier];
-        ctx2d.shadowBlur = tier > 0 ? 18 : 0;
-        ctx2d.font = `800 ${sizes[tier]}px 'Sora', sans-serif`;
-        ctx2d.fillText(`${session.combo}`, 0, 0);
+        ctx2d.font = `400 ${sizes[tier]}px Anton, 'Sora', sans-serif`;
+        ctx2d.lineWidth = Math.max(4, sizes[tier] * 0.13);
+        inkedText(ctx2d, `${session.combo}`, 0, 0, cols[tier]);
         ctx2d.restore();
         ctx2d.textAlign = "center";
-        ctx2d.fillStyle = "#9AA0A6";
         ctx2d.font = "600 12px 'IBM Plex Sans', sans-serif";
-        ctx2d.fillText("COMBO", w / 2, receptorY * 0.42 + 20);
+        ctx2d.lineWidth = 3;
+        inkedText(ctx2d, "COMBO", w / 2, receptorY * 0.42 + 24, "#A8928B");
       }
 
       // combo milestone flash (center, big, quick)
@@ -524,31 +572,65 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
           const sc = 0.7 + age * 0.7;
           ctx2d.scale(sc, sc);
           ctx2d.textAlign = "center";
-          ctx2d.fillStyle = "#FFD60A";
-          ctx2d.shadowColor = "#FFD60A";
-          ctx2d.shadowBlur = 26;
-          ctx2d.font = "800 42px 'Sora', sans-serif";
-          ctx2d.fillText(milestoneRef.current.text, 0, 0);
+          ctx2d.font = "400 48px Anton, 'Sora', sans-serif";
+          ctx2d.lineWidth = 10;
+          inkedText(ctx2d, milestoneRef.current.text, 0, 0, "#FFB020");
           ctx2d.restore();
         }
       }
 
-      // key hints
-      ctx2d.textAlign = "center";
-      ctx2d.fillStyle = "#8B9BB0";
-      ctx2d.font = "600 12px 'IBM Plex Sans', sans-serif";
-      for (let i = 0; i < 4; i++) {
-        ctx2d.fillText(keys[i] ?? "", (i + 0.5) * laneW, h - 10);
+      // Key hints sit under the receptor, tinted per lane. Drawn from the bound
+      // key's *label*, so arrow keys read as ← ↓ ↑ → instead of "ArrowLeft".
+      // Skipped on touch: there is no keyboard there, and the overlay already
+      // tells the player to use their thumbs.
+      if (!touchUi) {
+        ctx2d.save();
+        ctx2d.textAlign = "center";
+        ctx2d.textBaseline = "middle";
+        const hintY = Math.min(receptorY + 26, h - 14);
+        for (let i = 0; i < 4; i++) {
+          const label = keyHints[i] ?? "";
+          const flash = Math.max(
+            0,
+            1 - (performance.now() - (laneFlashRef.current[i] ?? 0)) / LANE_FLASH_MS,
+          );
+          const held = pressedRef.current.has(i);
+          const [r, g, b] = LANE_RGB[i] ?? LANE_RGB[0]!;
+          const cxm = (i + 0.5) * laneW;
+          const capW = Math.min(laneW * 0.7, 46);
+          const capH = 24;
+          skewPath(ctx2d, cxm - capW / 2, hintY - capH / 2, capW, capH, 6);
+          ctx2d.fillStyle = held ? LANE_COLORS[i]! : "rgba(18,16,15,0.94)";
+          ctx2d.fill();
+          ctx2d.lineWidth = 2;
+          ctx2d.strokeStyle = "#000000";
+          ctx2d.stroke();
+          ctx2d.font = `700 ${held ? 16 : 14}px 'IBM Plex Sans', sans-serif`;
+          ctx2d.fillStyle = held
+            ? "#12100F"
+            : `rgba(${r},${g},${b},${Math.min(1, 0.6 + flash * 0.4)})`;
+          ctx2d.fillText(label, cxm, hintY + 1);
+        }
+        ctx2d.restore();
       }
 
-      // countdown
+      // Countdown as comic emphasis type: heavy red slab behind a hard black
+      // outline. PRD §7.4 still bans Japanese-style onomatopoeia — this is the
+      // Western pop-art treatment instead.
       if (st < 0) {
         const cd = -st;
         const text = cd > 250 ? String(Math.ceil(cd / 1000)) : "GO";
+        ctx2d.save();
         ctx2d.textAlign = "center";
-        ctx2d.fillStyle = "#3DDCFF";
-        ctx2d.font = "800 72px 'Sora', sans-serif";
+        ctx2d.textBaseline = "middle";
+        ctx2d.font = "400 96px Anton, 'Sora', sans-serif";
+        ctx2d.lineJoin = "round";
+        ctx2d.lineWidth = 9;
+        ctx2d.strokeStyle = "#000000";
+        ctx2d.strokeText(text, w / 2, h / 2);
+        ctx2d.fillStyle = "#E23D3D";
         ctx2d.fillText(text, w / 2, h / 2);
+        ctx2d.restore();
       }
     };
 
@@ -640,7 +722,7 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
       cancelAnimationFrame(raf);
       ro.disconnect();
     };
-  }, [mode, settings.hitsound, settings.fancyFx, keys, chart.bpm]);
+  }, [mode, settings.hitsound, settings.fancyFx, keys, chart.bpm, touchUi]);
 
   const handlePress = (lane: number) => {
     const conductor = conductorRef.current;
@@ -677,13 +759,13 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.repeat) return;
-      const lane = keys.findIndex((k) => k.toLowerCase() === e.key.toLowerCase());
+      const lane = laneFromKeyEvent(e, keys);
       if (lane < 0) return;
       e.preventDefault();
       handlePress(lane);
     };
     const onKeyUp = (e: KeyboardEvent) => {
-      const lane = keys.findIndex((k) => k.toLowerCase() === e.key.toLowerCase());
+      const lane = laneFromKeyEvent(e, keys);
       if (lane < 0) return;
       handleRelease(lane);
     };
@@ -749,7 +831,11 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
           <button type="button" className="btn primary unlock-btn" onClick={(e) => { e.stopPropagation(); void startRun(); }}>
             {SCAPE_COPY.tapToEnter}
           </button>
-          <p className="unlock-hint">{keys.join(" · ")} when notes hit the line</p>
+          <p className="unlock-hint">
+            {touchUi
+              ? "Thumbs on the bottom lanes — tap as the notes land"
+              : `${keyHint} when notes hit the line`}
+          </p>
         </div>
       )}
       {!loading && !error && !needsStart && !paused && (
@@ -769,6 +855,11 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
   );
 }
 
+/**
+ * RESONANCE note: a flat diamond under a hard ink outline, with a single
+ * highlight wedge for cel-shaded volume. The old version baked a neon glow in —
+ * that is exactly what the v2.0 language removes.
+ */
 function makeNoteSprite(color: string, px: number): HTMLCanvasElement {
   const c = document.createElement("canvas");
   c.width = px;
@@ -776,28 +867,70 @@ function makeNoteSprite(color: string, px: number): HTMLCanvasElement {
   const g = c.getContext("2d")!;
   const cx = px / 2;
   const cy = px / 2;
-  const h = px * 0.3;
-  // baked neon glow
-  g.shadowColor = color;
-  g.shadowBlur = px * 0.26;
+  const r = px * 0.34;
+
+  const diamond = (radius: number) => {
+    g.beginPath();
+    g.moveTo(cx, cy - radius);
+    g.lineTo(cx + radius, cy);
+    g.lineTo(cx, cy + radius);
+    g.lineTo(cx - radius, cy);
+    g.closePath();
+  };
+
+  diamond(r);
   g.fillStyle = color;
+  g.fill();
+  g.lineJoin = "miter";
+  g.lineWidth = Math.max(2, px * 0.06);
+  g.strokeStyle = "#000000";
+  g.stroke();
+
+  // Single hard-edged highlight wedge, clipped to the inner diamond.
+  g.save();
+  diamond(r * 0.72);
+  g.clip();
+  g.fillStyle = "rgba(255,255,255,0.4)";
   g.beginPath();
-  g.moveTo(cx, cy - h);
-  g.lineTo(cx + h, cy);
-  g.lineTo(cx, cy + h);
-  g.lineTo(cx - h, cy);
+  g.moveTo(cx - r, cy - r * 0.2);
+  g.lineTo(cx + r * 0.15, cy - r);
+  g.lineTo(cx - r, cy - r);
   g.closePath();
   g.fill();
-  // bright inner core for pop
-  g.shadowBlur = 0;
-  g.fillStyle = "rgba(255,255,255,0.9)";
-  const h2 = px * 0.13;
-  g.beginPath();
-  g.moveTo(cx, cy - h2);
-  g.lineTo(cx + h2, cy);
-  g.lineTo(cx, cy + h2);
-  g.lineTo(cx - h2, cy);
-  g.closePath();
-  g.fill();
+  g.restore();
+
   return c;
+}
+
+/** Skewed parallelogram used for every HUD panel (PRD §7.6 comic framing). */
+function skewPath(
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  w: number,
+  h: number,
+  skew: number,
+) {
+  ctx.beginPath();
+  ctx.moveTo(x + skew, y);
+  ctx.lineTo(x + w, y);
+  ctx.lineTo(x + w - skew, y + h);
+  ctx.lineTo(x, y + h);
+  ctx.closePath();
+}
+
+/** Draw text with a hard ink outline — the pop-art emphasis treatment. */
+function inkedText(
+  ctx: CanvasRenderingContext2D,
+  text: string,
+  x: number,
+  y: number,
+  fill: string,
+  outline = "#000000",
+) {
+  ctx.lineJoin = "round";
+  ctx.strokeStyle = outline;
+  ctx.strokeText(text, x, y);
+  ctx.fillStyle = fill;
+  ctx.fillText(text, x, y);
 }

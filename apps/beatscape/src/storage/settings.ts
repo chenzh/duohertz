@@ -1,3 +1,5 @@
+import { DEFAULT_KEYS, normalizeKeys } from "../input/keyMap";
+
 export type BsSettings = {
   hitsound: boolean;
   fancyFx: boolean;
@@ -5,6 +7,8 @@ export type BsSettings = {
   casualSpeed: number;
   musicVolume: number;
   sfxVolume: number;
+  /** Touch-only: forgive a same-hand double tap when one thumb covers both lanes. */
+  chordAssist: boolean;
 };
 
 const DEFAULT: BsSettings = {
@@ -14,6 +18,7 @@ const DEFAULT: BsSettings = {
   casualSpeed: 1,
   musicVolume: 0.7,
   sfxVolume: 0.55,
+  chordAssist: true,
 };
 
 export function loadSettings(): BsSettings {
@@ -45,11 +50,11 @@ export function saveOffsetMs(ms: number) {
 export function loadKeys(): string[] {
   try {
     const raw = localStorage.getItem("bs_keys");
-    if (raw) return JSON.parse(raw);
+    if (raw) return normalizeKeys(JSON.parse(raw));
   } catch {
     /* ignore */
   }
-  return ["D", "F", "J", "K"];
+  return [...DEFAULT_KEYS];
 }
 
 export function saveKeys(keys: string[]) {

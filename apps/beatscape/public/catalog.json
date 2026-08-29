@@ -20,7 +20,7 @@
       "default_mode": "arcade",
       "default_tier": "standard",
       "audio": "/catalog/bs-s1-01/audio.m4a",
-      "cover": "/catalog/bs-s1-01/cover.png",
+      "cover": "/catalog/bs-s1-01/cover.svg",
       "charts": {
         "easy": "/catalog/bs-s1-01/easy.json",
         "standard": "/catalog/bs-s1-01/standard.json",
@@ -54,7 +54,7 @@
       "default_mode": "casual",
       "default_tier": "easy",
       "audio": "/catalog/bs-s1-02/audio.m4a",
-      "cover": "/catalog/bs-s1-02/cover.png",
+      "cover": "/catalog/bs-s1-02/cover.svg",
       "charts": {
         "easy": "/catalog/bs-s1-02/easy.json",
         "standard": "/catalog/bs-s1-02/standard.json",
@@ -88,7 +88,7 @@
       "default_mode": "arcade",
       "default_tier": "standard",
       "audio": "/catalog/bs-s1-03/audio.m4a",
-      "cover": "/catalog/bs-s1-03/cover.png",
+      "cover": "/catalog/bs-s1-03/cover.svg",
       "charts": {
         "easy": "/catalog/bs-s1-03/easy.json",
         "standard": "/catalog/bs-s1-03/standard.json",
@@ -122,7 +122,7 @@
       "default_mode": "casual",
       "default_tier": "easy",
       "audio": "/catalog/bs-s1-04/audio.m4a",
-      "cover": "/catalog/bs-s1-04/cover.png",
+      "cover": "/catalog/bs-s1-04/cover.svg",
       "charts": {
         "easy": "/catalog/bs-s1-04/easy.json",
         "standard": "/catalog/bs-s1-04/standard.json",
@@ -156,7 +156,7 @@
       "default_mode": "arcade",
       "default_tier": "hard",
       "audio": "/catalog/bs-s1-05/audio.m4a",
-      "cover": "/catalog/bs-s1-05/cover.png",
+      "cover": "/catalog/bs-s1-05/cover.svg",
       "charts": {
         "easy": "/catalog/bs-s1-05/easy.json",
         "standard": "/catalog/bs-s1-05/standard.json",
@@ -190,7 +190,7 @@
       "default_mode": "arcade",
       "default_tier": "standard",
       "audio": "/catalog/bs-s1-06/audio.m4a",
-      "cover": "/catalog/bs-s1-06/cover.png",
+      "cover": "/catalog/bs-s1-06/cover.svg",
       "charts": {
         "easy": "/catalog/bs-s1-06/easy.json",
         "standard": "/catalog/bs-s1-06/standard.json",

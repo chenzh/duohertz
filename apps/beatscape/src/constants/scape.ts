@@ -5,40 +5,43 @@ export const SCAPE_COPY = {
   rights: "AI Original · Owned Rights · Generated with MusicSaas",
   rightsShort: "AI Original · Owned Rights",
   tapToEnter: "Tap to enter the Scape",
-  playNow: "Play Now — D F J K",
-  play: "Play — D F J K",
+  playNow: "Play Now",
+  play: "Play",
   calibrateTitle: "Tap with the pulse",
-  calibrateHint: "Press D F J K when each lane flashes — sync once, then play.",
+  calibrateHint: "Tap each lane as it flashes — sync once, then play.",
   calibrateDone: "Offset saved. You're synced to the Scape.",
   calibrateSkip: "Playing with zero offset — recalibrate anytime in Settings.",
   emptyFavorites: "No favorites yet — pin a track from the Library.",
   weakNetwork: "Loading core beat first…",
 } as const;
 
-export const LANE_COLORS = ["#3DDCFF", "#7CFFB2", "#F5C542", "#FF5C7A"] as const;
+// PRD §7.5 v2.0 · RESONANCE palette.
+// Lane 3 stays cool on purpose: an all-warm set blurs together at high scroll
+// speed — a readability requirement, not a taste call.
+export const LANE_COLORS = ["#E23D3D", "#F2E4C9", "#FFB020", "#5B8DEF"] as const;
 
 export const LANE_RGB: Array<[number, number, number]> = [
-  [61, 220, 255],
-  [124, 255, 178],
-  [245, 197, 66],
-  [255, 92, 122],
+  [226, 61, 61],
+  [242, 228, 201],
+  [255, 176, 32],
+  [91, 141, 239],
 ];
 
 export const JUDGE_COLORS = {
-  perfect: "#FFD60A",
-  great: "#E8EEF7",
-  good: "#7CFFB2",
-  miss: "#FF5C7A",
+  perfect: "#F2E4C9",
+  great: "#FFB020",
+  good: "#5B8DEF",
+  miss: "#E23D3D",
 } as const;
 
 export const DISTRICT_COLORS: Record<string, string> = {
-  "Pulse Core": "#3DDCFF",
-  "Glass Rim": "#A8C0D8",
-  "Night Grid": "#6B5B95",
-  "Afterhours Lane": "#C4A484",
-  "Chrome Yard": "#9AA3AD",
-  "Slide District": "#7CFFB2",
-  "Skyline Hook": "#F5C542",
+  "Pulse Core": "#E23D3D",
+  "Glass Rim": "#E4D8C4",
+  "Night Grid": "#6E2426",
+  "Afterhours Lane": "#B0765A",
+  "Chrome Yard": "#8C8079",
+  "Slide District": "#FFB020",
+  "Skyline Hook": "#5B8DEF",
 };
 
 export const ARTIST_BIOS: Record<string, string> = {
@@ -58,7 +61,7 @@ export const ARTIST_BIOS: Record<string, string> = {
 };
 
 export function districtColor(district: string): string {
-  return DISTRICT_COLORS[district] ?? "#3DDCFF";
+  return DISTRICT_COLORS[district] ?? "#E23D3D";
 }
 
 export function artistBio(artist: string): string | undefined {

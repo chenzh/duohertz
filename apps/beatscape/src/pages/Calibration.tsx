@@ -1,14 +1,14 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate } from "../router";
 import { unlockAudio } from "../audio/context";
 import { playHit } from "../audio/hitsounds";
 import { getAudioContext } from "../audio/context";
-import { saveOffsetMs, setOnboarded } from "../storage/settings";
+import { loadKeys, saveOffsetMs, setOnboarded } from "../storage/settings";
+import { keyLabels, laneFromKeyEvent } from "../input/keyMap";
 import { LANE_COLORS, SCAPE_COPY } from "../constants/scape";
 import { firstPlayHref } from "../lib/firstPlay";
 
 const BEAT_MS = 60000 / 120;
-const LANES = ["D", "F", "J", "K"];
 const COUNT = 8;
 
 export function CalibrationPage() {
@@ -19,6 +19,8 @@ export function CalibrationPage() {
   const [beatIdx, setBeatIdx] = useState(0);
   const t0 = useRef(0);
   const beat = useRef(0);
+  const keys = useMemo(loadKeys, []);
+  const laneLabels = useMemo(() => keyLabels(keys), [keys]);
 
   useEffect(() => {
     if (phase !== "playing") return;
@@ -41,7 +43,7 @@ export function CalibrationPage() {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (phase !== "playing") return;
-      const lane = LANES.findIndex((k) => k.toLowerCase() === e.key.toLowerCase());
+      const lane = laneFromKeyEvent(e, keys);
       if (lane < 0) return;
       e.preventDefault();
       void unlockAudio();
@@ -52,7 +54,7 @@ export function CalibrationPage() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [phase]);
+  }, [phase, keys]);
 
   const finish = (offset: number) => {
     saveOffsetMs(offset);
@@ -82,9 +84,9 @@ export function CalibrationPage() {
       {phase === "playing" && (
         <>
           <div className="calib-lanes">
-            {LANES.map((k, i) => (
+            {laneLabels.map((k, i) => (
               <div
-                key={k}
+                key={i}
                 className={`calib-lane ${flash === i ? "flash" : ""}`}
                 style={{ ["--lane-color" as string]: LANE_COLORS[i] }}
               >

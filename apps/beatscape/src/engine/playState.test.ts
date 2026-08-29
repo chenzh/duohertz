@@ -47,3 +47,67 @@ describe("GameSession feel", () => {
     expect(s.consumeSlowTrigger()).toBe(true);
   });
 });
+
+function chordChart(lanes: Array<0 | 1 | 2 | 3>): ChartJSON {
+  return {
+    track_id: "test-chord",
+    tier: "standard",
+    format: 1,
+    bpm: 120,
+    ar: 28,
+    audio_offset_ms: 0,
+    total_notes: lanes.length,
+    notes: [{ id: "c1", type: "chord", lanes, t: 1 }],
+  };
+}
+
+describe("touch chord assist", () => {
+  it("banks the partner lane when one thumb cannot reach both", () => {
+    const s = new GameSession(chordChart([0, 1]), "arcade", { chordAssist: true });
+    s.press(0, 1000);
+    s.tick(1100);
+    expect(s.judgments.perfect).toBe(1);
+    expect(s.judgments.great).toBe(1);
+    expect(s.judgments.miss).toBe(0);
+  });
+
+  it("drops the lane when assist is off", () => {
+    const s = new GameSession(chordChart([0, 1]), "arcade");
+    s.press(0, 1000);
+    s.tick(1100);
+    expect(s.judgments.miss).toBe(1);
+    expect(s.judgments.great).toBe(0);
+  });
+
+  it("does not rescue a cross-hand chord — that one is fair", () => {
+    const s = new GameSession(chordChart([1, 2]), "arcade", { chordAssist: true });
+    s.press(1, 1000);
+    s.tick(1100);
+    expect(s.judgments.miss).toBe(1);
+    expect(s.judgments.great).toBe(0);
+  });
+
+  it("assists the right hand the same way", () => {
+    const s = new GameSession(chordChart([2, 3]), "arcade", { chordAssist: true });
+    s.press(3, 1000);
+    s.tick(1100);
+    expect(s.judgments.great).toBe(1);
+    expect(s.judgments.miss).toBe(0);
+  });
+
+  it("never rescues a lane whose partner also missed", () => {
+    const s = new GameSession(chordChart([0, 1]), "arcade", { chordAssist: true });
+    s.tick(1100);
+    expect(s.judgments.miss).toBe(2);
+    expect(s.judgments.great).toBe(0);
+  });
+
+  it("keeps an all-perfect run honest", () => {
+    const s = new GameSession(chordChart([0, 1]), "arcade", { chordAssist: true });
+    s.press(0, 1000);
+    s.tick(1100);
+    const r = s.getResult();
+    expect(r.allPerfect).toBe(false);
+    expect(r.fullCombo).toBe(true);
+  });
+});

@@ -10,6 +10,22 @@ import {
   judgmentScore,
   maxScore,
 } from "./judge";
+import { laneHand } from "../input/touchInput";
+
+export type SessionOptions = {
+  /**
+   * Touch-only forgiveness for two-thumb play.
+   *
+   * Two thumbs cover four lanes, one hand per pair. When a chart stacks a chord
+   * on a single hand (lanes 0+1 or 2+3), no thumb can hold both — the lane goes
+   * unplayed and the player eats a miss they never had a chance at. With assist
+   * on, a lane whose same-hand partner was struck is banked as GREAT instead of
+   * dropped. Chords that split across hands are untouched: those are fair.
+   *
+   * Banked rather than perfect on purpose — it keeps an all-perfect run honest.
+   */
+  chordAssist?: boolean;
+};
 
 /** Total judgment objects a chart contributes (PRD §4.4). */
 export function countTotalNotes(notes: ChartNote[]): number {
@@ -57,6 +73,7 @@ export class GameSession {
   readonly notes: RTNote[];
   readonly totalNotes: number;
   readonly mode: PlayMode;
+  readonly chordAssist: boolean;
 
   score = 0;
   combo = 0;
@@ -69,8 +86,9 @@ export class GameSession {
 
   private slowPending = false;
 
-  constructor(chart: ChartJSON, mode: PlayMode) {
+  constructor(chart: ChartJSON, mode: PlayMode, options: SessionOptions = {}) {
     this.mode = mode;
+    this.chordAssist = options.chordAssist === true;
     this.notes = chart.notes.map((def) => ({
       def,
       tMs: (def.t ?? 0) * 1000,
@@ -194,6 +212,12 @@ export class GameSession {
       } else if (d.type === "chord") {
         for (const l of d.lanes) {
           if (n.chord[l] == null && songMs - n.tMs > good) {
+            if (this.sameHandPartnerStruck(n, l)) {
+              n.chord[l] = "great";
+              this.register("great");
+              applied.push({ lane: l, judgment: "great", deltaMs: songMs - n.tMs });
+              continue;
+            }
             n.chord[l] = "miss";
             this.register("miss", { lane: l, tMs: songMs });
             applied.push({ lane: l, judgment: "miss", deltaMs: songMs - n.tMs });
@@ -248,6 +272,24 @@ export class GameSession {
       totalNotes: this.totalNotes,
       missEvents: [...this.missEvents],
     };
+  }
+
+  /**
+   * True when this chord lane is unplayed but another lane under the same thumb
+   * was struck. Only ever consulted when `chordAssist` is on.
+   */
+  private sameHandPartnerStruck(n: RTNote, lane: number): boolean {
+    if (!this.chordAssist) return false;
+    const d = n.def;
+    if (d.type !== "chord") return false;
+    const hand = laneHand(lane);
+    for (const other of d.lanes) {
+      if (other === lane) continue;
+      if (laneHand(other) !== hand) continue;
+      const j = n.chord[other];
+      if (j != null && j !== "miss") return true;
+    }
+    return false;
   }
 
   private register(j: Judgment, meta?: { lane: number; tMs: number }): void {

@@ -117,12 +117,13 @@ TIER = {
     "hard": {"ar": 34, "grid": 0.5, "hold_mul": 0.85},
 }
 
+# PRD §7.5 v2.0 · RESONANCE district accents
 DISTRICT_COLORS = {
-    "Pulse Core": "#3DDCFF",
-    "Glass Rim": "#A8C4E8",
-    "Night Grid": "#5B6EFF",
-    "Afterhours Lane": "#C084FC",
-    "Chrome Yard": "#94A3B8",
+    "Pulse Core": "#E23D3D",
+    "Glass Rim": "#E4D8C4",
+    "Night Grid": "#6E2426",
+    "Afterhours Lane": "#B0765A",
+    "Chrome Yard": "#8C8079",
 }
 
 
@@ -273,12 +274,13 @@ def build_chart(track: dict, tier: str) -> dict:
 
 
 def cover_svg(track_id: str, district: str, title: str) -> str:
-    color = DISTRICT_COLORS.get(district, "#3DDCFF")
+    """Ingest-time placeholder cover. Real covers come from beatscape-cover.py."""
+    color = DISTRICT_COLORS.get(district, "#E23D3D")
     seed = sum(ord(c) for c in track_id) % 360
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
-  <rect width="512" height="512" fill="#0b0f14"/>
+  <rect width="512" height="512" fill="#12100F"/>
   <polygon points="256,80 380,256 256,432 132,256" fill="none" stroke="{color}" stroke-width="4" opacity="0.9" transform="rotate({seed} 256 256)"/>
-  <text x="256" y="480" text-anchor="middle" fill="#8b9bb0" font-family="system-ui" font-size="22">{title}</text>
+  <text x="256" y="480" text-anchor="middle" fill="#A8928B" font-family="system-ui" font-size="22">{title}</text>
 </svg>"""
 
 

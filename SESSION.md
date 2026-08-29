@@ -2,7 +2,7 @@
 
 | 字段 | 值 |
 |------|-----|
-| **phase** | BeatScape UI 合入 · Reddit 待公网部署 |
+| **phase** | RESONANCE 改造完成 · 仅剩盲测（人为关卡） |
 | **updated** | 2026-08-29 |
 | **slug** | musicsaas |
 
@@ -11,9 +11,12 @@
 > 验收：[docs/BEATSCAPE-TODO-ACCEPTANCE.md](docs/BEATSCAPE-TODO-ACCEPTANCE.md)
 
 - [x] 合入 `preview/beatscape-try`（UI 抛光 · 25 首 · Reddit P0–P2）
+- [ ] **差异化盲测**（人为关卡，阻塞上线）：[`docs/RESONANCE-BLINDTEST.md`](docs/RESONANCE-BLINDTEST.md)，
+      素材已在 `data/beatscape-preview/visual-baseline/`
 - [ ] **公网部署** + Reddit 发帖（`docs/BEATSCAPE-REDDIT-LAUNCH.md`）
 - [ ] 合入 PR #15 / #16 / #14（难度 · 手感 · Privacy）
 - [ ] BeatScape：自动谱 + 鼓点对齐 QA · TICKET-B05 Reddit CTA
+- [ ] `audit` 4 个 FAIL（Stage2 音频：master 180s vs spec 90s；bs-s2-02 编码 wave 读不了）—— 存量，非视觉引入
 
 ## blockers
 

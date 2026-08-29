@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "../router";
 import {
   loadKeys,
@@ -10,6 +10,15 @@ import {
   saveOffsetMs,
   saveSettings,
 } from "../storage/settings";
+import {
+  KEY_PRESETS,
+  captureKeyCode,
+  codesForPreset,
+  hasDuplicateKeys,
+  keyLabel,
+  presetIdFor,
+} from "../input/keyMap";
+import { isCoarsePointer } from "../input/touchInput";
 import { SCAPE_COPY_EXTRA } from "../constants/scape";
 
 export function SettingsPage() {
@@ -18,8 +27,36 @@ export function SettingsPage() {
   const [keys, setKeys] = useState(loadKeys);
   const [displayName, setDisplayName] = useState(loadDisplayName);
   const [saved, setSaved] = useState(false);
+  const [listening, setListening] = useState(-1);
+  const [touchUi] = useState(isCoarsePointer);
+
+  const preset = presetIdFor(keys);
+  const activePreset = KEY_PRESETS.find((p) => p.id === preset) ?? null;
+  const duplicate = hasDuplicateKeys(keys);
+
+  useEffect(() => {
+    if (listening < 0) return;
+    const onKey = (e: KeyboardEvent) => {
+      e.preventDefault();
+      if (e.key === "Escape") {
+        setListening(-1);
+        return;
+      }
+      const code = captureKeyCode(e);
+      if (!code) return;
+      setKeys((prev) => {
+        const next = [...prev];
+        next[listening] = code;
+        return next;
+      });
+      setListening(-1);
+    };
+    window.addEventListener("keydown", onKey, { capture: true });
+    return () => window.removeEventListener("keydown", onKey, { capture: true });
+  }, [listening]);
 
   const save = () => {
+    if (duplicate) return;
     saveSettings(settings);
     saveOffsetMs(offset);
     saveKeys(keys);
@@ -112,31 +149,67 @@ export function SettingsPage() {
               <option value={1.25}>1.25×</option>
             </select>
           </label>
+          {touchUi && (
+            <label className="field toggle-field">
+              Thumb chord assist (touch)
+              <input
+                type="checkbox"
+                checked={settings.chordAssist}
+                onChange={(e) => setSettings({ ...settings, chordAssist: e.target.checked })}
+              />
+            </label>
+          )}
+          {touchUi && (
+            <p className="field-hint">
+              Two thumbs cover four lanes — one per hand. When a chart asks for two
+              lanes on the same hand at once, assist banks the second one instead of
+              dropping it.
+            </p>
+          )}
         </section>
 
         <section className="panel">
           <h2>Key map</h2>
+          <div className="preset-row">
+            {KEY_PRESETS.map((p) => (
+              <button
+                key={p.id}
+                type="button"
+                className={`btn compact${preset === p.id ? " is-active" : ""}`}
+                onClick={() => {
+                  setKeys(codesForPreset(p.id));
+                  setListening(-1);
+                }}
+              >
+                {p.label}
+              </button>
+            ))}
+          </div>
+          <p className="field-hint">
+            {activePreset ? activePreset.hint : "Custom layout"}
+            {" · bound by physical position, so it plays the same on QWERTY, AZERTY and QWERTZ"}
+          </p>
           <div className="keys-grid">
             {keys.map((k, i) => (
               <label key={i}>
                 Lane {i + 1}
-                <input
-                  maxLength={1}
-                  value={k}
-                  onChange={(e) => {
-                    const next = [...keys];
-                    next[i] = e.target.value.toUpperCase() || k;
-                    setKeys(next);
-                  }}
-                />
+                <button
+                  type="button"
+                  className={`keycap${listening === i ? " is-listening" : ""}`}
+                  onClick={() => setListening(listening === i ? -1 : i)}
+                >
+                  {listening === i ? "Press a key…" : keyLabel(k)}
+                </button>
               </label>
             ))}
           </div>
+          {listening >= 0 && <p className="field-hint">Press any key · Esc to cancel</p>}
+          {duplicate && <p className="error">Two lanes share the same key — rebind one to save.</p>}
         </section>
       </div>
 
       <div className="cta-row" style={{ marginTop: 20 }}>
-        <button type="button" className="btn primary" onClick={save}>
+        <button type="button" className="btn primary" onClick={save} disabled={duplicate}>
           {saved ? "Saved ✓" : "Save settings"}
         </button>
         <Link className="btn ghost" to="/calibrate">
