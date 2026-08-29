@@ -1,13 +1,16 @@
 // Note geometry. The scroll time a note is visible is beat-based (PRD §4.10):
-//   approach_sec = (50 / AR) * (60 / BPM) * (1 + scrollBias)
+//   approach_sec = (APPROACH_VISIBLE_BEATS / AR) * (60 / BPM) * (1 + scrollBias)
 // This makes the fall speed scale with tempo, so a 160 BPM chart scrolls
 // noticeably faster than an 88 BPM one — which the old code completely ignored.
 
 export const RECEPTOR_BOTTOM_RATIO = 0.15;
 
+/** Beats of visibility before the receptor; higher = slower scroll (visual only). */
+export const APPROACH_VISIBLE_BEATS = 64;
+
 /** Seconds a note is visible before it reaches the receptor line. */
 export function approachSec(ar: number, bpm: number, scrollBiasMult = 1): number {
-  const beats = 50 / (ar || 24);
+  const beats = APPROACH_VISIBLE_BEATS / (ar || 24);
   return beats * (60 / (bpm || 120)) * scrollBiasMult;
 }
 

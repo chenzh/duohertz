@@ -2,10 +2,12 @@ import { useEffect, useRef } from "react";
 import { LANE_COLORS, LANE_RGB } from "../constants/scape";
 import { makeNoteSprite, noteWidthForLane, NOTE_PROXIMITY_GROWTH } from "../engine/noteSprite";
 import { receptorYFromGeometry } from "../input/touchInput";
+import { APPROACH_VISIBLE_BEATS } from "../engine/geometry";
 
 const LANE_FLASH_MS = 180;
-const APPROACH_MS = 1300;
-const SPAWN_MS = 480;
+/** Hero loop timing — scaled from default AR 24 @ 120 BPM with APPROACH_VISIBLE_BEATS. */
+const APPROACH_MS = Math.round((APPROACH_VISIBLE_BEATS / 24) * (60 / 120) * 1000);
+const SPAWN_MS = Math.round(APPROACH_MS * 0.38);
 const LANE_PATTERN = [0, 1, 2, 3, 2, 1, 0, 3] as const;
 
 type FallingNote = { lane: number; born: number };

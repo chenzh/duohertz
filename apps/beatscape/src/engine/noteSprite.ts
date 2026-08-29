@@ -1,8 +1,8 @@
 /** Shared tap-note diamond sprite for canvas playfield + hero preview. */
 
 /** Fraction of lane width used for tap note diameter (capped by NOTE_MAX_PX). */
-export const NOTE_LANE_RATIO = 0.72;
-export const NOTE_MAX_PX = 52;
+export const NOTE_LANE_RATIO = 0.8;
+export const NOTE_MAX_PX = 60;
 /** Extra scale as the note nears the receptor line. */
 export const NOTE_PROXIMITY_GROWTH = 0.22;
 /** Hold body width as a fraction of tap note width. */
