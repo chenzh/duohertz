@@ -25,14 +25,13 @@ jobs:
         with:
           node-version: 22
 
-      - name: Install & build
+      - name: Install, test, build
         working-directory: apps/beatscape
-        env:
-          VITE_BASE: /
         run: |
           npm install
           npm test
-          npm run build
+          # Pages root URL — keep unit tests on default /beatscape/ base
+          VITE_BASE=/ npx vite build
 
       - name: Publish to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3

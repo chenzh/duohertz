@@ -2,31 +2,34 @@
 
 | 字段 | 值 |
 |------|-----|
-| **phase** | MVP 曲库 **35/35** · Stage4 RESONANCE 第一波已入库 |
+| **phase** | 曲库 **35/50** · Stage4 RESONANCE 入库 · Cloudflare Pages 部署中 |
 | **updated** | 2026-08-29 |
 | **slug** | musicsaas |
 
-## next
+## next（P0）
 
-> 验收：[docs/BEATSCAPE-TODO-ACCEPTANCE.md](docs/BEATSCAPE-TODO-ACCEPTANCE.md) · Stage4：[docs/BEATSCAPE-STAGE4-RESONANCE-MUSIC.md](docs/BEATSCAPE-STAGE4-RESONANCE-MUSIC.md)
+> 验收入口：本页 · `pnpm catalog:beatscape` · `pnpm audit:beatscape`
 
-- [x] Stage4 10 首生成 + 入库 → **35/35**（audit FAIL=0 · earcheck PASS）
-- [ ] **MLX 真推理替换**（当前为 Gateway mock BGM，上线前建议换 SA3 实生成 + 耳检）
-- [ ] **差异化盲测**（阻塞上线）：[`docs/RESONANCE-BLINDTEST.md`](docs/RESONANCE-BLINDTEST.md)
-- [ ] **公网部署** + Reddit（`docs/BEATSCAPE-REDDIT-LAUNCH.md`）
-- [ ] PRD §6.0.2 合入 [`docs/BEATSCAPE-RESONANCE-PRESETS.md`](docs/BEATSCAPE-RESONANCE-PRESETS.md)
+- [ ] **公网 URL 验收** — Cloudflare Pages（workflow 已合；确认 `https://beatscape.pages.dev/` 可玩）
+- [ ] **差异化盲测**（人类 · 阻塞对外宣称上线）：[`docs/RESONANCE-BLINDTEST.md`](docs/RESONANCE-BLINDTEST.md)
+- [ ] **MLX 真推理替换 mock 母带**（正式公网听感）：SA3 实生成 + 耳检
+- [ ] Stage5 扩至 **50** 首（路线图剩余 15）
+
+## 已完成（勿再当 P0）
+
+- [x] Stage1–4 曲库可玩 · **35/35** shipped · 全曲 `stream.m4a` · audit **FAIL=0**
+- [x] 移动端触控 · 后台时序自愈 · 分享/OG · Privacy/Terms · 难度降级
+- [x] Cloudflare Pages 流水线（PR #31/#32）· Secrets 已配置
+- [x] Reddit 首发工程项（`docs/TODO.md` P0–P2 工程侧）
 
 ## blockers
 
-- Stage4 音频需 Gateway；**mock 母带已入库** — 正式公网前建议 MLX 实生成重跑
-
-## 近期完成
-
-- Stage4 10 首 RESONANCE 入库 · 曲库 **35** 首 · Library Vibe 筛选
+- 盲测需 5–10 名「不玩日式 RPG」观察者（人工）
+- MLX 实生成需推理节点在线
 
 ## 链接
 
-- [docs/BEATSCAPE-SONIC-DIRECTION.md](docs/BEATSCAPE-SONIC-DIRECTION.md) — 全曲库声波真值
-- [docs/BEATSCAPE-STAGE4-RESONANCE-MUSIC.md](docs/BEATSCAPE-STAGE4-RESONANCE-MUSIC.md)
-- [docs/BEATSCAPE-RESONANCE-PRESETS.md](docs/BEATSCAPE-RESONANCE-PRESETS.md)
+- [docs/BEATSCAPE-SONIC-DIRECTION.md](docs/BEATSCAPE-SONIC-DIRECTION.md)
+- [docs/RESONANCE-BLINDTEST.md](docs/RESONANCE-BLINDTEST.md)
+- [docs/BEATSCAPE-REDDIT-LAUNCH.md](docs/BEATSCAPE-REDDIT-LAUNCH.md)
 - [docs/KNOWLEDGE-BASE.md](docs/KNOWLEDGE-BASE.md)
