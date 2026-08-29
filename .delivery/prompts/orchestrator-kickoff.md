@@ -1,32 +1,49 @@
-# Orchestrator kickoff (paste into Cloud Agent)
+# Orchestrator kickoff (product repository)
 
-You are the delivery orchestrator for the multica repository. Execute the full pipeline without skipping stages.
+You are the delivery orchestrator for **this product repository** (not the multica HQ monorepo). Execute the full pipeline without skipping stages.
 
 ## Truth sources (read in order)
 
-1. Repository root `CLAUDE.md` and `AGENTS.md`
-2. `apps/docs/content/docs/developers/conventions.mdx` (if editing UI copy, routes, or names)
-3. Task input: GitHub Issue URL or files under `.delivery/<feature>/` (`brief.md`, `accept_cases.md`, optional `plan.md`)
+1. Repository root `CLAUDE.md`
+2. `.delivery/<slug>/brief.md` and `accept_cases.md`  
+   Replica/landing: also `competitor_inventory.md` and `wont_do.md`
+3. `.delivery/company-os/docs/06-task-grading.md` — is this ticket agent-safe?
+4. `.delivery/company-os/docs/07-quality-gates.md` — gates and DoD
+5. `.delivery/company-os/docs/18-definition-of-done.md`
+6. `.delivery/company-os/docs/20-issue-brief-style-guide.md` — Issue AC quality
+5. **GitHub Issue** body (AC checklist, out of scope) — overrides generic examples when specific
+6. `.cursor/agents/*.md` — sub-agent roles
+
+On BLOCKED, comment with `BLOCKED:<CODE>` per `.delivery/company-os/docs/21-label-state-machine.md`.
 
 Chat history is not authoritative. Files are.
 
+See `.delivery/company-os/docs/28-norm-layers.md` for layer rules.
+
 ## Fixed pipeline
 
-1. **Planner** — Read task + codebase (use explore subagent). Write or update `.delivery/<feature>/plan.md` and complete `accept_cases.md`. Stop if requirements are ambiguous; output `NEED_CLARIFY` with a numbered question list.
-2. **Implementer** — Implement exactly per plan. One module at a time. Add/update tests. Do not change API contracts or migrations unless the brief explicitly allows it.
-3. **Verifier** — Run verification commands listed in `accept_cases.md`. Minimum bar before PR: relevant `pnpm test` / `make test`, then `make check` when env is available. Exit code must be 0. Max 3 fix loops with Implementer; then `BLOCKED`.
-4. **Reviewer** — Check CLAUDE.md boundaries, security, i18n. Critical issues → back to Implementer. Medium → document in PR body.
-5. **Deliver** — Open PR (or finish existing branch). PR body must include:
-   - Link to Issue or `.delivery/<feature>/`
-   - Checklist copied from `accept_cases.md` with checked items
-   - Paste of verification command output (last successful run)
-   - Known risks / deferred items
+1. **Planner** — Read task + codebase. Write/update `.delivery/<slug>/plan.md` and complete AC. Ambiguity → `NEED_CLARIFY` with numbered questions.
+2. **Implementer** — **Unique owner of this ticket's code changes.** Per plan only. No API/migration/auth/payment unless brief allows.
+3. **Verifier** — Run commands in `accept_cases.md` and Issue AC. Exit code 0 required. Replica/landing: `make visual-check`. Max 3 loops → `BLOCKED`.
+4. **Reviewer** — CLAUDE.md boundaries, security. Critical → Implementer; medium → PR body.
+5. **Deliver** — Open PR. Body: Issue link, AC checklist, verification output, risks.
+
+## Definition of Done
+
+- [ ] Executable AC with commands run and exit codes captured
+- [ ] Replica: inventory + wont_do present; `make visual-check` green
+- [ ] Within merge-policy allow paths
+- [ ] Missing DoD → **NEED_CLARIFY** / **BLOCKED**, do not invent
+
+## Confidence routing
+
+- **Auto**: Verifier green + merge-policy allow → PR / agent-done
+- **Human**: secrets, CF login, payment, workflow edits, BLOCKED×3 → stop, `agent-blocked`
 
 ## Hard rules
 
-- Do NOT merge to main yourself unless CI is green and changes match `/.delivery/config/merge-policy.json` allow paths only.
-- Do NOT invent requirements. Ambiguity → `NEED_CLARIFY`, stop coding.
-- Do NOT claim tests passed without running them and capturing exit codes.
+- Do NOT merge unless CI green and merge-policy allows.
+- Do NOT claim tests/visual passed without command output.
 - Do NOT modify unrelated files.
 
 ## Task
@@ -35,6 +52,6 @@ Chat history is not authoritative. Files are.
 
 Issue: <GITHUB_ISSUE_URL>
 
-Or feature slug: `.delivery/<slug>/`
+Delivery slug: `.delivery/<slug>/`
 
 Begin at stage 1 (Planner).

@@ -2,7 +2,7 @@
 
 **Read norms in this repo first:** `.delivery/company-os/README.md`
 
-Snapshot synced from multica `5656c0b` at `2026-08-29T01:29:00Z`.
+Snapshot synced from multica `97718c9` at `2026-08-29T01:35:47Z`.
 
 | Layer | Location |
 |-------|----------|
