@@ -120,11 +120,16 @@ bash scripts/ai-company/sync-company-norms.sh --include-paused
 ### 同步后必做（各产品仓）
 
 ```bash
+# 批量 stage + commit（本机各 checkout）
+bash scripts/ai-company/portfolio-commit-norms.sh --commit
+bash scripts/ai-company/portfolio-commit-norms.sh --commit --push   # 并 push origin
+
+# 或单仓手动：
 cd /path/to/product-repo
-git add .delivery/company-os .delivery/COMPANY-OS.md
+git add CLAUDE.md .delivery/company-os .delivery/COMPANY-OS.md
 git status
 git commit -m "chore: sync company-os norms from multica"
-git push
+git push origin
 ```
 
 HQ 仓（multica）本身 **不需要** 跑 `sync-company-norms` — 权威源已在 `.ai-company/`。

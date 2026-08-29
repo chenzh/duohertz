@@ -153,6 +153,8 @@
 | ❌ 非 Figma 级完美 | 够用、可维护优先 |
 | ❌ 非文档替代品 | 规范仍在 `.ai-company/`，界面只链过去 |
 
+**工作台 UI（P1.5）：** 打开 `:9477` 顶部 **公司指挥舱** — 流程灯（cron / verify / nightly）、规范文档链接、资产表（本机 path、company-os 副本版本、域名/CF、队列）。API：`GET /api/company-overview`；按钮 **重跑脱手验收** 调 `verify-hands-off.sh`。
+
 ---
 
 ## 日常口诀

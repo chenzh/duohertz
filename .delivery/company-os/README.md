@@ -1,5 +1,5 @@
 # Company OS snapshot (product copy)
-> synced: 2026-08-29T00:18:56Z · multica @ `e66bb8a`
+> synced: 2026-08-29T00:29:38Z · multica @ `b8f7a7f`
 
 Authoritative source: multica fork `.ai-company/` on the CEO machine.
 Refresh:
