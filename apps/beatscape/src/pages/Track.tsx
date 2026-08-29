@@ -4,29 +4,16 @@ import { assetUrl, getTrack } from "../catalog/loadCatalog";
 import type { CatalogTrack } from "../types/catalog";
 import type { ChartTier, PlayMode } from "../types/chart";
 import { toggleFavorite, loadFavorites } from "../storage/settings";
-
-const BEGINNER_TAG = "Beginner Pick";
-
-function confirmAdvanced(tier: ChartTier, mode: PlayMode): boolean {
-  if (tier === "hard") {
-    return window.confirm(
-      "Hard charts are dense and fast. Try Casual Easy first — still want Hard?",
-    );
-  }
-  if (mode === "arcade") {
-    return window.confirm(
-      "Arcade uses tight timing (15ms Perfect) and HP. Casual Easy is recommended for your first runs.",
-    );
-  }
-  return true;
-}
+import { StreamFullCTA } from "../components/StreamFullCTA";
+import { TrackAudioPreview } from "../components/TrackAudioPreview";
+import { DistrictBadge } from "../components/DistrictBadge";
+import { SCAPE_COPY, artistBio } from "../constants/scape";
 
 export function TrackPage() {
   const { id } = useParams();
   const [track, setTrack] = useState<CatalogTrack | null>(null);
-  const [tier, setTier] = useState<ChartTier>("easy");
-  const [mode, setMode] = useState<PlayMode>("casual");
-  const [showAdvanced, setShowAdvanced] = useState(false);
+  const [tier, setTier] = useState<ChartTier>("standard");
+  const [mode, setMode] = useState<PlayMode>("arcade");
   const [fav, setFav] = useState(false);
 
   useEffect(() => {
@@ -41,69 +28,70 @@ export function TrackPage() {
     });
   }, [id]);
 
-  if (!track) return <p>Loading…</p>;
+  if (!track) {
+    return (
+      <div className="loading-state">
+        <div className="loading-spinner" aria-hidden />
+        <p>{SCAPE_COPY.weakNetwork}</p>
+      </div>
+    );
+  }
 
-  const isBeginner = track.tags.includes(BEGINNER_TAG);
-  const playHref = `/play/${track.track_id}?tier=${tier}&mode=${mode}`;
-  const practiceHref = `/play/${track.track_id}?tier=${tier}&mode=practice`;
-
-  const pickTier = (next: ChartTier) => {
-    if (next === tier) return;
-    if (!confirmAdvanced(next, mode)) return;
-    setTier(next);
-  };
-
-  const pickMode = (next: PlayMode) => {
-    if (next === mode) return;
-    if (!confirmAdvanced(tier, next)) return;
-    setMode(next);
-  };
+  const bio = track.artist_bio ?? artistBio(track.artist);
 
   return (
     <section className="track-detail">
-      <img className="cover-lg" src={assetUrl(track.cover)} alt="" />
-      <div>
-        <h1>{track.title}</h1>
-        <p className="artist">{track.artist}</p>
-        <p className="meta">
-          {track.genre} · {track.bpm} BPM · {track.district}
-        </p>
-        {isBeginner && <p className="badge beginner">Recommended for beginners · Casual Easy</p>}
-        <p className="rights">AI Original · Owned Rights</p>
-        <div className="pickers">
-          <label>
-            Tier
-            <select value={tier} onChange={(e) => pickTier(e.target.value as ChartTier)}>
-              <option value="easy">Easy</option>
-              {showAdvanced && <option value="standard">Standard</option>}
-              {showAdvanced && <option value="hard">Hard</option>}
-            </select>
-          </label>
-          <label>
-            Mode
-            <select value={mode} onChange={(e) => pickMode(e.target.value as PlayMode)}>
-              <option value="casual">Casual</option>
-              {showAdvanced && <option value="arcade">Arcade</option>}
-            </select>
-          </label>
+      <Link to="/library" className="back-link">
+        Library
+      </Link>
+
+      <div className="track-hero">
+        <div className="track-hero-cover">
+          <img src={assetUrl(track.cover)} alt="" />
         </div>
-        <button type="button" className="btn linkish advanced-toggle" onClick={() => setShowAdvanced((v) => !v)}>
-          {showAdvanced ? "Hide Standard / Hard / Arcade" : "Show Standard, Hard & Arcade"}
-        </button>
-        <div className="cta-row">
-          <Link className="btn primary" to={playHref}>
-            Play {tier} · {mode}
-          </Link>
-          <Link className="btn practice-btn" to={practiceHref}>
-            Practice — slow on 3 misses
-          </Link>
-          <button
-            type="button"
-            className="btn"
-            onClick={() => setFav(toggleFavorite(track.track_id).includes(track.track_id))}
-          >
-            {fav ? "★ Favorited" : "☆ Favorite"}
-          </button>
+        <div className="track-hero-body">
+          <DistrictBadge district={track.district} />
+          <h1>{track.title}</h1>
+          <p className="artist">{track.artist}</p>
+          {bio && <p className="artist-bio">{bio}</p>}
+          <p className="meta">
+            {track.genre} · {track.bpm} BPM · {track.duration_sec}s clip
+          </p>
+          <p className="rights">{SCAPE_COPY.rights}</p>
+          <TrackAudioPreview trackId={track.track_id} audioPath={track.audio} title={track.title} />
+          <StreamFullCTA track={track} />
+
+          <div className="track-pickers">
+            <label className="picker-pill">
+              Tier
+              <select value={tier} onChange={(e) => setTier(e.target.value as ChartTier)}>
+                <option value="easy">Easy</option>
+                <option value="standard">Standard</option>
+                <option value="hard">Hard</option>
+              </select>
+            </label>
+            <label className="picker-pill">
+              Mode
+              <select value={mode} onChange={(e) => setMode(e.target.value as PlayMode)}>
+                <option value="arcade">Arcade</option>
+                <option value="casual">Casual</option>
+                <option value="practice">Practice</option>
+              </select>
+            </label>
+          </div>
+
+          <div className="cta-row">
+            <Link className="btn primary" to={`/play/${track.track_id}?tier=${tier}&mode=${mode}`}>
+              {SCAPE_COPY.play}
+            </Link>
+            <button
+              type="button"
+              className={`btn ${fav ? "primary" : "ghost"}`}
+              onClick={() => setFav(toggleFavorite(track.track_id).includes(track.track_id))}
+            >
+              {fav ? "★ Favorited" : "☆ Favorite"}
+            </button>
+          </div>
         </div>
       </div>
     </section>

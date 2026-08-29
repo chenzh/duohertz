@@ -1,7 +1,7 @@
 import type { LastRun, PlayResult } from "../types/chart";
 import type { CatalogTrack } from "../types/catalog";
 import { maxScore } from "../engine/judge";
-import { saveScore } from "./settings";
+import { saveScore, getPersonalBest } from "./settings";
 
 const SESSION_RUN_KEY = "bs_last_run";
 /** Survives new-tab share links (`?run=local`, PRD §6.0.24). */
@@ -33,6 +33,30 @@ export function saveBoardEntry(entry: BoardEntry, cap = 50) {
   localStorage.setItem("bs_board", JSON.stringify(next));
 }
 
+export type DailyBoardEntry = BoardEntry & { dateKey: string };
+
+export function loadDailyBoard(dateKey = new Date().toISOString().slice(0, 10)): DailyBoardEntry[] {
+  try {
+    const raw = localStorage.getItem("bs_daily_board");
+    if (!raw) return [];
+    const all: DailyBoardEntry[] = JSON.parse(raw);
+    return all.filter((e) => e.dateKey === dateKey).sort((a, b) => b.score - a.score).slice(0, 50);
+  } catch {
+    return [];
+  }
+}
+
+export function saveDailyBoardEntry(entry: DailyBoardEntry, cap = 200) {
+  try {
+    const raw = localStorage.getItem("bs_daily_board");
+    const all: DailyBoardEntry[] = raw ? JSON.parse(raw) : [];
+    const next = [...all, entry].sort((a, b) => b.score - a.score).slice(0, cap);
+    localStorage.setItem("bs_daily_board", JSON.stringify(next));
+  } catch {
+    /* ignore */
+  }
+}
+
 export function getDisplayName(): string {
   return localStorage.getItem("bs_display_name") || "Player";
 }
@@ -52,7 +76,10 @@ export function writeLastRun(
   mode: string,
   result: PlayResult,
   durationMs: number,
+  opts?: { daily?: boolean },
 ) {
+  // Capture the standing record BEFORE this run is saved, so Results can flag a true new best.
+  const prevBest = getPersonalBest(track.track_id, tier, mode);
   const run: LastRun = {
     v: 1,
     track_id: track.track_id,
@@ -70,6 +97,8 @@ export function writeLastRun(
     totalNotes: result.totalNotes,
     durationMs,
     endedAt: new Date().toISOString(),
+    prevBestScore: prevBest?.score,
+    missEvents: result.missEvents,
   };
   const payload = JSON.stringify(run);
   sessionStorage.setItem(SESSION_RUN_KEY, payload);
@@ -93,6 +122,19 @@ export function writeLastRun(
       accuracy: result.accuracy,
       name: getDisplayName(),
       at: run.endedAt,
+    });
+  }
+
+  if (opts?.daily && mode === "arcade" && !result.failed) {
+    saveDailyBoardEntry({
+      track_id: track.track_id,
+      title: track.title,
+      tier,
+      score: result.score,
+      accuracy: result.accuracy,
+      name: getDisplayName(),
+      at: run.endedAt,
+      dateKey: new Date().toISOString().slice(0, 10),
     });
   }
 }

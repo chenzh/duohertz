@@ -1,0 +1,672 @@
+{
+  "version": 1,
+  "authority": "docs/PRD-BEATSCAPE.md \u00a76.0.1 \u00b7 \u00a76.0.5 \u00b7 \u00a76.0.14",
+  "updated": "2026-08-25",
+  "stage_targets": {
+    "1": 6,
+    "2": 10,
+    "3": 25,
+    "4": 40,
+    "5": 50
+  },
+  "genre_targets": {
+    "by_stage": {
+      "1": {
+        "EDM": 2,
+        "Pop": 1,
+        "Hip-hop": 1,
+        "R&B": 1,
+        "Rock": 1
+      },
+      "2": {
+        "EDM": 3,
+        "Pop": 3,
+        "Hip-hop": 1,
+        "R&B": 1,
+        "Rock": 2
+      },
+      "3": {
+        "EDM": 6,
+        "Pop": 5,
+        "Hip-hop": 5,
+        "R&B": 4,
+        "Rock": 5
+      },
+      "4": {
+        "EDM": 10,
+        "Pop": 8,
+        "Hip-hop": 8,
+        "R&B": 6,
+        "Rock": 8
+      },
+      "5": {
+        "EDM": 12,
+        "Pop": 10,
+        "Hip-hop": 10,
+        "R&B": 8,
+        "Rock": 10
+      }
+    },
+    "formal": {
+      "EDM": 12,
+      "Pop": 10,
+      "Hip-hop": 10,
+      "R&B": 8,
+      "Rock": 10
+    }
+  },
+  "tag_targets_formal": {
+    "Hot Chart Style": 15,
+    "Viral Style": 12,
+    "Classic Style": 12,
+    "New Release": 11
+  },
+  "naming": {
+    "track_id_pattern": "bs-s{stage}-{nn}",
+    "title_max_words": 3,
+    "title_requires_theme_keyword": true
+  },
+  "slots": [
+    {
+      "track_id": "bs-s1-01",
+      "stage": 1,
+      "seq": 1,
+      "genre": "EDM",
+      "status": "shipped",
+      "title": "Neon Pulse",
+      "artist": "Pulse Atlas",
+      "preset_id": "bs-edm-main",
+      "district": "Pulse Core",
+      "tags": [
+        "Hot Chart Style"
+      ],
+      "game_duration_sec": 75,
+      "play_role": "Instant Demo \u00b7 Drop\u22648s"
+    },
+    {
+      "track_id": "bs-s1-02",
+      "stage": 1,
+      "seq": 2,
+      "genre": "Pop",
+      "status": "shipped",
+      "title": "Glass Horizon",
+      "artist": "Soft Circuit",
+      "preset_id": "bs-pop-hook",
+      "district": "Glass Rim",
+      "tags": [
+        "Viral Style"
+      ],
+      "game_duration_sec": 75,
+      "play_role": "\u65b0\u624b\u6f0f\u6597"
+    },
+    {
+      "track_id": "bs-s1-03",
+      "stage": 1,
+      "seq": 3,
+      "genre": "Hip-hop",
+      "status": "shipped",
+      "title": "Night Drive 808",
+      "artist": "Low Voltage",
+      "preset_id": "bs-hiphop-808",
+      "district": "Night Grid",
+      "tags": [
+        "Classic Style"
+      ],
+      "game_duration_sec": 75,
+      "play_role": "\u4f4e BPM \u5207\u5206"
+    },
+    {
+      "track_id": "bs-s1-04",
+      "stage": 1,
+      "seq": 4,
+      "genre": "R&B",
+      "status": "shipped",
+      "title": "Velvet Afterhours",
+      "artist": "Mira Lane",
+      "preset_id": "bs-rnb-groove",
+      "district": "Afterhours Lane",
+      "tags": [
+        "Classic Style"
+      ],
+      "game_duration_sec": 75,
+      "play_role": "\u957f\u6309\u4e3b\u9a8c"
+    },
+    {
+      "track_id": "bs-s1-05",
+      "stage": 1,
+      "seq": 5,
+      "genre": "EDM",
+      "status": "shipped",
+      "title": "Voltage Drop",
+      "artist": "Gridline",
+      "preset_id": "bs-edm-climax",
+      "district": "Pulse Core",
+      "tags": [
+        "Hot Chart Style"
+      ],
+      "game_duration_sec": 60,
+      "play_role": "\u9ad8\u5bc6\u5ea6\u7a33\u5b9a\u6027"
+    },
+    {
+      "track_id": "bs-s1-06",
+      "stage": 1,
+      "seq": 6,
+      "genre": "Rock",
+      "status": "shipped",
+      "title": "Chrome Riff",
+      "artist": "Iron Echo",
+      "preset_id": "bs-rock-drive",
+      "district": "Chrome Yard",
+      "tags": [
+        "New Release"
+      ],
+      "game_duration_sec": 75,
+      "play_role": "\u4e94\u98ce\u9f50 \u00b7 Rock"
+    },
+    {
+      "track_id": "bs-s2-01",
+      "stage": 2,
+      "seq": 7,
+      "genre": "EDM",
+      "status": "shipped",
+      "title": "Slide City",
+      "artist": "Vector Bloom",
+      "preset_id": "bs-edm-main",
+      "district": "Slide District",
+      "tags": [
+        "Hot Chart Style"
+      ],
+      "game_duration_sec": 90,
+      "play_role": "Slide \u4e3b\u9a8c",
+      "allows_slide": true
+    },
+    {
+      "track_id": "bs-s2-02",
+      "stage": 2,
+      "seq": 8,
+      "genre": "Pop",
+      "status": "shipped",
+      "title": "Skyline Hook",
+      "artist": "Ada North",
+      "preset_id": "bs-theme-en",
+      "district": "Skyline Hook",
+      "tags": [
+        "Viral Style"
+      ],
+      "game_duration_sec": 90,
+      "play_role": "\u82f1\u6587\u4eba\u58f0\u7a00\u758f\u8c31"
+    },
+    {
+      "track_id": "bs-s2-03",
+      "stage": 2,
+      "seq": 9,
+      "genre": "Pop",
+      "status": "shipped",
+      "title": "Blue Hour Loop",
+      "artist": "Quiet Neon",
+      "preset_id": "bs-chill-pop",
+      "district": "Glass Rim",
+      "tags": [
+        "Classic Style"
+      ],
+      "game_duration_sec": 90,
+      "play_role": "Practice \u7ec3\u5ea6"
+    },
+    {
+      "track_id": "bs-s2-04",
+      "stage": 2,
+      "seq": 10,
+      "genre": "Rock",
+      "status": "shipped",
+      "title": "Asphalt Anthem",
+      "artist": "Redline Co.",
+      "preset_id": "bs-rock-drive",
+      "district": "Chrome Yard",
+      "tags": [
+        "Hot Chart Style"
+      ],
+      "game_duration_sec": 90,
+      "play_role": "\u9ad8\u901f\u6447\u6eda"
+    },
+    {
+      "track_id": "bs-s3-01",
+      "stage": 3,
+      "seq": 11,
+      "genre": "EDM",
+      "status": "shipped",
+      "title": "Grid Voltage",
+      "preset_id": "bs-edm-main",
+      "game_duration_sec": 90,
+      "batch": "s3-wave-1"
+    },
+    {
+      "track_id": "bs-s3-02",
+      "stage": 3,
+      "seq": 12,
+      "genre": "Hip-hop",
+      "status": "shipped",
+      "title": "Night Pulse 808",
+      "preset_id": "bs-hiphop-808",
+      "game_duration_sec": 90,
+      "batch": "s3-wave-1"
+    },
+    {
+      "track_id": "bs-s3-03",
+      "stage": 3,
+      "seq": 13,
+      "genre": "Pop",
+      "status": "shipped",
+      "title": "Soft Horizon",
+      "preset_id": "bs-pop-hook",
+      "game_duration_sec": 90,
+      "batch": "s3-wave-1"
+    },
+    {
+      "track_id": "bs-s3-04",
+      "stage": 3,
+      "seq": 14,
+      "genre": "R&B",
+      "status": "shipped",
+      "title": "Velvet Scape",
+      "preset_id": "bs-rnb-groove",
+      "game_duration_sec": 90,
+      "batch": "s3-wave-1"
+    },
+    {
+      "track_id": "bs-s3-05",
+      "stage": 3,
+      "seq": 15,
+      "genre": "Rock",
+      "status": "shipped",
+      "title": "Chrome Grid",
+      "preset_id": "bs-rock-drive",
+      "game_duration_sec": 90,
+      "batch": "s3-wave-1"
+    },
+    {
+      "track_id": "bs-s3-06",
+      "stage": 3,
+      "seq": 16,
+      "genre": "EDM",
+      "status": "shipped",
+      "title": "Pulse Overload",
+      "preset_id": "bs-edm-climax",
+      "game_duration_sec": 90,
+      "batch": "s3-wave-2"
+    },
+    {
+      "track_id": "bs-s3-07",
+      "stage": 3,
+      "seq": 17,
+      "genre": "Hip-hop",
+      "status": "shipped",
+      "title": "Low Grid Flow",
+      "preset_id": "bs-hiphop-808",
+      "game_duration_sec": 90,
+      "batch": "s3-wave-2"
+    },
+    {
+      "track_id": "bs-s3-08",
+      "stage": 3,
+      "seq": 18,
+      "genre": "Pop",
+      "status": "shipped",
+      "title": "Blue Loop Hour",
+      "preset_id": "bs-chill-pop",
+      "game_duration_sec": 90,
+      "batch": "s3-wave-2"
+    },
+    {
+      "track_id": "bs-s3-09",
+      "stage": 3,
+      "seq": 19,
+      "genre": "R&B",
+      "status": "shipped",
+      "title": "Afterhours Pulse",
+      "preset_id": "bs-rnb-groove",
+      "game_duration_sec": 90,
+      "batch": "s3-wave-2"
+    },
+    {
+      "track_id": "bs-s3-10",
+      "stage": 3,
+      "seq": 20,
+      "genre": "Rock",
+      "status": "shipped",
+      "title": "Riff Voltage",
+      "preset_id": "bs-rock-drive",
+      "game_duration_sec": 90,
+      "batch": "s3-wave-2"
+    },
+    {
+      "track_id": "bs-s3-11",
+      "stage": 3,
+      "seq": 21,
+      "genre": "EDM",
+      "status": "shipped",
+      "title": "Neon Gridline",
+      "preset_id": "bs-edm-main",
+      "game_duration_sec": 90,
+      "batch": "s3-wave-3"
+    },
+    {
+      "track_id": "bs-s3-12",
+      "stage": 3,
+      "seq": 22,
+      "genre": "Hip-hop",
+      "status": "shipped",
+      "title": "Trap Grid",
+      "preset_id": "bs-hiphop-808",
+      "game_duration_sec": 90,
+      "batch": "s3-wave-3"
+    },
+    {
+      "track_id": "bs-s3-13",
+      "stage": 3,
+      "seq": 23,
+      "genre": "R&B",
+      "status": "shipped",
+      "title": "Scape Velvet",
+      "preset_id": "bs-rnb-groove",
+      "game_duration_sec": 90,
+      "batch": "s3-wave-3"
+    },
+    {
+      "track_id": "bs-s3-14",
+      "stage": 3,
+      "seq": 24,
+      "genre": "Hip-hop",
+      "status": "shipped",
+      "title": "808 Horizon",
+      "preset_id": "bs-hiphop-808",
+      "game_duration_sec": 90,
+      "batch": "s3-wave-3"
+    },
+    {
+      "track_id": "bs-s3-15",
+      "stage": 3,
+      "seq": 25,
+      "genre": "Rock",
+      "status": "shipped",
+      "title": "Anthem Chrome",
+      "preset_id": "bs-rock-drive",
+      "game_duration_sec": 90,
+      "batch": "s3-wave-3"
+    },
+    {
+      "track_id": "bs-s4-01",
+      "stage": 4,
+      "seq": 26,
+      "genre": "EDM",
+      "status": "planned",
+      "title": null,
+      "preset_id": "bs-edm-main",
+      "game_duration_sec": 120,
+      "batch": "s4-wave-1"
+    },
+    {
+      "track_id": "bs-s4-02",
+      "stage": 4,
+      "seq": 27,
+      "genre": "Hip-hop",
+      "status": "planned",
+      "title": null,
+      "preset_id": "bs-hiphop-808",
+      "game_duration_sec": 120,
+      "batch": "s4-wave-1"
+    },
+    {
+      "track_id": "bs-s4-03",
+      "stage": 4,
+      "seq": 28,
+      "genre": "Pop",
+      "status": "planned",
+      "title": null,
+      "preset_id": "bs-pop-hook",
+      "game_duration_sec": 120,
+      "batch": "s4-wave-1"
+    },
+    {
+      "track_id": "bs-s4-04",
+      "stage": 4,
+      "seq": 29,
+      "genre": "R&B",
+      "status": "planned",
+      "title": null,
+      "preset_id": "bs-rnb-groove",
+      "game_duration_sec": 120,
+      "batch": "s4-wave-1"
+    },
+    {
+      "track_id": "bs-s4-05",
+      "stage": 4,
+      "seq": 30,
+      "genre": "Rock",
+      "status": "planned",
+      "title": null,
+      "preset_id": "bs-rock-drive",
+      "game_duration_sec": 120,
+      "batch": "s4-wave-1"
+    },
+    {
+      "track_id": "bs-s4-06",
+      "stage": 4,
+      "seq": 31,
+      "genre": "EDM",
+      "status": "planned",
+      "title": null,
+      "preset_id": "bs-edm-climax",
+      "game_duration_sec": 120,
+      "batch": "s4-wave-2"
+    },
+    {
+      "track_id": "bs-s4-07",
+      "stage": 4,
+      "seq": 32,
+      "genre": "Hip-hop",
+      "status": "planned",
+      "title": null,
+      "preset_id": "bs-hiphop-808",
+      "game_duration_sec": 120,
+      "batch": "s4-wave-2"
+    },
+    {
+      "track_id": "bs-s4-08",
+      "stage": 4,
+      "seq": 33,
+      "genre": "Pop",
+      "status": "planned",
+      "title": null,
+      "preset_id": "bs-chill-pop",
+      "game_duration_sec": 120,
+      "batch": "s4-wave-2"
+    },
+    {
+      "track_id": "bs-s4-09",
+      "stage": 4,
+      "seq": 34,
+      "genre": "R&B",
+      "status": "planned",
+      "title": null,
+      "preset_id": "bs-rnb-groove",
+      "game_duration_sec": 120,
+      "batch": "s4-wave-2"
+    },
+    {
+      "track_id": "bs-s4-10",
+      "stage": 4,
+      "seq": 35,
+      "genre": "Rock",
+      "status": "planned",
+      "title": null,
+      "preset_id": "bs-rock-drive",
+      "game_duration_sec": 120,
+      "batch": "s4-wave-2"
+    },
+    {
+      "track_id": "bs-s4-11",
+      "stage": 4,
+      "seq": 36,
+      "genre": "EDM",
+      "status": "planned",
+      "title": null,
+      "preset_id": "bs-edm-main",
+      "game_duration_sec": 120,
+      "batch": "s4-wave-3"
+    },
+    {
+      "track_id": "bs-s4-12",
+      "stage": 4,
+      "seq": 37,
+      "genre": "Hip-hop",
+      "status": "planned",
+      "title": null,
+      "preset_id": "bs-hiphop-808",
+      "game_duration_sec": 120,
+      "batch": "s4-wave-3"
+    },
+    {
+      "track_id": "bs-s4-13",
+      "stage": 4,
+      "seq": 38,
+      "genre": "Pop",
+      "status": "planned",
+      "title": null,
+      "preset_id": "bs-pop-hook",
+      "game_duration_sec": 120,
+      "batch": "s4-wave-3"
+    },
+    {
+      "track_id": "bs-s4-14",
+      "stage": 4,
+      "seq": 39,
+      "genre": "Rock",
+      "status": "planned",
+      "title": null,
+      "preset_id": "bs-rock-drive",
+      "game_duration_sec": 120,
+      "batch": "s4-wave-3"
+    },
+    {
+      "track_id": "bs-s4-15",
+      "stage": 4,
+      "seq": 40,
+      "genre": "EDM",
+      "status": "planned",
+      "title": null,
+      "preset_id": "bs-edm-main",
+      "game_duration_sec": 120,
+      "batch": "s4-wave-3"
+    },
+    {
+      "track_id": "bs-s5-01",
+      "stage": 5,
+      "seq": 41,
+      "genre": "EDM",
+      "status": "planned",
+      "title": null,
+      "preset_id": "bs-edm-main",
+      "game_duration_sec": 120,
+      "batch": "s5-formal"
+    },
+    {
+      "track_id": "bs-s5-02",
+      "stage": 5,
+      "seq": 42,
+      "genre": "Pop",
+      "status": "planned",
+      "title": null,
+      "preset_id": "bs-pop-hook",
+      "game_duration_sec": 120,
+      "batch": "s5-formal"
+    },
+    {
+      "track_id": "bs-s5-03",
+      "stage": 5,
+      "seq": 43,
+      "genre": "Hip-hop",
+      "status": "planned",
+      "title": null,
+      "preset_id": "bs-hiphop-808",
+      "game_duration_sec": 120,
+      "batch": "s5-formal"
+    },
+    {
+      "track_id": "bs-s5-04",
+      "stage": 5,
+      "seq": 44,
+      "genre": "R&B",
+      "status": "planned",
+      "title": null,
+      "preset_id": "bs-rnb-groove",
+      "game_duration_sec": 120,
+      "batch": "s5-formal"
+    },
+    {
+      "track_id": "bs-s5-05",
+      "stage": 5,
+      "seq": 45,
+      "genre": "Rock",
+      "status": "planned",
+      "title": null,
+      "preset_id": "bs-rock-drive",
+      "game_duration_sec": 120,
+      "batch": "s5-formal"
+    },
+    {
+      "track_id": "bs-s5-06",
+      "stage": 5,
+      "seq": 46,
+      "genre": "EDM",
+      "status": "planned",
+      "title": null,
+      "preset_id": "bs-edm-climax",
+      "game_duration_sec": 120,
+      "batch": "s5-formal"
+    },
+    {
+      "track_id": "bs-s5-07",
+      "stage": 5,
+      "seq": 47,
+      "genre": "Pop",
+      "status": "planned",
+      "title": null,
+      "preset_id": "bs-chill-pop",
+      "game_duration_sec": 120,
+      "batch": "s5-formal"
+    },
+    {
+      "track_id": "bs-s5-08",
+      "stage": 5,
+      "seq": 48,
+      "genre": "Hip-hop",
+      "status": "planned",
+      "title": null,
+      "preset_id": "bs-hiphop-808",
+      "game_duration_sec": 120,
+      "batch": "s5-formal"
+    },
+    {
+      "track_id": "bs-s5-09",
+      "stage": 5,
+      "seq": 49,
+      "genre": "R&B",
+      "status": "planned",
+      "title": null,
+      "preset_id": "bs-rnb-groove",
+      "game_duration_sec": 120,
+      "batch": "s5-formal"
+    },
+    {
+      "track_id": "bs-s5-10",
+      "stage": 5,
+      "seq": 50,
+      "genre": "Rock",
+      "status": "planned",
+      "title": null,
+      "preset_id": "bs-rock-drive",
+      "game_duration_sec": 120,
+      "batch": "s5-formal"
+    }
+  ]
+}

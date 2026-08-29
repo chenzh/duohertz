@@ -1,97 +1,72 @@
-let ctx: AudioContext | null = null;
+import { getAudioContext } from "./context";
+import type { Judgment } from "../types/chart";
 
-function getCtx() {
-  if (!ctx) ctx = new AudioContext();
-  return ctx;
-}
+// Self-owned synth SFX (no external samples). A single shared context is
+// used so SFX are scheduled on the same clock as the music.
 
-export async function resumeAudio() {
-  const c = getCtx();
-  if (c.state === "suspended") await c.resume();
-}
+const SFX_GAIN = 0.55;
 
-/** Differentiated hit tones — Perfect brighter/louder, Miss soft thud */
-export function playHit(judgment: string) {
-  const c = getCtx();
-  const now = c.currentTime;
-  const o = c.createOscillator();
-  const g = c.createGain();
-  o.connect(g);
-  g.connect(c.destination);
+let sfxBus: GainNode | null = null;
 
-  if (judgment === "perfect") {
-    o.type = "sine";
-    o.frequency.setValueAtTime(988, now);
-    o.frequency.exponentialRampToValueAtTime(1318, now + 0.05);
-    g.gain.setValueAtTime(0.11, now);
-    g.gain.exponentialRampToValueAtTime(0.001, now + 0.09);
-    o.start(now);
-    o.stop(now + 0.09);
-  } else if (judgment === "great") {
-    o.type = "triangle";
-    o.frequency.value = 740;
-    g.gain.setValueAtTime(0.09, now);
-    g.gain.exponentialRampToValueAtTime(0.001, now + 0.07);
-    o.start(now);
-    o.stop(now + 0.07);
-  } else if (judgment === "good") {
-    o.type = "sine";
-    o.frequency.value = 494;
-    g.gain.setValueAtTime(0.06, now);
-    g.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
-    o.start(now);
-    o.stop(now + 0.05);
-  } else {
-    o.type = "square";
-    o.frequency.value = 110;
-    g.gain.setValueAtTime(0.04, now);
-    g.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
-    o.start(now);
-    o.stop(now + 0.1);
+function bus(): GainNode {
+  if (!sfxBus) {
+    const ctx = getAudioContext();
+    sfxBus = ctx.createGain();
+    sfxBus.gain.value = SFX_GAIN;
+    sfxBus.connect(ctx.destination);
   }
+  return sfxBus;
 }
 
-export function playKeyDown() {
-  const c = getCtx();
-  const o = c.createOscillator();
-  const g = c.createGain();
-  o.type = "sine";
-  o.frequency.value = 220;
-  g.gain.value = 0.025;
-  o.connect(g);
-  g.connect(c.destination);
-  o.start();
-  o.stop(c.currentTime + 0.025);
+export function setSfxVolume(v: number): void {
+  bus().gain.value = Math.max(0, Math.min(1, v));
+}
+
+function blip(freq: number, durSec: number, type: OscillatorType, peak: number) {
+  const ctx = getAudioContext();
+  const now = ctx.currentTime;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.type = type;
+  osc.frequency.setValueAtTime(freq, now);
+  gain.gain.setValueAtTime(0.0001, now);
+  gain.gain.exponentialRampToValueAtTime(peak, now + 0.004);
+  gain.gain.exponentialRampToValueAtTime(0.0001, now + durSec);
+  osc.connect(gain);
+  gain.connect(bus());
+  osc.start(now);
+  osc.stop(now + durSec + 0.02);
+}
+
+export function playHit(judgment: Judgment) {
+  if (judgment === "miss") {
+    playMiss();
+    return;
+  }
+  if (judgment === "perfect") {
+    blip(1480, 0.07, "sine", 0.42);
+    blip(2220, 0.04, "triangle", 0.18);
+    return;
+  }
+  if (judgment === "great") {
+    blip(1040, 0.06, "sine", 0.36);
+    return;
+  }
+  blip(720, 0.05, "sine", 0.28);
+}
+
+export function playMiss() {
+  blip(160, 0.11, "sawtooth", 0.38);
 }
 
 export function playBreak() {
-  const c = getCtx();
-  const o = c.createOscillator();
-  const g = c.createGain();
-  o.type = "sawtooth";
-  o.frequency.value = 90;
-  g.gain.setValueAtTime(0.05, c.currentTime);
-  g.gain.exponentialRampToValueAtTime(0.001, c.currentTime + 0.14);
-  o.connect(g);
-  g.connect(c.destination);
-  o.start();
-  o.stop(c.currentTime + 0.14);
+  blip(140, 0.12, "square", 0.34);
 }
 
-export function playMilestone() {
-  const c = getCtx();
-  const now = c.currentTime;
-  for (const [i, freq] of [660, 880, 1174].entries()) {
-    const o = c.createOscillator();
-    const g = c.createGain();
-    o.type = "sine";
-    o.frequency.value = freq;
-    g.gain.setValueAtTime(0, now + i * 0.04);
-    g.gain.linearRampToValueAtTime(0.06, now + i * 0.04 + 0.02);
-    g.gain.exponentialRampToValueAtTime(0.001, now + i * 0.04 + 0.12);
-    o.connect(g);
-    g.connect(c.destination);
-    o.start(now + i * 0.04);
-    o.stop(now + i * 0.04 + 0.12);
-  }
+export function playCountdownTick() {
+  blip(880, 0.05, "triangle", 0.25);
+}
+
+export function playKeyTick() {
+  blip(220, 0.025, "sine", 0.12);
 }

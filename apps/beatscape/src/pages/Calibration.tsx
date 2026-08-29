@@ -1,11 +1,16 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate } from "../router";
-import { resumeAudio, playHit } from "../audio/hitsounds";
+import { unlockAudio } from "../audio/context";
+import { playHit } from "../audio/hitsounds";
+import { getAudioContext } from "../audio/context";
+import { loadKeys, saveOffsetMs, setOnboarded } from "../storage/settings";
+import { keyLabels, laneFromKeyEvent } from "../input/keyMap";
+import { LANE_COLORS, SCAPE_COPY } from "../constants/scape";
+import { firstPlayHref } from "../lib/firstPlay";
 import { CALIBRATION_PAGE_META, usePageMeta } from "../seo/pageMeta";
-import { saveOffsetMs } from "../storage/settings";
 
 const BEAT_MS = 60000 / 120;
-const LANES = ["D", "F", "J", "K"];
+const COUNT = 8;
 
 export function CalibrationPage() {
   usePageMeta(CALIBRATION_PAGE_META);
@@ -13,18 +18,23 @@ export function CalibrationPage() {
   const [phase, setPhase] = useState<"intro" | "playing" | "done">("intro");
   const [hits, setHits] = useState<number[]>([]);
   const [flash, setFlash] = useState(-1);
+  const [beatIdx, setBeatIdx] = useState(0);
   const t0 = useRef(0);
   const beat = useRef(0);
+  const keys = useMemo(loadKeys, []);
+  const laneLabels = useMemo(() => keyLabels(keys), [keys]);
 
   useEffect(() => {
     if (phase !== "playing") return;
-    t0.current = performance.now();
+    t0.current = getAudioContext().currentTime * 1000;
     beat.current = 0;
+    setBeatIdx(0);
     const id = window.setInterval(() => {
       beat.current++;
-      setFlash(beat.current % 4);
+      setBeatIdx(beat.current);
+      setFlash(beat.current % COUNT);
       window.setTimeout(() => setFlash(-1), 120);
-      if (beat.current >= 8) {
+      if (beat.current >= COUNT) {
         clearInterval(id);
         setPhase("done");
       }
@@ -35,59 +45,76 @@ export function CalibrationPage() {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (phase !== "playing") return;
-      const lane = LANES.findIndex((k) => k.toLowerCase() === e.key.toLowerCase());
+      const lane = laneFromKeyEvent(e, keys);
       if (lane < 0) return;
       e.preventDefault();
-      void resumeAudio();
+      void unlockAudio();
       playHit("perfect");
       const expected = t0.current + beat.current * BEAT_MS;
-      setHits((h) => [...h, performance.now() - expected]);
+      const delta = getAudioContext().currentTime * 1000 - expected;
+      setHits((h) => [...h, delta]);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [phase]);
+  }, [phase, keys]);
 
   const finish = (offset: number) => {
     saveOffsetMs(offset);
-    nav("/play/bs-s1-02?tier=easy&mode=casual");
+    setOnboarded();
+    nav(firstPlayHref());
   };
 
   const median =
-    hits.length >= 3
-      ? [...hits].sort((a, b) => a - b)[Math.floor(hits.length / 2)]!
-      : 0;
+    hits.length >= 3 ? [...hits].sort((a, b) => a - b)[Math.floor(hits.length / 2)]! : 0;
 
   return (
-    <section className="calibrate">
-      <h1>Tap the beat</h1>
-      <p className="tagline">Press D F J K when each lane flashes — one step, 8 beats.</p>
+    <section className="calibrate calibrate-panel">
+      <Link to="/" className="back-link">
+        Home
+      </Link>
+      <header className="page-header">
+        <h1>{SCAPE_COPY.calibrateTitle}</h1>
+        <p className="tagline">{SCAPE_COPY.calibrateHint}</p>
+      </header>
+
       {phase === "intro" && (
         <button type="button" className="btn primary" onClick={() => setPhase("playing")}>
-          Start
+          Start calibration
         </button>
       )}
+
       {phase === "playing" && (
-        <div className="calib-lanes">
-          {LANES.map((k, i) => (
-            <div key={k} className={`calib-lane ${flash === i ? "flash" : ""}`}>
-              {k}
-            </div>
-          ))}
-          <p>Beat {Math.min(beat.current + 1, 8)} / 8 · hits {hits.length}</p>
-        </div>
+        <>
+          <div className="calib-lanes">
+            {laneLabels.map((k, i) => (
+              <div
+                key={i}
+                className={`calib-lane ${flash === i ? "flash" : ""}`}
+                style={{ ["--lane-color" as string]: LANE_COLORS[i] }}
+              >
+                {k}
+              </div>
+            ))}
+          </div>
+          <p className="calib-progress">
+            Beat {Math.min(beatIdx + 1, COUNT)} / {COUNT} · {hits.length} taps recorded
+          </p>
+        </>
       )}
+
       {phase === "done" && (
-        <div>
-          <p>Offset ≈ {Math.round(median)} ms (clamped ±200)</p>
+        <div className="calib-done">
+          <p>{SCAPE_COPY.calibrateDone}</p>
+          <p className="tagline">Suggested offset: {Math.round(median)} ms</p>
           <button type="button" className="btn primary" onClick={() => finish(Math.round(median))}>
-            Save & play Glass Horizon
+            Save &amp; play Neon Pulse
           </button>
         </div>
       )}
-      <button type="button" className="btn linkish" onClick={() => finish(0)}>
+
+      <button type="button" className="btn linkish" onClick={() => finish(0)} title={SCAPE_COPY.calibrateSkip}>
         Skip (offset 0)
       </button>
-      <Link to="/">Back</Link>
     </section>
   );
 }

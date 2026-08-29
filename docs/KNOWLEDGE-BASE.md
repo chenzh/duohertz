@@ -39,7 +39,11 @@
 
 1. [docs/PRD-BEATSCAPE.md](./PRD-BEATSCAPE.md) — 主产品 PRD
 2. [docs/PRD-WEB-RHYTHM-GAME.md](./PRD-WEB-RHYTHM-GAME.md) — NeonBeat 参考
-3. 内容流水线见 PRD-BEATSCAPE §6.0 · `catalog.json` · `scripts/beatscape-*`
+3. [docs/BEATSCAPE-STAGE1-DUAL-ASSET.md](./BEATSCAPE-STAGE1-DUAL-ASSET.md) — Stage1 双资产改造清单
+4. [docs/BEATSCAPE-CATALOG-ROADMAP.md](./BEATSCAPE-CATALOG-ROADMAP.md) — 正式版 50 首路线图与缺口
+5. [docs/BEATSCAPE-STAGE2-DELIVERY.md](./BEATSCAPE-STAGE2-DELIVERY.md) — Stage2 #07–#10 交付清单
+6. [docs/BEATSCAPE-TODO-ACCEPTANCE.md](./BEATSCAPE-TODO-ACCEPTANCE.md) — **待办 + 验收标准（SESSION 镜像）**
+7. 内容流水线见 PRD-BEATSCAPE §6.0 · `catalog.json` · `catalog-roadmap.json` · `scripts/beatscape-*`
 
 ### Harness / 续作
 

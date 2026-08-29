@@ -6,8 +6,15 @@ function redirectRootToBeatscape(): Plugin {
     name: "redirect-root-to-beatscape",
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
-        if (req.url === "/" || req.url === "") {
+        const url = req.url ?? "";
+        if (url === "/" || url === "") {
           res.writeHead(302, { Location: "/beatscape/" });
+          res.end();
+          return;
+        }
+        if (url === "/beatscape" || url.startsWith("/beatscape?")) {
+          const qs = url.includes("?") ? url.slice(url.indexOf("?")) : "";
+          res.writeHead(302, { Location: `/beatscape/${qs}` });
           res.end();
           return;
         }
@@ -22,7 +29,7 @@ export default defineConfig({
   base: process.env.VITE_BASE ?? "/beatscape/",
   server: {
     port: 5175,
-    host: "127.0.0.1",
+    host: true,
     strictPort: true,
     open: "/beatscape/",
   },

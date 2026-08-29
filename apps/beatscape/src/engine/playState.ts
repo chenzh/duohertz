@@ -8,35 +8,26 @@ import {
   judgeDelta,
   judgeHoldTail,
   judgmentScore,
+  maxScore,
 } from "./judge";
+import { laneHand } from "../input/touchInput";
 
-export type NoteState = {
-  note: ChartNote;
-  headJudged?: Judgment;
-  tailJudged?: Judgment;
-  /** chord: per-lane head judgment */
-  chordLanes?: Partial<Record<0 | 1 | 2 | 3, Judgment>>;
-  missed?: boolean;
+export type SessionOptions = {
+  /**
+   * Touch-only forgiveness for two-thumb play.
+   *
+   * Two thumbs cover four lanes, one hand per pair. When a chart stacks a chord
+   * on a single hand (lanes 0+1 or 2+3), no thumb can hold both — the lane goes
+   * unplayed and the player eats a miss they never had a chance at. With assist
+   * on, a lane whose same-hand partner was struck is banked as GREAT instead of
+   * dropped. Chords that split across hands are untouched: those are fair.
+   *
+   * Banked rather than perfect on purpose — it keeps an all-perfect run honest.
+   */
+  chordAssist?: boolean;
 };
 
-export type LivePlay = {
-  notes: NoteState[];
-  combo: number;
-  maxCombo: number;
-  score: number;
-  hp: number;
-  judgments: Record<Judgment, number>;
-  failed: boolean;
-  finished: boolean;
-  popups: Array<{ id: number; text: string; lane: number; at: number; judgment: Judgment }>;
-  popupId: number;
-  practiceSlowUntil: number;
-  consecutiveMiss: number;
-  lastFx?: { lane: number; judgment: Judgment; at: number };
-  comboMilestone?: number;
-  totalNotes: number;
-};
-
+/** Total judgment objects a chart contributes (PRD §4.4). */
 export function countTotalNotes(notes: ChartNote[]): number {
   let n = 0;
   for (const note of notes) {
@@ -47,300 +38,300 @@ export function countTotalNotes(notes: ChartNote[]): number {
   return n;
 }
 
-export function initPlay(chart: ChartJSON, _mode: PlayMode): LivePlay {
-  return {
-    notes: chart.notes.map((note) => ({ note })),
-    combo: 0,
-    maxCombo: 0,
-    score: 0,
-    hp: 100,
-    judgments: { perfect: 0, great: 0, good: 0, miss: 0 },
-    failed: false,
-    finished: false,
-    popups: [],
-    popupId: 0,
-    practiceSlowUntil: 0,
-    consecutiveMiss: 0,
-    totalNotes: chart.total_notes || countTotalNotes(chart.notes),
-  };
+type SubJudgment = "head" | "tail" | "chord";
+
+interface RTNote {
+  def: ChartNote;
+  tMs: number; // head hit time (ms)
+  endMs: number; // tail / completion time (ms)
+  head: Judgment | null;
+  tail: Judgment | null; // hold tail OR slide completion
+  chord: Partial<Record<number, Judgment>>;
+  done: boolean;
 }
 
-function breaksCombo(j: Judgment): boolean {
-  return j === "miss" || j === "good";
+export interface JudgeFx {
+  lane: number;
+  judgment: Judgment;
+  /** Signed ms: negative = early, positive = late. */
+  deltaMs: number;
 }
 
-function applyJudgment(play: LivePlay, j: Judgment, mode: PlayMode, tail = false): LivePlay {
-  const next = { ...play, judgments: { ...play.judgments } };
-  next.judgments[j]++;
-  if (breaksCombo(j)) {
-    next.combo = 0;
-    if (j === "miss") next.consecutiveMiss++;
-    if (mode === "arcade") next.hp = Math.max(0, next.hp + hpDelta(j, tail));
-    if (mode === "practice" && j === "miss" && next.consecutiveMiss >= 3) {
-      next.practiceSlowUntil = performance.now() + 5000;
-      next.consecutiveMiss = 0;
-    }
-    if (mode === "arcade" && next.hp <= 0) next.failed = true;
-    return next;
+const ZERO_COUNTS = (): Record<Judgment, number> => ({
+  perfect: 0,
+  great: 0,
+  good: 0,
+  miss: 0,
+});
+
+/**
+ * Live game session. The single runtime object that owns note state, scoring,
+ * combo and HP. Pure logic driven by an external clock (Conductor); it never
+ * touches the DOM or audio itself.
+ */
+export class GameSession {
+  readonly notes: RTNote[];
+  readonly totalNotes: number;
+  readonly mode: PlayMode;
+  readonly chordAssist: boolean;
+
+  score = 0;
+  combo = 0;
+  maxCombo = 0;
+  hp = 100;
+  judgments: Record<Judgment, number> = ZERO_COUNTS();
+  missEvents: Array<{ tMs: number; lane: number }> = [];
+  failed = false;
+  consecutiveMiss = 0;
+
+  private slowPending = false;
+
+  constructor(chart: ChartJSON, mode: PlayMode, options: SessionOptions = {}) {
+    this.mode = mode;
+    this.chordAssist = options.chordAssist === true;
+    this.notes = chart.notes.map((def) => ({
+      def,
+      tMs: (def.t ?? 0) * 1000,
+      endMs: ("end" in def && def.end ? def.end : def.t) * 1000,
+      head: null,
+      tail: null,
+      chord: {},
+      done: false,
+    }));
+    this.totalNotes = chart.total_notes || countTotalNotes(chart.notes);
   }
-  next.consecutiveMiss = 0;
-  next.combo++;
-  next.maxCombo = Math.max(next.maxCombo, next.combo);
-  const mult = comboMultiplier(next.combo);
-  next.score += judgmentScore(j) * mult;
-  if (mode === "arcade") next.hp = Math.min(100, next.hp + hpDelta(j, tail));
-  return next;
-}
 
-function noteLane(note: ChartNote): number | null {
-  if (note.type === "chord") return null;
-  return note.lane;
-}
+  get isComplete(): boolean {
+    return this.notes.every((n) => n.done);
+  }
 
-function chordDone(ns: NoteState): boolean {
-  if (ns.note.type !== "chord") return false;
-  const lanes = ns.note.lanes;
-  const judged = ns.chordLanes ?? {};
-  return lanes.every((l) => judged[l] != null);
-}
+  /** PlayField consumes this once when 3 consecutive misses occur (Practice). */
+  consumeSlowTrigger(): boolean {
+    if (this.slowPending) {
+      this.slowPending = false;
+      return true;
+    }
+    return false;
+  }
 
-export function pressLane(
-  play: LivePlay,
-  _chart: ChartJSON,
-  lane: 0 | 1 | 2 | 3,
-  songMs: number,
-  offsetMs: number,
-  mode: PlayMode,
-): LivePlay {
-  if (play.failed || play.finished) return play;
-  const now = songMs - offsetMs;
-  let next = play;
-  let bestIdx = -1;
-  let bestDelta = Infinity;
+  press(lane: number, songMs: number): JudgeFx | null {
+    if (this.failed || this.isComplete) return null;
+    const good = goodWindowMs(this.mode);
+    let best: RTNote | null = null;
+    let bestSub: SubJudgment = "head";
+    let bestDelta = Infinity;
 
-  for (let i = 0; i < next.notes.length; i++) {
-    const ns = next.notes[i]!;
-    const n = ns.note;
-    if (n.type === "chord") {
-      if (!n.lanes.includes(lane) || ns.chordLanes?.[lane]) continue;
-      const delta = now - n.t;
-      if (Math.abs(delta) < Math.abs(bestDelta)) {
-        bestDelta = delta;
-        bestIdx = i;
+    for (const n of this.notes) {
+      if (n.done) continue;
+      const d = n.def;
+      let sub: SubJudgment | null = null;
+      let delta = 0;
+      if (d.type === "tap" || d.type === "hold") {
+        if (d.lane === lane && n.head === null) {
+          sub = "head";
+          delta = songMs - n.tMs;
+        }
+      } else if (d.type === "chord") {
+        if (d.lanes.includes(lane as 0 | 1 | 2 | 3) && n.chord[lane] == null) {
+          sub = "chord";
+          delta = songMs - n.tMs;
+        }
+      } else if (d.type === "slide") {
+        if (n.head === null && d.lane === lane) {
+          sub = "head";
+          delta = songMs - n.tMs;
+        } else if (n.head !== null && n.tail === null && d.to === lane) {
+          sub = "tail";
+          delta = songMs - n.endMs;
+        }
       }
-      continue;
+      if (sub === null) continue;
+      if (Math.abs(delta) > good) continue;
+      if (Math.abs(delta) < Math.abs(bestDelta)) {
+        best = n;
+        bestSub = sub;
+        bestDelta = delta;
+      }
     }
-    if (noteLane(n) !== lane) continue;
-    if (n.type === "tap" && ns.headJudged) continue;
-    if (n.type === "hold" && ns.headJudged && ns.tailJudged) continue;
-    const target = n.type === "tap" ? n.t : ns.headJudged ? n.end : n.t;
-    const delta = now - target;
-    if (Math.abs(delta) < Math.abs(bestDelta)) {
-      bestDelta = delta;
-      bestIdx = i;
+
+    if (!best) return null; // empty press → no penalty, no combo break
+
+    const chosen = best;
+    const sub = bestSub;
+    const delta = sub === "tail" ? songMs - chosen.endMs : songMs - chosen.tMs;
+    const j: Judgment = sub === "tail" ? judgeHoldTail(delta, this.mode) : judgeDelta(delta, this.mode);
+    this.register(j, j === "miss" ? { lane, tMs: songMs } : undefined);
+
+    if (sub === "head") {
+      chosen.head = j;
+      if (chosen.def.type === "tap") chosen.done = true;
+      if (chosen.def.type === "slide" && j === "miss") chosen.done = true;
+    } else if (sub === "chord") {
+      chosen.chord[lane] = j;
+      if (chosen.def.type === "chord" && chosen.def.lanes.every((l) => chosen.chord[l] != null))
+        chosen.done = true;
+    } else {
+      chosen.tail = j;
+      chosen.done = true;
     }
+    return { lane, judgment: j, deltaMs: delta };
   }
 
-  if (bestIdx < 0) return next;
-
-  const ns = next.notes[bestIdx]!;
-  const n = ns.note;
-
-  if (n.type === "chord") {
-    const j = judgeDelta(now - n.t, mode);
-    const notes = [...next.notes];
-    const lanes = { ...(ns.chordLanes ?? {}), [lane]: j === "miss" ? "miss" : j };
-    notes[bestIdx] = { ...ns, chordLanes: lanes };
-    next = applyJudgment({ ...next, notes }, j, mode);
-    return pushPopup(next, j, lane);
+  /** Releasing a key only matters for holds (tail). */
+  release(lane: number, songMs: number): JudgeFx | null {
+    if (this.failed || this.isComplete) return null;
+    const good = goodWindowMs(this.mode);
+    for (const n of this.notes) {
+      if (n.done || n.def.type !== "hold") continue;
+      if (n.def.lane !== lane || n.head === null || n.tail !== null) continue;
+      const delta = songMs - n.endMs;
+      const j: Judgment = Math.abs(delta) <= good + 20 ? judgeHoldTail(delta, this.mode) : "miss";
+      this.register(j, j === "miss" ? { lane, tMs: songMs } : undefined);
+      n.tail = j;
+      n.done = true;
+      return { lane, judgment: j, deltaMs: delta };
+    }
+    return null;
   }
 
-  if (n.type === "hold" && ns.headJudged) {
-    const j = judgeHoldTail(now - n.end, mode);
-    if (j === "miss") return pushPopup(applyJudgment(next, "miss", mode, true), "miss", lane);
-    const notes = [...next.notes];
-    notes[bestIdx] = { ...ns, tailJudged: j };
-    next = applyJudgment({ ...next, notes }, j, mode, true);
-    return pushPopup(next, j, lane);
-  }
-
-  const j = judgeDelta(now - n.t, mode);
-  if (j === "miss") return pushPopup(applyJudgment(next, "miss", mode), "miss", lane);
-  const notes = [...next.notes];
-  notes[bestIdx] = { ...ns, headJudged: j };
-  next = applyJudgment({ ...next, notes }, j, mode);
-  return pushPopup(next, j, lane);
-}
-
-export function releaseLane(
-  play: LivePlay,
-  lane: number,
-  songMs: number,
-  offsetMs: number,
-  mode: PlayMode,
-): LivePlay {
-  const now = songMs - offsetMs;
-  let next = play;
-  for (let i = 0; i < next.notes.length; i++) {
-    const ns = next.notes[i]!;
-    const n = ns.note;
-    if (n.type !== "hold" || n.lane !== lane) continue;
-    if (!ns.headJudged || ns.tailJudged) continue;
-    const j = judgeHoldTail(now - n.end, mode);
-    const notes = [...next.notes];
-    notes[i] = { ...ns, tailJudged: j === "miss" ? "miss" : j };
-    next = applyJudgment({ ...next, notes }, j === "miss" ? "miss" : j, mode, j === "miss");
-    return pushPopup(next, j === "miss" ? "miss" : j, lane);
-  }
-  return next;
-}
-
-export function tickMisses(
-  play: LivePlay,
-  songMs: number,
-  offsetMs: number,
-  mode: PlayMode,
-): LivePlay {
-  if (play.failed || play.finished) return play;
-  const now = songMs - offsetMs;
-  const missAfter = goodWindowMs(mode);
-  let next = play;
-
-  for (let i = 0; i < next.notes.length; i++) {
-    const ns = next.notes[i]!;
-    const n = ns.note;
-    if (n.type === "chord") {
-      const lanes = n.lanes;
-      const judged = ns.chordLanes ?? {};
-      if (chordDone(ns) || ns.missed) continue;
-      if (now - n.t > missAfter) {
-        const notes = [...next.notes];
-        const full: Partial<Record<0 | 1 | 2 | 3, Judgment>> = { ...judged };
-        for (const l of lanes) {
-          if (!full[l]) {
-            full[l] = "miss";
-            next = applyJudgment(next, "miss", mode);
+  /** Auto-miss notes whose window has fully passed. Returns FX for rendering. */
+  tick(songMs: number): JudgeFx[] {
+    if (this.failed || this.isComplete) return [];
+    const good = goodWindowMs(this.mode);
+    const applied: JudgeFx[] = [];
+    for (const n of this.notes) {
+      if (n.done) continue;
+      const d = n.def;
+      if (d.type === "tap") {
+        if (n.head === null && songMs - n.tMs > good) {
+          n.head = "miss";
+          n.done = true;
+          this.register("miss", { lane: d.lane, tMs: songMs });
+          applied.push({ lane: d.lane, judgment: "miss", deltaMs: songMs - n.tMs });
+        }
+      } else if (d.type === "chord") {
+        for (const l of d.lanes) {
+          if (n.chord[l] == null && songMs - n.tMs > good) {
+            if (this.sameHandPartnerStruck(n, l)) {
+              n.chord[l] = "great";
+              this.register("great");
+              applied.push({ lane: l, judgment: "great", deltaMs: songMs - n.tMs });
+              continue;
+            }
+            n.chord[l] = "miss";
+            this.register("miss", { lane: l, tMs: songMs });
+            applied.push({ lane: l, judgment: "miss", deltaMs: songMs - n.tMs });
           }
         }
-        notes[i] = { ...ns, chordLanes: full, missed: true };
-        next = { ...next, notes };
+        if (d.lanes.every((l) => n.chord[l] != null)) n.done = true;
+      } else if (d.type === "hold") {
+        if (n.head === null && songMs - n.tMs > good) {
+          n.head = "miss";
+          n.tail = "miss";
+          n.done = true;
+          this.register("miss", { lane: d.lane, tMs: songMs });
+          this.register("miss", { lane: d.lane, tMs: songMs });
+          applied.push({ lane: d.lane, judgment: "miss", deltaMs: songMs - n.tMs });
+        } else if (n.head !== null && n.tail === null && songMs - n.endMs > good + 20) {
+          n.tail = "miss";
+          n.done = true;
+          this.register("miss", { lane: d.lane, tMs: songMs });
+          applied.push({ lane: d.lane, judgment: "miss", deltaMs: songMs - n.endMs });
+        }
+      } else if (d.type === "slide") {
+        if (n.head === null && songMs - n.tMs > good) {
+          n.head = "miss";
+          n.done = true;
+          this.register("miss", { lane: d.lane, tMs: songMs });
+          applied.push({ lane: d.lane, judgment: "miss", deltaMs: songMs - n.tMs });
+        } else if (n.head !== null && n.tail === null && songMs - n.endMs > good + 20) {
+          n.tail = "miss";
+          n.done = true;
+          this.register("miss", { lane: d.to, tMs: songMs });
+          applied.push({ lane: d.to, judgment: "miss", deltaMs: songMs - n.endMs });
+        }
       }
-      continue;
     }
-    if (ns.missed || ns.headJudged) continue;
-    if (now - n.t > missAfter) {
-      const notes = [...next.notes];
-      notes[i] = { ...ns, missed: true, headJudged: "miss" };
-      next = applyJudgment({ ...next, notes }, "miss", mode);
-    }
+    return applied;
   }
 
-  for (let i = 0; i < next.notes.length; i++) {
-    const ns = next.notes[i]!;
-    const n = ns.note;
-    if (n.type !== "hold" || !ns.headJudged || ns.tailJudged || ns.missed) continue;
-    if (now - n.end > missAfter + 20) {
-      const notes = [...next.notes];
-      notes[i] = { ...ns, tailJudged: "miss", missed: true };
-      next = applyJudgment({ ...next, notes }, "miss", mode, true);
+  getResult(): PlayResult {
+    const accuracy = accuracyPercent(this.judgments, this.totalNotes);
+    const fullCombo = this.judgments.miss === 0 && this.totalNotes > 0;
+    const allPerfect =
+      this.judgments.perfect === this.totalNotes && this.totalNotes > 0 && this.judgments.miss === 0;
+    return {
+      score: this.score,
+      accuracy,
+      maxCombo: this.maxCombo,
+      grade: gradeFromAccuracy(accuracy),
+      fullCombo,
+      allPerfect,
+      failed: this.failed,
+      judgments: { ...this.judgments },
+      totalNotes: this.totalNotes,
+      missEvents: [...this.missEvents],
+    };
+  }
+
+  /**
+   * True when this chord lane is unplayed but another lane under the same thumb
+   * was struck. Only ever consulted when `chordAssist` is on.
+   */
+  private sameHandPartnerStruck(n: RTNote, lane: number): boolean {
+    if (!this.chordAssist) return false;
+    const d = n.def;
+    if (d.type !== "chord") return false;
+    const hand = laneHand(lane);
+    for (const other of d.lanes) {
+      if (other === lane) continue;
+      if (laneHand(other) !== hand) continue;
+      const j = n.chord[other];
+      if (j != null && j !== "miss") return true;
+    }
+    return false;
+  }
+
+  private register(j: Judgment, meta?: { lane: number; tMs: number }): void {
+    this.judgments[j]++;
+    if (j === "miss" && meta) {
+      this.missEvents.push({ lane: meta.lane, tMs: meta.tMs });
+    }
+    if (j === "miss" || j === "good") {
+      this.combo = 0;
+      if (this.mode === "arcade") {
+        this.hp = Math.max(0, Math.min(100, this.hp + hpDelta(j)));
+        if (this.hp <= 0) this.failed = true;
+      }
+      if (j === "miss" && this.mode === "practice") {
+        this.consecutiveMiss++;
+        if (this.consecutiveMiss >= 3) {
+          this.slowPending = true;
+          this.consecutiveMiss = 0;
+        }
+      } else {
+        this.consecutiveMiss = 0;
+      }
+    } else {
+      this.combo++;
+      this.maxCombo = Math.max(this.maxCombo, this.combo);
+      this.score += judgmentScore(j) * comboMultiplier(this.combo);
+      this.consecutiveMiss = 0;
+      if (this.mode === "arcade") {
+        this.hp = Math.max(0, Math.min(100, this.hp + hpDelta(j)));
+      }
     }
   }
-  return next;
 }
 
-function pushPopup(play: LivePlay, j: Judgment, lane: number): LivePlay {
-  const text = j === "miss" ? "MISS" : j.toUpperCase();
-  const milestone =
-    !breaksCombo(j) && [25, 50, 100].includes(play.combo) ? play.combo : play.comboMilestone;
-  return {
-    ...play,
-    popupId: play.popupId + 1,
-    lastFx: { lane, judgment: j, at: performance.now() },
-    comboMilestone: milestone,
-    popups: [
-      ...play.popups.slice(-8),
-      { id: play.popupId + 1, text, lane, at: performance.now(), judgment: j },
-    ],
-  };
+/** Lightweight constructor kept for the PRD acceptance tests. */
+export function initPlay(chart: ChartJSON, mode: PlayMode): GameSession {
+  return new GameSession(chart, mode);
 }
 
-export function finalize(play: LivePlay): PlayResult {
-  const accuracy = accuracyPercent(play.judgments, play.totalNotes);
-  const fullCombo = play.judgments.miss === 0 && play.totalNotes > 0;
-  const allPerfect =
-    play.judgments.perfect === play.totalNotes && play.totalNotes > 0 && play.judgments.miss === 0;
-  return {
-    score: play.score,
-    accuracy,
-    maxCombo: play.maxCombo,
-    grade: gradeFromAccuracy(accuracy),
-    fullCombo,
-    allPerfect,
-    failed: play.failed,
-    judgments: play.judgments,
-    totalNotes: play.totalNotes,
-  };
+/** Finalize a session into a result (kept for the PRD acceptance tests). */
+export function finalize(session: GameSession): PlayResult {
+  return session.getResult();
 }
 
-/** Visual scroll only for Casual — audio stays 1.0× per PRD */
-export function visualScrollBias(mode: PlayMode, casualSpeed: number): number {
-  if (mode === "casual") return casualSpeed;
-  return 1;
-}
-
-export function audioRate(mode: PlayMode, practiceSlowUntil: number): number {
-  if (mode === "practice" && performance.now() < practiceSlowUntil) return 0.5;
-  return 1;
-}
-
-export function approachLeadMs(ar: number, leadMs = 1400): number {
-  return leadMs / (ar / 24);
-}
-
-/** Extra lead + lower visual AR for Easy / Casual readability */
-export function approachLeadFor(chart: ChartJSON, mode: PlayMode, baseLead = 1400): number {
-  let lead = baseLead;
-  if (chart.tier === "easy") lead *= 1.45;
-  if (chart.tier === "standard") lead *= 1.15;
-  if (mode === "casual") lead *= 1.25;
-  if (mode === "practice") lead *= 1.1;
-  return lead;
-}
-
-export function visualArFor(chart: ChartJSON, mode: PlayMode): number {
-  let ar = chart.ar;
-  if (chart.tier === "easy") ar = Math.min(ar, 20);
-  if (chart.tier === "standard") ar = Math.min(ar, 26);
-  if (mode === "casual") ar = Math.max(14, ar - 2);
-  return ar;
-}
-
-export function noteY(
-  noteMs: number,
-  songMs: number,
-  receptorY: number,
-  leadMs: number,
-  ar: number,
-  scrollBias = 1,
-): number {
-  const arScale = (ar / 24) * scrollBias;
-  const lead = leadMs / arScale;
-  const delta = noteMs - songMs;
-  if (delta >= 0) return receptorY - (delta / lead) * receptorY;
-  return receptorY + (-delta / lead) * 28;
-}
-
-export function noteTime(note: ChartNote): number {
-  return note.t;
-}
-
-export function noteEndTime(note: ChartNote): number | null {
-  if (note.type === "hold") return note.end;
-  if (note.type === "slide") return note.end;
-  return null;
-}
-
-export function noteLanes(note: ChartNote): Array<0 | 1 | 2 | 3> {
-  if (note.type === "chord") return note.lanes;
-  return [note.lane];
-}
+export { maxScore };

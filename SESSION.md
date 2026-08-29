@@ -2,15 +2,21 @@
 
 | 字段 | 值 |
 |------|-----|
-| **phase** | MVP v0.2 稳定 + BeatScape Stage1 可玩（Stage2 手感已合） |
-| **updated** | 2026-08-26 |
+| **phase** | RESONANCE 改造完成 · 已合入 main · 仅剩盲测（人为关卡） |
+| **updated** | 2026-08-29 |
 | **slug** | musicsaas |
 
 ## next
 
-- [ ] 处理 PR #5 Stage3 catalog（25 首）冲突 + CI 红后合入
-- [ ] BeatScape：MusicSaas 自动谱替换 BPM 占位网格 + 鼓点对齐 QA
-- [ ] Stage2+：Slide 音符；曲库扩至 50；TICKET-B05 Reddit CTA
+> 验收：[docs/BEATSCAPE-TODO-ACCEPTANCE.md](docs/BEATSCAPE-TODO-ACCEPTANCE.md)
+
+- [x] 合入 `preview/beatscape-try`（UI 抛光 · 25 首 · Reddit P0–P2）
+- [x] `chore/session-backlog-2026-08-26` → `main`（Stage3 · RESONANCE · delivery harness）
+- [x] PR #14/#15/#16 及 SEO B06–B11 已在 main
+- [ ] **差异化盲测**（人为关卡，阻塞上线）：[`docs/RESONANCE-BLINDTEST.md`](docs/RESONANCE-BLINDTEST.md)，
+      素材已在 `data/beatscape-preview/visual-baseline/`
+- [ ] **公网部署** + Reddit 发帖（`docs/BEATSCAPE-REDDIT-LAUNCH.md`）
+- [ ] BeatScape：自动谱 + 鼓点对齐 QA · TICKET-B05 Reddit CTA
 
 ## blockers
 
@@ -18,12 +24,13 @@
 
 ## 近期完成
 
-- TICKET-B01/#6 → PR #12；B02/#9 → PR #14；B03 清理；B04/#11 → PR #13（均已合）
-- LOCA-23 Stage2 手感 PR #16；LOCA-21 难度降级 PR #15；Privacy/Terms PR #14
-- LOCA-15 分享/OG/Local Board；移动端；Hard 密度
-- Delivery harness + agent-safe 队列跑通（本地 CLI 派单）
+- `chore/session-backlog-2026-08-26` merge 进 `main`
+- Stage3 曲库 25/25 · earcheck/audit PASS · Hero/移动 Tab/分享海报
+- TICKET-B01–B04 · LOCA-15/21/23 · SEO B06–B11 · Privacy/Terms
+- Delivery harness + agent-safe 队列
 
 ## 链接
 
-- Workbench: `bash ~/Projects/multica/scripts/ai-company/ceo-workbench.sh` → http://127.0.0.1:9477
-- OPC bridge: `~/Projects/multica/.ai-company/docs/13-opc-bridge.md`
+- [docs/BEATSCAPE-TODO-ACCEPTANCE.md](docs/BEATSCAPE-TODO-ACCEPTANCE.md)
+- [docs/KNOWLEDGE-BASE.md](docs/KNOWLEDGE-BASE.md)
+- [docs/PRD-BEATSCAPE.md](docs/PRD-BEATSCAPE.md)

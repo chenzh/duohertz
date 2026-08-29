@@ -1,15 +1,24 @@
+import { DEFAULT_KEYS, normalizeKeys } from "../input/keyMap";
+
 export type BsSettings = {
   hitsound: boolean;
   fancyFx: boolean;
   scrollBias: number;
   casualSpeed: number;
+  musicVolume: number;
+  sfxVolume: number;
+  /** Touch-only: forgive a same-hand double tap when one thumb covers both lanes. */
+  chordAssist: boolean;
 };
 
 const DEFAULT: BsSettings = {
   hitsound: true,
   fancyFx: true,
   scrollBias: 0,
-  casualSpeed: 0.75,
+  casualSpeed: 1,
+  musicVolume: 0.7,
+  sfxVolume: 0.55,
+  chordAssist: true,
 };
 
 export function loadSettings(): BsSettings {
@@ -41,11 +50,11 @@ export function saveOffsetMs(ms: number) {
 export function loadKeys(): string[] {
   try {
     const raw = localStorage.getItem("bs_keys");
-    if (raw) return JSON.parse(raw);
+    if (raw) return normalizeKeys(JSON.parse(raw));
   } catch {
     /* ignore */
   }
-  return ["D", "F", "J", "K"];
+  return [...DEFAULT_KEYS];
 }
 
 export function saveKeys(keys: string[]) {
@@ -104,6 +113,15 @@ export function saveScore(entry: ScoreEntry) {
   if (existing && existing.score >= entry.score) return;
   const next = [...filtered.filter((e) => `${e.track_id}|${e.tier}|${e.mode}` !== key), entry].slice(-200);
   localStorage.setItem("bs_scores", JSON.stringify(next));
+}
+
+export function saveDisplayName(name: string) {
+  const trimmed = name.trim().slice(0, 24) || "Player";
+  localStorage.setItem("bs_display_name", trimmed);
+}
+
+export function loadDisplayName(): string {
+  return localStorage.getItem("bs_display_name") || "Player";
 }
 
 export function getPersonalBest(trackId: string, tier: string, mode: string): ScoreEntry | null {
