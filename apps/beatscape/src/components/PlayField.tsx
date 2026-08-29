@@ -4,6 +4,7 @@ import { Conductor, unlockAudio } from "../audio/playback";
 import { playBreak, playCountdownTick, playHit, playKeyTick, setSfxVolume } from "../audio/hitsounds";
 import { GameSession, type JudgeFx } from "../engine/playState";
 import { approachSec, noteProximityFactor, noteScreenY } from "../engine/geometry";
+import { makeNoteSprite, noteWidthForLane, HOLD_BODY_RATIO, HOLD_STROKE_RATIO, NOTE_PROXIMITY_GROWTH, SLIDE_TAIL_SCALE } from "../engine/noteSprite";
 import { accuracyPercent, comboMultiplier, judgmentScore } from "../engine/judge";
 import { receptorYFromGeometry, laneFromClientX, isCoarsePointer, TouchLaneTracker } from "../input/touchInput";
 import { keyLabels, laneFromKeyEvent } from "../input/keyMap";
@@ -239,7 +240,7 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
       const sp = spritesRef.current[lane];
       if (!sp) return;
       const prox = noteProximityFactor(y, receptorY);
-      const drawSize = size * (1 + prox * 0.14);
+      const drawSize = size * (1 + prox * NOTE_PROXIMITY_GROWTH);
       const drawAlpha = Math.min(1, alpha * (0.78 + prox * 0.22));
       ctx2d.globalAlpha = drawAlpha;
       ctx2d.drawImage(sp, x - drawSize / 2, y - drawSize / 2, drawSize, drawSize);
@@ -269,7 +270,7 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
       const { w, h } = dimRef.current;
       const receptorY = receptorYFromGeometry(h, Math.min(w, h));
       const laneW = w / 4;
-      const noteW = Math.min(laneW * 0.66, 42);
+      const noteW = noteWidthForLane(laneW);
       const keyHints = keyLabels(keys);
       const session = sessionRef.current!;
       const approach = approachRef.current;
@@ -343,7 +344,7 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
         const laneBeat = pressedRef.current.has(i) ? 1 : beatPulse * 0.55;
         ctx2d.fillStyle = LANE_COLORS[i];
         ctx2d.globalAlpha = 0.65 + laneBeat * 0.35;
-        ctx2d.fillRect(cx - laneW * 0.18, receptorY - 2, laneW * 0.36, 4 + laneBeat * 3);
+        ctx2d.fillRect(cx - noteW * 0.45, receptorY - 2, noteW * 0.9, 4 + laneBeat * 3);
         ctx2d.globalAlpha = 1;
       }
 
@@ -364,11 +365,16 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
           const bodyH = Math.abs(yTail - yHead);
           const holding = pressedRef.current.has(d.lane) && n.head !== null && n.tail === null;
           ctx2d.fillStyle = `rgba(${LANE_RGB[d.lane][0]},${LANE_RGB[d.lane][1]},${LANE_RGB[d.lane][2]},${holding ? 0.62 : 0.45})`;
-          ctx2d.fillRect((d.lane + 0.5) * laneW - noteW * 0.22, top, noteW * 0.44, bodyH);
+          ctx2d.fillRect((d.lane + 0.5) * laneW - (noteW * HOLD_BODY_RATIO) / 2, top, noteW * HOLD_BODY_RATIO, bodyH);
           if (holding) {
             ctx2d.strokeStyle = `rgba(${LANE_RGB[d.lane][0]},${LANE_RGB[d.lane][1]},${LANE_RGB[d.lane][2]},0.85)`;
             ctx2d.lineWidth = 2;
-            ctx2d.strokeRect((d.lane + 0.5) * laneW - noteW * 0.28, top, noteW * 0.56, bodyH);
+            ctx2d.strokeRect(
+              (d.lane + 0.5) * laneW - (noteW * HOLD_STROKE_RATIO) / 2,
+              top,
+              noteW * HOLD_STROKE_RATIO,
+              bodyH,
+            );
           }
           const headAlpha = n.head ? 0.35 : 1;
           drawNote(d.lane, (d.lane + 0.5) * laneW, yHead, noteW, headAlpha, receptorY);
@@ -395,7 +401,7 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
           ctx2d.setLineDash([]);
           ctx2d.globalAlpha = 1;
           if (headDone && n.tail === null) {
-            drawNote(d.to, (d.to + 0.5) * laneW, yTail, noteW * 0.92, 1, receptorY);
+            drawNote(d.to, (d.to + 0.5) * laneW, yTail, noteW * SLIDE_TAIL_SCALE, 1, receptorY);
           }
         }
       }
@@ -853,53 +859,6 @@ export function PlayField({ chart, audioUrl, mode, casualSpeed, onStart, onFinis
       )}
     </div>
   );
-}
-
-/**
- * RESONANCE note: a flat diamond under a hard ink outline, with a single
- * highlight wedge for cel-shaded volume. The old version baked a neon glow in —
- * that is exactly what the v2.0 language removes.
- */
-function makeNoteSprite(color: string, px: number): HTMLCanvasElement {
-  const c = document.createElement("canvas");
-  c.width = px;
-  c.height = px;
-  const g = c.getContext("2d")!;
-  const cx = px / 2;
-  const cy = px / 2;
-  const r = px * 0.34;
-
-  const diamond = (radius: number) => {
-    g.beginPath();
-    g.moveTo(cx, cy - radius);
-    g.lineTo(cx + radius, cy);
-    g.lineTo(cx, cy + radius);
-    g.lineTo(cx - radius, cy);
-    g.closePath();
-  };
-
-  diamond(r);
-  g.fillStyle = color;
-  g.fill();
-  g.lineJoin = "miter";
-  g.lineWidth = Math.max(2, px * 0.06);
-  g.strokeStyle = "#000000";
-  g.stroke();
-
-  // Single hard-edged highlight wedge, clipped to the inner diamond.
-  g.save();
-  diamond(r * 0.72);
-  g.clip();
-  g.fillStyle = "rgba(255,255,255,0.4)";
-  g.beginPath();
-  g.moveTo(cx - r, cy - r * 0.2);
-  g.lineTo(cx + r * 0.15, cy - r);
-  g.lineTo(cx - r, cy - r);
-  g.closePath();
-  g.fill();
-  g.restore();
-
-  return c;
 }
 
 /** Skewed parallelogram used for every HUD panel (PRD §7.6 comic framing). */

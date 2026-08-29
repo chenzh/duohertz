@@ -91,7 +91,7 @@ export function HomePage() {
         </div>
 
         <div className="hero-visual">
-          <HeroGameplayPreview />
+          <HeroGameplayPreview keyHints={keys} />
           {featured.slice(0, 2).map((t, i) => (
             <div
               key={t.track_id}
