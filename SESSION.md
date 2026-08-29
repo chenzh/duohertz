@@ -10,7 +10,7 @@
 
 > 验收入口：本页 · `pnpm catalog:beatscape` · `pnpm audit:beatscape`
 
-- [ ] **公网 URL 验收** — Cloudflare Pages（workflow 已合；确认 `https://beatscape.pages.dev/` 可玩）
+- [x] **公网部署** — Cloudflare Pages 已发布：https://beatscape.pages.dev/ （preview https://ff9b1de5.beatscape.pages.dev）
 - [ ] **差异化盲测**（人类 · 阻塞对外宣称上线）：[`docs/RESONANCE-BLINDTEST.md`](docs/RESONANCE-BLINDTEST.md)
 - [ ] **MLX 真推理替换 mock 母带**（正式公网听感）：SA3 实生成 + 耳检
 - [ ] Stage5 扩至 **50** 首（路线图剩余 15）
