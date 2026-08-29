@@ -1,5 +1,5 @@
 # Company OS snapshot (product copy)
-> synced: 2026-08-29T00:29:38Z · multica @ `b8f7a7f`
+> synced: 2026-08-29T01:27:02Z · multica @ `a0ac053`
 
 Authoritative source: multica fork `.ai-company/` on the CEO machine.
 Refresh:
@@ -21,9 +21,11 @@ bash /Users/zhenhuachen/Projects/multica/scripts/ai-company/sync-company-norms.s
 - `docs/21-label-state-machine.md`
 - `docs/22-git-and-remotes.md`
 - `docs/23-local-agent-environment.md`
+- `docs/24-content-operations.md`
 - `docs/17-ceo-cockpit.md`
 - `docs/27-norm-sync.md`
 - `docs/28-norm-layers.md`
+- `docs/29-harness-layout.md`
 - `runbooks/blocked-triage.md`
 - `runbooks/employee-autopilot.md`
 - `runbooks/onboard-new-project.md`
