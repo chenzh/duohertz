@@ -29,6 +29,14 @@
 - 耳检需人工（50 首，约 1 轮）
 - 盲测需 5–10 名「不玩日式 RPG」观察者（人工）
 
+## 角色 IP / LoRA 工作流（并行 · 跨 IDE 真相见 docs/BEATSCAPE-CHARACTER-LORA.md）
+
+- [x] RIVET LoRA 验证 ✅（身份锁定，无 §2 红线）
+- [x] VOLTA / STATIC / PRISM LoRA 产出
+- [~] EMBER / GLIDE / HALO 批训练中（`scripts/beatscape-anime-lora-batch.py` 串行）
+- 模型 = **Animagine XL 4.0**（非 3.0）；训练参数 rank 8 / 8ep / lr 5e-5（rank16/20ep 会塌成噪点）
+- 剩余阻塞（非技术）：PRD §19 商标 17 项；盲测封面门（需人类观察者）
+
 ## 本波新增脚本（Stage6）
 
 | 脚本 | 用途 |

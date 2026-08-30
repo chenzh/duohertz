@@ -31,6 +31,12 @@ Vault 权威规范：`docs/VAULT-HARNESS.md`（由 `sync-all-harness` 生成）
 | 内容流水线 | `scripts/beatscape-*` · `data/beatscape-preview/` |
 | **AI 公司交付** | `.delivery/beatscape/` · `agent-safe` Issue 队列 |
 
+## BeatScape 角色 IP（anime + LoRA）— 跨 IDE 真相源
+
+7 个 District 角色用**本地 Animagine XL 4.0 + MPS diffusers** 出图并各训一个 SDXL LoRA（触发词 `<char>bs`）锁身份。完整 runbook + 已知坑（CLIP BPE 截断 / peft key bug / 过拟合噪点 / 模型版本 4.0 非 3.0）见 **[docs/BEATSCAPE-CHARACTER-LORA.md](docs/BEATSCAPE-CHARACTER-LORA.md)**（换 AI IDE 必读，避免重蹈覆辙）。
+
+> 接手 AI 三条铁律：① 训练用 **rank 8 / 8 epoch / lr 5e-5**（rank16/20ep 会塌成噪点）；② 存 LoRA 用 `save_lora_weights`+`convert_state_dict_to_diffusers`，加载用 `load_lora_weights`+`set_adapters`；③ 模型是 **Animagine XL 4.0**，不是 3.0。
+
 ## 常用命令
 
 ```bash
