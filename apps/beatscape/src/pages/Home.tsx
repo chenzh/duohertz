@@ -4,11 +4,11 @@ import { assetUrl, loadCatalog } from "../catalog/loadCatalog";
 import type { CatalogTrack } from "../types/catalog";
 import { FEATURED_TRACK_IDS, SCAPE_COPY, SCAPE_COPY_EXTRA } from "../constants/scape";
 import { HomeHeroPlay } from "../components/HomeHeroPlay";
-import { FIRST_PLAY_TRACK_ID, firstPlayHref } from "../lib/firstPlay";
+import { FIRST_PLAY_TRACK_ID, INTRO_TRACK_ID, firstPlayHref } from "../lib/firstPlay";
 import { dailyPlayHref, getDailyChallenge } from "../lib/dailyChallenge";
 import { trackEvent } from "../lib/analytics";
 import { keyLabels } from "../input/keyMap";
-import { loadKeys } from "../storage/settings";
+import { isOnboarded, loadKeys, setOnboarded } from "../storage/settings";
 import { HOME_PAGE_META, usePageMeta } from "../seo/pageMeta";
 
 function FeaturedCard({ track }: { track: CatalogTrack }) {
@@ -35,12 +35,21 @@ function FeaturedCard({ track }: { track: CatalogTrack }) {
 export function HomePage() {
   usePageMeta(HOME_PAGE_META);
   const [tracks, setTracks] = useState<CatalogTrack[]>([]);
+  const [showIntro, setShowIntro] = useState(() => !isOnboarded());
   const keys = useMemo(() => keyLabels(loadKeys()), []);
 
   useEffect(() => {
     trackEvent("home_view");
     void loadCatalog().then((c) => setTracks(c.tracks));
   }, []);
+
+  const introTrack = tracks.find((t) => t.track_id === INTRO_TRACK_ID) ?? null;
+
+  const dismissIntro = () => {
+    setOnboarded();
+    setShowIntro(false);
+    trackEvent("intro_dismiss");
+  };
 
   const heroTrack = tracks.find((t) => t.track_id === FIRST_PLAY_TRACK_ID) ?? tracks[0];
   const featured = FEATURED_TRACK_IDS.map((id) => tracks.find((t) => t.track_id === id)).filter(
@@ -148,6 +157,46 @@ export function HomePage() {
             ))}
           </div>
         </section>
+      )}
+
+      {showIntro && (
+        <div className="home-intro-backdrop" role="dialog" aria-modal="true" aria-label={SCAPE_COPY.introTitle}>
+          <div className="home-intro">
+            <p className="eyebrow">{SCAPE_COPY.introTitle}</p>
+            {introTrack && (
+              <div className="home-intro-track">
+                <div
+                  className="home-intro-cover"
+                  style={{ backgroundImage: `url(${assetUrl(introTrack.cover)})` }}
+                  aria-hidden
+                />
+                <div className="home-intro-track-meta">
+                  <strong>{introTrack.title}</strong>
+                  <span>
+                    {introTrack.artist} · Easy · Casual
+                  </span>
+                </div>
+              </div>
+            )}
+            <p className="tagline">{SCAPE_COPY.introBody}</p>
+            <div className="cta-row">
+              <Link
+                className="btn primary"
+                to={firstPlayHref(introTrack ? introTrack.track_id : undefined)}
+                onClick={() => {
+                  setOnboarded();
+                  setShowIntro(false);
+                  trackEvent("intro_start", { track: introTrack ? introTrack.track_id : INTRO_TRACK_ID });
+                }}
+              >
+                {SCAPE_COPY.introStart}
+              </Link>
+              <button type="button" className="btn ghost" onClick={dismissIntro}>
+                {SCAPE_COPY.introDismiss}
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </section>
   );

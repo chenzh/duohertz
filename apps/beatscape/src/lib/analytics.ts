@@ -5,6 +5,8 @@ export type AnalyticsEvent =
   | "home_hero_play_start"
   | "home_hero_play_finish"
   | "daily_challenge_click"
+  | "intro_start"
+  | "intro_dismiss"
   | "play_start"
   | "play_finish"
   | "share_copy"

@@ -10,8 +10,6 @@ import { isCoarsePointer } from "../input/touchInput";
 import { buildPlayPageMeta, usePageMeta } from "../seo/pageMeta";
 import { trackEvent } from "../lib/analytics";
 
-const GUIDE_TRACK = "bs-s1-02";
-
 export function PlayPage() {
   const { id } = useParams();
   const [params] = useSearchParams();
@@ -27,12 +25,6 @@ export function PlayPage() {
   usePageMeta(track ? buildPlayPageMeta(track, tier, mode) : null);
 
   useEffect(() => {
-    if (!isOnboarded()) {
-      if (id !== GUIDE_TRACK) {
-        nav(`/play/${GUIDE_TRACK}?tier=easy&mode=casual`, { replace: true });
-        return;
-      }
-    }
     if (!id) return;
     let cancelled = false;
     void (async () => {
@@ -64,11 +56,6 @@ export function PlayPage() {
     trackEvent("play_finish", { track: track.track_id, grade: result.grade, accuracy: result.accuracy });
     const isDaily = params.get("daily") === "1";
     writeLastRun(track, tier, mode, result, performance.now() - startedAt, { daily: isDaily });
-    if (!isOnboarded() && track.track_id === GUIDE_TRACK) {
-      setOnboarded();
-      nav("/");
-      return;
-    }
     if (!isOnboarded()) setOnboarded();
     nav("/results");
   };

@@ -19,6 +19,10 @@ export const SCAPE_COPY = {
   calibrateSkip: "Playing with zero offset — recalibrate anytime in Settings.",
   emptyFavorites: "No favorites yet — pin a track from the Library.",
   weakNetwork: "Loading core beat first…",
+  introTitle: "First time in the Scape?",
+  introBody: "Warm up with a beginner-friendly Easy · Casual run — or skip it and pick any track you like.",
+  introStart: "Start the warm-up",
+  introDismiss: "Explore on my own",
 } as const;
 
 // PRD §7.5 v2.0 · RESONANCE palette.

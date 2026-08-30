@@ -2346,3 +2346,65 @@ td {
     font-size: 14px;
   }
 }
+
+/* First-run intro — non-blocking recommendation on Home (PRD §6.0.3 v2). */
+.home-intro-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(4, 4, 4, 0.72);
+}
+
+.home-intro {
+  width: min(440px, 100%);
+  background: var(--bg-elevated);
+  border: var(--stroke-w) solid var(--ink);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 24px;
+  display: grid;
+  gap: 14px;
+}
+
+.home-intro .eyebrow {
+  color: var(--accent);
+}
+
+.home-intro-track {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.home-intro-cover {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-sm);
+  border: var(--stroke-w) solid var(--ink);
+  background-size: cover;
+  background-position: center;
+  flex: none;
+}
+
+.home-intro-track-meta {
+  display: grid;
+  gap: 2px;
+}
+
+.home-intro-track-meta strong {
+  font-size: 18px;
+}
+
+.home-intro-track-meta span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.home-intro .cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
