@@ -151,6 +151,7 @@ export function HomeHeroPlay() {
         ) : (
           <PlayField
             key={`${track.track_id}-${runKey}`}
+            district={track.district}
             chart={chart}
             audioUrl={assetUrl(track.audio)}
             mode="casual"

@@ -2553,3 +2553,31 @@ td {
   letter-spacing: 0.12em;
   color: var(--district-color, #e23d3d);
 }
+
+/* PlayField — district character tint (L1 immersion, zero gameplay impact) */
+.play-wrap {
+  position: relative;
+}
+.play-wrap-hero {
+  border: 1px solid var(--district-color, transparent);
+}
+.play-char-watermark {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  width: clamp(108px, 26%, 220px);
+  height: auto;
+  opacity: 0.16;
+  pointer-events: none;
+  z-index: 3;
+  mix-blend-mode: screen;
+  border-radius: 12px;
+  user-select: none;
+}
+@media (max-width: 600px) {
+  .play-char-watermark {
+    width: clamp(84px, 30%, 140px);
+    right: 10px;
+    bottom: 10px;
+  }
+}

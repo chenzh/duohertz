@@ -14,7 +14,7 @@ export function CharacterAvatar({ district, size, className = "", rounded = true
   const style = size ? { width: size, height: size } : undefined;
   return (
     <img
-      src={ca.art}
+      src={`${import.meta.env.BASE_URL}${ca.art.replace(/^\//, "")}`}
       alt={`${ca.name} — ${ca.district} character`}
       className={`character-avatar ${rounded ? "rounded" : ""} ${glow ? "glow" : ""} ${className}`.trim()}
       width={size}

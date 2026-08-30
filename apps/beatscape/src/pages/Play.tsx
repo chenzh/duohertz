@@ -120,6 +120,7 @@ export function PlayPage() {
       </div>
       <PlayField
         key={`${track.track_id}-${tier}-${mode}`}
+        district={track.district}
         chart={chart}
         audioUrl={assetUrl(track.audio)}
         mode={mode}
