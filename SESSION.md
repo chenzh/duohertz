@@ -17,6 +17,7 @@
 
 ## 已完成（勿再当 P0）
 
+- [x] **BeatScape 文档 as-built 对齐**：`apps/beatscape/PRD.md`（实现级 PRD）+ 总纲 `docs/PRD-BEATSCAPE.md` v1.9.3（18 项差异按代码回写，未实现项标注〔规划〕）· 2026-08-30
 - [x] **Stage6 扩容 50 首** — 35 → **85** · 全部 SA3 MLX 真推理母带（非 synth fallback）
 - [x] 双资产入库（120s 游戏切片 + 216s 流媒体）· audit **FAIL=0** · earcheck **86/86 PASS**
 - [x] 五曲风 / 标签 / Vibe / 难度四套配额全部对齐（`catalog:beatscape --stage 6` 缺口 0）

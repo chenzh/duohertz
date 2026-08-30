@@ -66,18 +66,19 @@ MusicSaas/
 |------|------|
 | `src/App.tsx` | 路由壳 |
 | `src/router.tsx` | 轻量自研路由（无 react-router-dom） |
-| `src/pages/` | Home · Library · Play · Results · Calibration · Settings |
-| `src/components/PlayField.tsx` | 谱面渲染、Tap to Start、键盘 D/F/J/K |
+| `src/pages/` | Home · Library · Track · Play · Results · Calibration · Settings · Leaderboard · Legal · NotFound |
+| `src/components/PlayField.tsx` | 谱面渲染、Tap to Start、键盘（默认方向键，物理键码）+ 触控 |
 | `src/engine/judge.ts` | 判定窗 15/30/50 ms |
 | `src/storage/settings.ts` | `bs_*` localStorage |
-| `public/catalog.json` | Stage1 曲库元数据 |
+| `public/catalog.json` | 曲库元数据（85 首 · v1 · 双资产） |
 | `catalog-roadmap.json` | 正式版 50 首槽位 · Stage/曲风配额真值 |
-| `public/catalog/bs-s1-*/` | 每曲 m4a + easy/standard/hard JSON + cover |
+| `public/catalog/bs-s*/` | 85 首曲目录：audio/stream m4a + 三难度 chart + cover.svg + og.png |
 
 **脚本：**
 
 - `scripts/beatscape-ingest-stage1.py` — Stage1 预览 → public catalog
 - `scripts/beatscape-ingest-stage2.py` — Stage2 合并入库（#07–#10）
+- `scripts/beatscape-stage6-specs.py` + `sync-manifest` + `ingest-stage6.py` + `pipeline.py` — Stage6 扩容 35→85 流水线
 - `scripts/beatscape-track-registry.py` — Stage1+2 锁定元数据
 - `scripts/beatscape-stage2-manifest.json` — Stage2 生成 Job 草案
 - `scripts/beatscape-audit.py` — 时长/元数据 QA

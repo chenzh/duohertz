@@ -6,8 +6,8 @@
 |------|------|
 | 文档类型 | 产品需求文档（PRD） |
 | 产品名称 | **BeatScape**（节拍幻境） |
-| 文档版本 | **v1.9.2（游戏切片 + 流媒体完整版双资产）** |
-| 日期 | 2026-08-25 |
+| 文档版本 | **v1.9.3（as-built 对齐修正 · 以 `apps/beatscape` 代码为唯一事实）** |
+| 日期 | 2026-08-30 |
 | 适配开发范式 | Vibe Coding 体感驱动、增量迭代、AI 自主开发 |
 | 对标竞品 | Rhythm Plus（手感追平、体验超车） |
 | 曲库音源 | **仅本地 MusicSaas AI 独立生成** |
@@ -34,6 +34,7 @@
 | **v1.9** | 2026-08-24 | 矛盾清算 + Stage1 冻结 |
 | **v1.9.1** | 2026-08-24 | 终检：MaxScore/封面措辞对齐 Local Board与程序化封面；确认无阻塞缺口，停扩规格 |
 | **v1.9.2** | 2026-08-25 | 双资产真值：游戏切片（BeatScape）+ 流媒体完整版（MusicSaas App 引流）；时长分层与 catalog 字段 |
+| **v1.9.3** | 2026-08-30 | **as-built 对齐修正**：以 `apps/beatscape/` 代码为唯一事实，校正运行时真值（默认键位 / Play Now / 首访引导 / AR 公式 / Hold 尾窗 / 海报 / 榜单 / 存档 / IA / 曲库默认值等 18 项），未实现项显式标注〔规划〕；实现级细节唯一入口 = `apps/beatscape/PRD.md` |
 
 ---
 
@@ -153,12 +154,12 @@
 |------|------|------|
 | 道数 | **4 lanes**（左→右 0–3） | 固定不可改 |
 | 滚动 | 默认 **下落**（downscroll） | 上落为 Post-MVP |
-| 默认键位 | `D` `F` `J` `K` → lane 0–3 | 可 remap，见 §4.8 |
+| 默认键位 | **方向键 ← ↓ ↑ →** → lane 0–3（按物理键码绑定，键盘布局无关） | 预设 Arrows / WASD / DFJK，可 remap，见 §4.8 |
 | 触屏 | 底部判定线四等分热区；按住 = Hold | 边缘防误触见 §8.2 |
 | 判定线 | 屏高约 **15%** 处固定 receptor | — |
 | 道语义（生成提示） | 0=kick · 3=snare · 1–2=hat/旋律 | 自动谱面优先外道清晰 |
-| Approach Rate | Easy **22** / Standard **28** / Hard **34** | **定义见 §4.10**（提前可见拍数） |
-| 曲长窗口 | **游戏切片** 60–90s（Stage1 已定 60–75s）；**流媒体完整版** 见 §6.0.27 | Instant Demo 可裁前 48s |
+| Approach Rate | 逐曲写入 chart.`ar`（自动谱流水线；全库中位数 E17.8 / S20.0 / H24.0，区间 11.1–37.5） | **定义见 §4.10**（提前可见时间）；引擎缺省 24 |
+| 曲长窗口 | **游戏切片** 60–120s（as-built 全库四档：60 / 75 / 90 / 120s）；**流媒体完整版** 180–216s，见 §6.0.27 | Instant Demo 可裁前 48s（10 首已产 preview） |
 
 ### 4.2 音符类型与生成规则
 
@@ -173,7 +174,7 @@
 
 - 头部：按 Tap 四档判定并计分  
 - 身段：**不计 tick 分**（头+尾两次判定即可）  
-- 尾部：须在 `end` 释放；窗口 = 当前模式 Good 窗 + **±20ms 吸附**；提前/过晚 = 尾 Miss（头分保留）  
+- 尾部：须在 `end` 释放；**三档判定窗均 +20ms 吸附**（Arcade 35 / 50 / 70ms）；超窗释放 = 尾 Miss（头分保留）  
 - 尾 Miss / 头 Miss 均 **断连击**  
 - 自动谱：能量持续 ≥400ms → Hold  
 
@@ -266,7 +267,7 @@ Accuracy% = (P×1.0 + Gr×0.75 + Go×0.40 + M×0) / TotalNotes × 100
 |------|------|------|------------|------|
 | **Casual** | 无失败，必打完 | 0.75× / 1.0× / 1.25× | #02 Glass Horizon | 新手、种草 |
 | **Arcade** | HP 归零失败 | 仅 1.0× | #01 Neon Pulse / #05 | 挑战、排行 |
-| **Practice** | 无失败；连 Miss×3 → 自动 0.5× 持续 5s | 0.5×–1.0× | #09 Blue Hour Loop | 练度 |
+| **Practice** | 无失败；连 Miss×3 → 自动 0.5× 持续 5s（音画同步） | 固定 1.0×（仅自动降速，无手动设置） | #09 Blue Hour Loop | 练度 |
 
 **Arcade HP**
 
@@ -280,7 +281,7 @@ Accuracy% = (P×1.0 + Gr×0.75 + Go×0.40 + M×0) / TotalNotes × 100
 |------|----------|------|----------|--------|
 | Casual | 0.75 / 1.0 / 1.25 | **恒 1.0×** | 视觉下落变快/慢 | **不变** |
 | Arcade | 仅 1.0 | 1.0× | 1.0× | 不变 |
-| Practice | 0.5–1.0 | **与谱面同步变速** | 同步 | **仍用 Practice=Arcade 窗 ms** |
+| Practice | 无手动速度；Miss×3 → 自动 0.5× / 5s | **同步变速** | 同步 | **仍用 Practice=Arcade 窗 ms** |
 | Practice 连 Miss×3 | 自动降至 **max(0.5×, 当前×0.5)** 持续 5s | 同步 | 同步 | 不变 |
 
 ### 4.6 难度档密度指标（自动谱面验收）
@@ -313,40 +314,50 @@ Loading → Countdown(3s) → Playing ⇄ Paused → Finished → Results / Repl
 
 | 设置 | 范围 | 存储 |
 |------|------|------|
-| Key remap | 任意 4 键 | `bs_keys` |
+| Key remap | 任意 4 键（**物理键码**；预设 Arrows / WASD / DFJK，重复键禁存） | `bs_keys` |
 | Global offset | −200…+200 ms；与 chart.`audio_offset_ms` **相加** | `bs_offset_ms` |
-| Scroll bias | ±15% → 只乘 `approach_sec` | `bs_settings` |
+| Scroll bias | ±15% → 只乘 `approach_sec`（引擎已生效；Settings UI 未露出） | `bs_settings` |
 | Hitsounds | On/Off | — |
 | Fancy FX | On/Off；`prefers-reduced-motion` 强制 Off | — |
 | Casual speed | 0.75 / 1.0 / 1.25（仅视觉） | — |
-| Practice speed | 0.5–1.0（音画同步） | — |
+| Practice | 无手动速度；Miss×3 → 自动 0.5× 持续 5s（音画同步） | — |
+| Thumb chord assist | 触屏默认 On：同手和弦超时未按且搭档道已击中 → 记 Great，防「不可能 Miss」 | `bs_settings.chordAssist` |
+| Music / SFX 音量 | 0–100 滑条（默认 0.70 / 0.55） | `bs_settings` |
+| Board name | ≤24 字（默认 "Player"） | `bs_display_name` |
 
-### 4.9 首次引导 vs Play Now
+### 4.9 首次引导 vs Play Now（as-built · 非阻塞引导）
+
+> v1.9.3：引导已改为**非阻塞**（commit 834fb12），不再强制跳转。`bs_onboarded` 在任意一局完成 / 校准完成 / 引导弹窗任一操作时置位。
 
 | 条件 | 行为 |
 |------|------|
-| 未引导 | 强制引导 → #02 Easy Casual（Skip → #01 Std **Casual**） |
-| 已引导 + Play Now | #01 Std **Arcade** |
-| 已引导 + 曲库 | 自选；默认 catalog |
-| 中途 Exit | 确认 *Leave the Scape?* → 丢弃本局分 |
-| Replay | 同 chart + 用户 offset；重新 Countdown |
+| 未引导访问 Home | 非阻塞 intro 弹窗 *First time in the Scape?* → **Start the warm-up**（#02 Glass Horizon · Easy · Casual）或 **Explore on my own** |
+| Play Now（Home CTA / 移动端 tabbar Play） | **bs-s4-10 Strike Vector · Easy · Casual** |
+| 曲库 / 曲目页 | 自选；tier/mode 选择器默认取 catalog `default_tier / default_mode` |
+| 中途 Exit | 原生 confirm *Leave the Scape?* → 丢弃本局分 |
+| Replay | Results → 同 track / tier / mode 重开，重新 Countdown |
+| 对局完成 | `setOnboarded()` + 写 `bs_last_run` → /results |
+
+Home hero 另嵌**真机可玩 demo**（Strike Vector Easy Casual：蒙版下循环动画，一键 Play+Sound 解锁 AudioContext 后 autoStart）。
 
 ```text
-1. 闪屏 ≤1.5s
-2. Tap to enter the Scape（解锁 AudioContext）
-3. Calibration 8 拍 @120（可 Skip）
-4. #02 Easy Casual → bs_onboarded=true
-5. CTA → Play Now / Neon Pulse
+1. 首访 Home → 非阻塞 intro 弹窗（可跳过）
+2. 首局 = Play Now（Strike Vector Easy Casual）或 warm-up（Glass Horizon Easy Casual）
+3. 对局内 "Enter the Scape" 按钮解锁 AudioContext（校准随时可从 Home / Settings 进入）
+4. 完成 → bs_onboarded=true → Results
 ```
 
 ### 4.10 Approach Rate
 
 ```text
-approach_beats = 50 / AR
-approach_sec   = approach_beats × (60 / BPM) × (1 + scroll_bias)
+APPROACH_VISIBLE_BEATS = 64        // engine/geometry.ts（v1.9.3 as-built；旧值 50 作废）
+approach_beats = APPROACH_VISIBLE_BEATS / chart.ar
+approach_sec   = approach_beats × (60 / BPM) × (1 + scroll_bias) × (casual ? casualSpeed : 1)
 ```
 
-Easy22 / Std28 / Hard34；@160BPM 约 0.85s / 0.67s / 0.55s。禁止另造像素速度常数。
+- `ar` 为**逐曲值**，由自动谱流水线写入 chart.json（全库中位数 E17.8 / S20.0 / H24.0，区间 11.1–37.5）；引擎缺省 24。
+- 判定线 = 短边 × **15%** 距底（减 safe-area）；下落进度 >88% 后有视觉缓动——只改观感，不改判定时刻。
+- 参考：ar20 @160BPM ≈ 1.20s 可见时间（全库 approach 中位数 E1.73s / S1.54s / H1.28s）。禁止另造像素速度常数。
 
 ### 4.11 倒计时 / 暂停 / Miss / 失败
 
@@ -358,7 +369,7 @@ Easy22 / Std28 / Hard34；@160BPM 约 0.85s / 0.67s / 0.55s。禁止另造像素
 | 有效击中时刻 | `note.t + audio_offset_ms/1000 + user_offset_ms/1000` |
 | 未击中自动 Miss | 过点后超出 Good 窗仍无击中 → Miss，断连 |
 | Hold 中段松开 | 尾预定 Miss（头分保留） |
-| Pause / 切后台 | 冻音画时钟；回前台自愈后再 Resume |
+| Pause / 切后台 | 手动 Pause 按钮冻音画时钟；`visibilitychange` hidden → **自动 Pause**，回前台用户手动 Resume |
 | Arcade HP=0 | 停谱；淡出 ≤300ms；不上传 |
 | Chord 齐按 | 各键相对 `note.t` 落在窗内，且键间互差 ≤ **15ms** |
 
@@ -370,16 +381,16 @@ Easy22 / Std28 / Hard34；@160BPM 约 0.85s / 0.67s / 0.55s。禁止另造像素
 | 四道 | 对局区均分；热区=道宽 |
 | 移动端 | 竖屏提示；`touch-action: none` |
 | PC 对局区 | 最大宽 **560px** 居中 |
-| 键位浮层 | 前 3 局显示 D F J K |
+| 键位浮层 | 非触屏**始终显示**，按绑定键标签渲染（方向键显示 ← ↓ ↑ →）；触屏不显示 |
 
 ### 4.13 个人最佳（PB）
 
 同一 `track_id + tier + mode`：
 
 1. Arcade：更高 score 覆盖；同分比 Accuracy  
-2. Casual/Practice：只存本地 PB，默认不上传  
-3. `history` 最多 10 条  
-4. 低分永不覆盖高分 PB  
+2. Casual/Practice：只存本地 PB，不上传  
+3. as-built：`bs_scores` 每个 `track|tier|mode` 键**只保留最高分一条**，全表上限 200 条（旧「history 10 条」作废）  
+4. 低分永不覆盖高分 PB；Results 用写入前快照 `prevBestScore` 判定真 NEW RECORD  
 
 ### 4.14 输入与击中边角（防漏判 / 防连触返工）
 
@@ -398,7 +409,7 @@ Easy22 / Std28 / Hard34；@160BPM 约 0.85s / 0.67s / 0.55s。禁止另造像素
 ```text
 期望时刻: t_i = t0 + i * (60/120), i = 0..7
 用户击打: u_i
-offset_ms = median(u_i - t_i)   // 取中位数，抗误触
+offset_ms = median(u_i - t_i)   // 取中位数，抗误触；记录 <3 次不取中位数，建议 0
 写入 bs_offset_ms；夹紧到 [-200, 200]
 ```
 
@@ -433,12 +444,15 @@ Skip → offset=0。可在 Settings 重做。
   "ap": false,
   "counts": { "perfect": 0, "great": 0, "good": 0, "miss": 0 },
   "totalNotes": 0,
+  "missEvents": [{ "tMs": 0, "lane": 0 }],
+  "prevBestScore": 0,
   "durationMs": 0,
   "endedAt": "ISO-8601"
 }
 ```
 
-- `/results` 只读该对象；缺 `v` 或字段 → 回 `/library`  
+- `/results` 只读该对象；缺对象 → 空态 "No recent run on this device"（提示 `?run=local` 深链），不跳转  
+- `missEvents`：Miss 复盘时间轴数据；`prevBestScore`：写入前 PB 快照（真 NEW RECORD 判定）  
 - Replay：用 `track_id/tier/mode` 重开 `/play/...`，不复用上局判定流  
 
 ### 4.18 Stage1 内容设计冻结声明
@@ -528,6 +542,8 @@ Skip → offset=0。可在 Settings 重做。
 | **Rock** | 电吉他 riff、鼓组清晰、4/4 推进 | 110–150 | SA3 `game_bgm` | **1** | **5** | **10** |
 | **合计** | — | — | — | **6** | **25** | **50** |
 
+> v1.9.3 as-built：Stage6 扩容后曲库 **85 首**（EDM 20 / Pop 17 / Hip-hop 17 / R&B 14 / Rock 17），已超正式版目标；本表保留为原始配额规划。
+
 **运营标签（4 类 · 仅营销/筛选，不代表版权来源）**
 
 | 标签 | 含义 | 建议占比（正式版 50 首内） |
@@ -597,6 +613,7 @@ beatscape original, owned rights, loop-friendly
 | Stage 3 | **25 首**（五风齐） | 曲库页搜索 / 分类 / 收藏 / 缓存全开 |
 | Stage 4 | **40 首** | 排行榜与复盘有足够样本；New Release 滚动开始 |
 | Stage 5 / 正式版 | **50 首** + 每月 +2～4 | 差异化打磨；CDN 静态分发；停用未过 QA 曲 |
+| Stage 6（as-built 已入库） | **85 首**（35 → 85 扩容） | SA3 MLX 真推理双资产；待人工耳检 + 重部署上线 |
 
 **维护节奏（对齐 §21）**
 
@@ -615,14 +632,16 @@ beatscape original, owned rights, loop-friendly
 
 | # | track_id | 英文曲名 | 艺人 | 曲风 | BPM | 时长 | 风格包 | District | 标签 | 默认难度/模式 | 允许音符 | 玩法职责 |
 |---|----------|----------|------|------|-----|------|--------|----------|------|---------------|----------|----------|
-| 01 | `bs-s1-01` | Neon Pulse | Pulse Atlas | EDM | 160 | 75s | `bs-edm-main` | Pulse Core | Hot Chart | Std / Arcade | Tap Hold Chord | Instant；Drop≤8s |
+| 01 | `bs-s1-01` | Neon Pulse | Pulse Atlas | EDM | 162 | 75s | `bs-edm-main` | Pulse Core | Hot Chart | Easy / Casual | Tap Hold Chord | Instant；Drop≤8s |
 | 02 | `bs-s1-02` | Glass Horizon | Soft Circuit | Pop | 118 | 75s | `bs-pop-hook` | Glass Rim | Viral | Easy / Casual | Tap Hold | 新手首局 |
-| 03 | `bs-s1-03` | Night Drive 808 | Low Voltage | Hip-hop | 95 | 75s | `bs-hiphop-808` | Night Grid | Classic | Std / Arcade | Tap Hold Chord | 低 BPM |
+| 03 | `bs-s1-03` | Night Drive 808 | Low Voltage | Hip-hop | 95 | 75s | `bs-hiphop-808` | Night Grid | Classic | Easy / Casual | Tap Hold Chord | 低 BPM |
 | 04 | `bs-s1-04` | Velvet Afterhours | Mira Lane | R&B | 88 | 75s | `bs-rnb-groove` | Afterhours Lane | Classic | Easy / Casual | Tap Hold | 长按主验 |
-| 05 | `bs-s1-05` | Voltage Drop | Gridline | EDM | 170 | 60s | `bs-edm-climax` | Pulse Core | Hot Chart | Hard / Arcade | Tap Hold Chord | 高密度 |
-| 06 | `bs-s1-06` | Chrome Riff | Iron Echo | Rock | 132 | 75s | `bs-rock-drive` | Chrome Yard | New Release | Std / Arcade | Tap Hold Chord | Rock 五风 |
+| 05 | `bs-s1-05` | Voltage Drop | Gridline | EDM | 171 | 60s | `bs-edm-climax` | Pulse Core | Hot Chart | Easy / Casual | Tap Hold Chord | 高密度 |
+| 06 | `bs-s1-06` | Chrome Riff | Iron Echo | Rock | 132 | 75s | `bs-rock-drive` | Chrome Yard | New Release | Easy / Casual | Tap Hold Chord | Rock 五风 |
 
 > Stage 1 **全曲禁止 Slide**。Hip-hop 谱面网格按 **标注 BPM**（95）出谱，不做 double-time 显示歧义；若鼓点听感偏 double，仍以 metadata.bpm=95 为判定真值。
+>
+> v1.9.3 as-built：全部 Stage1 曲目 catalog `default_tier/default_mode` = **easy/casual**（曲目页选择器默认，玩家可任选任意 tier/mode）；BPM 为入库实测值——162 / 171 与生成 Prompt 的 160 / 170 属正常生成漂移，**以 catalog 为准**（chart.bpm 为逐曲精确值，如 162.2）。
 
 **Stage 1 验收映射**
 
@@ -641,9 +660,9 @@ beatscape original, owned rights, loop-friendly
 | # | track_id | 英文曲名 | 艺人 | 曲风 | BPM | 风格包 | District | 允许音符 | 玩法职责 |
 |---|----------|----------|------|------|-----|--------|----------|----------|----------|
 | 07 | `bs-s2-01` | Slide City | Vector Bloom | EDM | 140 | `bs-edm-main`+sweep | Slide District | +Slide | 滑动主验 |
-| 08 | `bs-s2-02` | Skyline Hook | Ada North | Pop | 128 | `bs-theme-en` | Skyline Hook | Tap Hold（人声稀疏） | 英文人声 |
+| 08 | `bs-s2-02` | Skyline Hook | Ada North | Pop | 133 | `bs-theme-en` | Skyline Hook | Tap Hold（人声稀疏） | 英文人声 |
 | 09 | `bs-s2-03` | Blue Hour Loop | Quiet Neon | Pop | 120 | `bs-chill-pop` | Glass Rim | Tap Hold | Practice |
-| 10 | `bs-s2-04` | Asphalt Anthem | Redline Co. | Rock | 148 | `bs-rock-drive` | Chrome Yard | Tap Hold Chord | 高速摇滚 |
+| 10 | `bs-s2-04` | Asphalt Anthem | Redline Co. | Rock | 150 | `bs-rock-drive` | Chrome Yard | Tap Hold Chord | 高速摇滚 |
 
 ##### C. 初版不做什么（边界）
 
@@ -708,7 +727,7 @@ P2  #07–#10 → 滑动 / 英文人声 / 练度 / 高速摇滚
       "title": "Neon Pulse",
       "artist": "Pulse Atlas",
       "genre": "EDM",
-      "bpm": 160,
+      "bpm": 162,
       "duration_sec": 75,
       "stream_duration_sec": 198,
       "preset_id": "bs-edm-main",
@@ -716,16 +735,16 @@ P2  #07–#10 → 滑动 / 英文人声 / 练度 / 高速摇滚
       "job_id": "local-...",
       "rights": "owned",
       "theme": "beatscape",
-      "tags": ["Hot Chart Style"],
+      "tags": ["Hot Chart Style", "Beginner Pick"],
+      "vibe": "battle",
       "district": "Pulse Core",
-      "default_mode": "arcade",
-      "default_tier": "standard",
+      "default_mode": "casual",
+      "default_tier": "easy",
       "audio": "/catalog/bs-s1-01/audio.m4a",
       "stream_audio": "/catalog/bs-s1-01/stream.m4a",
-      "stream_app_url": "https://music.example.com/track/bs-s1-01",
-      "audio_master": "masters/bs-s1-01.wav",
       "preview": "/catalog/bs-s1-01/preview_48s.m4a",
-      "cover": "/catalog/bs-s1-01/cover.webp",
+      "cover": "/catalog/bs-s1-01/cover.svg",
+      "og": "/catalog/bs-s1-01/og.png",
       "charts": {
         "easy": "/catalog/bs-s1-01/easy.json",
         "standard": "/catalog/bs-s1-01/standard.json",
@@ -740,9 +759,20 @@ P2  #07–#10 → 滑动 / 英文人声 / 练度 / 高速摇滚
 }
 ```
 
+**as-built 字段说明（v1.9.3，对照 `src/types/catalog.ts`）**
+
+| 字段 | 状态 |
+|------|------|
+| `vibe` | 玩家情绪筛 `night-drive / groove / battle / chill`；缺省由 `src/catalog/trackVibe.ts` 按关键词/曲风/BPM 推断 |
+| `og` | per-track OG 图 1200×630（85/85 已产出） |
+| `stream_app_url` | **不逐曲存储**——深链走全局 `VITE_STREAM_APP_URL` 拼 `/track/{id}`（`src/lib/streamLink.ts`） |
+| `audio_master` | 预留字段，catalog 数据未落（母带台账在仓内 `data/`） |
+| `artist_bio` | 可选；缺省回退 `src/constants/scape.ts` `ARTIST_BIOS` |
+| `cover` | as-built 为程序化 `cover.svg`（非 webp） |
+
 缺 `rights` / `theme` / 三难度 chart 路径 → 构建失败，不可发版。
 
-**Stage 1 过渡**：现有 6 首可仅含 `audio`（游戏切片 = 当前 m4a）；`stream_audio` / `stream_app_url` **可选**。Stage 2 起新曲必须按 §6.0.27 双资产入库。
+**Stage 1 过渡（已完结）**：as-built 全 85 首均带 `stream_audio`（180–216s）与 `og.png`；`preview_48s` 仅 10 首产出（营销预览用，非必需字段）。
 
 #### 6.0.10 幻境街区宇宙（曲 ↔ 地图）
 
@@ -775,17 +805,19 @@ P2  #07–#10 → 滑动 / 英文人声 / 练度 / 高速摇滚
 
 #### 6.0.11 英文内容文案库（上架无中文）
 
+> as-built：上架文案以 `src/constants/scape.ts` `SCAPE_COPY` 为唯一真值；下表为设计全集，与代码冲突处以代码为准。
+
 | 场景 | 固定英文 |
 |------|----------|
 | 口号 | Feel the Beat, Own the Scape. |
 | 权利条 | AI Original · Owned Rights · Generated with MusicSaas |
-| 解锁音频 | Tap to enter the Scape |
-| Play Now | Play Now — D F J K |
+| 解锁音频 | Enter the Scape |
+| Play Now | Play Now（键位由键帽 chips 展示） |
 | 校准中 | Tap with the pulse |
 | 校准完成 | Offset saved. You’re synced to the Scape. |
 | 校准跳过 | Playing with zero offset — recalibrate anytime in Settings. |
-| 首局引导 | Start gentle on Glass Horizon — then chase Neon Pulse. |
-| 引导结束 | The Scape is open. Play Now for Neon Pulse. |
+| 首局引导 | First time in the Scape? · Warm up with a beginner-friendly Easy · Casual run — or skip it and pick any track you like. |
+| 引导按钮 | Start the warm-up / Explore on my own |
 | Countdown | 3 · 2 · 1 · GO |
 | Pause | Scape paused |
 | 中途退出确认 | Leave the Scape? Progress this run won’t be saved. |
@@ -818,13 +850,15 @@ Skyline hook — we light the height
 | ID | 用途 | 规格 |
 |----|------|------|
 | `sfx-tap` | Tap / Great | ≤80ms；0 dBFS 峰值归一后播放增益 **−8 dB** |
-| `sfx-hold-tick` | Hold 身段 | **默认关闭**；开启时 −18 dB |
-| `sfx-slide` | Slide 完成 | −10 dB |
+| `sfx-hold-tick` | Hold 身段 | **默认关闭**；开启时 −18 dB ·〔as-built：未实现〕 |
+| `sfx-slide` | Slide 完成 | −10 dB ·〔as-built：未实现——完成时刻播通用 hit 音效〕 |
 | `sfx-miss` | Miss | −6 dB；忌搞笑拟声 |
 | `sfx-perfect` | Perfect | −6 dB；比 tap 更亮 |
 | `sfx-countdown` | 3-2-1 | 极弱 −16 dB |
-| `bgm-song-select` | 大厅循环 | 30–45s loop；大厅音乐默认增益 **−14 dB** |
+| `bgm-song-select` | 大厅循环 | 30–45s loop；大厅音乐默认增益 **−14 dB** ·〔as-built：未实现〕 |
 | 默认用户音量 | Music **0.70** · SFX **0.55** | Settings 可改；写入 `bs_settings` |
+
+> as-built：已实现音效全部为**程序合成**（`src/audio/hitsounds.ts`，零采样文件，自有版权 ✓）——perfect / great / good / miss 分层打击音、combo-break、countdown tick（A5→C♯6→F6）、空按 key tick。
 
 #### 6.0.14 Stage 3–5 扩曲命名与配额规则
 
@@ -846,9 +880,9 @@ Skyline hook — we light the height
 
 其它规则：
 
-- 身份：`bs_player_id`；名 `Runner-XXXX` / 可改  
-- 仅 Arcade 通关写入本地榜；失败/退出不写  
-- 加权分 = `score × tier_weight`（E1.0 / S1.1 / H1.25）  
+- 身份：无账号无 UUID〔`bs_player_id` 规划未实现〕；名 = `bs_display_name`（默认 "Player"，Settings 可改，≤24 字）  
+- 仅 Arcade 通关且未失败且 score ≤ MaxScore×1.01 写入本地榜  
+- 排序：纯 score 降序〔`tier_weight` 加权为规划项，未实现〕  
 - 校验：`score ≤ MaxScore×1.01` 且 counts 与 TotalNotes 一致  
 
 #### 6.0.16 `chart.json` Schema（引擎唯一谱面真值）
@@ -870,10 +904,10 @@ Skyline hook — we light the height
     { "id": "outro", "t0": 58.0, "t1": 75.0 }
   ],
   "notes": [
-    { "t": 1.25, "type": "tap", "lane": 0 },
-    { "t": 2.00, "type": "hold", "lane": 1, "end": 3.50 },
-    { "t": 4.00, "type": "chord", "lanes": [0, 3] },
-    { "t": 5.00, "type": "slide", "lane": 0, "to": 1, "end": 5.40 }
+    { "id": "n001", "t": 1.25, "type": "tap", "lane": 0 },
+    { "id": "n002", "t": 2.00, "type": "hold", "lane": 1, "end": 3.50 },
+    { "id": "n003", "t": 4.00, "type": "chord", "lanes": [0, 3] },
+    { "id": "n004", "t": 5.00, "type": "slide", "lane": 0, "to": 1, "end": 5.40 }
   ]
 }
 ```
@@ -888,6 +922,9 @@ Skyline hook — we light the height
 | `chord` | 必有 `lanes` 长度 2–3，禁止 4 |
 | `slide` | 必有 `to`；`|to-lane|===1`；Stage1 文件不得出现 |
 | `total_notes` | 必须与 §4.4 计数规则一致（构建时校验） |
+| `id` | 每个 note 必带稳定 id（as-built 全库 92,288/92,288 全带） |
+| `ar` | 逐曲由自动谱写入：as-built 全库 11.1–37.5（中位数 E17.8 / S20.0 / H24.0）；引擎缺省 24 |
+| `audio_offset_ms` | as-built 全库为 0（时序校正由切片起点保证） |
 | 排序 | `notes` 按 `t` 升序 |
 
 #### 6.0.17 Stage 1 逐曲锁定 Prompt（禁止临场改词）
@@ -918,19 +955,22 @@ Skyline hook — we light the height
 
 **站点 base path（部署真值）**：`/beatscape/`（本地与静态托管均用此 base；勿与 NeonBeat `/neonbeat/` 混用）
 
-| 路由（相对 base） | 页面 | 内容职责 |
+| 路由（相对 base） | 页面 | 内容职责（as-built） |
 |------|------|----------|
-| `/` | Home | 口号、Play Now、Owned Rights；精选：Neon Pulse / Glass Horizon / Voltage Drop |
-| `/library` | Library | 搜索/筛选/收藏/街区 |
-| `/track/:id` | Track | 封面、bio、难度、模式、Play |
-| `/play/:id` | Play | query: `tier` `mode` `speed` |
-| `/results` | Results | 读 `sessionStorage.bs_last_run` |
-| `/replay` | 复盘 | Miss 时间轴（可与 Results 同页折叠） |
+| `/` | Home | 可玩 hero demo + Daily Challenge + Featured（Neon Pulse / Glass Horizon / Voltage Drop）+ 非阻塞首访 intro |
+| `/library` | Library | 搜索 + vibe / genre / Beginner / Vocals / Favorites 筛选 + 街区徽章 |
+| `/track/:id` | Track | 封面、bio、试听、tier/mode 选择（默认 catalog default）、Favorite、Stream CTA |
+| `/play/:id` | Play | query: `tier`（缺省 easy）`mode`（缺省 casual）`daily=1` |
+| `/results` | Results | 读 `bs_last_run`（session 优先，`?run=local` 读 local）；内嵌 Miss 复盘面板 |
+| `/calibrate` | Calibration | 8 拍 @120 校准（§4.15） |
 | `/settings` | Settings | §4.8 |
-| `/leaderboard` | Boards | 单曲 Top 50；全局 Top 100 |
-| `/profile` | Profile | 段位、成就、档案 |
+| `/leaderboard` | Leaderboard | Local Board：All-time Top 50 + Daily Challenge 双 tab |
+| `/privacy` `/terms` | Legal | 隐私与条款静态页 |
+| ~~`/replay`~~ | — | 已并入 Results（MissReplayPanel） |
+| ~~`/profile`~~ | — | 未实现（随成就/段位体系，见 §17〔规划〕） |
 
-未引导访问 `/play/*` → 引导流。分享 URL 见 §6.0.24。
+未引导访问 `/play/*` **不再强制跳转**（非阻塞引导，§4.9）。分享 URL 见 §6.0.24。
+站点 base：本地 dev = `/beatscape/`；Cloudflare Pages 构建（`build:cf`）= `/`。
 
 #### 6.0.19 结算页字段（强制展示顺序）
 
@@ -948,40 +988,43 @@ Skyline hook — we light the height
 
 | 项 | 真值 |
 |----|------|
-| 尺寸 | **1080×1350**（4:5，适 Reddit/IG/TikTok） |
-| 格式 | WebP/PNG；客户端 Canvas 导出 |
+| 尺寸 | **1200×630**（横版，与 OG 同比例 · as-built `lib/sharePoster.ts`） |
+| 格式 | PNG；客户端 Canvas 导出（半调网点 + 共振菱形 motif） |
 | 必含 | Logo、曲名、艺人、Accuracy、Grade、Max Combo、Owned Rights |
 | 禁含 | 真实热单暗示、外链广告、二次元贴纸 |
 
+> as-built：结算海报为横版 1200×630（`beatscape-{id}-{grade}.png` 下载）；4:5 竖版（IG/TikTok）为规划项。
+
 #### 6.0.21 本地存档键（localStorage）
 
-| Key | 内容 |
-|-----|------|
-| `bs_onboarded` | `"true"` |
-| `bs_offset_ms` | number |
-| `bs_keys` | `["D","F","J","K"]` |
-| `bs_settings` | hitsound/fx/bias/… |
-| `bs_player_id` | UUID |
-| `bs_display_name` | string |
-| `bs_scores` | 见下方结构 |
-| `bs_favorites` | string[] |
-| `bs_achievements` | string[] |
-| `bs_rank` | 段位 id |
-| `bs_upload_casual` | 废弃（Stage1–3 无上传）；保留键但忽略 |
-| `bs_board` | 本地榜数组 `{track_id,tier,score,accuracy,name,at}[]` |
+| Key | 内容 | as-built |
+|-----|------|----------|
+| `bs_onboarded` | `"true"` | ✅ |
+| `bs_offset_ms` | number（读写均夹紧 ±200） | ✅ |
+| `bs_keys` | 4 个**物理键码**，默认 `["ArrowLeft","ArrowDown","ArrowUp","ArrowRight"]` | ✅ |
+| `bs_settings` | `{hitsound, fancyFx, scrollBias, casualSpeed, musicVolume, sfxVolume, chordAssist}` | ✅ |
+| `bs_display_name` | string（默认 "Player"，≤24 字） | ✅ |
+| `bs_scores` | PB 平铺列表，见下方结构（cap 200） | ✅ |
+| `bs_favorites` | string[] | ✅ |
+| `bs_board` | Local Board Top50 `{track_id,title?,tier,score,accuracy,name,at}[]` | ✅ |
+| `bs_daily_board` | Daily 榜（+`dateKey`，cap 200） | ✅ |
+| `bs_last_run` / `bs_last_run_local` | LastRun（sessionStorage + localStorage 双写） | ✅ |
+| `bs_analytics` | 埋点事件缓冲（cap 120） | ✅ |
+| `bs_player_id` | UUID 游客身份 | 〔规划·未实现〕 |
+| `bs_achievements` | string[] | 〔规划·未实现〕 |
+| `bs_rank` | 段位 id | 〔规划·未实现〕 |
 
 **`bs_scores` 结构**
 
 ```json
-{
-  "bs-s1-01": {
-    "arcade": {
-      "standard": { "score": 0, "accuracy": 0, "maxCombo": 0, "grade": "D", "fc": false, "ap": false, "updatedAt": "" }
-    },
-    "casual": { "easy": { "score": 0, "accuracy": 0, "maxCombo": 0, "grade": "D", "updatedAt": "" } },
-    "history": []
-  }
-}
+```json
+[
+  { "track_id": "bs-s1-01", "tier": "easy", "mode": "casual",
+    "score": 0, "accuracy": 0, "at": "ISO-8601" }
+]
+```
+
+> 每个 `track|tier|mode` 键只保留最高分一条；全表上限 200 条（§4.13）。
 ```
 
 禁止把整段 WAV 塞进 localStorage（Cache API / IndexedDB）。
@@ -1012,14 +1055,16 @@ catalog.`audio` 指向上架 m4a，不是巨量 WAV。
 #### 6.0.24 分享与深度链接 URL
 
 ```text
-曲目页:   /beatscape/track/{track_id}
-开玩:     /beatscape/play/{track_id}?tier=standard&mode=arcade
-成绩卡:   /beatscape/results?run=local
-OG:       /catalog/{id}/og.png 1200×630
+曲目页:   {base}/track/{track_id}
+开玩:     {base}/play/{track_id}?tier=standard&mode=arcade
+成绩卡:   {base}/results?run=local
+OG:       /catalog/{id}/og.png 1200×630（85/85 已产出）
 复制文案: "I just ran {title} on BeatScape — {accuracy}% {grade}. Feel the Beat, Own the Scape. {url}"
 ```
 
-显示名：`[A-Za-z0-9 _\-]` 3–16 字；blocklist：`apps/beatscape/public/profanity-en.txt`。
+> `{base}` = `import.meta.env.BASE_URL`：本地 dev `/beatscape/` · Cloudflare Pages 构建 `/`。
+
+显示名：Settings 输入，≤24 字（as-built）；屏蔽词 `profanity-en.txt`〔规划·未实现〕——上服务端榜前必须补。
 
 #### 6.0.25 自动谱面内容规则（道映射 · 防谱面乱）
 
@@ -1067,7 +1112,9 @@ BeatScape 曲库与 **MusicSaas 音乐流媒体 App** 共用同一 `track_id` �
 | **游戏切片 Stage 1**（已交付） | **60–75s** | 六首定名表；#05 为 60s；**维持不改** |
 | **游戏切片 Stage 2+** | **90s–2:00** | 可有完整 build→drop arc，仍短于流媒体版 |
 | **游戏高密度挑战** | **60–90s** | 如 `bs-edm-climax` 类 |
-| **Instant 营销预览** | **≤48s** | `preview_48s.m4a`，非对局默认 |
+| **Instant 营销预览** | **≤48s** | `preview_48s.m4a`，非对局默认（as-built 仅 10 首产出） |
+
+> **as-built 实况（85 首）**：游戏切片 = 60 / 75 / 90 / 120s 四档；流媒体完整版 = **180–216s**（全部满足 ≥ 切片 ×1.8 的 QA 门）。
 
 > 欧美音游 **试玩关** 常 30–90s；**正经曲库关** 常见 2–4 分钟。BeatScape 用切片做引流，用流媒体完整版做留存；二者时长应明显不同（完整版通常为游戏切片的 **2–3 倍** 或以上）。
 
@@ -1122,7 +1169,7 @@ BeatScape 曲库与 **MusicSaas 音乐流媒体 App** 共用同一 `track_id` �
 
 - 曲目封面、曲名、作者（AI 笔名）、难度展示  
 - 难度分级标识（Easy / Standard / Hard，同源 AI 音频）  
-- 热门曲目排序（游玩量 / 高光局，非外部热单榜）  
+- 热门曲目排序（游玩量 / 高光局，非外部热单榜）〔as-built：未实现——Home 精选为运营固定位〕  
 - 搜索（模糊匹配英文标题 / 标签）  
 - 分类筛选（难度 / BPM / 曲风：Pop、EDM、R&B、Hip-hop、Rock）  
 - 收藏曲目  
@@ -1130,12 +1177,11 @@ BeatScape 曲库与 **MusicSaas 音乐流媒体 App** 共用同一 `track_id` �
 - 曲目详情展示合规提示：**「AI Original · Owned Rights · Generated with MusicSaas」**  
   （中文内部口径：自有版权 · AI 原曲 · 本地 MusicSaas 生成）  
 
-**加载体验**
+**加载体验（as-built 修正）**
 
-- 预加载、本地缓存（Cache API 缓存 **m4a + chart**）  
-- 加载进度条（decode + parse）  
-- 失败自动三重试  
-- 弱网：先内核后封面   
+- catalog/chart 模块级内存缓存；音频每次对局 fetch + decode（**未实现** Cache API 离线缓存）  
+- 加载态：对局 overlay（"Cueing audio"）+ 曲目页 spinner  
+- 加载失败：错误 overlay（"Signal lost"）手动退出重试（**未实现**自动三重试）  
 
 ### 6.2 游戏对局系统
 
@@ -1170,7 +1216,7 @@ BeatScape 曲库与 **MusicSaas 音乐流媒体 App** 共用同一 `track_id` �
 
 - Stage1–3：**Local Board**（本机，见 §6.0.15）；UI 不得写 Global / Worldwide  
 - Stage4+：可接服务端单曲榜 / 全局榜  
-- 加权：准确率、分数、难度（tier_weight） 
+- 加权：准确率、分数、难度（tier_weight）〔as-built：纯 score 排序，加权未实现〕 
 
 ### 6.6 设置系统
 
@@ -1357,6 +1403,7 @@ BeatScape 曲库与 **MusicSaas 音乐流媒体 App** 共用同一 `track_id` �
 | Stage 3 | 曲库产品化 | 展示 / 搜索 / 分类 / 收藏 / 缓存；**五风齐 · 25 首** |
 | Stage 4 | 数据与社交闭环 | 个人数据、复盘、排行榜；**40 首** |
 | Stage 5 | 极致打磨 & 差异化超车 | 自适应、稳压、视觉、出海；**正式版 50 首** + 月更 AI 新曲 |
+| Stage 6（as-built 已入库） | 曲库扩容 | **85 首**（35 → 85，SA3 MLX 真推理双资产）；待人工耳检 + 重部署 |
 
 ---
 
@@ -1484,6 +1531,8 @@ BeatScape 曲库与 **MusicSaas 音乐流媒体 App** 共用同一 `track_id` �
 
 ### 15.3 完整页面 SEO 落地规范
 
+> as-built（v1.9.3）：**已落地** = 每页动态 title/description（`seo/pageMeta.ts`）、85 张 per-track `og.png`；**未落地** = `Sitemap.xml` / `Robots.txt` / canonical / 单曲页静态化（纯 SPA + Cloudflare `_redirects`）——长尾 SEO 缺口，见 `apps/beatscape/PRD.md` §16。
+
 - **全站静态化**：首页、曲库列表、单曲详情、个人数据页、排行榜采用静态渲染，规避动态渲染收录失败  
 - **独立 Meta**：每页专属英文 Title / Description / Keywords；单曲页绑定曲风、BPM、难度等长尾词  
 - **Sitemap & Robots**：自动生成 `Sitemap.xml`、`Robots.txt`；屏蔽无效 / 测试页  
@@ -1518,6 +1567,8 @@ BeatScape 曲库与 **MusicSaas 音乐流媒体 App** 共用同一 `track_id` �
 ---
 
 ## 17. 轻量化用户激励与留存体系（无氪金 · 纯荣誉驱动）
+
+> as-built（v1.9.3）：本节为**规划规格，尚未实现**（无 `bs_achievements` / `bs_rank` / `bs_player_id`，无 `/profile` 页）。作为下一 Stage 候选保留，规格不变。
 
 基于「永久零广告、零内购、零付费」准则，搭建纯荣誉、轻量化激励体系。
 
@@ -1648,7 +1699,7 @@ BeatScape 曲库与 **MusicSaas 音乐流媒体 App** 共用同一 `track_id` �
 | Perfect | ±15ms | ±28ms |
 | Great | ±30ms | ±55ms |
 | Good | ±50ms | ±90ms |
-| 长按结尾缓冲 | 20ms 智能吸附 | 同左 |
+| 长按结尾缓冲 | 三档窗各 +20ms（Arcade 35/50/70） | 同左 |
 
 ### 22.3 性能硬性参数
 
@@ -1680,4 +1731,4 @@ BeatScape 曲库与 **MusicSaas 音乐流媒体 App** 共用同一 `track_id` �
 
 ---
 
-*End of Document — BeatScape PRD v1.9.1 · Stage1 Content Freeze · Audit Pass*
+*End of Document — BeatScape PRD v1.9.3 · As-Built Aligned · 实现级细节唯一入口 = apps/beatscape/PRD.md*
