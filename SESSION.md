@@ -10,6 +10,7 @@
 
 > 验收入口：本页 · `pnpm catalog:beatscape` · `pnpm audit:beatscape` · `pnpm earcheck:beatscape`
 
+- [ ] **商业化差距决策点 5 项待拍板**：[`docs/BEATSCAPE-COMMERCIALIZATION-GAP.md`](docs/BEATSCAPE-COMMERCIALIZATION-GAP.md) §6（变现模式 / 经营主体 / 后端栈 / 流媒体终点 / 商标批次）——拍板后解锁对应 P0
 - [ ] **人工耳检 50 首**（DoD 唯一剩余项）：是否脱口而出第三方名曲 → 有则废弃重生成
 - [ ] **重新部署 Cloudflare Pages**（当前线上为 35 首版本）：`bash scripts/deploy-beatscape-cf-pages.sh`
 - [ ] **差异化盲测**（人类 · 阻塞对外宣称上线）：[`docs/RESONANCE-BLINDTEST.md`](docs/RESONANCE-BLINDTEST.md)
@@ -17,6 +18,7 @@
 
 ## 已完成（勿再当 P0）
 
+- [x] **BeatScape 商业化差距分析**：[`docs/BEATSCAPE-COMMERCIALIZATION-GAP.md`](docs/BEATSCAPE-COMMERCIALIZATION-GAP.md)（7 域 34 项 · P0×9/P1×14/P2×11 · 变现模式建议 C+D）· 2026-08-30
 - [x] **BeatScape 文档 as-built 对齐**：`apps/beatscape/PRD.md`（实现级 PRD）+ 总纲 `docs/PRD-BEATSCAPE.md` v1.9.3（18 项差异按代码回写，未实现项标注〔规划〕）· 2026-08-30
 - [x] **Stage6 扩容 50 首** — 35 → **85** · 全部 SA3 MLX 真推理母带（非 synth fallback）
 - [x] 双资产入库（120s 游戏切片 + 216s 流媒体）· audit **FAIL=0** · earcheck **86/86 PASS**
