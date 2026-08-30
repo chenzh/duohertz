@@ -133,10 +133,28 @@ def estimate_bpm_from_onsets(onsets: list[float], hint: float) -> float:
     intervals.sort()
     median_ms = intervals[len(intervals) // 2]
     bpm = 60000.0 / median_ms
-    quantized = round(bpm / 2) * 2
+    quantized = _fold_octave(round(bpm / 2) * 2, hint)
     if abs(quantized - hint) <= 18:
         return float(hint)
     return float(max(60, min(200, quantized)))
+
+
+def _fold_octave(bpm: float, hint: float) -> float:
+    """Fold a detected BPM into the octave closest to the hint.
+
+    Onset-density estimation reads subdivisions (8ths / 16ths) as the beat, so a
+    94 BPM track can report 188. Folding by powers of two toward the hint keeps
+    the reported tempo on the tactus instead of the subdivision grid.
+    """
+    best, best_dist = bpm, abs(bpm - hint)
+    for factor in (0.5, 0.25, 2.0, 4.0):
+        cand = bpm * factor
+        if not 60 <= cand <= 200:
+            continue
+        dist = abs(cand - hint)
+        if dist < best_dist - 1e-6:
+            best, best_dist = cand, dist
+    return round(best / 2) * 2
 
 
 def estimate_bpm_autocorr(mono: list[float], rate: int, hint: float) -> float | None:

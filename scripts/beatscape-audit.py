@@ -146,10 +146,27 @@ CATALOG_REQUIRED = (
     "charts",
 )
 
-THEME_KEYWORDS = re.compile(
-    r"\b(neon|scape|pulse|glass|horizon|grid|chrome|velvet|voltage|skyline|afterhours|beat|slide|asphalt|blue|quiet|anthem)\b",
-    re.I,
+# BeatScape theme lexicon: district vocabulary (Pulse Core / Glass Rim / Night Grid /
+# Afterhours Lane / Chrome Yard / Slide District / Skyline Hook) plus the motif words the
+# catalog has accumulated through Stage 6. Matched as word prefixes so compound names
+# such as "Gridline", "Nightline" or "Riffline" still register as on-theme.
+THEME_STEMS = (
+    # districts
+    "pulse", "core", "glass", "rim", "night", "grid", "afterhours", "lane",
+    "chrome", "yard", "slide", "district", "skyline", "hook", "scape",
+    # Stage 1-3 motifs
+    "neon", "horizon", "velvet", "voltage", "beat", "asphalt", "blue", "quiet",
+    "anthem", "loop", "hour", "flow", "city", "drive", "riff",
+    # Stage 4-6 motifs
+    "halftone", "satin", "moonlit", "midnight", "nightfall", "overpass",
+    "underpass", "turnpike", "boulevard", "causeway", "foundry", "prism",
+    "static", "iron", "cipher", "ignition", "parade", "zenith", "ember",
+    "lantern", "amber", "verandah", "cadence", "drift", "bloom", "apex",
+    "vector", "strike", "stomp", "resonance", "overload", "shuffle",
+    "syncopated", "crimson", "brass", "harbour", "lullaby",
 )
+
+THEME_KEYWORDS = re.compile(r"\b(?:" + "|".join(THEME_STEMS) + r")\w*", re.I)
 
 
 @dataclass

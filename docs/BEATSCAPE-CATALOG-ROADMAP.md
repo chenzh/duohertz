@@ -16,6 +16,7 @@
 | **Stage 3** | **25** | +15 | 曲库页搜索·分类·收藏·缓存 |
 | **Stage 4** | **40** | +15 | 本地榜样本充足；New Release 滚动 |
 | **Stage 5 / 正式版** | **50** | +10 | 全量上线 + 月更 +2～4 |
+| **Stage 6 / 扩容** | **85** | +35 | 首轮扩容，见 [`BEATSCAPE-STAGE6-EXPANSION-MUSIC.md`](./BEATSCAPE-STAGE6-EXPANSION-MUSIC.md) |
 
 **维护节奏**（PRD §6.0.5）
 
@@ -33,16 +34,16 @@ BeatScape **全部音乐**统一为 **车载级宽声场** + **都市爵士战�
 
 ## 2. 五曲风配额（累计）
 
-| 曲风 | Stage 1 | Stage 2 | Stage 3 | Stage 4 | **正式版** |
-|------|---------|---------|---------|---------|------------|
-| **EDM** | 2 | 3 | 6 | 10 | **12** |
-| **Pop** | 1 | 3 | 5 | 8 | **10** |
-| **Hip-hop** | 1 | 1 | 5 | 8 | **10** |
-| **R&B** | 1 | 1 | 4 | 6 | **8** |
-| **Rock** | 1 | 2 | 5 | 8 | **10** |
-| **合计** | **6** | **10** | **25** | **40** | **50** |
+| 曲风 | Stage 1 | Stage 2 | Stage 3 | Stage 4 | **正式版 50** | **Stage 6 / 85** |
+|------|---------|---------|---------|---------|--------------|------------------|
+| **EDM** | 2 | 3 | 6 | 10 | **12** | **20** |
+| **Pop** | 1 | 3 | 5 | 8 | **10** | **17** |
+| **Hip-hop** | 1 | 1 | 5 | 8 | **10** | **17** |
+| **R&B** | 1 | 1 | 4 | 6 | **8** | **14** |
+| **Rock** | 1 | 2 | 5 | 8 | **10** | **17** |
+| **合计** | **6** | **10** | **25** | **40** | **50** | **85** |
 
-EDM 为音游主仓，正式版可略超配（≤12 已锁定在路线图）。
+EDM 为音游主仓，正式版可略超配（≤12 已锁定在路线图）。Stage 6 扩容按正式版比例 ×1.7 缩放，真值在 `catalog-roadmap.json` → `genre_targets.by_stage["6"]`。
 
 ---
 
@@ -70,8 +71,11 @@ EDM 为音游主仓，正式版可略超配（≤12 已锁定在路线图）。
 ### 待命名槽位（40 首）
 
 - **Stage 3**：`bs-s3-01` … `bs-s3-15`（分 3 波生成，每波 5 风交错）— **已上架 25/25**  
-- **Stage 4**：`bs-s4-01` … `bs-s4-15` — **第一波 10 首定名见** [`BEATSCAPE-STAGE4-RESONANCE-MUSIC.md`](./BEATSCAPE-STAGE4-RESONANCE-MUSIC.md)  
+- **Stage 4**：`bs-s4-01` … `bs-s4-15` — 第一波 10 首见 [`BEATSCAPE-STAGE4-RESONANCE-MUSIC.md`](./BEATSCAPE-STAGE4-RESONANCE-MUSIC.md)；第三波 5 首（`bs-s4-11`…`15`）随 Stage 6 一起定名生成  
 - **Stage 5**：`bs-s5-01` … `bs-s5-10`（正式版收官补齐）  
+- **Stage 6**：`bs-s6-01` … `bs-s6-35`（首轮扩容）  
+
+Stage 4 第三波 + Stage 5 + Stage 6 = **50 首一次交付**，曲目表见 [`BEATSCAPE-STAGE6-EXPANSION-MUSIC.md`](./BEATSCAPE-STAGE6-EXPANSION-MUSIC.md) §5。
 
 完整槽位表见 `catalog-roadmap.json` → `slots[]`。
 
@@ -89,14 +93,14 @@ EDM 为音游主仓，正式版可略超配（≤12 已锁定在路线图）。
 
 ## 5. 运营标签目标（正式版 50 首内）
 
-| 标签 | 目标数 |
-|------|--------|
-| Hot Chart Style | 15 |
-| Viral Style | 12 |
-| Classic Style | 12 |
-| New Release | 11 |
+| 标签 | 正式版 50 | Stage 6 / 85 |
+|------|-----------|--------------|
+| Hot Chart Style | 15 | **26** |
+| Viral Style | 12 | **20** |
+| Classic Style | 12 | **20** |
+| New Release | 11 | **19** |
 
-入库时写入 `catalog.json` → `tags[]`；月更曲优先打 **New Release**。
+入库时写入 `catalog.json` → `tags[]`；月更曲优先打 **New Release**。Stage 6 目标在 `catalog-roadmap.json` → `tag_targets_stage6`。
 
 ---
 
@@ -113,7 +117,7 @@ pnpm catalog:beatscape -- --json
 python3 scripts/beatscape-catalog-status.py --stage 2
 ```
 
-**当前基线**（2026-08-29）：**25/50 shipped** · 声波方向见 [`BEATSCAPE-SONIC-DIRECTION.md`](./BEATSCAPE-SONIC-DIRECTION.md) · Stage 4 第一波 10 首见 [`BEATSCAPE-STAGE4-RESONANCE-MUSIC.md`](./BEATSCAPE-STAGE4-RESONANCE-MUSIC.md) · 正式版缺口 **25**。
+**当前基线**（2026-08-30）：**35/85 shipped** · 声波方向见 [`BEATSCAPE-SONIC-DIRECTION.md`](./BEATSCAPE-SONIC-DIRECTION.md) · Stage 4 第一波 10 首见 [`BEATSCAPE-STAGE4-RESONANCE-MUSIC.md`](./BEATSCAPE-STAGE4-RESONANCE-MUSIC.md) · Stage 6 扩容 50 首见 [`BEATSCAPE-STAGE6-EXPANSION-MUSIC.md`](./BEATSCAPE-STAGE6-EXPANSION-MUSIC.md) · Stage 6 缺口 **50**。
 
 ---
 

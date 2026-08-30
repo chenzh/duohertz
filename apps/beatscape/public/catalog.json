@@ -1232,6 +1232,1756 @@
         "description": "Own the Scape. 134 BPM Rock chart."
       },
       "stream_audio": "/catalog/bs-s4-10/stream.m4a"
+    },
+    {
+      "track_id": "bs-s4-11",
+      "title": "Ember Pulse Line",
+      "artist": "Halcyon Flux",
+      "genre": "EDM",
+      "bpm": 162,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-brass",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s4-11",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Hot Chart Style"
+      ],
+      "vibe": "battle",
+      "district": "Pulse Core",
+      "default_mode": "arcade",
+      "default_tier": "standard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s4-11/audio.m4a",
+      "cover": "/catalog/bs-s4-11/cover.svg",
+      "og": "/catalog/bs-s4-11/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s4-11/easy.json",
+        "standard": "/catalog/bs-s4-11/standard.json",
+        "hard": "/catalog/bs-s4-11/hard.json"
+      },
+      "seo": {
+        "title": "Ember Pulse Line \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 158 BPM EDM chart."
+      },
+      "stream_audio": "/catalog/bs-s4-11/stream.m4a"
+    },
+    {
+      "track_id": "bs-s4-12",
+      "title": "Gridline Cipher",
+      "artist": "Subline",
+      "genre": "Hip-hop",
+      "bpm": 97,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-funkhop",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s4-12",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Classic Style"
+      ],
+      "vibe": "groove",
+      "district": "Night Grid",
+      "default_mode": "casual",
+      "default_tier": "standard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s4-12/audio.m4a",
+      "cover": "/catalog/bs-s4-12/cover.svg",
+      "og": "/catalog/bs-s4-12/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s4-12/easy.json",
+        "standard": "/catalog/bs-s4-12/standard.json",
+        "hard": "/catalog/bs-s4-12/hard.json"
+      },
+      "seo": {
+        "title": "Gridline Cipher \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 96 BPM Hip-hop chart."
+      },
+      "stream_audio": "/catalog/bs-s4-12/stream.m4a"
+    },
+    {
+      "track_id": "bs-s4-13",
+      "title": "Halftone Skyline",
+      "artist": "Luma Rim",
+      "genre": "Pop",
+      "bpm": 120,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-rhodes",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s4-13",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Viral Style"
+      ],
+      "vibe": "groove",
+      "district": "Glass Rim",
+      "default_mode": "arcade",
+      "default_tier": "easy",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s4-13/audio.m4a",
+      "cover": "/catalog/bs-s4-13/cover.svg",
+      "og": "/catalog/bs-s4-13/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s4-13/easy.json",
+        "standard": "/catalog/bs-s4-13/standard.json",
+        "hard": "/catalog/bs-s4-13/hard.json"
+      },
+      "seo": {
+        "title": "Halftone Skyline \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 120 BPM Pop chart."
+      },
+      "stream_audio": "/catalog/bs-s4-13/stream.m4a"
+    },
+    {
+      "track_id": "bs-s4-14",
+      "title": "Chrome Mile Anthem",
+      "artist": "Iron Echo",
+      "genre": "Rock",
+      "bpm": 133,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-stomp",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s4-14",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "New Release"
+      ],
+      "vibe": "battle",
+      "district": "Chrome Yard",
+      "default_mode": "arcade",
+      "default_tier": "hard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s4-14/audio.m4a",
+      "cover": "/catalog/bs-s4-14/cover.svg",
+      "og": "/catalog/bs-s4-14/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s4-14/easy.json",
+        "standard": "/catalog/bs-s4-14/standard.json",
+        "hard": "/catalog/bs-s4-14/hard.json"
+      },
+      "seo": {
+        "title": "Chrome Mile Anthem \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 134 BPM Rock chart."
+      },
+      "stream_audio": "/catalog/bs-s4-14/stream.m4a"
+    },
+    {
+      "track_id": "bs-s4-15",
+      "title": "Neon Scape Drift",
+      "artist": "Nova Circuit",
+      "genre": "EDM",
+      "bpm": 166,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-climax",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s4-15",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Viral Style"
+      ],
+      "vibe": "night-drive",
+      "district": "Pulse Core",
+      "default_mode": "arcade",
+      "default_tier": "standard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s4-15/audio.m4a",
+      "cover": "/catalog/bs-s4-15/cover.svg",
+      "og": "/catalog/bs-s4-15/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s4-15/easy.json",
+        "standard": "/catalog/bs-s4-15/standard.json",
+        "hard": "/catalog/bs-s4-15/hard.json"
+      },
+      "seo": {
+        "title": "Neon Scape Drift \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 166 BPM EDM chart."
+      },
+      "stream_audio": "/catalog/bs-s4-15/stream.m4a"
+    },
+    {
+      "track_id": "bs-s5-01",
+      "title": "Pulse Overpass",
+      "artist": "Halcyon Flux",
+      "genre": "EDM",
+      "bpm": 162,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-brass",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s5-01",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Hot Chart Style"
+      ],
+      "vibe": "battle",
+      "district": "Pulse Core",
+      "default_mode": "arcade",
+      "default_tier": "standard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s5-01/audio.m4a",
+      "cover": "/catalog/bs-s5-01/cover.svg",
+      "og": "/catalog/bs-s5-01/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s5-01/easy.json",
+        "standard": "/catalog/bs-s5-01/standard.json",
+        "hard": "/catalog/bs-s5-01/hard.json"
+      },
+      "seo": {
+        "title": "Pulse Overpass \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 160 BPM EDM chart."
+      },
+      "stream_audio": "/catalog/bs-s5-01/stream.m4a"
+    },
+    {
+      "track_id": "bs-s5-02",
+      "title": "Glass Turnpike",
+      "artist": "Ada North",
+      "genre": "Pop",
+      "bpm": 125,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-rhodes",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s5-02",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "New Release"
+      ],
+      "vibe": "groove",
+      "district": "Glass Rim",
+      "default_mode": "arcade",
+      "default_tier": "easy",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s5-02/audio.m4a",
+      "cover": "/catalog/bs-s5-02/cover.svg",
+      "og": "/catalog/bs-s5-02/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s5-02/easy.json",
+        "standard": "/catalog/bs-s5-02/standard.json",
+        "hard": "/catalog/bs-s5-02/hard.json"
+      },
+      "seo": {
+        "title": "Glass Turnpike \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 124 BPM Pop chart."
+      },
+      "stream_audio": "/catalog/bs-s5-02/stream.m4a"
+    },
+    {
+      "track_id": "bs-s5-03",
+      "title": "Nightlane Static",
+      "artist": "Low Voltage",
+      "genre": "Hip-hop",
+      "bpm": 100,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-funkhop",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s5-03",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Classic Style"
+      ],
+      "vibe": "night-drive",
+      "district": "Night Grid",
+      "default_mode": "casual",
+      "default_tier": "standard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s5-03/audio.m4a",
+      "cover": "/catalog/bs-s5-03/cover.svg",
+      "og": "/catalog/bs-s5-03/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s5-03/easy.json",
+        "standard": "/catalog/bs-s5-03/standard.json",
+        "hard": "/catalog/bs-s5-03/hard.json"
+      },
+      "seo": {
+        "title": "Nightlane Static \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 100 BPM Hip-hop chart."
+      },
+      "stream_audio": "/catalog/bs-s5-03/stream.m4a"
+    },
+    {
+      "track_id": "bs-s5-04",
+      "title": "Afterhours Satin",
+      "artist": "Mira Lane",
+      "genre": "R&B",
+      "bpm": 90,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-neosoul",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s5-04",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Classic Style"
+      ],
+      "vibe": "chill",
+      "district": "Afterhours Lane",
+      "default_mode": "casual",
+      "default_tier": "easy",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s5-04/audio.m4a",
+      "cover": "/catalog/bs-s5-04/cover.svg",
+      "og": "/catalog/bs-s5-04/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s5-04/easy.json",
+        "standard": "/catalog/bs-s5-04/standard.json",
+        "hard": "/catalog/bs-s5-04/hard.json"
+      },
+      "seo": {
+        "title": "Afterhours Satin \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 90 BPM R&B chart."
+      },
+      "stream_audio": "/catalog/bs-s5-04/stream.m4a"
+    },
+    {
+      "track_id": "bs-s5-05",
+      "title": "Chrome Vector",
+      "artist": "Redline Co.",
+      "genre": "Rock",
+      "bpm": 134,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-stomp",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s5-05",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Hot Chart Style"
+      ],
+      "vibe": "battle",
+      "district": "Chrome Yard",
+      "default_mode": "arcade",
+      "default_tier": "standard",
+      "allows_slide": true,
+      "audio": "/catalog/bs-s5-05/audio.m4a",
+      "cover": "/catalog/bs-s5-05/cover.svg",
+      "og": "/catalog/bs-s5-05/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s5-05/easy.json",
+        "standard": "/catalog/bs-s5-05/standard.json",
+        "hard": "/catalog/bs-s5-05/hard.json"
+      },
+      "seo": {
+        "title": "Chrome Vector \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 134 BPM Rock chart."
+      },
+      "stream_audio": "/catalog/bs-s5-05/stream.m4a"
+    },
+    {
+      "track_id": "bs-s5-06",
+      "title": "Overload Scape",
+      "artist": "Gridline",
+      "genre": "EDM",
+      "bpm": 170,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-climax",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s5-06",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Hot Chart Style"
+      ],
+      "vibe": "battle",
+      "district": "Pulse Core",
+      "default_mode": "arcade",
+      "default_tier": "hard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s5-06/audio.m4a",
+      "cover": "/catalog/bs-s5-06/cover.svg",
+      "og": "/catalog/bs-s5-06/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s5-06/easy.json",
+        "standard": "/catalog/bs-s5-06/standard.json",
+        "hard": "/catalog/bs-s5-06/hard.json"
+      },
+      "seo": {
+        "title": "Overload Scape \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 170 BPM EDM chart."
+      },
+      "stream_audio": "/catalog/bs-s5-06/stream.m4a"
+    },
+    {
+      "track_id": "bs-s5-07",
+      "title": "Halftone Harbour",
+      "artist": "Kite Solar",
+      "genre": "Pop",
+      "bpm": 115,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-glassdrive",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s5-07",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Classic Style"
+      ],
+      "vibe": "chill",
+      "district": "Glass Rim",
+      "default_mode": "casual",
+      "default_tier": "easy",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s5-07/audio.m4a",
+      "cover": "/catalog/bs-s5-07/cover.svg",
+      "og": "/catalog/bs-s5-07/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s5-07/easy.json",
+        "standard": "/catalog/bs-s5-07/standard.json",
+        "hard": "/catalog/bs-s5-07/hard.json"
+      },
+      "seo": {
+        "title": "Halftone Harbour \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 116 BPM Pop chart."
+      },
+      "stream_audio": "/catalog/bs-s5-07/stream.m4a"
+    },
+    {
+      "track_id": "bs-s5-08",
+      "title": "Gridlock Anthem",
+      "artist": "Subline",
+      "genre": "Hip-hop",
+      "bpm": 94,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-trapline",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s5-08",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Viral Style"
+      ],
+      "vibe": "groove",
+      "district": "Night Grid",
+      "default_mode": "arcade",
+      "default_tier": "standard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s5-08/audio.m4a",
+      "cover": "/catalog/bs-s5-08/cover.svg",
+      "og": "/catalog/bs-s5-08/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s5-08/easy.json",
+        "standard": "/catalog/bs-s5-08/standard.json",
+        "hard": "/catalog/bs-s5-08/hard.json"
+      },
+      "seo": {
+        "title": "Gridlock Anthem \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 94 BPM Hip-hop chart."
+      },
+      "stream_audio": "/catalog/bs-s5-08/stream.m4a"
+    },
+    {
+      "track_id": "bs-s5-09",
+      "title": "Satin Nightline",
+      "artist": "Verity Lane",
+      "genre": "R&B",
+      "bpm": 88,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-neosoul",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s5-09",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "New Release"
+      ],
+      "vibe": "chill",
+      "district": "Afterhours Lane",
+      "default_mode": "casual",
+      "default_tier": "easy",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s5-09/audio.m4a",
+      "cover": "/catalog/bs-s5-09/cover.svg",
+      "og": "/catalog/bs-s5-09/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s5-09/easy.json",
+        "standard": "/catalog/bs-s5-09/standard.json",
+        "hard": "/catalog/bs-s5-09/hard.json"
+      },
+      "seo": {
+        "title": "Satin Nightline \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 88 BPM R&B chart."
+      },
+      "stream_audio": "/catalog/bs-s5-09/stream.m4a"
+    },
+    {
+      "track_id": "bs-s5-10",
+      "title": "Iron Boulevard",
+      "artist": "Iron Echo",
+      "genre": "Rock",
+      "bpm": 142,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-chromeline",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s5-10",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Hot Chart Style"
+      ],
+      "vibe": "battle",
+      "district": "Chrome Yard",
+      "default_mode": "arcade",
+      "default_tier": "hard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s5-10/audio.m4a",
+      "cover": "/catalog/bs-s5-10/cover.svg",
+      "og": "/catalog/bs-s5-10/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s5-10/easy.json",
+        "standard": "/catalog/bs-s5-10/standard.json",
+        "hard": "/catalog/bs-s5-10/hard.json"
+      },
+      "seo": {
+        "title": "Iron Boulevard \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 142 BPM Rock chart."
+      },
+      "stream_audio": "/catalog/bs-s5-10/stream.m4a"
+    },
+    {
+      "track_id": "bs-s6-01",
+      "title": "Afterglow Scape",
+      "artist": "Pale Ember",
+      "genre": "EDM",
+      "bpm": 162,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-brass",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s6-01",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Hot Chart Style"
+      ],
+      "vibe": "battle",
+      "district": "Pulse Core",
+      "default_mode": "arcade",
+      "default_tier": "standard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s6-01/audio.m4a",
+      "cover": "/catalog/bs-s6-01/cover.svg",
+      "og": "/catalog/bs-s6-01/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s6-01/easy.json",
+        "standard": "/catalog/bs-s6-01/standard.json",
+        "hard": "/catalog/bs-s6-01/hard.json"
+      },
+      "seo": {
+        "title": "Afterglow Scape \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 162 BPM EDM chart."
+      },
+      "stream_audio": "/catalog/bs-s6-01/stream.m4a"
+    },
+    {
+      "track_id": "bs-s6-02",
+      "title": "Halftone Bloom",
+      "artist": "Luma Rim",
+      "genre": "Pop",
+      "bpm": 120,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-glassdrive",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s6-02",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Viral Style"
+      ],
+      "vibe": "groove",
+      "district": "Glass Rim",
+      "default_mode": "arcade",
+      "default_tier": "easy",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s6-02/audio.m4a",
+      "cover": "/catalog/bs-s6-02/cover.svg",
+      "og": "/catalog/bs-s6-02/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s6-02/easy.json",
+        "standard": "/catalog/bs-s6-02/standard.json",
+        "hard": "/catalog/bs-s6-02/hard.json"
+      },
+      "seo": {
+        "title": "Halftone Bloom \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 120 BPM Pop chart."
+      },
+      "stream_audio": "/catalog/bs-s6-02/stream.m4a"
+    },
+    {
+      "track_id": "bs-s6-03",
+      "title": "Lowbeam Groove",
+      "artist": "Low Voltage",
+      "genre": "Hip-hop",
+      "bpm": 98,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-funkhop",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s6-03",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Classic Style"
+      ],
+      "vibe": "groove",
+      "district": "Night Grid",
+      "default_mode": "casual",
+      "default_tier": "standard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s6-03/audio.m4a",
+      "cover": "/catalog/bs-s6-03/cover.svg",
+      "og": "/catalog/bs-s6-03/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s6-03/easy.json",
+        "standard": "/catalog/bs-s6-03/standard.json",
+        "hard": "/catalog/bs-s6-03/hard.json"
+      },
+      "seo": {
+        "title": "Lowbeam Groove \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 98 BPM Hip-hop chart."
+      },
+      "stream_audio": "/catalog/bs-s6-03/stream.m4a"
+    },
+    {
+      "track_id": "bs-s6-04",
+      "title": "Moonlit Turnpike",
+      "artist": "Verity Lane",
+      "genre": "R&B",
+      "bpm": 92,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-neosoul",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s6-04",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "New Release"
+      ],
+      "vibe": "chill",
+      "district": "Afterhours Lane",
+      "default_mode": "casual",
+      "default_tier": "easy",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s6-04/audio.m4a",
+      "cover": "/catalog/bs-s6-04/cover.svg",
+      "og": "/catalog/bs-s6-04/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s6-04/easy.json",
+        "standard": "/catalog/bs-s6-04/standard.json",
+        "hard": "/catalog/bs-s6-04/hard.json"
+      },
+      "seo": {
+        "title": "Moonlit Turnpike \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 92 BPM R&B chart."
+      },
+      "stream_audio": "/catalog/bs-s6-04/stream.m4a"
+    },
+    {
+      "track_id": "bs-s6-05",
+      "title": "Chrome Foundry",
+      "artist": "Iron Echo",
+      "genre": "Rock",
+      "bpm": 136,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-stomp",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s6-05",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "New Release"
+      ],
+      "vibe": "battle",
+      "district": "Chrome Yard",
+      "default_mode": "arcade",
+      "default_tier": "hard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s6-05/audio.m4a",
+      "cover": "/catalog/bs-s6-05/cover.svg",
+      "og": "/catalog/bs-s6-05/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s6-05/easy.json",
+        "standard": "/catalog/bs-s6-05/standard.json",
+        "hard": "/catalog/bs-s6-05/hard.json"
+      },
+      "seo": {
+        "title": "Chrome Foundry \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 136 BPM Rock chart."
+      },
+      "stream_audio": "/catalog/bs-s6-05/stream.m4a"
+    },
+    {
+      "track_id": "bs-s6-06",
+      "title": "Neon Overpass",
+      "artist": "Gridline",
+      "genre": "EDM",
+      "bpm": 167,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-climax",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s6-06",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Hot Chart Style"
+      ],
+      "vibe": "battle",
+      "district": "Pulse Core",
+      "default_mode": "arcade",
+      "default_tier": "hard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s6-06/audio.m4a",
+      "cover": "/catalog/bs-s6-06/cover.svg",
+      "og": "/catalog/bs-s6-06/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s6-06/easy.json",
+        "standard": "/catalog/bs-s6-06/standard.json",
+        "hard": "/catalog/bs-s6-06/hard.json"
+      },
+      "seo": {
+        "title": "Neon Overpass \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 166 BPM EDM chart."
+      },
+      "stream_audio": "/catalog/bs-s6-06/stream.m4a"
+    },
+    {
+      "track_id": "bs-s6-07",
+      "title": "Glass Verandah",
+      "artist": "Soft Circuit",
+      "genre": "Pop",
+      "bpm": 118,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-glassdrive",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s6-07",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "New Release"
+      ],
+      "vibe": "chill",
+      "district": "Glass Rim",
+      "default_mode": "casual",
+      "default_tier": "easy",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s6-07/audio.m4a",
+      "cover": "/catalog/bs-s6-07/cover.svg",
+      "og": "/catalog/bs-s6-07/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s6-07/easy.json",
+        "standard": "/catalog/bs-s6-07/standard.json",
+        "hard": "/catalog/bs-s6-07/hard.json"
+      },
+      "seo": {
+        "title": "Glass Verandah \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 118 BPM Pop chart."
+      },
+      "stream_audio": "/catalog/bs-s6-07/stream.m4a"
+    },
+    {
+      "track_id": "bs-s6-08",
+      "title": "Grid Alley Flow",
+      "artist": "Subline",
+      "genre": "Hip-hop",
+      "bpm": 95,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-trapline",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s6-08",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Viral Style"
+      ],
+      "vibe": "groove",
+      "district": "Night Grid",
+      "default_mode": "arcade",
+      "default_tier": "standard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s6-08/audio.m4a",
+      "cover": "/catalog/bs-s6-08/cover.svg",
+      "og": "/catalog/bs-s6-08/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s6-08/easy.json",
+        "standard": "/catalog/bs-s6-08/standard.json",
+        "hard": "/catalog/bs-s6-08/hard.json"
+      },
+      "seo": {
+        "title": "Grid Alley Flow \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 96 BPM Hip-hop chart."
+      },
+      "stream_audio": "/catalog/bs-s6-08/stream.m4a"
+    },
+    {
+      "track_id": "bs-s6-09",
+      "title": "Voltage Causeway",
+      "artist": "Redline Co.",
+      "genre": "Rock",
+      "bpm": 140,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-chromeline",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s6-09",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Hot Chart Style"
+      ],
+      "vibe": "battle",
+      "district": "Chrome Yard",
+      "default_mode": "arcade",
+      "default_tier": "hard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s6-09/audio.m4a",
+      "cover": "/catalog/bs-s6-09/cover.svg",
+      "og": "/catalog/bs-s6-09/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s6-09/easy.json",
+        "standard": "/catalog/bs-s6-09/standard.json",
+        "hard": "/catalog/bs-s6-09/hard.json"
+      },
+      "seo": {
+        "title": "Voltage Causeway \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 140 BPM Rock chart."
+      },
+      "stream_audio": "/catalog/bs-s6-09/stream.m4a"
+    },
+    {
+      "track_id": "bs-s6-10",
+      "title": "Scape Ignition",
+      "artist": "Nova Circuit",
+      "genre": "EDM",
+      "bpm": 168,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-climax",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s6-10",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Viral Style"
+      ],
+      "vibe": "night-drive",
+      "district": "Pulse Core",
+      "default_mode": "arcade",
+      "default_tier": "standard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s6-10/audio.m4a",
+      "cover": "/catalog/bs-s6-10/cover.svg",
+      "og": "/catalog/bs-s6-10/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s6-10/easy.json",
+        "standard": "/catalog/bs-s6-10/standard.json",
+        "hard": "/catalog/bs-s6-10/hard.json"
+      },
+      "seo": {
+        "title": "Scape Ignition \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 168 BPM EDM chart."
+      },
+      "stream_audio": "/catalog/bs-s6-10/stream.m4a"
+    },
+    {
+      "track_id": "bs-s6-11",
+      "title": "Prism Skyline",
+      "artist": "Kite Solar",
+      "genre": "Pop",
+      "bpm": 122,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-rhodes",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s6-11",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Viral Style"
+      ],
+      "vibe": "groove",
+      "district": "Glass Rim",
+      "default_mode": "arcade",
+      "default_tier": "standard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s6-11/audio.m4a",
+      "cover": "/catalog/bs-s6-11/cover.svg",
+      "og": "/catalog/bs-s6-11/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s6-11/easy.json",
+        "standard": "/catalog/bs-s6-11/standard.json",
+        "hard": "/catalog/bs-s6-11/hard.json"
+      },
+      "seo": {
+        "title": "Prism Skyline \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 122 BPM Pop chart."
+      },
+      "stream_audio": "/catalog/bs-s6-11/stream.m4a"
+    },
+    {
+      "track_id": "bs-s6-12",
+      "title": "Nightlane Drift",
+      "artist": "Low Voltage",
+      "genre": "Hip-hop",
+      "bpm": 102,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-funkhop",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s6-12",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Classic Style"
+      ],
+      "vibe": "night-drive",
+      "district": "Night Grid",
+      "default_mode": "casual",
+      "default_tier": "standard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s6-12/audio.m4a",
+      "cover": "/catalog/bs-s6-12/cover.svg",
+      "og": "/catalog/bs-s6-12/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s6-12/easy.json",
+        "standard": "/catalog/bs-s6-12/standard.json",
+        "hard": "/catalog/bs-s6-12/hard.json"
+      },
+      "seo": {
+        "title": "Nightlane Drift \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 102 BPM Hip-hop chart."
+      },
+      "stream_audio": "/catalog/bs-s6-12/stream.m4a"
+    },
+    {
+      "track_id": "bs-s6-13",
+      "title": "Satin Underpass",
+      "artist": "Mira Lane",
+      "genre": "R&B",
+      "bpm": 90,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-satin",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s6-13",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "New Release"
+      ],
+      "vibe": "chill",
+      "district": "Afterhours Lane",
+      "default_mode": "casual",
+      "default_tier": "easy",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s6-13/audio.m4a",
+      "cover": "/catalog/bs-s6-13/cover.svg",
+      "og": "/catalog/bs-s6-13/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s6-13/easy.json",
+        "standard": "/catalog/bs-s6-13/standard.json",
+        "hard": "/catalog/bs-s6-13/hard.json"
+      },
+      "seo": {
+        "title": "Satin Underpass \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 90 BPM R&B chart."
+      },
+      "stream_audio": "/catalog/bs-s6-13/stream.m4a"
+    },
+    {
+      "track_id": "bs-s6-14",
+      "title": "Iron Skyline Riff",
+      "artist": "Iron Echo",
+      "genre": "Rock",
+      "bpm": 144,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-chromeline",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s6-14",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Hot Chart Style"
+      ],
+      "vibe": "battle",
+      "district": "Chrome Yard",
+      "default_mode": "arcade",
+      "default_tier": "hard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s6-14/audio.m4a",
+      "cover": "/catalog/bs-s6-14/cover.svg",
+      "og": "/catalog/bs-s6-14/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s6-14/easy.json",
+        "standard": "/catalog/bs-s6-14/standard.json",
+        "hard": "/catalog/bs-s6-14/hard.json"
+      },
+      "seo": {
+        "title": "Iron Skyline Riff \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 144 BPM Rock chart."
+      },
+      "stream_audio": "/catalog/bs-s6-14/stream.m4a"
+    },
+    {
+      "track_id": "bs-s6-15",
+      "title": "Midnight Overpass",
+      "artist": "Halcyon Flux",
+      "genre": "EDM",
+      "bpm": 176,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-overdrive",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s6-15",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "New Release"
+      ],
+      "vibe": "night-drive",
+      "district": "Pulse Core",
+      "default_mode": "arcade",
+      "default_tier": "hard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s6-15/audio.m4a",
+      "cover": "/catalog/bs-s6-15/cover.svg",
+      "og": "/catalog/bs-s6-15/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s6-15/easy.json",
+        "standard": "/catalog/bs-s6-15/standard.json",
+        "hard": "/catalog/bs-s6-15/hard.json"
+      },
+      "seo": {
+        "title": "Midnight Overpass \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 174 BPM EDM chart."
+      },
+      "stream_audio": "/catalog/bs-s6-15/stream.m4a"
+    },
+    {
+      "track_id": "bs-s6-16",
+      "title": "Neon Chorus Line",
+      "artist": "Ada North",
+      "genre": "Pop",
+      "bpm": 126,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-rhodes",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s6-16",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "New Release"
+      ],
+      "vibe": "groove",
+      "district": "Glass Rim",
+      "default_mode": "arcade",
+      "default_tier": "standard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s6-16/audio.m4a",
+      "cover": "/catalog/bs-s6-16/cover.svg",
+      "og": "/catalog/bs-s6-16/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s6-16/easy.json",
+        "standard": "/catalog/bs-s6-16/standard.json",
+        "hard": "/catalog/bs-s6-16/hard.json"
+      },
+      "seo": {
+        "title": "Neon Chorus Line \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 126 BPM Pop chart."
+      },
+      "stream_audio": "/catalog/bs-s6-16/stream.m4a"
+    },
+    {
+      "track_id": "bs-s6-17",
+      "title": "Static Boulevard",
+      "artist": "Subline",
+      "genre": "Hip-hop",
+      "bpm": 94,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-trapline",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s6-17",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "New Release"
+      ],
+      "vibe": "groove",
+      "district": "Night Grid",
+      "default_mode": "arcade",
+      "default_tier": "standard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s6-17/audio.m4a",
+      "cover": "/catalog/bs-s6-17/cover.svg",
+      "og": "/catalog/bs-s6-17/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s6-17/easy.json",
+        "standard": "/catalog/bs-s6-17/standard.json",
+        "hard": "/catalog/bs-s6-17/hard.json"
+      },
+      "seo": {
+        "title": "Static Boulevard \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 94 BPM Hip-hop chart."
+      },
+      "stream_audio": "/catalog/bs-s6-17/stream.m4a"
+    },
+    {
+      "track_id": "bs-s6-18",
+      "title": "Afterhours Cadence",
+      "artist": "Verity Lane",
+      "genre": "R&B",
+      "bpm": 88,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-satin",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s6-18",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Viral Style"
+      ],
+      "vibe": "chill",
+      "district": "Afterhours Lane",
+      "default_mode": "casual",
+      "default_tier": "easy",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s6-18/audio.m4a",
+      "cover": "/catalog/bs-s6-18/cover.svg",
+      "og": "/catalog/bs-s6-18/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s6-18/easy.json",
+        "standard": "/catalog/bs-s6-18/standard.json",
+        "hard": "/catalog/bs-s6-18/hard.json"
+      },
+      "seo": {
+        "title": "Afterhours Cadence \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 88 BPM R&B chart."
+      },
+      "stream_audio": "/catalog/bs-s6-18/stream.m4a"
+    },
+    {
+      "track_id": "bs-s6-19",
+      "title": "Chrome Boulevard",
+      "artist": "Redline Co.",
+      "genre": "Rock",
+      "bpm": 133,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-stomp",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s6-19",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Classic Style"
+      ],
+      "vibe": "battle",
+      "district": "Chrome Yard",
+      "default_mode": "arcade",
+      "default_tier": "standard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s6-19/audio.m4a",
+      "cover": "/catalog/bs-s6-19/cover.svg",
+      "og": "/catalog/bs-s6-19/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s6-19/easy.json",
+        "standard": "/catalog/bs-s6-19/standard.json",
+        "hard": "/catalog/bs-s6-19/hard.json"
+      },
+      "seo": {
+        "title": "Chrome Boulevard \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 132 BPM Rock chart."
+      },
+      "stream_audio": "/catalog/bs-s6-19/stream.m4a"
+    },
+    {
+      "track_id": "bs-s6-20",
+      "title": "Pulse Foundry",
+      "artist": "Halcyon Flux",
+      "genre": "EDM",
+      "bpm": 158,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-brass",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s6-20",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Hot Chart Style"
+      ],
+      "vibe": "night-drive",
+      "district": "Pulse Core",
+      "default_mode": "arcade",
+      "default_tier": "standard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s6-20/audio.m4a",
+      "cover": "/catalog/bs-s6-20/cover.svg",
+      "og": "/catalog/bs-s6-20/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s6-20/easy.json",
+        "standard": "/catalog/bs-s6-20/standard.json",
+        "hard": "/catalog/bs-s6-20/hard.json"
+      },
+      "seo": {
+        "title": "Pulse Foundry \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 158 BPM EDM chart."
+      },
+      "stream_audio": "/catalog/bs-s6-20/stream.m4a"
+    },
+    {
+      "track_id": "bs-s6-21",
+      "title": "Halftone Parade",
+      "artist": "Luma Rim",
+      "genre": "Pop",
+      "bpm": 120,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-glassdrive",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s6-21",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Viral Style"
+      ],
+      "vibe": "groove",
+      "district": "Glass Rim",
+      "default_mode": "arcade",
+      "default_tier": "standard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s6-21/audio.m4a",
+      "cover": "/catalog/bs-s6-21/cover.svg",
+      "og": "/catalog/bs-s6-21/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s6-21/easy.json",
+        "standard": "/catalog/bs-s6-21/standard.json",
+        "hard": "/catalog/bs-s6-21/hard.json"
+      },
+      "seo": {
+        "title": "Halftone Parade \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 120 BPM Pop chart."
+      },
+      "stream_audio": "/catalog/bs-s6-21/stream.m4a"
+    },
+    {
+      "track_id": "bs-s6-22",
+      "title": "Grid Circuit Flow",
+      "artist": "Low Voltage",
+      "genre": "Hip-hop",
+      "bpm": 100,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-funkhop",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s6-22",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Viral Style"
+      ],
+      "vibe": "groove",
+      "district": "Night Grid",
+      "default_mode": "casual",
+      "default_tier": "standard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s6-22/audio.m4a",
+      "cover": "/catalog/bs-s6-22/cover.svg",
+      "og": "/catalog/bs-s6-22/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s6-22/easy.json",
+        "standard": "/catalog/bs-s6-22/standard.json",
+        "hard": "/catalog/bs-s6-22/hard.json"
+      },
+      "seo": {
+        "title": "Grid Circuit Flow \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 100 BPM Hip-hop chart."
+      },
+      "stream_audio": "/catalog/bs-s6-22/stream.m4a"
+    },
+    {
+      "track_id": "bs-s6-23",
+      "title": "Lantern Scape",
+      "artist": "Quiet Neon",
+      "genre": "R&B",
+      "bpm": 94,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-neosoul",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s6-23",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "New Release"
+      ],
+      "vibe": "chill",
+      "district": "Afterhours Lane",
+      "default_mode": "casual",
+      "default_tier": "easy",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s6-23/audio.m4a",
+      "cover": "/catalog/bs-s6-23/cover.svg",
+      "og": "/catalog/bs-s6-23/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s6-23/easy.json",
+        "standard": "/catalog/bs-s6-23/standard.json",
+        "hard": "/catalog/bs-s6-23/hard.json"
+      },
+      "seo": {
+        "title": "Lantern Scape \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 94 BPM R&B chart."
+      },
+      "stream_audio": "/catalog/bs-s6-23/stream.m4a"
+    },
+    {
+      "track_id": "bs-s6-24",
+      "title": "Asphalt Overdrive",
+      "artist": "Iron Echo",
+      "genre": "Rock",
+      "bpm": 144,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-chromeline",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s6-24",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Hot Chart Style"
+      ],
+      "vibe": "battle",
+      "district": "Chrome Yard",
+      "default_mode": "arcade",
+      "default_tier": "hard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s6-24/audio.m4a",
+      "cover": "/catalog/bs-s6-24/cover.svg",
+      "og": "/catalog/bs-s6-24/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s6-24/easy.json",
+        "standard": "/catalog/bs-s6-24/standard.json",
+        "hard": "/catalog/bs-s6-24/hard.json"
+      },
+      "seo": {
+        "title": "Asphalt Overdrive \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 144 BPM Rock chart."
+      },
+      "stream_audio": "/catalog/bs-s6-24/stream.m4a"
+    },
+    {
+      "track_id": "bs-s6-25",
+      "title": "Halftone Ignition",
+      "artist": "Kite Solar",
+      "genre": "EDM",
+      "bpm": 152,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-nightfall",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s6-25",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Viral Style"
+      ],
+      "vibe": "night-drive",
+      "district": "Pulse Core",
+      "default_mode": "arcade",
+      "default_tier": "standard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s6-25/audio.m4a",
+      "cover": "/catalog/bs-s6-25/cover.svg",
+      "og": "/catalog/bs-s6-25/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s6-25/easy.json",
+        "standard": "/catalog/bs-s6-25/standard.json",
+        "hard": "/catalog/bs-s6-25/hard.json"
+      },
+      "seo": {
+        "title": "Halftone Ignition \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 152 BPM EDM chart."
+      },
+      "stream_audio": "/catalog/bs-s6-25/stream.m4a"
+    },
+    {
+      "track_id": "bs-s6-26",
+      "title": "Prism Boulevard",
+      "artist": "Kite Solar",
+      "genre": "Pop",
+      "bpm": 122,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-rhodes",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s6-26",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "New Release"
+      ],
+      "vibe": "groove",
+      "district": "Glass Rim",
+      "default_mode": "arcade",
+      "default_tier": "easy",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s6-26/audio.m4a",
+      "cover": "/catalog/bs-s6-26/cover.svg",
+      "og": "/catalog/bs-s6-26/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s6-26/easy.json",
+        "standard": "/catalog/bs-s6-26/standard.json",
+        "hard": "/catalog/bs-s6-26/hard.json"
+      },
+      "seo": {
+        "title": "Prism Boulevard \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 122 BPM Pop chart."
+      },
+      "stream_audio": "/catalog/bs-s6-26/stream.m4a"
+    },
+    {
+      "track_id": "bs-s6-27",
+      "title": "Nightfall Cipher",
+      "artist": "Subline",
+      "genre": "Hip-hop",
+      "bpm": 94,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-trapline",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s6-27",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Viral Style"
+      ],
+      "vibe": "night-drive",
+      "district": "Night Grid",
+      "default_mode": "casual",
+      "default_tier": "standard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s6-27/audio.m4a",
+      "cover": "/catalog/bs-s6-27/cover.svg",
+      "og": "/catalog/bs-s6-27/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s6-27/easy.json",
+        "standard": "/catalog/bs-s6-27/standard.json",
+        "hard": "/catalog/bs-s6-27/hard.json"
+      },
+      "seo": {
+        "title": "Nightfall Cipher \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 92 BPM Hip-hop chart."
+      },
+      "stream_audio": "/catalog/bs-s6-27/stream.m4a"
+    },
+    {
+      "track_id": "bs-s6-28",
+      "title": "Amber Afterhours",
+      "artist": "Mira Lane",
+      "genre": "R&B",
+      "bpm": 90,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-neosoul",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s6-28",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Classic Style"
+      ],
+      "vibe": "chill",
+      "district": "Afterhours Lane",
+      "default_mode": "casual",
+      "default_tier": "easy",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s6-28/audio.m4a",
+      "cover": "/catalog/bs-s6-28/cover.svg",
+      "og": "/catalog/bs-s6-28/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s6-28/easy.json",
+        "standard": "/catalog/bs-s6-28/standard.json",
+        "hard": "/catalog/bs-s6-28/hard.json"
+      },
+      "seo": {
+        "title": "Amber Afterhours \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 90 BPM R&B chart."
+      },
+      "stream_audio": "/catalog/bs-s6-28/stream.m4a"
+    },
+    {
+      "track_id": "bs-s6-29",
+      "title": "Riffline Overdrive",
+      "artist": "Redline Co.",
+      "genre": "Rock",
+      "bpm": 142,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-chromeline",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s6-29",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Viral Style"
+      ],
+      "vibe": "battle",
+      "district": "Chrome Yard",
+      "default_mode": "arcade",
+      "default_tier": "hard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s6-29/audio.m4a",
+      "cover": "/catalog/bs-s6-29/cover.svg",
+      "og": "/catalog/bs-s6-29/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s6-29/easy.json",
+        "standard": "/catalog/bs-s6-29/standard.json",
+        "hard": "/catalog/bs-s6-29/hard.json"
+      },
+      "seo": {
+        "title": "Riffline Overdrive \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 142 BPM Rock chart."
+      },
+      "stream_audio": "/catalog/bs-s6-29/stream.m4a"
+    },
+    {
+      "track_id": "bs-s6-30",
+      "title": "Grid Apex Run",
+      "artist": "Nova Circuit",
+      "genre": "EDM",
+      "bpm": 170,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-climax",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s6-30",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Hot Chart Style"
+      ],
+      "vibe": "night-drive",
+      "district": "Pulse Core",
+      "default_mode": "arcade",
+      "default_tier": "hard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s6-30/audio.m4a",
+      "cover": "/catalog/bs-s6-30/cover.svg",
+      "og": "/catalog/bs-s6-30/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s6-30/easy.json",
+        "standard": "/catalog/bs-s6-30/standard.json",
+        "hard": "/catalog/bs-s6-30/hard.json"
+      },
+      "seo": {
+        "title": "Grid Apex Run \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 170 BPM EDM chart."
+      },
+      "stream_audio": "/catalog/bs-s6-30/stream.m4a"
+    },
+    {
+      "track_id": "bs-s6-31",
+      "title": "Skyline Cadence",
+      "artist": "Soft Circuit",
+      "genre": "Pop",
+      "bpm": 125,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-rhodes",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s6-31",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "New Release"
+      ],
+      "vibe": "groove",
+      "district": "Glass Rim",
+      "default_mode": "arcade",
+      "default_tier": "standard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s6-31/audio.m4a",
+      "cover": "/catalog/bs-s6-31/cover.svg",
+      "og": "/catalog/bs-s6-31/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s6-31/easy.json",
+        "standard": "/catalog/bs-s6-31/standard.json",
+        "hard": "/catalog/bs-s6-31/hard.json"
+      },
+      "seo": {
+        "title": "Skyline Cadence \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 124 BPM Pop chart."
+      },
+      "stream_audio": "/catalog/bs-s6-31/stream.m4a"
+    },
+    {
+      "track_id": "bs-s6-32",
+      "title": "Alley Voltage",
+      "artist": "Low Voltage",
+      "genre": "Hip-hop",
+      "bpm": 98,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-funkhop",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s6-32",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Classic Style"
+      ],
+      "vibe": "night-drive",
+      "district": "Night Grid",
+      "default_mode": "casual",
+      "default_tier": "standard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s6-32/audio.m4a",
+      "cover": "/catalog/bs-s6-32/cover.svg",
+      "og": "/catalog/bs-s6-32/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s6-32/easy.json",
+        "standard": "/catalog/bs-s6-32/standard.json",
+        "hard": "/catalog/bs-s6-32/hard.json"
+      },
+      "seo": {
+        "title": "Alley Voltage \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 98 BPM Hip-hop chart."
+      },
+      "stream_audio": "/catalog/bs-s6-32/stream.m4a"
+    },
+    {
+      "track_id": "bs-s6-33",
+      "title": "Scape Lullaby",
+      "artist": "Quiet Neon",
+      "genre": "R&B",
+      "bpm": 88,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-satin",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s6-33",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "New Release"
+      ],
+      "vibe": "chill",
+      "district": "Afterhours Lane",
+      "default_mode": "casual",
+      "default_tier": "easy",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s6-33/audio.m4a",
+      "cover": "/catalog/bs-s6-33/cover.svg",
+      "og": "/catalog/bs-s6-33/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s6-33/easy.json",
+        "standard": "/catalog/bs-s6-33/standard.json",
+        "hard": "/catalog/bs-s6-33/hard.json"
+      },
+      "seo": {
+        "title": "Scape Lullaby \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 88 BPM R&B chart."
+      },
+      "stream_audio": "/catalog/bs-s6-33/stream.m4a"
+    },
+    {
+      "track_id": "bs-s6-34",
+      "title": "Foundry Boulevard",
+      "artist": "Iron Echo",
+      "genre": "Rock",
+      "bpm": 133,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-stomp",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s6-34",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Hot Chart Style"
+      ],
+      "vibe": "battle",
+      "district": "Chrome Yard",
+      "default_mode": "arcade",
+      "default_tier": "standard",
+      "allows_slide": true,
+      "audio": "/catalog/bs-s6-34/audio.m4a",
+      "cover": "/catalog/bs-s6-34/cover.svg",
+      "og": "/catalog/bs-s6-34/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s6-34/easy.json",
+        "standard": "/catalog/bs-s6-34/standard.json",
+        "hard": "/catalog/bs-s6-34/hard.json"
+      },
+      "seo": {
+        "title": "Foundry Boulevard \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 134 BPM Rock chart."
+      },
+      "stream_audio": "/catalog/bs-s6-34/stream.m4a"
+    },
+    {
+      "track_id": "bs-s6-35",
+      "title": "Zenith Scape",
+      "artist": "Pulse Atlas",
+      "genre": "EDM",
+      "bpm": 171,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-overdrive",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-s6-35",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "New Release"
+      ],
+      "vibe": "night-drive",
+      "district": "Pulse Core",
+      "default_mode": "arcade",
+      "default_tier": "hard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-s6-35/audio.m4a",
+      "cover": "/catalog/bs-s6-35/cover.svg",
+      "og": "/catalog/bs-s6-35/og.png",
+      "charts": {
+        "easy": "/catalog/bs-s6-35/easy.json",
+        "standard": "/catalog/bs-s6-35/standard.json",
+        "hard": "/catalog/bs-s6-35/hard.json"
+      },
+      "seo": {
+        "title": "Zenith Scape \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 172 BPM EDM chart."
+      },
+      "stream_audio": "/catalog/bs-s6-35/stream.m4a"
     }
   ]
 }

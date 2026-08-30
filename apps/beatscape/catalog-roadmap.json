@@ -1,13 +1,14 @@
 {
   "version": 1,
   "authority": "docs/PRD-BEATSCAPE.md \u00a76.0.1 \u00b7 \u00a76.0.5 \u00b7 \u00a76.0.14",
-  "updated": "2026-08-29",
+  "updated": "2026-08-30",
   "stage_targets": {
     "1": 6,
     "2": 10,
     "3": 25,
     "4": 40,
-    "5": 50
+    "5": 50,
+    "6": 85
   },
   "genre_targets": {
     "by_stage": {
@@ -45,6 +46,13 @@
         "Hip-hop": 10,
         "R&B": 8,
         "Rock": 10
+      },
+      "6": {
+        "EDM": 20,
+        "Pop": 17,
+        "Hip-hop": 17,
+        "R&B": 14,
+        "Rock": 17
       }
     },
     "formal": {
@@ -569,165 +577,856 @@
       "stage": 4,
       "seq": 36,
       "genre": "EDM",
-      "status": "planned",
-      "title": null,
-      "preset_id": "bs-edm-main",
+      "status": "shipped",
+      "title": "Ember Pulse Line",
+      "preset_id": "bs-resonance-brass",
       "game_duration_sec": 120,
-      "batch": "s4-wave-3"
+      "batch": "s4-wave-3",
+      "artist": "Halcyon Flux",
+      "district": "Pulse Core",
+      "vibe": "battle",
+      "tags": [
+        "Hot Chart Style"
+      ]
     },
     {
       "track_id": "bs-s4-12",
       "stage": 4,
       "seq": 37,
       "genre": "Hip-hop",
-      "status": "planned",
-      "title": null,
-      "preset_id": "bs-hiphop-808",
+      "status": "shipped",
+      "title": "Gridline Cipher",
+      "preset_id": "bs-resonance-funkhop",
       "game_duration_sec": 120,
-      "batch": "s4-wave-3"
+      "batch": "s4-wave-3",
+      "artist": "Subline",
+      "district": "Night Grid",
+      "vibe": "groove",
+      "tags": [
+        "Classic Style"
+      ]
     },
     {
       "track_id": "bs-s4-13",
       "stage": 4,
       "seq": 38,
       "genre": "Pop",
-      "status": "planned",
-      "title": null,
-      "preset_id": "bs-pop-hook",
+      "status": "shipped",
+      "title": "Halftone Skyline",
+      "preset_id": "bs-resonance-rhodes",
       "game_duration_sec": 120,
-      "batch": "s4-wave-3"
+      "batch": "s4-wave-3",
+      "artist": "Luma Rim",
+      "district": "Glass Rim",
+      "vibe": "groove",
+      "tags": [
+        "Viral Style"
+      ]
     },
     {
       "track_id": "bs-s4-14",
       "stage": 4,
       "seq": 39,
       "genre": "Rock",
-      "status": "planned",
-      "title": null,
-      "preset_id": "bs-rock-drive",
+      "status": "shipped",
+      "title": "Chrome Mile Anthem",
+      "preset_id": "bs-resonance-stomp",
       "game_duration_sec": 120,
-      "batch": "s4-wave-3"
+      "batch": "s4-wave-3",
+      "artist": "Iron Echo",
+      "district": "Chrome Yard",
+      "vibe": "battle",
+      "tags": [
+        "New Release"
+      ]
     },
     {
       "track_id": "bs-s4-15",
       "stage": 4,
       "seq": 40,
       "genre": "EDM",
-      "status": "planned",
-      "title": null,
-      "preset_id": "bs-edm-main",
+      "status": "shipped",
+      "title": "Neon Scape Drift",
+      "preset_id": "bs-resonance-climax",
       "game_duration_sec": 120,
-      "batch": "s4-wave-3"
+      "batch": "s4-wave-3",
+      "artist": "Nova Circuit",
+      "district": "Pulse Core",
+      "vibe": "night-drive",
+      "tags": [
+        "Viral Style"
+      ]
     },
     {
       "track_id": "bs-s5-01",
       "stage": 5,
       "seq": 41,
       "genre": "EDM",
-      "status": "planned",
-      "title": null,
-      "preset_id": "bs-edm-main",
+      "status": "shipped",
+      "title": "Pulse Overpass",
+      "preset_id": "bs-resonance-brass",
       "game_duration_sec": 120,
-      "batch": "s5-formal"
+      "batch": "s5-formal",
+      "artist": "Halcyon Flux",
+      "district": "Pulse Core",
+      "vibe": "battle",
+      "tags": [
+        "Hot Chart Style"
+      ]
     },
     {
       "track_id": "bs-s5-02",
       "stage": 5,
       "seq": 42,
       "genre": "Pop",
-      "status": "planned",
-      "title": null,
-      "preset_id": "bs-pop-hook",
+      "status": "shipped",
+      "title": "Glass Turnpike",
+      "preset_id": "bs-resonance-rhodes",
       "game_duration_sec": 120,
-      "batch": "s5-formal"
+      "batch": "s5-formal",
+      "artist": "Ada North",
+      "district": "Glass Rim",
+      "vibe": "groove",
+      "tags": [
+        "New Release"
+      ]
     },
     {
       "track_id": "bs-s5-03",
       "stage": 5,
       "seq": 43,
       "genre": "Hip-hop",
-      "status": "planned",
-      "title": null,
-      "preset_id": "bs-hiphop-808",
+      "status": "shipped",
+      "title": "Nightlane Static",
+      "preset_id": "bs-resonance-funkhop",
       "game_duration_sec": 120,
-      "batch": "s5-formal"
+      "batch": "s5-formal",
+      "artist": "Low Voltage",
+      "district": "Night Grid",
+      "vibe": "night-drive",
+      "tags": [
+        "Classic Style"
+      ]
     },
     {
       "track_id": "bs-s5-04",
       "stage": 5,
       "seq": 44,
       "genre": "R&B",
-      "status": "planned",
-      "title": null,
-      "preset_id": "bs-rnb-groove",
+      "status": "shipped",
+      "title": "Afterhours Satin",
+      "preset_id": "bs-resonance-neosoul",
       "game_duration_sec": 120,
-      "batch": "s5-formal"
+      "batch": "s5-formal",
+      "artist": "Mira Lane",
+      "district": "Afterhours Lane",
+      "vibe": "chill",
+      "tags": [
+        "Classic Style"
+      ]
     },
     {
       "track_id": "bs-s5-05",
       "stage": 5,
       "seq": 45,
       "genre": "Rock",
-      "status": "planned",
-      "title": null,
-      "preset_id": "bs-rock-drive",
+      "status": "shipped",
+      "title": "Chrome Vector",
+      "preset_id": "bs-resonance-stomp",
       "game_duration_sec": 120,
-      "batch": "s5-formal"
+      "batch": "s5-formal",
+      "artist": "Redline Co.",
+      "district": "Chrome Yard",
+      "vibe": "battle",
+      "tags": [
+        "Hot Chart Style"
+      ]
     },
     {
       "track_id": "bs-s5-06",
       "stage": 5,
       "seq": 46,
       "genre": "EDM",
-      "status": "planned",
-      "title": null,
-      "preset_id": "bs-edm-climax",
+      "status": "shipped",
+      "title": "Overload Scape",
+      "preset_id": "bs-resonance-climax",
       "game_duration_sec": 120,
-      "batch": "s5-formal"
+      "batch": "s5-formal",
+      "artist": "Gridline",
+      "district": "Pulse Core",
+      "vibe": "battle",
+      "tags": [
+        "Hot Chart Style"
+      ]
     },
     {
       "track_id": "bs-s5-07",
       "stage": 5,
       "seq": 47,
       "genre": "Pop",
-      "status": "planned",
-      "title": null,
-      "preset_id": "bs-chill-pop",
+      "status": "shipped",
+      "title": "Halftone Harbour",
+      "preset_id": "bs-resonance-glassdrive",
       "game_duration_sec": 120,
-      "batch": "s5-formal"
+      "batch": "s5-formal",
+      "artist": "Kite Solar",
+      "district": "Glass Rim",
+      "vibe": "chill",
+      "tags": [
+        "Classic Style"
+      ]
     },
     {
       "track_id": "bs-s5-08",
       "stage": 5,
       "seq": 48,
       "genre": "Hip-hop",
-      "status": "planned",
-      "title": null,
-      "preset_id": "bs-hiphop-808",
+      "status": "shipped",
+      "title": "Gridlock Anthem",
+      "preset_id": "bs-resonance-trapline",
       "game_duration_sec": 120,
-      "batch": "s5-formal"
+      "batch": "s5-formal",
+      "artist": "Subline",
+      "district": "Night Grid",
+      "vibe": "groove",
+      "tags": [
+        "Viral Style"
+      ]
     },
     {
       "track_id": "bs-s5-09",
       "stage": 5,
       "seq": 49,
       "genre": "R&B",
-      "status": "planned",
-      "title": null,
-      "preset_id": "bs-rnb-groove",
+      "status": "shipped",
+      "title": "Satin Nightline",
+      "preset_id": "bs-resonance-neosoul",
       "game_duration_sec": 120,
-      "batch": "s5-formal"
+      "batch": "s5-formal",
+      "artist": "Verity Lane",
+      "district": "Afterhours Lane",
+      "vibe": "chill",
+      "tags": [
+        "New Release"
+      ]
     },
     {
       "track_id": "bs-s5-10",
       "stage": 5,
       "seq": 50,
       "genre": "Rock",
-      "status": "planned",
-      "title": null,
-      "preset_id": "bs-rock-drive",
+      "status": "shipped",
+      "title": "Iron Boulevard",
+      "preset_id": "bs-resonance-chromeline",
       "game_duration_sec": 120,
-      "batch": "s5-formal"
+      "batch": "s5-formal",
+      "artist": "Iron Echo",
+      "district": "Chrome Yard",
+      "vibe": "battle",
+      "tags": [
+        "Hot Chart Style"
+      ]
+    },
+    {
+      "track_id": "bs-s6-01",
+      "stage": 6,
+      "seq": 51,
+      "genre": "EDM",
+      "status": "shipped",
+      "title": "Afterglow Scape",
+      "preset_id": "bs-resonance-brass",
+      "game_duration_sec": 120,
+      "batch": "s6-expansion",
+      "artist": "Pale Ember",
+      "district": "Pulse Core",
+      "vibe": "battle",
+      "tags": [
+        "Hot Chart Style"
+      ]
+    },
+    {
+      "track_id": "bs-s6-02",
+      "stage": 6,
+      "seq": 52,
+      "genre": "Pop",
+      "status": "shipped",
+      "title": "Halftone Bloom",
+      "preset_id": "bs-resonance-glassdrive",
+      "game_duration_sec": 120,
+      "batch": "s6-expansion",
+      "artist": "Luma Rim",
+      "district": "Glass Rim",
+      "vibe": "groove",
+      "tags": [
+        "Viral Style"
+      ]
+    },
+    {
+      "track_id": "bs-s6-03",
+      "stage": 6,
+      "seq": 53,
+      "genre": "Hip-hop",
+      "status": "shipped",
+      "title": "Lowbeam Groove",
+      "preset_id": "bs-resonance-funkhop",
+      "game_duration_sec": 120,
+      "batch": "s6-expansion",
+      "artist": "Low Voltage",
+      "district": "Night Grid",
+      "vibe": "groove",
+      "tags": [
+        "Classic Style"
+      ]
+    },
+    {
+      "track_id": "bs-s6-04",
+      "stage": 6,
+      "seq": 54,
+      "genre": "R&B",
+      "status": "shipped",
+      "title": "Moonlit Turnpike",
+      "preset_id": "bs-resonance-neosoul",
+      "game_duration_sec": 120,
+      "batch": "s6-expansion",
+      "artist": "Verity Lane",
+      "district": "Afterhours Lane",
+      "vibe": "chill",
+      "tags": [
+        "New Release"
+      ]
+    },
+    {
+      "track_id": "bs-s6-05",
+      "stage": 6,
+      "seq": 55,
+      "genre": "Rock",
+      "status": "shipped",
+      "title": "Chrome Foundry",
+      "preset_id": "bs-resonance-stomp",
+      "game_duration_sec": 120,
+      "batch": "s6-expansion",
+      "artist": "Iron Echo",
+      "district": "Chrome Yard",
+      "vibe": "battle",
+      "tags": [
+        "New Release"
+      ]
+    },
+    {
+      "track_id": "bs-s6-06",
+      "stage": 6,
+      "seq": 56,
+      "genre": "EDM",
+      "status": "shipped",
+      "title": "Neon Overpass",
+      "preset_id": "bs-resonance-climax",
+      "game_duration_sec": 120,
+      "batch": "s6-expansion",
+      "artist": "Gridline",
+      "district": "Pulse Core",
+      "vibe": "battle",
+      "tags": [
+        "Hot Chart Style"
+      ]
+    },
+    {
+      "track_id": "bs-s6-07",
+      "stage": 6,
+      "seq": 57,
+      "genre": "Pop",
+      "status": "shipped",
+      "title": "Glass Verandah",
+      "preset_id": "bs-resonance-glassdrive",
+      "game_duration_sec": 120,
+      "batch": "s6-expansion",
+      "artist": "Soft Circuit",
+      "district": "Glass Rim",
+      "vibe": "chill",
+      "tags": [
+        "New Release"
+      ]
+    },
+    {
+      "track_id": "bs-s6-08",
+      "stage": 6,
+      "seq": 58,
+      "genre": "Hip-hop",
+      "status": "shipped",
+      "title": "Grid Alley Flow",
+      "preset_id": "bs-resonance-trapline",
+      "game_duration_sec": 120,
+      "batch": "s6-expansion",
+      "artist": "Subline",
+      "district": "Night Grid",
+      "vibe": "groove",
+      "tags": [
+        "Viral Style"
+      ]
+    },
+    {
+      "track_id": "bs-s6-09",
+      "stage": 6,
+      "seq": 59,
+      "genre": "Rock",
+      "status": "shipped",
+      "title": "Voltage Causeway",
+      "preset_id": "bs-resonance-chromeline",
+      "game_duration_sec": 120,
+      "batch": "s6-expansion",
+      "artist": "Redline Co.",
+      "district": "Chrome Yard",
+      "vibe": "battle",
+      "tags": [
+        "Hot Chart Style"
+      ]
+    },
+    {
+      "track_id": "bs-s6-10",
+      "stage": 6,
+      "seq": 60,
+      "genre": "EDM",
+      "status": "shipped",
+      "title": "Scape Ignition",
+      "preset_id": "bs-resonance-climax",
+      "game_duration_sec": 120,
+      "batch": "s6-expansion",
+      "artist": "Nova Circuit",
+      "district": "Pulse Core",
+      "vibe": "night-drive",
+      "tags": [
+        "Viral Style"
+      ]
+    },
+    {
+      "track_id": "bs-s6-11",
+      "stage": 6,
+      "seq": 61,
+      "genre": "Pop",
+      "status": "shipped",
+      "title": "Prism Skyline",
+      "preset_id": "bs-resonance-rhodes",
+      "game_duration_sec": 120,
+      "batch": "s6-expansion",
+      "artist": "Kite Solar",
+      "district": "Glass Rim",
+      "vibe": "groove",
+      "tags": [
+        "Viral Style"
+      ]
+    },
+    {
+      "track_id": "bs-s6-12",
+      "stage": 6,
+      "seq": 62,
+      "genre": "Hip-hop",
+      "status": "shipped",
+      "title": "Nightlane Drift",
+      "preset_id": "bs-resonance-funkhop",
+      "game_duration_sec": 120,
+      "batch": "s6-expansion",
+      "artist": "Low Voltage",
+      "district": "Night Grid",
+      "vibe": "night-drive",
+      "tags": [
+        "Classic Style"
+      ]
+    },
+    {
+      "track_id": "bs-s6-13",
+      "stage": 6,
+      "seq": 63,
+      "genre": "R&B",
+      "status": "shipped",
+      "title": "Satin Underpass",
+      "preset_id": "bs-resonance-satin",
+      "game_duration_sec": 120,
+      "batch": "s6-expansion",
+      "artist": "Mira Lane",
+      "district": "Afterhours Lane",
+      "vibe": "chill",
+      "tags": [
+        "New Release"
+      ]
+    },
+    {
+      "track_id": "bs-s6-14",
+      "stage": 6,
+      "seq": 64,
+      "genre": "Rock",
+      "status": "shipped",
+      "title": "Iron Skyline Riff",
+      "preset_id": "bs-resonance-chromeline",
+      "game_duration_sec": 120,
+      "batch": "s6-expansion",
+      "artist": "Iron Echo",
+      "district": "Chrome Yard",
+      "vibe": "battle",
+      "tags": [
+        "Hot Chart Style"
+      ]
+    },
+    {
+      "track_id": "bs-s6-15",
+      "stage": 6,
+      "seq": 65,
+      "genre": "EDM",
+      "status": "shipped",
+      "title": "Midnight Overpass",
+      "preset_id": "bs-resonance-overdrive",
+      "game_duration_sec": 120,
+      "batch": "s6-expansion",
+      "artist": "Halcyon Flux",
+      "district": "Pulse Core",
+      "vibe": "night-drive",
+      "tags": [
+        "New Release"
+      ]
+    },
+    {
+      "track_id": "bs-s6-16",
+      "stage": 6,
+      "seq": 66,
+      "genre": "Pop",
+      "status": "shipped",
+      "title": "Neon Chorus Line",
+      "preset_id": "bs-resonance-rhodes",
+      "game_duration_sec": 120,
+      "batch": "s6-expansion",
+      "artist": "Ada North",
+      "district": "Glass Rim",
+      "vibe": "groove",
+      "tags": [
+        "New Release"
+      ]
+    },
+    {
+      "track_id": "bs-s6-17",
+      "stage": 6,
+      "seq": 67,
+      "genre": "Hip-hop",
+      "status": "shipped",
+      "title": "Static Boulevard",
+      "preset_id": "bs-resonance-trapline",
+      "game_duration_sec": 120,
+      "batch": "s6-expansion",
+      "artist": "Subline",
+      "district": "Night Grid",
+      "vibe": "groove",
+      "tags": [
+        "New Release"
+      ]
+    },
+    {
+      "track_id": "bs-s6-18",
+      "stage": 6,
+      "seq": 68,
+      "genre": "R&B",
+      "status": "shipped",
+      "title": "Afterhours Cadence",
+      "preset_id": "bs-resonance-satin",
+      "game_duration_sec": 120,
+      "batch": "s6-expansion",
+      "artist": "Verity Lane",
+      "district": "Afterhours Lane",
+      "vibe": "chill",
+      "tags": [
+        "Viral Style"
+      ]
+    },
+    {
+      "track_id": "bs-s6-19",
+      "stage": 6,
+      "seq": 69,
+      "genre": "Rock",
+      "status": "shipped",
+      "title": "Chrome Boulevard",
+      "preset_id": "bs-resonance-stomp",
+      "game_duration_sec": 120,
+      "batch": "s6-expansion",
+      "artist": "Redline Co.",
+      "district": "Chrome Yard",
+      "vibe": "battle",
+      "tags": [
+        "Classic Style"
+      ]
+    },
+    {
+      "track_id": "bs-s6-20",
+      "stage": 6,
+      "seq": 70,
+      "genre": "EDM",
+      "status": "shipped",
+      "title": "Pulse Foundry",
+      "preset_id": "bs-resonance-brass",
+      "game_duration_sec": 120,
+      "batch": "s6-expansion",
+      "artist": "Halcyon Flux",
+      "district": "Pulse Core",
+      "vibe": "night-drive",
+      "tags": [
+        "Hot Chart Style"
+      ]
+    },
+    {
+      "track_id": "bs-s6-21",
+      "stage": 6,
+      "seq": 71,
+      "genre": "Pop",
+      "status": "shipped",
+      "title": "Halftone Parade",
+      "preset_id": "bs-resonance-glassdrive",
+      "game_duration_sec": 120,
+      "batch": "s6-expansion",
+      "artist": "Luma Rim",
+      "district": "Glass Rim",
+      "vibe": "groove",
+      "tags": [
+        "Viral Style"
+      ]
+    },
+    {
+      "track_id": "bs-s6-22",
+      "stage": 6,
+      "seq": 72,
+      "genre": "Hip-hop",
+      "status": "shipped",
+      "title": "Grid Circuit Flow",
+      "preset_id": "bs-resonance-funkhop",
+      "game_duration_sec": 120,
+      "batch": "s6-expansion",
+      "artist": "Low Voltage",
+      "district": "Night Grid",
+      "vibe": "groove",
+      "tags": [
+        "Viral Style"
+      ]
+    },
+    {
+      "track_id": "bs-s6-23",
+      "stage": 6,
+      "seq": 73,
+      "genre": "R&B",
+      "status": "shipped",
+      "title": "Lantern Scape",
+      "preset_id": "bs-resonance-neosoul",
+      "game_duration_sec": 120,
+      "batch": "s6-expansion",
+      "artist": "Quiet Neon",
+      "district": "Afterhours Lane",
+      "vibe": "chill",
+      "tags": [
+        "New Release"
+      ]
+    },
+    {
+      "track_id": "bs-s6-24",
+      "stage": 6,
+      "seq": 74,
+      "genre": "Rock",
+      "status": "shipped",
+      "title": "Asphalt Overdrive",
+      "preset_id": "bs-resonance-chromeline",
+      "game_duration_sec": 120,
+      "batch": "s6-expansion",
+      "artist": "Iron Echo",
+      "district": "Chrome Yard",
+      "vibe": "battle",
+      "tags": [
+        "Hot Chart Style"
+      ]
+    },
+    {
+      "track_id": "bs-s6-25",
+      "stage": 6,
+      "seq": 75,
+      "genre": "EDM",
+      "status": "shipped",
+      "title": "Halftone Ignition",
+      "preset_id": "bs-resonance-nightfall",
+      "game_duration_sec": 120,
+      "batch": "s6-expansion",
+      "artist": "Kite Solar",
+      "district": "Pulse Core",
+      "vibe": "night-drive",
+      "tags": [
+        "Viral Style"
+      ]
+    },
+    {
+      "track_id": "bs-s6-26",
+      "stage": 6,
+      "seq": 76,
+      "genre": "Pop",
+      "status": "shipped",
+      "title": "Prism Boulevard",
+      "preset_id": "bs-resonance-rhodes",
+      "game_duration_sec": 120,
+      "batch": "s6-expansion",
+      "artist": "Kite Solar",
+      "district": "Glass Rim",
+      "vibe": "groove",
+      "tags": [
+        "New Release"
+      ]
+    },
+    {
+      "track_id": "bs-s6-27",
+      "stage": 6,
+      "seq": 77,
+      "genre": "Hip-hop",
+      "status": "shipped",
+      "title": "Nightfall Cipher",
+      "preset_id": "bs-resonance-trapline",
+      "game_duration_sec": 120,
+      "batch": "s6-expansion",
+      "artist": "Subline",
+      "district": "Night Grid",
+      "vibe": "night-drive",
+      "tags": [
+        "Viral Style"
+      ]
+    },
+    {
+      "track_id": "bs-s6-28",
+      "stage": 6,
+      "seq": 78,
+      "genre": "R&B",
+      "status": "shipped",
+      "title": "Amber Afterhours",
+      "preset_id": "bs-resonance-neosoul",
+      "game_duration_sec": 120,
+      "batch": "s6-expansion",
+      "artist": "Mira Lane",
+      "district": "Afterhours Lane",
+      "vibe": "chill",
+      "tags": [
+        "Classic Style"
+      ]
+    },
+    {
+      "track_id": "bs-s6-29",
+      "stage": 6,
+      "seq": 79,
+      "genre": "Rock",
+      "status": "shipped",
+      "title": "Riffline Overdrive",
+      "preset_id": "bs-resonance-chromeline",
+      "game_duration_sec": 120,
+      "batch": "s6-expansion",
+      "artist": "Redline Co.",
+      "district": "Chrome Yard",
+      "vibe": "battle",
+      "tags": [
+        "Viral Style"
+      ]
+    },
+    {
+      "track_id": "bs-s6-30",
+      "stage": 6,
+      "seq": 80,
+      "genre": "EDM",
+      "status": "shipped",
+      "title": "Grid Apex Run",
+      "preset_id": "bs-resonance-climax",
+      "game_duration_sec": 120,
+      "batch": "s6-expansion",
+      "artist": "Nova Circuit",
+      "district": "Pulse Core",
+      "vibe": "night-drive",
+      "tags": [
+        "Hot Chart Style"
+      ]
+    },
+    {
+      "track_id": "bs-s6-31",
+      "stage": 6,
+      "seq": 81,
+      "genre": "Pop",
+      "status": "shipped",
+      "title": "Skyline Cadence",
+      "preset_id": "bs-resonance-rhodes",
+      "game_duration_sec": 120,
+      "batch": "s6-expansion",
+      "artist": "Soft Circuit",
+      "district": "Glass Rim",
+      "vibe": "groove",
+      "tags": [
+        "New Release"
+      ]
+    },
+    {
+      "track_id": "bs-s6-32",
+      "stage": 6,
+      "seq": 82,
+      "genre": "Hip-hop",
+      "status": "shipped",
+      "title": "Alley Voltage",
+      "preset_id": "bs-resonance-funkhop",
+      "game_duration_sec": 120,
+      "batch": "s6-expansion",
+      "artist": "Low Voltage",
+      "district": "Night Grid",
+      "vibe": "night-drive",
+      "tags": [
+        "Classic Style"
+      ]
+    },
+    {
+      "track_id": "bs-s6-33",
+      "stage": 6,
+      "seq": 83,
+      "genre": "R&B",
+      "status": "shipped",
+      "title": "Scape Lullaby",
+      "preset_id": "bs-resonance-satin",
+      "game_duration_sec": 120,
+      "batch": "s6-expansion",
+      "artist": "Quiet Neon",
+      "district": "Afterhours Lane",
+      "vibe": "chill",
+      "tags": [
+        "New Release"
+      ]
+    },
+    {
+      "track_id": "bs-s6-34",
+      "stage": 6,
+      "seq": 84,
+      "genre": "Rock",
+      "status": "shipped",
+      "title": "Foundry Boulevard",
+      "preset_id": "bs-resonance-stomp",
+      "game_duration_sec": 120,
+      "batch": "s6-expansion",
+      "artist": "Iron Echo",
+      "district": "Chrome Yard",
+      "vibe": "battle",
+      "tags": [
+        "Hot Chart Style"
+      ]
+    },
+    {
+      "track_id": "bs-s6-35",
+      "stage": 6,
+      "seq": 85,
+      "genre": "EDM",
+      "status": "shipped",
+      "title": "Zenith Scape",
+      "preset_id": "bs-resonance-overdrive",
+      "game_duration_sec": 120,
+      "batch": "s6-expansion",
+      "artist": "Pulse Atlas",
+      "district": "Pulse Core",
+      "vibe": "night-drive",
+      "tags": [
+        "New Release"
+      ]
     }
-  ]
+  ],
+  "tag_targets_stage6": {
+    "Hot Chart Style": 26,
+    "Viral Style": 20,
+    "Classic Style": 20,
+    "New Release": 19
+  }
 }
