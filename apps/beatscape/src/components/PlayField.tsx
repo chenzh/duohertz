@@ -10,7 +10,7 @@ import { receptorYFromGeometry, laneFromClientX, isCoarsePointer, TouchLaneTrack
 import { keyLabels, laneFromKeyEvent } from "../input/keyMap";
 import { loadKeys, loadOffsetMs, loadSettings } from "../storage/settings";
 
-import { JUDGE_COLORS, LANE_COLORS, LANE_RGB, SCAPE_COPY } from "../constants/scape";
+import { JUDGE_COLORS, LANE_COLORS, LANE_RGB, SCAPE_COPY, districtColor, characterArt } from "../constants/scape";
 const COUNTDOWN_MS = 3000;
 const LANE_FLASH_MS = 180;
 const JUDGE_LABEL: Record<string, string> = {
@@ -35,6 +35,8 @@ type Props = {
   muted?: boolean;
   /** Skip unlock overlay and start as soon as audio is ready (user gesture already unlocked audio). */
   autoStart?: boolean;
+  /** District key (e.g. "Pulse Core") — ties the field's beat-wash + watermark to the track's character. */
+  district?: string;
 };
 
 type Fx = { lane: number; judgment: JudgeFx["judgment"]; born: number; deltaMs: number };
@@ -56,6 +58,7 @@ export function PlayField({
   variant = "full",
   muted = false,
   autoStart = false,
+  district,
 }: Props) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -324,11 +327,14 @@ export function PlayField({
       const beatPhase = ((songSec * chart.bpm) / 60) % 1;
       const beatPulse = 0.12 + 0.18 * Math.max(0, Math.cos(beatPhase * Math.PI * 2));
 
-      // Flat ink ground with one faint crimson beat wash. No coloured gradient,
-      // no glow — the whole point of the v2.0 language.
+      // Flat ink ground; a faint district-coloured beat wash ties the field to
+      // the playing track's character (v2.0 language: flat, no gradient/glow).
+      const [dr, dg, db] = hexToRgb(districtColor(district ?? "Pulse Core"));
       ctx2d.fillStyle = "#12100F";
       ctx2d.fillRect(0, 0, w, h);
-      ctx2d.fillStyle = `rgba(226,61,61,${0.05 + beatPulse * 0.06})`;
+      ctx2d.fillStyle = `rgba(${dr},${dg},${db},0.05)`;
+      ctx2d.fillRect(0, 0, w, h);
+      ctx2d.fillStyle = `rgba(${dr},${dg},${db},${0.05 + beatPulse * 0.06})`;
       ctx2d.fillRect(0, 0, w, h);
 
       // screen shake: decaying random offset applied to the gameplay layer
@@ -770,7 +776,7 @@ export function PlayField({
       cancelAnimationFrame(raf);
       ro.disconnect();
     };
-  }, [mode, settings.hitsound, settings.fancyFx, keys, chart.bpm, touchUi]);
+  }, [mode, settings.hitsound, settings.fancyFx, keys, chart.bpm, touchUi, district]);
 
   const handlePress = (lane: number) => {
     const conductor = conductorRef.current;
@@ -859,7 +865,11 @@ export function PlayField({
   };
 
   return (
-    <div className={`play-wrap${variant === "hero" ? " play-wrap-hero" : ""}`} ref={wrapRef}>
+    <div
+      className={`play-wrap${variant === "hero" ? " play-wrap-hero" : ""}`}
+      ref={wrapRef}
+      style={district ? ({ "--district-color": districtColor(district) } as React.CSSProperties) : undefined}
+    >
       <canvas
         ref={canvasRef}
         className="play-canvas"
@@ -868,6 +878,14 @@ export function PlayField({
         onPointerUp={onPointerUp}
         onPointerCancel={onPointerUp}
       />
+      {district && (
+        <img
+          className="play-char-watermark"
+          src={`${import.meta.env.BASE_URL}${characterArt(district).art.replace(/^\//, "")}`}
+          alt=""
+          aria-hidden
+        />
+      )}
       {loading && !error && (
         <div className="overlay">
           <p className="overlay-kicker">Loading</p>
@@ -971,4 +989,12 @@ function inkedText(
   ctx.strokeText(text, x, y);
   ctx.fillStyle = fill;
   ctx.fillText(text, x, y);
+}
+
+/** Parse "#rrggbb" (or "#rgb") into [r,g,b] for canvas tinting. */
+function hexToRgb(hex: string): [number, number, number] {
+  const h = hex.replace("#", "");
+  const full = h.length === 3 ? h.split("").map((c) => c + c).join("") : h;
+  const n = parseInt(full, 16);
+  return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
 }

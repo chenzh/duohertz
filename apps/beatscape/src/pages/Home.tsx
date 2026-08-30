@@ -3,7 +3,9 @@ import { Link } from "../router";
 import { assetUrl, loadCatalog } from "../catalog/loadCatalog";
 import type { CatalogTrack } from "../types/catalog";
 import { FEATURED_TRACK_IDS, SCAPE_COPY, SCAPE_COPY_EXTRA } from "../constants/scape";
+import { CHARACTER_LIST } from "../constants/scape";
 import { HomeHeroPlay } from "../components/HomeHeroPlay";
+import { CharacterAvatar } from "../components/CharacterAvatar";
 import { FIRST_PLAY_TRACK_ID, INTRO_TRACK_ID, firstPlayHref } from "../lib/firstPlay";
 import { dailyPlayHref, getDailyChallenge } from "../lib/dailyChallenge";
 import { trackEvent } from "../lib/analytics";
@@ -104,6 +106,25 @@ export function HomePage() {
           <HomeHeroPlay />
         </div>
       </div>
+
+      <section className="meet-characters" aria-label="BeatScape characters">
+        <div className="section-head">
+          <h2>Meet the Districts</h2>
+          <Link to="/characters" className="section-link">
+            All characters
+          </Link>
+        </div>
+        <div className="character-strip">
+          {CHARACTER_LIST.map((c) => (
+            <div key={c.code} className="character-strip-item" style={{ ["--district-color" as string]: c.color }}>
+              <Link to="/characters" className="character-strip-link" aria-label={`${c.code} — ${c.district}`}>
+                <CharacterAvatar district={c.district} size={72} />
+                <span className="character-strip-code">{c.code}</span>
+              </Link>
+            </div>
+          ))}
+        </div>
+      </section>
 
       {daily && dailyTrack && (
         <section className="daily-challenge-banner">

@@ -47,6 +47,7 @@ export function Layout({ children }: { children: ReactNode }) {
         </Link>
         <nav className="site-nav">
           <NavLink to="/library">Library</NavLink>
+          <NavLink to="/characters">Characters</NavLink>
           <NavLink to="/leaderboard">Local Board</NavLink>
           <NavLink to="/settings">Settings</NavLink>
         </nav>

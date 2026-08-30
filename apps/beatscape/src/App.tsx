@@ -1,6 +1,7 @@
 import { Layout } from "./components/Layout";
 import { HomePage } from "./pages/Home";
 import { LibraryPage } from "./pages/Library";
+import { CharactersPage } from "./pages/Characters";
 import { TrackPage } from "./pages/Track";
 import { PlayPage } from "./pages/Play";
 import { ResultsPage } from "./pages/Results";
@@ -19,6 +20,7 @@ export default function App() {
       routes={[
         { path: "/", element: <HomePage /> },
         { path: "/library", element: <LibraryPage /> },
+        { path: "/characters", element: <CharactersPage /> },
         { path: "/track/:id", element: <TrackPage /> },
         { path: "/play/:id", element: <PlayPage /> },
         { path: "/results", element: <ResultsPage /> },
