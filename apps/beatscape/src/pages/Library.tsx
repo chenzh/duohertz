@@ -12,6 +12,7 @@ import {
 import type { CatalogTrack, TrackVibe } from "../types/catalog";
 import { loadFavorites } from "../storage/settings";
 import { DistrictBadge } from "../components/DistrictBadge";
+import { CharacterAvatar } from "../components/CharacterAvatar";
 import { VibeBadge } from "../components/VibeBadge";
 import { SCAPE_COPY, districtColor, SHOWCASE_TRACK_IDS } from "../constants/scape";
 import { LIBRARY_PAGE_META, usePageMeta } from "../seo/pageMeta";
@@ -143,6 +144,7 @@ export function LibraryPage() {
               style={{ ["--district-color" as string]: districtColor(t.district) }}
             >
               <img src={assetUrl(t.cover)} alt="" loading="lazy" />
+              <CharacterAvatar district={t.district} size={52} className="track-card-avatar" />
             </div>
             <div>
               <strong>{t.title}</strong>

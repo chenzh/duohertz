@@ -21,6 +21,12 @@ export const LIBRARY_PAGE_META: PageMeta = {
     "Browse owned AI originals. Filter by night-drive vibe, groove, battle energy, or genre. Feel the Beat, Own the Scape.",
 };
 
+export const CHARACTERS_PAGE_META: PageMeta = {
+  title: "Characters — BeatScape",
+  description:
+    "Seven Districts, seven night-shift souls — the original anime character IP behind the Scape. Owned, original, RESONANCE-style. Feel the Beat, Own the Scape.",
+};
+
 export const CALIBRATION_PAGE_META: PageMeta = {
   title: "Calibration — BeatScape",
   description:

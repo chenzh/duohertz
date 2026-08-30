@@ -2408,3 +2408,148 @@ td {
   flex-wrap: wrap;
   gap: 10px;
 }
+
+/* ===== Character IP (anime + LoRA) ===== */
+
+.character-avatar {
+  display: block;
+  object-fit: cover;
+  background: #12100f;
+  border: 2px solid var(--district-color, #e23d3d);
+}
+.character-avatar.rounded {
+  border-radius: 50%;
+}
+.character-avatar.glow {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12), 0 8px 28px -8px var(--district-color, #e23d3d);
+}
+
+/* Characters gallery page */
+.character-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 18px;
+  margin-top: 22px;
+}
+.character-card {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  border-top: 3px solid var(--district-color, #e23d3d);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.character-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 38px -16px var(--district-color, #e23d3d);
+}
+.character-card-art {
+  background: #12100f;
+  aspect-ratio: 640 / 935;
+  overflow: hidden;
+}
+.character-card-art .character-avatar {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 0;
+}
+.character-card-body {
+  padding: 14px 16px 18px;
+}
+.character-code {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--district-color, #e23d3d);
+  border: 1px solid var(--district-color, #e23d3d);
+  border-radius: 999px;
+  padding: 2px 10px;
+  margin-bottom: 8px;
+}
+.character-card-body h2 {
+  font-size: 19px;
+  margin: 0 0 6px;
+}
+.character-role {
+  margin: 0 0 8px;
+  font-size: 14px;
+  color: var(--text);
+}
+.character-motif {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.45;
+}
+.motif-label {
+  display: inline-block;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 4px;
+  padding: 1px 6px;
+  margin-right: 6px;
+}
+.characters-foot {
+  margin-top: 24px;
+  font-size: 13px;
+  color: var(--muted);
+  max-width: 680px;
+}
+
+/* Library card avatar overlay */
+.track-card-cover-wrap {
+  position: relative;
+}
+.track-card-avatar {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  width: 52px !important;
+  height: 52px !important;
+  border-radius: 50%;
+  border: 2px solid var(--district-color, #e23d3d);
+  box-shadow: 0 4px 14px -4px rgba(0, 0, 0, 0.6);
+}
+
+/* Home "Meet the Districts" strip */
+.meet-characters {
+  margin-top: 34px;
+}
+.character-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 14px;
+}
+.character-strip-item {
+  padding: 10px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.02);
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+.character-strip-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  color: inherit;
+}
+.character-strip-item:hover {
+  transform: translateY(-2px);
+  border-color: var(--district-color, #e23d3d);
+}
+.character-strip-code {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--district-color, #e23d3d);
+}
