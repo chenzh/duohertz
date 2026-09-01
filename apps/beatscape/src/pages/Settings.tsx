@@ -19,6 +19,7 @@ import {
   presetIdFor,
 } from "../input/keyMap";
 import { isCoarsePointer } from "../input/touchInput";
+import { hasProfanity } from "../lib/profanity";
 import { SCAPE_COPY_EXTRA } from "../constants/scape";
 import { SETTINGS_PAGE_META, usePageMeta } from "../seo/pageMeta";
 
@@ -35,6 +36,7 @@ export function SettingsPage() {
   const preset = presetIdFor(keys);
   const activePreset = KEY_PRESETS.find((p) => p.id === preset) ?? null;
   const duplicate = hasDuplicateKeys(keys);
+  const nameBlocked = hasProfanity(displayName);
 
   useEffect(() => {
     if (listening < 0) return;
@@ -58,7 +60,7 @@ export function SettingsPage() {
   }, [listening]);
 
   const save = () => {
-    if (duplicate) return;
+    if (duplicate || nameBlocked) return;
     saveSettings(settings);
     saveOffsetMs(offset);
     saveKeys(keys);
@@ -86,6 +88,9 @@ export function SettingsPage() {
               onChange={(e) => setDisplayName(e.target.value)}
             />
           </label>
+          {nameBlocked && (
+            <p className="error">That name won&apos;t pass the board censors — pick another.</p>
+          )}
           <label className="field">
             Global offset (ms)
             <input
@@ -211,7 +216,12 @@ export function SettingsPage() {
       </div>
 
       <div className="cta-row" style={{ marginTop: 20 }}>
-        <button type="button" className="btn primary" onClick={save} disabled={duplicate}>
+        <button
+          type="button"
+          className="btn primary"
+          onClick={save}
+          disabled={duplicate || nameBlocked}
+        >
           {saved ? "Saved ✓" : "Save settings"}
         </button>
         <Link className="btn ghost" to="/calibrate">

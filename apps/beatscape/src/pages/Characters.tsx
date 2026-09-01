@@ -1,3 +1,4 @@
+import { Link } from "../router";
 import { CHARACTER_LIST } from "../constants/scape";
 import { CharacterAvatar } from "../components/CharacterAvatar";
 import { CHARACTERS_PAGE_META, usePageMeta } from "../seo/pageMeta";
@@ -9,8 +10,14 @@ export function CharactersPage() {
       <header className="page-header">
         <h1>Characters</h1>
         <p className="tagline">
-          Seven Districts. Seven night-shift souls. Each is the face of the Scape — built
-          original, owned outright.
+          Three musicians. Seven Districts. No record deal. NIGHTSHIFT is the only band
+          still keeping the city loud — original, owned outright.
+        </p>
+        <p className="tagline">
+          Their pirate radio, The Late Static, broadcasts one episode a week.{" "}
+          <Link to="/radio" className="section-link">
+            Season program →
+          </Link>
         </p>
       </header>
 
@@ -38,8 +45,9 @@ export function CharactersPage() {
       </div>
 
       <p className="characters-foot">
-        Visual identity: RESONANCE flat + hard-edge ink line. The four-layer resonance diamond
-        lives at every character&apos;s sound source. Marks are tools, never weapons.
+        Visual identity: RESONANCE flat + hard-edge ink line. Voice, ear, heart — three
+        crew, seven blocks, every night one choice. If it&apos;s not yours, don&apos;t
+        sample it.
       </p>
     </section>
   );

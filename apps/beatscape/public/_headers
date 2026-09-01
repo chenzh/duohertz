@@ -1,0 +1,36 @@
+# Cloudflare Pages 响应头。
+#
+# 背景：这些规则以前只写在 netlify.toml 里（Netlify 专属的 [[headers]] 格式），
+# 而本项目实际部署在 Cloudflare Pages —— 也就是说线上从来没生效过：带内容哈希
+# 的 JS/CSS 拿不到 immutable，回访用户每次都重新下载整个 bundle。
+#
+# 路径说明：build:cf 会把 VITE_BASE 设成 "/"，所以线上是 /assets/*、/catalog/*
+# 而不是 /beatscape/assets/*。语法见 developers.cloudflare.com/pages/platform/headers
+
+# Vite 给这些文件名加了内容哈希，内容一变文件名就变 —— 永久缓存是安全的。
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# 曲库音频 / 谱面按 track id 寻址（如 bs-s3-14/audio.m4a），重生成会产出新 id
+# 而不是原地覆盖。但"废弃重生成"流程没有强制保证这一点，所以这里不用 immutable：
+# 30 天足够省下回访流量，万一真的原地覆盖了，最多一个月后自动纠正。
+/catalog/*
+  Cache-Control: public, max-age=2592000, must-revalidate
+
+# catalog.json 会随曲库扩容而变，且文件名不变 —— 必须短缓存。
+/catalog.json
+  Cache-Control: public, max-age=300, must-revalidate
+
+# 角色立绘文件名不含哈希，换图是原地覆盖，所以保守一些。
+/characters/*
+  Cache-Control: public, max-age=86400, must-revalidate
+
+# HTML 入口永远回源：否则发版后用户拿不到新的资源引用，会被旧 index 卡住。
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/sitemap.xml
+  Cache-Control: public, max-age=3600
+
+/robots.txt
+  Cache-Control: public, max-age=3600

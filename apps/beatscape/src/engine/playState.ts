@@ -71,6 +71,14 @@ const ZERO_COUNTS = (): Record<Judgment, number> => ({
  */
 export class GameSession {
   readonly notes: RTNote[];
+  /**
+   * The same notes sorted by head time. `tick` and the draw loop walk this
+   * from `cursor` so only the live window is touched. `notes` keeps its chart
+   * order because `press` resolves ties by array order.
+   */
+  readonly order: RTNote[];
+  /** First index in `order` that is not fully judged yet — never walks back. */
+  cursor = 0;
   readonly totalNotes: number;
   readonly mode: PlayMode;
   readonly chordAssist: boolean;
@@ -84,6 +92,13 @@ export class GameSession {
   failed = false;
   consecutiveMiss = 0;
 
+  /** Judged notes — maintained instead of scanning `notes.every(n => n.done)`. */
+  private doneCount = 0;
+  /**
+   * `tick`'s return buffer. Reused every frame: consumers must read it before
+   * the next tick (the play loop does — it only iterates it).
+   */
+  private readonly fxBuf: JudgeFx[] = [];
   private slowPending = false;
 
   constructor(chart: ChartJSON, mode: PlayMode, options: SessionOptions = {}) {
@@ -98,11 +113,21 @@ export class GameSession {
       chord: {},
       done: false,
     }));
+    // Stable sort: charts already arrive time-ordered, so this is a no-op for
+    // real data and only guarantees the cursor window is meaningful.
+    this.order = [...this.notes].sort((a, b) => a.tMs - b.tMs);
     this.totalNotes = chart.total_notes || countTotalNotes(chart.notes);
   }
 
   get isComplete(): boolean {
-    return this.notes.every((n) => n.done);
+    return this.doneCount >= this.notes.length;
+  }
+
+  /** Mark a note judged and keep `doneCount` in step (idempotent). */
+  private markDone(n: RTNote): void {
+    if (n.done) return;
+    n.done = true;
+    this.doneCount++;
   }
 
   /** PlayField consumes this once when 3 consecutive misses occur (Practice). */
@@ -164,15 +189,15 @@ export class GameSession {
 
     if (sub === "head") {
       chosen.head = j;
-      if (chosen.def.type === "tap") chosen.done = true;
-      if (chosen.def.type === "slide" && j === "miss") chosen.done = true;
+      if (chosen.def.type === "tap") this.markDone(chosen);
+      if (chosen.def.type === "slide" && j === "miss") this.markDone(chosen);
     } else if (sub === "chord") {
       chosen.chord[lane] = j;
       if (chosen.def.type === "chord" && chosen.def.lanes.every((l) => chosen.chord[l] != null))
-        chosen.done = true;
+        this.markDone(chosen);
     } else {
       chosen.tail = j;
-      chosen.done = true;
+      this.markDone(chosen);
     }
     return { lane, judgment: j, deltaMs: delta };
   }
@@ -188,7 +213,7 @@ export class GameSession {
       const j: Judgment = Math.abs(delta) <= good + 20 ? judgeHoldTail(delta, this.mode) : "miss";
       this.register(j, j === "miss" ? { lane, tMs: songMs } : undefined);
       n.tail = j;
-      n.done = true;
+      this.markDone(n);
       return { lane, judgment: j, deltaMs: delta };
     }
     return null;
@@ -196,16 +221,20 @@ export class GameSession {
 
   /** Auto-miss notes whose window has fully passed. Returns FX for rendering. */
   tick(songMs: number): JudgeFx[] {
-    if (this.failed || this.isComplete) return [];
+    // Reused buffer (see `fxBuf`): consumed synchronously by the play loop.
+    const applied = this.fxBuf;
+    applied.length = 0;
+    if (this.failed || this.isComplete) return applied;
     const good = goodWindowMs(this.mode);
-    const applied: JudgeFx[] = [];
-    for (const n of this.notes) {
+    const order = this.order;
+    for (let i = this.cursor; i < order.length; i++) {
+      const n = order[i]!;
       if (n.done) continue;
       const d = n.def;
       if (d.type === "tap") {
         if (n.head === null && songMs - n.tMs > good) {
           n.head = "miss";
-          n.done = true;
+          this.markDone(n);
           this.register("miss", { lane: d.lane, tMs: songMs });
           applied.push({ lane: d.lane, judgment: "miss", deltaMs: songMs - n.tMs });
         }
@@ -223,35 +252,39 @@ export class GameSession {
             applied.push({ lane: l, judgment: "miss", deltaMs: songMs - n.tMs });
           }
         }
-        if (d.lanes.every((l) => n.chord[l] != null)) n.done = true;
+        if (d.lanes.every((l) => n.chord[l] != null)) this.markDone(n);
       } else if (d.type === "hold") {
         if (n.head === null && songMs - n.tMs > good) {
           n.head = "miss";
           n.tail = "miss";
-          n.done = true;
+          this.markDone(n);
           this.register("miss", { lane: d.lane, tMs: songMs });
           this.register("miss", { lane: d.lane, tMs: songMs });
           applied.push({ lane: d.lane, judgment: "miss", deltaMs: songMs - n.tMs });
         } else if (n.head !== null && n.tail === null && songMs - n.endMs > good + 20) {
           n.tail = "miss";
-          n.done = true;
+          this.markDone(n);
           this.register("miss", { lane: d.lane, tMs: songMs });
           applied.push({ lane: d.lane, judgment: "miss", deltaMs: songMs - n.endMs });
         }
       } else if (d.type === "slide") {
         if (n.head === null && songMs - n.tMs > good) {
           n.head = "miss";
-          n.done = true;
+          this.markDone(n);
           this.register("miss", { lane: d.lane, tMs: songMs });
           applied.push({ lane: d.lane, judgment: "miss", deltaMs: songMs - n.tMs });
         } else if (n.head !== null && n.tail === null && songMs - n.endMs > good + 20) {
           n.tail = "miss";
-          n.done = true;
+          this.markDone(n);
           this.register("miss", { lane: d.to, tMs: songMs });
           applied.push({ lane: d.to, judgment: "miss", deltaMs: songMs - n.endMs });
         }
       }
     }
+    // Retire the judged head of the window. A hold stays un-done long after its
+    // head time (the tail is still playable), so only advance over notes that
+    // are finished — never over time.
+    while (this.cursor < order.length && order[this.cursor]!.done) this.cursor++;
     return applied;
   }
 

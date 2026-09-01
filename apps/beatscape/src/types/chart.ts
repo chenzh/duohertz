@@ -62,6 +62,8 @@ export type PlayResult = {
   judgments: Record<Judgment, number>;
   totalNotes: number;
   missEvents: MissEvent[];
+  /** Highest SIGNAL atmosphere tier reached this run (docs/BEATSCAPE-SURGE-FX.md). Presentation-only. */
+  surgeMaxTier?: 0 | 1 | 2 | 3;
 };
 
 export type LastRun = {
@@ -84,4 +86,6 @@ export type LastRun = {
   endedAt: string;
   /** PB score captured before this run was saved — used to flag a true new record. */
   prevBestScore?: number;
+  /** Highest SIGNAL tier reached (LIVE/ON AIR earn the Results badge + poster tag). */
+  surgeMaxTier?: 0 | 1 | 2 | 3;
 };

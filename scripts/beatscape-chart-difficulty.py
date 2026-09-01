@@ -85,6 +85,12 @@ def profile(path: str) -> dict | None:
         "c4": sizes[4],
         "same_hand": same_hand,
         "cross_hand": cross_hand,
+        # Share of chords that force one thumb onto two lanes. Generator theory
+        # value is ~40% on hard (2 of 5 CHORD_SHAPES_HARD); absolute same-hand
+        # counts scale with chart length/onset density, so compare this, not counts.
+        "same_hand_rate": round(same_hand / (same_hand + cross_hand), 3)
+        if (same_hand + cross_hand)
+        else 0.0,
     }
 
 
@@ -119,7 +125,7 @@ def main() -> int:
         by_tier[r["tier"]].append(r)
 
     print(f"{'tier':9s} {'charts':>6s} {'notes':>7s} {'NPS avg':>8s} {'NPS peak':>9s} "
-          f"{'chord%':>7s} {'2键':>6s} {'3键':>5s} {'4键':>5s} {'同手':>6s} {'跨手':>6s}")
+          f"{'chord%':>7s} {'2键':>6s} {'3键':>5s} {'4键':>5s} {'同手':>6s} {'跨手':>6s} {'同手率':>6s}")
     for tier in TIERS:
         rs = by_tier.get(tier)
         if not rs:
@@ -128,7 +134,7 @@ def main() -> int:
         print(f"{tier:9s} {len(rs):6d} {a('judge_notes'):7.0f} {a('nps_avg'):8.2f} "
               f"{a('nps_peak'):9.1f} {a('chord_rate')*100:6.1f}% "
               f"{a('c2'):6.1f} {a('c3'):5.1f} {a('c4'):5.1f} "
-              f"{a('same_hand'):6.1f} {a('cross_hand'):6.1f}")
+              f"{a('same_hand'):6.1f} {a('cross_hand'):6.1f} {a('same_hand_rate')*100:5.1f}%")
 
     worst = sorted(rows, key=lambda r: r["same_hand"], reverse=True)[:5]
     print("\n同手和弦最多（移动端最难）:")

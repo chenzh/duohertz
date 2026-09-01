@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "../router";
 import { loadCatalog } from "../catalog/loadCatalog";
 import { loadBoard, loadDailyBoard, type BoardEntry } from "../storage/session";
 import { todayKey } from "../lib/dailyChallenge";
@@ -39,7 +40,10 @@ export function LeaderboardPage() {
       <header className="page-header">
         <h1>Local Board</h1>
         <p className="tagline">
-          Scores stay on this device — playing as <strong>{playerName}</strong>. No global upload in Stage 1–3.
+          Scores stay on this device — playing as <strong>{playerName}</strong>. No global upload in Stage 1–3.{" "}
+          <Link to="/profile" className="honor-link">
+            View your profile →
+          </Link>
         </p>
       </header>
 

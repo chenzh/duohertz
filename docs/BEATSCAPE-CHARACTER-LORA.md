@@ -21,6 +21,16 @@
 | glide  | Slide District  | `glidebs` |
 | halo   | Skyline Hook    | `halobs`  |
 
+> **⚠️ 2026-08-30 起**：世界观切换为三人组 NIGHTSHIFT（[`BEATSCAPE-WORLDBIBLE.md`](./BEATSCAPE-WORLDBIBLE.md)），旧 7 角色人设退役、LoRA 停止新增投入（已训好的权重保留存档）。新角色触发词：
+
+| 角色 | District | 触发词 | anchor（front-1337） |
+|------|----------|--------|----------------------|
+| juno  | Pulse Core   | `junobs`   | `juno-front-1337-00-1571306751.png` |
+| atlas | Skyline Hook | `atlasbs`  | `atlas-front-1337-03-1647999605.png` |
+| torque| Chrome Yard  | `torquebs` | `torque-front-1337-00-1571306751.png` |
+
+新角色 prompt 定义已入 `scripts/beatscape-anime-prompts.py`（CHARACTERS 追加 juno/atlas/torque，ATLAS 用 `1other, androgynous`）；生图环境 = 托管 venv `~/.workbuddy/binaries/python/envs/default`（torch 2.13 / diffusers 0.40 / MPS）。
+
 ---
 
 ## 1. 三步流水线（每角色）
@@ -98,8 +108,8 @@ CLI 在 MPS 上已验证可跑；但若想要更快/更稳，用 **Draw Things**
 ## 5. 状态
 
 - [x] 管线验证：RIVET LoRA 产出 + 6 张验证图身份锁定 ✅（战术背心 + 金共振菱形光环 + 橙胸共振球一致，无 §2 红线）
-- [x] VOLTA / STATIC / PRISM LoRA 产出
-- [~] EMBER / GLIDE / HALO 批训练中（`scripts/beatscape-anime-lora-batch.py` 串行，约 7–8 min/角色）
+- [x] VOLTA / STATIC / PRISM LoRA 产出（旧 7 角色资产，2026-08-30 起退役存档）
+- [x] **NIGHTSHIFT 三人 LoRA 全部产出 ✅（2026-08-30）**：JUNO（loss 1.39）/ ATLAS（1.36）/ TORQUE（1.38），各 8 图训练集 + 6 张验证图身份锁定，MOTIF 就位、无红线；权重在 `data/beatscape-characters/anime/{juno,atlas,torque}/lora/pytorch_lora_weights.safetensors`
 - 共振钻石 MOTIF = 核心 IP 元素；§2 红线 = 面具/校服/披风/塔罗/武器/日文，任何产出禁止出现。
 
 ---

@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "../router";
-import { assetUrl, loadCatalog } from "../catalog/loadCatalog";
+import { getMessages } from "../i18n";
+import { assetUrl } from "../catalog/loadCatalog";
+import { useCatalog } from "../catalog/useCatalog";
 import type { CatalogTrack } from "../types/catalog";
 import { FEATURED_TRACK_IDS, SCAPE_COPY, SCAPE_COPY_EXTRA } from "../constants/scape";
 import { CHARACTER_LIST } from "../constants/scape";
@@ -9,16 +11,31 @@ import { CharacterAvatar } from "../components/CharacterAvatar";
 import { FIRST_PLAY_TRACK_ID, INTRO_TRACK_ID, firstPlayHref } from "../lib/firstPlay";
 import { dailyPlayHref, getDailyChallenge } from "../lib/dailyChallenge";
 import { trackEvent } from "../lib/analytics";
+import { RADIO_EPISODES } from "../data/radioEpisodes";
+import { episodeIndexAt } from "../lib/radio";
 import { keyLabels } from "../input/keyMap";
 import { isOnboarded, loadKeys, setOnboarded } from "../storage/settings";
+import { readLastRun } from "../storage/session";
 import { HOME_PAGE_META, usePageMeta } from "../seo/pageMeta";
+
+/** the Hush marks a block after 48h without music (World Bible §4) — same threshold for the radio welcome-back line. */
+const QUIET_BLOCK_MS = 48 * 60 * 60 * 1000;
 
 function FeaturedCard({ track }: { track: CatalogTrack }) {
   const preview = track.preview ?? track.audio;
   return (
     <div className="trend-card-wrap">
       <Link to={`/track/${track.track_id}`} className="trend-card">
-        <div className="trend-cover" style={{ backgroundImage: `url(${assetUrl(track.cover)})` }}>
+        <div className="trend-cover">
+          <img
+            className="trend-cover-img"
+            src={assetUrl(track.cover)}
+            alt=""
+            loading="lazy"
+            decoding="async"
+            width={512}
+            height={512}
+          />
           <span className="trend-bpm">{track.bpm} BPM</span>
         </div>
         <div className="trend-meta">
@@ -36,13 +53,14 @@ function FeaturedCard({ track }: { track: CatalogTrack }) {
 
 export function HomePage() {
   usePageMeta(HOME_PAGE_META);
-  const [tracks, setTracks] = useState<CatalogTrack[]>([]);
+  // 曲库走统一的 useCatalog：取不到时有 error 状态，而不是 unhandled rejection + 空列表。
+  const { tracks, error: catalogError } = useCatalog();
+  const t = getMessages();
   const [showIntro, setShowIntro] = useState(() => !isOnboarded());
   const keys = useMemo(() => keyLabels(loadKeys()), []);
 
   useEffect(() => {
     trackEvent("home_view");
-    void loadCatalog().then((c) => setTracks(c.tracks));
   }, []);
 
   const introTrack = tracks.find((t) => t.track_id === INTRO_TRACK_ID) ?? null;
@@ -54,6 +72,12 @@ export function HomePage() {
   };
 
   const heroTrack = tracks.find((t) => t.track_id === FIRST_PLAY_TRACK_ID) ?? tracks[0];
+  const cameBackQuiet = useMemo(() => {
+    const last = readLastRun();
+    if (!last) return false;
+    return Date.now() - new Date(last.endedAt).getTime() >= QUIET_BLOCK_MS;
+  }, []);
+  const onAir = RADIO_EPISODES[episodeIndexAt(Date.now())];
   const featured = FEATURED_TRACK_IDS.map((id) => tracks.find((t) => t.track_id === id)).filter(
     Boolean,
   ) as CatalogTrack[];
@@ -64,6 +88,11 @@ export function HomePage() {
 
   return (
     <section className="home">
+      {catalogError && (
+        <p className="catalog-error" role="alert">
+          Couldn’t load the track list ({catalogError}). Check your connection — the catalog is served from the same site.
+        </p>
+      )}
       <div className="hero-split">
         <div className="hero-copy">
           <p className="eyebrow">{SCAPE_COPY.rightsShort} · 4-lane rhythm · play in browser</p>
@@ -94,7 +123,7 @@ export function HomePage() {
               </Link>
             )}
             <Link className="btn ghost" to="/library">
-              Browse tracks
+              {t.ui.browseTracks}
             </Link>
             <Link className="btn ghost" to="/calibrate">
               Calibrate
@@ -107,11 +136,31 @@ export function HomePage() {
         </div>
       </div>
 
+      {cameBackQuiet && (
+        <p className="radio-welcome">
+          Your block went quiet for a while. Figured you&apos;d call eventually. —{" "}
+          <strong>JUNO, The Late Static</strong>
+        </p>
+      )}
+
+      {onAir && (
+        <section className="radio-episode-banner" aria-label="On air now — The Late Static">
+          <div>
+            <p className="eyebrow">On air · The Late Static</p>
+            <h2>{`EP ${onAir.ep} — ${onAir.title}`}</h2>
+            <p className="tagline">{onAir.lines[0]}</p>
+          </div>
+          <Link className="btn ghost" to="/radio">
+            Season program
+          </Link>
+        </section>
+      )}
+
       <section className="meet-characters" aria-label="BeatScape characters">
         <div className="section-head">
-          <h2>Meet the Districts</h2>
+          <h2>{t.ui.meetNightshift}</h2>
           <Link to="/characters" className="section-link">
-            All characters
+            The crew
           </Link>
         </div>
         <div className="character-strip">
@@ -147,9 +196,9 @@ export function HomePage() {
 
       <section className="trending-section">
         <div className="section-head">
-          <h2>Featured in the Scape</h2>
+          <h2>{t.ui.featuredInScape}</h2>
           <Link to="/library" className="section-link">
-            See all
+            {t.ui.seeAll}
           </Link>
         </div>
         <div className="trending-scroll">
@@ -162,12 +211,21 @@ export function HomePage() {
       {explore.length > 0 && (
         <section className="trending-section">
           <div className="section-head">
-            <h2>Explore the city</h2>
+            <h2>{t.ui.exploreCity}</h2>
           </div>
           <div className="trending-scroll">
             {explore.map((t) => (
               <Link key={t.track_id} to={`/track/${t.track_id}`} className="trend-card">
-                <div className="trend-cover" style={{ backgroundImage: `url(${assetUrl(t.cover)})` }}>
+                <div className="trend-cover">
+                  <img
+                    className="trend-cover-img"
+                    src={assetUrl(t.cover)}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    width={512}
+                    height={512}
+                  />
                   <span className="trend-bpm">{t.bpm} BPM</span>
                 </div>
                 <div className="trend-meta">
@@ -186,11 +244,16 @@ export function HomePage() {
             <p className="eyebrow">{SCAPE_COPY.introTitle}</p>
             {introTrack && (
               <div className="home-intro-track">
-                <div
-                  className="home-intro-cover"
-                  style={{ backgroundImage: `url(${assetUrl(introTrack.cover)})` }}
-                  aria-hidden
-                />
+              <img
+                className="home-intro-cover"
+                src={assetUrl(introTrack.cover)}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                width={512}
+                height={512}
+                aria-hidden
+              />
                 <div className="home-intro-track-meta">
                   <strong>{introTrack.title}</strong>
                   <span>

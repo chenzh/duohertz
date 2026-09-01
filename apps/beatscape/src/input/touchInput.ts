@@ -54,11 +54,6 @@ export function laneFromClientX(clientX: number, rect: DOMRect, laneCount = 4): 
   return laneFromX(clientX, w, laneCount);
 }
 
-/** True when enough time has passed since the last event in this lane. */
-export function debounceOk(lastAtMs: number, nowMs: number): boolean {
-  return nowMs - lastAtMs >= LANE_DEBOUNCE_MS;
-}
-
 /**
  * Tracks active touch pointers and debounces same-lane repeats.
  * - `press` returns `0` when the press is accepted, `null` when it is ignored

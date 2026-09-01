@@ -24,7 +24,7 @@ export const LIBRARY_PAGE_META: PageMeta = {
 export const CHARACTERS_PAGE_META: PageMeta = {
   title: "Characters — BeatScape",
   description:
-    "Seven Districts, seven night-shift souls — the original anime character IP behind the Scape. Owned, original, RESONANCE-style. Feel the Beat, Own the Scape.",
+    "Three musicians, seven Districts, no record deal — NIGHTSHIFT, the original character crew behind the Scape. Owned, original, RESONANCE-style. Feel the Beat, Own the Scape.",
 };
 
 export const CALIBRATION_PAGE_META: PageMeta = {
@@ -57,6 +57,18 @@ export const NOT_FOUND_PAGE_META: PageMeta = {
     "This page does not exist. Return to BeatScape home or browse the library. Feel the Beat, Own the Scape.",
 };
 
+export const PROFILE_PAGE_META: PageMeta = {
+  title: "Profile — BeatScape",
+  description:
+    "Your honor rank, achievements, and play stats — stored on this device only. Feel the Beat, Own the Scape.",
+};
+
+export const RADIO_PAGE_META: PageMeta = {
+  title: "The Late Static — BeatScape",
+  description:
+    "Season 1: Call-in — the pirate-radio broadcast of NIGHTSHIFT, one episode a week from a rooftop nobody can find. Feel the Beat, Own the Scape.",
+};
+
 export function setPageMeta(meta: PageMeta): void {
   document.title = meta.title;
   let el = document.querySelector('meta[name="description"]');
@@ -66,6 +78,16 @@ export function setPageMeta(meta: PageMeta): void {
     document.head.appendChild(el);
   }
   el.setAttribute("content", meta.description);
+  // Canonical per route (gap doc 5-3): keeps SPA URLs crawl-consistent.
+  if (typeof window !== "undefined") {
+    let link = document.querySelector('link[rel="canonical"]');
+    if (!link) {
+      link = document.createElement("link");
+      link.setAttribute("rel", "canonical");
+      document.head.appendChild(link);
+    }
+    link.setAttribute("href", `${window.location.origin}${window.location.pathname}`);
+  }
 }
 
 export function buildPlayPageMeta(

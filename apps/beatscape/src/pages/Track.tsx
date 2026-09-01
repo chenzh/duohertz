@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "../router";
+import { getMessages } from "../i18n";
 import { assetUrl, getTrack } from "../catalog/loadCatalog";
 import type { CatalogTrack } from "../types/catalog";
 import type { ChartTier, PlayMode } from "../types/chart";
@@ -9,10 +10,12 @@ import { TrackAudioPreview } from "../components/TrackAudioPreview";
 import { DistrictBadge } from "../components/DistrictBadge";
 import { VibeBadge } from "../components/VibeBadge";
 import { resolveTrackVibe } from "../catalog/trackVibe";
+import { trackRequest } from "../catalog/trackRequests";
 import { SCAPE_COPY, artistBio } from "../constants/scape";
 
 export function TrackPage() {
   const { id } = useParams();
+  const t = getMessages();
   const [track, setTrack] = useState<CatalogTrack | null>(null);
   const [tier, setTier] = useState<ChartTier>("standard");
   const [mode, setMode] = useState<PlayMode>("arcade");
@@ -40,16 +43,24 @@ export function TrackPage() {
   }
 
   const bio = track.artist_bio ?? artistBio(track.artist);
+  const request = trackRequest(track.track_id);
 
   return (
     <section className="track-detail">
       <Link to="/library" className="back-link">
-        Library
+        {t.ui.library}
       </Link>
 
       <div className="track-hero">
         <div className="track-hero-cover">
-          <img src={assetUrl(track.cover)} alt="" />
+          <img
+            src={assetUrl(track.cover)}
+            alt=""
+            width={512}
+            height={512}
+            decoding="async"
+            fetchPriority="high"
+          />
         </div>
         <div className="track-hero-body">
           <div className="track-hero-badges">
@@ -59,16 +70,21 @@ export function TrackPage() {
           <h1>{track.title}</h1>
           <p className="artist">{track.artist}</p>
           {bio && <p className="artist-bio">{bio}</p>}
+          {request && (
+            <p className="artist-bio radio-request">
+              “{request}” — <strong>The Late Static</strong>
+            </p>
+          )}
           <p className="meta">
             {track.genre} · {track.bpm} BPM · {track.duration_sec}s clip
           </p>
           <p className="rights">{SCAPE_COPY.rights}</p>
-          <TrackAudioPreview trackId={track.track_id} audioPath={track.audio} title={track.title} />
+          <TrackAudioPreview trackId={track.track_id} audioPath={track.preview ?? track.audio} title={track.title} />
           <StreamFullCTA track={track} />
 
           <div className="track-pickers">
             <label className="picker-pill">
-              Tier
+              {t.ui.tier}
               <select value={tier} onChange={(e) => setTier(e.target.value as ChartTier)}>
                 <option value="easy">Easy</option>
                 <option value="standard">Standard</option>
@@ -76,7 +92,7 @@ export function TrackPage() {
               </select>
             </label>
             <label className="picker-pill">
-              Mode
+              {t.ui.mode}
               <select value={mode} onChange={(e) => setMode(e.target.value as PlayMode)}>
                 <option value="arcade">Arcade</option>
                 <option value="casual">Casual</option>
@@ -94,7 +110,7 @@ export function TrackPage() {
               className={`btn ${fav ? "primary" : "ghost"}`}
               onClick={() => setFav(toggleFavorite(track.track_id).includes(track.track_id))}
             >
-              {fav ? "★ Favorited" : "☆ Favorite"}
+              {fav ? t.ui.favorited : t.ui.favorite}
             </button>
           </div>
         </div>

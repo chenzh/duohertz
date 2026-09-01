@@ -261,19 +261,22 @@ Loading(decode m4a) → needsStart(Tap to enter the Scape / hero autoStart)
 
 | 路由 | 页面 | as-built 职责 |
 |------|------|--------------|
-| `/` | Home | 双栏 hero（左文案+键帽+CTA，右 **HomeHeroPlay 真机可玩 demo**：PlayField hero 变体，蒙版后为 HeroGameplayPreview 循环动画，一键 Play+Sound 解锁后 autoStart）· Daily banner · Featured 卡（含 48s 音频试听 `<audio controls>`）· Explore 横滑 · 首访 intro 弹窗 |
+| `/` | Home | 双栏 hero（左文案+键帽+CTA，右 **HomeHeroPlay 真机可玩 demo**：PlayField hero 变体，蒙版后为 HeroGameplayPreview 循环动画，一键 Play+Sound 解锁后 autoStart）· Daily banner · **电台 On Air 横幅**（当前集 + Season program 入口）· **48h 回归欢迎语**（radio-welcome）· Featured 卡（含 48s 音频试听 `<audio controls>`）· Explore 横滑 · 首访 intro 弹窗 |
 | `/library` | Library | 搜索（title/artist/district/genre/vibe/tags 联合 hay）+ genre 下拉 + vibe 四 chip + Beginner/With vocals/Favorites 快筛 + 卡片网格（Vibe/District/Beginner/Vocals 徽章） |
-| `/track/:id` | Track | 封面 hero + 艺人 bio（catalog 字段优先，fallback `ARTIST_BIOS`）+ 音频试听 + Stream CTA + tier/mode 选择器（默认取 track `default_*`）+ Favorite |
+| `/track/:id` | Track | 封面 hero + 艺人 bio（catalog 字段优先，fallback `ARTIST_BIOS`）+ **电台点歌引语**（`trackRequests` 85/85 覆盖，缺 key 降级隐藏）+ 音频试听 + Stream CTA + tier/mode 选择器（默认取 track `default_*`）+ Favorite |
 | `/play/:id` | Play | query `tier`（缺省 easy）`mode`（缺省 casual）`daily=1`；加载封面做背景；Exit confirm；finish → `writeLastRun` + `setOnboarded` + `/results` |
 | `/results` | Results | 读 `bs_last_run`（`?run=local` 时优先 localStorage 深链）· Grade 大字 + FC/AP/NEW RECORD 徽章 · Score/Acc/MaxCombo 药丸 · 四档占比条 · **MissReplayPanel**（分道时间轴点图 + section 聚合 + 明细）· PB 对比 · Replay/Copy link/Poster/Library/Play Now · Owned Rights 条 |
 | `/calibrate` | Calibration | 8 拍 @120 BPM 四道轮流闪；`AudioContext` 时钟取 Δ；≥3 次取**中位数**建议 offset；Save → 写入并进首局；Skip → offset 0 |
 | `/settings` | Settings | 名字（≤24）/ Global offset ±200 / Hitsound / 双音量滑条 / FancyFX / Casual speed / **触屏专属 Thumb chord assist** / 键位三预设 + 逐道重绑（重复键禁存） |
 | `/leaderboard` | Leaderboard | **Local Board**：All-time（`bs_board` Top50）+ Daily challenge 双 tab；明示 "Scores stay on this device" |
+| `/characters` | Characters | NIGHTSHIFT 三人 crew 页（JUNO/ATLAS/TORQUE 档案卡 + 头像条入口），IP 主页面 |
+| `/radio` | Radio | **The Late Static 节目单**：Year 1 三季 24 集周播（`radioEpisodes.ts` season+week 结构，首播 2026-08-28）；已播全文 / 当前集 "On air now" 高亮 / 未播集只露 teaser；按季分组渲染 |
+| `/profile` | Profile | 荣誉段位 + 成就 + 统计（设备本地） |
 | `/privacy` `/terms` | Legal | 静态英文条款（2026-08-26 更新；本地存储声明、无追踪声明） |
 | fallback | NotFound | — |
 
-- 站点 chrome：顶部 logo（共振菱形 SVG）+ Library/Local Board/Settings + 玩家头像缩写；移动端底部 **5-tab tabbar**（Home/Library/Play/Board/Settings）；页脚 `BeatScape · AI Original · Owned Rights · v0.1.0`。
-- 每页 `usePageMeta` 动态 title/description（Play 页由 track seo 拼装）。
+- 站点 chrome：顶部 logo（共振菱形 SVG）+ Library/Characters/Radio/Local Board/Profile/Settings + 玩家头像缩写；移动端底部 **5-tab tabbar**（Home/Library/Play/Board/Settings，Radio 走 Home 横幅进入）；页脚 `BeatScape · AI Original · Owned Rights · v0.1.0`。
+- 每页 `usePageMeta` 动态 title/description（Play 页由 track seo 拼装）。`public/sitemap.xml`（6 主路由，beatscape.pages.dev）+ `robots.txt`（Disallow settings/profile/calibrate）随构建发布。
 
 ---
 
@@ -303,7 +306,7 @@ Loading(decode m4a) → needsStart(Tap to enter the Scape / hero autoStart)
 
 ## 11. 埋点（隐私友好）
 
-Plausible（`window.plausible` 可选挂载，不注入第三方脚本本身）+ localStorage 缓冲。事件集：`home_view / home_play_click / home_sound_toggle / home_hero_play_start / home_hero_play_finish / daily_challenge_click / intro_start / intro_dismiss / play_start / play_finish / share_copy / share_poster`。DEV 下 console.debug。
+Plausible（`window.plausible` 可选挂载，不注入第三方脚本本身）+ localStorage 缓冲。事件集：`home_view / home_play_click / home_sound_toggle / home_hero_play_start / home_hero_play_finish / daily_challenge_click / intro_start / intro_dismiss / radio_view / play_start / play_finish / share_copy / share_poster`。DEV 下 console.debug。
 
 ---
 
@@ -340,13 +343,14 @@ npm run deploy:cf             # build:cf + wrangler pages deploy dist --project-
 
 ---
 
-## 14. 质量与验收（2026-08-30 实测）
+## 14. 质量与验收（2026-08-30 实测 · 晚间更新）
 
-- `vitest run`：**11 文件 / 67 用例全部通过**（274ms）。
+- `vitest run`：**14 文件 / 96 用例全部通过**（~250ms）。
 - 关键验收面（`prdAcceptance.test.ts`）：Arcade 窗 15/30/50、MaxScore=N×300×4、准确率权重（P1+Gr0.75 → 2 音符 87.5%）、hold=2 计数、51ms=Miss、防抖 20ms、判定线几何、Stage2 Slide 结构合法性（相邻道、end>t、仅出现在 intro 段之后）。
-- 其余单测覆盖：judge / playState（8 例）/ geometry / noteSprite / touchInput / keyMap / session 存档 / pageMeta（18 例）/ i18n leaderboard / trackVibe。
+- 其余单测覆盖：judge / playState（含 chordAssist bank great 语义）/ geometry / noteSprite / touchInput / keyMap / session 存档 / pageMeta（18 例）/ i18n leaderboard / trackVibe / **profanity（leet 归一化 + Scunthorpe 防误报）** / **radio（跨季调度 + MONOLITH 真名按季 ≤3 + 违禁词护栏）**。
+- 谱面 QA：`python3 scripts/beatscape-chart-difficulty.py --tier hard`——85 张 hard 同手率 **40.5%** ≈ 生成器理论值 2/5（同手和弦观察项已关闭，非缺陷）。
 - 内容 QA：`public/reports/audit-report.json`（2026-08-29 生成）85 首逐曲字段 PASS；`pnpm catalog:beatscape` 配额缺口 0（SESSION 记录）。
-- 人工验收待办（SESSION P0）：50 首耳检、CF 重部署、RESONANCE 差异化盲测（上线前唯一未过项）。
+- 人工验收待办（SESSION P0）：50 首耳检（**工具已备**：`python3 scripts/beatscape-earcheck-worksheet.py` → `earcheck-worksheet.html`，逐曲播放器 + 判定持久化，仓库本地不部署）、CF 重部署、RESONANCE 差异化盲测（上线前唯一未过项）。
 
 ---
 

@@ -17,11 +17,22 @@
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Anton (display), Sora (secondary), IBM Plex Sans (body) — all SIL OFL. -->
+    <!-- Anton (display), Sora (secondary), IBM Plex Sans (body) — all SIL OFL.
+         Sora 只用到 600/700/800（见 styles.css），500 是白下载的 face，已去掉。
+         字体 CSS 改为非阻塞加载：preload 成 stylesheet，onload 再切换 rel，
+         避免首屏渲染被跨域字体 CSS 卡住；无 JS 时走 noscript 兜底。 -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Sora:wght@500;600;700;800&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Sora:wght@600;700;800&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'"
     />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Sora:wght@600;700;800&display=swap"
+      />
+    </noscript>
   </head>
   <body>
     <div id="root"></div>

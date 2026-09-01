@@ -1,0 +1,1069 @@
+// BeatScape playfield render loop — extracted from PlayField.tsx (P2-2).
+//
+// This module owns the entire requestAnimationFrame game loop: canvas setup,
+// sprite pre-render, the per-frame `draw()` routine, and the per-frame `loop()`
+// that advances the session + drives the SIGNAL/LIGHTING atmosphere. It was a
+// ~880-line `useEffect` closing over ~39 refs; moving it here keeps PlayField.tsx
+// focused on React (hooks, state, pointer/keyboard input, JSX).
+//
+// The body below is relocated VERBATIM from the component — only `onFinishRef`
+// became the `onFinish` callback passed through the context. All refs/values are
+// received via `PlayfieldRenderContext` and destructured with the SAME names the
+// original code used, so the logic is byte-for-byte identical.
+
+import type { RefObject } from "react";
+import type { ChartJSON, PlayMode, PlayResult } from "../../types/chart";
+import type { Conductor } from "../../audio/playback";
+import type { GameSession, JudgeFx } from "../../engine/playState";
+import type { ScoreStreak, SurgeMeter, SurgeTier } from "../../engine/surge";
+import {
+  playBreak,
+  playCountdownTick,
+  playHit,
+  playSurgeTier,
+} from "../../audio/hitsounds";
+import { vibrate } from "../../lib/haptics";
+import { accuracyPercent, comboMultiplier, judgmentScore } from "../../engine/judge";
+import {
+  HOLD_BODY_RATIO,
+  HOLD_STROKE_RATIO,
+  NOTE_PROXIMITY_GROWTH,
+  SLIDE_TAIL_SCALE,
+  makeNoteSprite,
+  noteWidthForLane,
+} from "../../engine/noteSprite";
+import {
+  noteProximityFactor,
+  noteScreenY,
+} from "../../engine/geometry";
+import { receptorYFromGeometry } from "../../input/touchInput";
+import {
+  SURGE_TIERS,
+  decayAtmosphere,
+  tierForHeat,
+} from "../../engine/surge";
+import {
+  JUDGE_COLORS,
+  LANE_COLORS,
+  LANE_RGB,
+  SURGE_COPY,
+  districtColor,
+} from "../../constants/scape";
+import {
+  hexToRgb,
+  inkedText,
+  makeDiamondRingSprite,
+  makeHalftonePattern,
+  makeRaysSprite,
+  prefersReducedMotion,
+  skewPath,
+} from "./canvasHelpers";
+
+type Fx = { lane: number; judgment: JudgeFx["judgment"]; born: number; deltaMs: number };
+type ScorePop = { x: number; y: number; text: string; born: number; color: string };
+
+export type { Fx, ScorePop };
+
+const LANE_FLASH_MS = 180;
+const JUDGE_LABEL: Record<string, string> = {
+  perfect: "PERFECT",
+  great: "GREAT",
+  good: "GOOD",
+  miss: "MISS",
+};
+const JUDGE_COLOR: Record<string, string> = { ...JUDGE_COLORS };
+const COMBO_MILESTONES = [10, 25, 50, 100, 150, 200, 300];
+
+export interface PlayfieldRenderContext {
+  // refs (read + mutated by the loop)
+  canvasRef: RefObject<HTMLCanvasElement | null>;
+  wrapRef: RefObject<HTMLDivElement | null>;
+  conductorRef: RefObject<Conductor | null>;
+  sessionRef: RefObject<GameSession | null>;
+  pressedRef: RefObject<Set<number>>;
+  laneFlashRef: RefObject<number[]>;
+  spritesRef: RefObject<HTMLCanvasElement[]>;
+  halftonePatRef: RefObject<CanvasPattern | null>;
+  ringSpriteRef: RefObject<HTMLCanvasElement | null>;
+  raysRef: RefObject<HTMLCanvasElement | null>;
+  dimRef: RefObject<{ w: number; h: number }>;
+  shakeRef: RefObject<{ mag: number; until: number }>;
+  fxRef: RefObject<Fx[]>;
+  particlesRef: RefObject<
+    Array<{ x: number; y: number; vx: number; vy: number; born: number; life: number; r: number; g: number; b: number; size: number }>
+  >;
+  milestoneRef: RefObject<{ text: string; born: number } | null>;
+  scorePopsRef: RefObject<ScorePop[]>;
+  comboBreakRef: RefObject<number>;
+  prevComboRef: RefObject<number>;
+  lastComboRef: RefObject<number>;
+  surgeRef: RefObject<SurgeMeter>;
+  streakRef: RefObject<ScoreStreak>;
+  prevNeonRef: RefObject<number>;
+  surgeTierRef: RefObject<SurgeTier>;
+  lastEffMsRef: RefObject<number>;
+  ringsRef: RefObject<number[]>;
+  colsRef: RefObject<Array<{ born: number; lane: number }>>;
+  sweepsRef: RefObject<Array<{ born: number; corner: number }>>;
+  lastLaneRef: RefObject<number>;
+  lightComboPrevRef: RefObject<number>;
+  lastShowBarRef: RefObject<number>;
+  surgeDropRef: RefObject<number>;
+  needsStartRef: RefObject<boolean>;
+  pausedRef: RefObject<boolean>;
+  mutedRef: RefObject<boolean>;
+  hitsoundRef: RefObject<boolean>;
+  fancyFxRef: RefObject<boolean>;
+  offsetMsRef: RefObject<number>;
+  approachRef: RefObject<number>;
+  lastNoteMsRef: RefObject<number>;
+  lastCountInt: RefObject<number>;
+  finishedRef: RefObject<boolean>;
+  // non-ref values captured at effect creation
+  chart: ChartJSON;
+  mode: PlayMode;
+  variant: "full" | "hero";
+  touchUi: boolean;
+  district: string | undefined;
+  demoSurge: number;
+  demoStreak: number;
+  keyHint: string[];
+  // component-bound closures the loop cannot own
+  spawnHitFx: (lane: number, judgment: JudgeFx["judgment"]) => void;
+  onFinish: (result: PlayResult) => void;
+}
+
+/**
+ * Start the playfield render loop. Returns a dispose function that cancels the
+ * rAF and disconnects the ResizeObserver — call it from a `useEffect` cleanup.
+ */
+export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void {
+  const {
+    canvasRef,
+    wrapRef,
+    conductorRef,
+    sessionRef,
+    pressedRef,
+    laneFlashRef,
+    spritesRef,
+    halftonePatRef,
+    ringSpriteRef,
+    raysRef,
+    dimRef,
+    shakeRef,
+    fxRef,
+    particlesRef,
+    milestoneRef,
+    scorePopsRef,
+    comboBreakRef,
+    prevComboRef,
+    lastComboRef,
+    surgeRef,
+    streakRef,
+    prevNeonRef,
+    surgeTierRef,
+    lastEffMsRef,
+    ringsRef,
+    colsRef,
+    sweepsRef,
+    lastLaneRef,
+    lightComboPrevRef,
+    lastShowBarRef,
+    surgeDropRef,
+    needsStartRef,
+    pausedRef,
+    mutedRef,
+    hitsoundRef,
+    fancyFxRef,
+    offsetMsRef,
+    approachRef,
+    lastNoteMsRef,
+    lastCountInt,
+    finishedRef,
+    chart,
+    mode,
+    variant,
+    touchUi,
+    district,
+    demoSurge,
+    demoStreak,
+    keyHint,
+    spawnHitFx,
+    onFinish,
+  } = ctx;
+
+  const canvas = canvasRef.current;
+  const wrap = wrapRef.current;
+  if (!canvas || !wrap) return () => {};
+  // draw() 每帧都用不透明色整屏覆盖（见其开头的 fillRect），所以 canvas 的
+  // alpha 通道完全没有用处，却会让合成器多做一次 blend。关掉它是零风险的白捡。
+  const ctx2d = canvas.getContext("2d", { alpha: false }) ?? canvas.getContext("2d")!;
+  let raf = 0;
+
+  // Pre-render glowing note sprites once. Per frame we only blit these
+  // (drawImage) instead of recomputing shadowBlur on every note — shadowBlur
+  // is the single most expensive canvas op and was the main frame-cost on
+  // dense charts. The Douyin neon look is baked into the sprite.
+  spritesRef.current = LANE_COLORS.map((c: string) => makeNoteSprite(c, 120));
+
+  // SIGNAL pre-rendered layers (size-independent): halftone tile + diamond ring.
+  // District 色只跟 district 有关，每帧重算（replace/split/map/join/parseInt）
+  // 纯属浪费 —— 提到 effect 作用域，draw() 里直接读 dr/dg/db。
+  const [dr, dg, db] = hexToRgb(districtColor(district ?? "Pulse Core"));
+  halftonePatRef.current = makeHalftonePattern(ctx2d, [dr, dg, db]);
+  ringSpriteRef.current = makeDiamondRingSprite();
+
+  const drawNote = (lane: number, x: number, y: number, size: number, alpha: number, receptorY: number) => {
+    const sp = spritesRef.current[lane];
+    if (!sp) return;
+    if (surgeRef.current.tier() >= 2 && fancyOn()) {
+      // LIVE+: hard-edged motion streak behind the note (flat, no gradient).
+      ctx2d.globalAlpha = alpha * 0.22;
+      ctx2d.fillStyle = LANE_COLORS[lane] ?? "#F5EFE6";
+      ctx2d.beginPath();
+      ctx2d.moveTo(x - size * 0.1, y - size * 0.5);
+      ctx2d.lineTo(x + size * 0.1, y - size * 0.5);
+      ctx2d.lineTo(x + size * 0.16, y - size * 1.9);
+      ctx2d.lineTo(x - size * 0.16, y - size * 1.9);
+      ctx2d.closePath();
+      ctx2d.fill();
+      ctx2d.globalAlpha = 1;
+    }
+    const prox = noteProximityFactor(y, receptorY);
+    const drawSize = size * (1 + prox * NOTE_PROXIMITY_GROWTH);
+    const drawAlpha = Math.min(1, alpha * (0.78 + prox * 0.22));
+    ctx2d.globalAlpha = drawAlpha;
+    ctx2d.drawImage(sp, x - drawSize / 2, y - drawSize / 2, drawSize, drawSize);
+    if (prox > 0.55 && fancyOn()) {
+      ctx2d.globalAlpha = prox * 0.35;
+      ctx2d.drawImage(sp, x - drawSize * 0.62, y - drawSize * 0.62, drawSize * 1.24, drawSize * 1.24);
+    }
+    ctx2d.globalAlpha = 1;
+  };
+
+  // 跑马灯四边的几何只跟 w/h 有关 —— 每帧重建 1–4 个 tuple 加一个数组太浪费，
+  // 在 resize 时算好复用。
+  let edgesOne: Array<[number, number, number, number]> = [];
+  let edgesFour: Array<[number, number, number, number]> = [];
+
+  const resize = () => {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const w = wrap.clientWidth;
+    const h = wrap.clientHeight;
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    canvas.style.width = `${w}px`;
+    canvas.style.height = `${h}px`;
+    ctx2d.setTransform(dpr, 0, 0, dpr, 0, 0);
+    dimRef.current = { w, h };
+    // Concentration rays are size-dependent — rebuild with the field.
+    raysRef.current = makeRaysSprite(w, h);
+    edgesOne = [[0, 5, w, 0]];
+    edgesFour = [
+      [0, 5, w, 0],
+      [0, h - 13, w, 0],
+      [0, 5, 0, h],
+      [w - 13, 5, 0, h],
+    ];
+  };
+  resize();
+  const ro = new ResizeObserver(resize);
+  ro.observe(wrap);
+
+  // 循环里的特效开关一律读 ref（见组件顶部 mutedRef 的注释）。
+  // prefersReducedMotion() 现在是缓存布尔值，每次调用只是属性读取。
+  const fancyOn = (): boolean => fancyFxRef.current && !prefersReducedMotion();
+
+  // HUD — skewed ink panels rather than bare floating text. 定义在 draw() 外面，
+  // 免得每帧重建一个闭包。
+  const panel = (x: number, y: number, pw: number, ph: number, fill: string, skew = 8) => {
+    skewPath(ctx2d, x, y, pw, ph, skew);
+    ctx2d.fillStyle = fill;
+    ctx2d.fill();
+    ctx2d.lineWidth = 2;
+    ctx2d.strokeStyle = "#000000";
+    ctx2d.stroke();
+  };
+
+  // score 文本缓存：`toLocaleString()` 每次调用都要跑一遍完整的 Intl 数字格式化，
+  // 是浏览器里最贵的 API 之一。而分数只在判定时才变（每秒最多几次），每帧重算纯属浪费。
+  let cachedScore = -1;
+  let cachedScoreText = "";
+  const scoreTextFor = (score: number): string => {
+    if (score !== cachedScore) {
+      cachedScore = score;
+      cachedScoreText = score.toLocaleString();
+    }
+    return cachedScoreText;
+  };
+
+  const draw = (effMs: number, st: number) => {
+    const { w, h } = dimRef.current;
+    const receptorY = receptorYFromGeometry(h, Math.min(w, h));
+    const laneW = w / 4;
+    const noteW = noteWidthForLane(laneW);
+    const session = sessionRef.current!;
+    const approach = approachRef.current;
+    const songSec = effMs / 1000;
+    const nowPerf = performance.now();
+
+    ctx2d.clearRect(0, 0, w, h);
+
+    const beatPhase = ((songSec * chart.bpm) / 60) % 1;
+    // FEEL PACK: blend real FFT bass into the pulse — the field breathes with
+    // the actual music, not just BPM math. Zero while paused/countdown.
+    const bass = conductorRef.current?.getBassEnergy() ?? 0;
+    const beatPulse = Math.min(0.5, 0.12 + 0.18 * Math.max(0, Math.cos(beatPhase * Math.PI * 2)) + bass * 0.4);
+
+    // Flat ink ground; a faint district-coloured beat wash ties the field to
+    // the playing track's character (v2.0 language: flat, no gradient/glow).
+    // dr/dg/db 已在 effect 作用域算好（见上）。
+    const surgeTier = surgeRef.current.tier();
+    ctx2d.fillStyle = "#12100F";
+    ctx2d.fillRect(0, 0, w, h);
+    ctx2d.fillStyle = `rgba(${dr},${dg},${db},0.05)`;
+    ctx2d.fillRect(0, 0, w, h);
+    // TUNING+ deepens the wash so a hot run visibly "lights the district".
+    ctx2d.fillStyle = `rgba(${dr},${dg},${db},${0.05 + beatPulse * 0.06 + surgeTier * 0.025})`;
+    ctx2d.fillRect(0, 0, w, h);
+
+    // LIVE+ atmosphere: halftone corners + concentration rays, beat-locked.
+    if (surgeTier >= 2 && fancyOn()) {
+      if (halftonePatRef.current) {
+        ctx2d.save();
+        ctx2d.globalAlpha = 0.05 + beatPulse * 0.06;
+        ctx2d.fillStyle = halftonePatRef.current;
+        const cornerW = w * 0.24;
+        const cornerH = Math.min(h * 0.2, 130);
+        ctx2d.fillRect(0, 0, cornerW, cornerH);
+        ctx2d.fillRect(w - cornerW, 0, cornerW, cornerH);
+        ctx2d.restore();
+      }
+      if (raysRef.current) {
+        ctx2d.save();
+        ctx2d.globalAlpha = 0.06 + beatPulse * 0.08;
+        ctx2d.drawImage(raysRef.current, 0, 0, w, h);
+        ctx2d.restore();
+      }
+    }
+
+    // screen shake: decaying random offset applied to the gameplay layer
+    let shx = 0;
+    let shy = 0;
+    if (nowPerf < shakeRef.current.until) {
+      const k = (shakeRef.current.until - nowPerf) / 150;
+      const m = shakeRef.current.mag * k;
+      shx = (Math.random() * 2 - 1) * m;
+      shy = (Math.random() * 2 - 1) * m;
+    }
+    ctx2d.save();
+    ctx2d.translate(shx, shy);
+
+    // lanes + pressed highlight + decaying hit flash
+    for (let i = 0; i < 4; i++) {
+      const x = i * laneW;
+      if (pressedRef.current.has(i)) {
+        ctx2d.fillStyle = `rgba(${LANE_RGB[i][0]},${LANE_RGB[i][1]},${LANE_RGB[i][2]},0.16)`;
+        ctx2d.fillRect(x, 0, laneW, h);
+      }
+      const flash = Math.max(0, 1 - (nowPerf - laneFlashRef.current[i]) / LANE_FLASH_MS);
+      if (flash > 0) {
+        // Hard-edged band instead of a fading gradient.
+        const bandH = Math.min(receptorY, h * 0.3);
+        ctx2d.fillStyle = `rgba(${LANE_RGB[i][0]},${LANE_RGB[i][1]},${LANE_RGB[i][2]},${0.34 * flash})`;
+        ctx2d.fillRect(x, receptorY - bandH, laneW, bandH);
+      }
+      // Lane dividers are ink rules, not faint white lines.
+      ctx2d.strokeStyle = "rgba(0,0,0,0.85)";
+      ctx2d.lineWidth = 2;
+      ctx2d.beginPath();
+      ctx2d.moveTo(x, 0);
+      ctx2d.lineTo(x, h);
+      ctx2d.stroke();
+    }
+
+    // Receptor: a thick black rail with a bone-white edge on top. No glow.
+    ctx2d.save();
+    ctx2d.lineWidth = 6 + beatPulse * 2;
+    ctx2d.strokeStyle = "#000000";
+    ctx2d.beginPath();
+    ctx2d.moveTo(0, receptorY);
+    ctx2d.lineTo(w, receptorY);
+    ctx2d.stroke();
+    ctx2d.lineWidth = 2;
+    ctx2d.strokeStyle = `rgba(245,239,230,${0.85 + beatPulse * 0.15})`;
+    ctx2d.beginPath();
+    ctx2d.moveTo(0, receptorY);
+    ctx2d.lineTo(w, receptorY);
+    ctx2d.stroke();
+    ctx2d.restore();
+    for (let i = 0; i < 4; i++) {
+      const cx = (i + 0.5) * laneW;
+      const laneBeat = pressedRef.current.has(i) ? 1 : beatPulse * 0.55;
+      ctx2d.fillStyle = LANE_COLORS[i];
+      ctx2d.globalAlpha = 0.65 + laneBeat * 0.35;
+      ctx2d.fillRect(cx - noteW * 0.45, receptorY - 2, noteW * 0.9, 4 + laneBeat * 3);
+      ctx2d.globalAlpha = 1;
+    }
+    if (surgeTier >= 1) {
+      // TUNING+: district hard rule under the rail — the field locks on.
+      ctx2d.fillStyle = `rgba(${dr},${dg},${db},${0.55 + beatPulse * 0.25})`;
+      ctx2d.fillRect(0, receptorY + 5, w, 3);
+    }
+
+    // notes
+    for (const n of session.notes) {
+      const d = n.def;
+      const yHead = noteScreenY(n.tMs / 1000, songSec, receptorY, approach);
+      if (yHead < -60 || yHead > h + 60) {
+        if (d.type !== "hold" && d.type !== "slide") continue;
+      }
+      if (d.type === "tap") {
+        if (n.done) continue;
+        drawNote(d.lane, (d.lane + 0.5) * laneW, yHead, noteW, 1, receptorY);
+      } else if (d.type === "hold") {
+        if (n.done) continue;
+        const yTail = noteScreenY(n.endMs / 1000, songSec, receptorY, approach);
+        const top = Math.min(yHead, yTail);
+        const bodyH = Math.abs(yTail - yHead);
+        const holding = pressedRef.current.has(d.lane) && n.head !== null && n.tail === null;
+        ctx2d.fillStyle = `rgba(${LANE_RGB[d.lane][0]},${LANE_RGB[d.lane][1]},${LANE_RGB[d.lane][2]},${holding ? 0.62 : 0.45})`;
+        ctx2d.fillRect((d.lane + 0.5) * laneW - (noteW * HOLD_BODY_RATIO) / 2, top, noteW * HOLD_BODY_RATIO, bodyH);
+        if (holding) {
+          ctx2d.strokeStyle = `rgba(${LANE_RGB[d.lane][0]},${LANE_RGB[d.lane][1]},${LANE_RGB[d.lane][2]},0.85)`;
+          ctx2d.lineWidth = 2;
+          ctx2d.strokeRect(
+            (d.lane + 0.5) * laneW - (noteW * HOLD_STROKE_RATIO) / 2,
+            top,
+            noteW * HOLD_STROKE_RATIO,
+            bodyH,
+          );
+        }
+        const headAlpha = n.head ? 0.35 : 1;
+        drawNote(d.lane, (d.lane + 0.5) * laneW, yHead, noteW, headAlpha, receptorY);
+      } else if (d.type === "chord") {
+        if (n.done) continue;
+        for (const l of d.lanes) {
+          const a = n.chord[l] != null ? 0.35 : 1;
+          drawNote(l, (l + 0.5) * laneW, yHead, noteW, a, receptorY);
+        }
+      } else if (d.type === "slide") {
+        if (n.done) continue;
+        const headDone = n.head !== null;
+        drawNote(d.lane, (d.lane + 0.5) * laneW, yHead, noteW, headDone ? 0.35 : 1, receptorY);
+        const yTail = noteScreenY(n.endMs / 1000, songSec, receptorY, approach);
+        const slideAlpha = headDone ? 0.95 : 0.55;
+        ctx2d.strokeStyle = LANE_COLORS[d.to];
+        ctx2d.globalAlpha = slideAlpha;
+        ctx2d.lineWidth = headDone ? 3 : 2;
+        ctx2d.setLineDash([6, 6]);
+        ctx2d.beginPath();
+        ctx2d.moveTo((d.lane + 0.5) * laneW, yHead);
+        ctx2d.lineTo((d.to + 0.5) * laneW, yTail);
+        ctx2d.stroke();
+        ctx2d.setLineDash([]);
+        ctx2d.globalAlpha = 1;
+        if (headDone && n.tail === null) {
+          drawNote(d.to, (d.to + 0.5) * laneW, yTail, noteW * SLIDE_TAIL_SCALE, 1, receptorY);
+        }
+      }
+    }
+
+    // hit particles (physics: gravity + fade)
+    if (fancyOn()) {
+      // 原地压缩（保序）：filter() 每帧会新建一个数组 + 一个闭包，六个池子加起来
+      // 就是每秒 360 次新生代分配，是 GC 抖动的来源之一。
+      {
+        const arr = particlesRef.current;
+        let n = 0;
+        for (let i = 0; i < arr.length; i++) {
+          const p = arr[i];
+          if (nowPerf - p.born < p.life) arr[n++] = p;
+        }
+        arr.length = n;
+      }
+      for (const p of particlesRef.current) {
+        const age = (nowPerf - p.born) / p.life;
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.14;
+        p.vx *= 0.985;
+        ctx2d.globalAlpha = Math.max(0, 1 - age);
+        // Square debris shards read as comic impact; circles read as sparks.
+        const s2 = p.size * (1 - age * 0.5) * 1.8;
+        ctx2d.fillStyle = `rgb(${p.r},${p.g},${p.b})`;
+        ctx2d.fillRect(p.x - s2 / 2, p.y - s2 / 2, s2, s2);
+      }
+      ctx2d.globalAlpha = 1;
+    } else {
+      particlesRef.current = [];
+    }
+
+    // LIGHTING one-shot fixtures — hard-edged, beat-scale, no strobe spam.
+    if (fancyOn()) {
+      {
+        const arr = colsRef.current;
+        let n = 0;
+        for (let i = 0; i < arr.length; i++) {
+          const c = arr[i];
+          if (nowPerf - c.born < 380) arr[n++] = c;
+        }
+        arr.length = n;
+      }
+      for (const c of colsRef.current) {
+        const age = (nowPerf - c.born) / 380;
+        const x = c.lane * laneW;
+        ctx2d.fillStyle = `rgba(${dr},${dg},${db},${0.26 * (1 - age)})`;
+        ctx2d.fillRect(x + 2, 0, laneW - 4, h);
+        ctx2d.fillStyle = `rgba(245,239,230,${0.5 * (1 - age)})`;
+        ctx2d.fillRect(x + laneW / 2 - 2, 0, 4, h);
+      }
+      {
+        const arr = sweepsRef.current;
+        let n = 0;
+        for (let i = 0; i < arr.length; i++) {
+          const s = arr[i];
+          if (nowPerf - s.born < 900) arr[n++] = s;
+        }
+        arr.length = n;
+      }
+      for (const s of sweepsRef.current) {
+        const age = (nowPerf - s.born) / 900;
+        const fromLeft = s.corner === 0;
+        const L = Math.hypot(w, h) * 1.15;
+        ctx2d.save();
+        ctx2d.translate(fromLeft ? -40 : w + 40, -30);
+        ctx2d.rotate((fromLeft ? 1 : -1) * (Math.PI / 2.6) + (fromLeft ? -1 : 1) * age * 0.55);
+        ctx2d.globalAlpha = 0.2 * (1 - age * 0.7);
+        ctx2d.fillStyle = `rgba(${dr},${dg},${db},1)`;
+        ctx2d.beginPath();
+        ctx2d.moveTo(0, -16);
+        ctx2d.lineTo(L, 0);
+        ctx2d.lineTo(0, 16);
+        ctx2d.closePath();
+        ctx2d.fill();
+        ctx2d.globalAlpha = 0.5 * (1 - age);
+        ctx2d.fillStyle = "rgba(245,239,230,1)";
+        ctx2d.fillRect(0, -1.5, L, 3);
+        ctx2d.restore();
+      }
+      // Idle show: a hot streak keeps the rig moving — one column per bar on
+      // a rotating lane, a sweep every other bar once the streak is big.
+      const rigStreak = Math.max(streakRef.current.count, demoStreak);
+      const barSec = 240 / chart.bpm;
+      const barIdx = Math.floor(songSec / barSec);
+      if (rigStreak >= 80 && barIdx > lastShowBarRef.current) {
+        lastShowBarRef.current = barIdx;
+        if (colsRef.current.length < 3) colsRef.current.push({ born: nowPerf, lane: barIdx % 4 });
+        if (rigStreak >= 120 && barIdx % 2 === 0 && sweepsRef.current.length < 2) {
+          sweepsRef.current.push({ born: nowPerf, corner: barIdx % 2 });
+        }
+      }
+    }
+
+    // FX flashes
+    {
+      const arr = fxRef.current;
+      let n = 0;
+      for (let i = 0; i < arr.length; i++) {
+        const f = arr[i];
+        if (nowPerf - f.born < 360) arr[n++] = f;
+      }
+      arr.length = n;
+    }
+    for (const f of fxRef.current) {
+      const age = (nowPerf - f.born) / 360;
+      const cx = (f.lane + 0.5) * laneW;
+      const [r, g, b] = f.judgment === "miss" ? LANE_RGB[0] : LANE_RGB[f.lane];
+
+      // Comic starburst instead of an expanding ring.
+      const spikes = f.judgment === "miss" ? 7 : f.judgment === "perfect" ? 12 : 9;
+      const rad = (10 + age * 34) * (f.judgment === "perfect" ? 1.3 : 1);
+      const inner = rad * 0.58;
+      ctx2d.beginPath();
+      for (let s = 0; s < spikes * 2; s++) {
+        const rr = s % 2 === 0 ? rad : inner;
+        const a = (s / (spikes * 2)) * Math.PI * 2 - Math.PI / 2;
+        const sx = cx + Math.cos(a) * rr;
+        const sy = receptorY + Math.sin(a) * rr;
+        if (s === 0) ctx2d.moveTo(sx, sy);
+        else ctx2d.lineTo(sx, sy);
+      }
+      ctx2d.closePath();
+      ctx2d.lineJoin = "miter";
+      ctx2d.strokeStyle = `rgba(${r},${g},${b},${1 - age})`;
+      ctx2d.lineWidth = 3;
+      ctx2d.stroke();
+      ctx2d.lineWidth = 1;
+
+      // Judgment label — Anton slab wrapped in a hard ink outline.
+      const label = JUDGE_LABEL[f.judgment];
+      if (label) {
+        const pop = age < 0.18 ? 0.5 + (age / 0.18) * 0.7 : 1.2 - (age - 0.18) * 0.24;
+        const isP = f.judgment === "perfect";
+        const skewX = Math.max(-18, Math.min(18, f.deltaMs * 0.35));
+        ctx2d.save();
+        ctx2d.globalAlpha = Math.max(0, 1 - age * age);
+        ctx2d.translate(cx + skewX, receptorY - 46 - age * 22);
+        ctx2d.scale(pop, pop);
+        ctx2d.textAlign = "center";
+        const fs = isP ? 23 : 17;
+        ctx2d.font = `400 ${fs}px Anton, 'Sora', sans-serif`;
+        ctx2d.lineWidth = Math.max(3, fs * 0.2);
+        inkedText(ctx2d, label, 0, 0, JUDGE_COLOR[f.judgment] || "#F5EFE6");
+        if (f.judgment !== "miss" && Math.abs(f.deltaMs) >= 8) {
+          ctx2d.font = "600 10px 'IBM Plex Sans', sans-serif";
+          ctx2d.lineWidth = 3;
+          inkedText(ctx2d, f.deltaMs < 0 ? "EARLY" : "LATE", 0, 15, "#F5EFE6");
+        }
+        ctx2d.restore();
+      }
+    }
+
+    ctx2d.restore(); // end gameplay (shaken) layer — HUD stays stable
+
+    // combo-break vignette (HUD layer, stable)
+    if (nowPerf < comboBreakRef.current) {
+      const t = (comboBreakRef.current - nowPerf) / 320;
+      ctx2d.fillStyle = `rgba(226,61,61,${0.3 * t})`;
+      ctx2d.fillRect(0, 0, w, h);
+    }
+
+    // ON AIR: misprint frame — black rule + district band at the screen edge.
+    if (surgeRef.current.tier() === 3) {
+      ctx2d.lineWidth = 5;
+      ctx2d.strokeStyle = "#000000";
+      ctx2d.strokeRect(2.5, 2.5, w - 5, h - 5);
+      ctx2d.fillStyle = `rgba(${dr},${dg},${db},${0.5 + beatPulse * 0.3})`;
+      ctx2d.fillRect(0, 0, w, 4);
+      ctx2d.fillRect(0, h - 4, w, 4);
+      ctx2d.fillRect(0, 0, 4, h);
+      ctx2d.fillRect(w - 4, 0, 4, h);
+    }
+
+    // Resonance-diamond rings (PRD §7.6-5 motif) on LIVE/ON AIR milestones.
+    if (ringsRef.current.length) {
+      {
+        const arr = ringsRef.current;
+        let n = 0;
+        for (let i = 0; i < arr.length; i++) {
+          const b = arr[i];
+          if (nowPerf - b < 640) arr[n++] = b;
+        }
+        arr.length = n;
+      }
+      for (const born of ringsRef.current) {
+        const age = (nowPerf - born) / 640;
+        const sz = 120 + age * 260;
+        ctx2d.save();
+        ctx2d.globalAlpha = Math.max(0, 1 - age) * 0.85;
+        ctx2d.translate(w / 2, receptorY * 0.5);
+        // Sprite is drawn as a diamond; only a slow drift, never a 45° flip
+        // (that would read as squares and break the 共振菱形 motif).
+        ctx2d.rotate(age * 0.12);
+        if (ringSpriteRef.current) ctx2d.drawImage(ringSpriteRef.current, -sz / 2, -sz / 2, sz, sz);
+        ctx2d.restore();
+      }
+    }
+
+    // LIGHTING marquee: a chase of flat dots along the top edge (all four
+    // edges once ON AIR). Speed scales with the streak; gel colour rotates
+    // per bar — the lighting designer swapping colour sheets.
+    if (fancyOn() && surgeRef.current.tier() >= 1) {
+      const rigStreak = Math.max(streakRef.current.count, demoStreak);
+      if (rigStreak >= 20) {
+        const dot = 8;
+        const gap = 14;
+        const step = dot + gap;
+        const speed = 45 + Math.min(150, rigStreak * 0.5);
+        const off = ((nowPerf / 1000) * speed) % step;
+        const barSecM = 240 / chart.bpm;
+        const gel = LANE_COLORS[(Math.floor(songSec / barSecM) + lastLaneRef.current) % 4]!;
+        const edges = surgeRef.current.tier() === 3 ? edgesFour : edgesOne;
+        for (const [ex, ey, ew] of edges) {
+          const horiz = ew > 0;
+          const count = Math.ceil((horiz ? w : h) / step);
+          for (let i = 0; i < count; i++) {
+            const t = i * step + off;
+            if (horiz) {
+              if (t > w) continue;
+              ctx2d.fillStyle = i % 5 === 0 ? "rgba(245,239,230,0.75)" : gel;
+              ctx2d.globalAlpha = 0.6;
+              ctx2d.fillRect(ex + t, ey, dot, dot);
+            } else {
+              if (t > h) continue;
+              ctx2d.fillStyle = i % 5 === 0 ? "rgba(245,239,230,0.75)" : gel;
+              ctx2d.globalAlpha = 0.6;
+              ctx2d.fillRect(ex, ey + t, dot, dot);
+            }
+          }
+        }
+        ctx2d.globalAlpha = 1;
+      }
+    }
+
+    // floating score pops
+    {
+      const arr = scorePopsRef.current;
+      let n = 0;
+      for (let i = 0; i < arr.length; i++) {
+        const p = arr[i];
+        if (nowPerf - p.born < 520) arr[n++] = p;
+      }
+      arr.length = n;
+    }
+    for (const p of scorePopsRef.current) {
+      const age = (nowPerf - p.born) / 520;
+      ctx2d.save();
+      ctx2d.globalAlpha = Math.max(0, 1 - age);
+      ctx2d.fillStyle = p.color;
+      ctx2d.font = "700 14px 'IBM Plex Sans', sans-serif";
+      ctx2d.textAlign = "center";
+      ctx2d.fillText(p.text, p.x, p.y - age * 36);
+      ctx2d.restore();
+    }
+
+    // panel() 定义在 effect 作用域（draw() 外面），免得每帧重建一个闭包。
+    // score 只在判定时才变，toLocaleString() 是浏览器里最贵的 API 之一 ——
+    // 缓存结果，只有分数真的变了才重新格式化。
+    const scoreText = scoreTextFor(session.score);
+    ctx2d.font = "600 18px 'IBM Plex Sans', sans-serif";
+    const scoreW = Math.min(w * 0.5, ctx2d.measureText(scoreText).width + 34);
+    panel(10, 10, scoreW, 30, "#1C1717");
+    ctx2d.fillStyle = "#F5EFE6";
+    ctx2d.textAlign = "left";
+    ctx2d.textBaseline = "middle";
+    ctx2d.fillText(scoreText, 26, 26);
+
+    // accuracyPercent() direct — getResult() allocates a fresh object per frame.
+    const accText = `${accuracyPercent(session.judgments, session.totalNotes).toFixed(2)}%`;
+    ctx2d.font = "600 15px 'IBM Plex Sans', sans-serif";
+    const accW = ctx2d.measureText(accText).width + 30;
+    panel(w - 10 - accW, 10, accW, 30, "#1C1717");
+    ctx2d.fillStyle = "#A8928B";
+    ctx2d.textAlign = "right";
+    ctx2d.fillText(accText, w - 24, 26);
+    ctx2d.textBaseline = "alphabetic";
+
+    // SIGNAL gauge — the run's atmosphere meter (TUNING / LIVE / ON AIR).
+    const heat = surgeRef.current.heat;
+    const tier = tierForHeat(heat);
+    const gx = 14;
+    const gy = 52;
+    const gw = 12;
+    const gh = Math.max(64, Math.min(150, h * 0.22));
+    skewPath(ctx2d, gx, gy, gw, gh, 4);
+    ctx2d.fillStyle = "#12100F";
+    ctx2d.fill();
+    ctx2d.lineWidth = 2;
+    ctx2d.strokeStyle = "#000000";
+    ctx2d.stroke();
+    const fillH = (gh - 4) * (heat / 100);
+    if (fillH > 0.5) {
+      ctx2d.save();
+      skewPath(ctx2d, gx, gy, gw, gh, 4);
+      ctx2d.clip();
+      ctx2d.fillStyle = `rgba(${dr},${dg},${db},0.92)`;
+      ctx2d.fillRect(gx + 2, gy + gh - 2 - fillH, gw, fillH + 2);
+      ctx2d.restore();
+    }
+    ctx2d.fillStyle = "rgba(0,0,0,0.9)";
+    for (const th of [SURGE_TIERS.t1, SURGE_TIERS.t2, SURGE_TIERS.t3]) {
+      ctx2d.fillRect(gx + 2, gy + gh - 2 - (gh - 4) * (th / 100), gw - 4, 1.5);
+    }
+    // Tier drop: the gauge itself flashes red for a beat — losing the signal
+    // must be felt, not just watched to drain (no extra SFX; miss/break cover it).
+    const dropAge = (nowPerf - surgeDropRef.current) / 450;
+    if (dropAge >= 0 && dropAge < 1) {
+      skewPath(ctx2d, gx, gy, gw, gh, 4);
+      ctx2d.fillStyle = `rgba(226,61,61,${0.5 * (1 - dropAge)})`;
+      ctx2d.fill();
+    }
+    ctx2d.save();
+    ctx2d.translate(gx + gw + 9, gy + gh);
+    ctx2d.rotate(-Math.PI / 2);
+    ctx2d.font = "700 10px 'IBM Plex Sans', sans-serif";
+    ctx2d.textAlign = "left";
+    ctx2d.textBaseline = "middle";
+    const tierLabel =
+      tier === 0 ? SURGE_COPY.gauge : tier === 1 ? SURGE_COPY.t1 : tier === 2 ? SURGE_COPY.t2 : SURGE_COPY.t3;
+    ctx2d.lineWidth = 3;
+    inkedText(ctx2d, tierLabel, 0, 0, tier === 0 ? "#A8928B" : "#F5EFE6");
+    ctx2d.restore();
+
+    if (mode === "arcade") {
+      const bx = 14;
+      const by = 46;
+      const bw = w - 28;
+      const bh = 12;
+      panel(bx, by, bw, bh, "#12100F", 6);
+      const innerW = ((bw - 6) * Math.max(0, session.hp)) / 100;
+      if (innerW > 0) {
+        ctx2d.save();
+        ctx2d.beginPath();
+        ctx2d.rect(bx + 3, by + 3, innerW, bh - 6);
+        ctx2d.clip();
+        ctx2d.fillStyle = session.hp <= 30 ? "#E23D3D" : "#FFB020";
+        ctx2d.fillRect(bx + 3, by + 3, bw, bh - 6);
+        ctx2d.restore();
+      }
+    }
+
+    if (session.combo >= 2) {
+      // Combo escalates in size and heat as it climbs, always ink-outlined.
+      const tiers = session.combo >= 100 ? 3 : session.combo >= 50 ? 2 : session.combo >= 10 ? 1 : 0;
+      const sizes = [34, 44, 56, 68];
+      const cols = ["#F5EFE6", "#F2E4C9", "#FFB020", "#E23D3D"];
+      const pulse = 1 + Math.min(0.18, (nowPerf % 600) / 600 / 6);
+      ctx2d.save();
+      ctx2d.textAlign = "center";
+      ctx2d.translate(w / 2, receptorY * 0.42);
+      ctx2d.scale(pulse, pulse);
+      ctx2d.font = `400 ${sizes[tiers]}px Anton, 'Sora', sans-serif`;
+      ctx2d.lineWidth = Math.max(4, sizes[tiers] * 0.13);
+      inkedText(ctx2d, `${session.combo}`, 0, 0, cols[tiers]);
+      ctx2d.restore();
+      ctx2d.textAlign = "center";
+      ctx2d.font = "600 12px 'IBM Plex Sans', sans-serif";
+      ctx2d.lineWidth = 3;
+      inkedText(ctx2d, "STREAK", w / 2, receptorY * 0.42 + 24, "#A8928B");
+    }
+
+    // combo milestone flash (center, big, quick)
+    if (fancyOn() && milestoneRef.current) {
+      const age = (nowPerf - milestoneRef.current.born) / 700;
+      if (age >= 1) {
+        milestoneRef.current = null;
+      } else {
+        ctx2d.save();
+        ctx2d.globalAlpha = 1 - age;
+        ctx2d.translate(w / 2, receptorY * 0.6);
+        const sc = 0.7 + age * 0.7;
+        ctx2d.scale(sc, sc);
+        ctx2d.textAlign = "center";
+        ctx2d.font = "400 48px Anton, 'Sora', sans-serif";
+        ctx2d.lineWidth = 10;
+        inkedText(ctx2d, milestoneRef.current.text, 0, 0, "#FFB020");
+        ctx2d.restore();
+      }
+    }
+
+    // Key hints sit under the receptor, tinted per lane. Drawn from the bound
+    // key's *label*, so arrow keys read as ← ↓ ↑ → instead of "ArrowLeft".
+    // Skipped on touch: there is no keyboard there, and the overlay already
+    // tells the player to use their thumbs.
+    if (!touchUi) {
+      ctx2d.save();
+      ctx2d.textAlign = "center";
+      ctx2d.textBaseline = "middle";
+      const hintY = Math.min(receptorY + 26, h - 14);
+      for (let i = 0; i < 4; i++) {
+        const label = keyHint[i] ?? "";
+        const flash = Math.max(
+          0,
+          1 - (performance.now() - (laneFlashRef.current[i] ?? 0)) / LANE_FLASH_MS,
+        );
+        const held = pressedRef.current.has(i);
+        const [r, g, b] = LANE_RGB[i] ?? LANE_RGB[0]!;
+        const cxm = (i + 0.5) * laneW;
+        const capW = Math.min(laneW * 0.7, 46);
+        const capH = 24;
+        skewPath(ctx2d, cxm - capW / 2, hintY - capH / 2, capW, capH, 6);
+        ctx2d.fillStyle = held ? LANE_COLORS[i]! : "rgba(18,16,15,0.94)";
+        ctx2d.fill();
+        ctx2d.lineWidth = 2;
+        ctx2d.strokeStyle = "#000000";
+        ctx2d.stroke();
+        ctx2d.font = `700 ${held ? 16 : 14}px 'IBM Plex Sans', sans-serif`;
+        ctx2d.fillStyle = held
+          ? "#12100F"
+          : `rgba(${r},${g},${b},${Math.min(1, 0.6 + flash * 0.4)})`;
+        ctx2d.fillText(label, cxm, hintY + 1);
+      }
+      ctx2d.restore();
+    }
+
+    // Countdown as comic emphasis type: heavy red slab behind a hard black
+    // outline. PRD §7.4 still bans Japanese-style onomatopoeia — this is the
+    // Western pop-art treatment instead.
+    if (st < 0) {
+      const cd = -st;
+      const text = cd > 250 ? String(Math.ceil(cd / 1000)) : "GO";
+      ctx2d.save();
+      ctx2d.textAlign = "center";
+      ctx2d.textBaseline = "middle";
+      ctx2d.font = "400 96px Anton, 'Sora', sans-serif";
+      ctx2d.lineJoin = "round";
+      ctx2d.lineWidth = 9;
+      ctx2d.strokeStyle = "#000000";
+      ctx2d.strokeText(text, w / 2, h / 2);
+      ctx2d.fillStyle = "#E23D3D";
+      ctx2d.fillText(text, w / 2, h / 2);
+      ctx2d.restore();
+    }
+  };
+
+  const loop = () => {
+    const conductor = conductorRef.current;
+    const session = sessionRef.current;
+    if (!conductor || !session) {
+      raf = requestAnimationFrame(loop);
+      return;
+    }
+    const st = conductor.songTimeMs();
+
+    if (!needsStartRef.current && !pausedRef.current) {
+      const eff = st - offsetMsRef.current;
+      const misses = session.tick(eff);
+      for (const m of misses) {
+        addFx(m.lane, m.judgment, m.deltaMs);
+        if (hitsoundRef.current) playHit(m.judgment);
+      }
+      if (session.consumeSlowTrigger()) conductor.setRate(0.5, 5000);
+
+      // SIGNAL atmosphere meter: decay on the song clock (pause-safe), then
+      // flip the tier + wrapper data attribute when it crosses a threshold.
+      // 先算 dt 再推进 lastEffMsRef：顺序反了 streak 拿到的 delta 就是 0，
+      // decay() 会直接 return（见 surge.ts decayAtmosphere 上的注释）。
+      const decayMs = Math.min(250, Math.max(0, eff - lastEffMsRef.current));
+      lastEffMsRef.current = eff;
+      // ScoreStreak feeds the LIGHTING rig + NEON ambience (survives good).
+      decayAtmosphere(surgeRef.current, streakRef.current, decayMs);
+      if (demoStreak > 0) streakRef.current.count = Math.max(streakRef.current.count, demoStreak);
+      if (demoSurge > 0) {
+        const lockHeat = [0, SURGE_TIERS.t1, SURGE_TIERS.t2, SURGE_TIERS.t3][demoSurge];
+        surgeRef.current.heat = Math.max(surgeRef.current.heat, lockHeat ?? 0);
+      }
+      const surgeTier = surgeRef.current.tier();
+      if (surgeTier !== surgeTierRef.current) {
+        const prevTier = surgeTierRef.current;
+        const enteredTop = surgeTier === 3 && prevTier < 3;
+        surgeTierRef.current = surgeTier;
+        if (surgeTier < prevTier) surgeDropRef.current = performance.now();
+        const wrapEl = wrapRef.current;
+        if (wrapEl) wrapEl.dataset.surge = fancyOn() ? String(surgeTier) : "0";
+        if (enteredTop && fancyOn()) {
+          milestoneRef.current = { text: SURGE_COPY.t3, born: performance.now() };
+          shakeRef.current = { mag: 8, until: performance.now() + 220 };
+          ringsRef.current.push(performance.now());
+        }
+        // FEEL PACK: tier-entry haptic double-pulse + "the drop" — the song
+        // ducks low then opens its gate. The music literally opens up.
+        if (surgeTier > prevTier && hitsoundRef.current) vibrate([12, 60, 24], 0);
+        if (enteredTop && !mutedRef.current) conductor.sweepOpen(380);
+        // Tier-entry cue: the station goes live (gated by the hitsound setting).
+        if (surgeTier > prevTier && hitsoundRef.current && (surgeTier === 2 || surgeTier === 3)) {
+          playSurgeTier(surgeTier);
+        }
+      }
+
+      // NEON ambience level → viewport layer (CSS-driven, zero re-renders).
+      if (variant === "full") {
+        const neon = streakRef.current.level();
+        if (neon !== prevNeonRef.current) {
+          prevNeonRef.current = neon;
+          document.body.dataset.neon = fancyOn() ? String(neon) : "0";
+        }
+      }
+
+      // LIGHTING rig driver (docs/BEATSCAPE-NEON-AMBIENCE.md §2): ScoreStreak
+      // is the dimmer board now — surviving good hits keeps the show on.
+      const lightStreak = Math.max(streakRef.current.count, demoStreak);
+      if (lightStreak === 0) {
+        lightComboPrevRef.current = 0;
+        lastShowBarRef.current = -1;
+      }
+      const crossed = (step: number) =>
+        Math.floor(lightStreak / step) > Math.floor(lightComboPrevRef.current / step);
+      if (lightStreak >= 20 && crossed(20) && colsRef.current.length < 3) {
+        colsRef.current.push({ born: performance.now(), lane: lastLaneRef.current });
+      }
+      if (lightStreak >= 80 && crossed(80) && sweepsRef.current.length < 2) {
+        sweepsRef.current.push({ born: performance.now(), corner: sweepsRef.current.length % 2 });
+      }
+      lightComboPrevRef.current = lightStreak;
+
+      // combo-break sound + combo milestone celebration
+      if (session.combo === 0 && lastComboRef.current > 0) {
+        if (hitsoundRef.current) playBreak();
+        comboBreakRef.current = performance.now() + 320;
+      }
+      if (session.combo > prevComboRef.current && COMBO_MILESTONES.includes(session.combo)) {
+        if (fancyOn()) {
+          milestoneRef.current = { text: `${session.combo} COMBO!`, born: performance.now() };
+          shakeRef.current = { mag: 9, until: performance.now() + 240 };
+          // LIVE/ON AIR milestones broadcast a resonance-diamond ring (PRD §7.6-5).
+          if (surgeTierRef.current >= 2) ringsRef.current.push(performance.now());
+        }
+        if (hitsoundRef.current) vibrate([18], 120);
+      }
+      prevComboRef.current = session.combo;
+      lastComboRef.current = session.combo;
+
+      // countdown ticks
+      if (st < 0) {
+        const ci = Math.ceil(-st / 1000);
+        if (ci !== lastCountInt.current) {
+          lastCountInt.current = ci;
+          if (hitsoundRef.current) playCountdownTick(ci);
+        }
+      }
+
+      // finish
+      if (!finishedRef.current) {
+        if (session.failed) {
+          finishedRef.current = true;
+          conductor.stop();
+          finishRun();
+        } else if (session.isComplete && st >= lastNoteMsRef.current) {
+          finishedRef.current = true;
+          conductor.stop();
+          finishRun();
+        } else if (conductor.finished) {
+          finishedRef.current = true;
+          conductor.stop();
+          finishRun();
+        }
+      }
+    }
+
+    draw(st < 0 ? st : st - offsetMsRef.current, st);
+    raf = requestAnimationFrame(loop);
+  };
+
+  const finishRun = () => {
+    const session = sessionRef.current;
+    if (!session) return;
+    // Attach the latched SIGNAL peak so Results/poster can reward the run
+    // without GameSession ever knowing the atmosphere layer exists.
+    onFinish({ ...session.getResult(), surgeMaxTier: surgeRef.current.maxTier });
+  };
+
+  const addFx = (lane: number, judgment: JudgeFx["judgment"], deltaMs = 0) => {
+    fxRef.current.push({ lane, judgment, born: performance.now(), deltaMs });
+    surgeRef.current.apply(judgment);
+    streakRef.current.apply(judgment);
+    spawnHitFx(lane, judgment);
+    const session = sessionRef.current;
+    const { w } = dimRef.current;
+    if (session && w && judgment !== "miss" && judgment !== "good") {
+      const gain = judgmentScore(judgment) * comboMultiplier(session.combo);
+      if (gain > 0) {
+        const receptorY = receptorYFromGeometry(dimRef.current.h, Math.min(w, dimRef.current.h));
+        scorePopsRef.current.push({
+          x: (lane + 0.5) * (w / 4),
+          y: receptorY - 78,
+          text: `+${gain}`,
+          born: performance.now(),
+          color: JUDGE_COLOR[judgment] ?? "#FFFFFF",
+        });
+      }
+    }
+  };
+
+  raf = requestAnimationFrame(loop);
+  return () => {
+    cancelAnimationFrame(raf);
+    ro.disconnect();
+  };
+}

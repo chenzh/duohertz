@@ -28,7 +28,7 @@
         "hard": "/catalog/bs-s1-01/hard.json"
       },
       "seo": {
-        "title": "Neon Pulse \u2014 BeatScape AI Original",
+        "title": "Neon Pulse — BeatScape AI Original",
         "description": "Own the Scape. 160 BPM EDM chart."
       },
       "og": "/catalog/bs-s1-01/og.png",
@@ -64,7 +64,7 @@
         "hard": "/catalog/bs-s1-02/hard.json"
       },
       "seo": {
-        "title": "Glass Horizon \u2014 BeatScape AI Original",
+        "title": "Glass Horizon — BeatScape AI Original",
         "description": "Own the Scape. 118 BPM Pop chart."
       },
       "og": "/catalog/bs-s1-02/og.png",
@@ -99,7 +99,7 @@
         "hard": "/catalog/bs-s1-03/hard.json"
       },
       "seo": {
-        "title": "Night Drive 808 \u2014 BeatScape AI Original",
+        "title": "Night Drive 808 — BeatScape AI Original",
         "description": "Own the Scape. 95 BPM Hip-hop chart."
       },
       "og": "/catalog/bs-s1-03/og.png",
@@ -135,7 +135,7 @@
         "hard": "/catalog/bs-s1-04/hard.json"
       },
       "seo": {
-        "title": "Velvet Afterhours \u2014 BeatScape AI Original",
+        "title": "Velvet Afterhours — BeatScape AI Original",
         "description": "Own the Scape. 88 BPM R&B chart."
       },
       "og": "/catalog/bs-s1-04/og.png",
@@ -170,7 +170,7 @@
         "hard": "/catalog/bs-s1-05/hard.json"
       },
       "seo": {
-        "title": "Voltage Drop \u2014 BeatScape AI Original",
+        "title": "Voltage Drop — BeatScape AI Original",
         "description": "Own the Scape. 170 BPM EDM chart."
       },
       "og": "/catalog/bs-s1-05/og.png",
@@ -205,7 +205,7 @@
         "hard": "/catalog/bs-s1-06/hard.json"
       },
       "seo": {
-        "title": "Chrome Riff \u2014 BeatScape AI Original",
+        "title": "Chrome Riff — BeatScape AI Original",
         "description": "Own the Scape. 132 BPM Rock chart."
       },
       "og": "/catalog/bs-s1-06/og.png",
@@ -243,7 +243,7 @@
         "hard": "/catalog/bs-s2-01/hard.json"
       },
       "seo": {
-        "title": "Slide City \u2014 BeatScape AI Original",
+        "title": "Slide City — BeatScape AI Original",
         "description": "Own the Scape. 140 BPM EDM chart."
       },
       "stream_audio": "/catalog/bs-s2-01/stream.m4a",
@@ -279,7 +279,7 @@
         "hard": "/catalog/bs-s2-02/hard.json"
       },
       "seo": {
-        "title": "Skyline Hook \u2014 BeatScape AI Original",
+        "title": "Skyline Hook — BeatScape AI Original",
         "description": "Own the Scape. 128 BPM Pop chart."
       },
       "stream_audio": "/catalog/bs-s2-02/stream.m4a",
@@ -315,7 +315,7 @@
         "hard": "/catalog/bs-s2-03/hard.json"
       },
       "seo": {
-        "title": "Blue Hour Loop \u2014 BeatScape AI Original",
+        "title": "Blue Hour Loop — BeatScape AI Original",
         "description": "Own the Scape. 120 BPM Pop chart."
       },
       "stream_audio": "/catalog/bs-s2-03/stream.m4a",
@@ -351,7 +351,7 @@
         "hard": "/catalog/bs-s2-04/hard.json"
       },
       "seo": {
-        "title": "Asphalt Anthem \u2014 BeatScape AI Original",
+        "title": "Asphalt Anthem — BeatScape AI Original",
         "description": "Own the Scape. 148 BPM Rock chart."
       },
       "stream_audio": "/catalog/bs-s2-04/stream.m4a",
@@ -387,11 +387,12 @@
         "hard": "/catalog/bs-s3-01/hard.json"
       },
       "seo": {
-        "title": "Grid Voltage \u2014 BeatScape AI Original",
+        "title": "Grid Voltage — BeatScape AI Original",
         "description": "Own the Scape. 155 BPM EDM chart."
       },
       "stream_audio": "/catalog/bs-s3-01/stream.m4a",
-      "vibe": "battle"
+      "vibe": "battle",
+      "preview": "/catalog/bs-s3-01/preview_48s.m4a"
     },
     {
       "track_id": "bs-s3-02",
@@ -422,11 +423,12 @@
         "hard": "/catalog/bs-s3-02/hard.json"
       },
       "seo": {
-        "title": "Night Pulse 808 \u2014 BeatScape AI Original",
+        "title": "Night Pulse 808 — BeatScape AI Original",
         "description": "Own the Scape. 98 BPM Hip-hop chart."
       },
       "stream_audio": "/catalog/bs-s3-02/stream.m4a",
-      "vibe": "night-drive"
+      "vibe": "night-drive",
+      "preview": "/catalog/bs-s3-02/preview_48s.m4a"
     },
     {
       "track_id": "bs-s3-03",
@@ -457,11 +459,12 @@
         "hard": "/catalog/bs-s3-03/hard.json"
       },
       "seo": {
-        "title": "Soft Horizon \u2014 BeatScape AI Original",
+        "title": "Soft Horizon — BeatScape AI Original",
         "description": "Own the Scape. 122 BPM Pop chart."
       },
       "stream_audio": "/catalog/bs-s3-03/stream.m4a",
-      "vibe": "chill"
+      "vibe": "chill",
+      "preview": "/catalog/bs-s3-03/preview_48s.m4a"
     },
     {
       "track_id": "bs-s3-04",
@@ -492,11 +495,12 @@
         "hard": "/catalog/bs-s3-04/hard.json"
       },
       "seo": {
-        "title": "Velvet Scape \u2014 BeatScape AI Original",
+        "title": "Velvet Scape — BeatScape AI Original",
         "description": "Own the Scape. 90 BPM R&B chart."
       },
       "stream_audio": "/catalog/bs-s3-04/stream.m4a",
-      "vibe": "chill"
+      "vibe": "chill",
+      "preview": "/catalog/bs-s3-04/preview_48s.m4a"
     },
     {
       "track_id": "bs-s3-05",
@@ -527,11 +531,12 @@
         "hard": "/catalog/bs-s3-05/hard.json"
       },
       "seo": {
-        "title": "Chrome Grid \u2014 BeatScape AI Original",
+        "title": "Chrome Grid — BeatScape AI Original",
         "description": "Own the Scape. 138 BPM Rock chart."
       },
       "stream_audio": "/catalog/bs-s3-05/stream.m4a",
-      "vibe": "battle"
+      "vibe": "battle",
+      "preview": "/catalog/bs-s3-05/preview_48s.m4a"
     },
     {
       "track_id": "bs-s3-06",
@@ -562,11 +567,12 @@
         "hard": "/catalog/bs-s3-06/hard.json"
       },
       "seo": {
-        "title": "Pulse Overload \u2014 BeatScape AI Original",
+        "title": "Pulse Overload — BeatScape AI Original",
         "description": "Own the Scape. 168 BPM EDM chart."
       },
       "stream_audio": "/catalog/bs-s3-06/stream.m4a",
-      "vibe": "battle"
+      "vibe": "battle",
+      "preview": "/catalog/bs-s3-06/preview_48s.m4a"
     },
     {
       "track_id": "bs-s3-07",
@@ -597,11 +603,12 @@
         "hard": "/catalog/bs-s3-07/hard.json"
       },
       "seo": {
-        "title": "Low Grid Flow \u2014 BeatScape AI Original",
+        "title": "Low Grid Flow — BeatScape AI Original",
         "description": "Own the Scape. 92 BPM Hip-hop chart."
       },
       "stream_audio": "/catalog/bs-s3-07/stream.m4a",
-      "vibe": "groove"
+      "vibe": "groove",
+      "preview": "/catalog/bs-s3-07/preview_48s.m4a"
     },
     {
       "track_id": "bs-s3-08",
@@ -632,11 +639,12 @@
         "hard": "/catalog/bs-s3-08/hard.json"
       },
       "seo": {
-        "title": "Blue Loop Hour \u2014 BeatScape AI Original",
+        "title": "Blue Loop Hour — BeatScape AI Original",
         "description": "Own the Scape. 118 BPM Pop chart."
       },
       "stream_audio": "/catalog/bs-s3-08/stream.m4a",
-      "vibe": "chill"
+      "vibe": "chill",
+      "preview": "/catalog/bs-s3-08/preview_48s.m4a"
     },
     {
       "track_id": "bs-s3-09",
@@ -667,11 +675,12 @@
         "hard": "/catalog/bs-s3-09/hard.json"
       },
       "seo": {
-        "title": "Afterhours Pulse \u2014 BeatScape AI Original",
+        "title": "Afterhours Pulse — BeatScape AI Original",
         "description": "Own the Scape. 86 BPM R&B chart."
       },
       "stream_audio": "/catalog/bs-s3-09/stream.m4a",
-      "vibe": "chill"
+      "vibe": "chill",
+      "preview": "/catalog/bs-s3-09/preview_48s.m4a"
     },
     {
       "track_id": "bs-s3-10",
@@ -702,11 +711,12 @@
         "hard": "/catalog/bs-s3-10/hard.json"
       },
       "seo": {
-        "title": "Riff Voltage \u2014 BeatScape AI Original",
+        "title": "Riff Voltage — BeatScape AI Original",
         "description": "Own the Scape. 142 BPM Rock chart."
       },
       "stream_audio": "/catalog/bs-s3-10/stream.m4a",
-      "vibe": "battle"
+      "vibe": "battle",
+      "preview": "/catalog/bs-s3-10/preview_48s.m4a"
     },
     {
       "track_id": "bs-s3-11",
@@ -737,11 +747,12 @@
         "hard": "/catalog/bs-s3-11/hard.json"
       },
       "seo": {
-        "title": "Neon Gridline \u2014 BeatScape AI Original",
+        "title": "Neon Gridline — BeatScape AI Original",
         "description": "Own the Scape. 158 BPM EDM chart."
       },
       "stream_audio": "/catalog/bs-s3-11/stream.m4a",
-      "vibe": "groove"
+      "vibe": "groove",
+      "preview": "/catalog/bs-s3-11/preview_48s.m4a"
     },
     {
       "track_id": "bs-s3-12",
@@ -772,11 +783,12 @@
         "hard": "/catalog/bs-s3-12/hard.json"
       },
       "seo": {
-        "title": "Trap Grid \u2014 BeatScape AI Original",
+        "title": "Trap Grid — BeatScape AI Original",
         "description": "Own the Scape. 100 BPM Hip-hop chart."
       },
       "stream_audio": "/catalog/bs-s3-12/stream.m4a",
-      "vibe": "battle"
+      "vibe": "battle",
+      "preview": "/catalog/bs-s3-12/preview_48s.m4a"
     },
     {
       "track_id": "bs-s3-13",
@@ -807,11 +819,12 @@
         "hard": "/catalog/bs-s3-13/hard.json"
       },
       "seo": {
-        "title": "Scape Velvet \u2014 BeatScape AI Original",
+        "title": "Scape Velvet — BeatScape AI Original",
         "description": "Own the Scape. 88 BPM R&B chart."
       },
       "stream_audio": "/catalog/bs-s3-13/stream.m4a",
-      "vibe": "chill"
+      "vibe": "chill",
+      "preview": "/catalog/bs-s3-13/preview_48s.m4a"
     },
     {
       "track_id": "bs-s3-14",
@@ -842,11 +855,12 @@
         "hard": "/catalog/bs-s3-14/hard.json"
       },
       "seo": {
-        "title": "808 Horizon \u2014 BeatScape AI Original",
+        "title": "808 Horizon — BeatScape AI Original",
         "description": "Own the Scape. 96 BPM Hip-hop chart."
       },
       "stream_audio": "/catalog/bs-s3-14/stream.m4a",
-      "vibe": "night-drive"
+      "vibe": "night-drive",
+      "preview": "/catalog/bs-s3-14/preview_48s.m4a"
     },
     {
       "track_id": "bs-s3-15",
@@ -877,11 +891,12 @@
         "hard": "/catalog/bs-s3-15/hard.json"
       },
       "seo": {
-        "title": "Anthem Chrome \u2014 BeatScape AI Original",
+        "title": "Anthem Chrome — BeatScape AI Original",
         "description": "Own the Scape. 136 BPM Rock chart."
       },
       "stream_audio": "/catalog/bs-s3-15/stream.m4a",
-      "vibe": "battle"
+      "vibe": "battle",
+      "preview": "/catalog/bs-s3-15/preview_48s.m4a"
     },
     {
       "track_id": "bs-s4-01",
@@ -913,7 +928,7 @@
         "hard": "/catalog/bs-s4-01/hard.json"
       },
       "seo": {
-        "title": "Brass Scape Rush \u2014 BeatScape AI Original",
+        "title": "Brass Scape Rush — BeatScape AI Original",
         "description": "Own the Scape. 160 BPM EDM chart."
       },
       "stream_audio": "/catalog/bs-s4-01/stream.m4a"
@@ -948,7 +963,7 @@
         "hard": "/catalog/bs-s4-02/hard.json"
       },
       "seo": {
-        "title": "Syncopated Grid \u2014 BeatScape AI Original",
+        "title": "Syncopated Grid — BeatScape AI Original",
         "description": "Own the Scape. 98 BPM Hip-hop chart."
       },
       "stream_audio": "/catalog/bs-s4-02/stream.m4a"
@@ -983,7 +998,7 @@
         "hard": "/catalog/bs-s4-03/hard.json"
       },
       "seo": {
-        "title": "Halftone Drive \u2014 BeatScape AI Original",
+        "title": "Halftone Drive — BeatScape AI Original",
         "description": "Own the Scape. 122 BPM Pop chart."
       },
       "stream_audio": "/catalog/bs-s4-03/stream.m4a"
@@ -1018,7 +1033,7 @@
         "hard": "/catalog/bs-s4-04/hard.json"
       },
       "seo": {
-        "title": "Satin Afterpulse \u2014 BeatScape AI Original",
+        "title": "Satin Afterpulse — BeatScape AI Original",
         "description": "Own the Scape. 92 BPM R&B chart."
       },
       "stream_audio": "/catalog/bs-s4-04/stream.m4a"
@@ -1053,7 +1068,7 @@
         "hard": "/catalog/bs-s4-05/hard.json"
       },
       "seo": {
-        "title": "Ink Stomp Riff \u2014 BeatScape AI Original",
+        "title": "Ink Stomp Riff — BeatScape AI Original",
         "description": "Own the Scape. 132 BPM Rock chart."
       },
       "stream_audio": "/catalog/bs-s4-05/stream.m4a"
@@ -1088,7 +1103,7 @@
         "hard": "/catalog/bs-s4-06/hard.json"
       },
       "seo": {
-        "title": "Resonance Overload \u2014 BeatScape AI Original",
+        "title": "Resonance Overload — BeatScape AI Original",
         "description": "Own the Scape. 168 BPM EDM chart."
       },
       "stream_audio": "/catalog/bs-s4-06/stream.m4a"
@@ -1123,7 +1138,7 @@
         "hard": "/catalog/bs-s4-07/hard.json"
       },
       "seo": {
-        "title": "Lane Shuffle Flow \u2014 BeatScape AI Original",
+        "title": "Lane Shuffle Flow — BeatScape AI Original",
         "description": "Own the Scape. 102 BPM Hip-hop chart."
       },
       "stream_audio": "/catalog/bs-s4-07/stream.m4a"
@@ -1158,7 +1173,7 @@
         "hard": "/catalog/bs-s4-08/hard.json"
       },
       "seo": {
-        "title": "Crimson Hookline \u2014 BeatScape AI Original",
+        "title": "Crimson Hookline — BeatScape AI Original",
         "description": "Own the Scape. 126 BPM Pop chart."
       },
       "stream_audio": "/catalog/bs-s4-08/stream.m4a"
@@ -1193,7 +1208,7 @@
         "hard": "/catalog/bs-s4-09/hard.json"
       },
       "seo": {
-        "title": "Moonlit Groove \u2014 BeatScape AI Original",
+        "title": "Moonlit Groove — BeatScape AI Original",
         "description": "Own the Scape. 94 BPM R&B chart."
       },
       "stream_audio": "/catalog/bs-s4-09/stream.m4a"
@@ -1228,7 +1243,7 @@
         "hard": "/catalog/bs-s4-10/hard.json"
       },
       "seo": {
-        "title": "Strike Vector \u2014 BeatScape AI Original",
+        "title": "Strike Vector — BeatScape AI Original",
         "description": "Own the Scape. 134 BPM Rock chart."
       },
       "stream_audio": "/catalog/bs-s4-10/stream.m4a"
@@ -1263,7 +1278,7 @@
         "hard": "/catalog/bs-s4-11/hard.json"
       },
       "seo": {
-        "title": "Ember Pulse Line \u2014 BeatScape AI Original",
+        "title": "Ember Pulse Line — BeatScape AI Original",
         "description": "Own the Scape. 158 BPM EDM chart."
       },
       "stream_audio": "/catalog/bs-s4-11/stream.m4a"
@@ -1298,7 +1313,7 @@
         "hard": "/catalog/bs-s4-12/hard.json"
       },
       "seo": {
-        "title": "Gridline Cipher \u2014 BeatScape AI Original",
+        "title": "Gridline Cipher — BeatScape AI Original",
         "description": "Own the Scape. 96 BPM Hip-hop chart."
       },
       "stream_audio": "/catalog/bs-s4-12/stream.m4a"
@@ -1333,7 +1348,7 @@
         "hard": "/catalog/bs-s4-13/hard.json"
       },
       "seo": {
-        "title": "Halftone Skyline \u2014 BeatScape AI Original",
+        "title": "Halftone Skyline — BeatScape AI Original",
         "description": "Own the Scape. 120 BPM Pop chart."
       },
       "stream_audio": "/catalog/bs-s4-13/stream.m4a"
@@ -1368,7 +1383,7 @@
         "hard": "/catalog/bs-s4-14/hard.json"
       },
       "seo": {
-        "title": "Chrome Mile Anthem \u2014 BeatScape AI Original",
+        "title": "Chrome Mile Anthem — BeatScape AI Original",
         "description": "Own the Scape. 134 BPM Rock chart."
       },
       "stream_audio": "/catalog/bs-s4-14/stream.m4a"
@@ -1403,7 +1418,7 @@
         "hard": "/catalog/bs-s4-15/hard.json"
       },
       "seo": {
-        "title": "Neon Scape Drift \u2014 BeatScape AI Original",
+        "title": "Neon Scape Drift — BeatScape AI Original",
         "description": "Own the Scape. 166 BPM EDM chart."
       },
       "stream_audio": "/catalog/bs-s4-15/stream.m4a"
@@ -1438,7 +1453,7 @@
         "hard": "/catalog/bs-s5-01/hard.json"
       },
       "seo": {
-        "title": "Pulse Overpass \u2014 BeatScape AI Original",
+        "title": "Pulse Overpass — BeatScape AI Original",
         "description": "Own the Scape. 160 BPM EDM chart."
       },
       "stream_audio": "/catalog/bs-s5-01/stream.m4a"
@@ -1473,7 +1488,7 @@
         "hard": "/catalog/bs-s5-02/hard.json"
       },
       "seo": {
-        "title": "Glass Turnpike \u2014 BeatScape AI Original",
+        "title": "Glass Turnpike — BeatScape AI Original",
         "description": "Own the Scape. 124 BPM Pop chart."
       },
       "stream_audio": "/catalog/bs-s5-02/stream.m4a"
@@ -1508,7 +1523,7 @@
         "hard": "/catalog/bs-s5-03/hard.json"
       },
       "seo": {
-        "title": "Nightlane Static \u2014 BeatScape AI Original",
+        "title": "Nightlane Static — BeatScape AI Original",
         "description": "Own the Scape. 100 BPM Hip-hop chart."
       },
       "stream_audio": "/catalog/bs-s5-03/stream.m4a"
@@ -1543,7 +1558,7 @@
         "hard": "/catalog/bs-s5-04/hard.json"
       },
       "seo": {
-        "title": "Afterhours Satin \u2014 BeatScape AI Original",
+        "title": "Afterhours Satin — BeatScape AI Original",
         "description": "Own the Scape. 90 BPM R&B chart."
       },
       "stream_audio": "/catalog/bs-s5-04/stream.m4a"
@@ -1578,7 +1593,7 @@
         "hard": "/catalog/bs-s5-05/hard.json"
       },
       "seo": {
-        "title": "Chrome Vector \u2014 BeatScape AI Original",
+        "title": "Chrome Vector — BeatScape AI Original",
         "description": "Own the Scape. 134 BPM Rock chart."
       },
       "stream_audio": "/catalog/bs-s5-05/stream.m4a"
@@ -1613,7 +1628,7 @@
         "hard": "/catalog/bs-s5-06/hard.json"
       },
       "seo": {
-        "title": "Overload Scape \u2014 BeatScape AI Original",
+        "title": "Overload Scape — BeatScape AI Original",
         "description": "Own the Scape. 170 BPM EDM chart."
       },
       "stream_audio": "/catalog/bs-s5-06/stream.m4a"
@@ -1648,7 +1663,7 @@
         "hard": "/catalog/bs-s5-07/hard.json"
       },
       "seo": {
-        "title": "Halftone Harbour \u2014 BeatScape AI Original",
+        "title": "Halftone Harbour — BeatScape AI Original",
         "description": "Own the Scape. 116 BPM Pop chart."
       },
       "stream_audio": "/catalog/bs-s5-07/stream.m4a"
@@ -1683,7 +1698,7 @@
         "hard": "/catalog/bs-s5-08/hard.json"
       },
       "seo": {
-        "title": "Gridlock Anthem \u2014 BeatScape AI Original",
+        "title": "Gridlock Anthem — BeatScape AI Original",
         "description": "Own the Scape. 94 BPM Hip-hop chart."
       },
       "stream_audio": "/catalog/bs-s5-08/stream.m4a"
@@ -1718,7 +1733,7 @@
         "hard": "/catalog/bs-s5-09/hard.json"
       },
       "seo": {
-        "title": "Satin Nightline \u2014 BeatScape AI Original",
+        "title": "Satin Nightline — BeatScape AI Original",
         "description": "Own the Scape. 88 BPM R&B chart."
       },
       "stream_audio": "/catalog/bs-s5-09/stream.m4a"
@@ -1753,7 +1768,7 @@
         "hard": "/catalog/bs-s5-10/hard.json"
       },
       "seo": {
-        "title": "Iron Boulevard \u2014 BeatScape AI Original",
+        "title": "Iron Boulevard — BeatScape AI Original",
         "description": "Own the Scape. 142 BPM Rock chart."
       },
       "stream_audio": "/catalog/bs-s5-10/stream.m4a"
@@ -1788,7 +1803,7 @@
         "hard": "/catalog/bs-s6-01/hard.json"
       },
       "seo": {
-        "title": "Afterglow Scape \u2014 BeatScape AI Original",
+        "title": "Afterglow Scape — BeatScape AI Original",
         "description": "Own the Scape. 162 BPM EDM chart."
       },
       "stream_audio": "/catalog/bs-s6-01/stream.m4a"
@@ -1823,7 +1838,7 @@
         "hard": "/catalog/bs-s6-02/hard.json"
       },
       "seo": {
-        "title": "Halftone Bloom \u2014 BeatScape AI Original",
+        "title": "Halftone Bloom — BeatScape AI Original",
         "description": "Own the Scape. 120 BPM Pop chart."
       },
       "stream_audio": "/catalog/bs-s6-02/stream.m4a"
@@ -1858,7 +1873,7 @@
         "hard": "/catalog/bs-s6-03/hard.json"
       },
       "seo": {
-        "title": "Lowbeam Groove \u2014 BeatScape AI Original",
+        "title": "Lowbeam Groove — BeatScape AI Original",
         "description": "Own the Scape. 98 BPM Hip-hop chart."
       },
       "stream_audio": "/catalog/bs-s6-03/stream.m4a"
@@ -1893,7 +1908,7 @@
         "hard": "/catalog/bs-s6-04/hard.json"
       },
       "seo": {
-        "title": "Moonlit Turnpike \u2014 BeatScape AI Original",
+        "title": "Moonlit Turnpike — BeatScape AI Original",
         "description": "Own the Scape. 92 BPM R&B chart."
       },
       "stream_audio": "/catalog/bs-s6-04/stream.m4a"
@@ -1928,7 +1943,7 @@
         "hard": "/catalog/bs-s6-05/hard.json"
       },
       "seo": {
-        "title": "Chrome Foundry \u2014 BeatScape AI Original",
+        "title": "Chrome Foundry — BeatScape AI Original",
         "description": "Own the Scape. 136 BPM Rock chart."
       },
       "stream_audio": "/catalog/bs-s6-05/stream.m4a"
@@ -1963,7 +1978,7 @@
         "hard": "/catalog/bs-s6-06/hard.json"
       },
       "seo": {
-        "title": "Neon Overpass \u2014 BeatScape AI Original",
+        "title": "Neon Overpass — BeatScape AI Original",
         "description": "Own the Scape. 166 BPM EDM chart."
       },
       "stream_audio": "/catalog/bs-s6-06/stream.m4a"
@@ -1998,7 +2013,7 @@
         "hard": "/catalog/bs-s6-07/hard.json"
       },
       "seo": {
-        "title": "Glass Verandah \u2014 BeatScape AI Original",
+        "title": "Glass Verandah — BeatScape AI Original",
         "description": "Own the Scape. 118 BPM Pop chart."
       },
       "stream_audio": "/catalog/bs-s6-07/stream.m4a"
@@ -2033,7 +2048,7 @@
         "hard": "/catalog/bs-s6-08/hard.json"
       },
       "seo": {
-        "title": "Grid Alley Flow \u2014 BeatScape AI Original",
+        "title": "Grid Alley Flow — BeatScape AI Original",
         "description": "Own the Scape. 96 BPM Hip-hop chart."
       },
       "stream_audio": "/catalog/bs-s6-08/stream.m4a"
@@ -2068,7 +2083,7 @@
         "hard": "/catalog/bs-s6-09/hard.json"
       },
       "seo": {
-        "title": "Voltage Causeway \u2014 BeatScape AI Original",
+        "title": "Voltage Causeway — BeatScape AI Original",
         "description": "Own the Scape. 140 BPM Rock chart."
       },
       "stream_audio": "/catalog/bs-s6-09/stream.m4a"
@@ -2103,7 +2118,7 @@
         "hard": "/catalog/bs-s6-10/hard.json"
       },
       "seo": {
-        "title": "Scape Ignition \u2014 BeatScape AI Original",
+        "title": "Scape Ignition — BeatScape AI Original",
         "description": "Own the Scape. 168 BPM EDM chart."
       },
       "stream_audio": "/catalog/bs-s6-10/stream.m4a"
@@ -2138,7 +2153,7 @@
         "hard": "/catalog/bs-s6-11/hard.json"
       },
       "seo": {
-        "title": "Prism Skyline \u2014 BeatScape AI Original",
+        "title": "Prism Skyline — BeatScape AI Original",
         "description": "Own the Scape. 122 BPM Pop chart."
       },
       "stream_audio": "/catalog/bs-s6-11/stream.m4a"
@@ -2173,7 +2188,7 @@
         "hard": "/catalog/bs-s6-12/hard.json"
       },
       "seo": {
-        "title": "Nightlane Drift \u2014 BeatScape AI Original",
+        "title": "Nightlane Drift — BeatScape AI Original",
         "description": "Own the Scape. 102 BPM Hip-hop chart."
       },
       "stream_audio": "/catalog/bs-s6-12/stream.m4a"
@@ -2208,7 +2223,7 @@
         "hard": "/catalog/bs-s6-13/hard.json"
       },
       "seo": {
-        "title": "Satin Underpass \u2014 BeatScape AI Original",
+        "title": "Satin Underpass — BeatScape AI Original",
         "description": "Own the Scape. 90 BPM R&B chart."
       },
       "stream_audio": "/catalog/bs-s6-13/stream.m4a"
@@ -2243,7 +2258,7 @@
         "hard": "/catalog/bs-s6-14/hard.json"
       },
       "seo": {
-        "title": "Iron Skyline Riff \u2014 BeatScape AI Original",
+        "title": "Iron Skyline Riff — BeatScape AI Original",
         "description": "Own the Scape. 144 BPM Rock chart."
       },
       "stream_audio": "/catalog/bs-s6-14/stream.m4a"
@@ -2278,7 +2293,7 @@
         "hard": "/catalog/bs-s6-15/hard.json"
       },
       "seo": {
-        "title": "Midnight Overpass \u2014 BeatScape AI Original",
+        "title": "Midnight Overpass — BeatScape AI Original",
         "description": "Own the Scape. 174 BPM EDM chart."
       },
       "stream_audio": "/catalog/bs-s6-15/stream.m4a"
@@ -2313,7 +2328,7 @@
         "hard": "/catalog/bs-s6-16/hard.json"
       },
       "seo": {
-        "title": "Neon Chorus Line \u2014 BeatScape AI Original",
+        "title": "Neon Chorus Line — BeatScape AI Original",
         "description": "Own the Scape. 126 BPM Pop chart."
       },
       "stream_audio": "/catalog/bs-s6-16/stream.m4a"
@@ -2348,7 +2363,7 @@
         "hard": "/catalog/bs-s6-17/hard.json"
       },
       "seo": {
-        "title": "Static Boulevard \u2014 BeatScape AI Original",
+        "title": "Static Boulevard — BeatScape AI Original",
         "description": "Own the Scape. 94 BPM Hip-hop chart."
       },
       "stream_audio": "/catalog/bs-s6-17/stream.m4a"
@@ -2383,7 +2398,7 @@
         "hard": "/catalog/bs-s6-18/hard.json"
       },
       "seo": {
-        "title": "Afterhours Cadence \u2014 BeatScape AI Original",
+        "title": "Afterhours Cadence — BeatScape AI Original",
         "description": "Own the Scape. 88 BPM R&B chart."
       },
       "stream_audio": "/catalog/bs-s6-18/stream.m4a"
@@ -2418,7 +2433,7 @@
         "hard": "/catalog/bs-s6-19/hard.json"
       },
       "seo": {
-        "title": "Chrome Boulevard \u2014 BeatScape AI Original",
+        "title": "Chrome Boulevard — BeatScape AI Original",
         "description": "Own the Scape. 132 BPM Rock chart."
       },
       "stream_audio": "/catalog/bs-s6-19/stream.m4a"
@@ -2453,7 +2468,7 @@
         "hard": "/catalog/bs-s6-20/hard.json"
       },
       "seo": {
-        "title": "Pulse Foundry \u2014 BeatScape AI Original",
+        "title": "Pulse Foundry — BeatScape AI Original",
         "description": "Own the Scape. 158 BPM EDM chart."
       },
       "stream_audio": "/catalog/bs-s6-20/stream.m4a"
@@ -2488,7 +2503,7 @@
         "hard": "/catalog/bs-s6-21/hard.json"
       },
       "seo": {
-        "title": "Halftone Parade \u2014 BeatScape AI Original",
+        "title": "Halftone Parade — BeatScape AI Original",
         "description": "Own the Scape. 120 BPM Pop chart."
       },
       "stream_audio": "/catalog/bs-s6-21/stream.m4a"
@@ -2523,7 +2538,7 @@
         "hard": "/catalog/bs-s6-22/hard.json"
       },
       "seo": {
-        "title": "Grid Circuit Flow \u2014 BeatScape AI Original",
+        "title": "Grid Circuit Flow — BeatScape AI Original",
         "description": "Own the Scape. 100 BPM Hip-hop chart."
       },
       "stream_audio": "/catalog/bs-s6-22/stream.m4a"
@@ -2558,7 +2573,7 @@
         "hard": "/catalog/bs-s6-23/hard.json"
       },
       "seo": {
-        "title": "Lantern Scape \u2014 BeatScape AI Original",
+        "title": "Lantern Scape — BeatScape AI Original",
         "description": "Own the Scape. 94 BPM R&B chart."
       },
       "stream_audio": "/catalog/bs-s6-23/stream.m4a"
@@ -2593,7 +2608,7 @@
         "hard": "/catalog/bs-s6-24/hard.json"
       },
       "seo": {
-        "title": "Asphalt Overdrive \u2014 BeatScape AI Original",
+        "title": "Asphalt Overdrive — BeatScape AI Original",
         "description": "Own the Scape. 144 BPM Rock chart."
       },
       "stream_audio": "/catalog/bs-s6-24/stream.m4a"
@@ -2628,7 +2643,7 @@
         "hard": "/catalog/bs-s6-25/hard.json"
       },
       "seo": {
-        "title": "Halftone Ignition \u2014 BeatScape AI Original",
+        "title": "Halftone Ignition — BeatScape AI Original",
         "description": "Own the Scape. 152 BPM EDM chart."
       },
       "stream_audio": "/catalog/bs-s6-25/stream.m4a"
@@ -2663,7 +2678,7 @@
         "hard": "/catalog/bs-s6-26/hard.json"
       },
       "seo": {
-        "title": "Prism Boulevard \u2014 BeatScape AI Original",
+        "title": "Prism Boulevard — BeatScape AI Original",
         "description": "Own the Scape. 122 BPM Pop chart."
       },
       "stream_audio": "/catalog/bs-s6-26/stream.m4a"
@@ -2698,7 +2713,7 @@
         "hard": "/catalog/bs-s6-27/hard.json"
       },
       "seo": {
-        "title": "Nightfall Cipher \u2014 BeatScape AI Original",
+        "title": "Nightfall Cipher — BeatScape AI Original",
         "description": "Own the Scape. 92 BPM Hip-hop chart."
       },
       "stream_audio": "/catalog/bs-s6-27/stream.m4a"
@@ -2733,7 +2748,7 @@
         "hard": "/catalog/bs-s6-28/hard.json"
       },
       "seo": {
-        "title": "Amber Afterhours \u2014 BeatScape AI Original",
+        "title": "Amber Afterhours — BeatScape AI Original",
         "description": "Own the Scape. 90 BPM R&B chart."
       },
       "stream_audio": "/catalog/bs-s6-28/stream.m4a"
@@ -2768,7 +2783,7 @@
         "hard": "/catalog/bs-s6-29/hard.json"
       },
       "seo": {
-        "title": "Riffline Overdrive \u2014 BeatScape AI Original",
+        "title": "Riffline Overdrive — BeatScape AI Original",
         "description": "Own the Scape. 142 BPM Rock chart."
       },
       "stream_audio": "/catalog/bs-s6-29/stream.m4a"
@@ -2803,7 +2818,7 @@
         "hard": "/catalog/bs-s6-30/hard.json"
       },
       "seo": {
-        "title": "Grid Apex Run \u2014 BeatScape AI Original",
+        "title": "Grid Apex Run — BeatScape AI Original",
         "description": "Own the Scape. 170 BPM EDM chart."
       },
       "stream_audio": "/catalog/bs-s6-30/stream.m4a"
@@ -2838,7 +2853,7 @@
         "hard": "/catalog/bs-s6-31/hard.json"
       },
       "seo": {
-        "title": "Skyline Cadence \u2014 BeatScape AI Original",
+        "title": "Skyline Cadence — BeatScape AI Original",
         "description": "Own the Scape. 124 BPM Pop chart."
       },
       "stream_audio": "/catalog/bs-s6-31/stream.m4a"
@@ -2873,7 +2888,7 @@
         "hard": "/catalog/bs-s6-32/hard.json"
       },
       "seo": {
-        "title": "Alley Voltage \u2014 BeatScape AI Original",
+        "title": "Alley Voltage — BeatScape AI Original",
         "description": "Own the Scape. 98 BPM Hip-hop chart."
       },
       "stream_audio": "/catalog/bs-s6-32/stream.m4a"
@@ -2908,7 +2923,7 @@
         "hard": "/catalog/bs-s6-33/hard.json"
       },
       "seo": {
-        "title": "Scape Lullaby \u2014 BeatScape AI Original",
+        "title": "Scape Lullaby — BeatScape AI Original",
         "description": "Own the Scape. 88 BPM R&B chart."
       },
       "stream_audio": "/catalog/bs-s6-33/stream.m4a"
@@ -2943,7 +2958,7 @@
         "hard": "/catalog/bs-s6-34/hard.json"
       },
       "seo": {
-        "title": "Foundry Boulevard \u2014 BeatScape AI Original",
+        "title": "Foundry Boulevard — BeatScape AI Original",
         "description": "Own the Scape. 134 BPM Rock chart."
       },
       "stream_audio": "/catalog/bs-s6-34/stream.m4a"
@@ -2978,7 +2993,7 @@
         "hard": "/catalog/bs-s6-35/hard.json"
       },
       "seo": {
-        "title": "Zenith Scape \u2014 BeatScape AI Original",
+        "title": "Zenith Scape — BeatScape AI Original",
         "description": "Own the Scape. 172 BPM EDM chart."
       },
       "stream_audio": "/catalog/bs-s6-35/stream.m4a"

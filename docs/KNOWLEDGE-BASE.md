@@ -49,6 +49,15 @@
 9. [docs/BEATSCAPE-TODO-ACCEPTANCE.md](./BEATSCAPE-TODO-ACCEPTANCE.md) — **待办 + 验收标准（SESSION 镜像）**
 10. 内容流水线见 PRD-BEATSCAPE §6.0 · `catalog.json` · `catalog-roadmap.json` · `scripts/beatscape-*`
 
+### BeatScape 世界观 / IP / 商业化（2026-08 新增线）
+
+1. [docs/BEATSCAPE-WORLDBIBLE.md](./BEATSCAPE-WORLDBIBLE.md) — **叙事唯一真相源**（Scape City / The Hush / NIGHTSHIFT 三人组 / 电台 Year 1 三季 24 集 / 商标筛查与备选名）
+2. [docs/BEATSCAPE-CHARACTER-LORA.md](./BEATSCAPE-CHARACTER-LORA.md) — 角色 LoRA 管线真相源（跨 IDE 必读，Animagine XL 4.0 / rank 8 铁律）
+3. [docs/BEATSCAPE-IP-STRATEGY.md](./BEATSCAPE-IP-STRATEGY.md) — 角色 IP 战略（Art Brief / 叙事 Bible / 商业化差距索引）
+4. [docs/BEATSCAPE-REDDIT-LAUNCH.md](./BEATSCAPE-REDDIT-LAUNCH.md) — Reddit 首发文案包（发帖前红线自查 + 三篇成稿）
+5. [docs/BEATSCAPE-COMMERCIALIZATION-GAP.md](./BEATSCAPE-COMMERCIALIZATION-GAP.md) — 商业化差距 7 域 34 项（5 决策点待拍板）
+6. [docs/RESONANCE-BLINDTEST.md](./RESONANCE-BLINDTEST.md) — 差异化盲测规程（上线前人工关卡，6 展示面）
+
 ### Harness / 续作
 
 1. [SESSION.md](../SESSION.md) — 项目级战略 todo（唯一真相）

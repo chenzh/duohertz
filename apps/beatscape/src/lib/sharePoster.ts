@@ -1,5 +1,5 @@
 import type { LastRun } from "../types/chart";
-import { SCAPE_COPY } from "../constants/scape";
+import { COMBO_COPY, SCAPE_COPY } from "../constants/scape";
 
 const W = 1200;
 const H = 630;
@@ -100,7 +100,30 @@ export async function renderSharePoster(run: LastRun, district = ""): Promise<Bl
   ctx.fillText(`${run.accuracy}% Acc · ${run.score.toLocaleString()} pts`, 72, 468);
   ctx.fillStyle = "#A8928B";
   ctx.font = "28px system-ui, sans-serif";
-  ctx.fillText(`Max Combo ${run.maxCombo}x`, 72, 518);
+  ctx.fillText(`${COMBO_COPY.maxCombo} ${run.maxCombo}x`, 72, 518);
+
+  // ON AIR tag (docs/BEATSCAPE-SURGE-FX.md): only the top SIGNAL tier earns
+  // poster space — skewed chip, flat gold, hard ink outline (PRD §7.6).
+  if (run.surgeMaxTier === 3) {
+    const label = "ON AIR";
+    ctx.font = "400 30px Anton, system-ui, sans-serif";
+    const bw = ctx.measureText(label).width + 44;
+    const bx = W - 72 - bw;
+    const by = 56;
+    ctx.beginPath();
+    ctx.moveTo(bx + 12, by);
+    ctx.lineTo(bx + bw, by);
+    ctx.lineTo(bx + bw - 12, by + 44);
+    ctx.lineTo(bx, by + 44);
+    ctx.closePath();
+    ctx.fillStyle = "#FFB020";
+    ctx.fill();
+    ctx.strokeStyle = "#000000";
+    ctx.lineWidth = 3;
+    ctx.stroke();
+    ctx.fillStyle = "#12100F";
+    ctx.fillText(label, bx + 22, by + 33);
+  }
 
   roundRect(ctx, 72, H - 88, W - 144, 48, 10);
   ctx.fillStyle = "#1C1717";

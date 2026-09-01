@@ -3,8 +3,6 @@
 // This makes the fall speed scale with tempo, so a 160 BPM chart scrolls
 // noticeably faster than an 88 BPM one — which the old code completely ignored.
 
-export const RECEPTOR_BOTTOM_RATIO = 0.15;
-
 /** Beats of visibility before the receptor; higher = slower scroll (visual only). */
 export const APPROACH_VISIBLE_BEATS = 64;
 

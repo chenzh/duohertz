@@ -1,26 +1,20 @@
 import { useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import type { ChartJSON, PlayMode, PlayResult } from "../types/chart";
 import { Conductor, unlockAudio } from "../audio/playback";
-import { playBreak, playCountdownTick, playHit, playKeyTick, setSfxVolume } from "../audio/hitsounds";
+import { playHit, playKeyTick, setSfxVolume } from "../audio/hitsounds";
+import { vibrate } from "../lib/haptics";
 import { GameSession, type JudgeFx } from "../engine/playState";
-import { approachSec, noteProximityFactor, noteScreenY } from "../engine/geometry";
-import { makeNoteSprite, noteWidthForLane, HOLD_BODY_RATIO, HOLD_STROKE_RATIO, NOTE_PROXIMITY_GROWTH, SLIDE_TAIL_SCALE } from "../engine/noteSprite";
-import { accuracyPercent, comboMultiplier, judgmentScore } from "../engine/judge";
-import { receptorYFromGeometry, laneFromClientX, isCoarsePointer, TouchLaneTracker } from "../input/touchInput";
+import { approachSec } from "../engine/geometry";
+import { laneFromClientX, isCoarsePointer, TouchLaneTracker, receptorYFromGeometry } from "../input/touchInput";
 import { keyLabels, laneFromKeyEvent } from "../input/keyMap";
 import { loadKeys, loadOffsetMs, loadSettings } from "../storage/settings";
+import { SCAPE_COPY, districtColor, characterArtWebp, LANE_RGB } from "../constants/scape";
+import { fancyFxOn } from "./playfield/canvasHelpers";
+import { createPlayfieldRenderer } from "./playfield/renderLoop";
+import type { Fx, ScorePop } from "./playfield/renderLoop";
+import { ScoreStreak, SurgeMeter, type SurgeTier } from "../engine/surge";
 
-import { JUDGE_COLORS, LANE_COLORS, LANE_RGB, SCAPE_COPY, districtColor, characterArt } from "../constants/scape";
 const COUNTDOWN_MS = 3000;
-const LANE_FLASH_MS = 180;
-const JUDGE_LABEL: Record<string, string> = {
-  perfect: "PERFECT",
-  great: "GREAT",
-  good: "GOOD",
-  miss: "MISS",
-};
-const JUDGE_COLOR: Record<string, string> = { ...JUDGE_COLORS };
-const COMBO_MILESTONES = [10, 25, 50, 100, 150, 200, 300];
 
 type Props = {
   chart: ChartJSON;
@@ -38,15 +32,6 @@ type Props = {
   /** District key (e.g. "Pulse Core") — ties the field's beat-wash + watermark to the track's character. */
   district?: string;
 };
-
-type Fx = { lane: number; judgment: JudgeFx["judgment"]; born: number; deltaMs: number };
-type ScorePop = { x: number; y: number; text: string; born: number; color: string };
-
-function fancyFxOn(settings: { fancyFx: boolean }): boolean {
-  if (!settings.fancyFx) return false;
-  if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return false;
-  return true;
-}
 
 export function PlayField({
   chart,
@@ -84,14 +69,51 @@ export function PlayField({
   const scorePopsRef = useRef<ScorePop[]>([]);
   const comboBreakRef = useRef(0);
   const prevComboRef = useRef(0);
+  // --- SIGNAL atmosphere layer (research: docs/BEATSCAPE-SURGE-FX.md) ---
+  const surgeRef = useRef(new SurgeMeter());
+  const streakRef = useRef(new ScoreStreak());
+  const prevNeonRef = useRef(0);
+  const surgeTierRef = useRef<SurgeTier>(0);
+  const lastEffMsRef = useRef(0);
+  const ringsRef = useRef<number[]>([]);
+  const surgeDropRef = useRef(0);
+  const halftonePatRef = useRef<CanvasPattern | null>(null);
+  const raysRef = useRef<HTMLCanvasElement | null>(null);
+  const ringSpriteRef = useRef<HTMLCanvasElement | null>(null);
+  // --- LIGHTING rig (docs/BEATSCAPE-SURGE-FX.md §2.4): combo-driven stage light ---
+  const colsRef = useRef<Array<{ born: number; lane: number }>>([]);
+  const sweepsRef = useRef<Array<{ born: number; corner: number }>>([]);
+  const lastLaneRef = useRef(0);
+  const lightComboPrevRef = useRef(0);
+  const lastShowBarRef = useRef(-1);
   const onFinishRef = useRef(onFinish);
   onFinishRef.current = onFinish;
 
   const settings = useMemo(loadSettings, []);
   // Stable reference: the keyboard effect below keys off this array.
   const keys = useMemo(loadKeys, []);
-  const keyHint = useMemo(() => keyLabels(keys), [keys]);
+    const keyHint = useMemo(() => keyLabels(keys), [keys]);
   const keyHintJoined = useMemo(() => keyHint.join(" · "), [keyHint]);
+  // Dev-only visual QA hooks: ?surge=N locks the SIGNAL meter at a tier;
+  // ?autostart skips the tap-to-enter gate. Both exist so tier stills can be
+  // captured headlessly and are compiled out of production builds.
+  const demoSurge = useMemo(() => {
+    if (!import.meta.env.DEV) return 0;
+    const v = Number(new URLSearchParams(window.location.search).get("surge") ?? "0");
+    return v >= 1 && v <= 3 ? (Math.floor(v) as SurgeTier) : 0;
+  }, []);
+  const devAutoStart = useMemo(() => {
+    if (!import.meta.env.DEV) return false;
+    return new URLSearchParams(window.location.search).has("autostart");
+  }, []);
+  // Dev-only: ?streak=N (alias ?combo=N) floors the ScoreStreak driver so
+  // stills can show the rig/neon at a given level without playing.
+  const demoStreak = useMemo(() => {
+    if (!import.meta.env.DEV) return 0;
+    const p = new URLSearchParams(window.location.search);
+    const v = Number(p.get("streak") ?? p.get("combo") ?? "0");
+    return Number.isFinite(v) && v > 0 ? Math.min(200, Math.floor(v)) : 0;
+  }, []);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -105,12 +127,27 @@ export function PlayField({
   const pausedRef = useRef(paused);
   needsStartRef.current = needsStart;
   pausedRef.current = paused;
+  // 这三个开关由 rAF 循环读取，所以走 ref 而不是闭包：
+  //   · 写进 rAF effect 的依赖 → 中途改音量/音色会销毁重建整个循环，连带重跑
+  //     sprite 预渲染和 halftone 图案，玩家看到一次明显卡帧；
+  //   · 不写进依赖、直接读 settings.xxx → 读到的是 effect 上次运行时的过期值
+  //     （settings 是 useMemo([]) 的稳定对象，属性变了引用不变）。
+  const mutedRef = useRef(muted);
+  const hitsoundRef = useRef(settings.hitsound);
+  const fancyFxRef = useRef(settings.fancyFx);
+  mutedRef.current = muted;
+  hitsoundRef.current = settings.hitsound;
+  fancyFxRef.current = settings.fancyFx;
 
-  // Immersive: hide site chrome while playing (full page only).
+  // Immersive: hide site chrome while playing (full page only). Also owns the
+  // viewport NEON level attribute — cleaned up on unmount.
   useEffect(() => {
     if (variant !== "full") return;
     document.body.classList.add("play-immersive");
-    return () => document.body.classList.remove("play-immersive");
+    return () => {
+      document.body.classList.remove("play-immersive");
+      delete document.body.dataset.neon;
+    };
   }, [variant]);
 
   // Load audio + build the session once per chart.
@@ -121,11 +158,25 @@ export function PlayField({
     lastCountInt.current = -1;
     fxRef.current = [];
     pressedRef.current.clear();
+    surgeRef.current.reset();
+    streakRef.current.reset();
+    prevNeonRef.current = 0;
+    surgeTierRef.current = 0;
+    lastEffMsRef.current = 0;
+    ringsRef.current = [];
+    surgeDropRef.current = 0;
+    colsRef.current = [];
+    sweepsRef.current = [];
+    lastLaneRef.current = 0;
+    lightComboPrevRef.current = 0;
+    lastShowBarRef.current = -1;
+    if (wrapRef.current) wrapRef.current.dataset.surge = "0";
 
     const conductor = new Conductor();
     // Initial bus levels; live mute toggles via the effect below.
-    conductor.setMusicVolume(muted ? 0 : settings.musicVolume);
-    setSfxVolume(muted || !settings.hitsound ? 0 : settings.sfxVolume);
+    // 走 ref 读 muted，好让音量相关设置不必进依赖（见下面的 deps 注释）。
+    conductor.setMusicVolume(mutedRef.current ? 0 : settings.musicVolume);
+    setSfxVolume(mutedRef.current || !settings.hitsound ? 0 : settings.sfxVolume);
     conductorRef.current = conductor;
     const session = new GameSession(chart, mode, { chordAssist });
     sessionRef.current = session;
@@ -152,12 +203,19 @@ export function PlayField({
 
     return () => {
       cancelled = true;
-      conductor.stop();
+      // dispose() 而不是 stop()：stop() 只停音源、保留整条 gain/filter/analyser
+      // 播放链（那是为了能恢复播放）。离开对局时整条链都要断开，否则每次挂载
+      // 都泄漏一套节点，而且音量设置一变就会再泄漏一套。
+      conductor.dispose();
       conductorRef.current = null;
       sessionRef.current = null;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- muted is applied live below; remounting on mute would restart the chart
-  }, [chart, mode, audioUrl, casualSpeed, chordAssist, settings.scrollBias, settings.musicVolume, settings.sfxVolume, settings.hitsound]);
+    // 依赖里刻意不含 settings.musicVolume / sfxVolume / hitsound / muted：
+    // 它们属于"实时生效"的音量，由下面那个 effect 直接作用在当前 conductor 上。
+    // 放进依赖的话，改一次音量就会重跑这里 —— 重新 new Conductor + 重新 fetch
+    // 并解码整段音频，玩家在对局中途调音量会直接被丢回加载态。
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chart, mode, audioUrl, casualSpeed, chordAssist, settings.scrollBias]);
 
   // Live mute toggle (home sound button) without remounting the chart.
   useEffect(() => {
@@ -193,31 +251,86 @@ export function PlayField({
   };
 
   // Home combined Play+Sound already unlocked AudioContext — start when ready.
+  // Dev-only: the ?surge=N visual-QA lock implies auto-start so stills can be
+  // captured headlessly without a click gesture.
   const autoStartedRef = useRef(false);
+  const effectiveAutoStart = autoStart || devAutoStart || (import.meta.env.DEV && demoSurge > 0);
   useEffect(() => {
     autoStartedRef.current = false;
   }, [chart, mode, audioUrl]);
   useEffect(() => {
-    if (!autoStart || loading || error || !needsStart || autoStartedRef.current) return;
+    if (!effectiveAutoStart || loading || error || !needsStart || autoStartedRef.current) return;
     autoStartedRef.current = true;
     void startRun();
     // eslint-disable-next-line react-hooks/exhaustive-deps -- one-shot after load
-  }, [autoStart, loading, error, needsStart]);
+  }, [effectiveAutoStart, loading, error, needsStart]);
+
+  // Dev-only QA hook (docs/BEATSCAPE-SURGE-FX.md): lets an injected autoplayer
+  // READ game state. Input still flows through the real keyboard event path.
+  useEffect(() => {
+    if (!import.meta.env.DEV) return;
+    (window as unknown as { __bs: unknown }).__bs = {
+      get session() { return sessionRef.current; },
+      get conductor() { return conductorRef.current; },
+      get surge() { return surgeRef.current; },
+      get offset() { return offsetMsRef.current; },
+    };
+    return () => { delete (window as unknown as { __bs?: unknown }).__bs; };
+  }, []);
 
   const togglePause = () => {
     const conductor = conductorRef.current;
     if (!conductor) return;
-    if (paused) {
-      conductor.resume();
-      setPaused(false);
-    } else {
-      conductor.pause();
-      setPaused(true);
-    }
+    // 用函数式更新读最新 paused，确保从按键监听（依赖只有 [keys]，closure 可能是旧的）调用也正确。
+    setPaused((prev) => {
+      if (prev) conductor.resume();
+      else conductor.pause();
+      return !prev;
+    });
+  };
+
+  // FEEL PACK: instant retry — same chart, fresh session, straight to countdown.
+  const restartRun = () => {
+    const conductor = conductorRef.current;
+    if (!conductor || loading) return;
+    conductor.stop();
+    sessionRef.current = new GameSession(chart, mode, { chordAssist });
+    surgeRef.current.reset();
+    streakRef.current.reset();
+    prevNeonRef.current = 0;
+    if (variant === "full") document.body.dataset.neon = "0";
+    surgeTierRef.current = 0;
+    lastEffMsRef.current = 0;
+    ringsRef.current = [];
+    colsRef.current = [];
+    sweepsRef.current = [];
+    lightComboPrevRef.current = 0;
+    lastShowBarRef.current = -1;
+    surgeDropRef.current = 0;
+    lastComboRef.current = 0;
+    prevComboRef.current = 0;
+    finishedRef.current = false;
+    lastCountInt.current = -1;
+    particlesRef.current = [];
+    fxRef.current = [];
+    scorePopsRef.current = [];
+    milestoneRef.current = null;
+    pressedRef.current.clear();
+    laneFlashRef.current = [0, 0, 0, 0];
+    if (wrapRef.current) wrapRef.current.dataset.surge = "0";
+    setPaused(false);
+    onStart?.();
+    void unlockAudio().then(() => conductor.begin(COUNTDOWN_MS));
   };
 
   // Juice: burst particles + screen shake on every judged hit/miss.
   const spawnHitFx = (lane: number, judgment: JudgeFx["judgment"]) => {
+    // FEEL PACK haptics (Android/Chromium): light tick per scoring hit, firm
+    // pulse on miss. Gated by the hitsound setting as the feedback master.
+    if (settings.hitsound) {
+      if (judgment === "miss") vibrate(35, 60);
+      else vibrate(8);
+    }
     const { w, h } = dimRef.current;
     if (!w || !h) return;
     const receptorY = receptorYFromGeometry(h, Math.min(w, h));
@@ -268,515 +381,64 @@ export function PlayField({
   }, []);
 
   // The game loop. Reads the audio clock, draws to canvas, never re-renders React.
+  // Moved verbatim to playfield/renderLoop.ts (P2-2) — PlayField just wires the
+  // refs/values/closures it needs through a context object.
   useEffect(() => {
-    const canvas = canvasRef.current;
-    const wrap = wrapRef.current;
-    if (!canvas || !wrap) return;
-    const ctx2d = canvas.getContext("2d")!;
-    let raf = 0;
-
-    // Pre-render glowing note sprites once. Per frame we only blit these
-    // (drawImage) instead of recomputing shadowBlur on every note — shadowBlur
-    // is the single most expensive canvas op and was the main frame-cost on
-    // dense charts. The Douyin neon look is baked into the sprite.
-    spritesRef.current = LANE_COLORS.map((c) => makeNoteSprite(c, 120));
-
-    const drawNote = (lane: number, x: number, y: number, size: number, alpha: number, receptorY: number) => {
-      const sp = spritesRef.current[lane];
-      if (!sp) return;
-      const prox = noteProximityFactor(y, receptorY);
-      const drawSize = size * (1 + prox * NOTE_PROXIMITY_GROWTH);
-      const drawAlpha = Math.min(1, alpha * (0.78 + prox * 0.22));
-      ctx2d.globalAlpha = drawAlpha;
-      ctx2d.drawImage(sp, x - drawSize / 2, y - drawSize / 2, drawSize, drawSize);
-      if (prox > 0.55 && fancyFxOn(settings)) {
-        ctx2d.globalAlpha = prox * 0.35;
-        ctx2d.drawImage(sp, x - drawSize * 0.62, y - drawSize * 0.62, drawSize * 1.24, drawSize * 1.24);
-      }
-      ctx2d.globalAlpha = 1;
-    };
-
-    const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const w = wrap.clientWidth;
-      const h = wrap.clientHeight;
-      canvas.width = Math.round(w * dpr);
-      canvas.height = Math.round(h * dpr);
-      canvas.style.width = `${w}px`;
-      canvas.style.height = `${h}px`;
-      ctx2d.setTransform(dpr, 0, 0, dpr, 0, 0);
-      dimRef.current = { w, h };
-    };
-    resize();
-    const ro = new ResizeObserver(resize);
-    ro.observe(wrap);
-
-    const draw = (effMs: number, st: number) => {
-      const { w, h } = dimRef.current;
-      const receptorY = receptorYFromGeometry(h, Math.min(w, h));
-      const laneW = w / 4;
-      const noteW = noteWidthForLane(laneW);
-      const keyHints = keyLabels(keys);
-      const session = sessionRef.current!;
-      const approach = approachRef.current;
-      const songSec = effMs / 1000;
-      const nowPerf = performance.now();
-
-      ctx2d.clearRect(0, 0, w, h);
-
-      const beatPhase = ((songSec * chart.bpm) / 60) % 1;
-      const beatPulse = 0.12 + 0.18 * Math.max(0, Math.cos(beatPhase * Math.PI * 2));
-
-      // Flat ink ground; a faint district-coloured beat wash ties the field to
-      // the playing track's character (v2.0 language: flat, no gradient/glow).
-      const [dr, dg, db] = hexToRgb(districtColor(district ?? "Pulse Core"));
-      ctx2d.fillStyle = "#12100F";
-      ctx2d.fillRect(0, 0, w, h);
-      ctx2d.fillStyle = `rgba(${dr},${dg},${db},0.05)`;
-      ctx2d.fillRect(0, 0, w, h);
-      ctx2d.fillStyle = `rgba(${dr},${dg},${db},${0.05 + beatPulse * 0.06})`;
-      ctx2d.fillRect(0, 0, w, h);
-
-      // screen shake: decaying random offset applied to the gameplay layer
-      let shx = 0;
-      let shy = 0;
-      if (nowPerf < shakeRef.current.until) {
-        const k = (shakeRef.current.until - nowPerf) / 150;
-        const m = shakeRef.current.mag * k;
-        shx = (Math.random() * 2 - 1) * m;
-        shy = (Math.random() * 2 - 1) * m;
-      }
-      ctx2d.save();
-      ctx2d.translate(shx, shy);
-
-      // lanes + pressed highlight + decaying hit flash
-      for (let i = 0; i < 4; i++) {
-        const x = i * laneW;
-        if (pressedRef.current.has(i)) {
-          ctx2d.fillStyle = `rgba(${LANE_RGB[i][0]},${LANE_RGB[i][1]},${LANE_RGB[i][2]},0.16)`;
-          ctx2d.fillRect(x, 0, laneW, h);
-        }
-        const flash = Math.max(0, 1 - (nowPerf - laneFlashRef.current[i]) / LANE_FLASH_MS);
-        if (flash > 0) {
-          // Hard-edged band instead of a fading gradient.
-          const bandH = Math.min(receptorY, h * 0.3);
-          ctx2d.fillStyle = `rgba(${LANE_RGB[i][0]},${LANE_RGB[i][1]},${LANE_RGB[i][2]},${0.34 * flash})`;
-          ctx2d.fillRect(x, receptorY - bandH, laneW, bandH);
-        }
-        // Lane dividers are ink rules, not faint white lines.
-        ctx2d.strokeStyle = "rgba(0,0,0,0.85)";
-        ctx2d.lineWidth = 2;
-        ctx2d.beginPath();
-        ctx2d.moveTo(x, 0);
-        ctx2d.lineTo(x, h);
-        ctx2d.stroke();
-      }
-
-      // Receptor: a thick black rail with a bone-white edge on top. No glow.
-      ctx2d.save();
-      ctx2d.lineWidth = 6 + beatPulse * 2;
-      ctx2d.strokeStyle = "#000000";
-      ctx2d.beginPath();
-      ctx2d.moveTo(0, receptorY);
-      ctx2d.lineTo(w, receptorY);
-      ctx2d.stroke();
-      ctx2d.lineWidth = 2;
-      ctx2d.strokeStyle = `rgba(245,239,230,${0.85 + beatPulse * 0.15})`;
-      ctx2d.beginPath();
-      ctx2d.moveTo(0, receptorY);
-      ctx2d.lineTo(w, receptorY);
-      ctx2d.stroke();
-      ctx2d.restore();
-      for (let i = 0; i < 4; i++) {
-        const cx = (i + 0.5) * laneW;
-        const laneBeat = pressedRef.current.has(i) ? 1 : beatPulse * 0.55;
-        ctx2d.fillStyle = LANE_COLORS[i];
-        ctx2d.globalAlpha = 0.65 + laneBeat * 0.35;
-        ctx2d.fillRect(cx - noteW * 0.45, receptorY - 2, noteW * 0.9, 4 + laneBeat * 3);
-        ctx2d.globalAlpha = 1;
-      }
-
-      // notes
-      for (const n of session.notes) {
-        const d = n.def;
-        const yHead = noteScreenY(n.tMs / 1000, songSec, receptorY, approach);
-        if (yHead < -60 || yHead > h + 60) {
-          if (d.type !== "hold" && d.type !== "slide") continue;
-        }
-        if (d.type === "tap") {
-          if (n.done) continue;
-          drawNote(d.lane, (d.lane + 0.5) * laneW, yHead, noteW, 1, receptorY);
-        } else if (d.type === "hold") {
-          if (n.done) continue;
-          const yTail = noteScreenY(n.endMs / 1000, songSec, receptorY, approach);
-          const top = Math.min(yHead, yTail);
-          const bodyH = Math.abs(yTail - yHead);
-          const holding = pressedRef.current.has(d.lane) && n.head !== null && n.tail === null;
-          ctx2d.fillStyle = `rgba(${LANE_RGB[d.lane][0]},${LANE_RGB[d.lane][1]},${LANE_RGB[d.lane][2]},${holding ? 0.62 : 0.45})`;
-          ctx2d.fillRect((d.lane + 0.5) * laneW - (noteW * HOLD_BODY_RATIO) / 2, top, noteW * HOLD_BODY_RATIO, bodyH);
-          if (holding) {
-            ctx2d.strokeStyle = `rgba(${LANE_RGB[d.lane][0]},${LANE_RGB[d.lane][1]},${LANE_RGB[d.lane][2]},0.85)`;
-            ctx2d.lineWidth = 2;
-            ctx2d.strokeRect(
-              (d.lane + 0.5) * laneW - (noteW * HOLD_STROKE_RATIO) / 2,
-              top,
-              noteW * HOLD_STROKE_RATIO,
-              bodyH,
-            );
-          }
-          const headAlpha = n.head ? 0.35 : 1;
-          drawNote(d.lane, (d.lane + 0.5) * laneW, yHead, noteW, headAlpha, receptorY);
-        } else if (d.type === "chord") {
-          if (n.done) continue;
-          for (const l of d.lanes) {
-            const a = n.chord[l] != null ? 0.35 : 1;
-            drawNote(l, (l + 0.5) * laneW, yHead, noteW, a, receptorY);
-          }
-        } else if (d.type === "slide") {
-          if (n.done) continue;
-          const headDone = n.head !== null;
-          drawNote(d.lane, (d.lane + 0.5) * laneW, yHead, noteW, headDone ? 0.35 : 1, receptorY);
-          const yTail = noteScreenY(n.endMs / 1000, songSec, receptorY, approach);
-          const slideAlpha = headDone ? 0.95 : 0.55;
-          ctx2d.strokeStyle = LANE_COLORS[d.to];
-          ctx2d.globalAlpha = slideAlpha;
-          ctx2d.lineWidth = headDone ? 3 : 2;
-          ctx2d.setLineDash([6, 6]);
-          ctx2d.beginPath();
-          ctx2d.moveTo((d.lane + 0.5) * laneW, yHead);
-          ctx2d.lineTo((d.to + 0.5) * laneW, yTail);
-          ctx2d.stroke();
-          ctx2d.setLineDash([]);
-          ctx2d.globalAlpha = 1;
-          if (headDone && n.tail === null) {
-            drawNote(d.to, (d.to + 0.5) * laneW, yTail, noteW * SLIDE_TAIL_SCALE, 1, receptorY);
-          }
-        }
-      }
-
-      // hit particles (physics: gravity + fade)
-      if (fancyFxOn(settings)) {
-        particlesRef.current = particlesRef.current.filter((p) => nowPerf - p.born < p.life);
-        for (const p of particlesRef.current) {
-          const age = (nowPerf - p.born) / p.life;
-          p.x += p.vx;
-          p.y += p.vy;
-          p.vy += 0.14;
-          p.vx *= 0.985;
-          ctx2d.globalAlpha = Math.max(0, 1 - age);
-          // Square debris shards read as comic impact; circles read as sparks.
-          const s2 = p.size * (1 - age * 0.5) * 1.8;
-          ctx2d.fillStyle = `rgb(${p.r},${p.g},${p.b})`;
-          ctx2d.fillRect(p.x - s2 / 2, p.y - s2 / 2, s2, s2);
-        }
-        ctx2d.globalAlpha = 1;
-      } else {
-        particlesRef.current = [];
-      }
-
-      // FX flashes
-      fxRef.current = fxRef.current.filter((f) => nowPerf - f.born < 360);
-      for (const f of fxRef.current) {
-        const age = (nowPerf - f.born) / 360;
-        const cx = (f.lane + 0.5) * laneW;
-        const [r, g, b] = f.judgment === "miss" ? LANE_RGB[0] : LANE_RGB[f.lane];
-
-        // Comic starburst instead of an expanding ring.
-        const spikes = f.judgment === "miss" ? 7 : f.judgment === "perfect" ? 12 : 9;
-        const rad = (10 + age * 34) * (f.judgment === "perfect" ? 1.3 : 1);
-        const inner = rad * 0.58;
-        ctx2d.beginPath();
-        for (let s = 0; s < spikes * 2; s++) {
-          const rr = s % 2 === 0 ? rad : inner;
-          const a = (s / (spikes * 2)) * Math.PI * 2 - Math.PI / 2;
-          const sx = cx + Math.cos(a) * rr;
-          const sy = receptorY + Math.sin(a) * rr;
-          if (s === 0) ctx2d.moveTo(sx, sy);
-          else ctx2d.lineTo(sx, sy);
-        }
-        ctx2d.closePath();
-        ctx2d.lineJoin = "miter";
-        ctx2d.strokeStyle = `rgba(${r},${g},${b},${1 - age})`;
-        ctx2d.lineWidth = 3;
-        ctx2d.stroke();
-        ctx2d.lineWidth = 1;
-
-        // Judgment label — Anton slab wrapped in a hard ink outline.
-        const label = JUDGE_LABEL[f.judgment];
-        if (label) {
-          const pop = age < 0.18 ? 0.5 + (age / 0.18) * 0.7 : 1.2 - (age - 0.18) * 0.24;
-          const isP = f.judgment === "perfect";
-          const skewX = Math.max(-18, Math.min(18, f.deltaMs * 0.35));
-          ctx2d.save();
-          ctx2d.globalAlpha = Math.max(0, 1 - age * age);
-          ctx2d.translate(cx + skewX, receptorY - 46 - age * 22);
-          ctx2d.scale(pop, pop);
-          ctx2d.textAlign = "center";
-          const fs = isP ? 23 : 17;
-          ctx2d.font = `400 ${fs}px Anton, 'Sora', sans-serif`;
-          ctx2d.lineWidth = Math.max(3, fs * 0.2);
-          inkedText(ctx2d, label, 0, 0, JUDGE_COLOR[f.judgment] || "#F5EFE6");
-          if (f.judgment !== "miss" && Math.abs(f.deltaMs) >= 8) {
-            ctx2d.font = "600 10px 'IBM Plex Sans', sans-serif";
-            ctx2d.lineWidth = 3;
-            inkedText(ctx2d, f.deltaMs < 0 ? "EARLY" : "LATE", 0, 15, "#F5EFE6");
-          }
-          ctx2d.restore();
-        }
-      }
-
-      ctx2d.restore(); // end gameplay (shaken) layer — HUD stays stable
-
-      // combo-break vignette (HUD layer, stable)
-      if (nowPerf < comboBreakRef.current) {
-        const t = (comboBreakRef.current - nowPerf) / 320;
-        ctx2d.fillStyle = `rgba(226,61,61,${0.3 * t})`;
-        ctx2d.fillRect(0, 0, w, h);
-      }
-
-      // floating score pops
-      scorePopsRef.current = scorePopsRef.current.filter((p) => nowPerf - p.born < 520);
-      for (const p of scorePopsRef.current) {
-        const age = (nowPerf - p.born) / 520;
-        ctx2d.save();
-        ctx2d.globalAlpha = Math.max(0, 1 - age);
-        ctx2d.fillStyle = p.color;
-        ctx2d.font = "700 14px 'IBM Plex Sans', sans-serif";
-        ctx2d.textAlign = "center";
-        ctx2d.fillText(p.text, p.x, p.y - age * 36);
-        ctx2d.restore();
-      }
-
-      // HUD — skewed ink panels rather than bare floating text.
-      const panel = (x: number, y: number, pw: number, ph: number, fill: string, skew = 8) => {
-        skewPath(ctx2d, x, y, pw, ph, skew);
-        ctx2d.fillStyle = fill;
-        ctx2d.fill();
-        ctx2d.lineWidth = 2;
-        ctx2d.strokeStyle = "#000000";
-        ctx2d.stroke();
-      };
-
-      const scoreText = session.score.toLocaleString();
-      ctx2d.font = "600 18px 'IBM Plex Sans', sans-serif";
-      const scoreW = Math.min(w * 0.5, ctx2d.measureText(scoreText).width + 34);
-      panel(10, 10, scoreW, 30, "#1C1717");
-      ctx2d.fillStyle = "#F5EFE6";
-      ctx2d.textAlign = "left";
-      ctx2d.textBaseline = "middle";
-      ctx2d.fillText(scoreText, 26, 26);
-
-      // accuracyPercent() direct — getResult() allocates a fresh object per frame.
-      const accText = `${accuracyPercent(session.judgments, session.totalNotes).toFixed(2)}%`;
-      ctx2d.font = "600 15px 'IBM Plex Sans', sans-serif";
-      const accW = ctx2d.measureText(accText).width + 30;
-      panel(w - 10 - accW, 10, accW, 30, "#1C1717");
-      ctx2d.fillStyle = "#A8928B";
-      ctx2d.textAlign = "right";
-      ctx2d.fillText(accText, w - 24, 26);
-      ctx2d.textBaseline = "alphabetic";
-
-      if (mode === "arcade") {
-        const bx = 14;
-        const by = 46;
-        const bw = w - 28;
-        const bh = 12;
-        panel(bx, by, bw, bh, "#12100F", 6);
-        const innerW = ((bw - 6) * Math.max(0, session.hp)) / 100;
-        if (innerW > 0) {
-          ctx2d.save();
-          ctx2d.beginPath();
-          ctx2d.rect(bx + 3, by + 3, innerW, bh - 6);
-          ctx2d.clip();
-          ctx2d.fillStyle = session.hp <= 30 ? "#E23D3D" : "#FFB020";
-          ctx2d.fillRect(bx + 3, by + 3, bw, bh - 6);
-          ctx2d.restore();
-        }
-      }
-
-      if (session.combo >= 2) {
-        // Combo escalates in size and heat as it climbs, always ink-outlined.
-        const tier = session.combo >= 100 ? 3 : session.combo >= 50 ? 2 : session.combo >= 10 ? 1 : 0;
-        const sizes = [34, 44, 56, 68];
-        const cols = ["#F5EFE6", "#F2E4C9", "#FFB020", "#E23D3D"];
-        const pulse = 1 + Math.min(0.18, (nowPerf % 600) / 600 / 6);
-        ctx2d.save();
-        ctx2d.textAlign = "center";
-        ctx2d.translate(w / 2, receptorY * 0.42);
-        ctx2d.scale(pulse, pulse);
-        ctx2d.font = `400 ${sizes[tier]}px Anton, 'Sora', sans-serif`;
-        ctx2d.lineWidth = Math.max(4, sizes[tier] * 0.13);
-        inkedText(ctx2d, `${session.combo}`, 0, 0, cols[tier]);
-        ctx2d.restore();
-        ctx2d.textAlign = "center";
-        ctx2d.font = "600 12px 'IBM Plex Sans', sans-serif";
-        ctx2d.lineWidth = 3;
-        inkedText(ctx2d, "COMBO", w / 2, receptorY * 0.42 + 24, "#A8928B");
-      }
-
-      // combo milestone flash (center, big, quick)
-      if (fancyFxOn(settings) && milestoneRef.current) {
-        const age = (nowPerf - milestoneRef.current.born) / 700;
-        if (age >= 1) {
-          milestoneRef.current = null;
-        } else {
-          ctx2d.save();
-          ctx2d.globalAlpha = 1 - age;
-          ctx2d.translate(w / 2, receptorY * 0.6);
-          const sc = 0.7 + age * 0.7;
-          ctx2d.scale(sc, sc);
-          ctx2d.textAlign = "center";
-          ctx2d.font = "400 48px Anton, 'Sora', sans-serif";
-          ctx2d.lineWidth = 10;
-          inkedText(ctx2d, milestoneRef.current.text, 0, 0, "#FFB020");
-          ctx2d.restore();
-        }
-      }
-
-      // Key hints sit under the receptor, tinted per lane. Drawn from the bound
-      // key's *label*, so arrow keys read as ← ↓ ↑ → instead of "ArrowLeft".
-      // Skipped on touch: there is no keyboard there, and the overlay already
-      // tells the player to use their thumbs.
-      if (!touchUi) {
-        ctx2d.save();
-        ctx2d.textAlign = "center";
-        ctx2d.textBaseline = "middle";
-        const hintY = Math.min(receptorY + 26, h - 14);
-        for (let i = 0; i < 4; i++) {
-          const label = keyHints[i] ?? "";
-          const flash = Math.max(
-            0,
-            1 - (performance.now() - (laneFlashRef.current[i] ?? 0)) / LANE_FLASH_MS,
-          );
-          const held = pressedRef.current.has(i);
-          const [r, g, b] = LANE_RGB[i] ?? LANE_RGB[0]!;
-          const cxm = (i + 0.5) * laneW;
-          const capW = Math.min(laneW * 0.7, 46);
-          const capH = 24;
-          skewPath(ctx2d, cxm - capW / 2, hintY - capH / 2, capW, capH, 6);
-          ctx2d.fillStyle = held ? LANE_COLORS[i]! : "rgba(18,16,15,0.94)";
-          ctx2d.fill();
-          ctx2d.lineWidth = 2;
-          ctx2d.strokeStyle = "#000000";
-          ctx2d.stroke();
-          ctx2d.font = `700 ${held ? 16 : 14}px 'IBM Plex Sans', sans-serif`;
-          ctx2d.fillStyle = held
-            ? "#12100F"
-            : `rgba(${r},${g},${b},${Math.min(1, 0.6 + flash * 0.4)})`;
-          ctx2d.fillText(label, cxm, hintY + 1);
-        }
-        ctx2d.restore();
-      }
-
-      // Countdown as comic emphasis type: heavy red slab behind a hard black
-      // outline. PRD §7.4 still bans Japanese-style onomatopoeia — this is the
-      // Western pop-art treatment instead.
-      if (st < 0) {
-        const cd = -st;
-        const text = cd > 250 ? String(Math.ceil(cd / 1000)) : "GO";
-        ctx2d.save();
-        ctx2d.textAlign = "center";
-        ctx2d.textBaseline = "middle";
-        ctx2d.font = "400 96px Anton, 'Sora', sans-serif";
-        ctx2d.lineJoin = "round";
-        ctx2d.lineWidth = 9;
-        ctx2d.strokeStyle = "#000000";
-        ctx2d.strokeText(text, w / 2, h / 2);
-        ctx2d.fillStyle = "#E23D3D";
-        ctx2d.fillText(text, w / 2, h / 2);
-        ctx2d.restore();
-      }
-    };
-
-    const loop = () => {
-      const conductor = conductorRef.current;
-      const session = sessionRef.current;
-      if (!conductor || !session) {
-        raf = requestAnimationFrame(loop);
-        return;
-      }
-      const st = conductor.songTimeMs();
-
-      if (!needsStartRef.current && !pausedRef.current) {
-        const eff = st - offsetMsRef.current;
-        const misses = session.tick(eff);
-        for (const m of misses) {
-          addFx(m.lane, m.judgment, m.deltaMs);
-          if (settings.hitsound) playHit(m.judgment);
-        }
-        if (session.consumeSlowTrigger()) conductor.setRate(0.5, 5000);
-
-        // combo-break sound + combo milestone celebration
-        if (session.combo === 0 && lastComboRef.current > 0) {
-          if (settings.hitsound) playBreak();
-          comboBreakRef.current = performance.now() + 320;
-        }
-        if (session.combo > prevComboRef.current && COMBO_MILESTONES.includes(session.combo)) {
-          if (fancyFxOn(settings)) {
-            milestoneRef.current = { text: `${session.combo} COMBO!`, born: performance.now() };
-            shakeRef.current = { mag: 9, until: performance.now() + 240 };
-          }
-        }
-        prevComboRef.current = session.combo;
-        lastComboRef.current = session.combo;
-
-        // countdown ticks
-        if (st < 0) {
-          const ci = Math.ceil(-st / 1000);
-          if (ci !== lastCountInt.current) {
-            lastCountInt.current = ci;
-            if (settings.hitsound) playCountdownTick(ci);
-          }
-        }
-
-        // finish
-        if (!finishedRef.current) {
-          if (session.failed) {
-            finishedRef.current = true;
-            conductor.stop();
-            onFinishRef.current(session.getResult());
-          } else if (session.isComplete && st >= lastNoteMsRef.current) {
-            finishedRef.current = true;
-            conductor.stop();
-            onFinishRef.current(session.getResult());
-          } else if (conductor.finished) {
-            finishedRef.current = true;
-            conductor.stop();
-            onFinishRef.current(session.getResult());
-          }
-        }
-      }
-
-      draw(st < 0 ? st : st - offsetMsRef.current, st);
-      raf = requestAnimationFrame(loop);
-    };
-
-    const addFx = (lane: number, judgment: JudgeFx["judgment"], deltaMs = 0) => {
-      fxRef.current.push({ lane, judgment, born: performance.now(), deltaMs });
-      spawnHitFx(lane, judgment);
-      const session = sessionRef.current;
-      const { w } = dimRef.current;
-      if (session && w && judgment !== "miss" && judgment !== "good") {
-        const gain = judgmentScore(judgment) * comboMultiplier(session.combo);
-        if (gain > 0) {
-          const receptorY = receptorYFromGeometry(dimRef.current.h, Math.min(w, dimRef.current.h));
-          scorePopsRef.current.push({
-            x: (lane + 0.5) * (w / 4),
-            y: receptorY - 78,
-            text: `+${gain}`,
-            born: performance.now(),
-            color: JUDGE_COLOR[judgment] ?? "#FFFFFF",
-          });
-        }
-      }
-    };
-
-    raf = requestAnimationFrame(loop);
-    return () => {
-      cancelAnimationFrame(raf);
-      ro.disconnect();
-    };
-  }, [mode, settings.hitsound, settings.fancyFx, keys, chart.bpm, touchUi, district]);
+    if (!canvasRef.current || !wrapRef.current) return;
+    return createPlayfieldRenderer({
+      canvasRef,
+      wrapRef,
+      conductorRef,
+      sessionRef,
+      pressedRef,
+      laneFlashRef,
+      spritesRef,
+      halftonePatRef,
+      ringSpriteRef,
+      raysRef,
+      dimRef,
+      shakeRef,
+      fxRef,
+      particlesRef,
+      milestoneRef,
+      scorePopsRef,
+      comboBreakRef,
+      prevComboRef,
+      lastComboRef,
+      surgeRef,
+      streakRef,
+      prevNeonRef,
+      surgeTierRef,
+      lastEffMsRef,
+      ringsRef,
+      colsRef,
+      sweepsRef,
+      lastLaneRef,
+      lightComboPrevRef,
+      lastShowBarRef,
+      surgeDropRef,
+      needsStartRef,
+      pausedRef,
+      mutedRef,
+      hitsoundRef,
+      fancyFxRef,
+      offsetMsRef,
+      approachRef,
+      lastNoteMsRef,
+      lastCountInt,
+      finishedRef,
+      chart,
+      mode,
+      variant,
+      touchUi,
+      district,
+      demoSurge,
+      demoStreak,
+      keyHint,
+      spawnHitFx,
+      onFinish,
+    });
+  }, [mode, keyHint, chart.bpm, touchUi, district, demoSurge, demoStreak]);
 
   const handlePress = (lane: number) => {
     const conductor = conductorRef.current;
@@ -785,12 +447,15 @@ export function PlayField({
     if (pressedRef.current.has(lane)) return;
     pressedRef.current.add(lane);
     laneFlashRef.current[lane] = performance.now();
+    lastLaneRef.current = lane;
     const eff = conductor.songTimeMs() - offsetMsRef.current;
     const fx = session.press(lane, eff);
     if (fx) {
       fxRef.current.push({ lane: fx.lane, judgment: fx.judgment, born: performance.now(), deltaMs: fx.deltaMs });
+      surgeRef.current.apply(fx.judgment);
+      streakRef.current.apply(fx.judgment);
       spawnHitFx(fx.lane, fx.judgment);
-      if (settings.hitsound) playHit(fx.judgment);
+      if (settings.hitsound) playHit(fx.judgment, surgeTierRef.current);
     } else if (settings.hitsound) {
       playKeyTick();
     }
@@ -805,8 +470,10 @@ export function PlayField({
     const fx = session.release(lane, eff);
     if (fx) {
       fxRef.current.push({ lane: fx.lane, judgment: fx.judgment, born: performance.now(), deltaMs: fx.deltaMs });
+      surgeRef.current.apply(fx.judgment);
+      streakRef.current.apply(fx.judgment);
       spawnHitFx(fx.lane, fx.judgment);
-      if (settings.hitsound) playHit(fx.judgment);
+      if (settings.hitsound) playHit(fx.judgment, surgeTierRef.current);
     }
   };
 
@@ -814,9 +481,22 @@ export function PlayField({
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.repeat) return;
       const lane = laneFromKeyEvent(e, keys);
-      if (lane < 0) return;
-      e.preventDefault();
-      handlePress(lane);
+      if (lane >= 0) {
+        e.preventDefault();
+        handlePress(lane);
+        return;
+      }
+      // FEEL PACK: instant retry — R restarts the chart unless R is lane-bound.
+      if (e.code === "KeyR" && !needsStartRef.current) {
+        e.preventDefault();
+        restartRun();
+        return;
+      }
+      // Escape / P 暂停或继续——对局里玩家没有别的退出键，必须有键盘暂停。
+      if ((e.key === "Escape" || e.key === "p" || e.key === "P") && !needsStartRef.current) {
+        e.preventDefault();
+        togglePause();
+      }
     };
     const onKeyUp = (e: KeyboardEvent) => {
       const lane = laneFromKeyEvent(e, keys);
@@ -832,10 +512,34 @@ export function PlayField({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [keys]);
 
+  // getBoundingClientRect() 会强制浏览器同步算一次布局。pointermove 在移动端能到
+  // 120Hz+，每移动一次都读就是在反复强制回流。DOMRect 是快照而非活对象，所以缓存
+  // 是安全的 —— 只在窗口 resize、页面滚动后失效即可。
+  const rectRef = useRef<DOMRect | null>(null);
+  useEffect(() => {
+    const invalidate = () => {
+      rectRef.current = null;
+    };
+    window.addEventListener("resize", invalidate);
+    // capture=true 才能收到内部滚动容器的滚动事件。
+    window.addEventListener("scroll", invalidate, { passive: true, capture: true });
+    return () => {
+      window.removeEventListener("resize", invalidate);
+      window.removeEventListener("scroll", invalidate, true);
+    };
+  }, []);
+  const fieldRect = (): DOMRect | null => {
+    if (!rectRef.current) {
+      const w = wrapRef.current;
+      if (!w) return null;
+      rectRef.current = w.getBoundingClientRect();
+    }
+    return rectRef.current;
+  };
+
   const onPointerDown = (e: ReactPointerEvent) => {
-    const wrap = wrapRef.current;
-    if (!wrap) return;
-    const rect = wrap.getBoundingClientRect();
+    const rect = fieldRect();
+    if (!rect) return;
     const localX = e.clientX - rect.left;
     const lane = laneFromClientX(localX, rect);
     if (lane == null) return;
@@ -845,9 +549,9 @@ export function PlayField({
     handlePress(lane);
   };
   const onPointerMove = (e: ReactPointerEvent) => {
-    const wrap = wrapRef.current;
-    if (!wrap || !pointerLane.current.has(e.pointerId)) return;
-    const rect = wrap.getBoundingClientRect();
+    if (!pointerLane.current.has(e.pointerId)) return;
+    const rect = fieldRect();
+    if (!rect) return;
     const lane = laneFromClientX(e.clientX - rect.left, rect);
     if (lane == null) return;
     const prev = pointerLane.current.get(e.pointerId);
@@ -881,7 +585,7 @@ export function PlayField({
       {district && (
         <img
           className="play-char-watermark"
-          src={`${import.meta.env.BASE_URL}${characterArt(district).art.replace(/^\//, "")}`}
+          src={`${import.meta.env.BASE_URL}${characterArtWebp(district, 512)}`}
           alt=""
           aria-hidden
         />
@@ -899,12 +603,11 @@ export function PlayField({
         </div>
       )}
       {!loading && !error && needsStart && !autoStart && (
+        // 外层 div 只负责"点任意处开始"的指针便捷（onClick），不做 button 语义；
+        // 真正可被键盘聚焦/激活的是里面的 <button>，避免 button 套 button 的非法结构。
         <div
           className="overlay overlay-tap"
-          role="button"
-          tabIndex={0}
           onClick={() => void startRun()}
-          onKeyDown={(e) => e.key === "Enter" && void startRun()}
         >
           <p className="overlay-kicker">
             {variant === "hero" ? SCAPE_COPY.heroPlayKicker : SCAPE_COPY.rightsShort}
@@ -959,42 +662,3 @@ export function PlayField({
 }
 
 /** Skewed parallelogram used for every HUD panel (PRD §7.6 comic framing). */
-function skewPath(
-  ctx: CanvasRenderingContext2D,
-  x: number,
-  y: number,
-  w: number,
-  h: number,
-  skew: number,
-) {
-  ctx.beginPath();
-  ctx.moveTo(x + skew, y);
-  ctx.lineTo(x + w, y);
-  ctx.lineTo(x + w - skew, y + h);
-  ctx.lineTo(x, y + h);
-  ctx.closePath();
-}
-
-/** Draw text with a hard ink outline — the pop-art emphasis treatment. */
-function inkedText(
-  ctx: CanvasRenderingContext2D,
-  text: string,
-  x: number,
-  y: number,
-  fill: string,
-  outline = "#000000",
-) {
-  ctx.lineJoin = "round";
-  ctx.strokeStyle = outline;
-  ctx.strokeText(text, x, y);
-  ctx.fillStyle = fill;
-  ctx.fillText(text, x, y);
-}
-
-/** Parse "#rrggbb" (or "#rgb") into [r,g,b] for canvas tinting. */
-function hexToRgb(hex: string): [number, number, number] {
-  const h = hex.replace("#", "");
-  const full = h.length === 3 ? h.split("").map((c) => c + c).join("") : h;
-  const n = parseInt(full, 16);
-  return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
-}

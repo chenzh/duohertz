@@ -48,14 +48,16 @@ export function Layout({ children }: { children: ReactNode }) {
         <nav className="site-nav">
           <NavLink to="/library">Library</NavLink>
           <NavLink to="/characters">Characters</NavLink>
+          <NavLink to="/radio">Radio</NavLink>
           <NavLink to="/leaderboard">Local Board</NavLink>
+          <NavLink to="/profile">Profile</NavLink>
           <NavLink to="/settings">Settings</NavLink>
         </nav>
         <Link
-          to="/settings"
+          to="/profile"
           className="header-avatar"
           title={loadDisplayName()}
-          aria-label={`Player ${loadDisplayName()} — Settings`}
+          aria-label={`Player ${loadDisplayName()} — Profile`}
         >
           {initials}
         </Link>

@@ -35,11 +35,17 @@ checkpoints/
 *.log
 logs/
 
-# Local runtime data
-data/
+# Local runtime data (root-anchored — the bare `data/` pattern used to also
+# swallow apps/beatscape/src/data/, dropping committed app data like
+# radioEpisodes.ts / trackRequests.json from every fresh checkout)
+/data/
 tmp/
 *-gateway-*.wav
 mlx-gateway-*.wav
 sa3-gateway-*.wav
 package-lock.json
 **/tsconfig.tsbuildinfo
+
+# Regenerable local artifacts
+apps/beatscape/earcheck-worksheet.html
+_tmp_*

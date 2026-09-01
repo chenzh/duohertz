@@ -35,6 +35,7 @@
 | **v1.9.1** | 2026-08-24 | 终检：MaxScore/封面措辞对齐 Local Board与程序化封面；确认无阻塞缺口，停扩规格 |
 | **v1.9.2** | 2026-08-25 | 双资产真值：游戏切片（BeatScape）+ 流媒体完整版（MusicSaas App 引流）；时长分层与 catalog 字段 |
 | **v1.9.3** | 2026-08-30 | **as-built 对齐修正**：以 `apps/beatscape/` 代码为唯一事实，校正运行时真值（默认键位 / Play Now / 首访引导 / AR 公式 / Hold 尾窗 / 海报 / 榜单 / 存档 / IA / 曲库默认值等 18 项），未实现项显式标注〔规划〕；实现级细节唯一入口 = `apps/beatscape/PRD.md` |
+| **v1.9.4** | 2026-08-30 | **叙事层 as-built**：新增 §6.7 电台叙事系统（The Late Static Year 1 三季 24 集）；§1.3a 叙事真相源指向 World Bible |
 
 ---
 
@@ -61,6 +62,8 @@
 > 手感顶级顺滑，节奏自成世界。
 
 ### 1.3a 主题世界观（内容创作唯一母题 · 强制）
+
+> **叙事真相源（2026-08-30 起）**：角色 / 世界观 / 电台剧集 / 商标约束统一以 [`BEATSCAPE-WORLDBIBLE.md`](BEATSCAPE-WORLDBIBLE.md) 为准（NIGHTSHIFT 三人组 · The Late Static 电台）；本节保留的是**内容生成层**的主题红线（关键词池 / 听觉视觉 / 命名 / 权利话术），两层并行不冲突。
 
 **一句话世界观**：玩家进入由节拍构成的极简「幻境城市」——每一次 Perfect 都是点亮街区的光，曲库是这座城市的街区地图，全部由产品方自建。
 
@@ -1222,6 +1225,17 @@ BeatScape 曲库与 **MusicSaas 音乐流媒体 App** 共用同一 `track_id` �
 
 对齐 §4.8：下落速度 / 全局延迟 / 判定松紧快捷 / 音量 / 特效开关 / **四键 remap**。  
 
+### 6.7 电台叙事系统（as-built · 2026-08-30）
+
+The Late Static 电台 = 叙事容器（Radio Episode 模式，**无过场动画**，文案即叙事）：
+
+- **节目单** `/radio`：Year 1 三季 24 集周播（S1 Call-in / S2 Cold Blocks / S3 The Drop Wars），首播 2026-08-28，季间接档无缝；每集 `#ep-N` 锚点可深链
+- **数据与调度**：`src/data/radioEpisodes.ts`（season + 全局 week）+ `src/lib/radio.ts`（全局周查找 + 三态）；演出规则 = 已播全文 / 当前集 "On air now" 高亮 / 未播集只露 teaser + airs 日期（留存钩子）
+- **叙事触点**：Home "On air" 横幅 + 48h 回归欢迎语 + Track 点歌引语（85/85）+ 判定文案皮肤（In Phase/Locked/Drifting/Dropout）
+- **调性护栏（vitest 守护）**：MONOLITH 真名每季 ≤3 次（实际全 0，仅 "the tower" 代称）+ 违禁词（mask/persona/velvet/phantom/epic/legendary/win big）零出现
+- **商标红线**：NIGHTSHIFT 不作产品品牌主标（Class 41 在册近邻 Kennelly Reg. 6359178）；MONOLITH 零出游戏（Warner Reg. 5880307）——见 World Bible §11
+- **遗留〔规划〕**：§8 所述 15s 台呼帧音频未生成（需 SA3 台呼 preset + 推理栈启动）；S1–S3 文案已全部在库
+
 ---
 
 ## 7. UI / 视觉体验规范（海外极简 · 节拍幻境主题）
@@ -1313,6 +1327,10 @@ BeatScape 曲库与 **MusicSaas 音乐流媒体 App** 共用同一 `track_id` �
 4. **漫画符码** —— 放射线、半调网点、集中线、爆炸星形气泡、斜切矩形。均为公共领域技法。
 5. **自创 motif：共振菱形** —— 四个同心菱形由内向外扩散、中心实心。用于 logo、封面、
    判定特效、加载动画。它是 BeatScape 的符号，**不得替换为任何第三方作品的标志性图形**。
+
+   > **as-built 注记（2026-08-31）**：NEON 氛围层的"霓虹灯管"= **硬边描线 + steps() 步进闪烁**
+   > 的表演元素（无渐变、无柔光、无辉光滤镜；alpha ≤ 0.22、闪烁 ≤ 1Hz、reduced-motion 全关），
+   > 落在"城市夜景"漫画符码语法内，不违反第 1 条平涂硬边。规格：docs/BEATSCAPE-NEON-AMBIENCE.md。
 
 **与「极简高级」的关系**（§12 产品定位）：极简指**布局不堆砌**，漫画指**视觉语言**。
 两者共存 —— 用极简的版面承载漫画的笔触，不做信息密度堆叠。

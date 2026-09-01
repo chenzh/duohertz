@@ -1,6 +1,6 @@
 import type { Messages } from "./types";
 
-/** Stub locale — full UI translation deferred; emptyState proves i18n wiring. */
+/** 阶段一用 zh 做第二语言占位；完整 UI 翻译在后续里程碑补齐。i18n.test.ts 强制 en/zh key 形状一致。 */
 export const zh: Messages = {
   leaderboard: {
     title: "Local Board",
@@ -14,5 +14,39 @@ export const zh: Messages = {
       accuracy: "Acc",
       name: "Name",
     },
+  },
+  ui: {
+    playNow: "立即游玩",
+    browseTracks: "浏览曲目",
+    calibrate: "校准",
+    meetNightshift: "认识 NIGHTSHIFT",
+    featuredInScape: "Scape 精选",
+    seeAll: "查看全部",
+    exploreCity: "探索城市",
+    dailyChallenge: "每日挑战",
+    dailyPlay: "挑战每日",
+    library: "曲库",
+    preview: "试听",
+    tier: "难度",
+    mode: "模式",
+    favorite: "☆ 收藏",
+    favorited: "★ 已收藏",
+    tapToEnter: "点击开始",
+    pause: "暂停",
+    resume: "继续",
+    cueingAudio: "音频加载中",
+    signalLost: "信号中断",
+    play: "开始",
+    loading: "加载中…",
+    copyLink: "复制链接",
+    downloadPoster: "下载海报",
+    shareRun: "分享战绩",
+    newHonor: "解锁新荣誉",
+    copyFailed: "复制失败",
+    settings: "设置",
+    profile: "个人资料",
+    audio: "音频",
+    gameplay: "玩法",
+    keyMap: "键位",
   },
 };

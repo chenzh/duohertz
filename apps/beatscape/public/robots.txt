@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /settings
+Disallow: /profile
+Disallow: /calibrate
+
+Sitemap: https://beatscape.pages.dev/sitemap.xml

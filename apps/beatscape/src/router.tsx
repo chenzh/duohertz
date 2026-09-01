@@ -62,6 +62,17 @@ export function Router({
     return () => window.removeEventListener("popstate", onPop);
   }, []);
 
+  // 路由切换：滚回顶部并把焦点交给主内容区，让键盘/读屏用户感知"进入了新页面"。
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0 });
+    const main = document.querySelector<HTMLElement>(".site-main");
+    if (main) {
+      main.setAttribute("tabindex", "-1");
+      main.focus({ preventScroll: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loc.path]);
+
   const navigate = useCallback((to: string, opts?: { replace?: boolean }) => {
     const href = toUrl(to);
     if (opts?.replace) window.history.replaceState({}, "", href);
@@ -151,14 +162,6 @@ export function Link({
       {children}
     </a>
   );
-}
-
-export function Navigate({ to }: { to: string }) {
-  const { navigate } = useLocation();
-  useEffect(() => {
-    navigate(to, { replace: true });
-  }, [to, navigate]);
-  return null;
 }
 
 export { APP_BASE };

@@ -15,8 +15,20 @@ Optimal settings (official): Euler a, 28 steps, CFG 5, SDXL-native 1024x1024.
 
 Usage:
   python3 scripts/beatscape-anime-prompts.py --list
-  python3 scripts/beatscape-anime-prompts.py --character volta
-  python3 scripts/beatscape-anime-prompts.py --character volta --view side
+  python3 scripts/beatscape-anime-prompts.py --character juno
+  python3 scripts/beatscape-anime-prompts.py --character juno --view side
+  python3 scripts/beatscape-anime-prompts.py --character juno --lora   # prepend <char>bs trigger
+
+Identity rules (BEATSCAPE-WORLDBIBLE.md §7 / ART-BRIEF §1):
+  - `anchors` = the character's Bible visual anchors. They sit right after
+    STYLE + MOTIF so they get identity-level CLIP weight — a portrait that
+    misses its anchors is a failed portrait even if it is pretty.
+  - STYLE forces the shared set look: cel shading + muted colors; night-city
+    mood comes from the backgrounds. The negatives ban daylight / blue sky
+    (the city only lives at night) and soft painterly shading.
+  - Budget is 77 CLIP BPE subwords (not comma count). NIGHTSHIFT entries are
+    measured ≤77 with the real tokenizer (trigger included); downstream
+    fit_clip() is the enforcement gate. Never add tags without re-measuring.
 """
 
 from __future__ import annotations
@@ -26,7 +38,10 @@ import json
 
 # --- shared ---------------------------------------------------------------
 
-QUALITY_TAGS = "masterpiece, high score, great score, absurdres"
+# Animagine quality boost. Kept to two tags: the 77-token CLIP budget is
+# measured in BPE subwords (not commas) and every BPE spent here is stolen
+# from identity anchors. Two tags is the verified minimum that still lifts.
+QUALITY_TAGS = "masterpiece, absurdres"
 
 # Standard SDXL negatives + BeatScape IP red lines.
 # The red-line tags are the useful part: they push the model away from the
@@ -45,8 +60,22 @@ NEGATIVE = (
     "tarot card, arcana, tarot spread, playing cards, "
     "weapon, sword, knife, gun, pistol, rifle, blade, "
     "japanese text, furigana, speech bubble, "
-    "cigarette, alcohol"
+    "cigarette, alcohol, "
+    # --- unified art direction: night city only (Bible §3.1), cel style only (BRIEF §1) ---
+    "daytime, blue sky, sunlight, sunset, dawn, "
+    "backlighting, rim lighting, lens flare, bloom, "
+    "soft shading, gradient shading, painterly, watercolor, sketch, "
+    "full body, oversaturated, "
+    # workwear, not warwear — TORQUE must read mechanic, never soldier
+    "tactical vest, chest rig, shoulder armor, mecha, robot"
 )
+
+# Art Brief §1 technique layer, shared by every character. Deliberately two
+# tags: hard edges arrive via "cel shading", the matte/night grade via the
+# night backgrounds plus negatives (soft shading / painterly / bloom /
+# daytime are all banned there). Every positive tag costs ~2-4 BPE of the
+# hard 77-token budget — style has to share that budget with identity.
+STYLE = "cel shading, muted colors"
 
 SETTINGS = {
     "base_model": "cagliostrolab/animagine-xl-4.0",
@@ -59,11 +88,15 @@ SETTINGS = {
 }
 
 # BeatScape brand motif — must appear in every character, at the sound source.
-MOTIF = "diamond-shaped halo, four concentric diamonds behind head, glowing amber diamond core"
+# Slimmed from the 3-tag/16-BPE original to one tag: the visual (glowing
+# diamond halo behind the head) is unchanged, and trainset/gen/cdcover all
+# consume this constant, so LoRA captions and renders stay consistent.
+MOTIF = "glowing diamond halo"
 
 VIEW_TAGS = {
-    "front": "standing, facing viewer, symmetric pose",
-    "side": "from side, profile, looking away",
+    # one shared crop for the whole set — a crew, not three unrelated images
+    "front": "cowboy shot",
+    "side": "from side, profile",
     "back": "from behind, back view",
 }
 
@@ -178,21 +211,68 @@ CHARACTERS: dict[str, dict[str, str]] = {
         "prop": "mechanical bird on shoulder, rangefinder device",
         "background": "city skyline at dusk, observation deck, clouds",
     },
+    # --- NIGHTSHIFT (World Bible v1 · 3-person crew, replaces the seven above) ---
+    # These three are budgeted to ≤77 *BPE* (verified with the real CLIP
+    # tokenizer, lora trigger included). Multi-word tags cost 2-6 BPE each,
+    # so every entry below is minimal by design: anchors + silhouette first,
+    # everything optional cut. The negatives carry the rest of the art
+    # direction. Do not "enrich" these without re-measuring BPE.
+    "juno": {
+        "codename": "JUNO",
+        "district": "Pulse Core",
+        "accent": "#E23D3D",
+        "trigger": "junobs",
+        "subject": "1girl, solo, young woman",
+        # headphones-on-one-ear IS her silhouette hook (Bible §7 视觉锚);
+        # badge lamp is letterless on purpose — letters garble at this size
+        "anchors": "headphones on one ear, glowing red chest badge, radio microphone",
+        "appearance": "black side ponytail, tired eyes, smirk",
+        "clothing": "red work jacket",
+        "background": "night city, radio tower, halftone",
+    },
+    "atlas": {
+        "codename": "ATLAS",
+        "district": "Skyline Hook",
+        "accent": "#5B8DEF",
+        "trigger": "atlasbs",
+        "subject": "1other, solo, androgynous",
+        # chest field-strength meter is the Bible anchor; the spectrum coat
+        # lining is expressed as a visible waveform-print shirt
+        "anchors": "chest field meter, waveform print shirt",
+        "appearance": "silver messy hair, hair over one eye, amber eyes",
+        "clothing": "blue long coat",
+        "background": "night rooftop, antenna forest, halftone",
+    },
+    "torque": {
+        "codename": "TORQUE",
+        "district": "Chrome Yard",
+        "accent": "#8C8079",
+        "trigger": "torquebs",
+        "subject": "1boy, solo, young man",
+        # wrench drumsticks + hubcap gong: drummer-mechanic, never soldier
+        # (tactical vests are banned in NEGATIVE)
+        "anchors": "holding drumsticks, chrome hubcap gong, wrench in belt",
+        "appearance": "dark undercut, stubble, warm grin",
+        "clothing": "grey coverall",
+        "background": "night scrap yard, halftone",
+    },
 }
 
 
 def _cap_77(prompt: str, limit: int = 75) -> str:
-    """CLIP text encoders cap at 77 tokens; overshoot silently drops the tail —
-    which is exactly where our IP motif (diamond halo) and quality tags live.
-
-    Trim the *middle* (redundant appearance/background filler) so the head
-    (subject + rating + motif) and tail (view/bg + quality) always survive.
-    Token count uses comma-separated Danbooru tags as a budget proxy.
+    """Cheap comma-tag pre-filter only — the REAL gate is `fit_clip()` in the
+    downstream scripts (gen/cdcover/trainset), which measures actual CLIP BPE
+    with the pipeline tokenizer. CLIP budget is 77 BPE subwords incl. BOS/EOS,
+    not comma count: a 45-tag prompt can be 150 BPE and get its tail silently
+    truncated by diffusers' truncation=True (this is exactly what made the
+    first render round drop backgrounds and quality tags). NIGHTSHIFT entries
+    are verified ≤77 BPE with the real tokenizer; deprecated entries may
+    overshoot here and rely on the gen-time fit_clip to trim.
     """
     toks = [t.strip() for t in prompt.split(",") if t.strip()]
     if len(toks) <= limit:
         return ", ".join(toks)
-    head_n, tail_n = 14, 4  # head: identity+motif | tail: quality tags
+    head_n, tail_n = 16, 4  # head: identity+style+motif+anchors | tail: quality tags
     head = toks[:head_n]
     tail = toks[-tail_n:]
     mid = [t for t in toks[head_n:-tail_n] if t not in head and t not in tail]
@@ -200,20 +280,25 @@ def _cap_77(prompt: str, limit: int = 75) -> str:
     return ", ".join(head + mid + tail)
 
 
-def build_prompt(key: str, view: str = "front", extra: str = "") -> str:
+def build_prompt(key: str, view: str = "front", extra: str = "", lora: bool = False) -> str:
     """Compose an Animagine-ordered prompt for one character and view.
 
-    Order matters: the resonance-diamond MOTIF sits right after `rating:safe`
-    so CLIP never truncates it. Quality tags stay last.
+    Order matters: STYLE (shared set look) and MOTIF sit right after
+    `rating:safe`, followed by the character's Bible anchors — the whole
+    identity block lands inside the un-trimmed head. Quality tags stay last.
     """
     c = CHARACTERS[key]
     parts = [
         c["subject"],
+        # LoRA identity trigger (<char>bs) only when generating with the
+        # fine-tuned adapter — the base model must never see it.
+        c.get("trigger", "") if lora else "",
         "rating:safe",
+        STYLE,
         MOTIF,
+        c.get("anchors") or c.get("prop", ""),  # identity-level props
         c["appearance"],
         c["clothing"],
-        c["prop"],
         VIEW_TAGS[view],
         c["background"],
     ]
@@ -229,6 +314,8 @@ def main() -> int:
     ap.add_argument("--character", help="character key, e.g. volta")
     ap.add_argument("--view", default="front", choices=sorted(VIEW_TAGS))
     ap.add_argument("--json", action="store_true")
+    ap.add_argument("--lora", action="store_true",
+                    help="prepend the LoRA identity trigger (<char>bs) into the prompt")
     args = ap.parse_args()
 
     if args.list:
@@ -242,20 +329,25 @@ def main() -> int:
     if args.character not in CHARACTERS:
         raise SystemExit(f"unknown character: {args.character}")
 
+    prompt = build_prompt(args.character, args.view, lora=args.lora)
     if args.json:
-        print(json.dumps({
+        payload = {
             "character": args.character,
             "view": args.view,
-            "prompt": build_prompt(args.character, args.view),
+            "prompt": prompt,
             "negative": NEGATIVE,
             "settings": SETTINGS,
-        }, indent=2))
+        }
+        if "trigger" in CHARACTERS[args.character]:
+            payload["lora_trigger"] = CHARACTERS[args.character]["trigger"]
+        print(json.dumps(payload, indent=2))
         return 0
 
-    print(f"# {CHARACTERS[args.character]['codename']} · {args.view}")
+    c = CHARACTERS[args.character]
+    print(f"# {c['codename']} · {args.view}" + (f"  (LoRA: {c['trigger']})" if args.lora and "trigger" in c else ""))
     print()
     print("PROMPT:")
-    print(build_prompt(args.character, args.view))
+    print(prompt)
     print()
     print("NEGATIVE:")
     print(NEGATIVE)

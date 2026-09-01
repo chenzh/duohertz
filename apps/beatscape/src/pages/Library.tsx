@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "../router";
-import { assetUrl, loadCatalog } from "../catalog/loadCatalog";
+import { assetUrl } from "../catalog/loadCatalog";
+import { useCatalog } from "../catalog/useCatalog";
 import {
   TRACK_VIBES,
   VIBE_HINTS,
@@ -9,7 +10,7 @@ import {
   resolveTrackVibe,
   trackHasVocals,
 } from "../catalog/trackVibe";
-import type { CatalogTrack, TrackVibe } from "../types/catalog";
+import type { TrackVibe } from "../types/catalog";
 import { loadFavorites } from "../storage/settings";
 import { DistrictBadge } from "../components/DistrictBadge";
 import { CharacterAvatar } from "../components/CharacterAvatar";
@@ -19,7 +20,7 @@ import { LIBRARY_PAGE_META, usePageMeta } from "../seo/pageMeta";
 
 export function LibraryPage() {
   usePageMeta(LIBRARY_PAGE_META);
-  const [tracks, setTracks] = useState<CatalogTrack[]>([]);
+  const { tracks, error: catalogError } = useCatalog();
   const [q, setQ] = useState("");
   const [genre, setGenre] = useState("");
   const [vibe, setVibe] = useState<TrackVibe | "">("");
@@ -29,7 +30,7 @@ export function LibraryPage() {
   const [favorites, setFavorites] = useState<string[]>([]);
 
   useEffect(() => {
-    void loadCatalog().then((c) => setTracks(c.tracks));
+    // 曲库加载交给 useCatalog；这里只负责收藏列表（同步读 localStorage）。
     setFavorites(loadFavorites());
   }, []);
 
@@ -49,9 +50,14 @@ export function LibraryPage() {
 
   return (
     <section className="library">
+      {catalogError && (
+        <p className="catalog-error" role="alert">
+          Couldn’t load the track list ({catalogError}). Check your connection — the catalog is served from the same site.
+        </p>
+      )}
       <header className="page-header">
         <h1>Library</h1>
-        <p className="tagline">Find your scape — filter by vibe, genre, or mood.</p>
+        <p className="tagline">The request board is open — pick a vibe and JUNO cues it up.</p>
         {tracks.length > 0 && <span className="page-count">{filtered.length} of {tracks.length} tracks</span>}
       </header>
 
@@ -143,7 +149,7 @@ export function LibraryPage() {
               className="track-card-cover-wrap"
               style={{ ["--district-color" as string]: districtColor(t.district) }}
             >
-              <img src={assetUrl(t.cover)} alt="" loading="lazy" />
+              <img src={assetUrl(t.cover)} alt="" loading="lazy" decoding="async" width={512} height={512} />
               <CharacterAvatar district={t.district} size={52} className="track-card-avatar" />
             </div>
             <div>

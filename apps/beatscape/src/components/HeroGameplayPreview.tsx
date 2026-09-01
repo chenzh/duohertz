@@ -201,11 +201,50 @@ export function HeroGameplayPreview({ keyHints }: Props) {
       draw(t);
       raf = requestAnimationFrame(loop);
     };
-    raf = requestAnimationFrame(loop);
+
+    // 无障碍 + 省电：prefers-reduced-motion 只画一帧静态画面（不跑动画）；
+    // 离开视口就停掉 rAF，避免首页常驻空转吃 CPU / 电量。
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const startLoop = () => {
+      if (!raf && !mq.matches) raf = requestAnimationFrame(loop);
+    };
+    const stopLoop = () => {
+      if (raf) {
+        cancelAnimationFrame(raf);
+        raf = 0;
+      }
+    };
+
+    let io: IntersectionObserver | null = null;
+    if (mq.matches) {
+      draw(performance.now());
+    } else {
+      io = new IntersectionObserver(
+        (entries) => {
+          if (entries[0]?.isIntersecting) startLoop();
+          else stopLoop();
+        },
+        { threshold: 0 },
+      );
+      io.observe(wrap);
+      startLoop();
+    }
+
+    const onMqChange = () => {
+      if (mq.matches) {
+        stopLoop();
+        draw(performance.now());
+      } else {
+        startLoop();
+      }
+    };
+    mq.addEventListener("change", onMqChange);
 
     return () => {
-      cancelAnimationFrame(raf);
+      stopLoop();
       ro.disconnect();
+      io?.disconnect();
+      mq.removeEventListener("change", onMqChange);
     };
   }, [keyHints]);
 

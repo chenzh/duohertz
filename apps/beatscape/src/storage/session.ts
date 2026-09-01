@@ -2,6 +2,7 @@ import type { LastRun, PlayResult } from "../types/chart";
 import type { CatalogTrack } from "../types/catalog";
 import { maxScore } from "../engine/judge";
 import { saveScore, getPersonalBest } from "./settings";
+import { readItem, readJSON, writeItem, writeJSON } from "./safeStorage";
 
 const SESSION_RUN_KEY = "bs_last_run";
 /** Survives new-tab share links (`?run=local`, PRD §6.0.24). */
@@ -17,48 +18,51 @@ export type BoardEntry = {
   at: string;
 };
 
+function isEntry(v: unknown): v is BoardEntry {
+  if (typeof v !== "object" || v === null) return false;
+  const e = v as Record<string, unknown>;
+  return typeof e.track_id === "string" && typeof e.tier === "string" && typeof e.name === "string";
+}
+
+function boardEntries(v: unknown): BoardEntry[] | null {
+  if (!Array.isArray(v)) return null;
+  return v.filter(isEntry);
+}
+
 export function loadBoard(): BoardEntry[] {
-  try {
-    const raw = localStorage.getItem("bs_board");
-    if (raw) return JSON.parse(raw);
-  } catch {
-    /* ignore */
-  }
-  return [];
+  return readJSON<BoardEntry[]>("bs_board", [], boardEntries);
 }
 
 export function saveBoardEntry(entry: BoardEntry, cap = 50) {
   const board = loadBoard();
   const next = [...board, entry].sort((a, b) => b.score - a.score).slice(0, cap);
-  localStorage.setItem("bs_board", JSON.stringify(next));
+  writeJSON("bs_board", next);
 }
 
 export type DailyBoardEntry = BoardEntry & { dateKey: string };
 
 export function loadDailyBoard(dateKey = new Date().toISOString().slice(0, 10)): DailyBoardEntry[] {
-  try {
-    const raw = localStorage.getItem("bs_daily_board");
-    if (!raw) return [];
-    const all: DailyBoardEntry[] = JSON.parse(raw);
-    return all.filter((e) => e.dateKey === dateKey).sort((a, b) => b.score - a.score).slice(0, 50);
-  } catch {
-    return [];
-  }
+  const all = readJSON<(BoardEntry & { dateKey?: string })[]>("bs_daily_board", [], (v) => {
+    if (!Array.isArray(v)) return null;
+    return v.filter(isEntry) as (BoardEntry & { dateKey?: string })[];
+  });
+  return all
+    .filter((e) => e.dateKey === dateKey)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 50) as DailyBoardEntry[];
 }
 
 export function saveDailyBoardEntry(entry: DailyBoardEntry, cap = 200) {
-  try {
-    const raw = localStorage.getItem("bs_daily_board");
-    const all: DailyBoardEntry[] = raw ? JSON.parse(raw) : [];
-    const next = [...all, entry].sort((a, b) => b.score - a.score).slice(0, cap);
-    localStorage.setItem("bs_daily_board", JSON.stringify(next));
-  } catch {
-    /* ignore */
-  }
+  const all = readJSON<DailyBoardEntry[]>("bs_daily_board", [], (v) => {
+    if (!Array.isArray(v)) return null;
+    return v.filter(isEntry) as DailyBoardEntry[];
+  });
+  const next = [...all, entry].sort((a, b) => b.score - a.score).slice(0, cap);
+  writeJSON("bs_daily_board", next);
 }
 
 export function getDisplayName(): string {
-  return localStorage.getItem("bs_display_name") || "Player";
+  return readItem("bs_display_name") || "Player";
 }
 
 function parseRun(raw: string | null): LastRun | null {
@@ -99,10 +103,13 @@ export function writeLastRun(
     endedAt: new Date().toISOString(),
     prevBestScore: prevBest?.score,
     missEvents: result.missEvents,
+    surgeMaxTier: result.surgeMaxTier,
   };
   const payload = JSON.stringify(run);
-  sessionStorage.setItem(SESSION_RUN_KEY, payload);
-  localStorage.setItem(LOCAL_RUN_KEY, payload);
+  // 这两次写入绝不能因为配额 / 隐私模式抛异常而中断：后面的成绩与排行榜存档
+  // 都在这两行之后，一抛就是"打完一局，什么都没存下来"。
+  writeItem(SESSION_RUN_KEY, payload, "session");
+  writeItem(LOCAL_RUN_KEY, payload);
 
   const ceiling = maxScore(result.totalNotes) * 1.01;
   if (result.score <= ceiling && mode === "arcade" && !result.failed) {
@@ -142,9 +149,9 @@ export function writeLastRun(
 /** Prefer session (same tab); fall back to localStorage for share deep links. */
 export function readLastRun(preferLocal = false): LastRun | null {
   if (preferLocal) {
-    return parseRun(localStorage.getItem(LOCAL_RUN_KEY)) ?? parseRun(sessionStorage.getItem(SESSION_RUN_KEY));
+    return parseRun(readItem(LOCAL_RUN_KEY)) ?? parseRun(readItem(SESSION_RUN_KEY, "session"));
   }
-  return parseRun(sessionStorage.getItem(SESSION_RUN_KEY)) ?? parseRun(localStorage.getItem(LOCAL_RUN_KEY));
+  return parseRun(readItem(SESSION_RUN_KEY, "session")) ?? parseRun(readItem(LOCAL_RUN_KEY));
 }
 
 export function shareResultsUrl(origin = typeof window !== "undefined" ? window.location.origin : ""): string {

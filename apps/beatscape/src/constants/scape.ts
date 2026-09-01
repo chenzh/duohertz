@@ -44,6 +44,29 @@ export const JUDGE_COLORS = {
   miss: "#E23D3D",
 } as const;
 
+/** 判定文案皮肤（World Bible §9）：工程真值 Perfect/Great/Good/Miss 与 15/30/50 窗不变，玩家可见层用信号链用语。 */
+export const JUDGE_COPY = {
+  perfect: "In Phase",
+  great: "Locked",
+  good: "Drifting",
+  miss: "Dropout",
+} as const;
+
+/** Combo 文案皮肤：Signal Streak / Full Broadcast（World Bible §9）。 */
+export const COMBO_COPY = {
+  combo: "Streak",
+  maxCombo: "Max Streak",
+  fullCombo: "Full Broadcast",
+} as const;
+
+/** SIGNAL 氛围层文案皮肤（docs/BEATSCAPE-SURGE-FX.md）：电台术语，无拟声词，符合 PRD §7.4。 */
+export const SURGE_COPY = {
+  gauge: "SIGNAL",
+  t1: "TUNING",
+  t2: "LIVE",
+  t3: "ON AIR",
+} as const;
+
 export const DISTRICT_COLORS: Record<string, string> = {
   "Pulse Core": "#E23D3D",
   "Glass Rim": "#E4D8C4",
@@ -83,7 +106,7 @@ export function artistBio(artist: string): string | undefined {
 // 设计纪律见 docs/BEATSCAPE-IP-STRATEGY.md §2：标志物=职业工具（非武器/面具/塔罗/披风/校服），
 // 头后四层共振菱形（MOTIF）永远出现在"声源"位置。
 export interface CharacterArt {
-  code: string; // 角色代号（VOLTA…HALO）
+  code: string; // 角色代号（NIGHTSHIFT：JUNO/ATLAS/TORQUE）
   name: string; // 显示名
   district: string; // 对应 District
   art: string; // 头像资源路径（public/ 下）
@@ -95,48 +118,45 @@ export interface CharacterArt {
 
 export const CHARACTER_ART: Record<string, CharacterArt> = {
   "Pulse Core": {
-    code: "VOLTA", name: "VOLTA", district: "Pulse Core",
+    code: "JUNO", name: "JUNO", district: "Pulse Core",
     art: "/characters/pulse-core.png", color: "#E23D3D",
-    role: "城市电网夜班调度员", motif: "胸口四层共振菱形徽记，静电炸开的发", trigger: "voltabs",
-  },
-  "Night Grid": {
-    code: "STATIC", name: "STATIC", district: "Night Grid",
-    art: "/characters/night-grid.png", color: "#6E2426",
-    role: "深夜街区信使", motif: "兜帽、头戴耳机、斜挎信使包", trigger: "staticbs",
-  },
-  "Glass Rim": {
-    code: "PRISM", name: "PRISM", district: "Glass Rim",
-    art: "/characters/glass-rim.png", color: "#E4D8C4",
-    role: "玻璃幕墙光影剪辑师", motif: "护目镜、反光刮板（工具，非武器）", trigger: "prismbs",
-  },
-  "Afterhours Lane": {
-    code: "EMBER", name: "EMBER", district: "Afterhours Lane",
-    art: "/characters/afterhours-lane.png", color: "#B0765A",
-    role: "打烊后还在弹 Rhodes 的酒吧乐手", motif: "翻起的键盘盖、一杯冷掉的咖啡", trigger: "emberbs",
-  },
-  "Chrome Yard": {
-    code: "RIVET", name: "RIVET", district: "Chrome Yard",
-    art: "/characters/chrome-yard.png", color: "#8C8079",
-    role: "废旧车间的吉他改装师", motif: "腰间工具带、缺一角的拨片挂坠", trigger: "rivetbs",
-  },
-  "Slide District": {
-    code: "GLIDE", name: "GLIDE", district: "Slide District",
-    art: "/characters/slide-district.png", color: "#FFB020",
-    role: "天台之间滑索穿行的信使", motif: "滑索手套、飘起的长围巾", trigger: "glidebs",
+    role: "Late-night radio host — the voice of NIGHTSHIFT",
+    motif: "Radio-crew jacket, one ear on one ear off, an ON AIR badge that never dims",
+    trigger: "junobs",
   },
   "Skyline Hook": {
-    code: "HALO", name: "HALO", district: "Skyline Hook",
+    code: "ATLAS", name: "ATLAS", district: "Skyline Hook",
     art: "/characters/skyline-hook.png", color: "#5B8DEF",
-    role: "城市天际线观测员", motif: "肩上机械信鸽、测距仪", trigger: "halobs",
+    role: "Antenna-tower signal engineer — the ear of NIGHTSHIFT",
+    motif: "Spectrum-print coat lining, a vintage field-strength meter on a chest strap",
+    trigger: "atlasbs",
+  },
+  "Chrome Yard": {
+    code: "TORQUE", name: "TORQUE", district: "Chrome Yard",
+    art: "/characters/chrome-yard.png", color: "#8C8079",
+    role: "Yard mechanic & 808 customizer — the heart of NIGHTSHIFT",
+    motif: "Wrench drumsticks, a chrome gong cut from a hubcap",
+    trigger: "torquebs",
   },
 };
 
-/** 按 District 取角色视觉身份；找不到回退 VOLTA（Pulse Core）。 */
+/** 按 District 取角色视觉身份。巡演救援区（Night Grid / Glass Rim / Afterhours Lane / Slide District）无驻场乐手，由电台代播——回退 JUNO（Pulse Core）。 */
 export function characterArt(district: string): CharacterArt {
   return CHARACTER_ART[district] ?? CHARACTER_ART["Pulse Core"];
 }
 
-/** 7 角色有序列表（画廊页遍历用）。 */
+/**
+ * 角色头像的 WebP 变体路径。原图是 640–832px 的 PNG（单张 ~1 MB），
+ * 实际只渲染进 52–240px 的框，PNG 在传输层已无压缩空间（gzip 反而更大）。
+ * 预生成了 128w / 512w 两档 WebP（见 public/characters/*.webp），这里拼出对应路径。
+ * `variant` 默认 512w，配合 <img srcset> 由浏览器按显示尺寸挑选。
+ */
+export function characterArtWebp(district: string, variant: 128 | 512 = 512): string {
+  const art = characterArt(district).art.replace(/^\//, "").replace(/\.(png|webp)$/i, "");
+  return `${art}-${variant}.webp`;
+}
+
+/** NIGHTSHIFT 三人有序列表（画廊页遍历用）。 */
 export const CHARACTER_LIST: CharacterArt[] = Object.values(CHARACTER_ART);
 
 export const FEATURED_TRACK_IDS = ["bs-s1-01", "bs-s1-02", "bs-s1-05"] as const;

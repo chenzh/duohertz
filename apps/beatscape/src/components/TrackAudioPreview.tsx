@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { assetUrl } from "../catalog/loadCatalog";
+import { getMessages } from "../i18n";
 
 type Props = {
   trackId: string;
@@ -10,6 +11,7 @@ type Props = {
 /** 15s game-clip preview so users can tell tracks apart before Play. */
 export function TrackAudioPreview({ trackId, audioPath, title }: Props) {
   const ref = useRef<HTMLAudioElement>(null);
+  const t = getMessages();
 
   useEffect(() => {
     const el = ref.current;
@@ -21,7 +23,7 @@ export function TrackAudioPreview({ trackId, audioPath, title }: Props) {
 
   return (
     <div className="track-preview">
-      <span className="track-preview-label">Preview</span>
+      <span className="track-preview-label">{t.ui.preview}</span>
       <audio
         ref={ref}
         key={trackId}

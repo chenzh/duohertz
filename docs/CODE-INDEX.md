@@ -66,9 +66,14 @@ MusicSaas/
 |------|------|
 | `src/App.tsx` | 路由壳 |
 | `src/router.tsx` | 轻量自研路由（无 react-router-dom） |
-| `src/pages/` | Home · Library · Track · Play · Results · Calibration · Settings · Leaderboard · Legal · NotFound |
+| `src/pages/` | Home · Library · Track · Play · Results · Calibration · Settings · Leaderboard · Characters · Radio · Profile · Legal · NotFound |
+| `src/data/radioEpisodes.ts` + `src/lib/radio.ts` | **The Late Static 电台**：Year 1 三季 24 集周播数据 + 跨季调度（World Bible §8） |
+| `src/constants/scape.ts` | JUDGE_COPY / COMBO_COPY 判定文案皮肤 + CHARACTER_ART 三人档案 |
+| `src/lib/profanity.ts` + `src/data/profanity-en.txt` | 昵称脏词过滤（leet 归一化 + token 精确匹配） |
+| `src/catalog/trackRequests.ts` + `src/data/trackRequests.json` | 电台点歌引语 85/85（Track 页展示） |
 | `src/components/PlayField.tsx` | 谱面渲染、Tap to Start、键盘（默认方向键，物理键码）+ 触控 |
 | `src/engine/judge.ts` | 判定窗 15/30/50 ms |
+| `src/engine/surge.ts` + `surge.test.ts` | **SIGNAL 氛围层**：命中质量→热量→三档（TUNING/LIVE/ON AIR）纯逻辑；只驱动表现，不碰计分/判定窗（docs/BEATSCAPE-SURGE-FX.md） |
 | `src/storage/settings.ts` | `bs_*` localStorage |
 | `public/catalog.json` | 曲库元数据（85 首 · v1 · 双资产） |
 | `catalog-roadmap.json` | 正式版 50 首槽位 · Stage/曲风配额真值 |
@@ -82,6 +87,9 @@ MusicSaas/
 - `scripts/beatscape-track-registry.py` — Stage1+2 锁定元数据
 - `scripts/beatscape-stage2-manifest.json` — Stage2 生成 Job 草案
 - `scripts/beatscape-audit.py` — 时长/元数据 QA
+- `scripts/beatscape-chart-difficulty.py` — 谱面难度画像（NPS/和弦/同手率 40.5% 结论）
+- `scripts/beatscape-track-requests.py` — 电台点歌文案生成（4 vibe × 12 句轮转）
+- `scripts/beatscape-earcheck-worksheet.py` — 人工耳检 HTML 工作单生成（50 首逐曲播放器）
 
 **预览：** `pnpm dev:beatscape` · base `/beatscape/`
 
@@ -152,6 +160,7 @@ BeatScape 待办与验收：[BEATSCAPE-TODO-ACCEPTANCE.md](./BEATSCAPE-TODO-ACCE
 改 Demo UI？         → apps/demo/src/
 改 BeatScape 玩法？  → apps/beatscape/src/engine/ + PRD-BEATSCAPE.md
 改曲库/谱面？        → scripts/beatscape-* + public/catalog/
+改世界观/电台剧集？  → docs/BEATSCAPE-WORLDBIBLE.md + src/data/radioEpisodes.ts
 改推理？             → workers/* + docs/INFERENCE.md
 改 Harness/续作？    → SESSION.md + worklog/
 ```
