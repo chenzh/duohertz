@@ -41,6 +41,7 @@
 - [x] **BeatScape 优化审计全量落地（P0–P3）**：部署 886MB→385MB（`stream.m4a`+`og.png` 548MB 迁出 `public/catalog` → gitignored `data/beatscape-stream/`，170 文件 git 解除追踪，未 commit）；立绘 PNG 7.1MB→339KB WebP（−95.3%）；CF Pages 真缓存头 `_headers`；ScoreStreak decay 真 bug 一行修复 + 回归测试；每帧 matchMedia/`.filter()` 去分配；`Conductor` 泄漏修复 + 时序重锚；9 路由 `React.lazy` 代码分割（11 chunk）；错误边界 + `safeStorage`；i18n 字典 + key-parity 守门测试；Home 封面 lazy `<img>` + 字体非阻塞 + 无障碍 rAF 门控；死 CSS 11 类 / 127 行清理；**P2-4 打击音 AudioNode 复用**：`hitsounds.ts` 重写为 VOICES 注册表 + OfflineAudioContext 预渲染缓存（18 种复合音一次性渲染为 `AudioBuffer`，命中回放改单 `BufferSource`，~49→~2 节点/hit，音色逐字节一致）+ `hitsounds.test.ts` 3 条回归。验收 `tsc` 干净 / `vitest` 120 passed / `vite build` 绿。审计文档 `docs/BEATSCAPE-OPTIMIZATION-AUDIT.md` · 2026-08-31
 - [x] MLX 真推理已跑通（SA3 small · 180s 母带约 5s/首 · 峰值 RAM 1.7 GB）
 - [x] **P2-2 PlayField 深层拆分完成（未提交）**：~880 行 rAF `useEffect` 逐字节 verbatim 迁到 `src/components/playfield/renderLoop.ts`（导 `createPlayfieldRenderer(ctx): () => void`，返回 dispose 取消 rAF + disconnect ResizeObserver），纯函数 + 常量一并迁入；`PlayField.tsx` 1643 → **664 行**（−59.6%）。`tsc`/`vitest 120`/`vite build` 全绿 · 2026-09-02
+- [x] **P2-2 余量 · FX-commit 去重（未提交）**：`handlePress`/`handleRelease` 内逐字节相同的 5 步块抽成 `commitFx(fx: JudgeFx)`；`renderLoop.ts` 的 `addFx` 本就是单函数、Reset 去重经核查已无重复（仅 1 处 `restartRun`）。`tsc`/`vitest 120`/`vite build` 全绿 · 2026-09-01
 
 ## blockers
 

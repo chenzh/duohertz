@@ -368,6 +368,22 @@ export function PlayField({
     }
   };
 
+  // Shared FX-commit: identical 5-step sequence previously duplicated in
+  // handlePress + handleRelease (audit P2-2). Pushes the judged hit into the
+  // fx queue, advances the SIGNAL/streak atmosphere, fires juice + hit SFX.
+  const commitFx = (fx: JudgeFx) => {
+    fxRef.current.push({
+      lane: fx.lane,
+      judgment: fx.judgment,
+      born: performance.now(),
+      deltaMs: fx.deltaMs,
+    });
+    surgeRef.current.apply(fx.judgment);
+    streakRef.current.apply(fx.judgment);
+    spawnHitFx(fx.lane, fx.judgment);
+    if (settings.hitsound) playHit(fx.judgment, surgeTierRef.current);
+  };
+
   // Auto-pause when the tab is hidden; user resumes on return (PRD §4.11).
   useEffect(() => {
     const onVis = () => {
@@ -451,11 +467,7 @@ export function PlayField({
     const eff = conductor.songTimeMs() - offsetMsRef.current;
     const fx = session.press(lane, eff);
     if (fx) {
-      fxRef.current.push({ lane: fx.lane, judgment: fx.judgment, born: performance.now(), deltaMs: fx.deltaMs });
-      surgeRef.current.apply(fx.judgment);
-      streakRef.current.apply(fx.judgment);
-      spawnHitFx(fx.lane, fx.judgment);
-      if (settings.hitsound) playHit(fx.judgment, surgeTierRef.current);
+      commitFx(fx);
     } else if (settings.hitsound) {
       playKeyTick();
     }
@@ -469,11 +481,7 @@ export function PlayField({
     const eff = conductor.songTimeMs() - offsetMsRef.current;
     const fx = session.release(lane, eff);
     if (fx) {
-      fxRef.current.push({ lane: fx.lane, judgment: fx.judgment, born: performance.now(), deltaMs: fx.deltaMs });
-      surgeRef.current.apply(fx.judgment);
-      streakRef.current.apply(fx.judgment);
-      spawnHitFx(fx.lane, fx.judgment);
-      if (settings.hitsound) playHit(fx.judgment, surgeTierRef.current);
+      commitFx(fx);
     }
   };
 
