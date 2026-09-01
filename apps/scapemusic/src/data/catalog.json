@@ -1,5 +1,165 @@
 [
   {
+    "track_id": "bs-p3-01",
+    "title": "Midnight Velvet",
+    "artist": "Verity Lane",
+    "genre": "R&B",
+    "bpm": 92,
+    "vibe": "chill",
+    "district": "Afterhours Lane",
+    "tags": [
+      "Classic Style"
+    ],
+    "cover": "/catalog/bs-p3-01/cover.svg",
+    "og": "/catalog/bs-p3-01/og.png",
+    "stream_audio": "/catalog/bs-p3-01/stream.m4a",
+    "stream_duration_sec": 216
+  },
+  {
+    "track_id": "bs-p3-02",
+    "title": "Chrome Psychosis",
+    "artist": "Nova Circuit",
+    "genre": "EDM",
+    "bpm": 158,
+    "vibe": "battle",
+    "district": "Pulse Core",
+    "tags": [
+      "Hot Chart Style"
+    ],
+    "cover": "/catalog/bs-p3-02/cover.svg",
+    "og": "/catalog/bs-p3-02/og.png",
+    "stream_audio": "/catalog/bs-p3-02/stream.m4a",
+    "stream_duration_sec": 216
+  },
+  {
+    "track_id": "bs-p3-03",
+    "title": "Tunnel After Hours",
+    "artist": "Low Voltage",
+    "genre": "Hip-hop",
+    "bpm": 96,
+    "vibe": "groove",
+    "district": "Night Grid",
+    "tags": [
+      "Viral Style"
+    ],
+    "cover": "/catalog/bs-p3-03/cover.svg",
+    "og": "/catalog/bs-p3-03/og.png",
+    "stream_audio": "/catalog/bs-p3-03/stream.m4a",
+    "stream_duration_sec": 216
+  },
+  {
+    "track_id": "bs-p3-04",
+    "title": "Lounge Phantom",
+    "artist": "Mira Lane",
+    "genre": "R&B",
+    "bpm": 90,
+    "vibe": "chill",
+    "district": "Afterhours Lane",
+    "tags": [
+      "New Release"
+    ],
+    "cover": "/catalog/bs-p3-04/cover.svg",
+    "og": "/catalog/bs-p3-04/og.png",
+    "stream_audio": "/catalog/bs-p3-04/stream.m4a",
+    "stream_duration_sec": 216
+  },
+  {
+    "track_id": "bs-p3-05",
+    "title": "Scarlet Hour",
+    "artist": "Halcyon Flux",
+    "genre": "EDM",
+    "bpm": 160,
+    "vibe": "battle",
+    "district": "Pulse Core",
+    "tags": [
+      "Hot Chart Style"
+    ],
+    "cover": "/catalog/bs-p3-05/cover.svg",
+    "og": "/catalog/bs-p3-05/og.png",
+    "stream_audio": "/catalog/bs-p3-05/stream.m4a",
+    "stream_duration_sec": 216
+  },
+  {
+    "track_id": "bs-p3-06",
+    "title": "Deep Rooftop Sigh",
+    "artist": "Quiet Neon",
+    "genre": "R&B",
+    "bpm": 88,
+    "vibe": "chill",
+    "district": "Glass Rim",
+    "tags": [
+      "Classic Style"
+    ],
+    "cover": "/catalog/bs-p3-06/cover.svg",
+    "og": "/catalog/bs-p3-06/og.png",
+    "stream_audio": "/catalog/bs-p3-06/stream.m4a",
+    "stream_duration_sec": 216
+  },
+  {
+    "track_id": "bs-p3-07",
+    "title": "Glass Phantom Drive",
+    "artist": "Kite Solar",
+    "genre": "Pop",
+    "bpm": 120,
+    "vibe": "groove",
+    "district": "Glass Rim",
+    "tags": [
+      "New Release"
+    ],
+    "cover": "/catalog/bs-p3-07/cover.svg",
+    "og": "/catalog/bs-p3-07/og.png",
+    "stream_audio": "/catalog/bs-p3-07/stream.m4a",
+    "stream_duration_sec": 216
+  },
+  {
+    "track_id": "bs-p3-08",
+    "title": "Midnight Rhapsody",
+    "artist": "Ada North",
+    "genre": "Pop",
+    "bpm": 116,
+    "vibe": "night-drive",
+    "district": "Glass Rim",
+    "tags": [
+      "Viral Style"
+    ],
+    "cover": "/catalog/bs-p3-08/cover.svg",
+    "og": "/catalog/bs-p3-08/og.png",
+    "stream_audio": "/catalog/bs-p3-08/stream.m4a",
+    "stream_duration_sec": 216
+  },
+  {
+    "track_id": "bs-p3-09",
+    "title": "Asphalt Waltz",
+    "artist": "Iron Echo",
+    "genre": "Rock",
+    "bpm": 138,
+    "vibe": "battle",
+    "district": "Chrome Yard",
+    "tags": [
+      "Classic Style"
+    ],
+    "cover": "/catalog/bs-p3-09/cover.svg",
+    "og": "/catalog/bs-p3-09/og.png",
+    "stream_audio": "/catalog/bs-p3-09/stream.m4a",
+    "stream_duration_sec": 216
+  },
+  {
+    "track_id": "bs-p3-10",
+    "title": "Scape Shade",
+    "artist": "Subline",
+    "genre": "Hip-hop",
+    "bpm": 100,
+    "vibe": "night-drive",
+    "district": "Night Grid",
+    "tags": [
+      "Hot Chart Style"
+    ],
+    "cover": "/catalog/bs-p3-10/cover.svg",
+    "og": "/catalog/bs-p3-10/og.png",
+    "stream_audio": "/catalog/bs-p3-10/stream.m4a",
+    "stream_duration_sec": 216
+  },
+  {
     "track_id": "bs-s1-01",
     "title": "Neon Pulse",
     "artist": "Pulse Atlas",
