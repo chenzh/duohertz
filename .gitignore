@@ -49,3 +49,6 @@ package-lock.json
 # Regenerable local artifacts
 apps/beatscape/earcheck-worksheet.html
 _tmp_*
+
+# AI-tool local backups (memory stays tracked)
+.workbuddy-ai/backups/
