@@ -33,6 +33,8 @@
     "earcheck:beatscape": "python3 scripts/beatscape-earcheck.py",
     "dev:beatscape": "pnpm --filter @musicsaas/beatscape dev",
     "build:beatscape": "pnpm --filter @musicsaas/beatscape build",
+    "dev:scapemusic": "pnpm --filter @musicsaas/scapemusic dev",
+    "sync:scapemusic": "python3 scripts/scapemusic-sync-catalog.py",
     "lint": "pnpm -r lint"
   },
   "engines": {

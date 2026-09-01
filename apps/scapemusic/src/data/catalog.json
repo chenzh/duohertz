@@ -1,0 +1,1450 @@
+[
+  {
+    "track_id": "bs-s1-01",
+    "title": "Neon Pulse",
+    "artist": "Pulse Atlas",
+    "genre": "EDM",
+    "bpm": 162,
+    "vibe": "battle",
+    "district": "Pulse Core",
+    "tags": [
+      "Hot Chart Style",
+      "Beginner Pick"
+    ],
+    "cover": "/catalog/bs-s1-01/cover.svg",
+    "og": "/catalog/bs-s1-01/og.png",
+    "stream_audio": "/catalog/bs-s1-01/stream.m4a",
+    "stream_duration_sec": 198,
+    "quote": "For the night the block needs a war drum, not a lullaby."
+  },
+  {
+    "track_id": "bs-s1-02",
+    "title": "Glass Horizon",
+    "artist": "Soft Circuit",
+    "genre": "Pop",
+    "bpm": 118,
+    "vibe": "groove",
+    "district": "Glass Rim",
+    "tags": [
+      "Viral Style",
+      "Beginner Pick"
+    ],
+    "cover": "/catalog/bs-s1-02/cover.svg",
+    "og": "/catalog/bs-s1-02/og.png",
+    "stream_audio": "/catalog/bs-s1-02/stream.m4a",
+    "stream_duration_sec": 198,
+    "quote": "SOLENN rates this one 'almost too clean'. From her, that's a love letter."
+  },
+  {
+    "track_id": "bs-s1-03",
+    "title": "Night Drive 808",
+    "artist": "Low Voltage",
+    "genre": "Hip-hop",
+    "bpm": 95,
+    "vibe": "night-drive",
+    "district": "Night Grid",
+    "tags": [
+      "Classic Style"
+    ],
+    "cover": "/catalog/bs-s1-03/cover.svg",
+    "og": "/catalog/bs-s1-03/og.png",
+    "stream_audio": "/catalog/bs-s1-03/stream.m4a",
+    "stream_duration_sec": 198,
+    "quote": "For the late shift rolling home with the windows down."
+  },
+  {
+    "track_id": "bs-s1-04",
+    "title": "Velvet Afterhours",
+    "artist": "Mira Lane",
+    "genre": "R&B",
+    "bpm": 88,
+    "vibe": "chill",
+    "district": "Afterhours Lane",
+    "tags": [
+      "Classic Style",
+      "Beginner Pick"
+    ],
+    "cover": "/catalog/bs-s1-04/cover.svg",
+    "og": "/catalog/bs-s1-04/og.png",
+    "stream_audio": "/catalog/bs-s1-04/stream.m4a",
+    "stream_duration_sec": 198,
+    "quote": "Last Call material — for when the amp hums louder than the crowd."
+  },
+  {
+    "track_id": "bs-s1-05",
+    "title": "Voltage Drop",
+    "artist": "Gridline",
+    "genre": "EDM",
+    "bpm": 171,
+    "vibe": "battle",
+    "district": "Pulse Core",
+    "tags": [
+      "Hot Chart Style"
+    ],
+    "cover": "/catalog/bs-s1-05/cover.svg",
+    "og": "/catalog/bs-s1-05/og.png",
+    "stream_audio": "/catalog/bs-s1-05/stream.m4a",
+    "stream_duration_sec": 180,
+    "quote": "Requested by TORQUE — he drums harder when this one's on."
+  },
+  {
+    "track_id": "bs-s1-06",
+    "title": "Chrome Riff",
+    "artist": "Iron Echo",
+    "genre": "Rock",
+    "bpm": 132,
+    "vibe": "battle",
+    "district": "Chrome Yard",
+    "tags": [
+      "New Release"
+    ],
+    "cover": "/catalog/bs-s1-06/cover.svg",
+    "og": "/catalog/bs-s1-06/og.png",
+    "stream_audio": "/catalog/bs-s1-06/stream.m4a",
+    "stream_duration_sec": 198,
+    "quote": "Three blocks went quiet on the same street. This is the answer."
+  },
+  {
+    "track_id": "bs-s2-01",
+    "title": "Slide City",
+    "artist": "Vector Bloom",
+    "genre": "EDM",
+    "bpm": 140,
+    "vibe": "battle",
+    "district": "Slide District",
+    "tags": [
+      "Hot Chart Style"
+    ],
+    "cover": "/catalog/bs-s2-01/cover.svg",
+    "og": "/catalog/bs-s2-01/og.png",
+    "stream_audio": "/catalog/bs-s2-01/stream.m4a",
+    "stream_duration_sec": 198,
+    "quote": "The Drop at 03:03 doesn't wait. Neither does this."
+  },
+  {
+    "track_id": "bs-s2-02",
+    "title": "Skyline Hook",
+    "artist": "Ada North",
+    "genre": "Pop",
+    "bpm": 133,
+    "vibe": "groove",
+    "district": "Skyline Hook",
+    "tags": [
+      "Viral Style"
+    ],
+    "cover": "/catalog/bs-s2-02/cover.svg",
+    "og": "/catalog/bs-s2-02/og.png",
+    "stream_audio": "/catalog/bs-s2-02/stream.m4a",
+    "stream_duration_sec": 198,
+    "quote": "Groove Hour opener material — the city walks differently to this."
+  },
+  {
+    "track_id": "bs-s2-03",
+    "title": "Blue Hour Loop",
+    "artist": "Quiet Neon",
+    "genre": "Pop",
+    "bpm": 120,
+    "vibe": "chill",
+    "district": "Glass Rim",
+    "tags": [
+      "Classic Style"
+    ],
+    "cover": "/catalog/bs-s2-03/cover.svg",
+    "og": "/catalog/bs-s2-03/og.png",
+    "stream_audio": "/catalog/bs-s2-03/stream.m4a",
+    "stream_duration_sec": 198,
+    "quote": "For the stool by the window and whatever's left in the cup."
+  },
+  {
+    "track_id": "bs-s2-04",
+    "title": "Asphalt Anthem",
+    "artist": "Redline Co.",
+    "genre": "Rock",
+    "bpm": 150,
+    "vibe": "battle",
+    "district": "Chrome Yard",
+    "tags": [
+      "Hot Chart Style"
+    ],
+    "cover": "/catalog/bs-s2-04/cover.svg",
+    "og": "/catalog/bs-s2-04/og.png",
+    "stream_audio": "/catalog/bs-s2-04/stream.m4a",
+    "stream_duration_sec": 198,
+    "quote": "Somebody in Chrome Yard asked for something loud. We delivered twice."
+  },
+  {
+    "track_id": "bs-s3-01",
+    "title": "Grid Voltage",
+    "artist": "Neon Arc",
+    "genre": "EDM",
+    "bpm": 154,
+    "vibe": "battle",
+    "district": "Pulse Core",
+    "tags": [
+      "Hot Chart Style"
+    ],
+    "cover": "/catalog/bs-s3-01/cover.svg",
+    "og": "/catalog/bs-s3-01/og.png",
+    "stream_audio": "/catalog/bs-s3-01/stream.m4a",
+    "stream_duration_sec": 198,
+    "quote": "Play it like the Grid is listening — it is."
+  },
+  {
+    "track_id": "bs-s3-02",
+    "title": "Night Pulse 808",
+    "artist": "Subline",
+    "genre": "Hip-hop",
+    "bpm": 98,
+    "vibe": "night-drive",
+    "district": "Night Grid",
+    "tags": [
+      "Classic Style"
+    ],
+    "cover": "/catalog/bs-s3-02/cover.svg",
+    "og": "/catalog/bs-s3-02/og.png",
+    "stream_audio": "/catalog/bs-s3-02/stream.m4a",
+    "stream_duration_sec": 198,
+    "quote": "Wide mix, empty freeway, city in the mirror — that's the whole brief."
+  },
+  {
+    "track_id": "bs-s3-03",
+    "title": "Soft Horizon",
+    "artist": "Luma Rim",
+    "genre": "Pop",
+    "bpm": 122,
+    "vibe": "chill",
+    "district": "Glass Rim",
+    "tags": [
+      "Viral Style"
+    ],
+    "cover": "/catalog/bs-s3-03/cover.svg",
+    "og": "/catalog/bs-s3-03/og.png",
+    "stream_audio": "/catalog/bs-s3-03/stream.m4a",
+    "stream_duration_sec": 198,
+    "quote": "Afterhours Lane holds its breath for this one."
+  },
+  {
+    "track_id": "bs-s3-04",
+    "title": "Velvet Scape",
+    "artist": "Mira Lane",
+    "genre": "R&B",
+    "bpm": 90,
+    "vibe": "chill",
+    "district": "Afterhours Lane",
+    "tags": [
+      "Classic Style"
+    ],
+    "cover": "/catalog/bs-s3-04/cover.svg",
+    "og": "/catalog/bs-s3-04/og.png",
+    "stream_audio": "/catalog/bs-s3-04/stream.m4a",
+    "stream_duration_sec": 198,
+    "quote": "Quiet isn't the Hush. Quiet is this, on purpose."
+  },
+  {
+    "track_id": "bs-s3-05",
+    "title": "Chrome Grid",
+    "artist": "Iron Echo",
+    "genre": "Rock",
+    "bpm": 140,
+    "vibe": "battle",
+    "district": "Chrome Yard",
+    "tags": [
+      "Hot Chart Style"
+    ],
+    "cover": "/catalog/bs-s3-05/cover.svg",
+    "og": "/catalog/bs-s3-05/og.png",
+    "stream_audio": "/catalog/bs-s3-05/stream.m4a",
+    "stream_duration_sec": 198,
+    "quote": "For every skyline that ever blinked first."
+  },
+  {
+    "track_id": "bs-s3-06",
+    "title": "Pulse Overload",
+    "artist": "Gridline",
+    "genre": "EDM",
+    "bpm": 167,
+    "vibe": "battle",
+    "district": "Pulse Core",
+    "tags": [
+      "Hot Chart Style"
+    ],
+    "cover": "/catalog/bs-s3-06/cover.svg",
+    "og": "/catalog/bs-s3-06/og.png",
+    "stream_audio": "/catalog/bs-s3-06/stream.m4a",
+    "stream_duration_sec": 198,
+    "quote": "The Hush hates this one. That's the whole review."
+  },
+  {
+    "track_id": "bs-s3-07",
+    "title": "Low Grid Flow",
+    "artist": "Low Voltage",
+    "genre": "Hip-hop",
+    "bpm": 92,
+    "vibe": "groove",
+    "district": "Night Grid",
+    "tags": [
+      "Classic Style"
+    ],
+    "cover": "/catalog/bs-s3-07/cover.svg",
+    "og": "/catalog/bs-s3-07/og.png",
+    "stream_audio": "/catalog/bs-s3-07/stream.m4a",
+    "stream_duration_sec": 198,
+    "quote": "For the crosswalk that thinks it's a catwalk."
+  },
+  {
+    "track_id": "bs-s3-08",
+    "title": "Blue Loop Hour",
+    "artist": "Quiet Neon",
+    "genre": "Pop",
+    "bpm": 162,
+    "vibe": "chill",
+    "district": "Glass Rim",
+    "tags": [
+      "Classic Style"
+    ],
+    "cover": "/catalog/bs-s3-08/cover.svg",
+    "og": "/catalog/bs-s3-08/og.png",
+    "stream_audio": "/catalog/bs-s3-08/stream.m4a",
+    "stream_duration_sec": 198,
+    "quote": "Requested for the walk home when you take the long stairs."
+  },
+  {
+    "track_id": "bs-s3-09",
+    "title": "Afterhours Pulse",
+    "artist": "Mira Lane",
+    "genre": "R&B",
+    "bpm": 86,
+    "vibe": "chill",
+    "district": "Afterhours Lane",
+    "tags": [
+      "Classic Style"
+    ],
+    "cover": "/catalog/bs-s3-09/cover.svg",
+    "og": "/catalog/bs-s3-09/og.png",
+    "stream_audio": "/catalog/bs-s3-09/stream.m4a",
+    "stream_duration_sec": 198,
+    "quote": "JUNO signs off most nights with something like this."
+  },
+  {
+    "track_id": "bs-s3-10",
+    "title": "Riff Voltage",
+    "artist": "Redline Co.",
+    "genre": "Rock",
+    "bpm": 182,
+    "vibe": "battle",
+    "district": "Chrome Yard",
+    "tags": [
+      "New Release"
+    ],
+    "cover": "/catalog/bs-s3-10/cover.svg",
+    "og": "/catalog/bs-s3-10/og.png",
+    "stream_audio": "/catalog/bs-s3-10/stream.m4a",
+    "stream_duration_sec": 198,
+    "quote": "Cue it when the streetlights start arguing back."
+  },
+  {
+    "track_id": "bs-s3-11",
+    "title": "Neon Gridline",
+    "artist": "Pulse Atlas",
+    "genre": "EDM",
+    "bpm": 158,
+    "vibe": "groove",
+    "district": "Pulse Core",
+    "tags": [
+      "Viral Style"
+    ],
+    "cover": "/catalog/bs-s3-11/cover.svg",
+    "og": "/catalog/bs-s3-11/og.png",
+    "stream_audio": "/catalog/bs-s3-11/stream.m4a",
+    "stream_duration_sec": 198,
+    "quote": "DIZZ tried to solo over this and forgot to stop."
+  },
+  {
+    "track_id": "bs-s3-12",
+    "title": "Trap Grid",
+    "artist": "Subline",
+    "genre": "Hip-hop",
+    "bpm": 100,
+    "vibe": "battle",
+    "district": "Night Grid",
+    "tags": [
+      "Hot Chart Style"
+    ],
+    "cover": "/catalog/bs-s3-12/cover.svg",
+    "og": "/catalog/bs-s3-12/og.png",
+    "stream_audio": "/catalog/bs-s3-12/stream.m4a",
+    "stream_duration_sec": 198,
+    "quote": "Battle Call standard issue: kick first, questions later."
+  },
+  {
+    "track_id": "bs-s3-13",
+    "title": "Scape Velvet",
+    "artist": "Mira Lane",
+    "genre": "R&B",
+    "bpm": 88,
+    "vibe": "chill",
+    "district": "Afterhours Lane",
+    "tags": [
+      "New Release"
+    ],
+    "cover": "/catalog/bs-s3-13/cover.svg",
+    "og": "/catalog/bs-s3-13/og.png",
+    "stream_audio": "/catalog/bs-s3-13/stream.m4a",
+    "stream_duration_sec": 198,
+    "quote": "For practicing falsetto at nobody in particular."
+  },
+  {
+    "track_id": "bs-s3-14",
+    "title": "808 Horizon",
+    "artist": "Low Voltage",
+    "genre": "Hip-hop",
+    "bpm": 200,
+    "vibe": "night-drive",
+    "district": "Night Grid",
+    "tags": [
+      "Viral Style"
+    ],
+    "cover": "/catalog/bs-s3-14/cover.svg",
+    "og": "/catalog/bs-s3-14/og.png",
+    "stream_audio": "/catalog/bs-s3-14/stream.m4a",
+    "stream_duration_sec": 198,
+    "quote": "ATLAS sequenced this one for the tunnel at exactly this speed."
+  },
+  {
+    "track_id": "bs-s3-15",
+    "title": "Anthem Chrome",
+    "artist": "Iron Echo",
+    "genre": "Rock",
+    "bpm": 136,
+    "vibe": "battle",
+    "district": "Chrome Yard",
+    "tags": [
+      "Hot Chart Style"
+    ],
+    "cover": "/catalog/bs-s3-15/cover.svg",
+    "og": "/catalog/bs-s3-15/og.png",
+    "stream_audio": "/catalog/bs-s3-15/stream.m4a",
+    "stream_duration_sec": 198,
+    "quote": "One take, no net, full broadcast."
+  },
+  {
+    "track_id": "bs-s4-01",
+    "title": "Brass Scape Rush",
+    "artist": "Neon Arc",
+    "genre": "EDM",
+    "bpm": 162,
+    "vibe": "battle",
+    "district": "Pulse Core",
+    "tags": [
+      "Hot Chart Style"
+    ],
+    "cover": "/catalog/bs-s4-01/cover.svg",
+    "og": "/catalog/bs-s4-01/og.png",
+    "stream_audio": "/catalog/bs-s4-01/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "Signed, sealed, cranked to the level the law allows. Barely."
+  },
+  {
+    "track_id": "bs-s4-02",
+    "title": "Syncopated Grid",
+    "artist": "Subline",
+    "genre": "Hip-hop",
+    "bpm": 98,
+    "vibe": "groove",
+    "district": "Night Grid",
+    "tags": [
+      "Classic Style"
+    ],
+    "cover": "/catalog/bs-s4-02/cover.svg",
+    "og": "/catalog/bs-s4-02/og.png",
+    "stream_audio": "/catalog/bs-s4-02/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "Slip this on and even the elevators sway."
+  },
+  {
+    "track_id": "bs-s4-03",
+    "title": "Halftone Drive",
+    "artist": "Luma Rim",
+    "genre": "Pop",
+    "bpm": 122,
+    "vibe": "groove",
+    "district": "Glass Rim",
+    "tags": [
+      "Viral Style"
+    ],
+    "cover": "/catalog/bs-s4-03/cover.svg",
+    "og": "/catalog/bs-s4-03/og.png",
+    "stream_audio": "/catalog/bs-s4-03/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "Glass Rim keeps asking for it. We keep saying yes."
+  },
+  {
+    "track_id": "bs-s4-04",
+    "title": "Satin Afterpulse",
+    "artist": "Mira Lane",
+    "genre": "R&B",
+    "bpm": 92,
+    "vibe": "chill",
+    "district": "Afterhours Lane",
+    "tags": [
+      "Classic Style"
+    ],
+    "cover": "/catalog/bs-s4-04/cover.svg",
+    "og": "/catalog/bs-s4-04/og.png",
+    "stream_audio": "/catalog/bs-s4-04/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "Low stakes, low lights, high fidelity."
+  },
+  {
+    "track_id": "bs-s4-05",
+    "title": "Ink Stomp Riff",
+    "artist": "Iron Echo",
+    "genre": "Rock",
+    "bpm": 132,
+    "vibe": "battle",
+    "district": "Chrome Yard",
+    "tags": [
+      "Hot Chart Style"
+    ],
+    "cover": "/catalog/bs-s4-05/cover.svg",
+    "og": "/catalog/bs-s4-05/og.png",
+    "stream_audio": "/catalog/bs-s4-05/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "For the night the block needs a war drum, not a lullaby."
+  },
+  {
+    "track_id": "bs-s4-06",
+    "title": "Resonance Overload",
+    "artist": "Gridline",
+    "genre": "EDM",
+    "bpm": 167,
+    "vibe": "battle",
+    "district": "Pulse Core",
+    "tags": [
+      "Hot Chart Style"
+    ],
+    "cover": "/catalog/bs-s4-06/cover.svg",
+    "og": "/catalog/bs-s4-06/og.png",
+    "stream_audio": "/catalog/bs-s4-06/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "Requested by TORQUE — he drums harder when this one's on."
+  },
+  {
+    "track_id": "bs-s4-07",
+    "title": "Lane Shuffle Flow",
+    "artist": "Low Voltage",
+    "genre": "Hip-hop",
+    "bpm": 102,
+    "vibe": "groove",
+    "district": "Night Grid",
+    "tags": [
+      "Viral Style"
+    ],
+    "cover": "/catalog/bs-s4-07/cover.svg",
+    "og": "/catalog/bs-s4-07/og.png",
+    "stream_audio": "/catalog/bs-s4-07/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "Syncopated enough to trip the Hush's metronome."
+  },
+  {
+    "track_id": "bs-s4-08",
+    "title": "Crimson Hookline",
+    "artist": "Ada North",
+    "genre": "Pop",
+    "bpm": 125,
+    "vibe": "groove",
+    "district": "Glass Rim",
+    "tags": [
+      "New Release"
+    ],
+    "cover": "/catalog/bs-s4-08/cover.svg",
+    "og": "/catalog/bs-s4-08/og.png",
+    "stream_audio": "/catalog/bs-s4-08/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "The bassline does the talking. The rest is agreeable."
+  },
+  {
+    "track_id": "bs-s4-09",
+    "title": "Moonlit Groove",
+    "artist": "Quiet Neon",
+    "genre": "R&B",
+    "bpm": 94,
+    "vibe": "chill",
+    "district": "Afterhours Lane",
+    "tags": [
+      "Classic Style"
+    ],
+    "cover": "/catalog/bs-s4-09/cover.svg",
+    "og": "/catalog/bs-s4-09/og.png",
+    "stream_audio": "/catalog/bs-s4-09/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "The city exhales on the two. Find it."
+  },
+  {
+    "track_id": "bs-s4-10",
+    "title": "Strike Vector",
+    "artist": "Redline Co.",
+    "genre": "Rock",
+    "bpm": 133,
+    "vibe": "battle",
+    "district": "Slide District",
+    "tags": [
+      "Hot Chart Style"
+    ],
+    "cover": "/catalog/bs-s4-10/cover.svg",
+    "og": "/catalog/bs-s4-10/og.png",
+    "stream_audio": "/catalog/bs-s4-10/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "Three blocks went quiet on the same street. This is the answer."
+  },
+  {
+    "track_id": "bs-s4-11",
+    "title": "Ember Pulse Line",
+    "artist": "Halcyon Flux",
+    "genre": "EDM",
+    "bpm": 162,
+    "vibe": "battle",
+    "district": "Pulse Core",
+    "tags": [
+      "Hot Chart Style"
+    ],
+    "cover": "/catalog/bs-s4-11/cover.svg",
+    "og": "/catalog/bs-s4-11/og.png",
+    "stream_audio": "/catalog/bs-s4-11/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "The Drop at 03:03 doesn't wait. Neither does this."
+  },
+  {
+    "track_id": "bs-s4-12",
+    "title": "Gridline Cipher",
+    "artist": "Subline",
+    "genre": "Hip-hop",
+    "bpm": 97,
+    "vibe": "groove",
+    "district": "Night Grid",
+    "tags": [
+      "Classic Style"
+    ],
+    "cover": "/catalog/bs-s4-12/cover.svg",
+    "og": "/catalog/bs-s4-12/og.png",
+    "stream_audio": "/catalog/bs-s4-12/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "Requested by a nurse coming off night shift. This one's hers."
+  },
+  {
+    "track_id": "bs-s4-13",
+    "title": "Halftone Skyline",
+    "artist": "Luma Rim",
+    "genre": "Pop",
+    "bpm": 120,
+    "vibe": "groove",
+    "district": "Glass Rim",
+    "tags": [
+      "Viral Style"
+    ],
+    "cover": "/catalog/bs-s4-13/cover.svg",
+    "og": "/catalog/bs-s4-13/og.png",
+    "stream_audio": "/catalog/bs-s4-13/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "For dancing like nobody's billing you by the hour."
+  },
+  {
+    "track_id": "bs-s4-14",
+    "title": "Chrome Mile Anthem",
+    "artist": "Iron Echo",
+    "genre": "Rock",
+    "bpm": 133,
+    "vibe": "battle",
+    "district": "Chrome Yard",
+    "tags": [
+      "New Release"
+    ],
+    "cover": "/catalog/bs-s4-14/cover.svg",
+    "og": "/catalog/bs-s4-14/og.png",
+    "stream_audio": "/catalog/bs-s4-14/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "Somebody in Chrome Yard asked for something loud. We delivered twice."
+  },
+  {
+    "track_id": "bs-s4-15",
+    "title": "Neon Scape Drift",
+    "artist": "Nova Circuit",
+    "genre": "EDM",
+    "bpm": 166,
+    "vibe": "night-drive",
+    "district": "Pulse Core",
+    "tags": [
+      "Viral Style"
+    ],
+    "cover": "/catalog/bs-s4-15/cover.svg",
+    "og": "/catalog/bs-s4-15/og.png",
+    "stream_audio": "/catalog/bs-s4-15/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "Requested by a cab driver who says the city hums back to this."
+  },
+  {
+    "track_id": "bs-s5-01",
+    "title": "Pulse Overpass",
+    "artist": "Halcyon Flux",
+    "genre": "EDM",
+    "bpm": 162,
+    "vibe": "battle",
+    "district": "Pulse Core",
+    "tags": [
+      "Hot Chart Style"
+    ],
+    "cover": "/catalog/bs-s5-01/cover.svg",
+    "og": "/catalog/bs-s5-01/og.png",
+    "stream_audio": "/catalog/bs-s5-01/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "Play it like the Grid is listening — it is."
+  },
+  {
+    "track_id": "bs-s5-02",
+    "title": "Glass Turnpike",
+    "artist": "Ada North",
+    "genre": "Pop",
+    "bpm": 125,
+    "vibe": "groove",
+    "district": "Glass Rim",
+    "tags": [
+      "New Release"
+    ],
+    "cover": "/catalog/bs-s5-02/cover.svg",
+    "og": "/catalog/bs-s5-02/og.png",
+    "stream_audio": "/catalog/bs-s5-02/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "Groove Hour keeps this in rotation because you keep calling it in."
+  },
+  {
+    "track_id": "bs-s5-03",
+    "title": "Nightlane Static",
+    "artist": "Low Voltage",
+    "genre": "Hip-hop",
+    "bpm": 100,
+    "vibe": "night-drive",
+    "district": "Night Grid",
+    "tags": [
+      "Classic Style"
+    ],
+    "cover": "/catalog/bs-s5-03/cover.svg",
+    "og": "/catalog/bs-s5-03/og.png",
+    "stream_audio": "/catalog/bs-s5-03/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "Overnight Drive staple: headlights, low end, no small talk."
+  },
+  {
+    "track_id": "bs-s5-04",
+    "title": "Afterhours Satin",
+    "artist": "Mira Lane",
+    "genre": "R&B",
+    "bpm": 90,
+    "vibe": "chill",
+    "district": "Afterhours Lane",
+    "tags": [
+      "Classic Style"
+    ],
+    "cover": "/catalog/bs-s5-04/cover.svg",
+    "og": "/catalog/bs-s5-04/og.png",
+    "stream_audio": "/catalog/bs-s5-04/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "For warming up, winding down, or both at once."
+  },
+  {
+    "track_id": "bs-s5-05",
+    "title": "Chrome Vector",
+    "artist": "Redline Co.",
+    "genre": "Rock",
+    "bpm": 134,
+    "vibe": "battle",
+    "district": "Chrome Yard",
+    "tags": [
+      "Hot Chart Style"
+    ],
+    "cover": "/catalog/bs-s5-05/cover.svg",
+    "og": "/catalog/bs-s5-05/og.png",
+    "stream_audio": "/catalog/bs-s5-05/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "For every skyline that ever blinked first."
+  },
+  {
+    "track_id": "bs-s5-06",
+    "title": "Overload Scape",
+    "artist": "Gridline",
+    "genre": "EDM",
+    "bpm": 170,
+    "vibe": "battle",
+    "district": "Pulse Core",
+    "tags": [
+      "Hot Chart Style"
+    ],
+    "cover": "/catalog/bs-s5-06/cover.svg",
+    "og": "/catalog/bs-s5-06/og.png",
+    "stream_audio": "/catalog/bs-s5-06/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "The Hush hates this one. That's the whole review."
+  },
+  {
+    "track_id": "bs-s5-07",
+    "title": "Halftone Harbour",
+    "artist": "Kite Solar",
+    "genre": "Pop",
+    "bpm": 115,
+    "vibe": "chill",
+    "district": "Glass Rim",
+    "tags": [
+      "Classic Style"
+    ],
+    "cover": "/catalog/bs-s5-07/cover.svg",
+    "og": "/catalog/bs-s5-07/og.png",
+    "stream_audio": "/catalog/bs-s5-07/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "Some blocks just want a lullaby with taste."
+  },
+  {
+    "track_id": "bs-s5-08",
+    "title": "Gridlock Anthem",
+    "artist": "Subline",
+    "genre": "Hip-hop",
+    "bpm": 94,
+    "vibe": "groove",
+    "district": "Night Grid",
+    "tags": [
+      "Viral Style"
+    ],
+    "cover": "/catalog/bs-s5-08/cover.svg",
+    "og": "/catalog/bs-s5-08/og.png",
+    "stream_audio": "/catalog/bs-s5-08/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "Smooth is a decision. This one makes it easy."
+  },
+  {
+    "track_id": "bs-s5-09",
+    "title": "Satin Nightline",
+    "artist": "Verity Lane",
+    "genre": "R&B",
+    "bpm": 88,
+    "vibe": "chill",
+    "district": "Afterhours Lane",
+    "tags": [
+      "New Release"
+    ],
+    "cover": "/catalog/bs-s5-09/cover.svg",
+    "og": "/catalog/bs-s5-09/og.png",
+    "stream_audio": "/catalog/bs-s5-09/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "Last Call, first pour — this one goes down easy."
+  },
+  {
+    "track_id": "bs-s5-10",
+    "title": "Iron Boulevard",
+    "artist": "Iron Echo",
+    "genre": "Rock",
+    "bpm": 142,
+    "vibe": "battle",
+    "district": "Chrome Yard",
+    "tags": [
+      "Hot Chart Style"
+    ],
+    "cover": "/catalog/bs-s5-10/cover.svg",
+    "og": "/catalog/bs-s5-10/og.png",
+    "stream_audio": "/catalog/bs-s5-10/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "Cue it when the streetlights start arguing back."
+  },
+  {
+    "track_id": "bs-s6-01",
+    "title": "Afterglow Scape",
+    "artist": "Pale Ember",
+    "genre": "EDM",
+    "bpm": 162,
+    "vibe": "battle",
+    "district": "Pulse Core",
+    "tags": [
+      "Hot Chart Style"
+    ],
+    "cover": "/catalog/bs-s6-01/cover.svg",
+    "og": "/catalog/bs-s6-01/og.png",
+    "stream_audio": "/catalog/bs-s6-01/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "Battle Call standard issue: kick first, questions later."
+  },
+  {
+    "track_id": "bs-s6-02",
+    "title": "Halftone Bloom",
+    "artist": "Luma Rim",
+    "genre": "Pop",
+    "bpm": 120,
+    "vibe": "groove",
+    "district": "Glass Rim",
+    "tags": [
+      "Viral Style"
+    ],
+    "cover": "/catalog/bs-s6-02/cover.svg",
+    "og": "/catalog/bs-s6-02/og.png",
+    "stream_audio": "/catalog/bs-s6-02/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "SOLENN rates this one 'almost too clean'. From her, that's a love letter."
+  },
+  {
+    "track_id": "bs-s6-03",
+    "title": "Lowbeam Groove",
+    "artist": "Low Voltage",
+    "genre": "Hip-hop",
+    "bpm": 98,
+    "vibe": "groove",
+    "district": "Night Grid",
+    "tags": [
+      "Classic Style"
+    ],
+    "cover": "/catalog/bs-s6-03/cover.svg",
+    "og": "/catalog/bs-s6-03/og.png",
+    "stream_audio": "/catalog/bs-s6-03/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "Groove Hour opener material — the city walks differently to this."
+  },
+  {
+    "track_id": "bs-s6-04",
+    "title": "Moonlit Turnpike",
+    "artist": "Verity Lane",
+    "genre": "R&B",
+    "bpm": 92,
+    "vibe": "chill",
+    "district": "Afterhours Lane",
+    "tags": [
+      "New Release"
+    ],
+    "cover": "/catalog/bs-s6-04/cover.svg",
+    "og": "/catalog/bs-s6-04/og.png",
+    "stream_audio": "/catalog/bs-s6-04/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "Last Call material — for when the amp hums louder than the crowd."
+  },
+  {
+    "track_id": "bs-s6-05",
+    "title": "Chrome Foundry",
+    "artist": "Iron Echo",
+    "genre": "Rock",
+    "bpm": 136,
+    "vibe": "battle",
+    "district": "Chrome Yard",
+    "tags": [
+      "New Release"
+    ],
+    "cover": "/catalog/bs-s6-05/cover.svg",
+    "og": "/catalog/bs-s6-05/og.png",
+    "stream_audio": "/catalog/bs-s6-05/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "One take, no net, full broadcast."
+  },
+  {
+    "track_id": "bs-s6-06",
+    "title": "Neon Overpass",
+    "artist": "Gridline",
+    "genre": "EDM",
+    "bpm": 167,
+    "vibe": "battle",
+    "district": "Pulse Core",
+    "tags": [
+      "Hot Chart Style"
+    ],
+    "cover": "/catalog/bs-s6-06/cover.svg",
+    "og": "/catalog/bs-s6-06/og.png",
+    "stream_audio": "/catalog/bs-s6-06/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "Signed, sealed, cranked to the level the law allows. Barely."
+  },
+  {
+    "track_id": "bs-s6-07",
+    "title": "Glass Verandah",
+    "artist": "Soft Circuit",
+    "genre": "Pop",
+    "bpm": 118,
+    "vibe": "chill",
+    "district": "Glass Rim",
+    "tags": [
+      "New Release"
+    ],
+    "cover": "/catalog/bs-s6-07/cover.svg",
+    "og": "/catalog/bs-s6-07/og.png",
+    "stream_audio": "/catalog/bs-s6-07/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "For the stool by the window and whatever's left in the cup."
+  },
+  {
+    "track_id": "bs-s6-08",
+    "title": "Grid Alley Flow",
+    "artist": "Subline",
+    "genre": "Hip-hop",
+    "bpm": 95,
+    "vibe": "groove",
+    "district": "Night Grid",
+    "tags": [
+      "Viral Style"
+    ],
+    "cover": "/catalog/bs-s6-08/cover.svg",
+    "og": "/catalog/bs-s6-08/og.png",
+    "stream_audio": "/catalog/bs-s6-08/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "For the crosswalk that thinks it's a catwalk."
+  },
+  {
+    "track_id": "bs-s6-09",
+    "title": "Voltage Causeway",
+    "artist": "Redline Co.",
+    "genre": "Rock",
+    "bpm": 140,
+    "vibe": "battle",
+    "district": "Chrome Yard",
+    "tags": [
+      "Hot Chart Style"
+    ],
+    "cover": "/catalog/bs-s6-09/cover.svg",
+    "og": "/catalog/bs-s6-09/og.png",
+    "stream_audio": "/catalog/bs-s6-09/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "For the night the block needs a war drum, not a lullaby."
+  },
+  {
+    "track_id": "bs-s6-10",
+    "title": "Scape Ignition",
+    "artist": "Nova Circuit",
+    "genre": "EDM",
+    "bpm": 168,
+    "vibe": "night-drive",
+    "district": "Pulse Core",
+    "tags": [
+      "Viral Style"
+    ],
+    "cover": "/catalog/bs-s6-10/cover.svg",
+    "og": "/catalog/bs-s6-10/og.png",
+    "stream_audio": "/catalog/bs-s6-10/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "For everyone still on the bridge at 3 a.m. — we see your high beams."
+  },
+  {
+    "track_id": "bs-s6-11",
+    "title": "Prism Skyline",
+    "artist": "Kite Solar",
+    "genre": "Pop",
+    "bpm": 122,
+    "vibe": "groove",
+    "district": "Glass Rim",
+    "tags": [
+      "Viral Style"
+    ],
+    "cover": "/catalog/bs-s6-11/cover.svg",
+    "og": "/catalog/bs-s6-11/og.png",
+    "stream_audio": "/catalog/bs-s6-11/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "DIZZ tried to solo over this and forgot to stop."
+  },
+  {
+    "track_id": "bs-s6-12",
+    "title": "Nightlane Drift",
+    "artist": "Low Voltage",
+    "genre": "Hip-hop",
+    "bpm": 102,
+    "vibe": "night-drive",
+    "district": "Night Grid",
+    "tags": [
+      "Classic Style"
+    ],
+    "cover": "/catalog/bs-s6-12/cover.svg",
+    "og": "/catalog/bs-s6-12/og.png",
+    "stream_audio": "/catalog/bs-s6-12/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "The kind of song the streetlights sync to."
+  },
+  {
+    "track_id": "bs-s6-13",
+    "title": "Satin Underpass",
+    "artist": "Mira Lane",
+    "genre": "R&B",
+    "bpm": 90,
+    "vibe": "chill",
+    "district": "Afterhours Lane",
+    "tags": [
+      "New Release"
+    ],
+    "cover": "/catalog/bs-s6-13/cover.svg",
+    "og": "/catalog/bs-s6-13/og.png",
+    "stream_audio": "/catalog/bs-s6-13/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "Afterhours Lane holds its breath for this one."
+  },
+  {
+    "track_id": "bs-s6-14",
+    "title": "Iron Skyline Riff",
+    "artist": "Iron Echo",
+    "genre": "Rock",
+    "bpm": 144,
+    "vibe": "battle",
+    "district": "Chrome Yard",
+    "tags": [
+      "Hot Chart Style"
+    ],
+    "cover": "/catalog/bs-s6-14/cover.svg",
+    "og": "/catalog/bs-s6-14/og.png",
+    "stream_audio": "/catalog/bs-s6-14/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "Requested by TORQUE — he drums harder when this one's on."
+  },
+  {
+    "track_id": "bs-s6-15",
+    "title": "Midnight Overpass",
+    "artist": "Halcyon Flux",
+    "genre": "EDM",
+    "bpm": 176,
+    "vibe": "night-drive",
+    "district": "Pulse Core",
+    "tags": [
+      "New Release"
+    ],
+    "cover": "/catalog/bs-s6-15/cover.svg",
+    "og": "/catalog/bs-s6-15/og.png",
+    "stream_audio": "/catalog/bs-s6-15/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "Mile markers keep time better than a metronome. So does this."
+  },
+  {
+    "track_id": "bs-s6-16",
+    "title": "Neon Chorus Line",
+    "artist": "Ada North",
+    "genre": "Pop",
+    "bpm": 126,
+    "vibe": "groove",
+    "district": "Glass Rim",
+    "tags": [
+      "New Release"
+    ],
+    "cover": "/catalog/bs-s6-16/cover.svg",
+    "og": "/catalog/bs-s6-16/og.png",
+    "stream_audio": "/catalog/bs-s6-16/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "Slip this on and even the elevators sway."
+  },
+  {
+    "track_id": "bs-s6-17",
+    "title": "Static Boulevard",
+    "artist": "Subline",
+    "genre": "Hip-hop",
+    "bpm": 94,
+    "vibe": "groove",
+    "district": "Night Grid",
+    "tags": [
+      "New Release"
+    ],
+    "cover": "/catalog/bs-s6-17/cover.svg",
+    "og": "/catalog/bs-s6-17/og.png",
+    "stream_audio": "/catalog/bs-s6-17/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "Glass Rim keeps asking for it. We keep saying yes."
+  },
+  {
+    "track_id": "bs-s6-18",
+    "title": "Afterhours Cadence",
+    "artist": "Verity Lane",
+    "genre": "R&B",
+    "bpm": 88,
+    "vibe": "chill",
+    "district": "Afterhours Lane",
+    "tags": [
+      "Viral Style"
+    ],
+    "cover": "/catalog/bs-s6-18/cover.svg",
+    "og": "/catalog/bs-s6-18/og.png",
+    "stream_audio": "/catalog/bs-s6-18/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "Quiet isn't the Hush. Quiet is this, on purpose."
+  },
+  {
+    "track_id": "bs-s6-19",
+    "title": "Chrome Boulevard",
+    "artist": "Redline Co.",
+    "genre": "Rock",
+    "bpm": 133,
+    "vibe": "battle",
+    "district": "Chrome Yard",
+    "tags": [
+      "Classic Style"
+    ],
+    "cover": "/catalog/bs-s6-19/cover.svg",
+    "og": "/catalog/bs-s6-19/og.png",
+    "stream_audio": "/catalog/bs-s6-19/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "Three blocks went quiet on the same street. This is the answer."
+  },
+  {
+    "track_id": "bs-s6-20",
+    "title": "Pulse Foundry",
+    "artist": "Halcyon Flux",
+    "genre": "EDM",
+    "bpm": 158,
+    "vibe": "night-drive",
+    "district": "Pulse Core",
+    "tags": [
+      "Hot Chart Style"
+    ],
+    "cover": "/catalog/bs-s6-20/cover.svg",
+    "og": "/catalog/bs-s6-20/og.png",
+    "stream_audio": "/catalog/bs-s6-20/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "Put your hazards on for the drop, not for trouble."
+  },
+  {
+    "track_id": "bs-s6-21",
+    "title": "Halftone Parade",
+    "artist": "Luma Rim",
+    "genre": "Pop",
+    "bpm": 120,
+    "vibe": "groove",
+    "district": "Glass Rim",
+    "tags": [
+      "Viral Style"
+    ],
+    "cover": "/catalog/bs-s6-21/cover.svg",
+    "og": "/catalog/bs-s6-21/og.png",
+    "stream_audio": "/catalog/bs-s6-21/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "Syncopated enough to trip the Hush's metronome."
+  },
+  {
+    "track_id": "bs-s6-22",
+    "title": "Grid Circuit Flow",
+    "artist": "Low Voltage",
+    "genre": "Hip-hop",
+    "bpm": 100,
+    "vibe": "groove",
+    "district": "Night Grid",
+    "tags": [
+      "Viral Style"
+    ],
+    "cover": "/catalog/bs-s6-22/cover.svg",
+    "og": "/catalog/bs-s6-22/og.png",
+    "stream_audio": "/catalog/bs-s6-22/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "The bassline does the talking. The rest is agreeable."
+  },
+  {
+    "track_id": "bs-s6-23",
+    "title": "Lantern Scape",
+    "artist": "Quiet Neon",
+    "genre": "R&B",
+    "bpm": 94,
+    "vibe": "chill",
+    "district": "Afterhours Lane",
+    "tags": [
+      "New Release"
+    ],
+    "cover": "/catalog/bs-s6-23/cover.svg",
+    "og": "/catalog/bs-s6-23/og.png",
+    "stream_audio": "/catalog/bs-s6-23/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "Requested for the walk home when you take the long stairs."
+  },
+  {
+    "track_id": "bs-s6-24",
+    "title": "Asphalt Overdrive",
+    "artist": "Iron Echo",
+    "genre": "Rock",
+    "bpm": 144,
+    "vibe": "battle",
+    "district": "Chrome Yard",
+    "tags": [
+      "Hot Chart Style"
+    ],
+    "cover": "/catalog/bs-s6-24/cover.svg",
+    "og": "/catalog/bs-s6-24/og.png",
+    "stream_audio": "/catalog/bs-s6-24/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "The Drop at 03:03 doesn't wait. Neither does this."
+  },
+  {
+    "track_id": "bs-s6-25",
+    "title": "Halftone Ignition",
+    "artist": "Kite Solar",
+    "genre": "EDM",
+    "bpm": 152,
+    "vibe": "night-drive",
+    "district": "Pulse Core",
+    "tags": [
+      "Viral Style"
+    ],
+    "cover": "/catalog/bs-s6-25/cover.svg",
+    "og": "/catalog/bs-s6-25/og.png",
+    "stream_audio": "/catalog/bs-s6-25/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "This one sounds like rain on glass that never lands."
+  },
+  {
+    "track_id": "bs-s6-26",
+    "title": "Prism Boulevard",
+    "artist": "Kite Solar",
+    "genre": "Pop",
+    "bpm": 122,
+    "vibe": "groove",
+    "district": "Glass Rim",
+    "tags": [
+      "New Release"
+    ],
+    "cover": "/catalog/bs-s6-26/cover.svg",
+    "og": "/catalog/bs-s6-26/og.png",
+    "stream_audio": "/catalog/bs-s6-26/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "Requested by a nurse coming off night shift. This one's hers."
+  },
+  {
+    "track_id": "bs-s6-27",
+    "title": "Nightfall Cipher",
+    "artist": "Subline",
+    "genre": "Hip-hop",
+    "bpm": 94,
+    "vibe": "night-drive",
+    "district": "Night Grid",
+    "tags": [
+      "Viral Style"
+    ],
+    "cover": "/catalog/bs-s6-27/cover.svg",
+    "og": "/catalog/bs-s6-27/og.png",
+    "stream_audio": "/catalog/bs-s6-27/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "For the long way home, taken on purpose."
+  },
+  {
+    "track_id": "bs-s6-28",
+    "title": "Amber Afterhours",
+    "artist": "Mira Lane",
+    "genre": "R&B",
+    "bpm": 90,
+    "vibe": "chill",
+    "district": "Afterhours Lane",
+    "tags": [
+      "Classic Style"
+    ],
+    "cover": "/catalog/bs-s6-28/cover.svg",
+    "og": "/catalog/bs-s6-28/og.png",
+    "stream_audio": "/catalog/bs-s6-28/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "JUNO signs off most nights with something like this."
+  },
+  {
+    "track_id": "bs-s6-29",
+    "title": "Riffline Overdrive",
+    "artist": "Redline Co.",
+    "genre": "Rock",
+    "bpm": 142,
+    "vibe": "battle",
+    "district": "Chrome Yard",
+    "tags": [
+      "Viral Style"
+    ],
+    "cover": "/catalog/bs-s6-29/cover.svg",
+    "og": "/catalog/bs-s6-29/og.png",
+    "stream_audio": "/catalog/bs-s6-29/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "Somebody in Chrome Yard asked for something loud. We delivered twice."
+  },
+  {
+    "track_id": "bs-s6-30",
+    "title": "Grid Apex Run",
+    "artist": "Nova Circuit",
+    "genre": "EDM",
+    "bpm": 170,
+    "vibe": "night-drive",
+    "district": "Pulse Core",
+    "tags": [
+      "Hot Chart Style"
+    ],
+    "cover": "/catalog/bs-s6-30/cover.svg",
+    "og": "/catalog/bs-s6-30/og.png",
+    "stream_audio": "/catalog/bs-s6-30/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "MARLOW sampled an actual engine for this. You're welcome."
+  },
+  {
+    "track_id": "bs-s6-31",
+    "title": "Skyline Cadence",
+    "artist": "Soft Circuit",
+    "genre": "Pop",
+    "bpm": 125,
+    "vibe": "groove",
+    "district": "Glass Rim",
+    "tags": [
+      "New Release"
+    ],
+    "cover": "/catalog/bs-s6-31/cover.svg",
+    "og": "/catalog/bs-s6-31/og.png",
+    "stream_audio": "/catalog/bs-s6-31/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "For dancing like nobody's billing you by the hour."
+  },
+  {
+    "track_id": "bs-s6-32",
+    "title": "Alley Voltage",
+    "artist": "Low Voltage",
+    "genre": "Hip-hop",
+    "bpm": 98,
+    "vibe": "night-drive",
+    "district": "Night Grid",
+    "tags": [
+      "Classic Style"
+    ],
+    "cover": "/catalog/bs-s6-32/cover.svg",
+    "og": "/catalog/bs-s6-32/og.png",
+    "stream_audio": "/catalog/bs-s6-32/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "For the late shift rolling home with the windows down."
+  },
+  {
+    "track_id": "bs-s6-33",
+    "title": "Scape Lullaby",
+    "artist": "Quiet Neon",
+    "genre": "R&B",
+    "bpm": 88,
+    "vibe": "chill",
+    "district": "Afterhours Lane",
+    "tags": [
+      "New Release"
+    ],
+    "cover": "/catalog/bs-s6-33/cover.svg",
+    "og": "/catalog/bs-s6-33/og.png",
+    "stream_audio": "/catalog/bs-s6-33/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "For practicing falsetto at nobody in particular."
+  },
+  {
+    "track_id": "bs-s6-34",
+    "title": "Foundry Boulevard",
+    "artist": "Iron Echo",
+    "genre": "Rock",
+    "bpm": 133,
+    "vibe": "battle",
+    "district": "Chrome Yard",
+    "tags": [
+      "Hot Chart Style"
+    ],
+    "cover": "/catalog/bs-s6-34/cover.svg",
+    "og": "/catalog/bs-s6-34/og.png",
+    "stream_audio": "/catalog/bs-s6-34/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "Play it like the Grid is listening — it is."
+  },
+  {
+    "track_id": "bs-s6-35",
+    "title": "Zenith Scape",
+    "artist": "Pulse Atlas",
+    "genre": "EDM",
+    "bpm": 171,
+    "vibe": "night-drive",
+    "district": "Pulse Core",
+    "tags": [
+      "New Release"
+    ],
+    "cover": "/catalog/bs-s6-35/cover.svg",
+    "og": "/catalog/bs-s6-35/og.png",
+    "stream_audio": "/catalog/bs-s6-35/stream.m4a",
+    "stream_duration_sec": 216,
+    "quote": "Wide mix, empty freeway, city in the mirror — that's the whole brief."
+  }
+]

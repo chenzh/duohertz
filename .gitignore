@@ -53,3 +53,6 @@ _tmp_*
 # AI-tool local backups (memory stays tracked)
 .workbuddy-ai/backups/
 apps/beatscape/dist-deploy/
+dist-deploy/
+**/public/catalog/**/stream.m4a
+**/public/catalog/**/og.png
