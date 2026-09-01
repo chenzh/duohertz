@@ -42,6 +42,7 @@
 - [x] MLX 真推理已跑通（SA3 small · 180s 母带约 5s/首 · 峰值 RAM 1.7 GB）
 - [x] **P2-2 PlayField 深层拆分完成（未提交）**：~880 行 rAF `useEffect` 逐字节 verbatim 迁到 `src/components/playfield/renderLoop.ts`（导 `createPlayfieldRenderer(ctx): () => void`，返回 dispose 取消 rAF + disconnect ResizeObserver），纯函数 + 常量一并迁入；`PlayField.tsx` 1643 → **664 行**（−59.6%）。`tsc`/`vitest 120`/`vite build` 全绿 · 2026-09-02
 - [x] **P2-2 余量 · FX-commit 去重（未提交）**：`handlePress`/`handleRelease` 内逐字节相同的 5 步块抽成 `commitFx(fx: JudgeFx)`；`renderLoop.ts` 的 `addFx` 本就是单函数、Reset 去重经核查已无重复（仅 1 处 `restartRun`）。`tsc`/`vitest 120`/`vite build` 全绿 · 2026-09-01
+- [x] **P2-2 余量 · useDevQaParams 抽取（未提交）**：3 个 dev-only `useMemo`（?surge/?autostart/?streak|?combo）抽成 `components/playfield/useDevQaParams.ts`（纯读取 location.search，无副作用）；`PlayField.tsx` 672→656。`useConductor`（audio 生命周期+dispose，高风险零测试）暂缓，`useSprites` 已随深层拆分落入 `renderLoop.ts` · 2026-09-01
 
 ## blockers
 

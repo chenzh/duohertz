@@ -11,6 +11,7 @@ import { loadKeys, loadOffsetMs, loadSettings } from "../storage/settings";
 import { SCAPE_COPY, districtColor, characterArtWebp, LANE_RGB } from "../constants/scape";
 import { fancyFxOn } from "./playfield/canvasHelpers";
 import { createPlayfieldRenderer } from "./playfield/renderLoop";
+import { useDevQaParams } from "./playfield/useDevQaParams";
 import type { Fx, ScorePop } from "./playfield/renderLoop";
 import { ScoreStreak, SurgeMeter, type SurgeTier } from "../engine/surge";
 
@@ -94,26 +95,9 @@ export function PlayField({
   const keys = useMemo(loadKeys, []);
     const keyHint = useMemo(() => keyLabels(keys), [keys]);
   const keyHintJoined = useMemo(() => keyHint.join(" · "), [keyHint]);
-  // Dev-only visual QA hooks: ?surge=N locks the SIGNAL meter at a tier;
-  // ?autostart skips the tap-to-enter gate. Both exist so tier stills can be
-  // captured headlessly and are compiled out of production builds.
-  const demoSurge = useMemo(() => {
-    if (!import.meta.env.DEV) return 0;
-    const v = Number(new URLSearchParams(window.location.search).get("surge") ?? "0");
-    return v >= 1 && v <= 3 ? (Math.floor(v) as SurgeTier) : 0;
-  }, []);
-  const devAutoStart = useMemo(() => {
-    if (!import.meta.env.DEV) return false;
-    return new URLSearchParams(window.location.search).has("autostart");
-  }, []);
-  // Dev-only: ?streak=N (alias ?combo=N) floors the ScoreStreak driver so
-  // stills can show the rig/neon at a given level without playing.
-  const demoStreak = useMemo(() => {
-    if (!import.meta.env.DEV) return 0;
-    const p = new URLSearchParams(window.location.search);
-    const v = Number(p.get("streak") ?? p.get("combo") ?? "0");
-    return Number.isFinite(v) && v > 0 ? Math.min(200, Math.floor(v)) : 0;
-  }, []);
+  // Dev-only visual-QA URL params (?surge / ?autostart / ?streak|?combo),
+  // compiled out of production builds — extracted to keep PlayField focused.
+  const { demoSurge, devAutoStart, demoStreak } = useDevQaParams();
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
