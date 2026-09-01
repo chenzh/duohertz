@@ -7,6 +7,7 @@ import type { CatalogTrack } from "../types/catalog";
 import { FEATURED_TRACK_IDS, SCAPE_COPY, SCAPE_COPY_EXTRA } from "../constants/scape";
 import { CHARACTER_LIST } from "../constants/scape";
 import { HomeHeroPlay } from "../components/HomeHeroPlay";
+import { AudioBar } from "../components/AudioBar";
 import { CharacterAvatar } from "../components/CharacterAvatar";
 import { FIRST_PLAY_TRACK_ID, INTRO_TRACK_ID, firstPlayHref } from "../lib/firstPlay";
 import { dailyPlayHref, getDailyChallenge } from "../lib/dailyChallenge";
@@ -46,7 +47,7 @@ function FeaturedCard({ track }: { track: CatalogTrack }) {
           </div>
         </div>
       </Link>
-      <audio className="trend-preview-audio" controls preload="none" src={assetUrl(preview)} aria-label={`Preview ${track.title}`} />
+      <AudioBar className="trend-preview-audio" preload="none" src={assetUrl(preview)} label={`Preview ${track.title}`} />
     </div>
   );
 }

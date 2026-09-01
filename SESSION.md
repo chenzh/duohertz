@@ -3,7 +3,7 @@
 | 字段 | 值 |
 |------|-----|
 | **phase** | 曲库 **85/85** · Stage6 扩容 50 首已入库（SA3 MLX 真推理）· 待人工耳检 |
-| **updated** | 2026-08-31 |
+| **updated** | 2026-09-02 |
 | **slug** | musicsaas |
 
 ## next（P0）
@@ -22,6 +22,8 @@
 - [x] **Scape Music 流媒体站 MVP（类汽水音乐 · GAP 5-1 最小终点）已合入 main + 已部署**：commit `7b649c5` 合入 main 并推送；线上 **https://scapemusic.pages.dev**（CF Pages，瘦身 dist 仅 stream/cover/og）——85 首 `stream.m4a` 完整版播放、竖版沉浸发现流（每日混合 · 上滑切歌）、曲库搜索筛选、The Late Static 四栏目歌单、`/#/track/:id` 单曲深链页；vitest 40/40 · tsc/build 绿 · 根 harness unit 回归过；待接线：游戏侧 `VITE_STREAM_APP_URL` 仍 0/85 指向本站（详见 `docs/BEATSCAPE-MUSIC-WEB.md`）；「Scape Music」为工作名对外前需商标初筛 · 2026-09-01
 
 ## 已完成（勿再当 P0）
+
+- [x] **AudioBar 播放条四项优化（未提交）**：`apps/beatscape/src/components/AudioBar.tsx` 重写 + `styles.css` 增补。① **拖拽性能**：rect 改 `pointerdown` 缓存、拖拽期用 ref 直写 DOM（fill/thumb/时间/气泡）、`pointerup` 才提交一次 state（原为每次 `pointermove` 一次 `getBoundingClientRect` + 一次 re-render），拖拽期 `timeupdate`/`progress` 早退消除抖动；② **键盘+无障碍**：`role="slider"` 补 `tabIndex` + `onKeyDown`（←→±5s / PageUp·Down±10s / Home·End / Space·Enter 播放暂停）、`aria-valuetext`（M:SS 而非裸秒）、`:focus-visible` 焦点环；③ **健壮性**：补 `onEnded`（按钮不再卡 pause 图标）、`onError`、`onDurationChange`，`currentTime` 赋值前查 `readyState>0`（Safari InvalidStateError），`fmt` 提到模块作用域；④ **视觉**：缓冲进度条 + 拖拽/悬停时间气泡 + thumb 悬停放大 + 热区 8px→22px。**React 坑已规避**：手动 `textContent` 改写要求元素只有单一 Text 子节点，故时间 span 用单插值写法。门禁：`tsc` 干净 / `vitest 120` / `vite build` 绿（CSS gzip 9.13→9.58 KB）。组件测试覆盖仍 0（测试环境 `node` 无 jsdom）· 2026-09-02
 
 - [x] **同手和弦观察项关闭（非缺陷）**：全库 hard 同手率 40.5% ≈ 生成器理论值 2/5；新旧组 40.8%/40.2% 无差异，绝对数差来自新 SA3 onset 更密（每谱音符 +23%）；移动端 `chordAssist` 已闭环（同手道 bank great）；`chart-difficulty.py` 新增同手率列 · 2026-08-30
 - [x] **Reddit 首发文案包**：[`docs/BEATSCAPE-REDDIT-LAUNCH.md`](docs/BEATSCAPE-REDDIT-LAUNCH.md) 三篇帖文成稿（r/rhythmgames · r/WebGames · r/gamedev）+ 评论区口径 6 问 + 商标/合规红线 + 发帖节奏 · 2026-08-30
