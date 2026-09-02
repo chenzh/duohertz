@@ -2273,6 +2273,31 @@ td {
   color: var(--muted);
 }
 
+/* B-2 回归回补：commit fa10253 把 .loading-spinner 当「仅 Play 页使用」删掉了
+   （连带 @keyframes spin），实际上还有三处在用：App.tsx 的 RouteFallback、
+   HomeHeroPlay 的图表加载态、Track 页的曲谱加载态。删了之后这三处渲染出一个
+   0×0 的空 div —— 加载中完全没有任何反馈。
+   恢复成硬边方块旋转（PRD §7.5 RESONANCE：无发光，方角不用圆）。 */
+.loading-spinner {
+  width: 34px;
+  height: 34px;
+  border: 3px solid rgba(242, 228, 201, 0.22);
+  border-top-color: var(--accent);
+  animation: spin 0.72s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-spinner {
+    animation-duration: 2.4s;
+  }
+}
+
 /* 调频刻度盘：横频带 + 扫描线来回扫动，像在调台锁定信号。*/
 .tuning-dial {
   position: relative;
@@ -3831,5 +3856,237 @@ td {
 @media (prefers-reduced-motion: reduce) {
   .site-main {
     animation: none;
+  }
+}
+
+/* ==========================================================================
+   DUO · 同屏分屏对战（/duo/:id）
+
+   两块 playfield 并排，各占一半宽度、共用一个高度。HUD 元素整体缩一档，
+   否则在半宽的画布上 chip / combo / 判定条会互相挤爆。
+   ========================================================================== */
+
+.duo-stage {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  height: calc(100dvh - 104px);
+  min-height: 400px;
+  padding: 0 8px;
+}
+
+/* 覆盖 .play-wrap 的居中 + 定宽：duo 时由 grid 决定尺寸。 */
+.play-wrap-duo {
+  height: 100%;
+  min-height: 0;
+  max-width: none;
+  margin: 0;
+  box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.55);
+}
+
+/* 竖屏 / 窄窗：左右排会窄到没法玩，改成上下分屏。 */
+@media (max-width: 760px) {
+  .duo-stage {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    height: calc(100dvh - 132px);
+  }
+}
+
+/* --- HUD 缩一档（半宽画布） --- */
+.play-wrap-duo .hud-chip {
+  max-width: 74%;
+  padding: 6px 9px;
+  gap: 2px;
+}
+.play-wrap-duo .hud-track-title {
+  font-size: 0.78rem;
+}
+.play-wrap-duo .hud-track-tier,
+.play-wrap-duo .hud-track-score-label {
+  font-size: 8px;
+  letter-spacing: 0.1em;
+}
+.play-wrap-duo .hud-track-score > span:last-child {
+  font-size: 0.92rem;
+}
+.play-wrap-duo .hud-signal {
+  top: 12px;
+  padding: 4px 10px;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.play-wrap-duo .hud-combo {
+  top: 10px;
+  right: 10px;
+}
+.play-wrap-duo .hud-combo-num {
+  font-size: 2rem;
+  -webkit-text-stroke-width: 1.5px;
+}
+.play-wrap-duo .hud-combo-label {
+  font-size: 9px;
+  letter-spacing: 0.16em;
+}
+.play-wrap-duo .hud-judges {
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  gap: 5px;
+}
+.play-wrap-duo .hud-judge {
+  padding: 4px 2px 5px;
+}
+.play-wrap-duo .hud-judge-label {
+  font-size: 8px;
+  letter-spacing: 0.05em;
+}
+.play-wrap-duo .hud-judge-count {
+  font-size: 1.05rem;
+}
+.play-wrap-duo .pause-btn {
+  top: 12px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  font-size: 13px;
+  box-shadow: 2px 2px 0 var(--ink);
+}
+.play-wrap-duo .play-char-watermark {
+  opacity: 0.06;
+}
+
+/* --- P1 / P2 徽标（仅 duo 渲染，单人时这个节点根本不存在） --- */
+.hud-player {
+  align-self: flex-start;
+  padding: 2px 7px;
+  font: 800 10px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  background: var(--ink);
+  color: var(--scape-accent-2);
+}
+.hud-player[data-player="P2"] {
+  background: #1c1717;
+  color: var(--accent);
+}
+
+/* --- 顶部 meta 的键位提示 --- */
+.duo-keyhint {
+  font: 700 11px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.duo-keyhint b {
+  color: var(--scape-accent-2);
+}
+.duo-keyhint-sep {
+  opacity: 0.45;
+  margin: 0 2px;
+}
+
+/* --- 起跑卡：两边都解码完才出现。一次点击 = 解锁 AudioContext（用户手势）
+   + 打开 startGate（两个 conductor 同一帧 begin）。 --- */
+.duo-start {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 16px;
+  background: rgba(18, 16, 15, 0.92);
+  background-image: var(--halftone);
+  background-size: 10px 10px;
+  cursor: pointer;
+}
+
+.duo-start .overlay-card {
+  text-align: center;
+}
+
+/* --- 结算浮层：两边都打完才出现 --- */
+.duo-result {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 16px;
+  background: rgba(18, 16, 15, 0.92);
+  background-image: var(--halftone);
+  background-size: 10px 10px;
+}
+
+.duo-result-card {
+  padding: 24px 26px 22px;
+  min-width: min(420px, 92vw);
+}
+
+.duo-scoreline {
+  display: flex;
+  gap: 12px;
+  margin: 4px 0 18px;
+}
+
+.duo-scorecol {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 12px 8px;
+  background: #1c1717;
+  border: 2px solid var(--ink);
+}
+.duo-scorecol.is-winner {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 14%, #1c1717);
+}
+
+.duo-scorecol-who {
+  font: 800 11px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+}
+.duo-scorecol.is-winner .duo-scorecol-who {
+  color: var(--accent);
+}
+.duo-scorecol-grade {
+  font-family: Anton, "Sora", sans-serif;
+  font-size: 2.6rem;
+  line-height: 0.9;
+  color: var(--scape-accent-2);
+  -webkit-text-stroke: 2px var(--ink);
+  paint-order: stroke fill;
+}
+.duo-scorecol-score {
+  font-family: Anton, "Sora", sans-serif;
+  font-size: 1.3rem;
+  letter-spacing: 0.02em;
+  color: var(--scape-accent-2);
+  font-variant-numeric: tabular-nums;
+}
+.duo-scorecol-meta {
+  font: 700 10px/1.5 "IBM Plex Mono", monospace;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+.duo-result-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+@media (max-width: 420px) {
+  .duo-scorecol-grade {
+    font-size: 2rem;
+  }
+  .duo-scorecol-score {
+    font-size: 1.05rem;
   }
 }

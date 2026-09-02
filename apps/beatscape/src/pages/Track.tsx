@@ -105,6 +105,11 @@ export function TrackPage() {
             <Link className="btn primary" to={`/play/${track.track_id}?tier=${tier}&mode=${mode}`}>
               {SCAPE_COPY.play}
             </Link>
+            {/* DUO · 同屏分屏对战。键盘：P1 用存档键位、P2 用不冲突的另一套；
+                触屏：两个 field 各自按 x 坐标分 lane，两人各摸自己那半边。 */}
+            <Link className="btn ghost" to={`/duo/${track.track_id}?tier=${tier}&mode=${mode}`}>
+              Duo
+            </Link>
             <button
               type="button"
               className={`btn ${fav ? "primary" : "ghost"}`}

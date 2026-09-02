@@ -12,6 +12,8 @@ export type AnalyticsEvent =
   | "radio_view"
   | "play_start"
   | "play_finish"
+  | "duo_start"
+  | "duo_finish"
   | "share_copy"
   | "share_poster";
 

@@ -17,6 +17,7 @@ import { Router } from "./router";
  * 是瞬时的，尤其结算页 —— 打完一局还要等一个 chunk 下载，体验上是不可接受的。
  * 其余页面按需加载，首屏 JS 因此少掉大半。
  */
+const DuoPage = lazy(() => import("./pages/Duo").then((m) => ({ default: m.DuoPage })));
 const CharactersPage = lazy(() => import("./pages/Characters").then((m) => ({ default: m.CharactersPage })));
 const RadioPage = lazy(() => import("./pages/Radio").then((m) => ({ default: m.RadioPage })));
 const TrackPage = lazy(() => import("./pages/Track").then((m) => ({ default: m.TrackPage })));
@@ -51,6 +52,7 @@ export default function App() {
             { path: "/radio", element: <RadioPage /> },
             { path: "/track/:id", element: <TrackPage /> },
             { path: "/play/:id", element: <PlayPage /> },
+            { path: "/duo/:id", element: <DuoPage /> },
             { path: "/results", element: <ResultsPage /> },
             { path: "/calibrate", element: <CalibrationPage /> },
             { path: "/settings", element: <SettingsPage /> },

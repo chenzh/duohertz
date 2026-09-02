@@ -52,6 +52,40 @@ type Props = {
    * implies the PlayHud is mounted, so the canvas HUD must step aside.
    */
   useComicHud?: boolean;
+  // --- Duo mode (PRD-extra) — all optional, single-player call sites unchanged ---
+  /**
+   * Duo · Lane key binding for THIS field. Defaults to the saved keys
+   * (`loadKeys`). In duo mode P1 keeps the saved binding and P2 gets the
+   * opposite-hand preset so both players can share one keyboard.
+   * Must be a stable array reference (the caller memoizes it).
+   */
+  keys?: string[];
+  /** Duo · Short label rendered in the HUD capsule (e.g. "P1" / "P2"). */
+  playerLabel?: string;
+  /**
+   * Duo · Mute the MUSIC bus only — hit SFX keep playing. Two fields decoding
+   * and playing the same track simultaneously would layer it on itself with
+   * the decode skew as a delay, which reads as a flanger / echo artefact. So
+   * in duo mode P1 carries the music and P2 runs silent, while both players
+   * still hear their own hitsounds.
+   */
+  muteMusic?: boolean;
+  /**
+   * Duo · Start gate counter. The parent bumps it once EVERY field has
+   * finished decoding audio, so both conductors `begin()` in the same React
+   * commit — i.e. the same frame. Letting each field auto-start on its own
+   * would skew the two charts by however much one decode took longer.
+   * 0 / undefined = no gate (normal single-player behaviour).
+   */
+  startGate?: number;
+  /** Duo · Fired once this field's audio is decoded and it is armed. */
+  onReady?: () => void;
+  /**
+   * Duo · Suppress this field's own "tap to enter" overlay. In duo mode the
+   * parent owns the start gesture (one click starts BOTH fields via
+   * `startGate`), so the per-field unlock card would just be noise.
+   */
+  hideStartOverlay?: boolean;
 };
 
 export function PlayField({
@@ -69,6 +103,12 @@ export function PlayField({
   trackTitle = "",
   tierLabel = "",
   useComicHud,
+  keys: keysProp,
+  playerLabel,
+  muteMusic = false,
+  startGate,
+  onReady,
+  hideStartOverlay = false,
 }: Props) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -119,11 +159,19 @@ export function PlayField({
   const lastShowBarRef = useRef(-1);
   const onFinishRef = useRef(onFinish);
   onFinishRef.current = onFinish;
+  // Duo · Kept in a ref so a new inline `onReady` closure from the parent does
+  // NOT re-run the audio-load effect below (which would re-decode the track).
+  const onReadyRef = useRef(onReady);
+  onReadyRef.current = onReady;
 
   const settings = useMemo(loadSettings, []);
   // Stable reference: the keyboard effect below keys off this array.
-  const keys = useMemo(loadKeys, []);
-    const keyHint = useMemo(() => keyLabels(keys), [keys]);
+  // Duo · `keysProp` overrides it (P2 gets its own binding). Both hooks run
+  // unconditionally so the hook order stays fixed across renders; the caller
+  // memoizes keysProp so the reference is stable.
+  const savedKeys = useMemo(loadKeys, []);
+  const keys = keysProp ?? savedKeys;
+  const keyHint = useMemo(() => keyLabels(keys), [keys]);
   const keyHintJoined = useMemo(() => keyHint.join(" · "), [keyHint]);
   // Dev-only visual-QA URL params (?surge / ?autostart / ?streak|?combo),
   // compiled out of production builds — extracted to keep PlayField focused.
@@ -147,9 +195,11 @@ export function PlayField({
   //   · 不写进依赖、直接读 settings.xxx → 读到的是 effect 上次运行时的过期值
   //     （settings 是 useMemo([]) 的稳定对象，属性变了引用不变）。
   const mutedRef = useRef(muted);
+  const muteMusicRef = useRef(muteMusic);
   const hitsoundRef = useRef(settings.hitsound);
   const fancyFxRef = useRef(settings.fancyFx);
   mutedRef.current = muted;
+  muteMusicRef.current = muteMusic;
   hitsoundRef.current = settings.hitsound;
   fancyFxRef.current = settings.fancyFx;
 
@@ -222,7 +272,7 @@ export function PlayField({
     const conductor = new Conductor();
     // Initial bus levels; live mute toggles via the effect below.
     // 走 ref 读 muted，好让音量相关设置不必进依赖（见下面的 deps 注释）。
-    conductor.setMusicVolume(mutedRef.current ? 0 : settings.musicVolume);
+    conductor.setMusicVolume(mutedRef.current || muteMusicRef.current ? 0 : settings.musicVolume);
     setSfxVolume(mutedRef.current || !settings.hitsound ? 0 : settings.sfxVolume);
     conductorRef.current = conductor;
     const session = new GameSession(chart, mode, { chordAssist });
@@ -243,6 +293,9 @@ export function PlayField({
         if (cancelled) return;
         setLoading(false);
         setNeedsStart(true);
+        // Duo · Tell the parent this field is armed. The parent counts these
+        // and bumps `startGate` only once every field is ready.
+        onReadyRef.current?.();
       } catch (e) {
         if (!cancelled) setError(e instanceof Error ? e.message : "Audio load failed");
       }
@@ -268,9 +321,9 @@ export function PlayField({
   useEffect(() => {
     const conductor = conductorRef.current;
     if (!conductor) return;
-    conductor.setMusicVolume(muted ? 0 : settings.musicVolume);
+    conductor.setMusicVolume(muted || muteMusic ? 0 : settings.musicVolume);
     setSfxVolume(muted || !settings.hitsound ? 0 : settings.sfxVolume);
-  }, [muted, settings.musicVolume, settings.sfxVolume, settings.hitsound]);
+  }, [muted, muteMusic, settings.musicVolume, settings.sfxVolume, settings.hitsound]);
 
   // Reset state when the chart changes.
   useEffect(() => {
@@ -311,6 +364,19 @@ export function PlayField({
     void startRun();
     // eslint-disable-next-line react-hooks/exhaustive-deps -- one-shot after load
   }, [effectiveAutoStart, loading, error, needsStart]);
+
+  // Duo · Start gate. The parent bumps `startGate` from 0 → n once every field
+  // has reported `onReady`, so all conductors `begin()` from the same React
+  // commit — same frame, charts in lockstep. Without this, each field would
+  // begin as soon as ITS decode finished and the two charts would drift apart
+  // by the decode-time difference (tens of ms — very visible as note offset).
+  useEffect(() => {
+    if (!startGate) return;
+    if (loading || error || !needsStart || autoStartedRef.current) return;
+    autoStartedRef.current = true;
+    void startRun();
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- one-shot per gate bump
+  }, [startGate, loading, error, needsStart]);
 
   // Dev-only QA hook (docs/BEATSCAPE-SURGE-FX.md): lets an injected autoplayer
   // READ game state. Input still flows through the real keyboard event path.
@@ -626,7 +692,9 @@ export function PlayField({
 
   return (
     <div
-      className={`play-wrap${variant === "hero" ? " play-wrap-hero" : ""}`}
+      className={`play-wrap${variant === "hero" ? " play-wrap-hero" : ""}${
+        playerLabel ? " play-wrap-duo" : ""
+      }`}
       ref={wrapRef}
       style={district ? ({ "--district-color": districtColor(district) } as React.CSSProperties) : undefined}
     >
@@ -639,7 +707,13 @@ export function PlayField({
         onPointerCancel={onPointerUp}
       />
       {statsRef && (
-        <PlayHud statsRef={statsRef} title={trackTitle || "—"} tier={tierLabel || "easy"} mode={mode} />
+        <PlayHud
+          statsRef={statsRef}
+          title={trackTitle || "—"}
+          tier={tierLabel || "easy"}
+          mode={mode}
+          playerLabel={playerLabel}
+        />
       )}
       {district && (
         <img
@@ -665,7 +739,7 @@ export function PlayField({
           </div>
         </div>
       )}
-      {!loading && !error && needsStart && !autoStart && (
+      {!loading && !error && needsStart && !autoStart && !hideStartOverlay && (
         // 外层 div 只负责"点任意处开始"的指针便捷（onClick），不做 button 语义；
         // 真正可被键盘聚焦/激活的是里面的 <button>，避免 button 套 button 的非法结构。
         <div

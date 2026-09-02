@@ -29,7 +29,12 @@ export function Layout({ children }: { children: ReactNode }) {
   const { path } = useRouter();
   // 路由切换时重挂载 <main>，重放 .site-main 的进场动画（D 档）。
   // 对局页跳过：canvas 游戏要的是即时，0.26s 淡入会被读成卡顿。
-  const routePlain = path === "/play" || path.startsWith("/play/");
+  // DUO（/duo/:id）同样是对局页，一并跳过。
+  const routePlain =
+    path === "/play" ||
+    path.startsWith("/play/") ||
+    path === "/duo" ||
+    path.startsWith("/duo/");
   return (
     <div className="app-shell">
       <div className="bg-fx" aria-hidden />

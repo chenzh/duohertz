@@ -41,11 +41,17 @@ export function PlayHud({
   title,
   tier,
   mode,
+  playerLabel,
 }: {
   statsRef: RefObject<LiveStats>;
   title: string;
   tier: string;
   mode: string;
+  /**
+   * Duo · "P1" / "P2" badge on the track capsule. Undefined in single-player
+   * (the capsule renders exactly as before — no badge, no extra chip).
+   */
+  playerLabel?: string;
 }) {
   const scoreEl = useRef<HTMLSpanElement>(null);
   const comboEl = useRef<HTMLDivElement>(null);
@@ -129,6 +135,12 @@ export function PlayHud({
   return (
     <div className="play-hud" aria-hidden="true">
       <div className="hud-chip hud-track">
+        {/* Duo only: single-player leaves this node out entirely. */}
+        {playerLabel && (
+          <span className="hud-player" data-player={playerLabel}>
+            {playerLabel}
+          </span>
+        )}
         <span className="hud-track-title">{title}</span>
         <span className="hud-track-tier">
           {tier} · {mode}
