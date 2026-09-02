@@ -3095,8 +3095,12 @@ td {
 
 /* --- 1. 滚动揭示 ---------------------------------------------------------
    位移用独立的 `translate` 属性而不是 `transform`，这样卡片自身的
-   :hover { transform: translate(-2px,-2px) } 不会被揭示动画顶掉。 */
-[data-reveal].reveal-armed {
+   :hover { transform: translate(-2px,-2px) } 不会被揭示动画顶掉。
+
+   规则不带 `[data-reveal]` 前缀：隐藏态只由 JS 加的 `.reveal-armed` 驱动，
+   而 Library / Characters 的卡片是按 class 选中的（router.Link 不透传自定义
+   属性），挂 `[data-reveal]` 前缀会让它们完全匹配不上、动画静默失效。 */
+.reveal-armed {
   opacity: 0;
   translate: 0 16px;
   transition: opacity 0.44s ease, translate 0.44s cubic-bezier(0.2, 0.9, 0.3, 1);
@@ -3124,7 +3128,8 @@ td {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  [data-reveal].reveal-armed {
+  .reveal-armed,
+  .reveal-armed.is-visible {
     opacity: 1;
     translate: none;
     transition: none;
