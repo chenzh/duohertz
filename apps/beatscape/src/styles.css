@@ -22,6 +22,7 @@
   --lane1: #f2e4c9;
   --lane2: #ffb020;
   --lane3: #5b8def;
+  --ok: #7ed49b;
   /* RESONANCE is flat and hard-edged — no neon glow anywhere. */
   --ink: #000000;
   --stroke-w: 2px;
@@ -417,15 +418,39 @@ a.header-avatar:hover {
   margin-top: 10px;
 }
 
+/* Chip 色板（D 档）：所有色彩由单个 --chip-ink 派生（border 40% / bg 10% /
+   文字 100%），新增语义变体只需覆盖一个变量。用 color-mix 而不是预生成的
+   rgba 常量，是为了让 district 色这类运行时注入的 hex 也能参与混色
+   —— 与 .district-badge 同一套机制。RESONANCE 保持扁平：不加 glow。 */
 .chip {
+  --chip-ink: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   font-size: 10px;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  padding: 3px 7px;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--muted);
+  letter-spacing: 0.05em;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid color-mix(in srgb, var(--chip-ink) 40%, transparent);
+  background: color-mix(in srgb, var(--chip-ink) 10%, transparent);
+  color: var(--chip-ink);
+}
+
+/* 语义变体。--ok 是新增 token（Beginner 需要一抹冷绿，
+   现有色板里红/金/蓝/米都不适合表达"友好"）。 */
+.chip-beginner {
+  --chip-ink: var(--ok);
+}
+.chip-vocals {
+  --chip-ink: var(--lane3);
+}
+.chip-tier {
+  --chip-ink: var(--accent2);
+}
+.chip-warn {
+  --chip-ink: var(--accent2);
 }
 
 .tagline {
@@ -3237,6 +3262,137 @@ td {
 
 @media (prefers-reduced-motion: reduce) {
   .home-hero-onair-dot {
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   D 档 · 骨架屏
+   盒模型复刻 .track-card（padding/边框/硬投影/圆角一致），保证真实卡片替换
+   进来时不发生布局跳动。刻意不复用 .track-card 类名 —— Library 的滚动揭示
+   按该选择器扫描，骨架命中就会被 arm 一次、和自身淡入打架。
+   ========================================================================== */
+.skeleton-card {
+  display: flex;
+  gap: 14px;
+  padding: 14px;
+  background: var(--bg-elevated);
+  border: var(--stroke-w) solid var(--ink);
+  border-radius: var(--radius-md);
+  box-shadow: 4px 4px 0 var(--ink);
+  animation: skeleton-in 0.32s ease-out both;
+}
+
+.skeleton-lines {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 2px;
+  /* min-width:0 —— flex 子项默认 min-width:auto，长标题会把卡片撑破。 */
+  min-width: 0;
+}
+
+.skeleton-block {
+  background-color: rgba(245, 239, 230, 0.07);
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(245, 239, 230, 0.09) 45%,
+    rgba(245, 239, 230, 0.14) 50%,
+    rgba(245, 239, 230, 0.09) 55%,
+    transparent 100%
+  );
+  background-repeat: no-repeat;
+  background-size: 220px 100%;
+  border-radius: var(--radius-sm);
+  animation: skeleton-sweep 1.5s ease-in-out infinite;
+}
+
+.skeleton-cover {
+  flex: 0 0 auto;
+  width: 72px;
+  height: 72px;
+}
+
+.skeleton-line {
+  height: 11px;
+  width: 100%;
+}
+.skeleton-line-lg {
+  height: 14px;
+  width: 72%;
+}
+.skeleton-line-sm {
+  width: 46%;
+  height: 22px; /* 对应 .track-card-badges 那一行的高度 */
+}
+
+@keyframes skeleton-sweep {
+  0% {
+    background-position: -240px 0;
+  }
+  100% {
+    background-position: calc(100% + 240px) 0;
+  }
+}
+
+@keyframes skeleton-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* 同一张卡里的三个文本行错峰，读起来像扫描线而不是整块闪。 */
+.skeleton-lines > .skeleton-block:nth-child(2) {
+  animation-delay: 0.12s;
+}
+.skeleton-lines > .skeleton-block:nth-child(3) {
+  animation-delay: 0.24s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-card,
+  .skeleton-block {
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   D 档 · 路由切换过渡
+   Layout 给 <main> 加 key={path}，切换路由即重挂载、重放这段动画。
+
+   只动 opacity，不动 transform/translate/clip-path —— 后三者会给
+   position: fixed 后代创建 containing block。Play 页的 .play-bg 和
+   .neon-layer 都是 fixed，一旦祖先带 transform 就会按 .site-main 的盒子
+   定位而不是视口，进游戏瞬间背景会错位。opacity 只产生层叠上下文，
+   不影响 fixed 定位。
+   ========================================================================== */
+.site-main {
+  animation: route-in 0.26s ease-out;
+}
+
+@keyframes route-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Play 页跳过过渡：对局要的是即时，淡入那 0.26s 会让人觉得"顿了一下"。
+   Layout 在 /play 路由上挂 .route-plain —— 比 :has() 更直白，也不依赖
+   浏览器对 :has() 的支持。 */
+.site-main.route-plain {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-main {
     animation: none;
   }
 }

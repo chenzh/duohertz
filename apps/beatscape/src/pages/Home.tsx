@@ -9,6 +9,7 @@ import { CHARACTER_LIST } from "../constants/scape";
 import { HomeHeroPlay } from "../components/HomeHeroPlay";
 import { AudioBar } from "../components/AudioBar";
 import { CharacterAvatar } from "../components/CharacterAvatar";
+import { DistrictBadge } from "../components/DistrictBadge";
 import { useReveal } from "../components/useReveal";
 import { FIRST_PLAY_TRACK_ID, INTRO_TRACK_ID, firstPlayHref } from "../lib/firstPlay";
 import { dailyPlayHref, getDailyChallenge } from "../lib/dailyChallenge";
@@ -44,7 +45,7 @@ function FeaturedCard({ track }: { track: CatalogTrack }) {
           <strong>{track.title}</strong>
           <span>{track.artist}</span>
           <div className="tier-chips">
-            <span className="chip">{track.district}</span>
+            <DistrictBadge district={track.district} />
           </div>
         </div>
       </Link>

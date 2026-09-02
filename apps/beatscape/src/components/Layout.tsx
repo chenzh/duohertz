@@ -26,6 +26,10 @@ function playerInitials(): string {
 
 export function Layout({ children }: { children: ReactNode }) {
   const initials = playerInitials();
+  const { path } = useRouter();
+  // 路由切换时重挂载 <main>，重放 .site-main 的进场动画（D 档）。
+  // 对局页跳过：canvas 游戏要的是即时，0.26s 淡入会被读成卡顿。
+  const routePlain = path === "/play" || path.startsWith("/play/");
   return (
     <div className="app-shell">
       <div className="bg-fx" aria-hidden />
@@ -62,7 +66,9 @@ export function Layout({ children }: { children: ReactNode }) {
           {initials}
         </Link>
       </header>
-      <main className="site-main">{children}</main>
+      <main className={routePlain ? "site-main route-plain" : "site-main"} key={path}>
+        {children}
+      </main>
       <footer className="site-footer">
         BeatScape · {SCAPE_COPY.rightsShort} · v{APP_VERSION}
       </footer>

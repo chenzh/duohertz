@@ -16,12 +16,13 @@ import { DistrictBadge } from "../components/DistrictBadge";
 import { CharacterAvatar } from "../components/CharacterAvatar";
 import { VibeBadge } from "../components/VibeBadge";
 import { useReveal } from "../components/useReveal";
+import { TrackGridSkeleton } from "../components/Skeletons";
 import { SCAPE_COPY, districtColor, SHOWCASE_TRACK_IDS } from "../constants/scape";
 import { LIBRARY_PAGE_META, usePageMeta } from "../seo/pageMeta";
 
 export function LibraryPage() {
   usePageMeta(LIBRARY_PAGE_META);
-  const { tracks, error: catalogError } = useCatalog();
+  const { tracks, loading, error: catalogError } = useCatalog();
   const [q, setQ] = useState("");
   const [genre, setGenre] = useState("");
   const [vibe, setVibe] = useState<TrackVibe | "">("");
@@ -143,12 +144,15 @@ export function LibraryPage() {
         </select>
       </div>
 
-      <div className="track-grid">
-        {filtered.length === 0 && (
-          <p className="library-empty">
-            {favOnly ? SCAPE_COPY.emptyFavorites : "No tracks match your filters."}
-          </p>
-        )}
+      {loading ? (
+        <TrackGridSkeleton count={8} />
+      ) : (
+        <div className="track-grid">
+          {filtered.length === 0 && (
+            <p className="library-empty">
+              {favOnly ? SCAPE_COPY.emptyFavorites : "No tracks match your filters."}
+            </p>
+          )}
         {filtered.map((t) => (
           <Link key={t.track_id} to={`/track/${t.track_id}`} className="track-card">
             <div
@@ -166,13 +170,14 @@ export function LibraryPage() {
               <div className="track-card-badges">
                 <VibeBadge vibe={resolveTrackVibe(t)} />
                 <DistrictBadge district={t.district} />
-                {isBeginnerTrack(t) && <span className="chip">Beginner</span>}
-                {trackHasVocals(t) && <span className="chip">Vocals</span>}
+                {isBeginnerTrack(t) && <span className="chip chip-beginner">Beginner</span>}
+                {trackHasVocals(t) && <span className="chip chip-vocals">Vocals</span>}
               </div>
             </div>
           </Link>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </section>
   );
 }
