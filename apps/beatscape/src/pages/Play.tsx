@@ -125,6 +125,11 @@ export function PlayPage() {
         <i className="tube" />
         <i className="tube" />
         <i className="tube" />
+        <i className="sign" />
+        <i className="sign" />
+        <i className="sign" />
+        <i className="sign" />
+        <i className="breathe" />
       </div>
       <div className="play-meta">
         <strong>{track.title}</strong>

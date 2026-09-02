@@ -1,9 +1,9 @@
 # BeatScape 霓虹氛围层（NEON AMBIENCE）设计方案
 
-> **状态**: **P1 已实施**（2026-08-31）· 决策点 1 已拍板放行（"1"）· PRD §7.6 as-built 注记已补
+> **状态**: **P1–P3 已全部实施**（2026-08-31/09-02）· 决策点 1 已拍板放行（"1"）· PRD §7.6 as-built 注记已补
 > **P1 落地**: `ScoreStreak`（surge.ts，6 单测）· LIGHTING 驱动 combo→ScoreStreak（阈值重标 20/80，灯光秀 80/120）· L1 侧翼灯管 ×4（CSS steps() 闪烁，body[data-neon] 驱动，≥1100px 显示）· dev 钩子 `?streak=N`
-> **待实施**: P2（L2 城市灯牌 + L3 呼吸边框）· P3（调参 + 盲测）
-> **验证**: vitest **111/111** · 构建干净 · 灯管 computed-style 验证（动画/颜色/定位/z 序）；实机像素待用户试玩（本机 rAF 冻结无法截帧）
+> **P2/P3 落地（2026-09-02）**: L2 城市灯牌 ×4（N2+ 亮起，signBlink steps 闪烁，斜切 RESONANCE 色块）+ L3 呼吸边框（N3+ 亮起，8s ease-in-out 呼吸，ON AIR 错位边框语法的极缓版）· 已部署线上验证
+> **验证**: vitest **120/120** · 构建干净 · 灯管/灯牌/呼吸框 computed-style 验证 + 实时截图确认；线上已部署
 > **来源**: 用户试玩反馈——① 全屏游玩时场地只是中间一根柱子，两侧大面积闲置；② LIGHTING 灯光组以 combo 驱动"太难过"（good/miss 即断）；③ 想要**霓虹闪动、若隐若现**的氛围感。
 > **定位**: 与已合入的 SIGNAL 档位（状态）+ LIGHTING 灯光组（爆发）正交的第三层——**环境霓虹（ambience）**。三层合起来 = 舞台的常亮灯 / 效果灯 / 环境霓虹灯。
 
@@ -76,8 +76,8 @@
 | 期 | 内容 | 验收 |
 |----|------|------|
 | P1 ✅ | `ScoreStreak` 纯逻辑 + 单测；LIGHTING 驱动切换；L1 侧翼灯管 | vitest 111/111；computed-style 验证；still: `?streak=N` |
-| P2 | L2 城市灯牌 + L3 呼吸边框 | 三档静帧差异可辨；reduced-motion 全关验证 |
-| P3 | 调参（阈值/alpha/周期）+ 盲测收集"霓虹有没有加分" | 与 SIGNAL/LIGHTING 合照不糊、不抢判定 |
+| P2 ✅ | L2 城市灯牌 + L3 呼吸边框 | vitest 120/120；实时浏览器 computed-style 验证 + 截图；线上已部署 |
+| P3 ⏳ | 调参（阈值/alpha/周期）+ 盲测收集"霓虹有没有加分" | 与 SIGNAL/LIGHTING 合照不糊、不抢判定；留人工试玩反馈 |
 
 **dev 钩子**（仅 DEV）：`?streak=N` 锁定 ScoreStreak 档位，采集静帧。✅ 已实现（`?combo=N` 保留为别名）。
 

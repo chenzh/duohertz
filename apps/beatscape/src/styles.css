@@ -1277,6 +1277,53 @@ body[data-neon="3"] .neon-layer {
   81% { opacity: 0.15; }
   100% { opacity: 0.05; }
 }
+
+/* L2 城市灯牌 — small skewed RESONANCE motifs blinking at the viewport edges.
+   N2+ only (body[data-neon] ≥ 2), alpha capped, steps() blink. */
+.neon-layer .sign {
+  position: absolute;
+  display: none;
+  width: 64px;
+  height: 22px;
+  background: var(--district-color, #e23d3d);
+  transform: skewX(-10deg);
+  opacity: 0.05;
+}
+body[data-neon="2"] .neon-layer .sign,
+body[data-neon="3"] .neon-layer .sign {
+  display: block;
+  animation: signBlink 4.6s steps(1, end) infinite;
+}
+.neon-layer .sign:nth-child(5) { left: 14%; top: 8%; }
+.neon-layer .sign:nth-child(6) { right: 15%; top: 16%; animation-duration: 5.3s; animation-delay: -1.7s; }
+.neon-layer .sign:nth-child(7) { left: 20%; bottom: 14%; animation-duration: 4.1s; animation-delay: -2.9s; }
+.neon-layer .sign:nth-child(8) { right: 10%; bottom: 8%; animation-duration: 5.8s; animation-delay: -0.8s; }
+@keyframes signBlink {
+  0% { opacity: 0.04; }
+  22% { opacity: 0.16; }
+  31% { opacity: 0.05; }
+  55% { opacity: 0.14; }
+  70% { opacity: 0.03; }
+  88% { opacity: 0.12; }
+  100% { opacity: 0.04; }
+}
+
+/* L3 呼吸边框 — ON AIR 错位边框语法的极缓呼吸版；N3 only，8s 周期。 */
+.neon-layer .breathe {
+  position: absolute;
+  inset: 0;
+  display: none;
+  border: 2px solid var(--district-color, #e23d3d);
+  opacity: 0.04;
+}
+body[data-neon="3"] .neon-layer .breathe {
+  display: block;
+  animation: breathe 8s ease-in-out infinite;
+}
+@keyframes breathe {
+  0%, 100% { opacity: 0.04; }
+  50% { opacity: 0.14; }
+}
 @media (max-width: 1099px) {
   .neon-layer { display: none; }
 }
