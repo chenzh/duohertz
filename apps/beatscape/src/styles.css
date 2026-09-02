@@ -2049,7 +2049,10 @@ td {
   position: relative;
   border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: var(--shadow-card), var(--shadow-glow);
+  /* Was `var(--shadow-card), var(--shadow-glow)` — --shadow-glow is the literal
+     keyword `none`, and `none` cannot appear in a comma list, so the whole
+     declaration was invalid and the cover had no shadow at all. */
+  box-shadow: var(--shadow-card);
   border: 1px solid var(--border);
 }
 
@@ -3038,4 +3041,150 @@ td {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   white-space: pre-wrap;
   text-align: left;
+}
+
+/* ===== A 档视觉改造 · 滚动揭示 / 封面交互层 / Hero 漫画画框 =====
+   全部走 RESONANCE 语言：硬边、硬投影、漫画网点、倾斜 —— 无模糊、无光晕。 */
+
+/* --- 1. 滚动揭示 ---------------------------------------------------------
+   位移用独立的 `translate` 属性而不是 `transform`，这样卡片自身的
+   :hover { transform: translate(-2px,-2px) } 不会被揭示动画顶掉。 */
+[data-reveal].reveal-armed {
+  opacity: 0;
+  translate: 0 16px;
+  transition: opacity 0.44s ease, translate 0.44s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+/* `none` (not `0 0`) on purpose: a non-none translate keeps creating a
+   containing block + stacking context, and there's no reason to leave ~80
+   revealed elements carrying one. `none` still interpolates from `0 16px`. */
+.reveal-armed.is-visible {
+  opacity: 1;
+  translate: none;
+}
+
+/* 网格内轻微错峰，读起来像"翻牌"而不是整块弹出。用 `> *` 而不是
+   `[data-reveal]`，因为 Library / Characters 的卡片是按 class 选中的
+   （router.Link 不透传自定义属性）。 */
+.track-grid > *:nth-child(3n + 2),
+.character-grid > *:nth-child(3n + 2) {
+  transition-delay: 60ms;
+}
+
+.track-grid > *:nth-child(3n + 3),
+.character-grid > *:nth-child(3n + 3) {
+  transition-delay: 120ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal].reveal-armed {
+    opacity: 1;
+    translate: none;
+    transition: none;
+  }
+}
+
+/* --- 2. 封面交互层 -------------------------------------------------------
+   漫画网点盖在专辑图上，hover 时网点退去 + 画面微推近，像"通电"。 */
+.trend-cover::after,
+.track-card-cover-wrap::after,
+.track-hero-cover::after,
+.character-card-art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-image: var(--halftone);
+  background-size: 5px 5px;
+  opacity: 0.34;
+  pointer-events: none;
+  transition: opacity 0.22s ease;
+}
+
+.character-card-art {
+  position: relative;
+}
+
+/* 网点层压在封面上，但不能盖住角标和角色头像。 */
+.trend-bpm,
+.track-card-avatar {
+  z-index: 2;
+}
+
+.trend-cover-img,
+.track-card-cover-wrap img,
+.track-hero-cover img,
+.character-card-art .character-avatar {
+  transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+.trend-card:hover .trend-cover::after,
+.track-card:hover .track-card-cover-wrap::after,
+.track-hero-cover:hover::after,
+.character-card:hover .character-card-art::after {
+  opacity: 0.08;
+}
+
+.trend-card:hover .trend-cover-img,
+.track-card:hover .track-card-cover-wrap img,
+.track-hero-cover:hover img,
+.character-card:hover .character-avatar {
+  transform: scale(1.06);
+}
+
+/* --- 3. Hero 漫画画框 -------------------------------------------------- */
+.home-hero-play-meta {
+  padding: 8px 0 10px 12px;
+  margin-bottom: 12px;
+  border-left: 4px solid var(--accent);
+  background: linear-gradient(90deg, rgba(226, 61, 61, 0.16), transparent 72%);
+}
+
+/* 播出中标签：倾斜硬边色块 + 闪烁方点，压在舞台左上角。 */
+.home-hero-onair {
+  position: absolute;
+  top: 10px;
+  left: -6px;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 13px;
+  font: 700 10px/1 "IBM Plex Mono", "IBM Plex Sans", monospace;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--scape-accent-2);
+  background: var(--accent);
+  border: var(--stroke-w) solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+  transform: skewX(-8deg);
+  pointer-events: none;
+}
+
+.home-hero-onair > span {
+  transform: skewX(8deg); /* un-skew the label inside the skewed slab */
+}
+
+.home-hero-onair-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--scape-accent-2);
+  animation: onairBlink 1.6s steps(1, end) infinite;
+}
+
+@keyframes onairBlink {
+  0%,
+  55% {
+    opacity: 1;
+  }
+  56%,
+  100% {
+    opacity: 0.2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-hero-onair-dot {
+    animation: none;
+  }
 }

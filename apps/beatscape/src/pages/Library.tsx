@@ -15,6 +15,7 @@ import { loadFavorites } from "../storage/settings";
 import { DistrictBadge } from "../components/DistrictBadge";
 import { CharacterAvatar } from "../components/CharacterAvatar";
 import { VibeBadge } from "../components/VibeBadge";
+import { useReveal } from "../components/useReveal";
 import { SCAPE_COPY, districtColor, SHOWCASE_TRACK_IDS } from "../constants/scape";
 import { LIBRARY_PAGE_META, usePageMeta } from "../seo/pageMeta";
 
@@ -36,6 +37,11 @@ export function LibraryPage() {
 
   const genres = useMemo(() => [...new Set(tracks.map((t) => t.genre))].sort(), [tracks]);
 
+  // Cards are rendered by router.Link, which doesn't forward arbitrary props —
+  // so they're targeted by class. Keyed on tracks.length (NOT filtered.length):
+  // re-running the scan on every keystroke would re-arm visible rows and flicker.
+  const libraryRef = useReveal<HTMLElement>(tracks.length, ".track-card");
+
   const filtered = tracks.filter((t) => {
     if (genre && t.genre !== genre) return false;
     if (vibe && resolveTrackVibe(t) !== vibe) return false;
@@ -49,7 +55,7 @@ export function LibraryPage() {
   });
 
   return (
-    <section className="library">
+    <section className="library" ref={libraryRef}>
       {catalogError && (
         <p className="catalog-error" role="alert">
           Couldn’t load the track list ({catalogError}). Check your connection — the catalog is served from the same site.

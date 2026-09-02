@@ -124,30 +124,38 @@ export function HomeHeroPlay() {
       </div>
       <div className="home-hero-play-stage">
         {!live ? (
-          <div className="home-hero-demo play-wrap play-wrap-hero">
-            <HeroGameplayPreview keyHints={keys} />
-            <div className="home-hero-demo-mask">
-              <p className="overlay-kicker">{SCAPE_COPY.heroPlayKicker}</p>
-              <button
-                type="button"
-                className="btn primary unlock-btn home-play-sound-btn"
-                onClick={() => void armPlay()}
-              >
-                <SoundIcon on />
-                <span>{SCAPE_COPY.play}</span>
-              </button>
-              {!keys.length ? null : (
-                <div className="unlock-keys" aria-hidden>
-                  {keys.map((k, i) => (
-                    <span key={i} className="key-chip">
-                      {k}
-                    </span>
-                  ))}
-                </div>
-              )}
-              <p className="unlock-hint">{SCAPE_COPY.heroPlaySoundHint}</p>
+          <>
+            {/* Comic "ON AIR" slab. Only over the demo — once live, the tag
+                would sit on top of the falling notes. */}
+            <p className="home-hero-onair" aria-hidden>
+              <i className="home-hero-onair-dot" />
+              <span>On air · demo</span>
+            </p>
+            <div className="home-hero-demo play-wrap play-wrap-hero">
+              <HeroGameplayPreview keyHints={keys} />
+              <div className="home-hero-demo-mask">
+                <p className="overlay-kicker">{SCAPE_COPY.heroPlayKicker}</p>
+                <button
+                  type="button"
+                  className="btn primary unlock-btn home-play-sound-btn"
+                  onClick={() => void armPlay()}
+                >
+                  <SoundIcon on />
+                  <span>{SCAPE_COPY.play}</span>
+                </button>
+                {!keys.length ? null : (
+                  <div className="unlock-keys" aria-hidden>
+                    {keys.map((k, i) => (
+                      <span key={i} className="key-chip">
+                        {k}
+                      </span>
+                    ))}
+                  </div>
+                )}
+                <p className="unlock-hint">{SCAPE_COPY.heroPlaySoundHint}</p>
+              </div>
             </div>
-          </div>
+          </>
         ) : (
           <PlayField
             key={`${track.track_id}-${runKey}`}

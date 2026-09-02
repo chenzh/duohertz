@@ -1,12 +1,15 @@
 import { Link } from "../router";
 import { CHARACTER_LIST } from "../constants/scape";
 import { CharacterAvatar } from "../components/CharacterAvatar";
+import { useReveal } from "../components/useReveal";
 import { CHARACTERS_PAGE_META, usePageMeta } from "../seo/pageMeta";
 
 export function CharactersPage() {
   usePageMeta(CHARACTERS_PAGE_META);
+  // Static list — no re-scan key needed.
+  const pageRef = useReveal<HTMLElement>(undefined, ".character-card");
   return (
-    <section className="characters">
+    <section className="characters" ref={pageRef}>
       <header className="page-header">
         <h1>Characters</h1>
         <p className="tagline">

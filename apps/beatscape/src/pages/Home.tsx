@@ -9,6 +9,7 @@ import { CHARACTER_LIST } from "../constants/scape";
 import { HomeHeroPlay } from "../components/HomeHeroPlay";
 import { AudioBar } from "../components/AudioBar";
 import { CharacterAvatar } from "../components/CharacterAvatar";
+import { useReveal } from "../components/useReveal";
 import { FIRST_PLAY_TRACK_ID, INTRO_TRACK_ID, firstPlayHref } from "../lib/firstPlay";
 import { dailyPlayHref, getDailyChallenge } from "../lib/dailyChallenge";
 import { trackEvent } from "../lib/analytics";
@@ -87,8 +88,15 @@ export function HomePage() {
   const daily = getDailyChallenge(tracks.map((t) => t.track_id));
   const dailyTrack = daily ? tracks.find((t) => t.track_id === daily.trackId) : null;
 
+  // Reveal the sections below the hero as you scroll. Keyed on tracks.length so
+  // the blocks that only exist after the catalog resolves still get picked up.
+  const homeRef = useReveal<HTMLElement>(
+    tracks.length,
+    ".radio-episode-banner, .meet-characters, .daily-challenge-banner, .trending-section",
+  );
+
   return (
-    <section className="home">
+    <section className="home" ref={homeRef}>
       {catalogError && (
         <p className="catalog-error" role="alert">
           Couldn’t load the track list ({catalogError}). Check your connection — the catalog is served from the same site.
