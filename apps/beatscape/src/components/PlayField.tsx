@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import type { ChartJSON, PlayMode, PlayResult } from "../types/chart";
+import type { RefObject } from "react";
+import type { LiveStats } from "./playfield/liveStats";
 import { Conductor, unlockAudio } from "../audio/playback";
 import { playHit, playKeyTick, setSfxVolume } from "../audio/hitsounds";
 import { vibrate } from "../lib/haptics";
@@ -12,6 +14,7 @@ import { SCAPE_COPY, districtColor, characterArtWebp, LANE_RGB } from "../consta
 import { fancyFxOn } from "./playfield/canvasHelpers";
 import { createPlayfieldRenderer } from "./playfield/renderLoop";
 import { useDevQaParams } from "./playfield/useDevQaParams";
+import { PlayHud } from "./playfield/PlayHud";
 import type { Fx, ScorePop } from "./playfield/renderLoop";
 import { ScoreStreak, SurgeMeter, type SurgeTier } from "../engine/surge";
 
@@ -32,6 +35,16 @@ type Props = {
   autoStart?: boolean;
   /** District key (e.g. "Pulse Core") — ties the field's beat-wash + watermark to the track's character. */
   district?: string;
+  /**
+   * B-1 · Optional live-stats bridge. When provided, PlayField runs a
+   * low-frequency (~20Hz) rAF that copies sessionRef/surgeTierRef into it so a
+   * comic-panel HUD can read the values without ever re-rendering React.
+   */
+  statsRef?: RefObject<LiveStats>;
+  /** Track title for the HUD capsule (static per run). */
+  trackTitle?: string;
+  /** Chart tier label (easy/standard/hard) for the HUD capsule. */
+  tierLabel?: string;
 };
 
 export function PlayField({
@@ -45,6 +58,9 @@ export function PlayField({
   muted = false,
   autoStart = false,
   district,
+  statsRef,
+  trackTitle = "",
+  tierLabel = "",
 }: Props) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -133,6 +149,39 @@ export function PlayField({
       delete document.body.dataset.neon;
     };
   }, [variant]);
+
+  // B-1 · Low-frequency (~20Hz) stats bridge. Copies the live session + SIGNAL
+  // tier into `statsRef` so the comic-panel HUD can read it on its own rAF
+  // without ever forcing a React re-render of the canvas game loop. Writes a
+  // plain ref object — no setState, no per-frame churn.
+  useEffect(() => {
+    if (!statsRef) return;
+    let raf = 0;
+    let prev = 0;
+    const STEP = 50; // ~20Hz
+    const loop = (t: number) => {
+      raf = requestAnimationFrame(loop);
+      if (t - prev < STEP) return;
+      prev = t;
+      const s = sessionRef.current;
+      if (!s) return;
+      const out = statsRef.current;
+      if (!out) return;
+      out.score = s.score;
+      out.combo = s.combo;
+      out.maxCombo = s.maxCombo;
+      out.hp = s.hp;
+      out.perfect = s.judgments.perfect;
+      out.great = s.judgments.great;
+      out.good = s.judgments.good;
+      out.miss = s.judgments.miss;
+      out.judged = s.judgments.perfect + s.judgments.great + s.judgments.good + s.judgments.miss;
+      out.total = s.totalNotes;
+      out.surgeTier = surgeTierRef.current;
+    };
+    raf = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(raf);
+  }, [statsRef]);
 
   // Load audio + build the session once per chart.
   useEffect(() => {
@@ -574,6 +623,9 @@ export function PlayField({
         onPointerUp={onPointerUp}
         onPointerCancel={onPointerUp}
       />
+      {statsRef && (
+        <PlayHud statsRef={statsRef} title={trackTitle || "—"} tier={tierLabel || "easy"} mode={mode} />
+      )}
       {district && (
         <img
           className="play-char-watermark"

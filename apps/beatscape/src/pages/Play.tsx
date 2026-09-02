@@ -12,6 +12,8 @@ import { recordRun } from "../lib/progress";
 import { isCoarsePointer } from "../input/touchInput";
 import { buildPlayPageMeta, usePageMeta } from "../seo/pageMeta";
 import { trackEvent } from "../lib/analytics";
+import { useRef } from "react";
+import { makeLiveStats, type LiveStats } from "../components/playfield/liveStats";
 
 export function PlayPage() {
   const { id } = useParams();
@@ -24,6 +26,10 @@ export function PlayPage() {
   const [loadError, setLoadError] = useState("");
   const [startedAt] = useState(() => performance.now());
   const [touchUi] = useState(() => isCoarsePointer());
+  // B-1 · Live stats bridge for the comic-panel HUD. Created here (stable
+  // across renders) and handed to both PlayField (writer) and PlayHud (reader)
+  // via the same ref — never crosses the 60fps canvas loop as React state.
+  const statsRef = useRef<LiveStats>(makeLiveStats());
   // loadSettings() 要读一次 localStorage 再 JSON.parse —— 每次渲染都做一遍太浪费。
   const settings = useMemo(loadSettings, []);
   usePageMeta(track ? buildPlayPageMeta(track, tier, mode) : null);
@@ -152,6 +158,9 @@ export function PlayPage() {
         audioUrl={assetUrl(track.audio)}
         mode={mode}
         casualSpeed={settings.casualSpeed}
+        statsRef={statsRef}
+        trackTitle={track.title}
+        tierLabel={tier}
         onStart={() => trackEvent("play_start", { track: track.track_id, tier, mode })}
         onFinish={finish}
       />

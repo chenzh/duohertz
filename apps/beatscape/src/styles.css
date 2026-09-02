@@ -1065,6 +1065,173 @@ body.play-immersive .play-page {
   color: var(--scape-warn);
 }
 
+/* ===== B-1 · 分镜式 HUD（叠加在 play-canvas 上，pointer-events:none） ===== */
+/* 容器只读，不拦截指针；唯一可交互的暂停键由 PlayField 自带（z-index 12）。 */
+.play-hud {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+  font-family: "Sora", "IBM Plex Sans", sans-serif;
+}
+
+/* 左上曲目胶囊：硬边色块 + 轻微 skew，漫画分镜画框语汇。 */
+.hud-chip {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  max-width: 58%;
+  padding: 8px 12px;
+  background: var(--scape-accent-2);
+  color: #12100f;
+  border: 3px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+  transform: skewX(-3deg);
+}
+.hud-chip > * {
+  transform: skewX(3deg); /* 内容反向 skew，保持文字端正 */
+}
+.hud-track-title {
+  font-family: Anton, "Sora", sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.hud-track-tier {
+  font: 700 10px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.78;
+}
+.hud-track-score {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-variant-numeric: tabular-nums;
+}
+.hud-track-score-label {
+  font: 700 9px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.14em;
+  opacity: 0.7;
+}
+.hud-track-score > span:last-child {
+  font-family: Anton, "Sora", sans-serif;
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+}
+
+/* 顶部 SIGNAL 档位 pill：跟随 surgeTier 换色，硬边 + skew。 */
+.hud-signal {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%) skewX(-6deg);
+  padding: 6px 16px;
+  font: 800 12px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #12100f;
+  background: var(--muted);
+  border: 3px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.hud-signal > * {
+  transform: skewX(6deg);
+}
+.hud-signal[data-tier="1"] { background: var(--lane2); }   /* TUNING · 琥珀 */
+.hud-signal[data-tier="2"] { background: var(--accent); }  /* LIVE · 红 */
+.hud-signal[data-tier="3"] {                                /* ON AIR · 金 */
+  background: var(--scape-gold, #ffb020);
+  color: #12100f;
+}
+
+/* 右上 combo 大数字：combo>0 才显（data-show 控制），硬描边漫画字。 */
+.hud-combo {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  transform: skewX(-4deg);
+  opacity: 0;
+  transition: opacity 0.16s ease;
+}
+.hud-combo[data-show="1"] { opacity: 1; }
+.hud-combo > * {
+  transform: skewX(4deg);
+}
+.hud-combo-num {
+  font-family: Anton, "Sora", sans-serif;
+  font-size: 3.2rem;
+  line-height: 0.86;
+  color: var(--scape-accent-2);
+  -webkit-text-stroke: 2px var(--ink);
+  paint-order: stroke fill;
+  font-variant-numeric: tabular-nums;
+}
+.hud-combo-label {
+  font: 800 11px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* 底部判定计数条：四色硬边小面板，顶部色条对应判定色。 */
+.hud-judges {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+.hud-judge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 6px 4px 7px;
+  background: rgba(18, 16, 15, 0.84);
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.hud-judge-label {
+  font: 700 9px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.hud-judge-count {
+  font-family: Anton, "Sora", sans-serif;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: var(--scape-accent-2);
+  font-variant-numeric: tabular-nums;
+}
+.hud-judge-perfect { border-top: 3px solid var(--lane1); } /* In Phase · 米 */
+.hud-judge-great { border-top: 3px solid var(--lane2); }   /* Locked · 琥珀 */
+.hud-judge-good { border-top: 3px solid var(--lane3); }    /* Drifting · 蓝 */
+.hud-judge-miss { border-top: 3px solid var(--lane0); }    /* Dropout · 红 */
+
+@media (max-width: 420px) {
+  .hud-combo-num { font-size: 2.6rem; }
+  .hud-judge-count { font-size: 1.15rem; }
+  .hud-chip { max-width: 54%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hud-combo { transition: none; }
+}
+
 .unlock-hint {
   margin: 0;
   max-width: 240px;
