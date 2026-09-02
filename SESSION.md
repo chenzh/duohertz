@@ -3,7 +3,7 @@
 | 字段 | 值 |
 |------|-----|
 | **phase** | 曲库 **85/85** · Stage6 扩容 50 首已入库（SA3 MLX 真推理）· 待人工耳检 |
-| **updated** | 2026-09-02 |
+| **updated** | 2026-09-03 |
 | **slug** | musicsaas |
 
 ## next（P0）
@@ -27,7 +27,7 @@
 - [x] **AudioBar 播放条四项优化（未提交）**：`apps/beatscape/src/components/AudioBar.tsx` 重写 + `styles.css` 增补。① **拖拽性能**：rect 改 `pointerdown` 缓存、拖拽期用 ref 直写 DOM（fill/thumb/时间/气泡）、`pointerup` 才提交一次 state（原为每次 `pointermove` 一次 `getBoundingClientRect` + 一次 re-render），拖拽期 `timeupdate`/`progress` 早退消除抖动；② **键盘+无障碍**：`role="slider"` 补 `tabIndex` + `onKeyDown`（←→±5s / PageUp·Down±10s / Home·End / Space·Enter 播放暂停）、`aria-valuetext`（M:SS 而非裸秒）、`:focus-visible` 焦点环；③ **健壮性**：补 `onEnded`（按钮不再卡 pause 图标）、`onError`、`onDurationChange`，`currentTime` 赋值前查 `readyState>0`（Safari InvalidStateError），`fmt` 提到模块作用域；④ **视觉**：缓冲进度条 + 拖拽/悬停时间气泡 + thumb 悬停放大 + 热区 8px→22px。**React 坑已规避**：手动 `textContent` 改写要求元素只有单一 Text 子节点，故时间 span 用单插值写法。门禁：`tsc` 干净 / `vitest 120` / `vite build` 绿（CSS gzip 9.13→9.58 KB）。组件测试覆盖仍 0（测试环境 `node` 无 jsdom）· 2026-09-02
 
 - [x] **D 档视觉打磨（本地提交 `df94640`，未 push）**：① chip 色板——所有色彩由单一 `--chip-ink` 派生（border 40% / bg 10% / 文字），新增 `.chip-beginner`(冷绿 `--ok`)/`.chip-vocals`(`--lane3`)/`.chip-tier`，通用 chip 也加描边；Home 的 district 改复用已有 `<DistrictBadge>`，Library 的 Beginner/Vocals 挂语义色板；② 骨架屏——新增 `components/Skeletons.tsx`（TrackCardSkeleton + TrackGridSkeleton，复刻 .track-card 盒模型 CLS≈0），顺手修真 bug：Library 原本没解构 `loading`，85 首曲库加载期会闪 "No tracks match your filters."；③ 路由切换过渡——Layout 给 `<main>` 加 `key={path}` 重放 `route-in` 动画（只动 opacity，不动 transform，否则给 `.play-bg`/`.neon-layer` 这些 fixed 后代建 containing block 致背景错位），`/play` 挂 `.route-plain` 跳过。全带 `prefers-reduced-motion` guard。门禁：tsc 干净 / vitest 120 / build 绿 · 2026-09-02
-- [x] **UI 炫酷化剩余工作交给定时任务 `ff19e388`（每日 09:00）**：B 档（B-1 Play 分镜 HUD / B-2 调频加载+Overlay 网点）+ C 档（C-1 Radio 收音机面板 / C-2 Characters 语言统一+Profile·Board 卡片化）由该自动化按节奏自主推进；prompt 自包含（设计纪律/可复用模式/门禁/并行会话协作规矩/终止条件），只提交自己改的文件、门禁全绿才提交。当前未 push · 2026-09-02
+- [x] **UI 炫酷化 B/C 档全部完成（本地 4 chunk 已提交，待 push）**：B-1 分镜式 HUD（PlayField 20Hz rAF 写 liveStats + PlayHud 直写 DOM，combo/score/signal/judgments 四色计数条）、B-2 调频式加载（THE LATE STATIC 搜台意象）+ Overlay 硬边网点卡片、C-1 Radio 收音机面板（调频刻度盘+信号强度条+频道按钮，频率 88.6/90.0/91.4 MHz 由三季数据驱动）、C-2 Characters 语言统一（去 1px 白描边/16px 圆角→2px 黑边+radius-md+硬投影）+ Profile/Leaderboard 卡片化（board-row/rank-card 硬投影、achievement 已解锁/未解锁 grayscale 差异加强）。四档各一 commit：`417ece9`/`fa10253`/`60e5db1`/`4310b12`，门禁全绿（tsc/vitest 120/build）。· 2026-09-03
 
 - [x] **同手和弦观察项关闭（非缺陷）**：全库 hard 同手率 40.5% ≈ 生成器理论值 2/5；新旧组 40.8%/40.2% 无差异，绝对数差来自新 SA3 onset 更密（每谱音符 +23%）；移动端 `chordAssist` 已闭环（同手道 bank great）；`chart-difficulty.py` 新增同手率列 · 2026-08-30
 - [x] **Reddit 首发文案包**：[`docs/BEATSCAPE-REDDIT-LAUNCH.md`](docs/BEATSCAPE-REDDIT-LAUNCH.md) 三篇帖文成稿（r/rhythmgames · r/WebGames · r/gamedev）+ 评论区口径 6 问 + 商标/合规红线 + 发帖节奏 · 2026-08-30
