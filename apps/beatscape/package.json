@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
-    "build:cf": "tsc --noEmit && VITE_BASE=/ vite build",
+    "build:cf": "tsc --noEmit && VITE_STREAM_APP_URL=https://scapemusic.pages.dev VITE_BASE=/ vite build",
     "deploy:cf": "npm run build:cf && npx --yes wrangler@4 pages deploy dist --project-name=beatscape --commit-dirty=true",
     "preview": "vite preview --host 127.0.0.1 --port 5175",
     "test": "vitest run",
