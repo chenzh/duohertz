@@ -2474,14 +2474,16 @@ td {
   align-items: center;
   padding: 14px 16px;
   border-radius: var(--radius-md);
-  background: var(--glass);
-  border: 1px solid var(--border);
-  transition: border-color 0.15s ease, transform 0.12s ease;
+  background: var(--bg-elevated);
+  border: 2px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+  transition: border-color 0.15s ease, transform 0.12s ease, box-shadow 0.12s ease;
 }
 
 .board-row:hover {
-  border-color: rgba(226, 61, 61, 0.25);
+  border-color: var(--accent);
   transform: translateX(2px);
+  box-shadow: 6px 6px 0 var(--ink);
 }
 
 .board-row.rank-1 {
@@ -2849,15 +2851,16 @@ td {
   display: flex;
   flex-direction: column;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-md);
   overflow: hidden;
   border-top: 3px solid var(--district-color, #e23d3d);
+  box-shadow: 4px 4px 0 var(--ink);
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 .character-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 14px 38px -16px var(--district-color, #e23d3d);
+  box-shadow: 8px 8px 0 var(--ink);
 }
 .character-card-art {
   background: #12100f;
@@ -3052,6 +3055,7 @@ td {
   flex-direction: column;
   gap: 4px;
   transform: skewX(-2deg);
+  box-shadow: 4px 4px 0 var(--ink);
 }
 .rank-card > * {
   transform: skewX(2deg);
@@ -3104,11 +3108,20 @@ td {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  opacity: 0.45;
+  opacity: 0.5;
+  filter: grayscale(0.85);
+  box-shadow: 4px 4px 0 var(--ink);
+  transform: skewX(-2deg);
+}
+.achievement-card > * {
+  transform: skewX(2deg);
 }
 .achievement-card.unlocked {
   opacity: 1;
-  border-color: #e23d3d;
+  filter: none;
+  border-color: var(--accent);
+  border-top: 3px solid var(--accent);
+  box-shadow: 6px 6px 0 var(--ink);
 }
 .achievement-mark {
   color: #e23d3d;
