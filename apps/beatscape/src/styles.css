@@ -351,7 +351,9 @@ a.header-avatar:hover {
 }
 
 .trend-card {
-  flex: 0 0 200px;
+  /* width 由 .trend-card-wrap（display:flex; flex-direction:column）撑开。 */
+  display: flex;
+  flex-direction: column;
   scroll-snap-align: start;
   text-decoration: none;
   color: inherit;
@@ -659,7 +661,9 @@ a.header-avatar:hover {
 }
 
 .track-preview .audiobar {
-  max-width: 360px;
+  /* 让 .audiobar 的 width:100% 直接撑满 .track-preview 列。
+     （这条 max-width 是更早时候封的 360px，删掉后 Track 页播放条与
+      Home 趋势卡播放条宽度规则统一——都是「撑满父容器」。） */
 }
 
 /* ===== Custom audio bar (replaces native <audio controls>) =====
@@ -1925,6 +1929,8 @@ td {
 }
 
 .trend-card-wrap {
+  display: flex;
+  flex-direction: column;
   flex: 0 0 200px;
   scroll-snap-align: start;
 }
