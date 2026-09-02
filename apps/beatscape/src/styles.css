@@ -3191,6 +3191,197 @@ td {
   max-width: 620px;
 }
 
+/* ===== C-1 · 老式收音机面板（贴 The Late Static 世界观） ===== */
+.radio-deck {
+  margin: 20px 0 8px;
+  padding: 16px 18px 18px;
+  background: linear-gradient(180deg, #1c1717, #141010);
+  border: 3px solid var(--ink);
+  border-radius: var(--radius-md);
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+.radio-deck-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.radio-readout {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-family: "IBM Plex Mono", monospace;
+}
+.radio-readout-band {
+  font: 800 11px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.14em;
+  color: #12100f;
+  background: var(--accent);
+  padding: 3px 6px;
+  border: 2px solid var(--ink);
+}
+.radio-readout-freq {
+  font-family: Anton, "Sora", sans-serif;
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--scape-accent-2);
+  -webkit-text-stroke: 1.5px var(--ink);
+  paint-order: stroke fill;
+  font-variant-numeric: tabular-nums;
+}
+.radio-readout-mhz {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+.radio-readout-station {
+  margin-left: 6px;
+  font: 700 10px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent2);
+  align-self: center;
+}
+
+/* 信号强度：5 格硬边条，on 点亮红色。 */
+.radio-signal {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 30px;
+}
+.radio-signal-bar {
+  width: 7px;
+  height: 20%;
+  background: rgba(242, 228, 201, 0.16);
+  border: 1.5px solid var(--ink);
+  transition: height 0.2s ease, background 0.2s ease;
+}
+.radio-signal-bar:nth-child(2) { height: 40%; }
+.radio-signal-bar:nth-child(3) { height: 60%; }
+.radio-signal-bar:nth-child(4) { height: 80%; }
+.radio-signal-bar:nth-child(5) { height: 100%; }
+.radio-signal-bar.on {
+  background: var(--accent);
+}
+
+/* 调频刻度盘：横向频带 + 刻度 + 指针。 */
+.radio-dial {
+  position: relative;
+  height: 54px;
+  margin: 6px 0 4px;
+  background-color: #12100f;
+  background-image:
+    repeating-linear-gradient(90deg, rgba(242, 228, 201, 0.18) 0 1px, transparent 1px 18px),
+    var(--halftone);
+  background-size: 18px 100%, 6px 6px;
+  border: 2px solid var(--ink);
+  overflow: hidden;
+}
+.radio-dial-ticks {
+  position: absolute;
+  inset: 0;
+}
+.radio-dial-tick {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: rgba(242, 228, 201, 0.5);
+  transform: translateX(-50%);
+}
+.radio-dial-tick.tuned {
+  background: var(--accent);
+  width: 3px;
+}
+.radio-dial-needle {
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  width: 4px;
+  background: var(--accent2);
+  box-shadow: 0 0 0 1px var(--ink);
+  transform: translateX(-50%);
+  animation: dialJitter 2.4s ease-in-out infinite;
+}
+@keyframes dialJitter {
+  0%, 100% { transform: translateX(-50%) rotate(-1.2deg); }
+  50% { transform: translateX(-50%) rotate(1.2deg); }
+}
+.radio-dial-labels {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 3px;
+}
+.radio-dial-label {
+  position: absolute;
+  transform: translateX(-50%);
+  font: 700 9px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+.radio-dial-label.tuned {
+  color: var(--scape-accent-2);
+}
+
+/* 频道按钮：每季一个台，当前台高亮。 */
+.radio-channels {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+}
+.radio-channel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 8px 12px;
+  background: var(--bg-elevated);
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  transform: skewX(-2deg);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+.radio-channel > * {
+  transform: skewX(2deg);
+}
+.radio-channel:hover {
+  transform: translate(-1px, -1px) skewX(-2deg);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.radio-channel:active {
+  transform: translate(2px, 2px) skewX(-2deg);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+.radio-channel.active {
+  background: var(--accent);
+  color: #12100f;
+}
+.radio-channel-num {
+  font: 800 10px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.14em;
+}
+.radio-channel-name {
+  font: 700 13px/1.1 "Sora", sans-serif;
+}
+.radio-channel.active .radio-channel-num {
+  color: #12100f;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .radio-dial-needle { animation: none; }
+}
+
 .radio-episode-list {
   display: grid;
   gap: 14px;
@@ -3198,9 +3389,10 @@ td {
 }
 .radio-episode {
   padding: 16px 18px;
-  border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius-md);
+  border: 2px solid var(--ink);
+  background: var(--bg-elevated);
+  box-shadow: 4px 4px 0 var(--ink);
 }
 .radio-episode-head {
   display: flex;
@@ -3225,8 +3417,8 @@ td {
   white-space: nowrap;
 }
 .radio-episode.now {
-  border-color: rgba(255, 176, 32, 0.45);
-  background: rgba(255, 176, 32, 0.05);
+  border-top: 3px solid var(--accent2);
+  background: color-mix(in srgb, var(--accent2) 10%, var(--bg-elevated));
 }
 .radio-episode.upcoming {
   opacity: 0.62;
