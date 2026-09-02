@@ -2252,28 +2252,82 @@ td {
   font-size: 12px;
 }
 
+/* ===== B-2 · 调频式加载（"搜台"意象，贴 The Late Static 世界观） ===== */
 .loading-state {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
-  padding: 48px 20px;
+  gap: 16px;
+  padding: 44px 22px;
   color: var(--muted);
 }
 
-.loading-spinner {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 3px solid rgba(226, 61, 61, 0.15);
-  border-top-color: var(--accent);
-  animation: spin 0.8s linear infinite;
+/* 调频刻度盘：横频带 + 扫描线来回扫动，像在调台锁定信号。*/
+.tuning-dial {
+  position: relative;
+  width: min(320px, 78vw);
+  height: 58px;
+  background-color: #12100f;
+  background-image:
+    repeating-linear-gradient(90deg, rgba(242, 228, 201, 0.22) 0 1px, transparent 1px 16px),
+    var(--halftone);
+  background-size: 16px 100%, 6px 6px;
+  border: 3px solid var(--ink);
+  box-shadow: 5px 5px 0 var(--ink);
+  overflow: hidden;
 }
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+.tuning-scan {
+  position: absolute;
+  top: -2px;
+  bottom: -2px;
+  left: 4%;
+  width: 4px;
+  background: var(--accent);
+  box-shadow: 0 0 0 1px var(--ink);
+  animation: tuningScan 1.7s steps(22, end) infinite alternate;
+}
+
+@keyframes tuningScan {
+  from { left: 4%; }
+  to { left: 94%; }
+}
+
+.tuning-callsign {
+  margin: 0;
+  font: 800 13px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--scape-accent-2);
+}
+
+.tuning-status {
+  margin: 0;
+  font: 700 11px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tuning-scan { animation: none; left: 48%; }
+}
+
+/* B-2 · Overlay 硬边卡片：网点底已来自 .overlay，这里加一张居中硬卡 + 倾斜标题。 */
+.overlay-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 22px 28px;
+  background: rgba(18, 16, 15, 0.92);
+  border: 3px solid var(--ink);
+  box-shadow: 7px 7px 0 var(--ink);
+  max-width: 88%;
+}
+
+.overlay-title {
+  transform: skewX(-5deg);
 }
 
 /* Track detail hero */

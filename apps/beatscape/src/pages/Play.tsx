@@ -109,8 +109,11 @@ export function PlayPage() {
   if (!track || !chart) {
     return (
       <div className="loading-state">
-        <div className="loading-spinner" aria-hidden />
-        <p>Loading chart…</p>
+        <div className="tuning-dial" aria-hidden="true">
+          <div className="tuning-scan" />
+        </div>
+        <p className="tuning-callsign">THE LATE STATIC · 88.6 FM</p>
+        <p className="tuning-status">Tuning into the Scape…</p>
       </div>
     );
   }

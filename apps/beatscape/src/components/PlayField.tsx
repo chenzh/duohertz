@@ -636,14 +636,18 @@ export function PlayField({
       )}
       {loading && !error && (
         <div className="overlay">
-          <p className="overlay-kicker">Loading</p>
-          <p className="overlay-title">Cueing audio</p>
+          <div className="overlay-card">
+            <p className="overlay-kicker">Loading</p>
+            <p className="overlay-title">Cueing audio</p>
+          </div>
         </div>
       )}
       {error && (
         <div className="overlay load-error">
-          <p className="overlay-kicker">Signal lost</p>
-          <p>{error}</p>
+          <div className="overlay-card">
+            <p className="overlay-kicker">Signal lost</p>
+            <p>{error}</p>
+          </div>
         </div>
       )}
       {!loading && !error && needsStart && !autoStart && (
@@ -653,39 +657,43 @@ export function PlayField({
           className="overlay overlay-tap"
           onClick={() => void startRun()}
         >
-          <p className="overlay-kicker">
-            {variant === "hero" ? SCAPE_COPY.heroPlayKicker : SCAPE_COPY.rightsShort}
-          </p>
-          <button
-            type="button"
-            className="btn primary unlock-btn"
-            onClick={(e) => {
-              e.stopPropagation();
-              void startRun();
-            }}
-          >
-            {variant === "hero" ? SCAPE_COPY.play : SCAPE_COPY.tapToEnter}
-          </button>
-          {!touchUi && (
-            <div className="unlock-keys" aria-hidden>
-              {keyHint.map((k, i) => (
-                <span key={i} className="key-chip">
-                  {k}
-                </span>
-              ))}
-            </div>
-          )}
-          <p className="unlock-hint">
-            {touchUi
-              ? SCAPE_COPY.heroPlayHintTouch
-              : `${SCAPE_COPY.heroPlayHintKeys} · ${keyHintJoined}`}
-          </p>
+          <div className="overlay-card">
+            <p className="overlay-kicker">
+              {variant === "hero" ? SCAPE_COPY.heroPlayKicker : SCAPE_COPY.rightsShort}
+            </p>
+            <button
+              type="button"
+              className="btn primary unlock-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                void startRun();
+              }}
+            >
+              {variant === "hero" ? SCAPE_COPY.play : SCAPE_COPY.tapToEnter}
+            </button>
+            {!touchUi && (
+              <div className="unlock-keys" aria-hidden>
+                {keyHint.map((k, i) => (
+                  <span key={i} className="key-chip">
+                    {k}
+                  </span>
+                ))}
+              </div>
+            )}
+            <p className="unlock-hint">
+              {touchUi
+                ? SCAPE_COPY.heroPlayHintTouch
+                : `${SCAPE_COPY.heroPlayHintKeys} · ${keyHintJoined}`}
+            </p>
+          </div>
         </div>
       )}
       {!loading && !error && needsStart && autoStart && (
         <div className="overlay">
-          <p className="overlay-kicker">{SCAPE_COPY.heroPlayKicker}</p>
-          <p className="overlay-title">Cueing…</p>
+          <div className="overlay-card">
+            <p className="overlay-kicker">{SCAPE_COPY.heroPlayKicker}</p>
+            <p className="overlay-title">Cueing…</p>
+          </div>
         </div>
       )}
       {!loading && !error && !needsStart && !paused && (
@@ -695,10 +703,12 @@ export function PlayField({
       )}
       {paused && (
         <div className="overlay">
-          <p className="overlay-title">{SCAPE_COPY.pauseTitle}</p>
-          <button type="button" className="btn primary unlock-btn" onClick={togglePause}>
-            {SCAPE_COPY.resume}
-          </button>
+          <div className="overlay-card">
+            <p className="overlay-title">{SCAPE_COPY.pauseTitle}</p>
+            <button type="button" className="btn primary unlock-btn" onClick={togglePause}>
+              {SCAPE_COPY.resume}
+            </button>
+          </div>
         </div>
       )}
     </div>
