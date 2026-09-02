@@ -69,14 +69,12 @@ export function AudioBar({ src, label, preload = "metadata", className }: Props)
   const [time, setTime] = useState(0);
   const [dur, setDur] = useState(0);
   const [buf, setBuf] = useState(0);
-  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     setPlaying(false);
     setTime(0);
     setDur(0);
     setBuf(0);
-    setReady(false);
     rectRef.current = null;
     dragRef.current = false;
   }, [src]);
@@ -210,11 +208,7 @@ export function AudioBar({ src, label, preload = "metadata", className }: Props)
         }}
         onLoadedMetadata={(e) => setDur((e.target as HTMLAudioElement).duration)}
         onDurationChange={(e) => setDur((e.target as HTMLAudioElement).duration)}
-        onCanPlay={() => setReady(true)}
-        onError={() => {
-          setPlaying(false);
-          setReady(false);
-        }}
+        onError={() => setPlaying(false)}
         // Without this the toggle button stays stuck on the "pause" icon.
         onEnded={() => {
           setPlaying(false);
@@ -228,7 +222,12 @@ export function AudioBar({ src, label, preload = "metadata", className }: Props)
         className="audiobar-toggle"
         onClick={toggle}
         aria-label={playing ? "Pause" : "Play"}
-        disabled={!ready && !dur}
+        // 只能用 src 判空，不能用 ready/dur 门禁：首页用 preload="none"，
+        // 浏览器不预拉元数据 → onLoadedMetadata / onCanPlay 都不触发 →
+        // dur=0 且 ready=false，按钮会被永久 disabled。而"点播放"恰恰是
+        // 唯一能触发加载的动作，形成死锁（首页播放条点不动）。
+        // 元数据迟到由 seekTo/nudge 里的 readyState>0 兜住。
+        disabled={!src}
       >
         {playing ? <span className="audiobar-ic audiobar-ic-pause" /> : <span className="audiobar-ic audiobar-ic-play" />}
       </button>
