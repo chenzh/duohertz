@@ -45,6 +45,13 @@ type Props = {
   trackTitle?: string;
   /** Chart tier label (easy/standard/hard) for the HUD capsule. */
   tierLabel?: string;
+  /**
+   * B-1 · When true, the renderer's built-in score / accuracy / SIGNAL-gauge
+   * panels are skipped so the comic-panel PlayHud is the single source of
+   * truth for the score row. Defaults to `!!statsRef` — passing a statsRef
+   * implies the PlayHud is mounted, so the canvas HUD must step aside.
+   */
+  useComicHud?: boolean;
 };
 
 export function PlayField({
@@ -61,6 +68,7 @@ export function PlayField({
   statsRef,
   trackTitle = "",
   tierLabel = "",
+  useComicHud,
 }: Props) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -77,6 +85,12 @@ export function PlayField({
   const approachRef = useRef(1);
   const lastNoteMsRef = useRef(0);
   const laneFlashRef = useRef<number[]>([0, 0, 0, 0]);
+  // B-1 · The HUD-bypass flag is read inside the canvas rAF. Caching it in a
+  // ref keeps the render loop's effect dep stable — otherwise toggling the
+  // comic HUD on/off mid-run would tear down the whole rAF (and the
+  // pre-rendered halftone + note sprites), causing a visible frame drop.
+  const useComicHudRef = useRef(useComicHud ?? !!statsRef);
+  useComicHudRef.current = useComicHud ?? !!statsRef;
   const spritesRef = useRef<HTMLCanvasElement[]>([]);
   const dimRef = useRef<{ w: number; h: number }>({ w: 0, h: 0 });
   // --- juice: particles / screen shake / combo milestone ---
@@ -486,6 +500,7 @@ export function PlayField({
       keyHint,
       spawnHitFx,
       onFinish,
+      useComicHud: useComicHudRef.current,
     });
   }, [mode, keyHint, chart.bpm, touchUi, district, demoSurge, demoStreak]);
 

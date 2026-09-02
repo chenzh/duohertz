@@ -131,6 +131,14 @@ export interface PlayfieldRenderContext {
   // component-bound closures the loop cannot own
   spawnHitFx: (lane: number, judgment: JudgeFx["judgment"]) => void;
   onFinish: (result: PlayResult) => void;
+  /**
+   * B-1 · When true, the comic-panel DOM HUD (PlayHud) is overlaid on top of
+   * the canvas. The renderer's built-in score / accuracy / SIGNAL-gauge panels
+   * are skipped to avoid drawing the same element twice (the old built-ins
+   * used to overlap the DOM HUD). Combo center, HP bar, key hints, and
+   * in-frame feedback still draw as before.
+   */
+  useComicHud: boolean;
 }
 
 /**
@@ -190,6 +198,7 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
     keyHint,
     spawnHitFx,
     onFinish,
+    useComicHud,
   } = ctx;
 
   const canvas = canvasRef.current;
@@ -726,70 +735,78 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
     // panel() 定义在 effect 作用域（draw() 外面），免得每帧重建一个闭包。
     // score 只在判定时才变，toLocaleString() 是浏览器里最贵的 API 之一 ——
     // 缓存结果，只有分数真的变了才重新格式化。
-    const scoreText = scoreTextFor(session.score);
-    ctx2d.font = "600 18px 'IBM Plex Sans', sans-serif";
-    const scoreW = Math.min(w * 0.5, ctx2d.measureText(scoreText).width + 34);
-    panel(10, 10, scoreW, 30, "#1C1717");
-    ctx2d.fillStyle = "#F5EFE6";
-    ctx2d.textAlign = "left";
-    ctx2d.textBaseline = "middle";
-    ctx2d.fillText(scoreText, 26, 26);
+    //
+    // B-1 · When useComicHud is on, the comic-panel PlayHud (DOM overlay) draws
+    // the score / accuracy / SIGNAL tier chips itself. Drawing them again here
+    // would double-stack on the canvas and visually fight the DOM HUD, so skip
+    // the block entirely. Combo center number, HP bar, key hints, milestone
+    // flash, and floating score pops stay — they are not duplicated by PlayHud.
+    if (!useComicHud) {
+      const scoreText = scoreTextFor(session.score);
+      ctx2d.font = "600 18px 'IBM Plex Sans', sans-serif";
+      const scoreW = Math.min(w * 0.5, ctx2d.measureText(scoreText).width + 34);
+      panel(10, 10, scoreW, 30, "#1C1717");
+      ctx2d.fillStyle = "#F5EFE6";
+      ctx2d.textAlign = "left";
+      ctx2d.textBaseline = "middle";
+      ctx2d.fillText(scoreText, 26, 26);
 
-    // accuracyPercent() direct — getResult() allocates a fresh object per frame.
-    const accText = `${accuracyPercent(session.judgments, session.totalNotes).toFixed(2)}%`;
-    ctx2d.font = "600 15px 'IBM Plex Sans', sans-serif";
-    const accW = ctx2d.measureText(accText).width + 30;
-    panel(w - 10 - accW, 10, accW, 30, "#1C1717");
-    ctx2d.fillStyle = "#A8928B";
-    ctx2d.textAlign = "right";
-    ctx2d.fillText(accText, w - 24, 26);
-    ctx2d.textBaseline = "alphabetic";
+      // accuracyPercent() direct — getResult() allocates a fresh object per frame.
+      const accText = `${accuracyPercent(session.judgments, session.totalNotes).toFixed(2)}%`;
+      ctx2d.font = "600 15px 'IBM Plex Sans', sans-serif";
+      const accW = ctx2d.measureText(accText).width + 30;
+      panel(w - 10 - accW, 10, accW, 30, "#1C1717");
+      ctx2d.fillStyle = "#A8928B";
+      ctx2d.textAlign = "right";
+      ctx2d.fillText(accText, w - 24, 26);
+      ctx2d.textBaseline = "alphabetic";
 
-    // SIGNAL gauge — the run's atmosphere meter (TUNING / LIVE / ON AIR).
-    const heat = surgeRef.current.heat;
-    const tier = tierForHeat(heat);
-    const gx = 14;
-    const gy = 52;
-    const gw = 12;
-    const gh = Math.max(64, Math.min(150, h * 0.22));
-    skewPath(ctx2d, gx, gy, gw, gh, 4);
-    ctx2d.fillStyle = "#12100F";
-    ctx2d.fill();
-    ctx2d.lineWidth = 2;
-    ctx2d.strokeStyle = "#000000";
-    ctx2d.stroke();
-    const fillH = (gh - 4) * (heat / 100);
-    if (fillH > 0.5) {
-      ctx2d.save();
+      // SIGNAL gauge — the run's atmosphere meter (TUNING / LIVE / ON AIR).
+      const heat = surgeRef.current.heat;
+      const tier = tierForHeat(heat);
+      const gx = 14;
+      const gy = 52;
+      const gw = 12;
+      const gh = Math.max(64, Math.min(150, h * 0.22));
       skewPath(ctx2d, gx, gy, gw, gh, 4);
-      ctx2d.clip();
-      ctx2d.fillStyle = `rgba(${dr},${dg},${db},0.92)`;
-      ctx2d.fillRect(gx + 2, gy + gh - 2 - fillH, gw, fillH + 2);
+      ctx2d.fillStyle = "#12100F";
+      ctx2d.fill();
+      ctx2d.lineWidth = 2;
+      ctx2d.strokeStyle = "#000000";
+      ctx2d.stroke();
+      const fillH = (gh - 4) * (heat / 100);
+      if (fillH > 0.5) {
+        ctx2d.save();
+        skewPath(ctx2d, gx, gy, gw, gh, 4);
+        ctx2d.clip();
+        ctx2d.fillStyle = `rgba(${dr},${dg},${db},0.92)`;
+        ctx2d.fillRect(gx + 2, gy + gh - 2 - fillH, gw, fillH + 2);
+        ctx2d.restore();
+      }
+      ctx2d.fillStyle = "rgba(0,0,0,0.9)";
+      for (const th of [SURGE_TIERS.t1, SURGE_TIERS.t2, SURGE_TIERS.t3]) {
+        ctx2d.fillRect(gx + 2, gy + gh - 2 - (gh - 4) * (th / 100), gw - 4, 1.5);
+      }
+      // Tier drop: the gauge itself flashes red for a beat — losing the signal
+      // must be felt, not just watched to drain (no extra SFX; miss/break cover it).
+      const dropAge = (nowPerf - surgeDropRef.current) / 450;
+      if (dropAge >= 0 && dropAge < 1) {
+        skewPath(ctx2d, gx, gy, gw, gh, 4);
+        ctx2d.fillStyle = `rgba(226,61,61,${0.5 * (1 - dropAge)})`;
+        ctx2d.fill();
+      }
+      ctx2d.save();
+      ctx2d.translate(gx + gw + 9, gy + gh);
+      ctx2d.rotate(-Math.PI / 2);
+      ctx2d.font = "700 10px 'IBM Plex Sans', sans-serif";
+      ctx2d.textAlign = "left";
+      ctx2d.textBaseline = "middle";
+      const tierLabel =
+        tier === 0 ? SURGE_COPY.gauge : tier === 1 ? SURGE_COPY.t1 : tier === 2 ? SURGE_COPY.t2 : SURGE_COPY.t3;
+      ctx2d.lineWidth = 3;
+      inkedText(ctx2d, tierLabel, 0, 0, tier === 0 ? "#A8928B" : "#F5EFE6");
       ctx2d.restore();
     }
-    ctx2d.fillStyle = "rgba(0,0,0,0.9)";
-    for (const th of [SURGE_TIERS.t1, SURGE_TIERS.t2, SURGE_TIERS.t3]) {
-      ctx2d.fillRect(gx + 2, gy + gh - 2 - (gh - 4) * (th / 100), gw - 4, 1.5);
-    }
-    // Tier drop: the gauge itself flashes red for a beat — losing the signal
-    // must be felt, not just watched to drain (no extra SFX; miss/break cover it).
-    const dropAge = (nowPerf - surgeDropRef.current) / 450;
-    if (dropAge >= 0 && dropAge < 1) {
-      skewPath(ctx2d, gx, gy, gw, gh, 4);
-      ctx2d.fillStyle = `rgba(226,61,61,${0.5 * (1 - dropAge)})`;
-      ctx2d.fill();
-    }
-    ctx2d.save();
-    ctx2d.translate(gx + gw + 9, gy + gh);
-    ctx2d.rotate(-Math.PI / 2);
-    ctx2d.font = "700 10px 'IBM Plex Sans', sans-serif";
-    ctx2d.textAlign = "left";
-    ctx2d.textBaseline = "middle";
-    const tierLabel =
-      tier === 0 ? SURGE_COPY.gauge : tier === 1 ? SURGE_COPY.t1 : tier === 2 ? SURGE_COPY.t2 : SURGE_COPY.t3;
-    ctx2d.lineWidth = 3;
-    inkedText(ctx2d, tierLabel, 0, 0, tier === 0 ? "#A8928B" : "#F5EFE6");
-    ctx2d.restore();
 
     if (mode === "arcade") {
       const bx = 14;

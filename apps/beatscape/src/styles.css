@@ -958,11 +958,16 @@ body.play-immersive .play-page {
   height: 100%;
 }
 
+/* B-1 · 暂停键之前在 top:10px left:50%（transform 居中），跟 .hud-signal
+   （top:14px left:50% skewX(-6deg)）几乎完全重叠——SIGNAL pill 中段被压住。
+   挪到右上：.hud-signal 独占顶中显示档位。combo 数（.hud-combo，默认
+   opacity:0，combo>0 才显）也占 right:14px，pause-btn z-index:12 在
+   .play-hud(z:6) 之上，combo 显时会盖在 pause-btn 上——暂停与 combo 同时刻
+   极窄，权衡后选了空间清晰：暂停键永远可点。 */
 .pause-btn {
   position: absolute;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 14px;
+  right: 14px;
   z-index: 12;
   width: 38px;
   height: 38px;
