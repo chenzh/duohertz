@@ -62,6 +62,8 @@ type Props = {
   keys?: string[];
   /** Duo · Short label rendered in the HUD capsule (e.g. "P1" / "P2"). */
   playerLabel?: string;
+  /** Appended to the field's own `.play-wrap` classes (duo side-swap uses it). */
+  className?: string;
   /**
    * Duo · Mute the MUSIC bus only — hit SFX keep playing. Two fields decoding
    * and playing the same track simultaneously would layer it on itself with
@@ -118,6 +120,7 @@ export function PlayField({
   useComicHud,
   keys: keysProp,
   playerLabel,
+  className,
   muteMusic = false,
   startGate,
   onReady,
@@ -743,7 +746,7 @@ export function PlayField({
     <div
       className={`play-wrap${variant === "hero" ? " play-wrap-hero" : ""}${
         playerLabel ? " play-wrap-duo" : ""
-      }`}
+      }${className ? ` ${className}` : ""}`}
       ref={wrapRef}
       style={district ? ({ "--district-color": districtColor(district) } as React.CSSProperties) : undefined}
     >

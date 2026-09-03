@@ -6,7 +6,7 @@ import { PlayField } from "../components/PlayField";
 import type { ChartJSON, ChartTier, PlayMode, PlayResult } from "../types/chart";
 import type { CatalogTrack } from "../types/catalog";
 import { loadKeys, loadSettings } from "../storage/settings";
-import { keyLabels, partnerKeysFor } from "../input/keyMap";
+import { keyLabels, partnerKeysFor, presetIdFor } from "../input/keyMap";
 import { districtColor } from "../constants/scape";
 import { makeLiveStats, type LiveStats } from "../components/playfield/liveStats";
 import { trackEvent } from "../lib/analytics";
@@ -190,6 +190,74 @@ export function DuoPage() {
         ? "P1 WINS"
         : "P2 WINS";
 
+  // WASD lives under the left hand, the arrow cluster in the bottom-right
+  // corner — so whoever is on WASD takes the LEFT panel, or the two players'
+  // hands end up crossed in front of each other.
+  const p2OnLeft = presetIdFor(p2Keys) === "wasd";
+
+  // Everything that has a left/right order follows the panels, so what the
+  // player reads matches where their board actually is.
+  const keyHints: Array<[string, string]> = [
+    ["P1", p1Hint],
+    ["P2", p2Hint],
+  ];
+  if (p2OnLeft) keyHints.reverse();
+
+  const scoreCols: Array<[string, PlayResult]> = duoResult
+    ? [
+        ["P1", duoResult[0]],
+        ["P2", duoResult[1]],
+      ]
+    : [];
+  if (p2OnLeft) scoreCols.reverse();
+
+  // Both fields as elements so the stage can flip their DOM order without
+  // touching identity: React matches on `key`, so a flip moves the nodes
+  // instead of remounting them (no lost session, no re-decode).
+  const fieldP1 = (
+    <PlayField
+      key={`p1-${track.track_id}-${tier}-${mode}-${runKey}`}
+      district={track.district}
+      chart={chart}
+      audioUrl={assetUrl(track.audio)}
+      mode={mode}
+      casualSpeed={settings.casualSpeed}
+      statsRef={p1Stats}
+      trackTitle={track.title}
+      tierLabel={tier}
+      playerLabel="P1"
+      keys={p1Keys}
+      startGate={startGate}
+      onReady={armReady}
+      hideStartOverlay
+      onPauseChange={broadcastPause}
+      pauseSync={pauseSync}
+      onFinish={finish(0)}
+    />
+  );
+  const fieldP2 = (
+    <PlayField
+      key={`p2-${track.track_id}-${tier}-${mode}-${runKey}`}
+      district={track.district}
+      chart={chart}
+      audioUrl={assetUrl(track.audio)}
+      mode={mode}
+      casualSpeed={settings.casualSpeed}
+      statsRef={p2Stats}
+      trackTitle={track.title}
+      tierLabel={tier}
+      playerLabel="P2"
+      keys={p2Keys}
+      muteMusic
+      startGate={startGate}
+      onReady={armReady}
+      hideStartOverlay
+      onPauseChange={broadcastPause}
+      pauseSync={pauseSync}
+      onFinish={finish(1)}
+    />
+  );
+
   return (
     <section className="play-page duo-page">
       <div
@@ -222,49 +290,22 @@ export function DuoPage() {
           DUO · {tier} · {mode}
         </span>
         <span className="duo-keyhint" aria-hidden>
-          <b>P1</b> {p1Hint} <span className="duo-keyhint-sep">|</span> <b>P2</b> {p2Hint}
+          {keyHints.map(([who, hint], i) => (
+            <span key={who}>
+              {i > 0 && <span className="duo-keyhint-sep">|</span>}
+              <b>{who}</b> {hint}
+            </span>
+          ))}
         </span>
       </div>
+      {/* 屏幕左右要跟键盘左右对上：用 WASD（左手区）的那个玩家坐左边，用
+          方向键（右下角）的坐右边。否则两个人手是交叉的——右手边的人去够
+          键盘左边的 WASD，左手边的人去够右下角的方向键，别扭且容易碰手。
+          P1 / P2 的身份、计分、回调都跟着玩家走，交换的只是 DOM 顺序。 */}
       <div className="duo-stage">
-        <PlayField
-          key={`p1-${track.track_id}-${tier}-${mode}-${runKey}`}
-          district={track.district}
-          chart={chart}
-          audioUrl={assetUrl(track.audio)}
-          mode={mode}
-          casualSpeed={settings.casualSpeed}
-          statsRef={p1Stats}
-          trackTitle={track.title}
-          tierLabel={tier}
-          playerLabel="P1"
-          keys={p1Keys}
-          startGate={startGate}
-          onReady={armReady}
-          hideStartOverlay
-          onPauseChange={broadcastPause}
-          pauseSync={pauseSync}
-          onFinish={finish(0)}
-        />
-        <PlayField
-          key={`p2-${track.track_id}-${tier}-${mode}-${runKey}`}
-          district={track.district}
-          chart={chart}
-          audioUrl={assetUrl(track.audio)}
-          mode={mode}
-          casualSpeed={settings.casualSpeed}
-          statsRef={p2Stats}
-          trackTitle={track.title}
-          tierLabel={tier}
-          playerLabel="P2"
-          keys={p2Keys}
-          muteMusic
-          startGate={startGate}
-          onReady={armReady}
-          hideStartOverlay
-          onPauseChange={broadcastPause}
-          pauseSync={pauseSync}
-          onFinish={finish(1)}
-        />
+        {p2OnLeft
+          ? [fieldP2, fieldP1]
+          : [fieldP1, fieldP2]}
       </div>
 
       {/* Ready card — shown once BOTH fields finished decoding. One click:
@@ -297,9 +338,9 @@ export function DuoPage() {
             <p className="overlay-kicker">Duo · {track.title}</p>
             <p className="overlay-title">{winner}</p>
             <div className="duo-scoreline">
-              {duoResult.map((r, i) => (
-                <div className={`duo-scorecol${r.score === best ? " is-winner" : ""}`} key={i}>
-                  <span className="duo-scorecol-who">{i === 0 ? "P1" : "P2"}</span>
+              {scoreCols.map(([who, r]) => (
+                <div className={`duo-scorecol${r.score === best ? " is-winner" : ""}`} key={who}>
+                  <span className="duo-scorecol-who">{who}</span>
                   <span className="duo-scorecol-grade">{r.grade}</span>
                   <span className="duo-scorecol-score">{r.score.toLocaleString("en-US")}</span>
                   <span className="duo-scorecol-meta">
