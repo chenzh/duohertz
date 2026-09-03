@@ -26,7 +26,8 @@ import { buildPlayPageMeta, usePageMeta } from "../seo/pageMeta";
  *   (two decodes = a few ms of delay = flanger/echo). Hit SFX stay on for both,
  *   so each player still hears their own feedback.
  * · **Keys**: P1 keeps the player's saved binding; P2 is handed the preset that
- *   can't collide with it (arrows ↔ D F J K), see `keyMap.partnerKeysFor`.
+ *   can't collide with it — and that sits as far away as the board allows
+ *   (arrows ↔ WASD, two opposite corners), see `keyMap.partnerKeysFor`.
  * · **Pause**: both fields hand their pause toggles to the parent, which bumps
  *   a single `pauseSync` counter that flips BOTH fields — a one-sided pause
  *   would freeze one chart while the other kept falling.

@@ -129,13 +129,42 @@ export function hasDuplicateKeys(keys: string[]): boolean {
 }
 
 /**
- * Duo mode · The second player's binding: whichever preset can NOT collide
- * with the first player's. Arrows users get D F J K (left-hand home row);
- * anyone already on letter keys (dfjk / wasd / custom) gets the arrows.
- * Returns a fresh array — callers memoize it.
+ * Duo mode · Which preset P2 is offered, in preference order.
+ *
+ * WASD is first because it is the tightest cluster on the board — W sits
+ * directly above A S D, all four inside one 3×2 block — and it lives under the
+ * left hand, the furthest reachable spot from the arrow keys (a separate
+ * island in the bottom-right corner). Two players share ONE keyboard here, so
+ * physical separation is the whole point: their hands must never meet.
+ *
+ * The arrows are next. D F J K is deliberately last: it sprawls across the
+ * home row (D F … J K, with G H gaping in the middle rather than four keys you
+ * can cup with one hand), it overlaps WASD on `D`, and it lands right beside
+ * the arrow cluster — the exact crowding that got it dropped from duo.
+ */
+const DUO_PARTNER_PRESETS: KeyPresetId[] = ["wasd", "arrows", "dfjk"];
+
+/**
+ * Duo mode · The second player's binding: the first preset above that shares
+ * no key at all with P1's. Returns a fresh array — callers memoize it.
  */
 export function partnerKeysFor(p1: string[]): string[] {
-  return presetIdFor(p1) === "arrows" ? codesForPreset("dfjk") : codesForPreset("arrows");
+  const taken = new Set(p1.filter(Boolean));
+  for (const id of DUO_PARTNER_PRESETS) {
+    const codes = codesForPreset(id);
+    if (codes.every((c) => !taken.has(c))) return codes;
+  }
+  // P1 is customised hard enough to squat on all three presets — it only takes
+  // three well-aimed keys (say A + ← + J) to do it. Pool every preset's codes
+  // and deal out four that at least don't clash: 12 candidates minus the ≤4
+  // that P1 holds always leaves more than enough for a playable layout.
+  const free: string[] = [];
+  for (const id of DUO_PARTNER_PRESETS) {
+    for (const c of codesForPreset(id)) {
+      if (!taken.has(c) && !free.includes(c)) free.push(c);
+    }
+  }
+  return free.slice(0, 4);
 }
 
 /**

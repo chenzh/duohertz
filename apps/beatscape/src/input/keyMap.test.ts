@@ -86,17 +86,31 @@ describe("keyMap", () => {
   });
 
   it("gives duo P2 a binding that never collides with P1", () => {
-    // Arrows player → P2 gets the left-hand home row (D F J K).
-    expect(partnerKeysFor(DEFAULT_KEYS)).toEqual(codesForPreset("dfjk"));
-    // DFJK / WASD / custom letter bindings → P2 gets the arrows.
-    expect(partnerKeysFor(codesForPreset("dfjk"))).toEqual(codesForPreset("arrows"));
+    // P1 on the arrow cluster (bottom-right island) → P2 gets WASD, the tight
+    // left-hand block on the opposite corner. Hands never meet.
+    expect(partnerKeysFor(DEFAULT_KEYS)).toEqual(codesForPreset("wasd"));
+    // P1 already on WASD → P2 gets the arrows, the only preset that far away.
     expect(partnerKeysFor(codesForPreset("wasd"))).toEqual(codesForPreset("arrows"));
-    expect(partnerKeysFor(["KeyZ", "KeyX", "KeyC", "KeyV"])).toEqual(codesForPreset("arrows"));
+    // P1 on D F J K → WASD is out (both layouts use `D`), so P2 gets the arrows.
+    expect(partnerKeysFor(codesForPreset("dfjk"))).toEqual(codesForPreset("arrows"));
+    // Custom bindings get the same treatment — WASD when it's free.
+    expect(partnerKeysFor(["KeyZ", "KeyX", "KeyC", "KeyV"])).toEqual(codesForPreset("wasd"));
     // The contract that actually matters: zero shared codes for any P1 input.
     for (const p of [...KEY_PRESETS.map((k) => k.codes), ["KeyZ", "KeyX", "KeyC", "KeyV"]]) {
       const p2 = partnerKeysFor(p);
       for (const code of p2) expect(p).not.toContain(code);
       expect(p2).toHaveLength(4);
+      expect(new Set(p2).size).toBe(4);
     }
+  });
+
+  it("keeps duo P2 playable when P1 squats on all three presets", () => {
+    // One key out of each preset: A (wasd), ← (arrows), J (dfjk). No preset is
+    // free wholesale, so P2 is dealt four leftovers instead of nothing.
+    const p1 = ["KeyA", "ArrowLeft", "KeyJ", "KeyS"];
+    const p2 = partnerKeysFor(p1);
+    expect(p2).toHaveLength(4);
+    expect(new Set(p2).size).toBe(4);
+    for (const code of p2) expect(p1).not.toContain(code);
   });
 });
