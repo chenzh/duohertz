@@ -8,6 +8,7 @@ import {
   keyLabels,
   laneFromKeyEvent,
   normalizeKeys,
+  partnerKeysFor,
   presetIdFor,
 } from "./keyMap";
 
@@ -81,6 +82,21 @@ describe("keyMap", () => {
     for (const p of KEY_PRESETS) {
       expect(p.codes).toHaveLength(4);
       expect(hasDuplicateKeys(p.codes)).toBe(false);
+    }
+  });
+
+  it("gives duo P2 a binding that never collides with P1", () => {
+    // Arrows player → P2 gets the left-hand home row (D F J K).
+    expect(partnerKeysFor(DEFAULT_KEYS)).toEqual(codesForPreset("dfjk"));
+    // DFJK / WASD / custom letter bindings → P2 gets the arrows.
+    expect(partnerKeysFor(codesForPreset("dfjk"))).toEqual(codesForPreset("arrows"));
+    expect(partnerKeysFor(codesForPreset("wasd"))).toEqual(codesForPreset("arrows"));
+    expect(partnerKeysFor(["KeyZ", "KeyX", "KeyC", "KeyV"])).toEqual(codesForPreset("arrows"));
+    // The contract that actually matters: zero shared codes for any P1 input.
+    for (const p of [...KEY_PRESETS.map((k) => k.codes), ["KeyZ", "KeyX", "KeyC", "KeyV"]]) {
+      const p2 = partnerKeysFor(p);
+      for (const code of p2) expect(p).not.toContain(code);
+      expect(p2).toHaveLength(4);
     }
   });
 });

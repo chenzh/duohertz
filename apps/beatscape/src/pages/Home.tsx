@@ -11,7 +11,7 @@ import { AudioBar } from "../components/AudioBar";
 import { CharacterAvatar } from "../components/CharacterAvatar";
 import { DistrictBadge } from "../components/DistrictBadge";
 import { useReveal } from "../components/useReveal";
-import { FIRST_PLAY_TRACK_ID, INTRO_TRACK_ID, firstPlayHref } from "../lib/firstPlay";
+import { FIRST_PLAY_TRACK_ID, INTRO_TRACK_ID, duoHref, firstPlayHref } from "../lib/firstPlay";
 import { dailyPlayHref, getDailyChallenge } from "../lib/dailyChallenge";
 import { trackEvent } from "../lib/analytics";
 import { RADIO_EPISODES } from "../data/radioEpisodes";
@@ -135,6 +135,12 @@ export function HomePage() {
             <Link className="btn ghost" to="/library">
               {t.ui.browseTracks}
             </Link>
+            {/* DUO · 两人一键盘同屏对战，入口跟着主 CTA 走。 */}
+            {heroTrack && (
+              <Link className="btn ghost" to={duoHref(heroTrack.track_id)}>
+                Duo
+              </Link>
+            )}
             <Link className="btn ghost" to="/calibrate">
               Calibrate
             </Link>

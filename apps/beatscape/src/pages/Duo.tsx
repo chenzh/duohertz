@@ -6,7 +6,7 @@ import { PlayField } from "../components/PlayField";
 import type { ChartJSON, ChartTier, PlayMode, PlayResult } from "../types/chart";
 import type { CatalogTrack } from "../types/catalog";
 import { loadKeys, loadSettings } from "../storage/settings";
-import { codesForPreset, keyLabels, presetIdFor } from "../input/keyMap";
+import { keyLabels, partnerKeysFor } from "../input/keyMap";
 import { districtColor } from "../constants/scape";
 import { makeLiveStats, type LiveStats } from "../components/playfield/liveStats";
 import { trackEvent } from "../lib/analytics";
@@ -26,13 +26,11 @@ import { buildPlayPageMeta, usePageMeta } from "../seo/pageMeta";
  *   (two decodes = a few ms of delay = flanger/echo). Hit SFX stay on for both,
  *   so each player still hears their own feedback.
  * · **Keys**: P1 keeps the player's saved binding; P2 is handed the preset that
- *   can't collide with it (arrows ↔ D F J K).
+ *   can't collide with it (arrows ↔ D F J K), see `keyMap.partnerKeysFor`.
+ * · **Pause**: both fields hand their pause toggles to the parent, which bumps
+ *   a single `pauseSync` counter that flips BOTH fields — a one-sided pause
+ *   would freeze one chart while the other kept falling.
  */
-
-/** P2's binding: whatever preset does NOT collide with P1's. */
-function partnerKeys(p1: string[]): string[] {
-  return presetIdFor(p1) === "arrows" ? codesForPreset("dfjk") : codesForPreset("arrows");
-}
 
 export function DuoPage() {
   const { id } = useParams();
@@ -79,7 +77,7 @@ export function DuoPage() {
   const p2Stats = useRef<LiveStats>(makeLiveStats());
 
   const p1Keys = useMemo(loadKeys, []);
-  const p2Keys = useMemo(() => partnerKeys(p1Keys), [p1Keys]);
+  const p2Keys = useMemo(() => partnerKeysFor(p1Keys), [p1Keys]);
   const p1Hint = useMemo(() => keyLabels(p1Keys).join(" · "), [p1Keys]);
   const p2Hint = useMemo(() => keyLabels(p2Keys).join(" · "), [p2Keys]);
 
@@ -100,6 +98,25 @@ export function DuoPage() {
     setGateOpen(true);
     trackEvent("duo_start", { track: track?.track_id ?? "", tier, mode });
   };
+
+  // Linked pause: any pause action on either field broadcasts once and BOTH
+  // fields flip together (a one-sided pause would drift the charts apart).
+  // Both fields' window-keydown handlers fire for the SAME key event — and
+  // browsers run a microtask checkpoint between event listeners, so a
+  // queueMicrotask here would flush after listener #1 and the second
+  // broadcast would slip through as a SECOND bump (two flips = no pause).
+  // setTimeout(0) lands after the whole dispatch task, so the two reports
+  // collapse into exactly one bump.
+  const [pauseSync, setPauseSync] = useState(0);
+  const pausePendingRef = useRef(false);
+  const broadcastPause = useCallback(() => {
+    if (pausePendingRef.current) return;
+    pausePendingRef.current = true;
+    setTimeout(() => {
+      pausePendingRef.current = false;
+      setPauseSync((s) => s + 1);
+    }, 0);
+  }, []);
 
   // Both runs must land before we can call a winner.
   const [duoResult, setDuoResult] = useState<[PlayResult, PlayResult] | null>(null);
@@ -217,6 +234,8 @@ export function DuoPage() {
           startGate={startGate}
           onReady={armReady}
           hideStartOverlay
+          onPauseChange={broadcastPause}
+          pauseSync={pauseSync}
           onFinish={finish(0)}
         />
         <PlayField
@@ -235,6 +254,8 @@ export function DuoPage() {
           startGate={startGate}
           onReady={armReady}
           hideStartOverlay
+          onPauseChange={broadcastPause}
+          pauseSync={pauseSync}
           onFinish={finish(1)}
         />
       </div>

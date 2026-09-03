@@ -129,6 +129,16 @@ export function hasDuplicateKeys(keys: string[]): boolean {
 }
 
 /**
+ * Duo mode · The second player's binding: whichever preset can NOT collide
+ * with the first player's. Arrows users get D F J K (left-hand home row);
+ * anyone already on letter keys (dfjk / wasd / custom) gets the arrows.
+ * Returns a fresh array — callers memoize it.
+ */
+export function partnerKeysFor(p1: string[]): string[] {
+  return presetIdFor(p1) === "arrows" ? codesForPreset("dfjk") : codesForPreset("arrows");
+}
+
+/**
  * Read a code out of a raw keydown while the user is rebinding a lane.
  * Modifier-only presses (Shift, Ctrl, …) are rejected so they can't be bound.
  */

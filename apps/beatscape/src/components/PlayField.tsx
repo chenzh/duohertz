@@ -86,6 +86,19 @@ type Props = {
    * `startGate`), so the per-field unlock card would just be noise.
    */
   hideStartOverlay?: boolean;
+  /**
+   * Duo · Pause broadcasting. When provided, this field no longer toggles its
+   * own pause on Esc / P / the pause button / tab-hide — it just calls this
+   * callback and lets the parent broadcast `pauseSync` so BOTH fields switch
+   * together. Without it (single player) behaviour is unchanged.
+   */
+  onPauseChange?: () => void;
+  /**
+   * Duo · Pause broadcast counter. Every bump toggles this field's pause.
+   * The parent bumps once per user action (debounced when both fields report
+   * the same tab-hide), so both sides flip in lockstep and stay in sync.
+   */
+  pauseSync?: number;
 };
 
 export function PlayField({
@@ -109,6 +122,8 @@ export function PlayField({
   startGate,
   onReady,
   hideStartOverlay = false,
+  onPauseChange,
+  pauseSync,
 }: Props) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -163,6 +178,9 @@ export function PlayField({
   // NOT re-run the audio-load effect below (which would re-decode the track).
   const onReadyRef = useRef(onReady);
   onReadyRef.current = onReady;
+  // Duo · Same trick for the pause broadcast: stable ref, no effect churn.
+  const onPauseChangeRef = useRef(onPauseChange);
+  onPauseChangeRef.current = onPauseChange;
 
   const settings = useMemo(loadSettings, []);
   // Stable reference: the keyboard effect below keys off this array.
@@ -394,6 +412,13 @@ export function PlayField({
   const togglePause = () => {
     const conductor = conductorRef.current;
     if (!conductor) return;
+    // Duo · Hand the toggle to the parent: it bumps `pauseSync`, which flips
+    // BOTH fields in the same commit. Toggling locally here would let one
+    // player freeze while the other keeps playing — the charts would drift.
+    if (onPauseChangeRef.current) {
+      onPauseChangeRef.current();
+      return;
+    }
     // 用函数式更新读最新 paused，确保从按键监听（依赖只有 [keys]，closure 可能是旧的）调用也正确。
     setPaused((prev) => {
       if (prev) conductor.resume();
@@ -401,6 +426,20 @@ export function PlayField({
       return !prev;
     });
   };
+
+  // Duo · Parent's pause broadcast: flip this field once per bump. Bumps are
+  // debounced on the parent side, so one user action = one bump = one flip
+  // here — including the tab-hide case where BOTH fields report at once.
+  useEffect(() => {
+    if (!pauseSync) return;
+    const conductor = conductorRef.current;
+    if (!conductor) return;
+    setPaused((prev) => {
+      if (prev) conductor.resume();
+      else conductor.pause();
+      return !prev;
+    });
+  }, [pauseSync]);
 
   // FEEL PACK: instant retry — same chart, fresh session, straight to countdown.
   const restartRun = () => {
@@ -498,9 +537,16 @@ export function PlayField({
   };
 
   // Auto-pause when the tab is hidden; user resumes on return (PRD §4.11).
+  // Duo · Broadcast instead of pausing locally, so both fields freeze together.
+  // Both fields fire this on the same tab-hide; the parent debounces the two
+  // reports into a single `pauseSync` bump.
   useEffect(() => {
     const onVis = () => {
       if (document.hidden && conductorRef.current?.playing) {
+        if (onPauseChangeRef.current) {
+          onPauseChangeRef.current();
+          return;
+        }
         conductorRef.current.pause();
         setPaused(true);
       }
@@ -609,7 +655,10 @@ export function PlayField({
         return;
       }
       // FEEL PACK: instant retry — R restarts the chart unless R is lane-bound.
-      if (e.code === "KeyR" && !needsStartRef.current) {
+      // Duo · disabled: this restarts only THIS field, and the two charts would
+      // leave the lockstep they started in. Rematch on the result card is the
+      // duo way to replay.
+      if (e.code === "KeyR" && !needsStartRef.current && !onPauseChangeRef.current) {
         e.preventDefault();
         restartRun();
         return;
