@@ -907,6 +907,11 @@ body.play-immersive .play-page {
   background: rgba(28, 23, 23, 0.75);
   border: 1px solid var(--border);
   backdrop-filter: blur(10px);
+  /* z-index 夹在中间：31 > duo-start(30)，所以「Duel ready」那张全屏卡挡不住
+     左上角的 X（那一等可能好几秒，用户得能退出）；31 < duo-result(40)，所以
+     结算卡仍然盖住它 —— 结算卡自己带 Exit，两个退出入口不打架。 */
+  position: relative;
+  z-index: 31;
 }
 
 .play-meta-tier {
@@ -917,6 +922,40 @@ body.play-immersive .play-page {
   padding: 6px 10px;
   font-size: 12px;
   margin-left: auto;
+}
+
+/* 退出游戏的 X —— 常驻 .play-meta 最左，也就是屏幕真正的左上角。
+   全屏下它是唯一够得着的关闭方式（手机没有 Esc，右上角那个 Fullscreen
+   又只在大屏触屏出现）。误触不会丢进度：exitPlay / exitDuo 有 confirm。 */
+.play-exit {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--ink);
+  background: var(--bg-elevated);
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 var(--ink);
+  transition: background 120ms ease, color 120ms ease, transform 120ms ease;
+}
+
+.play-exit:hover,
+.play-exit:focus-visible {
+  background: var(--accent);
+  color: #12100f;
+}
+
+.play-exit:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 var(--ink);
 }
 
 .play-wrap {

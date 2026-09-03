@@ -141,6 +141,11 @@ export function PlayPage() {
         <i className="breathe" />
       </div>
       <div className="play-meta">
+        {/* X 坐最左：全屏下它是唯一够得着的关闭方式（手机没有 Esc），
+            位置也跟别的全屏 App 一致。误触有 exitPlay 的 confirm 兜底。 */}
+        <button type="button" className="play-exit" onClick={exitPlay} aria-label="Exit the Scape">
+          ✕
+        </button>
         <strong>{track.title}</strong>
         <span className="play-meta-tier">
           {tier} · {mode}
@@ -150,9 +155,6 @@ export function PlayPage() {
             Fullscreen
           </button>
         )}
-        <button type="button" className="btn compact" onClick={exitPlay}>
-          Exit
-        </button>
       </div>
       <PlayField
         key={`${track.track_id}-${tier}-${mode}`}

@@ -149,8 +149,13 @@ export function DuoPage() {
     setRunKey((k) => k + 1);
   };
 
+  const leaveDuo = () => nav(track ? `/track/${track.track_id}` : "/library");
+
+  // 左上角 X / 对局途中退出：这一局没打完（DUO 也不写单人档案），确认一次
+  // 再走 —— X 就在左上角，误触比原来那个被推到右上角的 Exit 容易得多。
   const exitDuo = () => {
-    nav(track ? `/track/${track.track_id}` : "/library");
+    if (!window.confirm("Leave the Scape? This run won't be saved.")) return;
+    leaveDuo();
   };
 
   if (loadError) {
@@ -208,6 +213,10 @@ export function DuoPage() {
         <i className="breathe" />
       </div>
       <div className="play-meta duo-meta">
+        {/* 同 Play 页：X 坐最左，全屏下唯一够得着的关闭方式。 */}
+        <button type="button" className="play-exit" onClick={exitDuo} aria-label="Exit the Scape">
+          ✕
+        </button>
         <strong>{track.title}</strong>
         <span className="play-meta-tier">
           DUO · {tier} · {mode}
@@ -215,9 +224,6 @@ export function DuoPage() {
         <span className="duo-keyhint" aria-hidden>
           <b>P1</b> {p1Hint} <span className="duo-keyhint-sep">|</span> <b>P2</b> {p2Hint}
         </span>
-        <button type="button" className="btn compact" onClick={exitDuo}>
-          Exit
-        </button>
       </div>
       <div className="duo-stage">
         <PlayField
@@ -309,7 +315,8 @@ export function DuoPage() {
               <button type="button" className="btn primary" onClick={rematch}>
                 Rematch
               </button>
-              <button type="button" className="btn" onClick={exitDuo}>
+              {/* 两边都打完了，没有可丢的 —— 不再拦一道确认。 */}
+              <button type="button" className="btn" onClick={leaveDuo}>
                 Exit
               </button>
             </div>
