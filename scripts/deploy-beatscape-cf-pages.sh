@@ -31,6 +31,11 @@ npm run build:cf
 OUT="$APP/dist"
 test -f "$OUT/index.html"
 
+# --- 瘦身：stream.m4a 在 BeatScape 里从不播放（只被 streamLink.ts 用来判断是否
+#     显示"跳转流媒体 App"的链接），却占 ~680MB。deploy 实际只需 audio.m4a（~355MB），
+#     删掉 stream.m4a 直接省掉 2/3 体积，绕开 CF Pages 的部署体积上限。
+find "$OUT/catalog" -name 'stream.m4a' -delete
+
 cd "$ROOT"
 if ! npx --yes wrangler@4 pages project list 2>/dev/null | grep -q "$PROJECT_NAME"; then
   npx --yes wrangler@4 pages project create "$PROJECT_NAME" \
