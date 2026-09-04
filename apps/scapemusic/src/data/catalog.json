@@ -1,7 +1,7 @@
 [
   {
     "track_id": "bs-p3-01",
-    "title": "Midnight Velvet",
+    "title": "Midnight Haze",
     "artist": "Verity Lane",
     "genre": "R&B",
     "bpm": 92,
@@ -13,14 +13,14 @@
     "cover": "/catalog/bs-p3-01/cover.svg",
     "og": "/catalog/bs-p3-01/og.png",
     "stream_audio": "/catalog/bs-p3-01/stream.m4a",
-    "stream_duration_sec": 216
+    "stream_duration_sec": 180
   },
   {
     "track_id": "bs-p3-02",
     "title": "Chrome Psychosis",
     "artist": "Nova Circuit",
     "genre": "EDM",
-    "bpm": 158,
+    "bpm": 156,
     "vibe": "battle",
     "district": "Pulse Core",
     "tags": [
@@ -49,7 +49,7 @@
   },
   {
     "track_id": "bs-p3-04",
-    "title": "Lounge Phantom",
+    "title": "Lounge Ember",
     "artist": "Mira Lane",
     "genre": "R&B",
     "bpm": 90,
@@ -61,7 +61,7 @@
     "cover": "/catalog/bs-p3-04/cover.svg",
     "og": "/catalog/bs-p3-04/og.png",
     "stream_audio": "/catalog/bs-p3-04/stream.m4a",
-    "stream_duration_sec": 216
+    "stream_duration_sec": 180
   },
   {
     "track_id": "bs-p3-05",
@@ -97,7 +97,7 @@
   },
   {
     "track_id": "bs-p3-07",
-    "title": "Glass Phantom Drive",
+    "title": "Glass Echo Drive",
     "artist": "Kite Solar",
     "genre": "Pop",
     "bpm": 120,
@@ -109,7 +109,7 @@
     "cover": "/catalog/bs-p3-07/cover.svg",
     "og": "/catalog/bs-p3-07/og.png",
     "stream_audio": "/catalog/bs-p3-07/stream.m4a",
-    "stream_duration_sec": 216
+    "stream_duration_sec": 180
   },
   {
     "track_id": "bs-p3-08",
@@ -157,6 +157,166 @@
     "cover": "/catalog/bs-p3-10/cover.svg",
     "og": "/catalog/bs-p3-10/og.png",
     "stream_audio": "/catalog/bs-p3-10/stream.m4a",
+    "stream_duration_sec": 216
+  },
+  {
+    "track_id": "bs-p4-01",
+    "title": "Humming Haze",
+    "artist": "Verity Lane",
+    "genre": "R&B",
+    "bpm": 88,
+    "vibe": "chill",
+    "district": "Afterhours Lane",
+    "tags": [
+      "Classic Style"
+    ],
+    "cover": "/catalog/bs-p4-01/cover.svg",
+    "og": "/catalog/bs-p4-01/og.png",
+    "stream_audio": "/catalog/bs-p4-01/stream.m4a",
+    "stream_duration_sec": 216
+  },
+  {
+    "track_id": "bs-p4-02",
+    "title": "Chrome Choir",
+    "artist": "Nova Circuit",
+    "genre": "EDM",
+    "bpm": 158,
+    "vibe": "battle",
+    "district": "Pulse Core",
+    "tags": [
+      "Hot Chart Style"
+    ],
+    "cover": "/catalog/bs-p4-02/cover.svg",
+    "og": "/catalog/bs-p4-02/og.png",
+    "stream_audio": "/catalog/bs-p4-02/stream.m4a",
+    "stream_duration_sec": 216
+  },
+  {
+    "track_id": "bs-p4-03",
+    "title": "Midnight Hum",
+    "artist": "Mira Lane",
+    "genre": "R&B",
+    "bpm": 92,
+    "vibe": "chill",
+    "district": "Afterhours Lane",
+    "tags": [
+      "New Release"
+    ],
+    "cover": "/catalog/bs-p4-03/cover.svg",
+    "og": "/catalog/bs-p4-03/og.png",
+    "stream_audio": "/catalog/bs-p4-03/stream.m4a",
+    "stream_duration_sec": 216
+  },
+  {
+    "track_id": "bs-p4-04",
+    "title": "Echo Glow Chorus",
+    "artist": "Halcyon Flux",
+    "genre": "EDM",
+    "bpm": 162,
+    "vibe": "battle",
+    "district": "Pulse Core",
+    "tags": [
+      "Viral Style"
+    ],
+    "cover": "/catalog/bs-p4-04/cover.svg",
+    "og": "/catalog/bs-p4-04/og.png",
+    "stream_audio": "/catalog/bs-p4-04/stream.m4a",
+    "stream_duration_sec": 216
+  },
+  {
+    "track_id": "bs-p4-05",
+    "title": "Glass Aria",
+    "artist": "Ada North",
+    "genre": "Pop",
+    "bpm": 118,
+    "vibe": "night-drive",
+    "district": "Glass Rim",
+    "tags": [
+      "New Release"
+    ],
+    "cover": "/catalog/bs-p4-05/cover.svg",
+    "og": "/catalog/bs-p4-05/og.png",
+    "stream_audio": "/catalog/bs-p4-05/stream.m4a",
+    "stream_duration_sec": 216
+  },
+  {
+    "track_id": "bs-p4-06",
+    "title": "Rooftop Hum",
+    "artist": "Quiet Neon",
+    "genre": "R&B",
+    "bpm": 88,
+    "vibe": "chill",
+    "district": "Glass Rim",
+    "tags": [
+      "Classic Style"
+    ],
+    "cover": "/catalog/bs-p4-06/cover.svg",
+    "og": "/catalog/bs-p4-06/og.png",
+    "stream_audio": "/catalog/bs-p4-06/stream.m4a",
+    "stream_duration_sec": 216
+  },
+  {
+    "track_id": "bs-p4-07",
+    "title": "Neon Lullaby",
+    "artist": "Luma Rim",
+    "genre": "Pop",
+    "bpm": 122,
+    "vibe": "groove",
+    "district": "Glass Rim",
+    "tags": [
+      "Viral Style"
+    ],
+    "cover": "/catalog/bs-p4-07/cover.svg",
+    "og": "/catalog/bs-p4-07/og.png",
+    "stream_audio": "/catalog/bs-p4-07/stream.m4a",
+    "stream_duration_sec": 216
+  },
+  {
+    "track_id": "bs-p4-08",
+    "title": "Afterhours Voice",
+    "artist": "Verity Lane",
+    "genre": "R&B",
+    "bpm": 90,
+    "vibe": "chill",
+    "district": "Afterhours Lane",
+    "tags": [
+      "New Release"
+    ],
+    "cover": "/catalog/bs-p4-08/cover.svg",
+    "og": "/catalog/bs-p4-08/og.png",
+    "stream_audio": "/catalog/bs-p4-08/stream.m4a",
+    "stream_duration_sec": 216
+  },
+  {
+    "track_id": "bs-p4-09",
+    "title": "Blue Hour Chorus",
+    "artist": "Kite Solar",
+    "genre": "EDM",
+    "bpm": 150,
+    "vibe": "night-drive",
+    "district": "Pulse Core",
+    "tags": [
+      "Hot Chart Style"
+    ],
+    "cover": "/catalog/bs-p4-09/cover.svg",
+    "og": "/catalog/bs-p4-09/og.png",
+    "stream_audio": "/catalog/bs-p4-09/stream.m4a",
+    "stream_duration_sec": 216
+  },
+  {
+    "track_id": "bs-p4-10",
+    "title": "Scape Sings Low",
+    "artist": "Subline",
+    "genre": "Hip-hop",
+    "bpm": 96,
+    "vibe": "groove",
+    "district": "Night Grid",
+    "tags": [
+      "Classic Style"
+    ],
+    "cover": "/catalog/bs-p4-10/cover.svg",
+    "og": "/catalog/bs-p4-10/og.png",
+    "stream_audio": "/catalog/bs-p4-10/stream.m4a",
     "stream_duration_sec": 216
   },
   {

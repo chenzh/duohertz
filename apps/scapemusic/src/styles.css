@@ -882,15 +882,25 @@ img {
   border-radius: 2px;
   background: var(--scape-line);
   accent-color: var(--scape-accent);
+  /* Let the bar be grabbed anywhere and keep vertical page scroll from
+     hijacking horizontal scrub on touch screens. */
+  touch-action: none;
+  cursor: pointer;
+}
+
+.np-seek input[type="range"]:disabled {
+  opacity: 0.4;
+  cursor: default;
 }
 
 .np-seek input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   border-radius: 3px;
   background: var(--scape-accent-2);
   border: 2px solid var(--ink);
+  box-shadow: none;
 }
 
 .np-controls {

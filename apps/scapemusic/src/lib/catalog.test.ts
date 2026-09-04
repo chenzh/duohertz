@@ -4,8 +4,8 @@ import { filterTracks, GENRES, TRACKS, trackById, VIBES, type Vibe } from "./cat
 const VIBE_IDS = VIBES.map((v) => v.id);
 
 describe("catalog integrity (synced from apps/beatscape/public/catalog.json)", () => {
-  it("has the full 85-track library", () => {
-    expect(TRACKS).toHaveLength(85);
+  it("has the full 105-track library", () => {
+    expect(TRACKS).toHaveLength(105);
   });
 
   it("has unique track ids", () => {

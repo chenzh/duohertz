@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { fmtTime } from "../lib/format";
 import { gameTrackUrl, vibeMeta } from "../lib/catalog";
 import { useFavorites } from "../lib/storage";
@@ -18,10 +19,30 @@ export function NowPlaying() {
   const st = usePlayerState();
   const actions = usePlayerActions();
   const { favorites, toggleFavorite } = useFavorites();
+  // While the user drags the seek bar we must NOT fight them with the live
+  // playback position (timeupdate re-renders every ~250ms would snap the
+  // thumb back under the finger). Show a local scrub value during the drag
+  // and commit the seek on release.
+  const [scrubbing, setScrubbing] = useState(false);
+  const [scrubVal, setScrubVal] = useState(0);
   if (!st.track || !st.expanded) return null;
   const t = st.track;
   const vm = vibeMeta(t.vibe);
   const fav = favorites.includes(t.track_id);
+
+  const maxSec = Math.floor(st.dur) || 0;
+  const clampSec = (v: number) => Math.max(0, Math.min(maxSec, Math.floor(v)));
+  const shownSec = scrubbing ? scrubVal : clampSec(st.pos);
+
+  const startScrub = () => {
+    setScrubVal(clampSec(st.pos));
+    setScrubbing(true);
+  };
+  const commitScrub = () => {
+    if (!scrubbing) return;
+    actions.seekTo(scrubVal);
+    setScrubbing(false);
+  };
 
   return (
     <div className="np-overlay" role="dialog" aria-modal="true" aria-label="Now playing">
@@ -65,15 +86,23 @@ export function NowPlaying() {
         <p className="np-error">Stream hiccup — this frequency dropped out. Try the next track.</p>
       ) : (
         <div className="np-seek">
-          <span className="np-time">{fmtTime(st.pos)}</span>
+          <span className="np-time">{fmtTime(scrubbing ? scrubVal : st.pos)}</span>
           <input
             type="range"
             min={0}
-            max={Math.floor(st.dur) || 0}
-            value={Math.floor(st.pos)}
-            onChange={(e) => actions.seekTo(Number(e.target.value))}
-            aria-label="Seek"
+            max={maxSec}
+            value={shownSec}
             disabled={!st.dur}
+            aria-label="Seek"
+            onPointerDown={startScrub}
+            onChange={(e) => {
+              const v = clampSec(Number(e.target.value));
+              setScrubVal(v);
+              actions.seekTo(v);
+            }}
+            onPointerUp={commitScrub}
+            onPointerCancel={() => setScrubbing(false)}
+            onBlur={commitScrub}
           />
           <span className="np-time">{fmtTime(st.dur)}</span>
         </div>

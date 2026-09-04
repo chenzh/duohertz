@@ -1,4 +1,5 @@
 import { useMemo, type ReactNode } from "react";
+import { TRACKS } from "./lib/catalog";
 import { MiniPlayer } from "./components/MiniPlayer";
 import { NowPlaying } from "./components/NowPlaying";
 import { TabBar } from "./components/TabBar";
@@ -96,7 +97,7 @@ export default function App() {
       <TabBar />
       {st.expanded && <NowPlaying />}
       <footer className="foot">
-        AI Original · Owned Rights · BeatScape — 85 generated tracks, zero licensed inventory.
+        AI Original · Owned Rights · BeatScape — {TRACKS.length} generated tracks, zero licensed inventory.
       </footer>
     </div>
   );
