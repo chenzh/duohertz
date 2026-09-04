@@ -39,6 +39,16 @@ class GenerateRequest(BaseModel):
     duration_sec: int = Field(ge=5, le=180)
     model_variant: str | None = "small"
     output_path: str
+    # Optional per-request negative prompt. When set, overrides the process
+    # default (SA3_NEGATIVE_PROMPT = "vocals, singing, speech, lyrics") so a
+    # caller can ask for wordless humming. Game BGM callers omit it → default
+    # stays fully instrumental.
+    negative_prompt: str | None = None
+    # Optional per-request sampling params. Override the process defaults
+    # (SA3_CFG / SA3_STEPS). CFG>1 pushes output toward the prompt — useful to
+    # sharpen a wordless vocal; defaults keep the fast low-CFG posture.
+    cfg: float | None = None
+    steps: int | None = None
 
 
 def _check_secret(secret: str | None) -> None:

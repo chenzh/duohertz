@@ -236,6 +236,7 @@ def all_locked_tracks() -> list[dict[str, Any]]:
         ("beatscape_stage4_specs", "beatscape-stage4-specs.py", "stage4_tracks"),
         ("beatscape_stage6_specs", "beatscape-stage6-specs.py", "stage6_tracks"),
         ("beatscape_p3_specs", "beatscape-p3-specs.py", "p3_tracks"),
+        ("beatscape_p4_specs", "beatscape-p4-specs.py", "p4_tracks"),
     ):
         spec = importlib.util.spec_from_file_location(mod_name, scripts / path_name)
         if not spec or not spec.loader:
@@ -317,10 +318,27 @@ def _merge_p3_locked() -> None:
         PREVIEW_STEM_BY_ID[t["track_id"]] = t["preview_stem"]
 
 
+def _merge_p4_locked() -> None:
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location(
+        "beatscape_p4_specs",
+        Path(__file__).resolve().parent / "beatscape-p4-specs.py",
+    )
+    if not spec or not spec.loader:
+        return
+    m = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(m)
+    for t in m.p4_tracks():
+        LOCKED_BY_ID[t["track_id"]] = t
+        PREVIEW_STEM_BY_ID[t["track_id"]] = t["preview_stem"]
+
+
 _merge_stage3_locked()
 _merge_stage4_locked()
 _merge_stage6_locked()
 _merge_p3_locked()
+_merge_p4_locked()
 
 
 def stage_from_track_id(track_id: str) -> int:

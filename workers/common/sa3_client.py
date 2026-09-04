@@ -70,9 +70,19 @@ def generate_via_sa3_mlx(payload: dict[str, Any], out_path: str) -> tuple[bool, 
     seed_env = os.getenv("SA3_SEED")
     seed = int(seed_env) if seed_env else abs(hash(job_id)) % (2**31)
 
-    negative = os.getenv("SA3_NEGATIVE_PROMPT", "vocals, singing, speech, lyrics")
-    cfg = float(os.getenv("SA3_CFG", "1.0"))
-    steps = int(os.getenv("SA3_STEPS", "8"))
+    # Per-request negative prompt overrides the process default. Default keeps
+    # the fully-instrumental posture (vocals/singing/lyrics banned) for game
+    # BGM; wordless-hum requests pass their own negative that allows humming
+    # while still blocking lyrics/speech.
+    negative = (
+        payload.get("negative_prompt")
+        or os.getenv("SA3_NEGATIVE_PROMPT")
+        or "vocals, singing, speech, lyrics"
+    )
+    # Per-request sampling params override process defaults. CFG>1 sharpens
+    # prompt adherence (vocal shape); steps stays at the distilled 8 by default.
+    cfg = float(payload.get("cfg") if payload.get("cfg") is not None else os.getenv("SA3_CFG", "1.0"))
+    steps = int(payload.get("steps") if payload.get("steps") is not None else os.getenv("SA3_STEPS", "8"))
 
     tmp_out = Path(f"/tmp/sa3-{job_id}.wav")
     if tmp_out.exists():
