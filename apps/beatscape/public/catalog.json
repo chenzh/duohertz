@@ -3,12 +3,12 @@
   "tracks": [
     {
       "track_id": "bs-p3-01",
-      "title": "Midnight Velvet",
+      "title": "Midnight Haze",
       "artist": "Verity Lane",
       "genre": "R&B",
       "bpm": 92,
       "duration_sec": 120,
-      "stream_duration_sec": 216,
+      "stream_duration_sec": 180,
       "preset_id": "bs-resonance-neosoul",
       "engine": "stable-audio-3",
       "job_id": "local-preview-bs-p3-01",
@@ -31,7 +31,7 @@
         "hard": "/catalog/bs-p3-01/hard.json"
       },
       "seo": {
-        "title": "Midnight Velvet \u2014 BeatScape AI Original",
+        "title": "Midnight Haze \u2014 BeatScape AI Original",
         "description": "Own the Scape. 92 BPM R&B chart."
       },
       "stream_audio": "/catalog/bs-p3-01/stream.m4a"
@@ -108,12 +108,12 @@
     },
     {
       "track_id": "bs-p3-04",
-      "title": "Lounge Phantom",
+      "title": "Lounge Ember",
       "artist": "Mira Lane",
       "genre": "R&B",
       "bpm": 90,
       "duration_sec": 120,
-      "stream_duration_sec": 216,
+      "stream_duration_sec": 180,
       "preset_id": "bs-resonance-satin",
       "engine": "stable-audio-3",
       "job_id": "local-preview-bs-p3-04",
@@ -136,7 +136,7 @@
         "hard": "/catalog/bs-p3-04/hard.json"
       },
       "seo": {
-        "title": "Lounge Phantom \u2014 BeatScape AI Original",
+        "title": "Lounge Ember \u2014 BeatScape AI Original",
         "description": "Own the Scape. 90 BPM R&B chart."
       },
       "stream_audio": "/catalog/bs-p3-04/stream.m4a"
@@ -213,12 +213,12 @@
     },
     {
       "track_id": "bs-p3-07",
-      "title": "Glass Phantom Drive",
+      "title": "Glass Echo Drive",
       "artist": "Kite Solar",
       "genre": "Pop",
       "bpm": 120,
       "duration_sec": 120,
-      "stream_duration_sec": 216,
+      "stream_duration_sec": 180,
       "preset_id": "bs-resonance-rhodes",
       "engine": "stable-audio-3",
       "job_id": "local-preview-bs-p3-07",
@@ -241,7 +241,7 @@
         "hard": "/catalog/bs-p3-07/hard.json"
       },
       "seo": {
-        "title": "Glass Phantom Drive \u2014 BeatScape AI Original",
+        "title": "Glass Echo Drive \u2014 BeatScape AI Original",
         "description": "Own the Scape. 120 BPM Pop chart."
       },
       "stream_audio": "/catalog/bs-p3-07/stream.m4a"
@@ -350,6 +350,356 @@
         "description": "Own the Scape. 100 BPM Hip-hop chart."
       },
       "stream_audio": "/catalog/bs-p3-10/stream.m4a"
+    },
+    {
+      "track_id": "bs-p4-01",
+      "title": "Humming Haze",
+      "artist": "Verity Lane",
+      "genre": "R&B",
+      "bpm": 88,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-satin",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-p4-01",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Classic Style"
+      ],
+      "vibe": "chill",
+      "district": "Afterhours Lane",
+      "default_mode": "casual",
+      "default_tier": "easy",
+      "allows_slide": false,
+      "audio": "/catalog/bs-p4-01/audio.m4a",
+      "cover": "/catalog/bs-p4-01/cover.svg",
+      "og": "/catalog/bs-p4-01/og.png",
+      "charts": {
+        "easy": "/catalog/bs-p4-01/easy.json",
+        "standard": "/catalog/bs-p4-01/standard.json",
+        "hard": "/catalog/bs-p4-01/hard.json"
+      },
+      "seo": {
+        "title": "Humming Haze \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 90 BPM R&B chart."
+      },
+      "stream_audio": "/catalog/bs-p4-01/stream.m4a"
+    },
+    {
+      "track_id": "bs-p4-02",
+      "title": "Chrome Choir",
+      "artist": "Nova Circuit",
+      "genre": "EDM",
+      "bpm": 158,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-overdrive",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-p4-02",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Hot Chart Style"
+      ],
+      "vibe": "battle",
+      "district": "Pulse Core",
+      "default_mode": "arcade",
+      "default_tier": "hard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-p4-02/audio.m4a",
+      "cover": "/catalog/bs-p4-02/cover.svg",
+      "og": "/catalog/bs-p4-02/og.png",
+      "charts": {
+        "easy": "/catalog/bs-p4-02/easy.json",
+        "standard": "/catalog/bs-p4-02/standard.json",
+        "hard": "/catalog/bs-p4-02/hard.json"
+      },
+      "seo": {
+        "title": "Chrome Choir \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 158 BPM EDM chart."
+      },
+      "stream_audio": "/catalog/bs-p4-02/stream.m4a"
+    },
+    {
+      "track_id": "bs-p4-03",
+      "title": "Midnight Hum",
+      "artist": "Mira Lane",
+      "genre": "R&B",
+      "bpm": 92,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-neosoul",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-p4-03",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "New Release"
+      ],
+      "vibe": "chill",
+      "district": "Afterhours Lane",
+      "default_mode": "casual",
+      "default_tier": "easy",
+      "allows_slide": false,
+      "audio": "/catalog/bs-p4-03/audio.m4a",
+      "cover": "/catalog/bs-p4-03/cover.svg",
+      "og": "/catalog/bs-p4-03/og.png",
+      "charts": {
+        "easy": "/catalog/bs-p4-03/easy.json",
+        "standard": "/catalog/bs-p4-03/standard.json",
+        "hard": "/catalog/bs-p4-03/hard.json"
+      },
+      "seo": {
+        "title": "Midnight Hum \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 92 BPM R&B chart."
+      },
+      "stream_audio": "/catalog/bs-p4-03/stream.m4a"
+    },
+    {
+      "track_id": "bs-p4-04",
+      "title": "Echo Glow Chorus",
+      "artist": "Halcyon Flux",
+      "genre": "EDM",
+      "bpm": 162,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-brass",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-p4-04",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Viral Style"
+      ],
+      "vibe": "battle",
+      "district": "Pulse Core",
+      "default_mode": "arcade",
+      "default_tier": "standard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-p4-04/audio.m4a",
+      "cover": "/catalog/bs-p4-04/cover.svg",
+      "og": "/catalog/bs-p4-04/og.png",
+      "charts": {
+        "easy": "/catalog/bs-p4-04/easy.json",
+        "standard": "/catalog/bs-p4-04/standard.json",
+        "hard": "/catalog/bs-p4-04/hard.json"
+      },
+      "seo": {
+        "title": "Echo Glow Chorus \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 162 BPM EDM chart."
+      },
+      "stream_audio": "/catalog/bs-p4-04/stream.m4a"
+    },
+    {
+      "track_id": "bs-p4-05",
+      "title": "Glass Aria",
+      "artist": "Ada North",
+      "genre": "Pop",
+      "bpm": 118,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-glassdrive",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-p4-05",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "New Release"
+      ],
+      "vibe": "night-drive",
+      "district": "Glass Rim",
+      "default_mode": "arcade",
+      "default_tier": "standard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-p4-05/audio.m4a",
+      "cover": "/catalog/bs-p4-05/cover.svg",
+      "og": "/catalog/bs-p4-05/og.png",
+      "charts": {
+        "easy": "/catalog/bs-p4-05/easy.json",
+        "standard": "/catalog/bs-p4-05/standard.json",
+        "hard": "/catalog/bs-p4-05/hard.json"
+      },
+      "seo": {
+        "title": "Glass Aria \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 118 BPM Pop chart."
+      },
+      "stream_audio": "/catalog/bs-p4-05/stream.m4a"
+    },
+    {
+      "track_id": "bs-p4-06",
+      "title": "Rooftop Hum",
+      "artist": "Quiet Neon",
+      "genre": "R&B",
+      "bpm": 88,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-satin",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-p4-06",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Classic Style"
+      ],
+      "vibe": "chill",
+      "district": "Glass Rim",
+      "default_mode": "casual",
+      "default_tier": "easy",
+      "allows_slide": false,
+      "audio": "/catalog/bs-p4-06/audio.m4a",
+      "cover": "/catalog/bs-p4-06/cover.svg",
+      "og": "/catalog/bs-p4-06/og.png",
+      "charts": {
+        "easy": "/catalog/bs-p4-06/easy.json",
+        "standard": "/catalog/bs-p4-06/standard.json",
+        "hard": "/catalog/bs-p4-06/hard.json"
+      },
+      "seo": {
+        "title": "Rooftop Hum \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 88 BPM R&B chart."
+      },
+      "stream_audio": "/catalog/bs-p4-06/stream.m4a"
+    },
+    {
+      "track_id": "bs-p4-07",
+      "title": "Neon Lullaby",
+      "artist": "Luma Rim",
+      "genre": "Pop",
+      "bpm": 122,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-rhodes",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-p4-07",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Viral Style"
+      ],
+      "vibe": "groove",
+      "district": "Glass Rim",
+      "default_mode": "arcade",
+      "default_tier": "standard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-p4-07/audio.m4a",
+      "cover": "/catalog/bs-p4-07/cover.svg",
+      "og": "/catalog/bs-p4-07/og.png",
+      "charts": {
+        "easy": "/catalog/bs-p4-07/easy.json",
+        "standard": "/catalog/bs-p4-07/standard.json",
+        "hard": "/catalog/bs-p4-07/hard.json"
+      },
+      "seo": {
+        "title": "Neon Lullaby \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 122 BPM Pop chart."
+      },
+      "stream_audio": "/catalog/bs-p4-07/stream.m4a"
+    },
+    {
+      "track_id": "bs-p4-08",
+      "title": "Afterhours Voice",
+      "artist": "Verity Lane",
+      "genre": "R&B",
+      "bpm": 90,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-satin",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-p4-08",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "New Release"
+      ],
+      "vibe": "chill",
+      "district": "Afterhours Lane",
+      "default_mode": "casual",
+      "default_tier": "easy",
+      "allows_slide": false,
+      "audio": "/catalog/bs-p4-08/audio.m4a",
+      "cover": "/catalog/bs-p4-08/cover.svg",
+      "og": "/catalog/bs-p4-08/og.png",
+      "charts": {
+        "easy": "/catalog/bs-p4-08/easy.json",
+        "standard": "/catalog/bs-p4-08/standard.json",
+        "hard": "/catalog/bs-p4-08/hard.json"
+      },
+      "seo": {
+        "title": "Afterhours Voice \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 90 BPM R&B chart."
+      },
+      "stream_audio": "/catalog/bs-p4-08/stream.m4a"
+    },
+    {
+      "track_id": "bs-p4-09",
+      "title": "Blue Hour Chorus",
+      "artist": "Kite Solar",
+      "genre": "EDM",
+      "bpm": 150,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-nightfall",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-p4-09",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Hot Chart Style"
+      ],
+      "vibe": "night-drive",
+      "district": "Pulse Core",
+      "default_mode": "arcade",
+      "default_tier": "standard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-p4-09/audio.m4a",
+      "cover": "/catalog/bs-p4-09/cover.svg",
+      "og": "/catalog/bs-p4-09/og.png",
+      "charts": {
+        "easy": "/catalog/bs-p4-09/easy.json",
+        "standard": "/catalog/bs-p4-09/standard.json",
+        "hard": "/catalog/bs-p4-09/hard.json"
+      },
+      "seo": {
+        "title": "Blue Hour Chorus \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 150 BPM EDM chart."
+      },
+      "stream_audio": "/catalog/bs-p4-09/stream.m4a"
+    },
+    {
+      "track_id": "bs-p4-10",
+      "title": "Scape Sings Low",
+      "artist": "Subline",
+      "genre": "Hip-hop",
+      "bpm": 96,
+      "duration_sec": 120,
+      "stream_duration_sec": 216,
+      "preset_id": "bs-resonance-funkhop",
+      "engine": "stable-audio-3",
+      "job_id": "local-preview-bs-p4-10",
+      "rights": "owned",
+      "theme": "beatscape",
+      "tags": [
+        "Classic Style"
+      ],
+      "vibe": "groove",
+      "district": "Night Grid",
+      "default_mode": "casual",
+      "default_tier": "standard",
+      "allows_slide": false,
+      "audio": "/catalog/bs-p4-10/audio.m4a",
+      "cover": "/catalog/bs-p4-10/cover.svg",
+      "og": "/catalog/bs-p4-10/og.png",
+      "charts": {
+        "easy": "/catalog/bs-p4-10/easy.json",
+        "standard": "/catalog/bs-p4-10/standard.json",
+        "hard": "/catalog/bs-p4-10/hard.json"
+      },
+      "seo": {
+        "title": "Scape Sings Low \u2014 BeatScape AI Original",
+        "description": "Own the Scape. 96 BPM Hip-hop chart."
+      },
+      "stream_audio": "/catalog/bs-p4-10/stream.m4a"
     },
     {
       "track_id": "bs-s1-01",
