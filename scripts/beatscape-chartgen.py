@@ -36,10 +36,39 @@ analyze_audio = _audio.analyze_audio
 AudioAnalysis = _audio.AudioAnalysis
 
 TIER_SPEC = {
-    "easy": {"approach": 1.35, "min_gap": 0.38, "nps": 2.5, "peak": 5, "hold_p": 0.12, "chord_p": 0.0, "slide_max": 0},
-    "standard": {"approach": 1.20, "min_gap": 0.22, "nps": 4.5, "peak": 8, "hold_p": 0.24, "chord_p": 0.16, "slide_max": 2},
-    "hard": {"approach": 1.00, "min_gap": 0.14, "nps": 6.4, "peak": 12, "hold_p": 0.30, "chord_p": 0.34, "slide_max": 8},
+    # grid_w 由 scripts/ 下的参数扫描定出（见 beatscape-chart-gridfit.py 的说明）：
+    # easy 最贴拍（新手要能锁住脉冲），hard 只轻度拉一把、保留切分加花。
+    "easy": {"approach": 1.35, "min_gap": 0.38, "nps": 2.5, "peak": 5, "hold_p": 0.12, "chord_p": 0.0, "slide_max": 0, "grid_w": 0.60},
+    "standard": {"approach": 1.20, "min_gap": 0.22, "nps": 4.5, "peak": 8, "hold_p": 0.24, "chord_p": 0.16, "slide_max": 2, "grid_w": 0.50},
+    "hard": {"approach": 1.00, "min_gap": 0.14, "nps": 6.4, "peak": 12, "hold_p": 0.30, "chord_p": 0.34, "slide_max": 8, "grid_w": 0.40},
 }
+
+# --- beat-grid affinity ---------------------------------------------------
+# Onset 检测密度（约 11/s）远高于八分音符网格（90 BPM 仅 3/s），所以"纯按能量
+# 挑最响的 onset"会把音符撒在拍与拍之间的微位置上：每个音都确实踩在真实声音上，
+# 但相邻间隔忽长忽短，玩家锁不住脉冲 —— 听感就是"不跟拍"。
+# 这里给排序键加一项"贴网格"加成：正拍 1.0、八分反拍 0.78、十六分 0.5、格间 0。
+# grid_w 越大越贴拍（easy 最贴，让人能跟上；hard 保留切分加花）。
+GRID_TOL_SEC = 0.022  # 判为"在格上"的容差，取 onset 检测抖动的量级
+GRID_LEVELS = (  # (到最近整拍的距离，单位=拍) -> 加成权重
+    (0.0, 1.00),
+    (0.5, 0.78),
+    (0.25, 0.50),
+)
+
+
+def grid_affinity(t_sec: float, beat: float, offset_sec: float) -> float:
+    """0..1：音符落在检测到的拍网格上的程度；落在格间返回 0。"""
+    if beat <= 0:
+        return 0.0
+    tol = GRID_TOL_SEC / beat  # 容差换算成"拍"
+    rel = (t_sec - offset_sec) / beat
+    frac = abs(rel - round(rel))  # 到最近整拍的距离，0..0.5 拍
+    best = 0.0
+    for center, weight in GRID_LEVELS:
+        if abs(frac - center) <= tol:
+            best = max(best, weight)
+    return best
 
 CHORD_SHAPES = [(0, 3), (1, 2), (0, 2), (1, 3)]
 CHORD_SHAPES_HARD = [(0, 3), (1, 2), (0, 3), (0, 1, 2), (1, 2, 3)]
@@ -59,7 +88,14 @@ def make_slide(rng: random.Random, t: float, lane: int, beat: float) -> dict | N
     return {"id": "slide", "t": round(t, 3), "type": "slide", "lane": lane, "to": to_lane, "end": end_t}
 
 
-def enforce_peak_nps(notes: list[dict], max_peak: int) -> list[dict]:
+def enforce_peak_nps(
+    notes: list[dict], max_peak: int, beat: float = 0.0, offset: float = 0.0
+) -> list[dict]:
+    """Cull notes to keep peak NPS in check.
+
+    beat > 0 时优先砍掉**最不贴拍**的那个，而不是窗口正中那个 —— 否则刚按网格
+    搭起来的节拍骨架会被随机拆掉一两根，前功尽弃。
+    """
     def peak(ns: list[dict]) -> int:
         times = sorted(n["t"] for n in ns)
         best = 0
@@ -87,20 +123,44 @@ def enforce_peak_nps(notes: list[dict], max_peak: int) -> list[dict]:
             cands = [n for n in kept if ws <= n["t"] <= we]
         if not cands:
             break
-        kept.remove(cands[len(cands) // 2])
+        affs = [grid_affinity(n["t"], beat, offset) for n in cands] if beat > 0 else []
+        # 只有窗口内的贴格程度**有差异**时才按 aff 挑，否则退回原来的"取中间"
+        # 行为（全部离格时按 aff 挑会退化成"删最早的"，白白改变既有谱面）。
+        if affs and max(affs) - min(affs) > 1e-9:
+            victim = min(zip(affs, [n["t"] for n in cands], cands))[2]
+        else:
+            victim = cands[len(cands) // 2]
+        kept.remove(victim)
     kept.sort(key=lambda n: n["t"])
     return kept
 
 
 def select_onsets(analysis: AudioAnalysis, tier: str, dur: float) -> list[tuple[float, int, float]]:
-    """Pick onset subset for tier: (t_sec, lane, energy)."""
+    """Pick onset subset for tier: (t_sec, lane, energy).
+
+    排序键 = 归一化能量 + grid_w × 网格亲和力。纯按能量排会把音符撒在拍与拍
+    之间的微位置上（onset 密度远高于拍密度），间隔忽长忽短 = 玩起来不跟拍。
+    能量归一化到 0..1 后仍是主导项，grid 只是加成，所以不会出现"贴格但听不见"
+    的音符盖过"响亮但离格"的音符（除非 grid_w 开得很大）。
+    """
     spec = TIER_SPEC[tier]
     min_gap = spec["min_gap"]
+    grid_w = float(spec["grid_w"])
     target = int(dur * spec["nps"] * 1.05)
-    ranked = sorted(
-        zip(analysis.onsets_sec, analysis.onset_lanes, analysis.onset_energies),
-        key=lambda x: -x[2],
+    beat = 60.0 / analysis.bpm if analysis.bpm > 0 else 0.5
+    offset = (analysis.audio_offset_ms or 0) / 1000.0
+
+    triples = list(
+        zip(analysis.onsets_sec, analysis.onset_lanes, analysis.onset_energies)
     )
+    energies = [e for _, _, e in triples] or [0.0]
+    lo = min(energies)
+    span = (max(energies) - lo) or 1.0
+
+    def score(t: float, e: float) -> float:
+        return (e - lo) / span + grid_w * grid_affinity(t, beat, offset)
+
+    ranked = sorted(triples, key=lambda x: -score(x[0], x[2]))
     picked: list[tuple[float, int, float]] = []
     for t, lane, e in ranked:
         if len(picked) >= target:
@@ -235,7 +295,7 @@ def build_chart_from_onsets(
         idx += 1
         i += 1
 
-    notes = enforce_peak_nps(notes, spec["peak"])
+    notes = enforce_peak_nps(notes, spec["peak"], beat, (analysis.audio_offset_ms or 0) / 1000.0)
     notes.sort(key=lambda n: n["t"])
     for j, n in enumerate(notes):
         n["id"] = f"n{j}"

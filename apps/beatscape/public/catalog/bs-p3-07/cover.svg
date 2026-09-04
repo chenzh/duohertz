@@ -97,7 +97,7 @@
   </g>
   <polygon points="0,372 512,344 512,512 0,512" fill="#1C1717" stroke="#000000" stroke-width="4"/>
   <polygon points="0,372 512,344 512,352 0,380" fill="#E4D8C4"/>
-  <text x="40" y="432" fill="#F5EFE6" font-family="Anton, Impact, Haettenschweiler, 'Arial Narrow', sans-serif" font-size="34" letter-spacing="0.01em" paint-order="stroke" stroke="#000000" stroke-width="5">Glass Phantom Drive</text>
+  <text x="40" y="432" fill="#F5EFE6" font-family="Anton, Impact, Haettenschweiler, 'Arial Narrow', sans-serif" font-size="34" letter-spacing="0.01em" paint-order="stroke" stroke="#000000" stroke-width="5">Glass Echo Drive</text>
   <text x="40" y="464" fill="#A8928B" font-family="IBM Plex Sans, system-ui, -apple-system, sans-serif" font-size="16" font-weight="500">Kite Solar</text>
   <text x="40" y="492" fill="#E4D8C4" font-family="IBM Plex Sans, system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" letter-spacing="0.14em">GLASS RIM</text>
   <text x="462" y="46" text-anchor="end" fill="#F5EFE6" font-family="IBM Plex Sans, system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" paint-order="stroke" stroke="#000000" stroke-width="4">120 BPM</text>
