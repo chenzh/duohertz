@@ -788,6 +788,9 @@ export function PlayField({
           <div className="overlay-card">
             <p className="overlay-kicker">Signal lost</p>
             <p>{error}</p>
+            <button type="button" className="btn primary" onClick={() => window.location.reload()}>
+              Retry loading
+            </button>
           </div>
         </div>
       )}

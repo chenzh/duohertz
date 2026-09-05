@@ -83,7 +83,8 @@ describe("HOME_PAGE_META", () => {
 
   it("includes rhythm game semantics and site tagline", () => {
     expect(HOME_PAGE_META.description).toContain("English pop & EDM browser rhythm game");
-    expect(HOME_PAGE_META.description).toContain("owned AI originals");
+    expect(HOME_PAGE_META.description).toContain("AI originals");
+    expect(HOME_PAGE_META.description).toContain("Scores stay in your browser");
     expect(HOME_PAGE_META.description).toContain("Feel the Beat, Own the Scape.");
   });
 

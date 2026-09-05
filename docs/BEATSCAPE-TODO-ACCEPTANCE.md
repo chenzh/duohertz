@@ -1,5 +1,7 @@
 # BeatScape 待办与验收标准
 
+> **当前上线准备（2026-09-05）**：见 [BEATSCAPE-RELEASE-READINESS.md](BEATSCAPE-RELEASE-READINESS.md)，105 首 / 315 张谱。本文以下为 Stage1–3 历史验收规格，旧测试数及勾选状态不能充当当前版本的验收证据。
+
 > **更新**：2026-08-25（Stage3 验收）  
 > **进度入口**：`SESSION.md` · `pnpm catalog:beatscape`  
 > **权威 PRD**：`docs/PRD-BEATSCAPE.md`

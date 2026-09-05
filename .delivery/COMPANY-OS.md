@@ -1,19 +1,13 @@
-# Company OS pointer
+# Company OS reference
 
-**Read norms in this repo first:** `.delivery/company-os/README.md`
+[Snapshot inventory](company-os/README.md): multica `97718c9`, synced `2026-08-29T01:35:47Z`. `.delivery/company-os/` is a read-only copy of the upstream multica `.ai-company/` directory.
 
-Snapshot synced from multica `97718c9` at `2026-08-29T01:35:47Z`.
+Use only the relevant sections for an active delivery job:
 
-| Layer | Location |
-|-------|----------|
-| **Norms (this repo)** | `.delivery/company-os/` |
-| **HQ truth (CEO machine)** | multica `.ai-company/` |
-| **Execution harness** | `.delivery/` · `.cursor/agents/` · workflows |
+- [Task grading](company-os/docs/06-task-grading.md) and [Definition of Done](company-os/docs/18-definition-of-done.md).
+- [Quality gates](company-os/docs/07-quality-gates.md), [label state machine](company-os/docs/21-label-state-machine.md), and [blocked triage](company-os/runbooks/blocked-triage.md).
+- [Layer ownership](company-os/docs/28-norm-layers.md) and [sync procedure](company-os/docs/27-norm-sync.md).
 
-Refresh norms:
+Repository adaptations live in [AGENTS.md](../AGENTS.md), [delivery workflow](../.agents/skills/music-delivery/SKILL.md), and [verification workflow](../.agents/skills/music-verify/SKILL.md). The snapshot contains generic examples and historical rules; use actual MusicSaas commands and current task authorization. Do not treat references to push, notifications, or sync as authorization to perform them.
 
-```bash
-bash /path/to/multica/scripts/ai-company/sync-company-norms.sh --id <project-id>
-```
-
-Full playbook: `.delivery/company-os/docs/27-norm-sync.md` (after sync).
+Refresh only when requested, from the configured HQ checkout using its `scripts/ai-company/sync-company-norms.sh --id beatscape`. Inspect the resulting diff. Do not edit the snapshot locally or run `install-harness.sh --force` without checking for overwritten repository adapters.

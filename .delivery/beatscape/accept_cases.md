@@ -1,18 +1,20 @@
 # Acceptance Cases — beatscape
 
-## Verification commands（Verifier 最低栏）
+## Verification commands（BeatScape 交付任务最低栏）
 
 ```bash
 pnpm --filter @musicsaas/beatscape test
 pnpm build:beatscape
 ```
 
-**全量（PR 前，env 允许时）：**
+**补充检查（PR 前，env 允许时；分别覆盖 Gateway + Python unit、BeatScape 曲库审计，并非全仓测试）：**
 
 ```bash
 pnpm test
 python3 scripts/beatscape-audit.py --dir apps/beatscape/public --catalog apps/beatscape/public/catalog.json
 ```
+
+其他受影响模块和发布候选检查按 [music-verify](../../.agents/skills/music-verify/SKILL.md) 补充。记录环境限制和未运行项；技术检查不能代替正式发布所需的人工耳检、真机验收及签审。
 
 ## Functional（按 ticket 勾选）
 

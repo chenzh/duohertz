@@ -1,61 +1,16 @@
-# CLAUDE.md — beatscape (MusicSaas)
+# CLAUDE.md — MusicSaas
 
-## Meta
+Repository instructions live in [AGENTS.md](AGENTS.md). Use that entry point for module boundaries, context loading, authorization, and verification; do not reload context already supplied by the parent task.
 
-| Field | Value |
-|-------|-------|
-| Project ID | `beatscape` |
-| Delivery slug | `beatscape` → `.delivery/beatscape/` |
-| Tier | production |
-| Repo | `chenzh/MusicSaas` |
-| App scope | `apps/beatscape/` (`@musicsaas/beatscape`) |
+## BeatScape delivery queue
 
-## Stack
+These defaults apply to unattended `agent-safe` delivery jobs. Direct user tasks use their authorized scope; queue eligibility and permission to auto-merge remain separate decisions.
 
-- Vite + React (beatscape app inside MusicSaas monorepo)
-- pnpm workspace; Python harness scripts for catalog/MLX (human-only)
+- Project / delivery slug: `beatscape`; repository: `chenzh/MusicSaas`.
+- App: `apps/beatscape/` (`@musicsaas/beatscape`), Vite + React in the pnpm workspace.
+- Scope and acceptance: [brief](.delivery/beatscape/brief.md), [acceptance cases](.delivery/beatscape/accept_cases.md), and the current Issue's explicit scope.
+- The queue excludes Gateway, Demo, workers, inference/content generation, secrets, production configuration, and `.github/workflows/**`. Changes to product semantics or judgment windows **15/30/50** need explicit task authorization and appropriate grading.
+- Workflow: [music-delivery](.agents/skills/music-delivery/SKILL.md). Commands and evidence: [music-verify](.agents/skills/music-verify/SKILL.md). Release sign-off: [release readiness](docs/BEATSCAPE-RELEASE-READINESS.md).
+- Auto-merge eligibility: [merge policy](.delivery/config/merge-policy.json). Passing local tests does not establish CI status or authorize a merge.
 
-## Commands
-
-```bash
-pnpm install
-pnpm --filter @musicsaas/beatscape test
-pnpm build:beatscape
-# PR前全量（env 允许时）:
-pnpm test
-```
-
-## Forbidden paths (agent-safe)
-
-- `apps/gateway/**`, `apps/demo/**`, `workers/**`
-- MLX / inference / `scripts/beatscape-ingest*` / `pipeline*` / `regenerate*`
-- `.env`, API keys, production gateway config
-- `apps/beatscape/src/engine/` timing constants **15/30/50** unless ticket allows
-- `.github/workflows/**` (human-only)
-
-## Product truth sources (read before coding)
-
-1. Repo root `AGENTS.md` and `docs/KNOWLEDGE-BASE.md` (MusicSaas product rules)
-2. `.delivery/beatscape/brief.md`
-3. `.delivery/beatscape/accept_cases.md`
-4. `docs/PRD-BEATSCAPE.md` (read-only for agents; semantic changes = human-only)
-
-## Company norms (AI delivery layer)
-
-- `.delivery/company-os/README.md`
-- `.delivery/company-os/docs/06-task-grading.md`
-- `.delivery/company-os/docs/18-definition-of-done.md`
-
-Refresh: `bash ~/Projects/multica/scripts/ai-company/sync-company-norms.sh --id beatscape`
-
-## Agent pipeline
-
-- `.delivery/prompts/orchestrator-kickoff.md`
-- `.cursor/agents/`
-- `.delivery/config/merge-policy.json`
-
-## Hard rules
-
-1. Agent changes stay in `apps/beatscape/**` unless ticket says otherwise.
-2. Verifier: `pnpm --filter @musicsaas/beatscape test` + `pnpm build:beatscape` exit 0.
-3. No gateway/MLX side effects from UI tickets.
+[Company OS](.delivery/COMPANY-OS.md) is a read-only upstream snapshot reference. The [delivery entry point](.delivery/README.md) documents local integration and sync boundaries.

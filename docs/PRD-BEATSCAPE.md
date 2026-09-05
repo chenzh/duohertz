@@ -1446,6 +1446,8 @@ The Late Static 电台 = 叙事容器（Radio Episode 模式，**无过场动画
 
 ### 11.4 内容设计验收（v1.9）
 
+> **2026-09-05 当前状态**：以下 2026-08-29 的 25 首自检为历史记录，不覆盖当前 105 首和 NIGHTSHIFT 角色位图。当前技术候选已验证；人工耳检、差异化盲测、真机记录与最终签审仍待完成，详见 [发布准备](BEATSCAPE-RELEASE-READINESS.md) 和 [当前资产归档](licenses/README.md)。
+
 - [ ] 菱形音符 + 四道色；判定窗 15/30/50（未拷 NeonBeat）  
 - [ ] Casual 仅视觉变速；Practice 音画同步；GO 同时开声  
 - [ ] m4a 可玩；Local Board；校准为唯一 offset 源  
@@ -1456,7 +1458,7 @@ The Late Static 电台 = 叙事容器（Radio Episode 模式，**无过场动画
 - [x] **红线自检**：§7.7 表格逐项通过；字体全部 OFL 且授权文本已归档  
   *2026-08-29 已验：见 [`docs/licenses/README.md`](licenses/README.md) §4；OFL 文本归档于 `docs/licenses/fonts/`。*
 - [ ] **差异化盲测**：5–10 名非日式 RPG 玩家，无人识别出来源作品（§7.7）  
-  **⬅ 上线前唯一未通过项。** 规程与记录表见 [`docs/RESONANCE-BLINDTEST.md`](RESONANCE-BLINDTEST.md)。
+  规程、当前截图包与记录表见 [`docs/RESONANCE-BLINDTEST.md`](RESONANCE-BLINDTEST.md)；该项与人工耳检、真机验收共同组成上线前门禁。
 
 ---
 

@@ -6,8 +6,14 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
-    "build:cf": "tsc --noEmit && VITE_STREAM_APP_URL=https://scapemusic.pages.dev VITE_BASE=/ vite build",
-    "deploy:cf": "npm run build:cf && npx --yes wrangler@4 pages deploy dist --project-name=beatscape --commit-dirty=true",
+    "build:cf": "tsc --noEmit && VITE_STREAM_APP_URL=https://scapemusic.pages.dev VITE_BASE=/ vite build && node scripts/release.mjs prepare",
+    "deploy:cf": "bash ../../scripts/deploy-beatscape-cf-pages.sh",
+    "release:verify": "node scripts/release.mjs verify",
+    "launch:check": "node scripts/launch-check.mjs",
+    "release:live": "node scripts/live-smoke.mjs",
+    "generate:og:site": "node scripts/generate-site-og.mjs",
+    "release:check": "npm test && node --test scripts/release.test.mjs && npm run build:cf && npm run test:e2e && npm run release:verify",
+    "test:e2e": "playwright test",
     "preview": "vite preview --host 127.0.0.1 --port 5175",
     "test": "vitest run",
     "test:prd": "vitest run src/acceptance/prdAcceptance.test.ts",
@@ -19,6 +25,7 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.63.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^4.3.4",

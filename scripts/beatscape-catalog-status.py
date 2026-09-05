@@ -69,6 +69,7 @@ def main() -> int:
     catalog = load_json(args.catalog)
     public_dir = args.catalog.parent
     slots: list[dict[str, Any]] = roadmap["slots"]
+    expansions = roadmap.get("expansion_slots", [])
     slot_by_id = {s["track_id"]: s for s in slots}
     shipped = shipped_ids(catalog, public_dir)
 
@@ -77,7 +78,9 @@ def main() -> int:
             slot_by_id[tid]["_live"] = True
 
     catalog_ids = {str(t.get("track_id")) for t in catalog.get("tracks", [])}
-    unknown = sorted(catalog_ids - set(slot_by_id.keys()))
+    expansion_ids = {s["track_id"] for s in expansions}
+    unknown = sorted(catalog_ids - set(slot_by_id.keys()) - expansion_ids)
+    missing_expansions = sorted(expansion_ids - shipped)
     stage_gate = args.stage or max(int(k) for k in roadmap["stage_targets"])
 
     targets_total = int(roadmap["stage_targets"][str(stage_gate)])
@@ -85,8 +88,8 @@ def main() -> int:
     planned_slots = [s for s in slots if int(s["stage"]) <= stage_gate]
     live_in_gate = [s for s in planned_slots if s["track_id"] in shipped]
 
-    live_genre = Counter(str(t.get("genre", "")) for t in catalog.get("tracks", []) if t.get("track_id") in shipped)
-    planned_genre = count_by_genre(planned_slots)
+    gate_ids = {s["track_id"] for s in planned_slots}
+    live_genre = Counter(str(t.get("genre", "")) for t in catalog.get("tracks", []) if t.get("track_id") in shipped & gate_ids)
 
     gaps = {
         "total": {
@@ -107,7 +110,7 @@ def main() -> int:
 
     next_slots = [
         s for s in planned_slots
-        if s["track_id"] not in shipped and s.get("status") != "shipped"
+        if s["track_id"] not in shipped
     ][:8]
 
     report = {
@@ -118,6 +121,9 @@ def main() -> int:
         "shipped_total": len(shipped),
         "gaps": gaps,
         "unknown_track_ids": unknown,
+        "expansion_shipped": len(expansion_ids & shipped),
+        "expansion_target": len(expansion_ids),
+        "missing_expansions": missing_expansions,
         "next_slots": [
             {
                 "track_id": s["track_id"],
@@ -140,6 +146,7 @@ def main() -> int:
         g = gaps["total"]
         print(f"  Total: {g['shipped']}/{g['target']} shipped · {g['remaining']} remaining to Stage {stage_gate}")
         print(f"  Formal v1 target: {report['formal_target']} tracks (Stage 5)")
+        print(f"  Expansions: {report['expansion_shipped']}/{report['expansion_target']} · Full catalog: {len(shipped)} playable tracks")
         print()
         print("  By genre:")
         for genre in GENRES:
@@ -154,8 +161,10 @@ def main() -> int:
                 title = s.get("title") or "(TBD)"
                 batch = f" · {s['batch']}" if s.get("batch") else ""
                 print(f"    {s['track_id']}  {title}  [{s['genre']}]{batch}")
+        if missing_expansions:
+            print(f"  FAIL: missing expansion assets: {', '.join(missing_expansions)}")
 
-    return 1 if unknown else 0
+    return 1 if unknown or missing_expansions or gaps["total"]["remaining"] > 0 or any(g["remaining"] > 0 for g in gaps["by_genre"].values()) else 0
 
 
 if __name__ == "__main__":

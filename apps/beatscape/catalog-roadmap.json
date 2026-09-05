@@ -1,7 +1,7 @@
 {
   "version": 1,
   "authority": "docs/PRD-BEATSCAPE.md \u00a76.0.1 \u00b7 \u00a76.0.5 \u00b7 \u00a76.0.14",
-  "updated": "2026-08-30",
+  "updated": "2026-09-05",
   "stage_targets": {
     "1": 6,
     "2": 10,
@@ -1428,5 +1428,147 @@
     "Viral Style": 20,
     "Classic Style": 20,
     "New Release": 19
-  }
+  },
+  "expansion_slots": [
+    {
+      "track_id": "bs-p3-01",
+      "title": "Midnight Haze",
+      "genre": "R&B",
+      "batch": "p3-wave",
+      "status": "shipped"
+    },
+    {
+      "track_id": "bs-p3-02",
+      "title": "Chrome Psychosis",
+      "genre": "EDM",
+      "batch": "p3-wave",
+      "status": "shipped"
+    },
+    {
+      "track_id": "bs-p3-03",
+      "title": "Tunnel After Hours",
+      "genre": "Hip-hop",
+      "batch": "p3-wave",
+      "status": "shipped"
+    },
+    {
+      "track_id": "bs-p3-04",
+      "title": "Lounge Ember",
+      "genre": "R&B",
+      "batch": "p3-wave",
+      "status": "shipped"
+    },
+    {
+      "track_id": "bs-p3-05",
+      "title": "Scarlet Hour",
+      "genre": "EDM",
+      "batch": "p3-wave",
+      "status": "shipped"
+    },
+    {
+      "track_id": "bs-p3-06",
+      "title": "Deep Rooftop Sigh",
+      "genre": "R&B",
+      "batch": "p3-wave",
+      "status": "shipped"
+    },
+    {
+      "track_id": "bs-p3-07",
+      "title": "Glass Echo Drive",
+      "genre": "Pop",
+      "batch": "p3-wave",
+      "status": "shipped"
+    },
+    {
+      "track_id": "bs-p3-08",
+      "title": "Midnight Rhapsody",
+      "genre": "Pop",
+      "batch": "p3-wave",
+      "status": "shipped"
+    },
+    {
+      "track_id": "bs-p3-09",
+      "title": "Asphalt Waltz",
+      "genre": "Rock",
+      "batch": "p3-wave",
+      "status": "shipped"
+    },
+    {
+      "track_id": "bs-p3-10",
+      "title": "Scape Shade",
+      "genre": "Hip-hop",
+      "batch": "p3-wave",
+      "status": "shipped"
+    },
+    {
+      "track_id": "bs-p4-01",
+      "title": "Humming Haze",
+      "genre": "R&B",
+      "batch": "p4-wave",
+      "status": "shipped"
+    },
+    {
+      "track_id": "bs-p4-02",
+      "title": "Chrome Choir",
+      "genre": "EDM",
+      "batch": "p4-wave",
+      "status": "shipped"
+    },
+    {
+      "track_id": "bs-p4-03",
+      "title": "Midnight Hum",
+      "genre": "R&B",
+      "batch": "p4-wave",
+      "status": "shipped"
+    },
+    {
+      "track_id": "bs-p4-04",
+      "title": "Echo Glow Chorus",
+      "genre": "EDM",
+      "batch": "p4-wave",
+      "status": "shipped"
+    },
+    {
+      "track_id": "bs-p4-05",
+      "title": "Glass Aria",
+      "genre": "Pop",
+      "batch": "p4-wave",
+      "status": "shipped"
+    },
+    {
+      "track_id": "bs-p4-06",
+      "title": "Rooftop Hum",
+      "genre": "R&B",
+      "batch": "p4-wave",
+      "status": "shipped"
+    },
+    {
+      "track_id": "bs-p4-07",
+      "title": "Neon Lullaby",
+      "genre": "Pop",
+      "batch": "p4-wave",
+      "status": "shipped"
+    },
+    {
+      "track_id": "bs-p4-08",
+      "title": "Afterhours Voice",
+      "genre": "R&B",
+      "batch": "p4-wave",
+      "status": "shipped"
+    },
+    {
+      "track_id": "bs-p4-09",
+      "title": "Blue Hour Chorus",
+      "genre": "EDM",
+      "batch": "p4-wave",
+      "status": "shipped"
+    },
+    {
+      "track_id": "bs-p4-10",
+      "title": "Scape Sings Low",
+      "genre": "Hip-hop",
+      "batch": "p4-wave",
+      "status": "shipped"
+    }
+  ]
 }

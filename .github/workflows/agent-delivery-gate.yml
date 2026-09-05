@@ -2,7 +2,9 @@ name: Agent delivery gate
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened, labeled]
+    types: [opened, synchronize, reopened, labeled, unlabeled, ready_for_review]
+  pull_request_review:
+    types: [submitted, dismissed]
   workflow_dispatch:
     inputs:
       pr_number:
@@ -15,78 +17,73 @@ permissions:
   pull-requests: write
   checks: read
 
+concurrency:
+  group: agent-delivery-gate-${{ github.event.pull_request.number || inputs.pr_number }}
+  cancel-in-progress: true
+
 jobs:
   evaluate:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GITHUB_REPOSITORY: ${{ github.repository }}
+      PR_NUMBER: ${{ github.event.pull_request.number || inputs.pr_number }}
     steps:
-      - name: Checkout
+      # Evaluate trusted policy/scripts; never execute a PR's version with a write token.
+      - name: Checkout base policy
         uses: actions/checkout@v6
-
-      - name: Resolve PR number
-        id: pr
-        env:
-          PR_INPUT: ${{ inputs.pr_number }}
-        run: |
-          if [ -n "$PR_INPUT" ]; then
-            echo "number=$PR_INPUT" >> "$GITHUB_OUTPUT"
-          else
-            echo "number=${{ github.event.pull_request.number }}" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Skip non-agent PRs
-        id: scope
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          head="$(gh pr view "${{ steps.pr.outputs.number }}" --json headRefName -q .headRefName)"
-          if [[ "$head" != cursor/* ]]; then
-            echo "skip=true" >> "$GITHUB_OUTPUT"
-            echo "Not a cursor/* agent branch — skipping gate."
-          else
-            echo "skip=false" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Wait for required checks
-        if: github.event_name == 'pull_request' && steps.scope.outputs.skip == 'false'
-        uses: lewagon/wait-on-check-action@v1.3.4
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          check-regexp: "^(frontend|backend|mobile-verify)"
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          wait-interval: 30
-          allowed-conclusions: success,skipped
+          ref: ${{ github.event.pull_request.base.sha || github.event.repository.default_branch }}
+          persist-credentials: false
 
       - name: Check merge eligibility
-        if: steps.scope.outputs.skip == 'false'
         id: gate
-        env:
-          GH_TOKEN: ${{ github.token }}
-          GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
-          chmod +x scripts/agent-delivery/check-merge-eligible.sh
-          set +e
-          OUT="$(bash scripts/agent-delivery/check-merge-eligible.sh "${{ steps.pr.outputs.number }}")"
-          code=$?
-          set -e
-          echo "$OUT"
+          set -euo pipefail
+          [[ "$PR_NUMBER" =~ ^[1-9][0-9]*$ ]] || { echo "::error::Invalid PR number"; exit 1; }
+          OUT="$(bash scripts/agent-delivery/check-merge-eligible.sh "$PR_NUMBER")"
           echo "$OUT" >> "$GITHUB_STEP_SUMMARY"
-          eligible=false
-          if echo "$OUT" | grep -q '^merge_eligible=true'; then
-            eligible=true
+          if [[ "$OUT" =~ ^merge_eligible=true\ sha=([0-9a-f]{40})\ files=[0-9]+$ ]]; then
+            echo "eligible=true" >> "$GITHUB_OUTPUT"
+            echo "sha=${BASH_REMATCH[1]}" >> "$GITHUB_OUTPUT"
+          else
+            echo "eligible=false" >> "$GITHUB_OUTPUT"
           fi
-          echo "eligible=$eligible" >> "$GITHUB_OUTPUT"
 
-      - name: Enable auto-merge
-        if: steps.scope.outputs.skip == 'false' && steps.gate.outputs.eligible == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          gh pr merge "${{ steps.pr.outputs.number }}" --auto --squash --delete-branch
-          gh pr comment "${{ steps.pr.outputs.number }}" --body "✅ Auto-merge enabled (agent delivery allowlist + CI green)."
+      - name: Report opt-in status
+        if: vars.AGENT_DELIVERY_AUTO_MERGE != 'true'
+        run: echo 'Auto-merge is inactive. Enable AGENT_DELIVERY_AUTO_MERGE only after reviewing repository protection and this workflow.' >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Comment when manual merge required
-        if: steps.scope.outputs.skip == 'false' && steps.gate.outputs.eligible != 'true'
+      - name: Wait for CI on the evaluated commit
+        if: steps.gate.outputs.eligible == 'true' && vars.AGENT_DELIVERY_AUTO_MERGE == 'true'
+        timeout-minutes: 15
         env:
-          GH_TOKEN: ${{ github.token }}
+          EXPECTED_SHA: ${{ steps.gate.outputs.sha }}
         run: |
-          gh pr comment "${{ steps.pr.outputs.number }}" --body "ℹ️ Auto-merge skipped (deny path or not in allowlist). Review manually. See \`.delivery/config/merge-policy.json\`."
+          set -euo pipefail
+          while true; do
+            pr="$(gh pr view "$PR_NUMBER" --json headRefOid,statusCheckRollup)"
+            [[ "$(jq -r .headRefOid <<< "$pr")" == "$EXPECTED_SHA" ]] || { echo '::error::PR head changed; reevaluate the new commit'; exit 1; }
+            checks="$(jq '[.statusCheckRollup[] | select(.name == "unit" or .name == "build" or .name == "beatscape" or .name == "integration")]' <<< "$pr")"
+            if jq -e 'any(.[]; .status == "COMPLETED" and .conclusion != "SUCCESS")' <<< "$checks" >/dev/null; then
+              echo '::error::A CI job did not succeed'
+              exit 1
+            fi
+            if jq -e '([.[].name] | unique | sort) == ["beatscape", "build", "integration", "unit"] and all(.[]; .status == "COMPLETED" and .conclusion == "SUCCESS")' <<< "$checks" >/dev/null; then
+              break
+            fi
+            sleep 30
+          done
+
+      - name: Recheck policy and enable auto-merge
+        if: steps.gate.outputs.eligible == 'true' && vars.AGENT_DELIVERY_AUTO_MERGE == 'true'
+        env:
+          EXPECTED_SHA: ${{ steps.gate.outputs.sha }}
+        run: |
+          set -euo pipefail
+          OUT="$(bash scripts/agent-delivery/check-merge-eligible.sh "$PR_NUMBER")"
+          echo "$OUT" >> "$GITHUB_STEP_SUMMARY"
+          [[ "$OUT" == "merge_eligible=true sha=$EXPECTED_SHA "* ]] || { echo '::error::PR eligibility changed'; exit 1; }
+          gh pr merge "$PR_NUMBER" --auto --squash --delete-branch --match-head-commit "$EXPECTED_SHA"

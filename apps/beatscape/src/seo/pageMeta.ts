@@ -5,7 +5,7 @@ import type { CatalogTrack } from "../types/catalog";
 export const DEFAULT_PAGE_META = {
   title: "BeatScape — Feel the Beat, Own the Scape",
   description:
-    "Feel the Beat, Own the Scape. English pop & EDM browser rhythm game with owned AI originals.",
+    "English pop & EDM browser rhythm game with AI originals. No account, no ads. Scores stay in your browser. Feel the Beat, Own the Scape.",
 };
 
 export type PageMeta = {

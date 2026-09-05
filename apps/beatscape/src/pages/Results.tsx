@@ -20,7 +20,7 @@ import { trackEvent } from "../lib/analytics";
 import {
   readLastRun,
   shareResultsCopy,
-  shareResultsUrl,
+  shareChallengeUrl,
 } from "../storage/session";
 import { getPersonalBest } from "../storage/settings";
 import { readItem, readJSON, removeItem } from "../storage/safeStorage";
@@ -151,7 +151,8 @@ export function ResultsPage() {
   }
 
   const pb = getPersonalBest(run.track_id, run.tier, run.mode);
-  const isRecord = run.prevBestScore != null ? run.score > run.prevBestScore : true;
+  const isRecord = run.mode === "arcade" && !run.failed &&
+    (run.prevBestScore == null || run.score > run.prevBestScore);
   const counts = run.counts;
   const totalJ = counts.perfect + counts.great + counts.good + counts.miss || 1;
   const dist = [
@@ -167,7 +168,7 @@ export function ResultsPage() {
   async function onCopyLink() {
     if (!run) return;
     setCopyFailed(false);
-    const url = shareResultsUrl();
+    const url = shareChallengeUrl(run);
     const text = shareResultsCopy(run, url);
     // 整段文案复制失败就退一步只复制链接；全都失败要如实告诉用户，
     // 而不是像以前那样把异常吞掉、按钮照样显示成功。

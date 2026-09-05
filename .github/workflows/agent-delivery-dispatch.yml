@@ -27,9 +27,12 @@ concurrency:
 jobs:
   dispatch:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          persist-credentials: false
 
       - name: Verify secrets
         env:
@@ -49,22 +52,22 @@ jobs:
         run: |
           set -euo pipefail
           if [ -n "$SINGLE" ]; then
+            [[ "$SINGLE" =~ ^[1-9][0-9]*$ ]] || { echo "::error::issue_number must be a positive integer"; exit 1; }
+            issue="$(gh issue view "$SINGLE" --json state,labels)"
+            jq -e '.state == "OPEN" and ([.labels[].name] | index("agent-safe") != null and index("agent-running") == null and index("agent-blocked") == null and index("agent-done") == null and index("human-only") == null and index("agent-assisted") == null)' <<< "$issue" >/dev/null
             echo "numbers=$SINGLE" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          mapfile -t nums < <(gh issue list \
+          MAX="${MAX:-1}"
+          [[ "$MAX" =~ ^[1-9][0-9]*$ ]] || { echo "::error::max_tasks must be a positive integer"; exit 1; }
+          queue="$(gh issue list \
             --label "agent-safe" \
             --state open \
-            --json number,labels \
-            --jq '.[] | select([.labels[].name] | (index("agent-running") | not) and (index("agent-blocked") | not)) | .number' \
-            | head -n "$MAX")
-          if [ "${#nums[@]}" -eq 0 ]; then
-            echo "numbers=" >> "$GITHUB_OUTPUT"
-            echo "No eligible issues in queue."
-            exit 0
-          fi
-          joined="$(IFS=,; echo "${nums[*]}")"
+            --search '-label:agent-running -label:agent-blocked -label:agent-done -label:human-only -label:agent-assisted' \
+            --limit "$MAX" --json number)"
+          joined="$(jq -r 'map(.number | tostring) | join(",")' <<< "$queue")"
           echo "numbers=$joined" >> "$GITHUB_OUTPUT"
+          [ -n "$joined" ] || echo "No eligible issues in queue."
 
       - name: Dispatch Cloud Agents
         if: steps.queue.outputs.numbers != ''
@@ -72,10 +75,12 @@ jobs:
           CURSOR_API_KEY: ${{ secrets.CURSOR_API_KEY }}
           GH_TOKEN: ${{ github.token }}
           GITHUB_REPOSITORY: ${{ github.repository }}
+          ISSUE_NUMBERS: ${{ steps.queue.outputs.numbers }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           set -euo pipefail
-          chmod +x scripts/agent-delivery/*.sh
-          IFS=',' read -ra ISSUES <<< "${{ steps.queue.outputs.numbers }}"
+          IFS=',' read -ra ISSUES <<< "$ISSUE_NUMBERS"
           failed=0
           for n in "${ISSUES[@]}"; do
             n="$(echo "$n" | xargs)"
@@ -84,10 +89,9 @@ jobs:
             if ! bash scripts/agent-delivery/dispatch-cursor-agent.sh "$n"; then
               failed=1
               gh issue edit "$n" --add-label "agent-blocked" --remove-label "agent-running" || true
-              gh issue comment "$n" --body "❌ Agent dispatch failed. See workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-              if [ -n "${{ secrets.SLACK_WEBHOOK_URL }}" ]; then
-                SLACK_WEBHOOK_URL="${{ secrets.SLACK_WEBHOOK_URL }}" \
-                  bash scripts/agent-delivery/notify-slack.sh "Agent dispatch FAILED for ${GITHUB_REPOSITORY}#$n"
+              gh issue comment "$n" --body "❌ Agent dispatch failed. See workflow run: $RUN_URL" || true
+              if [ -n "$SLACK_WEBHOOK_URL" ]; then
+                bash scripts/agent-delivery/notify-slack.sh "Agent dispatch FAILED for ${GITHUB_REPOSITORY}#$n" || true
               fi
             fi
           done

@@ -62,6 +62,8 @@ MusicSaas/
 
 ## 4. apps/beatscape（Stage1）
 
+**上线准备**：[BEATSCAPE-RELEASE-READINESS.md](./BEATSCAPE-RELEASE-READINESS.md) · `pnpm release:beatscape` 技术检查 · `apps/beatscape/scripts/release.mjs` 构建资产/哈希门禁 · `scripts/launch-check.mjs` 正式放行 · `scripts/live-smoke.mjs` 发布后只读检查 · `e2e/release.spec.ts` 生产包浏览器回归 · `scripts/capture-blindtest.mjs` 捕获绑定候选哈希的 5 张人工盲测截图。
+
 | 路径 | 职责 |
 |------|------|
 | `src/App.tsx` | 路由壳 |
@@ -78,6 +80,10 @@ MusicSaas/
 | `public/catalog.json` | 曲库元数据（85 首 · v1 · 双资产） |
 | `catalog-roadmap.json` | 正式版 50 首槽位 · Stage/曲风配额真值 |
 | `public/catalog/bs-s*/` | 85 首曲目录：audio/stream m4a + 三难度 chart + cover.svg + og.png |
+
+**可玩性 / 欧美增长 TODO：** [BEATSCAPE-PLAYABILITY-GROWTH-TODO.md](./BEATSCAPE-PLAYABILITY-GROWTH-TODO.md)
+—— T1a 站点级 OG 卡 / T2 Note speed 滑杆（arcade 也要能调）/ T3 判定偏早偏晚 /
+T4 从失败点重开 / T5 分享文案。含 2026-09-05 逐条核实的状态快照与两处误判修订。
 
 **脚本：**
 
@@ -161,6 +167,10 @@ BeatScape 待办与验收：[BEATSCAPE-TODO-ACCEPTANCE.md](./BEATSCAPE-TODO-ACCE
 改 BeatScape 玩法？  → apps/beatscape/src/engine/ + PRD-BEATSCAPE.md
 改曲库/谱面？        → scripts/beatscape-* + public/catalog/
 改世界观/电台剧集？  → docs/BEATSCAPE-WORLDBIBLE.md + src/data/radioEpisodes.ts
+改可玩性/欧美增长？  → docs/BEATSCAPE-PLAYABILITY-GROWTH-TODO.md
 改推理？             → workers/* + docs/INFERENCE.md
-改 Harness/续作？    → SESSION.md + worklog/
+改 Harness/续作？    → AGENTS.md + .agents/skills/ + SESSION.md + worklog/
 ```
+
+Agent 配置审计与维护：[AGENT-WORKFLOW-AUDIT.md](./AGENT-WORKFLOW-AUDIT.md)。按需流程：
+[music-verify](../.agents/skills/music-verify/SKILL.md)（实际验收范围）、[music-delivery](../.agents/skills/music-delivery/SKILL.md)（agent-safe Issue）。

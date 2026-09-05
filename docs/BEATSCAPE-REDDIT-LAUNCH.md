@@ -1,7 +1,7 @@
 # BeatScape Reddit 首发文案包
 
-> **更新**：2026-08-30 · 全面重写（85 曲库 + World Bible 语音 + 商标红线 + 合规守则）
-> **发帖前置门（未过不发）**：① Cloudflare Pages 重新部署（线上仍是 35 首旧版）；② `docs/RESONANCE-BLINDTEST.md` 盲测未做前，帖文**不得出现**任何"音质/差异化优于同类"的宣称——只陈述事实（自有版权、可玩性、免费无账号）。
+> **更新**：2026-09-05 · 105 曲库发布候选；本文件是待发布草稿
+> **发帖前置门（未过不发）**：① 按 `BEATSCAPE-RELEASE-READINESS.md` 通过内容审计、人工耳检、设备验收，再发布并核对 release.json；② `docs/RESONANCE-BLINDTEST.md` 盲测未做前，帖文**不得出现**任何"音质/差异化优于同类"的宣称——只陈述事实（自有版权、可玩性、免费无账号）。
 
 ## 0. 红线（每篇帖文发前自查）
 
@@ -12,28 +12,28 @@
 
 ## 1. 差异化一句话（事实版，盲测过了才可加语气）
 
-> **BeatScape** — a free browser 4-lane rhythm game. 85 AI-original tracks we own outright (night-drive, groove, battle, chill), onset-generated charts with 15/30/50 ms windows, keyboard or two-thumb touch. No download, no account — play in ~10 seconds.
+> **BeatScape** — a free browser 4-lane rhythm game. 105 AI-original tracks generated for the game (night-drive, groove, battle, chill), onset-generated charts with 15/30/50 ms windows, keyboard or two-thumb touch. No download, no account — choose a track and play.
 
 ## 2. 帖文成稿（三篇，按 sub 二选一起发，间隔 ≥1 周）
 
 ### Post A — r/rhythmgames（硬核向：判定与谱面）
 
-**标题**：`[Web] BeatScape — free browser 4-lane rhythm game, 85 owned AI-original tracks, 15/30/50ms windows`
+**标题**：`[Web] BeatScape — free browser 4-lane rhythm game, 105 AI-original tracks, 15/30/50ms windows`
 
 **正文**：
 
 > Hi all — long-time lurker, finally shipping mine.
 >
-> **BeatScape** is a browser 4-lane rhythm game (D F J K on desktop, two-thumb lanes on mobile). No download, no account, saves stay on your device.
+> **BeatScape** is a browser 4-lane rhythm game (arrow keys by default on desktop; WASD and DFJK presets available, two-thumb lanes on mobile). No download, no account, saves stay on your device.
 >
 > What it is:
-> - **85 tracks, all AI-generated in-house, rights owned outright** — no licensed hits, no takedown risk, and the catalog keeps growing
+> - **105 tracks, all AI-generated in-house** — no third-party commercial hits; the catalog keeps growing
 > - Charts are generated from audio onsets (not a fixed BPM grid), then filtered per tier: easy/standard/hard with peak-NPS caps
-> - **15/30/50 ms judgment windows** (Perfect/Great/Good/Miss), arcade + casual modes, per-track offset calibration
+> - **15/30/50 ms judgment windows** (Perfect/Great/Good/Miss), arcade + casual modes, device offset calibration
 > - Local leaderboard + a rotating daily challenge; shareable result poster
 > - Touch gets a chord-assist so one-thumb-per-lane still clears 3-lane chords (banked as Great, never Perfect)
 >
-> Honest caveats: it's AI music — if that's a dealbreaker, totally fair. Charts are machine-generated with density audits; a human ear-pass on all 85 masters is in progress.
+> Honest caveats: it's AI music — if that's a dealbreaker, totally fair. Charts are machine-generated with density audits; human listening and device checks are part of our release process.
 >
 > Feedback I'd love: judgment feel at your offset, chart readability on hard, anything that feels unfair.
 >
@@ -49,9 +49,9 @@
 
 **正文**：
 
-> Made a little thing: a 4-lane rhythm game that runs in the browser. Hit the link, press Play, you're tapping to the beat in about ten seconds — D F J K, or thumbs if you're on a phone.
+> Made a little thing: a 4-lane rhythm game that runs in the browser. Hit the link, press Play, choose a track and start — arrow keys, WASD, DFJK, or thumbs if you're on a phone.
 >
-> - 85 original tracks (all ours — funk, neo-soul, night-drive EDM flavors)
+> - 105 original tracks (generated in-house — funk, neo-soul, night-drive EDM flavors)
 > - Daily challenge track, local high scores, a shareable result card
 > - There's a whole pirate-radio storyline wrapped around it if you're into that ("keep your block loud")
 >
@@ -63,22 +63,24 @@
 
 ### Post C — r/gamedev（开发向：管线故事，间隔 ≥2 周发）
 
-**标题**：`I generated an 85-track, fully-owned music catalog for my rhythm game — here's the pipeline and the cost traps`
+**标题**：`I generated a 105-track AI-generated music catalog for my rhythm game — here's the pipeline and the cost traps`
 
 **正文**：
 
-> My rhythm game needed music I could actually own, so I built a generation pipeline instead of licensing. Numbers, mistakes, and what I'd do differently:
+> My rhythm game needed an original catalog, so I built a local generation pipeline. Numbers, mistakes, and what I'd do differently:
 >
-> - **Pipeline**: local inference (MLX on Apple silicon) → 216s masters → 120s game clips + full streams, dual assets per track; batch manifest + quota checks per vibe/difficulty
+> - **Pipeline**: local inference (MLX on Apple silicon) → masters → game clips + full streams, dual assets per track; batch manifest + quota checks per vibe/difficulty
 > - **Charts**: generated from onsets, not grids — tier specs cap NPS and chord probability; a profiler flags peak density and thumb-impossible chords (mobile gets an assist, not silent charts)
 > - **Cost traps**: batch inference OOM at long durations (chunk it), transcoding time dominating the pipeline (parallelize early), and "generate 50 more tracks" failing at the audit stage ~10% of the time — budget for regeneration
-> - **The weird part**: owning the masters means the game can link the full track on the results screen with zero rights conversation
+> - **The weird part**: the same generated track serves both the rhythm game and a separate full-track listening page
 >
 > AMA about the pipeline; happy to share specifics on the audit gates.
 
 **首评**（管线实测数，发帖时直接引用）：
 
-> Numbers from the real run: 85 tracks across two expansions (35 → 85), all local inference — SA3 on MLX / Apple silicon, ~5s per 180s master, peak RAM 1.7 GB. Every track ships as dual assets (120s game clip + full stream master). Automated gates: catalog audit (quotas + density) FAIL=0 across all 85; density WARNs on ~8% of the last batch, same magnitude as v1. Human ear-pass on all masters in progress — that gate is the one that matters.
+> Current catalog: 105 tracks and 315 charts, generated locally with SA3 on MLX / Apple silicon. Charts use onset strength and beat-grid affinity, with separate density targets for each difficulty. We verify the shipped assets, browser flows, and local score storage before publishing.
+
+**内部发布备注（不复制到帖子）**：2026-09-05 最终自动内容审计为 FAIL=0、WARN=9；这不等于人耳审查通过。三首循环扩展候选接缝、105 首人工耳检、盲测和真机验收未关闭前不发帖。
 
 ## 3. 预期问题与回答口径（评论区速查）
 

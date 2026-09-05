@@ -1,27 +1,7 @@
 ---
-description: MusicSaas 代码索引边界 — 改代码前先读 CODE-INDEX
+description: MusicSaas 项目指令入口
 alwaysApply: true
 ---
 
-# Code Index
-
-本仓代码索引权威文档：
-
-1. [docs/CODE-INDEX.md](../../docs/CODE-INDEX.md) — 模块地图与决策树
-2. [docs/KNOWLEDGE-BASE.md](../../docs/KNOWLEDGE-BASE.md) — 知识库与文档顺序
-3. [AGENTS.md](../../AGENTS.md) — Agent 入口
-
-## 索引边界
-
-- **索引**：`apps/` · `workers/` · `packages/` · `scripts/` · `tests/` · `docs/` · `examples/`
-- **不索引**：见根目录 [.cursorignore](../../.cursorignore)（`node_modules` · `dist` · `data/` · 音频二进制）
-
-## 子产品分界
-
-| 目录 | 说明 |
-|------|------|
-| `apps/beatscape/` | **BeatScape 主产品** — 判定 15/30/50 |
-| `apps/neonbeat/` | 参考实现 — 勿混用常量 |
-| `apps/gateway/` + `workers/` | MusicSaas API / MLX |
-
-改 BeatScape 前先读 `docs/PRD-BEATSCAPE.md`。
+遵循仓库根 [AGENTS.md](../../AGENTS.md)；已加载时不重复读取。
+按任务从 [CODE-INDEX](../../docs/CODE-INDEX.md) 定位模块；索引排除项见 [.cursorignore](../../.cursorignore)。

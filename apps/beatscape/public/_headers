@@ -11,15 +11,14 @@
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
 
-# 曲库音频 / 谱面按 track id 寻址（如 bs-s3-14/audio.m4a），重生成会产出新 id
-# 而不是原地覆盖。但"废弃重生成"流程没有强制保证这一点，所以这里不用 immutable：
-# 30 天足够省下回访流量，万一真的原地覆盖了，最多一个月后自动纠正。
+# 曲库会在原 track id 下重出谱面和音频，每次使用必须重验证。
+# 发布构建还会给资产 URL 加内容哈希，避开旧版本已写入的 30 天浏览器缓存。
 /catalog/*
-  Cache-Control: public, max-age=2592000, must-revalidate
+  Cache-Control: public, max-age=0, must-revalidate
 
 # catalog.json 会随曲库扩容而变，且文件名不变 —— 必须短缓存。
 /catalog.json
-  Cache-Control: public, max-age=300, must-revalidate
+  Cache-Control: public, max-age=0, must-revalidate
 
 # 角色立绘文件名不含哈希，换图是原地覆盖，所以保守一些。
 /characters/*
@@ -28,6 +27,16 @@
 # HTML 入口永远回源：否则发版后用户拿不到新的资源引用，会被旧 index 卡住。
 /*.html
   Cache-Control: public, max-age=0, must-revalidate
+
+/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/release.json
+  Cache-Control: no-cache
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
 
 /sitemap.xml
   Cache-Control: public, max-age=3600

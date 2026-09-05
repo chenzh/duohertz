@@ -1,7 +1,7 @@
 # MusicSaas 知识库（Harness Basic）
 
 > **slug:** `musicsaas` · **Vault:** `10-SYSTEM/HARNESS/projects/musicsaas.md`  
-> Agent 进仓后 **60 秒内** 应读完本页 + [CODE-INDEX.md](./CODE-INDEX.md)。
+> 先用本页 + [CODE-INDEX.md](./CODE-INDEX.md) 定位模块，只读任务相关资料；执行约定见 [AGENTS.md](../AGENTS.md)。
 
 ---
 
@@ -23,7 +23,7 @@
 
 ---
 
-## 2. 读文档顺序（写代码前）
+## 2. 按任务选文档（无需逐项预读）
 
 ### API / 平台（MVP v0.2）
 
@@ -36,6 +36,8 @@
 7. [docs/ACCEPTANCE.md](./ACCEPTANCE.md) — 验收用例
 
 ### BeatScape（Stage1）
+
+**上线准备当前入口（2026-09-05）**：[BEATSCAPE-RELEASE-READINESS.md](./BEATSCAPE-RELEASE-READINESS.md) — 105 首候选包、技术证据、内容阻塞、人工验收工作包与发布/回退流程。
 
 1. [docs/PRD-BEATSCAPE.md](./PRD-BEATSCAPE.md) — 主产品 PRD
 2. [docs/PRD-WEB-RHYTHM-GAME.md](./PRD-WEB-RHYTHM-GAME.md) — NeonBeat 参考
@@ -59,6 +61,8 @@
 6. [docs/RESONANCE-BLINDTEST.md](./RESONANCE-BLINDTEST.md) — 差异化盲测规程（上线前人工关卡，6 展示面）
 
 ### Harness / 续作
+
+工作流入口：[验证技能](../.agents/skills/music-verify/SKILL.md) · [Issue 交付技能](../.agents/skills/music-delivery/SKILL.md) · [规则审计与官方依据](./AGENT-WORKFLOW-AUDIT.md)。
 
 1. [SESSION.md](../SESSION.md) — 项目级战略 todo（唯一真相）
 2. [docs/VAULT-HARNESS.md](./VAULT-HARNESS.md) — Vault 规范快照
@@ -100,8 +104,8 @@ bash scripts/print-status.sh
 ## 5. 已知约束 / 踩坑
 
 - **Worker 分离**：Gateway 禁止内嵌 PyTorch；推理走 `workers/*`
-- **BeatScape 谱面**：Stage1 为 BPM 占位网格，待接 MusicSaas 自动谱 + QA
-- **npm 证书**：`apps/beatscape` 独立 `npm install` 可能 SSL 失败；可复用 neonbeat `node_modules`
+- **BeatScape 谱面**：当前实现和验收状态见 `SESSION.md`；生成器入口 `scripts/beatscape-chartgen.py`，勿把历史 Stage1 占位描述当成当前实现
+- **依赖安装**：使用仓库 pnpm 锁文件；遇到网络/证书问题先诊断，不复制其他 app 的 `node_modules`
 - **预览音频**：`data/beatscape-preview/` gitignore；Range 服务 `serve.py`
 - **秘密**：`.env` 禁止 commit / 写入 Vault
 

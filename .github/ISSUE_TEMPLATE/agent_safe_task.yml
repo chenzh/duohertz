@@ -1,5 +1,5 @@
 name: "Agent-safe task"
-description: Bounded task for autonomous agent delivery (agent-safe label).
+description: Bounded MusicSaas task with explicit scope and verifiable acceptance criteria.
 title: "[Agent]: "
 labels: ["agent-safe"]
 body:
@@ -7,7 +7,9 @@ body:
     attributes:
       value: |
         Tasks with label `agent-safe` may be picked up by the agent delivery workflow.
-        See `.delivery/README.md`, `.delivery/COMPANY-OS.md`, and `.delivery/company-os/` (norms snapshot).
+        Before using this template, confirm the task fits the queue scope: at most 3 modules,
+        with no migration, auth/payment/permission-model change, or breaking API change.
+        See `.delivery/README.md`, `.delivery/beatscape/brief.md`, and `.agents/skills/music-verify/SKILL.md`.
 
   - type: textarea
     id: summary
@@ -20,10 +22,11 @@ body:
     id: acceptance
     attributes:
       label: Acceptance criteria (checkbox list)
-      description: Verifier and CI gate on these. Include commands with exit code 0.
+      description: State observable results and choose actual commands from music-verify. Examples below cover BeatScape code; adapt them to the task.
       placeholder: |
-        - [ ] pnpm test passes
-        - [ ] make test passes
+        - [ ] Describe the trigger and expected behavior, including a relevant edge case.
+        - [ ] pnpm --filter @musicsaas/beatscape test exits 0
+        - [ ] pnpm build:beatscape exits 0 (includes typecheck)
     validations:
       required: true
 
@@ -32,6 +35,8 @@ body:
     attributes:
       label: Out of scope (required)
       placeholder: |
+        - Changes limited to the listed apps/beatscape paths
+        - No judgment-window changes (15/30/50 ms)
         - No migrations
         - No auth/payment changes
     validations:
@@ -42,4 +47,4 @@ body:
     attributes:
       label: Delivery slug (optional)
       description: Folder under `.delivery/<slug>/` if not using issue-only input.
-      placeholder: music-game-sea
+      placeholder: beatscape

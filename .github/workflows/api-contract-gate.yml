@@ -1,52 +1,101 @@
-# Optional: enable when api/openapi.yaml exists.
-# Requires: vacuum CLI in CI (or use pb33f/vacuum-action).
+# Optional contract: lint when present, compare existing contracts against the PR base.
 name: API contract gate
 
 on:
   pull_request:
     paths:
       - "api/**"
-      - "server/**"
-      - "apps/**"
-      - "packages/**"
+      - "apps/gateway/**"
+      - "packages/shared/**"
+      - ".github/workflows/api-contract-gate.yml"
   workflow_dispatch:
 
 permissions:
   contents: read
-  pull-requests: write
+
+concurrency:
+  group: api-contract-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  skip:
-    if: hashFiles('api/openapi.yaml') == ''
+  detect:
     runs-on: ubuntu-latest
-    steps:
-      - run: echo "No api/openapi.yaml — API contract gate skipped"
-
-  lint-openapi:
-    if: hashFiles('api/openapi.yaml') != ''
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Install vacuum
-        run: |
-          curl -fsSL https://raw.githubusercontent.com/daveshanley/vacuum/main/bin/install.sh | bash
-          echo "$HOME/.vacuum/bin" >> "$GITHUB_PATH"
-
-      - name: Lint OpenAPI
-        run: vacuum lint api/openapi.yaml --fail-severity error
-
-  breaking-changes:
-    if: hashFiles('api/openapi.yaml') != ''
-    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      present: ${{ steps.spec.outputs.present }}
+      base_present: ${{ steps.spec.outputs.base_present }}
+      base_ref: ${{ steps.spec.outputs.base_ref }}
     steps:
       - uses: actions/checkout@v6
         with:
           fetch-depth: 0
+          persist-credentials: false
+      - name: Locate current and base contracts after checkout
+        id: spec
+        env:
+          BASE_REF: ${{ github.event.pull_request.base.sha || format('origin/{0}', github.event.repository.default_branch) }}
+        run: |
+          set -euo pipefail
+          base_sha="$(git rev-parse --verify "$BASE_REF^{commit}")"
+          echo "base_ref=$base_sha" >> "$GITHUB_OUTPUT"
+          present=false
+          base_present=false
+          [ ! -f api/openapi.yaml ] || present=true
+          if git cat-file -e "$base_sha:api/openapi.yaml" 2>/dev/null; then
+            base_present=true
+          fi
+          echo "present=$present" >> "$GITHUB_OUTPUT"
+          echo "base_present=$base_present" >> "$GITHUB_OUTPUT"
+          if [ "$base_present" = true ] && [ "$present" = false ]; then
+            echo '::error::An existing API contract was removed'
+            exit 1
+          fi
 
+  skip:
+    needs: detect
+    if: needs.detect.outputs.present != 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - run: echo "No api/openapi.yaml — API contract gate skipped"
+
+  lint-openapi:
+    needs: detect
+    if: needs.detect.outputs.present == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Install vacuum
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/daveshanley/vacuum/main/bin/install.sh | INSTALL_DIR="$RUNNER_TEMP/vacuum-bin" bash
+          echo "$RUNNER_TEMP/vacuum-bin" >> "$GITHUB_PATH"
+      - name: Lint OpenAPI
+        run: vacuum lint api/openapi.yaml --fail-severity error
+
+  breaking-changes:
+    needs: detect
+    if: needs.detect.outputs.present == 'true' && needs.detect.outputs.base_present == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Extract base contract
+        env:
+          BASE_REF: ${{ needs.detect.outputs.base_ref }}
+        run: |
+          mkdir -p .contract-base
+          git show "$BASE_REF:api/openapi.yaml" > .contract-base/openapi.yaml
       - name: Breaking change check
         uses: oasdiff/oasdiff-action/breaking@v0
         with:
-          base: "origin/${{ github.base_ref }}:api/openapi.yaml"
-          revision: "HEAD:api/openapi.yaml"
+          base: .contract-base/openapi.yaml
+          revision: api/openapi.yaml
           fail-on: WARN
+          review: false

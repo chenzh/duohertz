@@ -68,7 +68,15 @@ export function getDisplayName(): string {
 function parseRun(raw: string | null): LastRun | null {
   if (!raw) return null;
   try {
-    return JSON.parse(raw) as LastRun;
+    const run = JSON.parse(raw) as LastRun;
+    if (!run || run.v !== 1 || typeof run.track_id !== "string" || typeof run.title !== "string" ||
+      typeof run.artist !== "string" || !["easy", "standard", "hard"].includes(run.tier) ||
+      !["casual", "arcade", "practice"].includes(run.mode) || !["S", "A", "B", "C", "D"].includes(run.grade) ||
+      ![run.score, run.accuracy, run.maxCombo, run.totalNotes, run.durationMs].every(Number.isFinite) ||
+      !run.counts || ![run.counts.perfect, run.counts.great, run.counts.good, run.counts.miss].every(Number.isFinite) ||
+      (run.missEvents !== undefined && (!Array.isArray(run.missEvents) ||
+        !run.missEvents.every((e) => e && Number.isFinite(e.tMs) && [0, 1, 2, 3].includes(e.lane))))) return null;
+    return run;
   } catch {
     return null;
   }
@@ -97,6 +105,7 @@ export function writeLastRun(
     grade: result.grade,
     fc: result.fullCombo,
     ap: result.allPerfect,
+    failed: result.failed,
     counts: result.judgments,
     totalNotes: result.totalNotes,
     durationMs,
@@ -132,7 +141,7 @@ export function writeLastRun(
     });
   }
 
-  if (opts?.daily && mode === "arcade" && !result.failed) {
+  if (opts?.daily && result.score <= ceiling && mode === "arcade" && !result.failed) {
     saveDailyBoardEntry({
       track_id: track.track_id,
       title: track.title,
@@ -160,5 +169,11 @@ export function shareResultsUrl(origin = typeof window !== "undefined" ? window.
 }
 
 export function shareResultsCopy(run: LastRun, url: string): string {
-  return `I just ran ${run.title} on BeatScape — ${run.accuracy}% ${run.grade}. Feel the Beat, Own the Scape. ${url}`;
+  return `I just ran ${run.title} on BeatScape — ${run.accuracy}% ${run.grade}. No account, no ads. Scores stay in your browser. Try this chart: ${url}`;
+}
+
+/** A recipient can play the same chart without access to the sender's local save. */
+export function shareChallengeUrl(run: LastRun, origin = typeof window !== "undefined" ? window.location.origin : ""): string {
+  const base = (import.meta.env.BASE_URL || "/beatscape/").replace(/\/$/, "");
+  return `${origin}${base}/play/${encodeURIComponent(run.track_id)}?tier=${run.tier}&mode=${run.mode}`;
 }

@@ -6,7 +6,7 @@ let cache: CatalogJSON | null = null;
 export async function loadCatalog(): Promise<CatalogJSON> {
   if (cache) return cache;
   const base = import.meta.env.BASE_URL;
-  const res = await fetch(`${base}catalog.json`);
+  const res = await fetch(`${base}catalog.json`, { cache: "no-cache" });
   if (!res.ok) throw new Error("Failed to load catalog");
   cache = (await res.json()) as CatalogJSON;
   return cache;

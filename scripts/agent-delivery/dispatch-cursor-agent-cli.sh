@@ -46,6 +46,7 @@ if [ -z "$ISSUE_NUMBER" ]; then
   usage >&2
   exit 1
 fi
+[[ "$ISSUE_NUMBER" =~ ^[1-9][0-9]*$ ]] || { echo 'error: issue number must be a positive integer' >&2; exit 1; }
 
 WORKTREE_NAME="${WORKTREE_NAME:-cursor-issue-${ISSUE_NUMBER}}"
 USE_WORKTREE="${USE_WORKTREE:-1}"
@@ -60,7 +61,7 @@ LOG_FILE="$LOG_DIR/issue-${ISSUE_NUMBER}-${TS}.log"
 } >>"$LOG_FILE"
 
 if [ -z "$REPO" ]; then
-  REPO="$(gh repo view "$REPO_ROOT" --json nameWithOwner -q .nameWithOwner 2>/dev/null || true)"
+  REPO="$(cd "$REPO_ROOT" && gh repo view --json nameWithOwner -q .nameWithOwner)"
 fi
 if [ -z "$REPO" ]; then
   echo "error: set GITHUB_REPOSITORY or run inside a gh-linked repo" >&2
@@ -84,8 +85,7 @@ fi
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
 
-export GH_REPO="$REPO"
-gh issue view "$ISSUE_NUMBER" --json title,body,url,number >"$TMP/issue.json"
+gh issue view "$ISSUE_NUMBER" --repo "$REPO" --json title,body,url,number >"$TMP/issue.json"
 PROMPT="$TMP/prompt.txt"
 bash "$(dirname "$0")/build-prompt.sh" "$TMP/issue.json" >"$PROMPT"
 
@@ -96,7 +96,7 @@ if [ "$DRY_RUN" -eq 1 ]; then
   exit 0
 fi
 
-gh issue edit "$ISSUE_NUMBER" --add-label "agent-running" --remove-label "agent-blocked" 2>/dev/null || true
+gh issue edit "$ISSUE_NUMBER" --repo "$REPO" --add-label "agent-running" --remove-label "agent-blocked" 2>/dev/null || true
 
 COMMENT="🤖 Local cursor-agent dispatched for this issue.
 
@@ -106,7 +106,7 @@ COMMENT="🤖 Local cursor-agent dispatched for this issue.
 
 Verifier must pass acceptance commands before merge."
 
-gh issue comment "$ISSUE_NUMBER" --body "$COMMENT"
+gh issue comment "$ISSUE_NUMBER" --repo "$REPO" --body "$COMMENT"
 
 echo "Dispatching issue #$ISSUE_NUMBER in $REPO_ROOT (log: $LOG_FILE)"
 
@@ -134,7 +134,7 @@ if git -C "$REPO_ROOT" rev-parse --is-inside-work-tree &>/dev/null; then
     WORKTREE_BASE_REF="$WORKTREE_BASE"
   else
     echo "error: cannot resolve worktree base '$WORKTREE_BASE' in $REPO_ROOT" >&2
-    gh issue edit "$ISSUE_NUMBER" --remove-label "agent-running" --add-label "agent-blocked" 2>/dev/null || true
+    gh issue edit "$ISSUE_NUMBER" --repo "$REPO" --remove-label "agent-running" --add-label "agent-blocked" 2>/dev/null || true
     exit 1
   fi
 fi
@@ -165,14 +165,15 @@ exit_code=$?
 set -e
 
 if [ "$exit_code" -eq 0 ]; then
-  gh issue edit "$ISSUE_NUMBER" --remove-label "agent-running" --add-label "agent-done" 2>/dev/null || true
-  gh issue comment "$ISSUE_NUMBER" --body "$(cat <<EOF
-✅ Local cursor-agent finished (exit 0). Check worktree \`${WORKTREE_NAME}\` and open PR if not auto-created.
+  # A successful CLI process does not prove PR, CI, or acceptance completion.
+  # Keep agent-running until reconciliation or a reviewer confirms the evidence.
+  gh issue comment "$ISSUE_NUMBER" --repo "$REPO" --body "$(cat <<EOF
+Local cursor-agent exited 0. Worktree: \`${WORKTREE_NAME}\`. Awaiting PR, CI, and acceptance-evidence verification; issue remains agent-running.
 EOF
 )"
 else
-  gh issue edit "$ISSUE_NUMBER" --remove-label "agent-running" --add-label "agent-blocked" 2>/dev/null || true
-  gh issue comment "$ISSUE_NUMBER" --body "$(cat <<EOF
+  gh issue edit "$ISSUE_NUMBER" --repo "$REPO" --remove-label "agent-running" --add-label "agent-blocked" 2>/dev/null || true
+  gh issue comment "$ISSUE_NUMBER" --repo "$REPO" --body "$(cat <<EOF
 ❌ Local cursor-agent failed (exit $exit_code). See log: \`${LOG_FILE}\`
 EOF
 )"

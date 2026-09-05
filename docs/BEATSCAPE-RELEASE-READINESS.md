@@ -1,0 +1,116 @@
+# BeatScape 上线准备 · 2026-09-05
+
+当前为 **105 首 / 315 张谱的本地发布候选**。技术验收与正式放行分开：内容审计已为 FAIL=0，人工耳检、差异化盲测、真机验收未签审，**不能据此宣称正式上线准备全部完成**。现有免费、无账号、设备本地存档的产品范围保持不变。
+
+## 发布候选与证据
+
+| 项目 | 当前结果 | 复验/证据 |
+|---|---|---|
+| 曲库登记 | Stage6 85/85 + P3/P4 20/20 = 105；五曲风缺口 0 | `pnpm catalog:beatscape` |
+| 前端单元/PRD 测试 | 18 文件，127 用例 | `pnpm --filter @musicsaas/beatscape test` |
+| 发布器回归 | 6 用例：缺谱、HTML 假音频、计数、重复 ID、版本变化、产物篡改 | `node --test apps/beatscape/scripts/release.test.mjs` |
+| 生产构建 | 类型检查通过；591 文件，402.7 MiB；主 JS gzip 约 105.5 kB | `pnpm --filter @musicsaas/beatscape build:cf` |
+| 全资产检查 | 105 个 M4A 文件头、105 张封面、315 张完整谱结构/计数/路径/时间/道号；逐文件 SHA-256 | `dist/release.json`、`release:verify` |
+| 浏览器回归 | 桌面 Chrome + Pixel 7 视口/触控模拟；16 项流程 | `PLAYWRIGHT_CHANNEL=chrome pnpm --filter @musicsaas/beatscape test:e2e` |
+| 实际音频/结算 | 两种视口均完整运行 Voltage Drop，正确结算全 Miss，成功导出 PNG；双人键位独立与同步暂停 | `e2e/release.spec.ts`；`test-results/` 截图 |
+| 根测试 | Gateway 6 + pytest 8 通过 | `pnpm test` |
+| 音乐站同步 | 105 首同步一致；40 单测与构建通过 | `python3 scripts/scapemusic-sync-catalog.py --check` |
+| 人工工作单工具 | 105 行、姓名必填、指纹/待审导出、三首 216s 实际 M4A 加载通过 | `earcheck-worksheet.html`；没有生成虚假 Clear |
+| 谱面自动体检 | 105 首、106 PASS、0 FAIL | `pnpm earcheck:beatscape`；**不是人工耳检** |
+| 内容审计 | **4726 PASS / 9 WARN / 0 FAIL** | 本地 `data/beatscape-release/2026-09-05/content-final/audit-report.json` |
+| 正式放行 | **BLOCKED，预期退出 1** | `pnpm --filter @musicsaas/beatscape launch:check` |
+
+候选产物 SHA-256：`74840f1fc466c78a1f02c59fa2800878659c5ca1a08ba1f4963058c44226a4e6`。`release.json` 同时记录源码 commit、工作区 dirty 状态、catalog 与全部文件哈希；本次源码未 commit/push。任何内容变更后，以重建产出的哈希为准，原签审失效。
+
+## 本次修复
+
+- 三个发布入口统一执行类型检查、测试、同一生产构建与产物核验。CI 改用 pnpm 锁文件，PR 运行验收，生产发布前检查签审证据。
+- 构建仅清理 `dist` 内的完整版母带、历史报告与未跟踪的单曲 OG；单曲 OG 字段统一回退到版本控制中的站点卡片。本地额外素材不会让 CI 产生另一份发布包。
+- 音频、封面、试听和谱面 URL 带内容哈希；曲库请求重验证，修复原地重出谱面后仍命中旧 30 天缓存的问题。
+- 首页增加静态 OG/Twitter 标签和 1200×630 站点卡片。图由现有四道/菱形/色板及 OFL Anton 字体排版，源为 `scripts/og-card.html`，可用 `generate:og:site` 重出。
+- 分享成绩改为携带同曲/难度/模式的可玩挑战链接；旧 `results?run=local` 仍兼容本机读取。文案准确描述本地存档。
+- 修复 Scape Music 深链为 `/#/track/:id`；修复时长四舍五入出现 `1:60`。线上音乐站 JS 已只读核实包含 105 个曲目 ID。
+- Settings 增加 0.5–2× Note speed，覆盖全部模式。映射为 `scrollBias = 1/speed - 1`（提高数值应下落更快），音频速率及 15/30/50 判定窗不变。
+- 损坏成绩存档回退、Daily 榜分数上限与总榜一致、Casual/失败局不再误标 NEW RECORD、音频失败增加 Retry loading。
+- 人工耳检工作单扩至完整 105 首，导出审核 JSON 并绑定实际音频 SHA-256；音频更换会使旧勾选失效。
+
+## 内容修复与人工复核
+
+| 曲目 | 实测 | 当前要求 | 处理状态 |
+|---|---|---|---|
+| bs-p3-01 · Midnight Haze | stream 216s / game 120s | stream ≥216s | 时长通过；循环接缝待耳检 |
+| bs-p3-04 · Lounge Ember | stream 216s / game 120s | stream ≥216s | 同上 |
+| bs-p3-07 · Glass Echo Drive | stream 216s / game 120s | stream ≥216s | 同上 |
+
+`afinfo` 证实原有三首完整版为 180s。现已用既有 `beatscape-stitch-stream.py` 从**当前 180s 母带**制作 216s 循环扩展候选，再以 `beatscape-ingest-stream.py` 入库；没有使用目录中的旧名资产，没有改变游戏音频、谱面或放宽规格。原 stream 备份于 `data/beatscape-release/2026-09-05/original-streams/`，新旧指纹与来源见同目录 `stream-candidates.json`。这是循环扩展，未经人工认可的接缝仍须耳检；原始母带保持不变。
+
+Scape Music 的本地曲库已同步到 216s（同时修正既有 bs-p3-02 BPM 156→158 的元数据漂移），同步检查、40 单测及构建通过。音乐站线上尚未替换这三首候选；正式放行时需通过其现有发布脚本配套发布，确保带正确 `VITE_GAME_URL`，再核对线上时长与播放。
+
+9 WARN 已对照当前谱和审计器逐条定位。审计器对 `onset-v1` 使用已有扩展区间；以下为告警记录，未改阈值、未自动重出谱，也未代填人工接受。
+
+| 曲目 | 档位 / 项目 | 当前测量 | 审计区间 | 待验内容 |
+|---|---|---|---|---|
+| bs-p4-04 · Echo Glow Chorus | 命名主题词 | title/artist 未命中词表 | 主题词匹配 | 核对命名与世界观；单纯缺词不证明音频或资产错误 |
+| bs-s2-03 · Blue Hour Loop | Hard 和弦/10s | 18.67 | 0–18 | 连打负担 |
+| bs-s3-05 · Chrome Grid | Hard 和弦/10s | 19.00 | 0–18 | 连打负担 |
+| bs-s4-13 · Halftone Skyline | Hard 和弦/10s | 18.08 | 0–18 | 连打负担 |
+| bs-s4-14 · Chrome Mile Anthem | Hard 和弦/10s | 18.42 | 0–18 | 连打负担 |
+| bs-s5-05 · Chrome Vector | Hard 和弦/10s | 18.58 | 0–18 | 连打负担 |
+| bs-s6-04 · Moonlit Turnpike | Standard 和弦/10s | 7.42 | 0–7 | Standard 难度与双拇指体验 |
+| bs-s6-05 · Chrome Foundry | Hard 和弦/10s | 20.33 | 0–18 | 优先实玩，和弦偏高最明显 |
+| bs-s6-21 · Halftone Parade | Standard NPS | 2.33 | 2.4–6.4 | 留白与节奏是否自然 |
+
+和弦频度按全曲时长取平均，不能据此推断每个 10s 区段或真机手感。实际接受或要求返工须记录曲目、档位、理由及审核者。
+
+## 人工验收工作包
+
+2026-09-05 用户明确确认：以下人工验收尚未完成。
+
+1. **105 首耳检**：运行 `python3 scripts/beatscape-earcheck-worksheet.py --all`，在浏览器打开 `apps/beatscape/earcheck-worksheet.html`。逐曲听、选 Clear/Derivative、填写备注和 reviewer 后导出 JSON。三首新循环扩展候选要额外听接缝，保持 pending 直到真实审核完成。自动 `earcheck:beatscape` 不替代此记录。
+2. **差异化盲测**：当前 5 张截图已备于 `data/beatscape-release/2026-09-05/blindtest/index.html`，附产物与图片哈希。按 [RESONANCE-BLINDTEST.md](RESONANCE-BLINDTEST.md) §结果记录，邀请 5–10 名不玩日式 RPG 的观察者，对既定展示面记原话与结论。PRD §7.7/§11.4 明确要求上线前完成。
+3. **设备验收**：记录设备/OS/浏览器版本、日期、曲目/模式、通过或问题。至少覆盖下表；模拟器通过不能填成真机通过。
+
+| 设备/浏览器 | 验收步骤 | 当前状态 |
+|---|---|---|
+| Windows Chrome / Edge / Firefox | 默认方向键与重绑、Standard/Hard 一局、Esc 暂停、切后台恢复、海报 | 待人工 |
+| macOS Safari | 首次点击解锁、M4A 试听与对局、暂停/切后台、音量/校准保存 | 待人工 |
+| iPhone Safari | 竖屏双拇指、横竖屏切换、安全区、锁屏/来电恢复、退出入口 | 待人工 |
+| Android Chrome | 多指/Slide、Fullscreen、边缘误触、弱网重试 | 待人工 |
+| 高密度/性能 | bs-s1-05 Hard 全程，记录掉帧/音画偏移、耳机/扬声器/蓝牙校准差异 | 待人工 |
+
+对本候选的限制：无全站离线缓存承诺；未证明所有真机稳定 60fps、≤30ms 音画误差、1.5s 首屏；全站 SPA，单曲 HTML 预渲染/单曲爬虫 OG 仍为后续工作；榜单为设备本地。宣传草稿已按实际功能和 105 首更新，未发布。
+
+## 复验、签审、发布与回退
+
+技术准备（不联网发布、不读取部署密钥）：
+
+```bash
+pnpm install --frozen-lockfile --filter @musicsaas/beatscape
+pnpm --filter @musicsaas/beatscape exec playwright install chromium
+pnpm release:beatscape
+# 等价部署前自检入口
+bash scripts/deploy-beatscape-cf-pages.sh --check
+```
+
+本机浏览器下载受到代理证书链影响，因此已使用本机已安装的 Chrome、默认音频权限策略完成验收（未绕过用户手势解锁）：`PLAYWRIGHT_CHANNEL=chrome pnpm release:beatscape`。无需关闭 TLS 验证。CI 使用 Playwright 自带 Chromium；其远程运行需在后续提交后验证。
+
+所有门禁实际通过后，由审核者填写 `apps/beatscape/launch-signoff.json`：
+
+- `artifactSha256` = 最终 `dist/release.json` 的值；`reviewedBy` / `reviewedAt` = 实际审核者和 ISO 日期。
+- `contentAudit`、`earcheckReport`、`blindtestRecord`、`deviceTestRecord` 各为 `{ "status": "pass", "evidence": "相对 apps/beatscape 的证据文件路径", "sha256": "证据文件 SHA-256" }`。
+- contentAudit 使用完整 `audit-report.json`（必须 FAIL=0 且覆盖 105 首），earcheckReport 使用上述工作单导出的 JSON（所有当前音频 Clear）；另两项使用真实填写的 Markdown/JSON 记录。
+- 可将签审证据归档到 `docs/releases/<版本>/` 以供 CI 读取；`data/` 内临时文件不会随 Git 到 CI。签审是对原有 PRD 人工验收的记录，不能由自动测试代填。CI 不携带 stream 母带，以产物/证据哈希绑定已审核记录；本地有母带时额外核对音频指纹。
+
+```bash
+pnpm --filter @musicsaas/beatscape launch:check
+# 真正发布命令：仅在门禁通过且获准发布时执行
+bash scripts/deploy-beatscape-cf-pages.sh
+# 发布后的只读验收：比对线上和本地产物哈希、深链、OG、代表曲谱面/音频
+pnpm --filter @musicsaas/beatscape release:live https://beatscape.pages.dev/
+```
+
+发布前在 Cloudflare Pages 的 Deployments 中记录上一份成功生产部署 ID/URL。出现无法开局、音频/谱面资源失败、成绩流程异常时，停止宣传并在该旧生产部署菜单选择 **Rollback to this deployment**；预览部署不能作为回退目标。[Cloudflare 官方回退说明](https://developers.cloudflare.com/pages/configuration/rollbacks/)
+
+回退后用上一份保存的 `release.json` 进行 `release:live`，再实测开局/暂停/结算；第一次引入 manifest 的回退目标可能没有 `release.json`，此时核对保留的旧 catalog/JS 哈希与手动游玩记录。当前没有执行正式部署、回退或发送社区帖子。
+
+缓存头实现依据 [Cloudflare Headers](https://developers.cloudflare.com/pages/configuration/headers/)。音频请求允许 Pages 返回完整 200 或部分 206；完整响应还会核对 SHA-256，避免把 SPA 的 HTML 200 当成成功音频。[Cloudflare 静态资源行为](https://developers.cloudflare.com/pages/configuration/serving-pages/)

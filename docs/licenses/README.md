@@ -1,95 +1,76 @@
-# 知识产权授权归档
+# BeatScape 资产与授权归档
 
-> 对应 PRD §7.5 字体条款与 §7.7 差异化红线。
-> **原则**：不依赖「我已重画素材」免责，而是**留档可举证的授权链 + 主动差异化**（`Tetris Holding v. Xio Interactive`, 2012）。
+> 当前资产快照：**2026-09-05，105 首曲库**。对应 [PRD](../PRD-BEATSCAPE.md) §7.5、§7.7、§11.4。
+> 本页记录资产来源、许可证文件与验收证据状态。`rights: "owned"` 是曲库声明，不能替代人工耳检或差异化盲测。
+> 用户已确认耳检、盲测、真机验收尚未完成；当前放行状态以[上线准备清单](../BEATSCAPE-RELEASE-READINESS.md)及签审记录为准。
 
----
+## 1. 字体归档
 
-## 1. 字体（只使用 SIL OFL / Apache）
-
-| 字体 | 用途 | 授权 | 授权文本 |
-|------|------|------|----------|
-| **Anton** | Display：标题、HUD 数字、判定文案 | SIL OFL 1.1 | [fonts/anton-OFL.txt](fonts/anton-OFL.txt) |
+| 字体 | 当前用途 | 归档授权 | 授权文本 |
+|------|----------|----------|----------|
+| **Anton** | Display：标题、HUD 数字、判定文案；站点 OG 卡 | SIL OFL 1.1 | [fonts/anton-OFL.txt](fonts/anton-OFL.txt) |
 | **Sora** | 次级标题、强调标签 | SIL OFL 1.1 | [fonts/sora-OFL.txt](fonts/sora-OFL.txt) |
 | **IBM Plex Sans** | 数据、正文、UI | SIL OFL 1.1 | [fonts/ibmplexsans-OFL.txt](fonts/ibmplexsans-OFL.txt) |
 
-授权文本来源：`https://raw.githubusercontent.com/google/fonts/main/ofl/<family>/OFL.txt`（上游 google/fonts 仓库，官方权威副本）。
+字体引用见 [index.html](../../apps/beatscape/index.html) 与 [styles.css](../../apps/beatscape/src/styles.css)；归档文本来自 Google Fonts 上游仓库的 `ofl/<family>/OFL.txt`。站点 OG 的 [HTML 模板](../../apps/beatscape/scripts/og-card.html) 与[生成脚本](../../apps/beatscape/scripts/generate-site-og.mjs)使用 Anton。
 
-**为什么这条是硬的**
+历史记录：单曲 OG 生成器 [beatscape-generate-og.py](../../scripts/beatscape-generate-og.py) 曾修正系统 Arial 字体路径，现有实现从候选字体中查找、缺少字体时省略文字。该脚本生成的本地单曲 OG 不属于当前 BeatScape 发布包；本段不构成对所有历史图片的重新验收。
 
-- 美国：字体**形状**不受著作权保护，但字体**软件**受保护。
-- 中国：独创性高的字体单字**可作为美术作品**受保护，字库按**计算机软件**保护
-  （方正诉暴雪，最高人民法院，判赔 205 万元）。
-- 日本：字体形状本身不受保护。
+## 2. 音频资产快照
 
-→ 按**最严口径**管理：只用 OFL / Apache，全站零例外。
+事实来源：[public/catalog.json](../../apps/beatscape/public/catalog.json)。
 
-**已消除的隐患**：`scripts/beatscape-generate-og.py` 的 Pillow 分支原先用
-`/System/Library/Fonts/Supplemental/Arial Bold.ttf` 渲染 OG 图文字。
-Arial 是 Monotype 商业字体，**不得烘焙进交付资产**。
-已改为 OFL 字体查找（Anton / IBM Plex / DejaVu），
-**找不到安全字体时只输出几何图形、不写文字** ——
-与 stdlib 分支输出一致，保证不同机器产出相同，也保证永不静默使用商业字体。
+| 项目 | 当前数量 / 状态 | 证据边界 |
+|------|-----------------|----------|
+| 曲目 | 105 首 | 当前曲库条目数 |
+| 生成引擎字段 | `stable-audio-3` 104 首；`ace-step` 1 首 | 曲库记录的生成来源 |
+| 权利字段 | 105/105 `rights: "owned"` | 项目元数据声明，不是逐曲审核结果 |
+| 人工耳检 | **尚未完成** | 尚无覆盖当前音频指纹的完整人工记录 |
 
----
+不能用 `owned` 字段推导“无任何第三方旋律、采样、音效”或“原曲相似度检查已通过”。当前候选音频与人工记录的绑定方式、三首循环扩展候选的接缝耳检要求见[上线准备清单](../BEATSCAPE-RELEASE-READINESS.md)。
 
-## 2. 音频（100% 自研 AI 原创）
+## 3. 美术资产快照
 
-- 曲库 25 首，`catalog.json` 中 **25/25 `rights: "owned"`**。
-- 生成引擎：`stable-audio-3` × 24、`ace-step` × 1。
-- **无任何第三方旋律、采样、音效。**
+| 资产 | 当前事实 | 来源 / 打包依据 |
+|------|----------|-----------------|
+| 曲目封面 | 105 张 `catalog/<track_id>/cover.svg` | [public/catalog](../../apps/beatscape/public/catalog/)；[封面生成器](../../scripts/beatscape-cover.py) |
+| 站点 OG | 1 张 `og.png`，1200 × 630 | [当前站点图](../../apps/beatscape/public/og.png)；§1 中的模板与生成脚本 |
+| 本地单曲 OG | `public/catalog` 可存在单曲 `og.png`；当前发布流程剔除这些文件，曲目分享图回退站点 OG | [release.mjs](../../apps/beatscape/scripts/release.mjs)；当前 `dist` 中仅根目录 `og.png` |
+| 角色位图 | **7 个 District 文件组，共 7 张 PNG + 14 张 WebP**，当前均随发布包复制 | [public/characters](../../apps/beatscape/public/characters/)；当前 `dist/characters` 文件清单 |
 
----
+七个文件组的名称为 `afterhours-lane`、`chrome-yard`、`glass-rim`、`night-grid`、`pulse-core`、`skyline-hook`、`slide-district`；每组包含 `<slug>.png`、`<slug>-128.webp`、`<slug>-512.webp`。不能继续将当前站点描述为“无人物位图”或“全部程序化几何素材”。
 
-## 3. 美术资产（100% 程序化生成，零外部素材）
+当前页面的主角色是 **NIGHTSHIFT 三人组：JUNO、ATLAS、TORQUE**。角色映射分别使用 `pulse-core`、`skyline-hook`、`chrome-yard` 文件组，其余 District 的页面角色回退 JUNO；页面通过 WebP 变体显示头像。依据为 [scape.ts](../../apps/beatscape/src/constants/scape.ts)、[CharacterAvatar.tsx](../../apps/beatscape/src/components/CharacterAvatar.tsx) 与[角色页](../../apps/beatscape/src/pages/Characters.tsx)。其余四个文件组仍在包内，不能因页面只展示三人而从资产盘点中省略。
 
-- `apps/beatscape/public/` 内**除 `catalog/*/og.png` 外无任何位图**。
-- 25 张曲目封面：由 `scripts/beatscape-cover.py` 按 `seed = track_id` 程序化生成，**纯几何、无人物脸**（PRD §7.5）。
-- 25 张 OG 图：由 `scripts/beatscape-generate-og.py` 程序化生成。
-- 共振菱形 motif 为本项目原创，见 PRD §7.6。
+角色创作与生成来源见 [World Bible](../BEATSCAPE-WORLDBIBLE.md) 和[角色 LoRA runbook](../BEATSCAPE-CHARACTER-LORA.md)。runbook 记录的是本地 Animagine XL 4.0 / LoRA 管线；旧七人叙事已退役，当前人物设定以 World Bible 三人组为准。本次归档只核对文件与文档关系，未重新验证模型版本、权重或签署角色人工审查结论。
 
----
+## 4. 差异化红线：当前证据状态
 
-## 4. 差异化红线自检（PRD §7.7）
+此前本页的“25 首、零人物位图、逐项通过”属于旧资产阶段记录，**不能作为当前 105 首曲库及角色位图的验收证据**。正文关键词搜索只能定位文本，不能证明图片、旋律或整体视觉已经通过人工检查。
 
-| 红线 | 检查方式 | 结果 |
-|------|----------|------|
-| 第三方作品名称 / logo / 系列徽记 | 全仓 grep `persona` `atlus` `女神异闻录` 等 | ✅ 无命中（仅 `getPersonalBest` / "Personal Best" 误报） |
-| 任何具体角色 | 无位图资产；封面为程序化几何，无人物脸 | ✅ 通过 |
-| 人格面具 / 塔罗牌 / 天鹅绒房间 motif | grep `tarot` `arcana` `velvet room` `塔罗` `面具` | ✅ 无命中 |
-| 原曲旋律 / 采样 / 音效 | `rights: owned` 25/25 | ✅ 通过 |
-| 官方美术资产与定制字体文件 | 无外部图片；字体全部 OFL | ✅ 通过 |
-| 非 OFL/Apache 字体 | 见 §1；Arial 隐患已消除 | ✅ 通过 |
-| 日文 / 二次元拟声词与表情贴纸 | grep 日文假名字符区间 `U+3040–U+30FF` | ✅ 无命中 |
+| 检查对象 | 已有事实 | 当前结论 |
+|----------|----------|----------|
+| 字体 | 三份 OFL 文本已归档，当前页面字体引用可追溯 | 归档在本页 §1 |
+| 音频旋律、采样、音效 | 105 首曲库及生成引擎元数据可追溯 | 人工耳检尚未完成，不能写“通过” |
+| 角色造型、图案、视觉元素 | 七组位图仍随包，页面主角色为三人 | 需覆盖当前实际资产；不沿用“无位图”结论 |
+| 第三方名称、标识、整体视觉联想 | 项目有 PRD §7.7 红线与盲测规程 | 当前差异化盲测尚未完成 |
 
-**风格名自建为 RESONANCE（共振）** —— 不称其为任何既有作品之名。这既是品牌，也是法律姿态。
+项目视觉名称为 **RESONANCE（共振）**。品牌命名、元数据声明与技术测试均不替代上述人工记录。
 
----
+## 5. 差异化盲测（上线前门禁）
 
-## 5. 差异化盲测（上线前硬性关卡）
+按 PRD §11.4 与[差异化盲测规程](../RESONANCE-BLINDTEST.md)，找 **5–10 名不玩日式 RPG** 的观察者，**只给当前截图、不给提示**，问“这看起来像哪款游戏”。任一人说出来源作品即判定不通过，退回处理差异化。
 
-PRD §11.4 规定：找 **5–10 名不玩日式 RPG** 的观察者，**只给截图、不给提示**，
-问「这看起来像哪款游戏」。**任一人说出来源作品即判定不通过**，退回重做差异化。
-
-- 素材：[`../RESONANCE-BLINDTEST.md`](../RESONANCE-BLINDTEST.md)
-- 结果记录：本文件 §6
-
----
+截图范围、原话记录、证据文件与签审绑定方式见[盲测规程](../RESONANCE-BLINDTEST.md)及[上线准备清单](../BEATSCAPE-RELEASE-READINESS.md)。不得将测试模板、截图生成成功或自动化检查结果登记为观察者结论。
 
 ## 6. 盲测结果
 
 | 日期 | 观察者数 | 说出来源作品的人数 | 结论 |
 |------|----------|--------------------|------|
-| _待执行_ | — | — | — |
+| 2026-09-05 | 尚未执行 | 无记录 | **待人工验收，未放行** |
 
----
+用户已明确尚未完成这些人工验收；本轮仅更新资产归档，未填写或代签盲测结果。完成后保留观察者原话与当前截图版本，并依上线准备清单接入签审。
 
-## 7. 遗留观察项（非违规，但需知悉）
+## 7. 记录维护
 
-**曲目名含 "Velvet"**：`Velvet Afterhours`、`Velvet Scape`、`Scape Velvet` 三首。
-
-- `velvet` 是英语常用词（天鹅绒质感 / lounge-jazz 语境的常见搭配），
-  与特定作品的专有名词 **Velvet Room** 并非同一复合词，单用词不构成可保护的要素。
-- 但在朱红配色的整体语境下，属于**同一语义邻域**，会在盲测中被一并观察。
-- 处置：**保留**（改名会破坏曲库既有链接与 seo 字段），但盲测时若有人因此联想到来源作品，
-  优先改名这三首而非改配色。
+曲库、角色图片、页面视觉或字体变动后，更新本页资产快照并核对原有人工记录是否仍覆盖当前候选。不得从历史勾选项自动继承当前版本的通过状态。

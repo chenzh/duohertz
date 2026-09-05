@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import argparse
 import html
+import hashlib
 import json
 from pathlib import Path
 
@@ -24,7 +25,7 @@ CATALOG_JSON = ROOT / "apps" / "beatscape" / "public" / "catalog.json"
 OUT = ROOT / "apps" / "beatscape" / "earcheck-worksheet.html"
 
 ROWS = """
-  <tr data-tid="{tid}">
+  <tr data-tid="{tid}" data-fingerprint="{fingerprint}">
     <td class="idx">{i}</td>
     <td class="meta"><strong>{title}</strong><span>{artist} · {vibe} · {bpm} BPM</span></td>
     <td class="player"><audio controls preload="none" src="{src}"></audio></td>
@@ -63,18 +64,21 @@ TEMPLATE = """<!doctype html>
 <h1>Human Ear-Check Worksheet — __SCOPE__</h1>
 <p class="sub">For each track: play the full stream master. Ask exactly one question — <em>&ldquo;does this remind me of a specific existing song?&rdquo;</em> If yes, mark Derivative and name the song. Verdicts save to this browser automatically.</p>
 <p class="progress" id="progress">Checked: 0 / __COUNT__</p>
+<p><label>Reviewer <input id="reviewer" placeholder="Your name"></label> <button id="export" type="button">Export review JSON</button> <span id="export-status" role="status"></span></p>
 <table>
 __ROWS__
 </table>
 <script>
   const KEY = "bs_earcheck___SCOPE_KEY__";
-  const state = JSON.parse(localStorage.getItem(KEY) || "{}");
+  let state = {};
+  try { state = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch {}
+  if (!state || typeof state !== "object" || Array.isArray(state)) state = {};
   const rows = [...document.querySelectorAll("tr[data-tid]")];
   function apply() {
     let done = 0;
     for (const tr of rows) {
       const tid = tr.dataset.tid;
-      const v = state[tid]?.v || "";
+      const v = state[tid]?.fingerprint === tr.dataset.fingerprint ? state[tid]?.v || "" : "";
       const note = state[tid]?.note || "";
       tr.querySelector(`input[value="clear"]`).checked = v === "clear";
       tr.querySelector(`input[value="derivative"]`).checked = v === "derivative";
@@ -89,14 +93,28 @@ __ROWS__
     const tid = tr.dataset.tid;
     tr.addEventListener("change", (e) => {
       if (e.target.type === "radio") {
-        state[tid] = { ...(state[tid] || {}), v: e.target.value };
+        state[tid] = { ...(state[tid] || {}), v: e.target.value, fingerprint: tr.dataset.fingerprint, reviewedAt: new Date().toISOString() };
       } else if (e.target.classList.contains("note")) {
         state[tid] = { ...(state[tid] || {}), note: e.target.value };
       }
-      localStorage.setItem(KEY, JSON.stringify(state));
+      try { localStorage.setItem(KEY, JSON.stringify(state)); }
+      catch { document.getElementById("export-status").textContent = "Browser storage unavailable. Export before closing."; }
       apply();
     });
   });
+  document.getElementById("export").onclick = () => {
+    const reviewer = document.getElementById("reviewer").value.trim();
+    if (!reviewer) { document.getElementById("export-status").textContent = "Enter the reviewer's name first."; return; }
+    const report = {
+      schema: 1, scope: "__SCOPE_KEY__", reviewer, exportedAt: new Date().toISOString(),
+      tracks: rows.map((tr) => ({ track_id: tr.dataset.tid, fingerprint: tr.dataset.fingerprint,
+        ...(state[tr.dataset.tid]?.fingerprint === tr.dataset.fingerprint ? state[tr.dataset.tid] : { v: "pending" }) }))
+    };
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(new Blob([JSON.stringify(report, null, 2)], {type: "application/json"}));
+    link.href = url; link.download = "beatscape-earcheck-" + new Date().toISOString().slice(0,10) + ".json";
+    link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+  };
   apply();
 </script>
 </body>
@@ -129,6 +147,10 @@ def main() -> int:
         if not e:
             raise SystemExit(f"track {tid} in manifest but missing from catalog.json")
         stream = str(e["stream_audio"]).lstrip("/")
+        stream_path = ROOT / "apps/beatscape/public" / stream
+        if not stream_path.is_file():
+            raise SystemExit(f"Missing listening asset: {stream_path}")
+        fingerprint = hashlib.sha256(stream_path.read_bytes()).hexdigest()
         rows.append(
             ROWS.format(
                 tid=html.escape(tid),
@@ -138,6 +160,7 @@ def main() -> int:
                 vibe=html.escape(str(e.get("vibe", "?"))),
                 bpm=e.get("bpm", "?"),
                 src=html.escape(f"public/{stream}"),
+                fingerprint=fingerprint,
             )
         )
 

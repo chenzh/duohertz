@@ -79,6 +79,8 @@ export type LastRun = {
   grade: "S" | "A" | "B" | "C" | "D";
   fc: boolean;
   ap: boolean;
+  /** Optional so older device saves remain readable. */
+  failed?: boolean;
   counts: Record<Judgment, number>;
   totalNotes: number;
   missEvents?: MissEvent[];

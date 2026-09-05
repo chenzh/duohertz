@@ -146,6 +146,19 @@ export function SettingsPage() {
             />
           </label>
           <label className="field">
+            Note speed · {(1 / (1 + settings.scrollBias)).toFixed(2)}×
+            <input
+              aria-label="Note speed"
+              type="range"
+              min={0.5}
+              max={2}
+              step={0.05}
+              value={1 / (1 + settings.scrollBias)}
+              onChange={(e) => setSettings({ ...settings, scrollBias: 1 / Number(e.target.value) - 1 })}
+            />
+            <span className="field-hint">All modes. Higher means faster notes. Music and timing windows stay the same.</span>
+          </label>
+          <label className="field">
             Casual visual speed
             <select
               value={settings.casualSpeed}

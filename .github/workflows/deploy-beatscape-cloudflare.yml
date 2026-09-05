@@ -5,11 +5,23 @@ on:
     branches: [main]
     paths:
       - "apps/beatscape/**"
+      - "scripts/beatscape-catalog-status.py"
+      - "scripts/deploy-beatscape-cf-pages.sh"
+      - "pnpm-lock.yaml"
+      - "package.json"
+      - ".github/workflows/deploy-beatscape-cloudflare.yml"
+  pull_request:
+    paths:
+      - "apps/beatscape/**"
+      - "scripts/beatscape-catalog-status.py"
+      - "scripts/deploy-beatscape-cf-pages.sh"
+      - "pnpm-lock.yaml"
+      - "package.json"
       - ".github/workflows/deploy-beatscape-cloudflare.yml"
   workflow_dispatch:
 
 concurrency:
-  group: beatscape-cloudflare-pages
+  group: beatscape-cloudflare-pages-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -25,15 +37,35 @@ jobs:
         with:
           node-version: 22
 
-      - name: Install, test, build
-        working-directory: apps/beatscape
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.0
+
+      - name: Install locked dependencies
+        run: pnpm install --frozen-lockfile --filter @musicsaas/beatscape
+
+      - name: Install browser
+        run: pnpm --filter @musicsaas/beatscape exec playwright install --with-deps chromium
+
+      - name: Verify release candidate
         run: |
-          npm install
-          npm test
-          # Pages root URL — keep unit tests on default /beatscape/ base
-          VITE_BASE=/ npx vite build
+          pnpm release:beatscape
+
+      - name: Preserve release identity and browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: beatscape-release-evidence
+          path: |
+            apps/beatscape/dist/release.json
+            apps/beatscape/test-results/
+
+      - name: Check launch sign-off
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        run: pnpm --filter @musicsaas/beatscape launch:check
 
       - name: Publish to Cloudflare Pages
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}

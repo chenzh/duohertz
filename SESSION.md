@@ -10,10 +10,17 @@
 
 > 验收入口：本页 · `pnpm catalog:beatscape` · `pnpm audit:beatscape` · `pnpm earcheck:beatscape`
 
+- [x] **人工验收材料备齐（2026-09-05，未签审）**：当前候选 `74840f1fc466` 的 5 张盲测截图及 SHA-256 清单位于 `data/beatscape-release/2026-09-05/blindtest/`；截图等待字体加载，Play/Results 来自真实对局。9 WARN 已逐项定位到曲目/档位/测量值；资产归档更新为 105 首、7 PNG + 14 WebP、NIGHTSHIFT 三人。用户明确尚未完成耳检/盲测/真机，下一步使用 [`docs/RESONANCE-BLINDTEST.md`](docs/RESONANCE-BLINDTEST.md) 与上线清单记录真实结果后签审。
+
+- [x] **Agent 规则与工作流审计（2026-09-05，本地未提交）**：按 GPT-6 Astra 官方指导精简 AGENTS、常驻规则、角色与交付模板，新增按需验证/交付 skills，修复 CI/派单/合并资格校验。下一次上游 Harness 同步须审查 diff、保留本仓适配；自动合并须另行明确启用仓库变量。依据、验收与边界见 [AGENT-WORKFLOW-AUDIT](docs/AGENT-WORKFLOW-AUDIT.md)。
+
+- [x] **上线技术准备（2026-09-05，本地未提交/未发布）**：105 首 / 315 张谱候选包；统一锁文件/类型检查/构建与 CI 门禁；内容哈希 URL 修旧谱缓存；静态 OG 卡、全模式 Note speed、跨设备同曲分享、音乐站 hash 深链；修损坏存档、Daily 榜上限与误报纪录。`pnpm release:beatscape` 通过：127 单测 + 6 发布器回归 + 16 桌面/移动模拟 E2E，根测试 6+8 通过；产物 591 文件 / 402.7 MiB。详见 [`docs/BEATSCAPE-RELEASE-READINESS.md`](docs/BEATSCAPE-RELEASE-READINESS.md)。
+- [ ] **正式上线放行**：bs-p3-01/04/07 已从当前母带循环扩展至 216s（原版已备份，最终 audit **PASS=4726 WARN=9 FAIL=0**）；接缝听感仍待审核，继续完成 105 首人工耳检、差异化盲测、Safari/iPhone/Android/Windows 真机记录。工作单使用 `python3 scripts/beatscape-earcheck-worksheet.py --all`，带音频指纹与导出。`launch:check` 当前应阻止正式发布；待实际验收后填写 `apps/beatscape/launch-signoff.json`，不得把技术检查通过当成全部上线门禁通过。
+
 - [x] **三人立绘重出（已完成 2026-09-02）**：本地 MPS + LoRA 重出 JUNO/ATLAS/TORQUE（prompt 母本 v2，锚点前置 + 赛璐璐夜色模板，BPE 66-71 通过）；锚点 checklist 目验过（单耳挂耳机/场强仪/扳手鼓槌+铬面锣/共振菱形 MOTIF）；已替换 `public/characters/` 三图并推送（commit `6b97c2e`）· 剩余市场评估（女性首位风险）为人工判断
 - [ ] **商业化差距决策点 5 项待拍板**：[`docs/BEATSCAPE-COMMERCIALIZATION-GAP.md`](docs/BEATSCAPE-COMMERCIALIZATION-GAP.md) §6（变现模式 / 经营主体 / 后端栈 / 流媒体终点 / 商标批次）——拍板后解锁对应 P0
 - [ ] **世界观 Bible 待办（仅剩人工项）**：[`docs/BEATSCAPE-WORLDBIBLE.md`](docs/BEATSCAPE-WORLDBIBLE.md) §12——文档/文案/判定皮肤/美术/回归语/昵称合规/点歌文案包/**S1 电台剧集包**完成；**商标深检索已完成**（2026-08-30，Justia 全 4 页 73 条 + serial 级核证，§11）：NIGHTSHIFT 游戏内可用但 **Class 41 有 LIVE 在册近邻（Kennelly Reg. 6359178，乐队现场演出）**，商品化/对外品牌化前必须 TSDR 全类正式检索；**备选名初筛已备好**（The Late Static 首推 / Scape City 次选，均无精确同名）；MONOLITH 证实 LIVE（华纳 Reg. 5880307 · Class 9 游戏软件全线）→ 限游戏内叙事不变
-- [ ] **人工耳检 50 首**（DoD 唯一剩余项）：是否脱口而出第三方名曲 → 有则废弃重生成。**工具已备**：`python3 scripts/beatscape-earcheck-worksheet.py` 生成 `apps/beatscape/earcheck-worksheet.html`，浏览器打开逐曲听+勾，进度自动保存
+- [ ] **人工耳检 105 首**（与内容失败/盲测/真机共同组成上线门禁）：是否脱口而出第三方名曲 → 有则废弃重生成。**工具已备**：`python3 scripts/beatscape-earcheck-worksheet.py --all` 生成 `apps/beatscape/earcheck-worksheet.html`，浏览器打开逐曲听+勾，进度自动保存且绑定音频指纹，可导出审核记录 · 曲目数 105（s1 6 / s2 4 / s3 15 / s4 15 / s5 10 / s6 35 / p3 10 / p4 10）
 - [x] **重新部署 Cloudflare Pages（已完成）**：线上 95 首（85+P3-10）+ 全部氛围层 + 自定义播放条 + 无红框；audiobar 渲染 30 处、原生控件 0；`bash scripts/deploy-beatscape-cf-pages.sh` 已验证 · 2026-09-02
 - [ ] **差异化盲测**（人类 · 阻塞对外宣称上线）：[`docs/RESONANCE-BLINDTEST.md`](docs/RESONANCE-BLINDTEST.md)
 - [x] **SIGNAL 氛围层已合入主工作区（未提交）**：高命中玩家对局氛围——SIGNAL 表三档 TUNING/LIVE/ON AIR 点亮 PlayField + 进档音效 + 掉档红闪；结算页 PEAK SIGNAL 徽标 + 海报 ON AIR 金章；计分/判定窗零改动 · patch `git apply` 合入 + 主区 vitest **105/105** + 构建干净 · 回退 `git apply -R docs/BEATSCAPE-SURGE-FX.patch` · 待人工：音色听感 / 真机帧率 / 文案入 Bible §9（文档 §8 草案已备）· worktree `../MusicSaas-wt-surge` 保留可删 · 2026-08-30
@@ -62,8 +69,10 @@
 
 ## blockers
 
-- 耳检需人工（50 首，约 1 轮）
+- bs-p3-01/04/07 的 216s 循环扩展候选已过时长审计；接缝待人工耳检，Scape Music 已本地同步但尚未配套发布
+- 耳检需人工（105 首，须记录当前音频版本）
 - 盲测需 5–10 名「不玩日式 RPG」观察者（人工）
+- 真机兼容性与高密度手感/帧率记录待人工；正式发布签审未完成
 
 ## 角色 IP / LoRA 工作流（并行 · 跨 IDE 真相见 docs/BEATSCAPE-CHARACTER-LORA.md）
 
