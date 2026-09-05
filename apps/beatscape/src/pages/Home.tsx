@@ -20,8 +20,9 @@ import { keyLabels } from "../input/keyMap";
 import { isOnboarded, loadKeys, setOnboarded } from "../storage/settings";
 import { readLastRun } from "../storage/session";
 import { HOME_PAGE_META, usePageMeta } from "../seo/pageMeta";
+import { ShiftHomeCard } from "../components/ShiftStory";
 
-/** the Hush marks a block after 48h without music (World Bible §4) — same threshold for the radio welcome-back line. */
+/** A friendly return greeting; elapsed time never removes story progress. */
 const QUIET_BLOCK_MS = 48 * 60 * 60 * 1000;
 
 function FeaturedCard({ track }: { track: CatalogTrack }) {
@@ -112,8 +113,8 @@ export function HomePage() {
             Own the Scape.
           </h1>
           <p className="tagline">
-            English pop &amp; EDM originals — tap Play on the right to hit Strike Vector with sound.
-            Until then the lanes demo behind the mask. Calibrate anytime in Settings.
+            A city running on music. A pirate radio crew keeping it together.
+            Play original pop &amp; EDM tracks in your browser — or take the call and meet NIGHTSHIFT.
           </p>
           <div className="key-chips" aria-label="Keyboard lanes">
             {keys.map((k, i) => (
@@ -135,6 +136,7 @@ export function HomePage() {
             <Link className="btn ghost" to="/library">
               {t.ui.browseTracks}
             </Link>
+            <Link className="btn ghost" to="/shift">First shift · Story</Link>
             {/* DUO · 两人一键盘同屏对战，入口跟着主 CTA 走。 */}
             {heroTrack && (
               <Link className="btn ghost" to={duoHref(heroTrack.track_id)}>
@@ -154,17 +156,19 @@ export function HomePage() {
 
       {cameBackQuiet && (
         <p className="radio-welcome">
-          Your block went quiet for a while. Figured you&apos;d call eventually. —{" "}
+          Good to hear from you. We kept your chair. Pick something you like. —{" "}
           <strong>JUNO, The Late Static</strong>
         </p>
       )}
+
+      <ShiftHomeCard />
 
       {onAir && (
         <section className="radio-episode-banner" aria-label="On air now — The Late Static">
           <div>
             <p className="eyebrow">On air · The Late Static</p>
             <h2>{`EP ${onAir.ep} — ${onAir.title}`}</h2>
-            <p className="tagline">{onAir.lines[0]}</p>
+            <p className="tagline">{onAir.lines[0]?.text}</p>
           </div>
           <Link className="btn ghost" to="/radio">
             Season program
@@ -280,8 +284,9 @@ export function HomePage() {
             )}
             <p className="tagline">{SCAPE_COPY.introBody}</p>
             <div className="cta-row">
+              <Link className="btn primary" to="/shift" onClick={dismissIntro}>Take the call · Story</Link>
               <Link
-                className="btn primary"
+                className="btn"
                 to={firstPlayHref(introTrack ? introTrack.track_id : undefined)}
                 onClick={() => {
                   setOnboarded();

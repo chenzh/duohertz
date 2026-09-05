@@ -1,0 +1,203 @@
+.crew-story-header {
+  max-width: 720px;
+}
+
+.crew-story .crew-story-header h1 {
+  margin-bottom: 10px;
+}
+
+.crew-story-lede {
+  margin: 0 0 12px;
+  color: var(--scape-accent-2);
+  font-size: clamp(18px, 2.5vw, 24px);
+  line-height: 1.4;
+}
+
+.crew-story .crew-story-header .tagline {
+  max-width: 64ch;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.crew-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 22px;
+  margin-top: 32px;
+}
+
+.crew-card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid var(--ink);
+  background: var(--bg2);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+
+.crew-card-portrait {
+  position: relative;
+  aspect-ratio: 5 / 4;
+  overflow: hidden;
+  border-bottom: 4px solid var(--district-color);
+  background: var(--scape-bg-0);
+}
+
+.crew-card-portrait .character-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  border: 0;
+}
+
+.crew-card-district {
+  position: absolute;
+  bottom: 12px;
+  left: 14px;
+  padding: 5px 9px;
+  border: 1px solid var(--ink);
+  background: var(--scape-accent-2);
+  color: var(--scape-bg-0);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.crew-card-copy {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 22px 20px;
+}
+
+.crew-card-copy h2 {
+  margin: 0 0 6px;
+  font-size: 36px;
+  line-height: 1.1;
+}
+
+.crew-card-role {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.crew-card-quote {
+  margin: 22px 0 18px;
+  padding-left: 12px;
+  border-left: 3px solid var(--district-color);
+  color: var(--scape-accent-2);
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+.crew-card-quote p {
+  margin: 0;
+}
+
+.crew-card-bio,
+.crew-card-dilemma,
+.crew-card-relationship p,
+.crew-card-request p {
+  margin: 0 0 14px;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.crew-card-dilemma {
+  color: var(--scape-accent-2);
+}
+
+.crew-card-relationship {
+  margin: 4px 0 16px;
+}
+
+.crew-card-copy h3 {
+  margin: 0 0 7px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.crew-card-request {
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid rgba(245, 239, 230, 0.16);
+}
+
+.crew-story .crew-card-play {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 48px;
+  padding: 12px;
+  background: var(--scape-accent-2);
+  color: var(--scape-bg-0);
+  line-height: 1.4;
+}
+
+.crew-story .crew-card-play:hover {
+  background: var(--text);
+  color: var(--scape-bg-0);
+}
+
+.crew-card-difficulty {
+  display: block;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.crew-story-invitation {
+  max-width: 660px;
+  margin-top: 38px;
+  padding: 24px 0;
+  border-top: 2px solid var(--ink);
+}
+
+.crew-story-invitation > p:not(.eyebrow) {
+  line-height: 1.65;
+}
+
+@media (min-width: 681px) and (max-width: 960px) {
+  .crew-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .crew-card {
+    display: grid;
+    grid-template-columns: minmax(180px, 1fr) minmax(0, 1.6fr);
+  }
+
+  .crew-card-portrait {
+    aspect-ratio: auto;
+    border-right: 4px solid var(--district-color);
+    border-bottom: 0;
+  }
+
+  .crew-card-portrait .character-avatar {
+    position: absolute;
+    object-position: center;
+  }
+}
+
+@media (max-width: 680px) {
+  .crew-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .crew-card-portrait {
+    aspect-ratio: 4 / 3;
+  }
+
+  .crew-card-copy {
+    padding: 22px;
+  }
+}

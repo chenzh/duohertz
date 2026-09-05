@@ -12,61 +12,78 @@ export type PollEntry = {
   summary: string;
 };
 
-export function useJobPoll(jobId: string | null) {
-  const [job, setJob] = useState<Job | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [timedOut, setTimedOut] = useState(false);
-  const [pollLog, setPollLog] = useState<PollEntry[]>([]);
+type PollState = {
+  jobId: string | null;
+  job: Job | null;
+  error: string | null;
+  timedOut: boolean;
+  pollLog: PollEntry[];
+};
 
-  const poll = useCallback(async () => {
+function emptyState(jobId: string | null): PollState {
+  return { jobId, job: null, error: null, timedOut: false, pollLog: [] };
+}
+
+export function useJobPoll(jobId: string | null) {
+  const [state, setState] = useState<PollState>(() => emptyState(jobId));
+  const [revision, setRevision] = useState(0);
+  const refresh = useCallback(() => setRevision((value) => value + 1), []);
+
+  useEffect(() => {
+    setState(emptyState(jobId));
     if (!jobId) return;
-    try {
-      const data = await getJob(jobId);
-      setJob(data);
-      setPollLog((prev) =>
-        [
-          {
+
+    let stopped = false;
+    let nextPoll: ReturnType<typeof setTimeout> | undefined;
+    const deadline = setTimeout(() => {
+      stopped = true;
+      clearTimeout(nextPoll);
+      setState((current) => ({ ...current, timedOut: true }));
+    }, MAX_POLL_MS);
+
+    async function poll() {
+      try {
+        const data = await getJob(jobId!);
+        if (stopped) return;
+        if (!data || data.job_id !== jobId) throw new Error("Unexpected job response");
+        const terminal = data.status === "completed" || data.status === "failed";
+        setState((current) => ({
+          jobId,
+          job: data,
+          error: data.status === "failed"
+            ? data.error ? `${data.error.code}: ${data.error.message}` : "failed"
+            : null,
+          timedOut: false,
+          pollLog: [{
             at: new Date().toISOString().slice(11, 19),
             status: data.status,
             summary: `latency_ms=${data.latency_ms ?? "—"}`,
-          },
-          ...prev,
-        ].slice(0, POLL_LOG_MAX),
-      );
-      if (data.status === "failed") {
-        const err = data.error;
-        setError(err ? `${err.code}: ${err.message}` : "failed");
-      } else {
-        setError(null);
+          }, ...current.pollLog].slice(0, POLL_LOG_MAX),
+        }));
+        if (terminal) {
+          stopped = true;
+          clearTimeout(deadline);
+          return;
+        }
+      } catch (error) {
+        if (stopped) return;
+        setState((current) => ({
+          ...current,
+          error: error instanceof Error ? error.message : "poll error",
+        }));
       }
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "poll error");
+      if (!stopped) nextPoll = setTimeout(() => void poll(), INTERVAL_MS);
     }
-  }, [jobId]);
 
-  useEffect(() => {
-    if (!jobId) {
-      setPollLog([]);
-      return;
-    }
-    const start = Date.now();
-    const timer = setInterval(async () => {
-      if (Date.now() - start > MAX_POLL_MS) {
-        setTimedOut(true);
-        clearInterval(timer);
-        return;
-      }
-      await poll();
-    }, INTERVAL_MS);
     void poll();
-    return () => clearInterval(timer);
-  }, [jobId, poll]);
+    return () => {
+      stopped = true;
+      clearTimeout(nextPoll);
+      clearTimeout(deadline);
+    };
+  }, [jobId, revision]);
 
-  useEffect(() => {
-    if (job?.status === "completed" || job?.status === "failed") {
-      // stop visual spinner via parent reading status
-    }
-  }, [job?.status]);
-
-  return { job, error, timedOut, pollLog, refresh: poll };
+  // Do not expose the previous task while the new task's effect is starting.
+  const current = state.jobId === jobId ? state : emptyState(jobId);
+  return { job: current.job, error: current.error, timedOut: current.timedOut, pollLog: current.pollLog, refresh };
 }

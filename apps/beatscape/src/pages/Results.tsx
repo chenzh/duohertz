@@ -24,6 +24,7 @@ import {
 } from "../storage/session";
 import { getPersonalBest } from "../storage/settings";
 import { readItem, readJSON, removeItem } from "../storage/safeStorage";
+import { ShiftResult } from "../components/ShiftStory";
 
 const NEW_ACH_KEY = "bs_new_achievements";
 const RANK_UP_KEY = "bs_rank_up";
@@ -217,6 +218,8 @@ export function ResultsPage() {
         <p className="tagline">{run.artist}</p>
       </div>
 
+      {run.shiftStep && <ShiftResult run={run} district={track?.district} />}
+
       {(honor.achievements.length > 0 || honor.rankUp) && (
         <div className="honor-toast">
           {honor.rankUp && (
@@ -252,6 +255,8 @@ export function ResultsPage() {
           <strong>{run.maxCombo}×</strong>
         </div>
       </div>
+
+      {!run.shiftStep && <ShiftResult run={run} district={track?.district} />}
 
       <div className="judge-bars">
         {dist.map((d, i) => (
@@ -291,7 +296,7 @@ export function ResultsPage() {
         )
       )}
       <div className="cta-row">
-        <Link className="btn primary" to={`/play/${run.track_id}?tier=${run.tier}&mode=${run.mode}`}>
+        <Link className="btn primary" to={`/play/${run.track_id}?tier=${run.tier}&mode=${run.mode}${run.shiftStep ? `&shift=${encodeURIComponent(run.shiftStep)}` : ""}`}>
           Replay
         </Link>
         <button type="button" className="btn" onClick={() => void onCopyLink()}>
@@ -312,15 +317,6 @@ export function ResultsPage() {
           Play Now
         </Link>
       </div>
-      <p className="results-meta">
-        {run.fc
-          ? "Full broadcast — not one silent second. JUNO is cueing this one again tonight."
-          : isRecord
-            ? "You're tuned in — that run goes straight onto tonight's set list."
-            : counts.miss === 0
-              ? "Clean signal. The block felt that one."
-              : "Thanks for keeping your block loud. Same time tomorrow?"}
-      </p>
       <p className="rights results-rights">{SCAPE_COPY.rights}</p>
     </section>
   );

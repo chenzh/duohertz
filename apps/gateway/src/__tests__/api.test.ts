@@ -1,4 +1,4 @@
-import { beforeAll, describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it, vi } from "vitest";
 import { createApp } from "../app.js";
 import { config } from "../lib/config.js";
 import { prisma } from "../lib/prisma.js";
@@ -91,5 +91,38 @@ describe("API MVP", () => {
       headers: { "X-API-Key": API_KEY },
     });
     expect([409, 200]).toContain(audio.status);
+  });
+
+  it("keeps dedicated Demo jobs separate from primary API jobs", async () => {
+    const original = { demoBffEnabled: config.demoBffEnabled, demoApiKey: config.demoApiKey };
+    config.demoBffEnabled = true;
+    config.demoApiKey = `demo-isolation-${crypto.randomUUID()}`;
+    const localFetch = vi.spyOn(globalThis, "fetch").mockImplementation((input, init) =>
+      Promise.resolve(app.fetch(new Request(input, init))),
+    );
+    try {
+      const payload = JSON.stringify({ mode: "game_bgm", prompt: "isolated mock demo", duration_sec: 15 });
+      const demoCreated = await req("/demo/api/v1/jobs", {
+        method: "POST", headers: { "Content-Type": "application/json" }, body: payload,
+      });
+      expect(demoCreated.status).toBe(201);
+      const demoId = (await demoCreated.json()).data.job_id;
+      await waitForQueueDrain();
+      expect((await req(`/demo/api/v1/jobs/${demoId}`)).status).toBe(200);
+      expect((await req(`/demo/api/v1/jobs/${demoId}/audio`)).status).toBe(200);
+      expect((await req(`/v1/jobs/${demoId}`, { headers: { "X-API-Key": API_KEY } })).status).toBe(404);
+
+      const primaryCreated = await req("/v1/jobs", {
+        method: "POST", headers: { "Content-Type": "application/json", "X-API-Key": API_KEY }, body: payload,
+      });
+      expect(primaryCreated.status).toBe(201);
+      const primaryId = (await primaryCreated.json()).data.job_id;
+      expect((await req(`/demo/api/v1/jobs/${primaryId}`)).status).toBe(404);
+      expect((await req(`/demo/api/v1/jobs/${primaryId}/audio`)).status).toBe(404);
+      await waitForQueueDrain();
+    } finally {
+      localFetch.mockRestore();
+      Object.assign(config, original);
+    }
   });
 });

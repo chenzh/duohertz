@@ -86,6 +86,8 @@ export type LastRun = {
   missEvents?: MissEvent[];
   durationMs: number;
   endedAt: string;
+  /** Optional playable opening-night scene; absent for ordinary free play. */
+  shiftStep?: "studio" | "yard" | "rooftop";
   /** PB score captured before this run was saved — used to flag a true new record. */
   prevBestScore?: number;
   /** Highest SIGNAL tier reached (LIVE/ON AIR earn the Results badge + poster tag). */

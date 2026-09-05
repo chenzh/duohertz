@@ -10,17 +10,19 @@ import { LandingSection, ShowcaseSection } from "./sections/Landing";
 import { PlaygroundSection } from "./sections/Playground";
 import { PresentMode } from "./sections/PresentMode";
 import { ConvertSection, TrustSection } from "./sections/Trust";
+import { readStoredLocale, writeStorage } from "./lib/storage";
+import { publicAsset } from "./lib/assets";
 
 export function App() {
   const modes = useUrlModes();
   const [locale, setLocale] = useState<Locale>(
-    () => (localStorage.getItem("demo_locale") as Locale) || "zh",
+    () => readStoredLocale(),
   );
   const t = useMessages(locale);
   const content = useLandingContent(locale);
   const health = useInferenceHealth();
 
-  const [demoUrl, setDemoUrl] = useState(() => window.location.origin + "/demo/");
+  const [demoUrl, setDemoUrl] = useState(() => window.location.origin + publicAsset(""));
   const [apiDocsUrl, setApiDocsUrl] = useState(
     "https://github.com/chenzh/MusicSaas/blob/main/docs/DATA_API.md",
   );
@@ -28,7 +30,8 @@ export function App() {
   const [helpOpen, setHelpOpen] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem("demo_locale", locale);
+    writeStorage("demo_locale", locale);
+    document.documentElement.lang = locale === "zh" ? "zh-CN" : "en";
   }, [locale]);
 
   useEffect(() => {
@@ -86,7 +89,7 @@ export function App() {
         minimal={modes.playgroundOnly}
       />
 
-      <OnboardingCoach content={content} />
+      <OnboardingCoach content={content} locale={locale} />
 
       {!modes.playgroundOnly && (
         <>

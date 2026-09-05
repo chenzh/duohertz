@@ -2,6 +2,7 @@ import type { Mode } from "../api";
 import type { Messages } from "../i18n";
 import type { TaskItem } from "./TaskCard";
 import { Badge } from "./ui";
+import { publicAsset } from "../lib/assets";
 
 const GRADIENTS: Record<string, [string, string]> = {
   game_bgm: ["#7c3aed", "#2563eb"],
@@ -46,15 +47,15 @@ export function WorkGridCard({
 export function EngineCompare({ locale }: { locale: "zh" | "en" }) {
   return (
     <div className="engine-compare glass" data-testid="engine-compare">
-      <h3>{locale === "zh" ? "双引擎对比" : "Engine comparison"}</h3>
+      <h3>{locale === "zh" ? "接口播放测试片段（非音质对比）" : "API playback fixtures (not a quality comparison)"}</h3>
       <div className="compare-row">
         <div>
           <strong>ACE-Step 1.5</strong>
-          <audio controls src="/demo/showcase/vocal-jpop.wav" preload="none" />
+          <audio controls src={publicAsset("samples/vocal-demo.wav")} preload="none" />
         </div>
         <div>
           <strong>Stable Audio 3</strong>
-          <audio controls src="/demo/showcase/bgm-dungeon.wav" preload="none" />
+          <audio controls src={publicAsset("samples/bgm-demo.wav")} preload="none" />
         </div>
       </div>
     </div>

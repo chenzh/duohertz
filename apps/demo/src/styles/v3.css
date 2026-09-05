@@ -192,6 +192,9 @@
   cursor: pointer;
 }
 
+.showcase-select { width: 100%; padding: 0; border: 0; background: transparent; color: inherit; text-align: left; cursor: pointer; }
+.showcase-select:focus-visible { outline: 3px solid var(--primary); outline-offset: -3px; }
+
 .showcase-cover {
   height: 88px;
 }

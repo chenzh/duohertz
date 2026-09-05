@@ -7,6 +7,8 @@ import { readItem, readJSON, writeItem, writeJSON } from "./safeStorage";
 const SESSION_RUN_KEY = "bs_last_run";
 /** Survives new-tab share links (`?run=local`, PRD §6.0.24). */
 const LOCAL_RUN_KEY = "bs_last_run_local";
+let visitRun: LastRun | null = null;
+let needsVisitRun = false;
 
 export type BoardEntry = {
   track_id: string;
@@ -76,6 +78,7 @@ function parseRun(raw: string | null): LastRun | null {
       !run.counts || ![run.counts.perfect, run.counts.great, run.counts.good, run.counts.miss].every(Number.isFinite) ||
       (run.missEvents !== undefined && (!Array.isArray(run.missEvents) ||
         !run.missEvents.every((e) => e && Number.isFinite(e.tMs) && [0, 1, 2, 3].includes(e.lane))))) return null;
+    if (run.shiftStep !== undefined && !["studio", "yard", "rooftop"].includes(run.shiftStep)) delete run.shiftStep;
     return run;
   } catch {
     return null;
@@ -88,7 +91,7 @@ export function writeLastRun(
   mode: string,
   result: PlayResult,
   durationMs: number,
-  opts?: { daily?: boolean },
+  opts?: { daily?: boolean; shiftStep?: LastRun["shiftStep"] },
 ) {
   // Capture the standing record BEFORE this run is saved, so Results can flag a true new best.
   const prevBest = getPersonalBest(track.track_id, tier, mode);
@@ -110,6 +113,7 @@ export function writeLastRun(
     totalNotes: result.totalNotes,
     durationMs,
     endedAt: new Date().toISOString(),
+    ...(opts?.shiftStep ? { shiftStep: opts.shiftStep } : {}),
     prevBestScore: prevBest?.score,
     missEvents: result.missEvents,
     surgeMaxTier: result.surgeMaxTier,
@@ -117,8 +121,12 @@ export function writeLastRun(
   const payload = JSON.stringify(run);
   // 这两次写入绝不能因为配额 / 隐私模式抛异常而中断：后面的成绩与排行榜存档
   // 都在这两行之后，一抛就是"打完一局，什么都没存下来"。
+  visitRun = run;
   writeItem(SESSION_RUN_KEY, payload, "session");
   writeItem(LOCAL_RUN_KEY, payload);
+  // A denied write can leave an older readable save behind. Prefer this actual
+  // finish for the current visit instead of showing stale results (or no run).
+  needsVisitRun = readItem(SESSION_RUN_KEY, "session") !== payload;
 
   const ceiling = maxScore(result.totalNotes) * 1.01;
   if (result.score <= ceiling && mode === "arcade" && !result.failed) {
@@ -153,10 +161,12 @@ export function writeLastRun(
       dateKey: new Date().toISOString().slice(0, 10),
     });
   }
+  return run;
 }
 
 /** Prefer session (same tab); fall back to localStorage for share deep links. */
 export function readLastRun(preferLocal = false): LastRun | null {
+  if (needsVisitRun && visitRun) return visitRun;
   if (preferLocal) {
     return parseRun(readItem(LOCAL_RUN_KEY)) ?? parseRun(readItem(SESSION_RUN_KEY, "session"));
   }

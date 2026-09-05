@@ -3,6 +3,7 @@ import type { LandingContent } from "../content/landing";
 import { PlaygroundSection } from "./Playground";
 import type { Locale } from "../i18n";
 import type { Messages } from "../i18n";
+import { publicAsset } from "../lib/assets";
 
 const NOTES = [
   "开场：本地双引擎 API，数据不出内网",
@@ -31,6 +32,7 @@ export function PresentMode({
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
+      if ((e.target as HTMLElement)?.closest("input,textarea,select,[contenteditable=true]")) return;
       if (e.key === "ArrowRight") setSlide((s) => Math.min(s + 1, 3));
       if (e.key === "ArrowLeft") setSlide((s) => Math.max(s - 1, 0));
       if (e.key === "p" || e.key === "P") setShowNotes((v) => !v);
@@ -43,7 +45,7 @@ export function PresentMode({
   return (
     <div className="present-mode" data-testid="present-mode">
       <header className="present-header">
-        <img src="/demo/brand/logo.svg" alt="" width={40} height={40} />
+        <img src={publicAsset("brand/logo.svg")} alt="" width={40} height={40} />
         <div className="present-dots">
           {[0, 1, 2, 3].map((i) => (
             <span key={i} className={slide === i ? "active" : ""} />

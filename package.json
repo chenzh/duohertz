@@ -10,6 +10,8 @@
     "test:unit": "bash scripts/harness.sh unit",
     "test:integration": "bash scripts/harness.sh integration",
     "test:e2e": "bash scripts/harness.sh e2e",
+    "release:portal": "pnpm --filter demo release:check",
+    "preview:portal": "pnpm --filter demo preview:portal",
     "test:mlx": "bash scripts/harness.sh mlx",
     "test:sa3": "bash scripts/mac-sa3-test.sh",
     "test:all": "bash scripts/harness.sh all",

@@ -14,6 +14,8 @@ import { buildPlayPageMeta, usePageMeta } from "../seo/pageMeta";
 import { trackEvent } from "../lib/analytics";
 import { useRef } from "react";
 import { makeLiveStats, type LiveStats } from "../components/playfield/liveStats";
+import { shiftStep } from "../data/firstShift";
+import { recordShiftRun } from "../lib/firstShift";
 
 export function PlayPage() {
   const { id } = useParams();
@@ -30,12 +32,14 @@ export function PlayPage() {
   // across renders) and handed to both PlayField (writer) and PlayHud (reader)
   // via the same ref — never crosses the 60fps canvas loop as React state.
   const statsRef = useRef<LiveStats>(makeLiveStats());
+  const finishedRunRef = useRef(false);
   // loadSettings() 要读一次 localStorage 再 JSON.parse —— 每次渲染都做一遍太浪费。
   const settings = useMemo(loadSettings, []);
   usePageMeta(track ? buildPlayPageMeta(track, tier, mode) : null);
 
   useEffect(() => {
     if (!id) return;
+    finishedRunRef.current = false;
     let cancelled = false;
     void (async () => {
       setLoadError("");
@@ -65,11 +69,17 @@ export function PlayPage() {
   }, [id, tier, nav]);
 
   const finish = (result: PlayResult) => {
-    if (!track) return;
+    if (!track || finishedRunRef.current) return;
+    finishedRunRef.current = true;
     trackEvent("play_finish", { track: track.track_id, grade: result.grade, accuracy: result.accuracy });
     const isDaily = params.get("daily") === "1";
     const durationMs = performance.now() - startedAt;
-    writeLastRun(track, tier, mode, result, durationMs, { daily: isDaily });
+    const scene = shiftStep(params.get("shift"));
+    const run = writeLastRun(track, tier, mode, result, durationMs, {
+      daily: isDaily,
+      shiftStep: scene?.trackId === track.track_id ? scene.id : undefined,
+    });
+    recordShiftRun(run);
     // Honor progress (PRD §17): run history + achievements + rank-up for the Profile page.
     const prog = recordRun(track, tier, mode, result, durationMs);
     writeJSON("bs_new_achievements", prog.newAchievements, "session");

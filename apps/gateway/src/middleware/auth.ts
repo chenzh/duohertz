@@ -7,7 +7,7 @@ export type AuthVars = { apiKeyHash: string };
 
 export async function authMiddleware(c: Context, next: Next) {
   const key = c.req.header("X-API-Key");
-  const validKeys = [config.apiKey, config.apiKeyAlt].filter(Boolean);
+  const validKeys = [config.apiKey, config.apiKeyAlt, config.demoBffEnabled ? config.demoApiKey : ""].filter(Boolean);
   if (!key || !validKeys.includes(key)) {
     return c.json(
       { ...errorResponse(ERROR_CODES.UNAUTHORIZED, "Invalid or missing API key"), meta: { request_id: crypto.randomUUID() } },

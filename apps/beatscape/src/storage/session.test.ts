@@ -71,4 +71,31 @@ describe("release storage and sharing regressions", () => {
     writeLastRun(track, "easy", "arcade", { ...result, score: 300 }, 1000, { daily: true });
     expect(loadDailyBoard()).toHaveLength(1);
   });
+
+  it("keeps an otherwise valid run when optional story metadata is corrupt", () => {
+    const session = memoryStorage();
+    vi.stubGlobal("localStorage", memoryStorage());
+    vi.stubGlobal("sessionStorage", session);
+    for (const shiftStep of ["unknown", null, { id: "studio" }]) {
+      session.setItem("bs_last_run", JSON.stringify({ ...sample, shiftStep }));
+      expect(readLastRun()).toEqual(sample);
+    }
+  });
+});
+
+describe("current-visit results when storage is blocked", () => {
+  it("keeps the actual finish and its story scene instead of an older readable save", async () => {
+    vi.resetModules();
+    const storage = { getItem: () => JSON.stringify(sample), setItem: () => { throw new Error("quota"); } };
+    vi.stubGlobal("localStorage", storage);
+    vi.stubGlobal("sessionStorage", storage);
+    const store = await import("./session");
+    const result = { score: 0, accuracy: 1, maxCombo: 1, grade: "D" as const, fullCombo: false, allPerfect: false,
+      failed: false, judgments: { perfect: 0, great: 0, good: 1, miss: 9 }, totalNotes: 10, missEvents: [] };
+    const track = { track_id: "bs-s1-05", title: "Voltage Drop", artist: "Gridline" } as Parameters<typeof store.writeLastRun>[0];
+    const current = store.writeLastRun(track, "easy", "casual", result, 60000, { shiftStep: "studio" });
+    expect(store.readLastRun()).toEqual(current);
+    expect(store.readLastRun(true)?.shiftStep).toBe("studio");
+    expect(store.readLastRun()?.track_id).toBe("bs-s1-05");
+  });
 });

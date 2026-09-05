@@ -1,8 +1,10 @@
 import { useEffect } from "react";
-import { RADIO_EPISODES, RADIO_SEASONS, SEASON_PREMIERE_MS } from "../data/radioEpisodes";
+import { RADIO_EPISODES, RADIO_SEASONS, SEASON_PREMIERE_MS, type RadioLine } from "../data/radioEpisodes";
 import { episodeAirLabel, episodeIndexAt, episodeState } from "../lib/radio";
 import { trackEvent } from "../lib/analytics";
+import { Link } from "../router";
 import { RADIO_PAGE_META, usePageMeta } from "../seo/pageMeta";
+import "../styles/radio-story.css";
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 const WEEK_MS = 7 * DAY_MS;
@@ -35,6 +37,19 @@ function scrollToSeason(season: number): void {
   document.getElementById(`season-${season}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
+export function RadioDialogue({ lines }: { lines: readonly RadioLine[] }) {
+  return (
+    <ol className="radio-dialogue" aria-label="Broadcast transcript" role="list">
+      {lines.map((line, i) => (
+        <li key={i} className="radio-dialogue-turn" data-speaker={line.speaker}>
+          <span className="radio-speaker">{line.speaker}</span>
+          <p className="radio-dialogue-text">{line.text}</p>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
 export function RadioPage() {
   usePageMeta(RADIO_PAGE_META);
   useEffect(() => {
@@ -55,13 +70,21 @@ export function RadioPage() {
     <section className="radio-page">
       <header className="page-header">
         <p className="eyebrow">
-          {currentSeason ? `Season ${currentSeason.number} · ${currentSeason.name}` : "Season radio"}
+          {currentSeason ? `Broadcast transcripts · Season ${currentSeason.number}` : "Broadcast transcripts"}
         </p>
         <h1>The Late Static</h1>
         <p className="tagline">
-          One broadcast a week, from a rooftop nobody can find. Past episodes stay in the
-          archive — future ones are just static until they air.
+          In Scape City, music keeps the lights on. When a block falls silent, the Hush
+          takes its sound memories. NIGHTSHIFT is a three-piece band keeping the signal alive.
         </p>
+        <p className="radio-story-note">
+          Read the crew’s broadcast logs, one new episode each week. Past episodes stay here;
+          future episodes show a preview until their date arrives.
+        </p>
+        <div className="radio-shift-entry">
+          <Link to="/shift" className="btn secondary">Play your first shift</Link>
+          <p>Start with a playable opening: help repair three broadcast nodes. The weekly logs follow life in the city.</p>
+        </div>
       </header>
 
       <div className="radio-deck" role="group" aria-label="Receiver">
@@ -147,12 +170,8 @@ export function RadioPage() {
                       </p>
                     ) : (
                       <>
-                        {state === "now" && <p className="radio-onair">On air now</p>}
-                        {episode.lines.map((line, i) => (
-                          <p key={i} className="radio-line">
-                            {line}
-                          </p>
-                        ))}
+                        {state === "now" && <p className="radio-onair">This week’s transcript</p>}
+                        <RadioDialogue lines={episode.lines} />
                         <p className="radio-signoff">{episode.signoff}</p>
                       </>
                     )}

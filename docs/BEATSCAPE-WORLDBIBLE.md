@@ -1,42 +1,42 @@
-# BeatScape 世界观 Bible — Keep the City Loud（欧美向 · 原创基线 v1）
+# BeatScape 世界观 Bible — Keep the City Loud（英语叙事基线 v2）
 
-> **状态**：世界观新基线草案 · 2026-08-30 · 待拍板
-> **定位**：面向欧美玩家的叙事母文档——"故事"从这里长出来。角色定义**全新创作，不沿用旧版**（`BEATSCAPE-CHARACTER-NARRATIVE.md` 的 7 位 Tuning Keeper 自本文件采纳起退役，其 LoRA 生成管线与 Art Brief 视觉规范不受影响，仅人设/命名/叙事层替换）。
-> **继承的产品真值**（PRD §1.3a，不变）：节拍幻境母题、Perfect 点亮街区、关键词池、District = 曲库地图、RESONANCE 声波、英文 UI、低饱和赛博轻奢。
-> **配套**：`BEATSCAPE-SONIC-DIRECTION.md`（听感）· `BEATSCAPE-CHARACTER-ART-BRIEF.md`（画法，本文件定"演什么"）· `BEATSCAPE-IP-STRATEGY.md`（权利边界）
+> **状态**：已采纳的叙事基线 · 2026-09-05 更新；当前实现与验证见 [发布准备](BEATSCAPE-RELEASE-READINESS.md)。本次为本地叙事优化，未据此宣称上线或受众验证通过。
+> **定位**：英语市场中喜欢音乐、风格化都市幻想与乐队人物的玩家。不是对“欧美人”统一口味的判断；接受度须用目标受众试玩验证。
+> **当前角色**：NIGHTSHIFT 三人组 JUNO / ATLAS / TORQUE。旧 `BEATSCAPE-CHARACTER-NARRATIVE.md` 的 Tuning Keeper 七人方案已退役；保留其工程管线历史，不再沿用其人物。
+> **产品真值**：District = 曲库地图，命中反馈点亮当前舞台；RESONANCE 漫画排版搭配既有动漫立绘，英文 UI；判定与音频规则以 PRD/代码为准。
+> **配套**：[听感](BEATSCAPE-SONIC-DIRECTION.md) · [Art Brief](BEATSCAPE-CHARACTER-ART-BRIEF.md) · [LoRA 管线](BEATSCAPE-CHARACTER-LORA.md) · [IP 边界](BEATSCAPE-IP-STRATEGY.md) · [叙事试玩协议](BEATSCAPE-NARRATIVE-PLAYTEST.md)
 
 ---
 
-## 1. 为什么重写：欧美口味北极星
+## 1. 受众与创作方向
 
-### 1.1 口味对标（气质参照，非表达借用）
+### 1.1 设计参照，不作市场证据
 
-| 参照 | 借它的什么 | 明确不借 |
-|------|-----------|---------|
-| Arcane | 城市双面性、街区质感、配乐即世界观 | 角色造型、剧情桥段 |
-| Splatoon | 街头 crew、艺人偶像感、潮流语言 | 鱿鱼/章鱼、任何专名 |
-| Gorillaz | 虚拟乐队范式、lore 只埋不倒（iceberg） | 成员人设、视觉风格 |
-| Hades | punchy 台词、角色魅力密度 | 希腊神话框架 |
-| Sayonara Wild Hearts | 音乐即玩法、风格化夜色 | 蝴蝶/心形意象系统 |
+| 参照方向 | 希望练习的表达能力 | 不借用的内容 |
+|----------|--------------------|--------------|
+| 城市群像 | 用通勤、租金、排练和器材体现一座城市的生活 | 既有作品的城市布局、人物造型与剧情桥段 |
+| 虚拟乐队 | 通过节目单、演出与成员分歧逐渐认识人物 | 既有乐队的人设、标志和代表性故事 |
+| 短篇角色对白 | 用少量台词呈现动机、关系与一件眼前的事 | 既有角色的标志性句式、笑话或口头禅 |
+| 音乐驱动的都市幻想 | 音乐行动与故事反馈发生在同一局里 | 第三方作品的专名、意象系统与过场 |
 
-### 1.2 三条欧美口味法则（全文档创作时的硬约束）
+这些是创作选择，不能推导为“英语玩家一定喜欢”或“更容易出圈”。当前动漫立绘与漫画版式的混合风格保留；不按国籍判断动漫喜好，也不把讨厌某种游戏设为目标受众条件。
 
-1. **Authenticity > Polish**：角色必须是"真做音乐的人"，有本职、有破绽、有品味分歧；不接受"为世界观服务的空壳偶像"。Street culture 的可信度靠细节（采样、场巡、设备鄙视链），不靠口号。
-2. **Crew > Solo Savior**：核心情感是 found family（凑出来的家人）。没有天选之子，冲突靠七个人各干各的活解决——个人主义×集体内胆，是欧美叙事的最优公约数。
-3. **Iceberg Lore**：表层 0 门槛（氛围 + 一句话设定），中层有故事，底层有阴谋。永不主动倒完设定；文案只埋钩子。玩家愿意自己拼图，是欧美社区自发产出二创的关键。
+### 1.2 三条写作约束
 
-**口味红线（创作时避开）**：日式学园/觉醒/羁绊告白套路的腔调；说教式"音乐拯救世界"；emoji 堆砌；"epic win" 赌博腔（合规）；宏大天使恶魔二元论。
+1. **先有生活，再有设定**：台词先交代人物今晚要做什么、遇到了什么麻烦。器材细节服务人物，不能代替动机，也不能假称实际曲目由某个角色演奏、采样或制作。
+2. **关系里有分歧**：三个人可以为同一件好事争论方法。JUNO 要守住开放的电台，TORQUE 需要可靠的设备，ATLAS 担心安全与自己隐瞒的信号；不能总让一人正确、另外两人陪衬。
+3. **先解决眼前问题，再留下一个问题**：首访只需认识电台、三位伙伴与今晚的修复工作。塔的悬念逐步出现，不要求玩家先记七个区或读二十四集。
 
 ---
 
 ## 2. 一句话世界观 + Elevator Pitch
 
-**一句话**：Scape City 的夜晚靠声音供电——真音乐在播，街区就亮；只要安静满 48 小时，无声潮就会把整个街区的声音记忆吞掉。三人地下乐队 NIGHTSHIFT 是唯一还在全城巡演的人，七个街区，只有他们三个——而你，是深夜电台里唯一的听众。
+**一句话**：Scape City 的街灯跟着音乐亮起；当声音失去回应，无声潮就会侵蚀街区的声音记忆。NIGHTSHIFT 一边打工一边守着一间深夜电台，今晚三个广播节点出了故障——你接通了他们的热线，可以从第一首歌帮起。
 
 **Elevator Pitch (EN)**:
-> *Scape City runs on bass. Its grid is sound: every live beat keeps the lights on, block by block. But wherever the city stays silent too long, the Hush rolls in — a gray tide that doesn't destroy anything, just makes everyone forget how the block ever sounded. Three underground musicians, one pirate radio station, seven blocks and not enough hours in the night — and one listener still calling in at 3 a.m. — you. Keep your block loud.*
+> *In Scape City, music keeps the streetlights moving. JUNO, ATLAS, and TORQUE run The Late Static between day jobs, borrowed gear, and arguments over the next set. Tonight, three broadcast links are down. You're on the request line. Pick up the first shift, play a song, and meet the people keeping this little station on air.*
 
-**Slogan**：**Keep the City Loud.**（产品口号 *Feel the Beat, Own the Scape.* 不变，两者并存：前者是叙事口号/社区 tag，后者是产品口号）
+**叙事口号**：**Keep the City Loud.** 产品口号 *Feel the Beat, Own the Scape.* 保留。口号适合标题与海报，角色日常对白不需要句句重复它。
 
 ---
 
@@ -44,15 +44,14 @@
 
 ### 3.1 物理法则（Sound Grid）
 
-Scape City 的电网、信号网、交通调度共用一条底层网络——**the Grid**，而 the Grid 的载波是**声音**。这不是隐喻：鼓点驱动路灯，贝斯线维持数据流，人声让电梯愿意动。城市为此立法：《Loud Code（声音法典）》规定每个街区必须维持**最低响度配额（Minimum Loudness）**——像消防法规一样上墙公示。
+城市的电网、信号网、交通调度共用 **the Grid**，以声音作为载波：鼓点驱动路灯的脉冲，贝斯线维持数据流，人声让老电梯重新应答。《Loud Code（声音法典）》把街区共同维护信号写成 **Minimum Loudness**，这是社区与公共设施的责任。
 
-- **The Drop**：每晚 03:03，全城节拍短暂同步，天际线灯光做一次全城脉冲。市民把这一分钟当节日，乐手把它当deadline——Drop 时刻在全城放歌的乐队，第二天街上会有人认出你。
-- **夜经济即主干**：这是座下午死气沉沉、夜里才通电的城市。白天你可以看到 Hush 留下的灰色街区（法律叫 *silent zones*），夜里才看到城市真正的形状。
-- **声音是手艺不是魔法**：没有人"施法"，所有能力都是乐器、设备、手艺。grounded urban fantasy——欧美口味的"低幻想"，可信感来自器材与场景的真实颗粒度。
+- **The Drop**：每晚 03:03，全城节拍短暂同步，天际线灯光做一次脉冲。市民会等这段广播，乐手也争取这个演出位。这是世界内时刻，不要求玩家在现实凌晨登录。
+- **夜班生活**：换班巴士、打烊后收椅子的酒吧、早班面包店和夜里维修的车场，比抽象的“霓虹城市”更能交代场景。
+- **都市幻想**：声音影响城市是虚构规则；角色的工作通过乐器、工具与协作完成。工程行话须足够让陌生玩家从上下文理解。
+- **安静也有价值**：主动休息、轻声的音乐和不想说话都不等于 the Hush。故事关心的是人与声音失去联系，不能用“越响越好”否定安静。
 
 ### 3.2 声学街区（街区即乐器）
-
-每个 District 因为建材与地形不同，天然共鸣不同——这是"地图即曲库"的世界内解释：
 
 | District | 声学人格 | 城市肌理 |
 |----------|---------|---------|
@@ -64,172 +63,193 @@ Scape City 的电网、信号网、交通调度共用一条底层网络——**t
 | **Slide District** | 滑坡与弯道带来的滑音 | 山坡街区，楼梯与滑索是音符的滑弦 |
 | **Skyline Hook** | 风穿过天线的呼啸 | 屋顶天线森林，全城的信号从这里起飞 |
 
-（District 名称与曲库映射不变——这是产品真值。本表新增的是各区的"声学人格"，供文案/关卡主题化/封面生成取用。）
+District 名称与曲库映射不变。本表是创作场景，不代表当前实现了城市模拟。
 
 ---
 
-## 4. 反派：The Hush（无声潮）
+## 4. 叙事压力：the Hush（无声潮）
 
-**设计原则**：反派不是一个"坏蛋"，是一个**系统**——欧美当下最强的文化情绪是"against the flattening"（反平庸化/反算法压平），但BeatScape 是 AI 生成音乐产品，叙事**不站队"人机对立"**，改写为"人类要不要维护自己的声音"。The Hush 对应的是"放弃声音"本身，不是某家公司。
+**设计原则**：the Hush 是虚构现象，不是某家公司或“AI 与人类之战”的隐喻。人物如何照顾自己、伙伴与听众，是故事的具体冲突；无需代言某种未经验证的“欧美文化情绪”。
 
-### 4.1 现象层（游戏内可见）
+### 4.1 现象层
 
-The Hush 是从城市边缘渗入的灰色潮汐。被吞掉的街区**不毁灭、不死亡**——只是**失去声音记忆**：灯还亮但不再闪，车还开但不再按喇叭，人还说话但只剩气声，酒吧还在营业但没人记得乐队唱过什么。本地人称这个状态为 **going quiet**。
+the Hush 从城市边缘渗入，被覆盖的街区失去声音记忆：灯还亮却不再随音乐闪动，酒吧里的人记不清昨晚的旋律。本地人称为 **going quiet**。
 
-**蔓延触发器（世界观核心机制）**：一个街区若 **48 小时无人当众播放真音乐**，Hush 就标记它。>因此"每天来玩"不是运营 KPI，是世界内生死线。
+**四十八小时**是广播故事里街区公共信号中断后的风险经验。它不是玩家离线计时器：不因缺席改变街区、扣分、重置开场进度或关闭剧集。歌可以重玩，广播可以回来再读；回归台词欢迎玩家，不把虚构损失归因于他们。
 
-**三阶段**（对应难度分层的叙事皮肤）：
+| 阶段 | 故事状态 | 当前实现边界 |
+|------|----------|--------------|
+| **Haze** | 边缘嘶声，高频先消失 | 广播文案中的现象 |
+| **Fog** | 旋律失忆，居民哼不出昨天的歌 | 广播文案中的现象 |
+| **Null** | 整区静默 | 广播文案中的危机；不等同已实现的限时救援系统 |
 
-| 阶段 | 状态 | 玩家感知 |
-|------|------|---------|
-| **Haze** | 边缘嘶声，高频先消失 | 常规关卡（白/绿区） |
-| **Fog** | 旋律失忆，居民哼不出昨天的歌 | 进阶关卡（黄区） |
-| **Null** | 整区静默，地图上变成灰色补丁 | 高难关卡（红区）+ 限时救援事件 |
+这些状态不绑定玩家所选难度，不因成绩不佳升级。
 
-### 4.2 都市传说层（iceberg 底层，第一年不揭穿）
+### 4.2 都市传说层
 
-坊间传说 Hush 有个源头：**MONOLITH**——Skyline Hook 区尽头那栋**从来没有天线**的静音高楼。没人见过它开门。深夜电台偶尔收到从那栋楼方位飘来的、只有单音的正弦波请求。
+**MONOLITH** 是内部设定名：Skyline Hook 尽头那栋没有天线的静音高楼。对外广播使用 *the tower uptown* 等代称。偶尔从那个方向出现单音信号，ATLAS 比别人更早留意到。
 
-**不解释、不揭穿、不画脸。** 它可以是任何东西（公司/现象/总开关/集体沉默的化身）。这是留给社区三年的钓鱼钩，也是后续 season 免费的悬念资产。〔合规注：MONOLITH 为通用词，形象化/商品化前需过一次商标筛查，见 §12。〕
+Year 1 不揭示源头、不画人格化反派；悬念通过可记住的观测推进，而不是每次都用“以后再说”代替人物回答。命名使用边界与历史检索记录见 §11。
 
 ---
 
 ## 5. 术语表（对外统一英文用语）
 
 | 术语 | 含义 | 使用规范 |
-|------|------|---------|
-| **the Grid** | 以声音为载波的城市底层网络 | 首字母大写 |
-| **The Drop** | 每晚 03:03 的全城同步脉冲 | 专有时刻，玩家社区高危词易撞曲风术语 drop（音乐 drop），文案里注意语境 |
-| **the Hush** | 无声潮 | 一律定冠词 the |
-| **going quiet** | 街区被吞的状态 | 口语化表达，NPC 台词用 |
-| **Minimum Loudness** | 法定最低响度配额 | 官方文书腔，制造反差幽默 |
-| **silent zone** | 法定静默区（被吞街区） | 路牌体，可做关卡 UI 皮肤 |
-| **Frequency** | 每个街区独特的"声音签名" | 角色间行话 |
-| **NIGHTSHIFT** | 三人地下乐队（见 §7） | 全大写一个词 |
-| **The Late Static** | JUNO 的深夜电台，叙事容器 | 见 §9 |
-| **The Listener** | 玩家在世界内的身份 | 见 §8，永远不用 player 字样 |
+|------|------|----------|
+| **the Grid** | 城市声音网络 | 先用“电台/街灯/信号”等具体事物交代，再引入术语 |
+| **The Drop** | 世界内每晚 03:03 的同步脉冲 | 区分音乐段落的普通 drop，不是现实登录时刻 |
+| **the Hush** | 无声潮 | 定冠词 the；人物第一次提及时给上下文 |
+| **going quiet** | 街区声音记忆衰退 | 不用来责怪玩家离线 |
+| **Minimum Loudness** | 公共维护规范 | 可作少量文书反差幽默，不是日常任务配额 |
+| **silent zone** | 世界内静默街区 | 当前为故事概念 |
+| **Frequency** | 街区的声音签名 | 避免一段同时引入多个未解释词 |
+| **NIGHTSHIFT** | 三人地下乐队 | JUNO / ATLAS / TORQUE，全大写一个词 |
+| **The Late Static** | JUNO 的深夜电台 | 叙事容器；见 §8 |
+| **The Listener** | 玩家作为点歌来电者的身份 | 不是全城唯一听众；清晰度需要时 UI 可用 player/run 等普通产品词 |
+| **First shift** | 随时开始的三节点开场 | 本机进度；与周播日期独立 |
 
 ---
 
-## 6. 玩家身份：The Listener
+## 6. 玩家身份与可玩开场
 
-**设计哲学（欧美口味关键决策）**：玩家**不是**被选中的英雄、没有超能力、不需要觉醒。玩家是全城最后一个还在给深夜电台打电话的普通人——**regular person in an extraordinary scene**，这是欧美叙事最耐用的代入位。
+玩家是一个接通电台的普通来电者。其他居民、来电者和乐手都存在，三人并非全城唯一会做音乐的人。玩家不需要替整座城市承担责任。
 
-- **入场**：玩家某晚 03:03 拨通 The Late Static 的点歌热线（对应首次进入游戏），JUNO 接起："*You're the only line that's not static. So — what does your block sound like?*"（首访引导的世界观皮肤，对应 PRD 首局分流）
-- **打歌 = 供频（wired to gameplay）**：玩家每一次游玩，都是替某个街区"续频"——判定越准，那个街区的灯越亮。**Perfect 点亮街区的产品真值由此获得叙事肉身**：你打得越好，下一局开场的街区天空越亮（PlayField 已有 District 主题化基础）。
-- **点歌 = 选曲**：Library 即电台点歌台；曲目卡片上的"申请理由"文案是乐队视角的一两句话（每曲一句，曲库 85 首可分批补文案）。✅ **已落地（2026-08-30）**：85/85 全量真值 `src/data/trackRequests.json`（生成器 `scripts/beatscape-track-requests.py`，缺 key 优雅降级），Track 详情页展示 "— The Late Static" 点歌引语。
-- **排行榜 = The Board**：全城天台灯牌榜。你不是在和"玩家"比，是在和全城其他还在守夜的 Listeners 比。Weekly Board 的世界内说法：*"This week, [District] was kept loud by…"*
-- **断连回来**：长期未登录后回归，开场文案不是"欢迎回来"，而是 JUNO 一句：*"*Your block went quiet for a while. Figured you'd call eventually.*"*（留存机制叙事化，但不 guilt-trip——语气是松的，欧美口味忌讳绑架感）
+### 6.1 First shift：今晚先修三个广播节点
+
+`/shift` 提供可重读的短对白、当次即可推进的三首曲目与完成后的回信。首页和电台页均可进入；自由选曲仍可直接开始。节点按顺序进行：
+
+| 顺序 | 眼前任务 | 角色 | 对应曲目 |
+|------|----------|------|----------|
+| 1 | Pulse Core 演播室回传通路 | JUNO | `bs-s1-05` · Voltage Drop · 60s |
+| 2 | Chrome Yard 借来的扬声器 | TORQUE | `bs-s1-06` · Chrome Riff · 75s |
+| 3 | Skyline Hook 天台转播器 | ATLAS | `bs-s2-02` · Skyline Hook · 90s |
+
+- 完成当前节点指定曲目的完整 Casual 或 Arcade 对局，且至少一次命中，才推进本机节点；低分不阻塞新手。
+- 失败、退出、零命中旁观或 Practice 不推进，回应说明可以再试。失误反馈不说“你让街区失去声音”。
+- 修复的是这三个广播节点；末尾以“第四把椅子”欢迎来电者加入电台的日常，不声称一次游玩拯救全城。
+- 节点进度保存在本机，刷新/离开后可以继续；浏览器无法写入存储时明确提示进度仅在本次访问保留。不依赖等待周播，不跨设备同步，不因现实时间过去倒退。
+- 对白可重读；完成开场后可以回到 Library 自由选曲和 Radio 继续认识人物。
+
+### 6.2 日常触点
+
+- **游玩反馈**：当前舞台随命中变化；普通自由打歌结算由角色回应本局表现/街区。反馈不能声称服务器更新了全城状态，也不宣称所有曲目都是角色亲手制作。
+- **点歌**：105 首曲目对应 `src/data/trackRequests.json` 的虚构来电引语；生成器 `scripts/beatscape-track-requests.py --check` 检查落盘内容与曲库覆盖。来电是世界内生活切片，不是实际录音来源。
+- **排行榜**：The Board 可作风格用语，但必须保留 Local / On this device 的范围，不虚构实时全城听众榜。
+- **回归**：48h 后可出现友好的欢迎文案，例如 *“Good to hear from you. There's a chair by the desk.”* 不暗示玩家缺席造成城市受损。
 
 ---
 
-## 7. NIGHTSHIFT — 三人地下乐队（角色全新定义）
+## 7. NIGHTSHIFT — 三人地下乐队
 
-**范式**：不是"守护者"，是**一支真的地下乐队**——白天各有本职，晚上巡街演出给街区供频。他们保护街区的方式就是**把歌唱得足够好**。三人是 band + found family：吵过架、分过账、谁也没签过约（都对"签约进 Glass Rim 的大楼"这件事有过心动和拒绝）。
+七个街区，三位主角。各区还有其他乐手和居民，NIGHTSHIFT 是故事聚焦的一支小乐队。他们白天各有工作，夜里共享电台、演出与设备；有限的钱、时间和体力让分歧自然发生。
 
-**为什么是三个人（欧美 underdog 张力）**：power trio 是欧美乐队最经典的编制（Green Day / Blink-182 一脉的可信度），而**七个街区、只有三个人**本身就是叙事引擎——NIGHTSHIFT 每晚只能救一个区，被跳过的街区就是第二天的伤口。人力不足不是设定漏洞，是取舍戏剧：*Four blocks, one choice, every night.*
-
-**三人结构（嘴 / 耳 / 心）**：JUNO 是 the voice（电台的嘴）· ATLAS 是 the ear（全队的耳）· TORQUE 是 the heart（现场的心跳）。
-
-**共同守则（crew 三条，写进 Lore）**：
-1. Never play the same set twice.（每晚歌单不同——对应曲库持续更新）
-2. No gig is too small.（一个人听也要演完整场——对应新手关卡存在的世界内理由）
-3. If it's not yours, don't sample it.（band 内部的版权观，一句歌词埋掉产品"全自有版权"的真值，欧美玩家会心一笑）
+**共同守则**：
+1. *Leave room for one request.* 给听众留一个位置，重听旧歌同样有意义。
+2. *No gig is too small.* 人少、初学或失误都不是敷衍的理由。
+3. *Ask before you borrow. Give it back working.* 借设备先开口，借用别人的音乐也要有相应许可；这条人物守则不替代真实资产的权利审查。
 
 ### 7.1 角色档案
 
-> 每张卡 = 艺名 / 主场区 / 声部与流派 / 本职 / 人设内核 / 口头禅 / 视觉锚（Art Brief 输入）。年龄 21–25，无一人与旧版角色重名。三人各自承担了原七人方案的复合职能（词作者/采样师/气氛组均已并入），出图与 LoRA 资产量同步减半。
+**JUNO** · Pulse Core · 24 · she/her · 主唱 / 主持
 
-**JUNO** · Pulse Core（主场）· 24 · 主唱 / 主持
-- 流派：radio funk / neo-soul。本职：深夜电台 The Late Static 的主持兼电工。
-- 内核：**全队的嘴**。城市就要静下来的时候，总得有人在频段里说话。她妈留下这台电台——被 Hush 吞掉之前的最后一间"还开着灯的直播间"。歌词全是街区的口供：每个 call-in 电话里的故事，都被她写进下一首歌。
-- 口头禅：*You're tuned in. Act like it.*
-- 视觉锚：电台工装夹克 + 一只戴一只挂的耳机 + 永远亮着的 "ON AIR" 徽灯。
-- 弧光：从"替全城说话"到"承认自己也有想放不能放的歌"。
+- **生活**：深夜电台 The Late Static 的主持兼电工；母亲留下的电台现在由她照看。母亲后来的经历尚未在正文确立，不擅自增加死亡或被 Hush 吞噬的事实。
+- **想要**：让电台仍是居民打得进来的地方，证明自己能守住这份遗产。
+- **不愿承认**：电台拖欠两个月租金，修复也需要钱与别人的帮助；习惯替所有人答应事情，用主持人的镇定掩盖负担。
+- **关系冲突**：与 TORQUE 为“接受设备支持是否意味着卖掉点歌权”争论；ATLAS 的沉默让她恼火，因为她把知道一切当成保护大家的前提。
+- **说话**：直接叫人、交代下一件事，紧张时用干笑话；偶尔承认“我不知道”，不要句句号召。
+- **视觉锚**：电台工装夹克、单耳挂耳机、ON AIR 徽灯。属于美术输入，不作为人物介绍正文。
+- **弧光**：从替所有人说话，到先问伙伴需要什么，也说出自己的需要。
 
-**ATLAS** · Skyline Hook（主场）· 21（they/them）· 制作 / 工程
-- 流派：future garage / 2-step。本职：天线塔顶的信号工程师。
-- 内核：**全队的耳**。听得见 Hush 的"嘶声从哪个方向来"——巡演路线、场地安全、每首歌的骨架与最终混音都出自这双手。习惯采样一切：闸门、报站、别人的沉默。被 MONOLITH 的单音请求 ping 过一次，全队只有 TA 决定不回拨。
-- 口头禅：*Give me a wave and I'll find its shape.*
-- 视觉锚：内衬印频谱图的风衣 + 挂在胸前的老式场强仪。
-- 弧光：全队唯一与 MONOLITH"说过话"的人——第一年保持沉默，悬念由 TA 扛。
+**ATLAS** · Skyline Hook · 21 · they/them · 制作 / 工程
 
-**TORQUE** · Chrome Yard（主场）· 25 · 鼓 / 低音
-- 流派：bass / trap-funk。本职：报废车场的机械师，兼职改装 808。
-- 内核：**全队的心**。坚信 loud 是一种爱的表达，车轱辘盖做的铬面锣是他给这座城的礼物。现场冷场时他用扳手鼓槌敲暖场段子，话糙理正，是三人之间的胶水；但给 The Listener 录教学关时会突然变得极温柔。
-- 口头禅：*Loud is a love language.*
-- 视觉锚：扳手改的鼓槌 + 铬面锣（车轱辘盖做的）。
-- 弧光：从"越大声越好"到"替一首安静的歌留出呼吸"。
+- **生活**：天线塔信号工程师，负责广播线路与演出器材；会保留声音笔记，也留意电台以外的事。
+- **想要**：给街区一条可靠的线路，弄清塔的异常信号，同时让朋友安全回家。
+- **不愿承认**：不确定该如何解释观测时，会先把风险独自扛下。不是天生无情或只会讲术语的人。
+- **关系冲突**：JUNO 要公开答案，ATLAS 想先验证；面对独家合同，他们坚持自主广播却一度只会否决、不给替代方案。TORQUE 用递工具、留晚饭的方式打断他们过度工作。
+- **说话**：具体观察，短的干幽默，必要时用一句普通话解释术语；始终使用 they/them。
+- **视觉锚**：频谱内衬风衣、胸挂老式场强仪。
+- **弧光与时间线**：S1 EP8 记录来自塔方向的异常信号，未回应；S2 EP14 先私自回应一秒、收到第二脉冲后才告诉伙伴，被指出违背共同调查约定；S3 EP24 主动安排三人演出后一起检查。Year 1 塔的来源仍未解答。
 
-### 7.2 主场与巡演（District 覆盖）
+**TORQUE** · Chrome Yard · 25 · he/him · 鼓 / 低音
 
-| 成员 | 主场 District | 为什么在这 |
-|------|--------------|-----------|
-| JUNO | Pulse Core | 电台与全城广播的心脏在这里 |
-| ATLAS | Skyline Hook | 天线塔、信号起飞点、MONOLITH 的视野 |
-| TORQUE | Chrome Yard | 车场 = 设备改装房 + 排练室 |
+- **生活**：车场机械师，维修电台和演出设备；扳手鼓槌与轮毂盖铬面锣是他的手工习惯。
+- **想要**：让伙伴有安全、可靠的器材，演完后还有饭吃。
+- **不愿承认**：乐队的每次“再撑一晚”都可能变成他的额外修理工时，所以会认真考虑合同提供的设备。
+- **关系冲突**：他对 JUNO 的理想有感情，但不愿用疲惫给理想无限垫底；和 ATLAS 会争修法，仍给对方留工具。
+- **说话**：动作、物件与直接关心人，温和的自嘲；不堆脏话，不把粗鲁当性格。对初学者给具体可行的鼓励。
+- **视觉锚**：扳手鼓槌与铬面锣。
+- **弧光**：从靠多干活证明关心，到开口求助，并给安静的音乐与别人做决定的空间。
 
-**巡演救援区**：Night Grid / Glass Rim / Afterhours Lane / Slide District——没有主场成员的四个区，每晚演谁家全靠取舍。Glass Rim 的签约条件（S3 剧情线）也从这里来：最亮、最安静、最想买断他们的区。
+### 7.2 主场与关系
 
-### 7.3 Crew 动态（文案取用的关系速查）
+| 成员 | 主场 | 场景取用 |
+|------|------|----------|
+| JUNO | Pulse Core | 电台桌、热线、线缆、没有喝完的咖啡 |
+| ATLAS | Skyline Hook | 天台、末班车、场强仪、折起来的观测记录 |
+| TORQUE | Chrome Yard | 借来的扬声器、工具、排练后收椅子、晚饭 |
 
-- **JUNO × ATLAS**：电台的嘴 × 电台的耳，互相拆台但谁也离不开谁——混音争吵是乐队的日常仪式。
-- **TORQUE × ATLAS**：车场的手艺 × 塔顶的耳朵，全队的设备与歌的骨架都出自这两人，吵架方式是互相递工具。
-- **TORQUE × JUNO**：鼓点 × 电台腔，一个要把气氛吹回来、一个要把话说清楚；JUNO 写不出的词，TORQUE 用一句糙话救场。
-- **对 The Listener**：三人通过电台认得你的"声音"（call-in 时的电流声）。你是 crew 的第四人，但从不上台——**你是他们演给谁看的那个人**。
+Night Grid / Glass Rim / Afterhours Lane / Slide District 无驻场主角，由三人轮流到访，仍有各自居民。Glass Rim 合同要有具体的好处和代价，不能把“漂亮大楼”直接写成坏人。
 
----
-
-## 8. 叙事容器与运营节奏（Radio Episode 模式）
-
-**核心范式（借 Gorillaz 的运营骨架，不借表达）**：**不开场动画、不做过场**。叙事全部经由 The Late Static 电台播出——文案 + 头像 + 一段 15 秒电台帧音频（可由 MusicSaas 生成），成本极低且天然适配曲库更新节奏。
-
-| 运营事件 | 世界内表达 | 文案范式 |
-|----------|-----------|---------|
-| 新曲上架 | 电台首播 | *Fresh off the board — this one's for [District].* |
-| Stage 扩容 | 新巡演季（Season） | *Season opens tonight. Same city, new blocks.* |
-| 曲风/Vibe 筛选 | 电台栏目 | Night Drive→*Overnight Drive* · Groove→*Groove Hour* · Battle→*Battle Call* · Chill→*Last Call* |
-| 排行榜结算 | 灯牌榜 The Board | *"Top block this week: yours."* |
-| 限时高难关 | Null 救援夜 | *"Skyline Hook is going quiet. One night only."* |
-| 断连回归 | 静默数日的来电 | 见 §6 |
-
-**Season 叙事线（Year 1 三季，全部免费文案资产）**：
-- **S1 "Call-in"**：城市常规供频，教玩家守则，埋 MONOLITH 传说（只埋不解）。✅ **八集已落地**：`apps/beatscape/src/data/radioEpisodes.ts` + `/radio` 节目单页（周播解锁，未播集只露 teaser）+ Home "On air" 横幅；真名 MONOLITH 在文案中 0 次出现（以 "the tower uptown" 代称，调性不变量有测试守护）。
-- **S2 "Cold Blocks"**：巡演救援区连续被标 Haze，NIGHTSHIFT 首次"救不回来"——三个救不了一直在塌的四个区，学会接受失败，社区开始有共情话题。✅ **八集已落地**（EP9–16，`radioEpisodes.ts` 与 `/radio` 双季节目单；10 月 23 日起周播）：救不回 Night Grid 的开场、三集排班/愧疚/共情（Triage / The Missed Call / The Fourth Chair）、Glass Rim 拒约（S3 引线）、雾夜 Overnight Drive、塔第二次 ping 且 ATLAS 回拨了一次（§7.1 弧光推进）、收播承诺 "the drop wars are coming" 直接点题 S3。真名 MONOLITH 全季 0 次出现。
-- **S3 "The Drop Wars"**：各街区乐手为 03:03 的黄金演出位竞争，NIGHTSHIFT 内部第一次出现分歧（签或不签 Glass Rim 的条件）——crew 差一点散伙，靠 The Listener 点的一首旧歌收场。✅ **八集已落地**（EP17–24，12 月 18 日起周播）：03:03 规则开场 → Glass Rim 合同与 exclusivity 条款 → EP19 电台第一次停播（crew 内战）→ EP20 盗用他人档期的地下票务（crew 守则 3 "If it's not yours, don't sample it" 焊接）→ EP21 旧歌来电（乐 selfie 沉时刻）→ EP22 拒签投票 → EP23 赢得 slot 后交给全城 → EP24 塔灯全亮十分钟的收播。ATLAS 弧光收口于"塔回应了一次"。真名 MONOLITH 全季 0 次。**Year 1 三季 24 集全部在库**。
+JUNO × ATLAS 的分歧是公开与验证；TORQUE × ATLAS 是赶工与可靠性；JUNO × TORQUE 是开放点歌与可持续的设备/工时。三人会道歉、会欠人情，互相关心通过做事显现。The Listener 的“第四把椅子”是欢迎意象，不意味着玩家从此必须每天值班。
 
 ---
 
-## 9. 世界观 ↔ 游戏功能焊接表（机制即叙事）
+## 8. 两种叙事节奏：First shift 与固定周播
 
-| 游戏真值（不改代码语义） | 世界内说法 | 状态 |
-|--------------------------|-----------|------|
-| 判定 Perfect / Great / Good / Miss | In Phase / Locked / Drifting / Dropout（四档信号链） | ✅ 已落地（`constants/scape.ts` → `JUDGE_COPY`，判定逻辑与 15/30/50 真值不动） |
-| Combo / Full Combo / All Perfect | Signal Streak / Full Broadcast / All In Phase | ✅ 已落地（`COMBO_COPY` + canvas STREAK 字 + 成就/海报/Profile 文案） |
-| Perfect 点亮街区 | 供频（feed the block） | ✅ 直接对齐 PRD §1.3a |
-| District 关卡主题化 | 各区 venue 演出（PlayField 已按 District 主题化） | ✅ 已有基础 |
-| 每日任务 / 回访 | Minimum Loudness / Keep Your Block Loud | 文案层 |
-| Library 筛选 | 电台点歌台（call-in board） | 文案层 |
-| 排行榜 | The Board | 文案层 |
-| 4 Vibe（Night Drive/Groove/Battle/Chill） | 电台栏目 Overnight Drive / Groove Hour / Battle Call / Last Call | 文案层（产品 Vibe 命名不变） |
-| 判定窗 15/30/50 | 不进入叙事（工程真值） | — |
+**当前容器**：头像、短对白、可玩的歌曲与结算回信，无强制长过场。15 秒台呼音频仍是后续规划，不能写成已提供的配音。First shift 让新玩家今天就经历一件完整的小事；Radio 让乐队生活随固定节目单继续。
+
+### 8.1 固定广播
+
+`src/data/radioEpisodes.ts` + `src/lib/radio.ts` 管理 Year 1 三季 24 集，首播 2026-08-28，按客户端本地日期每周开放一集。`/radio` 的 `#ep-N` 可深链；已播全文可读，当前集标为 On air，未播只显示 teaser 与日期。
+
+- **S1 “Call-in” / EP1–8**：广播修复压力从前两集就能感知；用第一次来电、排练、设备、居民和塔的异常认识三人。周播固定内容不检查玩家是否完成 First shift。
+- **S2 “Cold Blocks” / EP9–16，10 月 23 日起**：三人接 Glass Rim 的付费演出买设备，却没替 Night Grid 安排值班，不能保证失去的声音记忆复原。之后与居民建立替班、留言和回拨安排；ATLAS 回应一次塔的信号。失误由人物承担，不归因于玩家没有登录。
+- **S3 “The Drop Wars” / EP17–24，12 月 18 日起**：独家合同会限制电台，三人为设备、租金与自主权吵散一次排练；旧歌来电促使三人具体道歉，改谈每月一个周四的较低费用、无独家演出，欠款分期、继续做维修工。另一路是七场地共用转播器的排期争议：代管办公室重复售档、借乐队名义取消演出，三人凭票据申诉；场地方决定试行每晚两队各五分钟，先补被取消的乐队，再续批一个月。NIGHTSHIFT 参与修线路，没有赢得治理全城的权力。旧歌来电是固定剧本，不能伪装成读取了玩家个人点歌史。
+
+24 集均是写好的广播，**不是个人分支、服务端城市状态或实时生成的对话**。季线中的事件是作者安排；First shift 的本机节点和普通结算回应不改写它们。
+
+### 8.2 运营文案边界
+
+| 产品事件 | 可以采用的世界内表达 | 不可暗示的行为 |
+|----------|----------------------|----------------|
+| 新曲上架 | 电台新加入的点歌曲目 | 某角色实际采样/制作了录音，除非真实记录支持 |
+| Vibe 筛选 | Overnight Drive / Groove Hour / Battle Call / Last Call | 改动产品 Vibe 命名或歌曲元数据 |
+| 本机成绩 | 电台桌旁的 Local Board | 全城在线榜、每周真人排名 |
+| 回归 | “Good to hear from you.” | 街区因缺席受害、错过永久内容 |
+| 开场完成 | 三条线路重新接通、给来电者留一把椅子 | 全城已被玩家修复、其他玩家收到状态同步 |
 
 ---
 
-## 10. 文案 Tone 指南（EN，对外统一）
+## 9. 世界观与游戏功能对应
 
-**Do**：
-- 短句、动词开头、punchy：*Keep your block loud.*
-- 二人称电台腔（对 Listener 说话，不对玩家解释设定）：*You're the only line that's not static.*
-- 只埋不倒：MONOLITH 每季最多出现 3 次，每次一句话，永不解释。
-- 幽默来自行话与反差（法定文书腔 × 街头口语）：*"Per Loud Code §3, you are required to dance."*
-- 角色说话有流派味：JUNO 电台腔短句收尾（*You're tuned in. Act like it.*）；ATLAS 只谈波形与频段、从不说破；TORQUE 糙话暖场、给 Listener 录教学时突然温柔。
+| 游戏真值（不改代码语义） | 世界内说法 | 状态与边界 |
+|--------------------------|------------|------------|
+| Perfect / Great / Good / Miss | In Phase / Locked / Drifting / Dropout | `constants/scape.ts` → `JUDGE_COPY`，判定逻辑与 15/30/50 真值不动 |
+| Combo / Full Combo / All Perfect | Signal Streak / Full Broadcast / All In Phase | 文案皮肤，计分不变 |
+| 当前舞台的命中反馈 | 给线路送回一个清楚的节拍 | 不保存全城亮度，不映射成真实共享城市状态 |
+| District 主题舞台 | 当地演出场景 | 当前舞台视觉层 |
+| First shift 三节点 | 演播室、扬声器、天台转播器恢复 | 顺序推进、本机保存，见 §6.1 |
+| Library / Track | 电台点歌台、虚构来电 | 105/105 引语，非歌曲制作说明 |
+| 排行榜 | The Board | 明示 Local 范围 |
+| Night Drive / Groove / Battle / Chill | 四档电台栏目 | 产品 Vibe 命名不变 |
+| 48h 回归提示 | 给老听众留座 | 无缺席惩罚，无进度衰减 |
+| 判定窗 15/30/50 | 不进入叙事 | 工程真值 |
 
-**Don't**：
-- 不说 "epic / legendary rewards / win big"（合规赌博腔红线）。
-- 不用觉醒/羁绊/命运的日式词根；不出现 "mask / persona / velvet / phantom" 等高危词。
-- 不写"AI 与人类之战"——产品的音乐就是生成的，叙事立场是**声音要有人守**，与生成技术无关，避免自我矛盾。
-- 不倒设定、不发 lore 长文；社区问了就说 *"The Late Static knows. Stay tuned."*
+---
+
+## 10. 英文创作与编辑原则
+
+- **自然先于“酷”**：写能说出口的完整意思；需要时用普通词。用 *Tonight on Overnight Drive*，不用 *Column tonight*。避免把中文抽象名词逐词搬成英语。
+- **每段先有人和一件事**：谁拿了最后一根线、谁还没吃饭、谁答应了不该答应的演出；一个具体细节即可，不给每句话叠比喻。
+- **每个人有自己的句子**：JUNO 先接住来电再说要做的事；ATLAS 先观察再给判断，偶尔承认不确定；TORQUE 先动手、递东西，再说关心。不能把 ATLAS 写成仪表，把 TORQUE 写成大嗓门，把 JUNO 写成永不疲倦的主持模板。
+- **署名与视角一致**：第一人称说本人经历；多人对白标明说话者，不用第三人称介绍 TORQUE 后直接署名 TORQUE。
+- **不卖虚假的参与感**：只回应确实发生的本局结果与本机节点；固定广播不说“我看见你昨晚的选择改变了城市”。没有操作的页面不伪装电话已拨出或留言已发送。
+- **不把失败或休息写成道德过错**：不要 *The block hears your mistakes*、*You let us down* 或离线损失暗示。鼓励要具体而平等，避免居高临下地夸奖初学者。
+- **循序披露**：可玩开场优先“电台/朋友/坏了什么”；塔的谜团一段一个进展。人物页可以讲动机与关系，不把训练 prompt、视觉规范或技术注释当故事。
+- **清楚说明内容来源**：世界内可以有手工器材和虚构点歌，但真实歌曲信息仍由 catalog/资产台账支持；不虚构录音方法、艺人劳动或实际来电记录。
+- **风格边界**：不用 *epic / legendary rewards / win big* 等夸张奖励话术；不借用第三方角色专名、标志性台词或既有剧情。不以排斥某种文化的词汇作为英语质量标准。
+- **验证方式**：编辑检查不等于市场验证。真实读者能否复述设定、记住人物、想继续以及指出生硬处，按 [叙事试玩协议](BEATSCAPE-NARRATIVE-PLAYTEST.md) 单独记录。
 
 ---
 
@@ -245,7 +265,7 @@ The Hush 是从城市边缘渗入的灰色潮汐。被吞掉的街区**不毁灭
     - 其余目标类近邻均为异业：Apple「Night Shift」(Class 9 屏幕显示软件，货品极窄)、Arcascope 睡眠 App (97171388)、NightShift Automation 家居自动化 (99847649, 2026-05 新申请)、PokerGO「THE NIGHTSHIFT」扑克节目 (2024)、Midnight Logic 派对制作 (99192163, 2025-05)、NightShift Crew「NSC LIVE」(99533558, mark 是 NSC LIVE 非 NIGHTSHIFT)。
     - **结论**：Class 9 游戏软件内未发现 LIVE 的 NIGHTSHIFT 注册；Class 41 有 Kennelly 现场演出注册压阵。游戏内叙事用法维持；对外品牌化（商店页副标、周边、社媒账号以 NIGHTSHIFT 为主体名）**必须先过 TSDR 全类正式检索 + 律师意见**；备选乐队名随正式检索一并准备。
   - **MONOLITH ⚠️ 仅限游戏内叙事使用（深检索已证实 LIVE）**：Warner Bros. Entertainment 持有 **Class 9 游戏软件注册商标 Reg. 5880307（Serial 86782414，2015-10 申请，2019-10-08 注册，Status 700 - Registered）**，覆盖 "computer game software / downloadable game software / interactive video game software" 全线，另有 Madrid 国际注册 1292973（2020 年部分失效记录，2025-11-11 到期续展——US 注册维护独立于 IR，页面仍显示 LIVE）。MONOLITH 在本世界观中本就只是 lore 都市传说层（§4.2，不揭穿不画脸）——维持纯游戏内叙事使用是安全的；**禁止**用于商品名、商店页标题、付费章节名、营销物料主标；未来若需商品化必须换名（候选：the Tower / the Silent Floor 等世界内代称）。
-- 3 位新角色名（JUNO/TORQUE/ATLAS）与旧版 7 位零重叠；MARLOW/SOLENN/DIZZ/WREN 四名弃用，不进入任何对外资产。角色名不进入关键词池（关键词池仍是曲名/封面专用真值）。
+- 当前成员只有 JUNO / ATLAS / TORQUE；旧 Tuning Keeper 七人方案及中间稿 MARLOW / SOLENN / DIZZ / WREN 均为退役记录，不进入当前对外文案。角色名不进入关键词池（关键词池仍是曲名/封面专用真值）。
 - **备选乐队名短名单（2026-08-30 初筛 · TSDR 正式检索时随 NIGHTSHIFT 一并查）**：
   - **The Late Static（首推）**：世界观原生（电台名），语义与"乐队 + 电台叙事"天然绑定。Justia "late static" 搜索前 20 **无精确同名**；近邻全是 STATIC 家族静电/清洁/电子类异业（STATIC KING / STATIC CLEAN / STATIC GUARD 等），无娱乐/游戏类碰撞。若 NIGHTSHIFT 因 Kennelly Reg. 6359178 放弃对外品牌化，由它承接商品名。
   - **Scape City（次选，世界地名向）**：Justia "scape city" 前 20 **无精确同名**；近邻 SOCIAL SCAPE（Serial 97573400，VR 社交平台，2022）——SCAPE 后缀在科技/游戏圈偏拥挤，混淆距离尚可但不如 The Late Static 干净。
@@ -254,12 +274,10 @@ The Hush 是从城市边缘渗入的灰色潮汐。被吞掉的街区**不毁灭
 
 ---
 
-## 12. 落地路线（建议，待拍板）
+## 12. 当前落地与后续验证
 
-1. **文档层（本文件）**：拍板后本文件成为叙事唯一真相源；旧 `BEATSCAPE-CHARACTER-NARRATIVE.md` 标注 deprecated（其 LoRA 管线文档 `BEATSCAPE-CHARACTER-LORA.md` 保留工程价值）。
-2. **文案层（低成本先行，不动美术）**：SEO meta、分享海报、复盘页电台腔文案、Library 点歌台文案、回归欢迎语——全部可先于角色美术上线，用文字先把世界观立住。
-3. **资产层**：新 3 人按 Art Brief 流程重走（关键词改用 §7 视觉锚 + 现有 LoRA 管线；出图与 LoRA 训练量较七人方案直接减半）；过渡期旧头像可继续占位（玩家对旧 7 人无情感沉淀，替换风险低）。
-4. **代码层**：`CHARACTER_ART` 常量替换人设字段（code/district/role/motif → 新档案）；判定文案皮肤（In Phase/Drifting/Dropout）做成文案常量，不碰判定逻辑与 15/30/50 真值。
-5. **社区层**：MONOLITH 传说 = r/BeatScape 的二创引子；Season 切换配 Reddit 发帖节奏（对齐 `BEATSCAPE-REDDIT-LAUNCH.md`）。
-
-**需要用户拍板的 3 件事**：① ~~采纳本文件为叙事新基线~~（✅ 已按本文件落地：文案层 + 判定皮肤 + 三人美术/LoRA，见 §12 路线 1–4）；② ~~判定文案皮肤~~（✅ 已落地 In Phase/Locked/Drifting/Dropout）；③ ~~商标初筛~~（✅ 2026-08-30 深检索完成，结论见 §11：NIGHTSHIFT 游戏内可用但带 41 类在册近邻、商品化前须正式检索，MONOLITH 证实 LIVE 限游戏内叙事）。**剩余人工动作**：NIGHTSHIFT 正式商标检索（TSDR 全类）+ 角色页新头像的人工目验。
+1. **当前基线**：本文件已采纳；NIGHTSHIFT 三人设定、既有动漫立绘/LoRA、判定文案皮肤继续使用。旧角色只作历史存档，不在当前文案占位。
+2. **2026-09-05 叙事优化**：人物页优先动机与关系；First shift 提供三节点可玩开场和结果回信；24 集进行人物声音与固定时间线编辑；105 首虚构点歌引语统一为当前三人世界。
+3. **工程验证**：按 [music-verify](../.agents/skills/music-verify/SKILL.md) 选择相关测试、构建与交互验收。日期调度、本机进度、重读和失败/零命中不推进应有可观察证据；不改判定/音频规则。
+4. **受众验证待执行**：[叙事试玩](BEATSCAPE-NARRATIVE-PLAYTEST.md) 单独测试理解、角色记忆、继续意愿与英语自然度；现有 [视觉差异化盲测](RESONANCE-BLINDTEST.md) 继续按既有独立门禁执行。没有真实参与者记录前，不称“符合欧美口味”或“受众验收通过”。
+5. **其他工作线保留**：真实人工耳检、真机记录、发布签审与 NIGHTSHIFT 正式商标检索仍按原入口处理。本次文案与实现不代替这些结论，也未授权发布或对外消息。

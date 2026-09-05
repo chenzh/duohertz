@@ -72,7 +72,8 @@ export function TrackPage() {
           {bio && <p className="artist-bio">{bio}</p>}
           {request && (
             <p className="artist-bio radio-request">
-              “{request}” — <strong>The Late Static</strong>
+              “{request}” — <strong>The Late Static</strong><br />
+              <small>A fictional call-in from Scape City</small>
             </p>
           )}
           <p className="meta">

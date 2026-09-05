@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import {
   audioUrl,
   createJob,
-  getJob,
   type Mode,
 } from "../api";
 import { OfflineBanner, ErrorBanner } from "../components/Banners";
@@ -19,12 +18,15 @@ import type { Locale } from "../i18n";
 import { useInferenceHealth } from "../hooks/useInferenceHealth";
 import { useJobPoll } from "../hooks/useJobPoll";
 import { PRESETS, SAMPLES, type Preset, type Scene } from "../presets";
+import { publicAsset } from "../lib/assets";
+import { buildJobPayload } from "../lib/integrationSnippets";
+import { readStoredJson, writeStoredJson } from "../lib/storage";
 
-const MODES: { value: Mode; label: string }[] = [
-  { value: "vocal_lyrics", label: "人声-歌词" },
-  { value: "vocal_desc", label: "人声-描述" },
-  { value: "game_bgm", label: "游戏 BGM" },
-  { value: "game_theme_vocal", label: "主题曲" },
+const MODES: { value: Mode; zh: string; en: string }[] = [
+  { value: "vocal_lyrics", zh: "人声-歌词", en: "Vocals from lyrics" },
+  { value: "vocal_desc", zh: "人声-描述", en: "Vocals from prompt" },
+  { value: "game_bgm", zh: "游戏 BGM", en: "Game BGM" },
+  { value: "game_theme_vocal", zh: "主题曲", en: "Game theme song" },
 ];
 
 const DRAFT_KEY = "demo_form_draft_v3";
@@ -37,6 +39,34 @@ type Draft = {
   styleTags: string;
   lyrics: string;
 };
+
+const DEFAULT_DRAFT: Draft = {
+  scene: "game",
+  mode: "game_bgm",
+  duration: 60,
+  prompt: "dark dungeon ambient, tense, no vocals, instrumental",
+  styleTags: "j-pop, female vocal, emotional",
+  lyrics: "[Verse]\n星が降る夜に\n[Chorus]\nHello tonight",
+};
+
+function isDraft(value: unknown): value is Draft {
+  if (!value || typeof value !== "object") return false;
+  const draft = value as Draft;
+  return (draft.scene === "game" || draft.scene === "vocal")
+    && MODES.some((mode) => mode.value === draft.mode)
+    && Number.isFinite(draft.duration)
+    && typeof draft.prompt === "string"
+    && typeof draft.styleTags === "string"
+    && typeof draft.lyrics === "string";
+}
+
+function isTaskList(value: unknown): value is TaskItem[] {
+  return Array.isArray(value) && value.every((item) => item && typeof item === "object"
+    && typeof item.job_id === "string"
+    && MODES.some((mode) => mode.value === item.mode)
+    && typeof item.status === "string"
+    && typeof item.created_at === "string");
+}
 
 function engineLabel(mode: Mode, t: Messages) {
   return mode === "game_bgm" ? t.engineSa3 : t.engineAce;
@@ -59,74 +89,50 @@ export function PlaygroundSection({
   deepLinkJobId: string | null;
   apiDocsUrl: string;
 }) {
-  const [scene, setScene] = useState<Scene>("game");
-  const [mode, setMode] = useState<Mode>("game_bgm");
-  const [duration, setDuration] = useState(60);
-  const [prompt, setPrompt] = useState("dark dungeon ambient, tense, no vocals, instrumental");
-  const [styleTags, setStyleTags] = useState("j-pop, female vocal, emotional");
-  const [lyrics, setLyrics] = useState("[Verse]\n星が降る夜に\n[Chorus]\nHello tonight");
+  const [initialDraft] = useState(() => readStoredJson(DRAFT_KEY, DEFAULT_DRAFT, isDraft));
+  const [scene, setScene] = useState<Scene>(initialDraft.scene);
+  const [mode, setMode] = useState<Mode>(initialDraft.mode);
+  const [duration, setDuration] = useState(initialDraft.duration);
+  const [prompt, setPrompt] = useState(initialDraft.prompt);
+  const [styleTags, setStyleTags] = useState(initialDraft.styleTags);
+  const [lyrics, setLyrics] = useState(initialDraft.lyrics);
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [advanced, setAdvanced] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const [activeJobId, setActiveJobId] = useState<string | null>(null);
+  const [activeJobId, setActiveJobId] = useState<string | null>(deepLinkJobId);
   const [elapsed, setElapsed] = useState(0);
-  const [tasks, setTasks] = useState<TaskItem[]>(() => {
-    try {
-      return JSON.parse(sessionStorage.getItem("demo_tasks_v2") ?? "[]");
-    } catch {
-      return [];
-    }
-  });
+  const [tasks, setTasks] = useState<TaskItem[]>(() =>
+    readStoredJson("demo_tasks_v2", [], isTaskList, "session").slice(0, 20));
 
   const health = useInferenceHealth();
-  const { job, error: pollError, timedOut, pollLog } = useJobPoll(activeJobId);
-
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem(DRAFT_KEY);
-      if (!raw) return;
-      const d = JSON.parse(raw) as Draft;
-      setScene(d.scene);
-      setMode(d.mode);
-      setDuration(d.duration);
-      setPrompt(d.prompt);
-      setStyleTags(d.styleTags);
-      setLyrics(d.lyrics);
-    } catch {
-      /* ignore */
-    }
-  }, []);
+  const { job, error: pollError, timedOut, pollLog, refresh: refreshJob } = useJobPoll(activeJobId);
+  const scenePresets = PRESETS.filter((preset) => preset.scene === scene);
+  const workersDown = health.gateway !== "ok" || !health.workersOk;
+  const isGenerating = !!activeJobId && !timedOut && job?.status !== "completed" && job?.status !== "failed";
 
   useEffect(() => {
     const draft: Draft = { scene, mode, duration, prompt, styleTags, lyrics };
-    localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+    writeStoredJson(DRAFT_KEY, draft);
   }, [scene, mode, duration, prompt, styleTags, lyrics]);
 
   useEffect(() => {
-    sessionStorage.setItem("demo_tasks_v2", JSON.stringify(tasks.slice(0, 20)));
+    writeStoredJson("demo_tasks_v2", tasks.slice(0, 20), "session");
   }, [tasks]);
 
   useEffect(() => {
     if (!job?.job_id) return;
-    setTasks((prev) =>
-      prev.map((item) => (item.job_id === job.job_id ? { ...item, status: job.status } : item)),
-    );
+    setTasks((prev) => {
+      if (prev.some((item) => item.job_id === job.job_id)) {
+        return prev.map((item) => item.job_id === job.job_id ? { ...item, status: job.status } : item);
+      }
+      return [{ job_id: job.job_id, mode: job.mode, status: job.status, created_at: new Date().toISOString() }, ...prev].slice(0, 20);
+    });
     if (job.status === "completed") console.info("demo_job_completed", job.job_id);
   }, [job?.job_id, job?.status]);
 
   useEffect(() => {
-    if (!deepLinkJobId) return;
-    setActiveJobId(deepLinkJobId);
-    void getJob(deepLinkJobId)
-      .then((j) => {
-        setMode(j.mode);
-        setTasks((prev) => {
-          if (prev.some((x) => x.job_id === j.job_id)) return prev;
-          return [{ job_id: j.job_id, mode: j.mode, status: j.status, created_at: new Date().toISOString() }, ...prev];
-        });
-      })
-      .catch(() => undefined);
+    if (deepLinkJobId) setActiveJobId(deepLinkJobId);
   }, [deepLinkJobId]);
 
   useEffect(() => {
@@ -136,20 +142,18 @@ export function PlaygroundSection({
   }, [demoMode]);
 
   useEffect(() => {
-    if (!activeJobId || job?.status === "completed" || job?.status === "failed") return;
+    if (!isGenerating) return;
     const t0 = Date.now();
+    setElapsed(0);
     const id = window.setInterval(() => setElapsed(Math.floor((Date.now() - t0) / 1000)), 1000);
     return () => clearInterval(id);
-  }, [activeJobId, job?.status]);
-
-  const scenePresets = PRESETS.filter((p) => p.scene === scene);
-  const workersDown = health.gateway === "ok" && !health.workersOk;
-  const isGenerating =
-    !!activeJobId && job?.status && !["completed", "failed"].includes(job.status);
+  }, [activeJobId, isGenerating]);
 
   const showLyrics = mode === "vocal_lyrics" || mode === "game_theme_vocal";
   const showPrompt = mode !== "vocal_lyrics";
   const showStyle = mode === "vocal_lyrics";
+  const minDuration = mode === "game_bgm" ? 15 : 30;
+  const maxDuration = mode === "game_bgm" ? 180 : 240;
 
   function applyPreset(preset: Preset) {
     setScene(preset.scene);
@@ -170,14 +174,26 @@ export function PlaygroundSection({
   }
 
   async function onSubmit() {
-    if (workersDown) return;
+    if (workersDown || submitting || isGenerating) return;
+    if (!Number.isInteger(duration) || duration < minDuration || duration > maxDuration) {
+      setSubmitError(locale === "zh"
+        ? `请输入 ${minDuration}–${maxDuration} 秒之间的整数时长。`
+        : `Enter a whole number between ${minDuration} and ${maxDuration} seconds.`);
+      return;
+    }
+    const missingInput = mode === "vocal_lyrics"
+      ? !styleTags.trim() || !lyrics.trim()
+      : mode === "game_theme_vocal"
+        ? !prompt.trim() && !lyrics.trim()
+        : !prompt.trim();
+    if (missingInput) {
+      setSubmitError(locale === "zh" ? "请填写当前模式所需的描述、风格或歌词。" : "Add the prompt, style or lyrics required for this mode.");
+      return;
+    }
     setSubmitting(true);
     setSubmitError(null);
     try {
-      const body: Record<string, unknown> = { mode, duration_sec: duration };
-      if (showPrompt) body.prompt = prompt;
-      if (showStyle) body.style_tags = styleTags;
-      if (showLyrics) body.lyrics = lyrics;
+      const body = buildJobPayload({ mode, duration_sec: duration, prompt, style_tags: styleTags, lyrics });
       const created = await createJob(body);
       setActiveJobId(created.job_id);
       setElapsed(0);
@@ -252,7 +268,7 @@ export function PlaygroundSection({
                   <select value={mode} onChange={(e) => setMode(e.target.value as Mode)}>
                     {MODES.map((m) => (
                       <option key={m.value} value={m.value}>
-                        {m.label}
+                        {m[locale]}
                       </option>
                     ))}
                   </select>
@@ -261,8 +277,8 @@ export function PlaygroundSection({
                   {t.duration}
                   <input
                     type="number"
-                    min={5}
-                    max={240}
+                    min={minDuration}
+                    max={maxDuration}
                     value={duration}
                     onChange={(e) => setDuration(Number(e.target.value))}
                   />
@@ -348,12 +364,18 @@ export function PlaygroundSection({
         <div className="col-output">
           <Card className="output-card">
             <div className="output-head">
-              <Badge tone={scene === "game" ? "game" : "vocal"}>{engineLabel(mode, t)}</Badge>
+              <Badge tone={(job?.mode ?? mode) === "game_bgm" ? "game" : "vocal"}>{engineLabel(job?.mode ?? mode, t)}</Badge>
               {health.lmModel && <Badge>{health.lmModel}</Badge>}
             </div>
 
             <GenerationTimeline status={job?.status} failed={job?.status === "failed"} t={t} />
             <p className="status-text">{statusText}</p>
+
+            {timedOut && (
+              <button type="button" className="btn-secondary" onClick={refreshJob}>
+                {locale === "zh" ? "刷新任务状态" : "Refresh task status"}
+              </button>
+            )}
 
             {isGenerating && <PlayerSkeleton hint={t.mlxHint} />}
 
@@ -405,7 +427,7 @@ export function PlaygroundSection({
                   <div key={s.id} className="sample-item">
                     <Badge>{s.engine}</Badge>
                     <span>{locale === "zh" ? s.labelZh : s.labelEn}</span>
-                    <audio controls src={s.url} preload="none" />
+                    <audio controls src={publicAsset(s.url)} preload="none" />
                   </div>
                 ))}
               </div>

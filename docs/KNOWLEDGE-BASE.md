@@ -27,6 +27,8 @@
 
 ### API / 平台（MVP v0.2）
 
+**门户上线准备（2026-09-05）**：[PORTAL-RELEASE-READINESS.md](./PORTAL-RELEASE-READINESS.md) — 独立静态门户、候选证据、发布输入与回滚；当前域名/Pages 项目待定。
+
 1. [PRD.md](../PRD.md) — 产品总纲 v1.2
 2. [docs/RULES.md](./RULES.md) — 规则与边界
 3. [docs/DATA_API.md](./DATA_API.md) — 接口与数据库
@@ -59,6 +61,8 @@
 4. [docs/BEATSCAPE-REDDIT-LAUNCH.md](./BEATSCAPE-REDDIT-LAUNCH.md) — Reddit 首发文案包（发帖前红线自查 + 三篇成稿）
 5. [docs/BEATSCAPE-COMMERCIALIZATION-GAP.md](./BEATSCAPE-COMMERCIALIZATION-GAP.md) — 商业化差距 7 域 34 项（5 决策点待拍板）
 6. [docs/RESONANCE-BLINDTEST.md](./RESONANCE-BLINDTEST.md) — 差异化盲测规程（上线前人工关卡，6 展示面）
+7. [docs/BEATSCAPE-NARRATIVE-PLAYTEST.md](./BEATSCAPE-NARRATIVE-PLAYTEST.md) — 五分钟英语叙事试玩：理解、人物记忆、继续意愿与英语自然度；待真实参与者执行
+8. [docs/BEATSCAPE-NARRATIVE-UPDATE.md](./BEATSCAPE-NARRATIVE-UPDATE.md) — 2026-09-05 本地叙事优化：三节点可玩开场、24 集对白、人物页与验证证据
 
 ### Harness / 续作
 

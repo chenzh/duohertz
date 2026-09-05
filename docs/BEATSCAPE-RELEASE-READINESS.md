@@ -2,7 +2,13 @@
 
 当前为 **105 首 / 315 张谱的本地发布候选**。技术验收与正式放行分开：内容审计已为 FAIL=0，人工耳检、差异化盲测、真机验收未签审，**不能据此宣称正式上线准备全部完成**。现有免费、无账号、设备本地存档的产品范围保持不变。
 
-## 发布候选与证据
+## 当前叙事候选（2026-09-05，本地未发布）
+
+First shift 三节点、角色页、24 集多人对白与 105 首虚构来电已更新。当前产物 SHA-256 为 `fa4bca512a3893919ca619fd6e9e1aa632229203995c3719b16e07c388e5668c`；139 单测、6 发布器回归、28 桌面/手机模拟浏览器流程、类型检查、构建与资产核验通过，最终结果及截图见 [叙事优化交付](BEATSCAPE-NARRATIVE-UPDATE.md)。
+
+下表与原盲测工作包记录的是**叙事调整前**的技术基线，不是对新界面的人工认可。新版本的受众叙事接受度按 [叙事试玩协议](BEATSCAPE-NARRATIVE-PLAYTEST.md) 待执行；视觉盲测需重新绑定当前候选截图，耳检、真机与正式签审仍未完成。
+
+## 叙事调整前技术基线（历史证据）
 
 | 项目 | 当前结果 | 复验/证据 |
 |---|---|---|
@@ -20,7 +26,7 @@
 | 内容审计 | **4726 PASS / 9 WARN / 0 FAIL** | 本地 `data/beatscape-release/2026-09-05/content-final/audit-report.json` |
 | 正式放行 | **BLOCKED，预期退出 1** | `pnpm --filter @musicsaas/beatscape launch:check` |
 
-候选产物 SHA-256：`74840f1fc466c78a1f02c59fa2800878659c5ca1a08ba1f4963058c44226a4e6`。`release.json` 同时记录源码 commit、工作区 dirty 状态、catalog 与全部文件哈希；本次源码未 commit/push。任何内容变更后，以重建产出的哈希为准，原签审失效。
+此历史候选产物 SHA-256：`74840f1fc466c78a1f02c59fa2800878659c5ca1a08ba1f4963058c44226a4e6`。`release.json` 同时记录源码 commit、工作区 dirty 状态、catalog 与全部文件哈希；本次源码未 commit/push。任何内容变更后，以重建产出的哈希为准，原签审失效。
 
 ## 本次修复
 
@@ -67,7 +73,7 @@ Scape Music 的本地曲库已同步到 216s（同时修正既有 bs-p3-02 BPM 1
 2026-09-05 用户明确确认：以下人工验收尚未完成。
 
 1. **105 首耳检**：运行 `python3 scripts/beatscape-earcheck-worksheet.py --all`，在浏览器打开 `apps/beatscape/earcheck-worksheet.html`。逐曲听、选 Clear/Derivative、填写备注和 reviewer 后导出 JSON。三首新循环扩展候选要额外听接缝，保持 pending 直到真实审核完成。自动 `earcheck:beatscape` 不替代此记录。
-2. **差异化盲测**：当前 5 张截图已备于 `data/beatscape-release/2026-09-05/blindtest/index.html`，附产物与图片哈希。按 [RESONANCE-BLINDTEST.md](RESONANCE-BLINDTEST.md) §结果记录，邀请 5–10 名不玩日式 RPG 的观察者，对既定展示面记原话与结论。PRD §7.7/§11.4 明确要求上线前完成。
+2. **差异化盲测**：叙事调整前候选的 5 张截图保留于 `data/beatscape-release/2026-09-05/blindtest/index.html`，附产物与图片哈希；正式盲测前须用当前候选重新捕获既定展示面。按 [RESONANCE-BLINDTEST.md](RESONANCE-BLINDTEST.md) §结果记录，邀请 5–10 名不玩日式 RPG 的观察者，对既定展示面记原话与结论。PRD §7.7/§11.4 明确要求上线前完成；本轮叙事截图不自动代替该工作包。
 3. **设备验收**：记录设备/OS/浏览器版本、日期、曲目/模式、通过或问题。至少覆盖下表；模拟器通过不能填成真机通过。
 
 | 设备/浏览器 | 验收步骤 | 当前状态 |
@@ -93,6 +99,8 @@ bash scripts/deploy-beatscape-cf-pages.sh --check
 ```
 
 本机浏览器下载受到代理证书链影响，因此已使用本机已安装的 Chrome、默认音频权限策略完成验收（未绕过用户手势解锁）：`PLAYWRIGHT_CHANNEL=chrome pnpm release:beatscape`。无需关闭 TLS 验证。CI 使用 Playwright 自带 Chromium；其远程运行需在后续提交后验证。
+
+续作切到受限环境后，系统 pnpm 在切换项目指定的 9.15.0 时因 registry fetch 失败无法完成签名验证；没有跳过该验证。本轮直接执行 `node apps/beatscape/scripts/launch-check.mjs`，与 package 脚本内容相同，产物校验通过并正确拒绝缺失签审。原始环境错误保存在 `data/beatscape-release/2026-09-05/launch-check-pnpm-environment.log`；此前整套技术验收证据不变。
 
 所有门禁实际通过后，由审核者填写 `apps/beatscape/launch-signoff.json`：
 

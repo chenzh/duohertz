@@ -1,0 +1,93 @@
+.radio-story-note {
+  max-width: 66ch;
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.radio-shift-entry {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  margin-top: 18px;
+}
+
+.radio-shift-entry .btn {
+  flex: 0 0 auto;
+}
+
+.radio-shift-entry p {
+  flex: 1 1 280px;
+  max-width: 52ch;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.radio-dialogue {
+  display: grid;
+  gap: 16px;
+  margin: 20px 0;
+  padding: 0;
+  list-style: none;
+}
+
+.radio-dialogue-turn {
+  --speaker-color: #f2e4c9;
+  display: grid;
+  grid-template-columns: 5rem minmax(0, 1fr);
+  align-items: baseline;
+  gap: 12px;
+  border-left: 2px solid var(--speaker-color);
+  padding-left: 12px;
+}
+
+.radio-dialogue-turn[data-speaker="ATLAS"] {
+  --speaker-color: #9cbbf9;
+}
+
+.radio-dialogue-turn[data-speaker="TORQUE"] {
+  --speaker-color: #ffc76b;
+}
+
+.radio-speaker {
+  color: var(--speaker-color);
+  font-size: 0.69rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+}
+
+.radio-dialogue-text {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.radio-page .radio-signoff {
+  margin-top: 18px;
+  padding-top: 12px;
+  border-top: 1px solid color-mix(in srgb, var(--muted) 25%, transparent);
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+@media (max-width: 520px) {
+  .radio-dialogue-turn {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+  }
+
+  .radio-page .radio-episode-head {
+    flex-wrap: wrap;
+  }
+
+  .radio-page .radio-episode-head h3 {
+    flex: 1 1 calc(100% - 70px);
+  }
+}

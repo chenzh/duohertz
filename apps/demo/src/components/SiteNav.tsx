@@ -1,6 +1,7 @@
 import type { Locale } from "../i18n";
 import type { LandingContent } from "../content/landing";
 import { scrollToSection } from "../hooks/useUrlModes";
+import { publicAsset } from "../lib/assets";
 
 type Health = { gateway: string; ace: string; sa3: string };
 
@@ -23,8 +24,8 @@ export function SiteNav({
 
   return (
     <nav className="site-nav" data-testid="site-nav">
-      <a href="/demo/" className="nav-brand">
-        <img src="/demo/brand/logo.svg" alt="MusicSaas" width={36} height={36} />
+      <a href={publicAsset("")} className="nav-brand">
+        <img src={publicAsset("brand/logo.svg")} alt="MusicSaas" width={36} height={36} />
         <span>MusicSaas</span>
       </a>
       <div className="nav-links">

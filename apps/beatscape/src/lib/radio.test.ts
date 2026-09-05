@@ -1,8 +1,26 @@
 import { describe, expect, it } from "vitest";
+import { createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
 import { RADIO_EPISODES, RADIO_SEASONS, SEASON_PREMIERE_MS } from "../data/radioEpisodes";
+import { RadioDialogue } from "../pages/Radio";
 import { episodeAirLabel, episodeIndexAt, episodeState } from "./radio";
 
 const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
+
+describe("broadcast transcripts", () => {
+  it("renders each line with its own speaker instead of treating dialogue as plain text", () => {
+    const html = renderToStaticMarkup(createElement(RadioDialogue, {
+      lines: [
+        { speaker: "ATLAS", text: "The relay is steady." },
+        { speaker: "TORQUE", text: "Then we can play." },
+      ],
+    }));
+    expect(html).toContain('aria-label="Broadcast transcript"');
+    expect(html).toMatch(/data-speaker="ATLAS"[^>]*>.*?>ATLAS<.*?The relay is steady\./);
+    expect(html).toMatch(/data-speaker="TORQUE"[^>]*>.*?>TORQUE<.*?Then we can play\./);
+    expect(html).not.toContain("[object Object]");
+  });
+});
 
 describe("episodeIndexAt", () => {
   it("clamps before the season premiere to the first episode", () => {
@@ -66,7 +84,7 @@ describe("program invariants (World Bible tone guide)", () => {
   it("never speaks the tower's true name more than 3 times per season", () => {
     for (const season of RADIO_SEASONS) {
       const copy = RADIO_EPISODES.filter((e) => e.season === season.number)
-        .flatMap((e) => e.lines)
+        .flatMap((e) => e.lines.map((line) => line.text))
         .join(" ");
       const mentions = copy.match(/monolith/gi)?.length ?? 0;
       expect(mentions).toBeLessThanOrEqual(3);
@@ -74,7 +92,7 @@ describe("program invariants (World Bible tone guide)", () => {
   });
 
   it("avoids the banned tone words", () => {
-    const copy = RADIO_EPISODES.flatMap((e) => [e.title, e.teaser, ...e.lines, e.signoff]).join(" ");
+    const copy = RADIO_EPISODES.flatMap((e) => [e.title, e.teaser, ...e.lines.map((line) => line.text), e.signoff]).join(" ");
     // word boundaries: "personal" must not trip the "persona" guard
     expect(copy).not.toMatch(/\bmask\b|\bpersona\b|\bvelvet\b|\bphantom\b|\bepic\b|\blegendary\b|\bwin big\b/i);
   });

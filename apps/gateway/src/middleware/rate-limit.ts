@@ -34,7 +34,7 @@ function refundToken(apiKeyHash: string): void {
 }
 
 export async function rateLimitMiddleware(c: Context, next: Next) {
-  if (c.req.path.startsWith("/v1/health") || c.req.method === "GET" || c.req.header("X-Demo-BFF")) {
+  if (c.req.path.startsWith("/v1/health") || c.req.method === "GET") {
     await next();
     return;
   }

@@ -21,7 +21,20 @@
 
 ## 1. 产品一句话
 
-海外轻量音游玩家**免安装、秒开即玩**的浏览器节奏游戏：全自有 AI 曲库（车载听感 + 都市爵士战斗感）、RESONANCE 漫画风视觉、专业 Miss 复盘、Local Board 荣誉体系，并以流媒体完整版 CTA 向 MusicSaas App 引流。
+面向英语市场中喜欢音乐、风格化都市幻想与乐队人物的轻量玩家，提供**免安装、秒开即玩**的浏览器节奏游戏：自有 AI 曲库（车载听感 + 都市爵士战斗感）、RESONANCE 漫画版式与既有 NIGHTSHIFT 动漫立绘、专业 Miss 复盘、Local Board，并以流媒体完整版 CTA 向音乐站引流。受众是待验证的兴趣群体，不以“欧美人统一口味”或排斥动漫定义。
+
+**2026-09-05 叙事优化**：世界观按 [World Bible](../../docs/BEATSCAPE-WORLDBIBLE.md)，相关交互如下；下文未修订的代码规模与测试数仍为历史快照。
+
+| 入口 | 当前叙事体验 | 行为边界 |
+|------|--------------|----------|
+| `/shift` · First shift | JUNO 的演播室回传通路 → TORQUE 借来的扬声器 → ATLAS 天台转播器；三首完整曲目、短对白、结算回信与下一步入口 | `bs-s1-05` / `bs-s1-06` / `bs-s2-02`；完整 Casual/Arcade 且至少一次命中按顺序推进；失败、退出、零命中或 Practice 不推进；本机保存，可重读、可继续 |
+| Home / Radio | 可玩开场入口、固定周播入口 | 立即玩开场，无需等待周播日期；自由选曲仍可直接进入 |
+| `/characters` | 三人的想要、顾虑、分歧与彼此关系 | 只讲当前 JUNO / ATLAS / TORQUE；不把 LoRA/画法说明当人物介绍 |
+| Results | 开场节点回信或按本局表现/街区的角色回应 | 只确认实际对局行为，不声明全城联网状态或个人周播分支 |
+| `/radio` | 三季 24 集固定广播，前两集已有器材与电台困境，三人各自说话 | 按本地日期开放全文；未播 teaser，已播可回读；独立于本机开场进度 |
+| Track / 回归 | 105 首虚构来电生活片段；友好欢迎回来 | 引语非实际录音来源；48h 不触发缺席惩罚或进度倒退 |
+
+叙事接受度仍需 [目标受众五分钟试玩](../../docs/BEATSCAPE-NARRATIVE-PLAYTEST.md)。该协议与现有视觉差异化盲测分开，不能以不玩日式 RPG 筛选叙事受众，也没有已通过的真人结果。
 
 **六层优先级铁律**（继承总纲 §1.5，代码严格遵守）：
 `音频时序同步 ＞ 60fps 稳态 ＞ 判定手感一致性 ＞ 稳定性 ＞ 功能完整性 ＞ UI 美观`
@@ -265,13 +278,14 @@ Loading(decode m4a) → needsStart(Tap to enter the Scape / hero autoStart)
 |------|------|--------------|
 | `/` | Home | 双栏 hero（左文案+键帽+CTA，右 **HomeHeroPlay 真机可玩 demo**：PlayField hero 变体，蒙版后为 HeroGameplayPreview 循环动画，一键 Play+Sound 解锁后 autoStart）· Daily banner · **电台 On Air 横幅**（当前集 + Season program 入口）· **48h 回归欢迎语**（radio-welcome）· Featured 卡（含 48s 音频试听 `<audio controls>`）· Explore 横滑 · 首访 intro 弹窗 |
 | `/library` | Library | 搜索（title/artist/district/genre/vibe/tags 联合 hay）+ genre 下拉 + vibe 四 chip + Beginner/With vocals/Favorites 快筛 + 卡片网格（Vibe/District/Beginner/Vocals 徽章） |
-| `/track/:id` | Track | 封面 hero + 艺人 bio（catalog 字段优先，fallback `ARTIST_BIOS`）+ **电台点歌引语**（`trackRequests` 85/85 覆盖，缺 key 降级隐藏）+ 音频试听 + Stream CTA + tier/mode 选择器（默认取 track `default_*`）+ Favorite |
+| `/track/:id` | Track | 封面 hero + 艺人 bio（catalog 字段优先，fallback `ARTIST_BIOS`）+ **虚构电台来电引语**（`trackRequests` 105/105 覆盖，缺 key 降级隐藏）+ 音频试听 + Stream CTA + tier/mode 选择器（默认取 track `default_*`）+ Favorite |
 | `/play/:id` | Play | query `tier`（缺省 easy）`mode`（缺省 casual）`daily=1`；加载封面做背景；Exit confirm；finish → `writeLastRun` + `setOnboarded` + `/results` |
 | `/results` | Results | 读 `bs_last_run`（`?run=local` 时优先 localStorage 深链）· Grade 大字 + FC/AP/NEW RECORD 徽章 · Score/Acc/MaxCombo 药丸 · 四档占比条 · **MissReplayPanel**（分道时间轴点图 + section 聚合 + 明细）· PB 对比 · Replay/Copy link/Poster/Library/Play Now · Owned Rights 条 |
 | `/calibrate` | Calibration | 8 拍 @120 BPM 四道轮流闪；`AudioContext` 时钟取 Δ；≥3 次取**中位数**建议 offset；Save → 写入并进首局；Skip → offset 0 |
 | `/settings` | Settings | 名字（≤24）/ Global offset ±200 / Hitsound / 双音量滑条 / FancyFX / Casual speed / **触屏专属 Thumb chord assist** / 键位三预设 + 逐道重绑（重复键禁存） |
 | `/leaderboard` | Leaderboard | **Local Board**：All-time（`bs_board` Top50）+ Daily challenge 双 tab；明示 "Scores stay on this device" |
-| `/characters` | Characters | NIGHTSHIFT 三人 crew 页（JUNO/ATLAS/TORQUE 档案卡 + 头像条入口），IP 主页面 |
+| `/characters` | Characters | NIGHTSHIFT 三人的动机、关系、立绘与电台入口 |
+| `/shift` | FirstShift | 三节点可玩开场、重读对白、本机继续与结算回信 |
 | `/radio` | Radio | **The Late Static 节目单**：Year 1 三季 24 集周播（`radioEpisodes.ts` season+week 结构，首播 2026-08-28）；已播全文 / 当前集 "On air now" 高亮 / 未播集只露 teaser；按季分组渲染 |
 | `/profile` | Profile | 荣誉段位 + 成就 + 统计（设备本地） |
 | `/privacy` `/terms` | Legal | 静态英文条款（2026-08-26 更新；本地存储声明、无追踪声明） |
@@ -313,6 +327,8 @@ Plausible（`window.plausible` 可选挂载，不注入第三方脚本本身）+
 ---
 
 ## 12. 视觉规范 as-built（RESONANCE v2.0）
+
+当前是漫画 UI 与动漫角色立绘的混合风格。表内语法规范约束布局/效果，不能据此宣称角色不含动漫特征，或所有英语玩家都偏好这套画风。
 
 | Token | 值 |
 |-------|-----|

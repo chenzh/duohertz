@@ -50,6 +50,8 @@ MusicSaas/
 
 ## 3. apps/demo
 
+**公开门户**：`src/Portal.tsx` + `styles/portal.css`，`pnpm release:portal` 构建 `dist-portal/`；原 Demo 继续 `pnpm --filter demo build` → `/demo/`。`scripts/release.mjs` 校验域名/静态闭包/样例/哈希，`e2e/` 覆盖门户与本地 Demo，发布与回滚见 [PORTAL-RELEASE-READINESS.md](./PORTAL-RELEASE-READINESS.md)。
+
 | 路径 | 职责 |
 |------|------|
 | `src/App.tsx` | 四 mode UI 入口 |
@@ -68,11 +70,14 @@ MusicSaas/
 |------|------|
 | `src/App.tsx` | 路由壳 |
 | `src/router.tsx` | 轻量自研路由（无 react-router-dom） |
-| `src/pages/` | Home · Library · Track · Play · Results · Calibration · Settings · Leaderboard · Characters · Radio · Profile · Legal · NotFound |
-| `src/data/radioEpisodes.ts` + `src/lib/radio.ts` | **The Late Static 电台**：Year 1 三季 24 集周播数据 + 跨季调度（World Bible §8） |
+| `src/pages/` | Home · FirstShift · Library · Track · Play · Results · Calibration · Settings · Leaderboard · Characters · Radio · Profile · Legal · NotFound |
+| `src/data/firstShift.ts` + `src/lib/firstShift.ts` | 三节点可玩开场：对白/曲目、真实结算顺序推进、存档恢复与本次访问兜底 |
+| `src/components/ShiftStory.tsx` + `src/pages/FirstShift.tsx` | `/shift`、首页继续入口、结算回信、连接状态与对白重读 |
+| `src/data/radioEpisodes.ts` + `src/lib/radio.ts` | **The Late Static 电台**：Year 1 三季 24 集多人对白 + 固定周播调度；独立于开场进度（World Bible §8） |
 | `src/constants/scape.ts` | JUDGE_COPY / COMBO_COPY 判定文案皮肤 + CHARACTER_ART 三人档案 |
 | `src/lib/profanity.ts` + `src/data/profanity-en.txt` | 昵称脏词过滤（leet 归一化 + token 精确匹配） |
-| `src/catalog/trackRequests.ts` + `src/data/trackRequests.json` | 电台点歌引语 85/85（Track 页展示） |
+| `src/catalog/trackRequests.ts` + `src/data/trackRequests.json` | 105/105 首虚构点歌引语；`scripts/beatscape-track-requests.py --check` 校验覆盖及内容一致 |
+| `e2e/narrative.spec.ts` | 桌面/手机模拟：首访、三首真实歌曲故事推进、回信/重载、退出/失败/练习/存储拒绝 |
 | `src/components/PlayField.tsx` | 谱面渲染、Tap to Start、键盘（默认方向键，物理键码）+ 触控 |
 | `src/engine/judge.ts` | 判定窗 15/30/50 ms |
 | `src/engine/surge.ts` + `surge.test.ts` | **SIGNAL 氛围层**：命中质量→热量→三档（TUNING/LIVE/ON AIR）纯逻辑；只驱动表现，不碰计分/判定窗（docs/BEATSCAPE-SURGE-FX.md） |
@@ -167,6 +172,7 @@ BeatScape 待办与验收：[BEATSCAPE-TODO-ACCEPTANCE.md](./BEATSCAPE-TODO-ACCE
 改 BeatScape 玩法？  → apps/beatscape/src/engine/ + PRD-BEATSCAPE.md
 改曲库/谱面？        → scripts/beatscape-* + public/catalog/
 改世界观/电台剧集？  → docs/BEATSCAPE-WORLDBIBLE.md + src/data/radioEpisodes.ts
+改可玩开场/回信？    → src/data/firstShift.ts + src/lib/firstShift.ts + components/ShiftStory.tsx
 改可玩性/欧美增长？  → docs/BEATSCAPE-PLAYABILITY-GROWTH-TODO.md
 改推理？             → workers/* + docs/INFERENCE.md
 改 Harness/续作？    → AGENTS.md + .agents/skills/ + SESSION.md + worklog/

@@ -1,0 +1,62 @@
+name: Portal release check
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/demo/**'
+      - 'scripts/deploy-portal-cf-pages.sh'
+      - 'docs/PORTAL-RELEASE-READINESS.md'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - '.github/workflows/portal-check.yml'
+  pull_request:
+    paths:
+      - 'apps/demo/**'
+      - 'scripts/deploy-portal-cf-pages.sh'
+      - 'docs/PORTAL-RELEASE-READINESS.md'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - '.github/workflows/portal-check.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: portal-release-check-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  portal-release-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PORTAL_SITE_URL: https://portal-preview.invalid
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install locked portal dependencies
+        run: pnpm install --frozen-lockfile --filter demo
+      - name: Install browser
+        run: pnpm --filter demo exec playwright install --with-deps chromium
+      - name: Verify portal candidate without publishing
+        run: pnpm --filter demo release:check
+      - name: Preserve artifact identity and browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: portal-release-evidence
+          path: |
+            apps/demo/dist-portal/
+            apps/demo/test-results/
+            data/portal-release/screenshots/
+          if-no-files-found: warn

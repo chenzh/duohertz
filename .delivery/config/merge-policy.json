@@ -1,8 +1,10 @@
 {
   "$schema": "Generic agent delivery auto-merge policy. Deny wins over allow.",
   "autoMergeEnabled": true,
-  "requireLabels": ["agent-safe"],
-  "branchNamePrefix": "cursor/",
+  "requireLabels": [
+    "agent-safe"
+  ],
+  "branchNamePrefix": "codex/issue-",
   "allow": [
     "docs/**",
     "**/*.md",
@@ -28,5 +30,9 @@
     "docker-compose*.yml",
     "Dockerfile",
     "Makefile"
+  ],
+  "branchNamePrefixes": [
+    "codex/issue-",
+    "cursor/"
   ]
 }

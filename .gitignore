@@ -1,5 +1,6 @@
 # Dependencies
 node_modules/
+.pnpm-store/
 .venv/
 .tmp-venv/
 venv/
@@ -60,3 +61,6 @@ dist-check/
 **/public/catalog/**/og.png
 apps/beatscape/test-results/
 apps/beatscape/playwright-report/
+apps/demo/dist-portal/
+apps/demo/test-results/
+apps/demo/playwright-report/

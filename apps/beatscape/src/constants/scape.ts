@@ -4,7 +4,7 @@ export const SCAPE_COPY = {
   tagline: "Feel the Beat. Own the Scape.",
   rights: "AI Original · Owned Rights · Generated with MusicSaas",
   rightsShort: "AI Original · Owned Rights",
-  tapToEnter: "Enter the Scape",
+  tapToEnter: "Start playing",
   playNow: "Play Now",
   play: "Play",
   heroPlayKicker: "Strike Vector",
@@ -19,10 +19,10 @@ export const SCAPE_COPY = {
   calibrateSkip: "Playing with zero offset — recalibrate anytime in Settings.",
   emptyFavorites: "No favorites yet — pin a track from the Library.",
   weakNetwork: "Loading core beat first…",
-  introTitle: "First time in the Scape?",
-  introBody: "Warm up with a beginner-friendly Easy · Casual run — or skip it and pick any track you like.",
-  introStart: "Start the warm-up",
-  introDismiss: "Explore on my own",
+  introTitle: "You're through. This is The Late Static.",
+  introBody: "JUNO here. You're the only line that's not static. We call you the Listener. Start with an Easy · Casual warm-up: tap the four lanes as notes reach the line. Or pick a song of your own.",
+  introStart: "Play the warm-up",
+  introDismiss: "Pick my own song",
 } as const;
 
 // PRD §7.5 v2.0 · RESONANCE palette.
@@ -101,7 +101,7 @@ export function artistBio(artist: string): string | undefined {
   return ARTIST_BIOS[artist];
 }
 
-// BeatScape 角色 IP（anime + LoRA）— 7 District × 7 角色视觉身份层。
+// NIGHTSHIFT: three musicians with home districts; touring districts share the radio host.
 // key 与 DISTRICT_COLORS / catalog.json `district` 字段一致；art 指向 public/characters/<slug>.png。
 // 设计纪律见 docs/BEATSCAPE-IP-STRATEGY.md §2：标志物=职业工具（非武器/面具/塔罗/披风/校服），
 // 头后四层共振菱形（MOTIF）永远出现在"声源"位置。
@@ -114,29 +114,65 @@ export interface CharacterArt {
   role: string; // 职业 / 锚点
   motif: string; // 标志物描述
   trigger: string; // LoRA 触发词（生成用，网站展示不依赖）
+  bio: string;
+  dilemma: string;
+  relationship: string;
+  quote: string;
+  recommendedTrack: {
+    trackId: string;
+    title: string;
+    note: string;
+  };
 }
 
 export const CHARACTER_ART: Record<string, CharacterArt> = {
   "Pulse Core": {
     code: "JUNO", name: "JUNO", district: "Pulse Core",
     art: "/characters/pulse-core.png", color: "#E23D3D",
-    role: "Late-night radio host — the voice of NIGHTSHIFT",
+    role: "Vocals · radio host · electrician",
     motif: "Radio-crew jacket, one ear on one ear off, an ON AIR badge that never dims",
     trigger: "junobs",
+    bio: "Her mother left her a radio station. JUNO keeps it on air, turning callers' stories into songs so nobody's block gets forgotten.",
+    dilemma: "She can find the words for everyone else. Asking the crew to play a song she needs is harder.",
+    relationship: "She and ATLAS argue over every mix. She still waits for their nod before opening the mic.",
+    quote: "You're tuned in. Act like it.",
+    recommendedTrack: {
+      trackId: "bs-s1-04",
+      title: "Velvet Afterhours",
+      note: "JUNO's pick for when the callers have gone home and the mic is still warm.",
+    },
   },
   "Skyline Hook": {
     code: "ATLAS", name: "ATLAS", district: "Skyline Hook",
     art: "/characters/skyline-hook.png", color: "#5B8DEF",
-    role: "Antenna-tower signal engineer — the ear of NIGHTSHIFT",
+    role: "Production · signal engineer",
     motif: "Spectrum-print coat lining, a vintage field-strength meter on a chest strap",
     trigger: "atlasbs",
+    bio: "ATLAS turns closing gates and last-train announcements into drum tracks. They map the night's route by listening for trouble before anyone else hears it.",
+    dilemma: "One tower sent back a tone they couldn't place. They want to understand it. They haven't told the crew everything.",
+    relationship: "ATLAS and TORQUE built the rig together. Even mid-argument, one holds the cable while the other fixes it.",
+    quote: "Give me a wave and I'll find its shape.",
+    recommendedTrack: {
+      trackId: "bs-s1-03",
+      title: "Night Drive 808",
+      note: "ATLAS's pick for the ride between blocks. Find the space between the kicks.",
+    },
   },
   "Chrome Yard": {
     code: "TORQUE", name: "TORQUE", district: "Chrome Yard",
     art: "/characters/chrome-yard.png", color: "#8C8079",
-    role: "Yard mechanic & 808 customizer — the heart of NIGHTSHIFT",
+    role: "Drums & bass · yard mechanic",
     motif: "Wrench drumsticks, a chrome gong cut from a hubcap",
     trigger: "torquebs",
+    bio: "TORQUE made the band's gong from a hubcap. He wants every gig to feel like somebody saved you a place, even if you're the only person there.",
+    dilemma: "He can fill a yard with sound. Leaving enough room for someone else's quiet song takes practice.",
+    relationship: "When JUNO gets stuck on a lyric, he gets her laughing. When you miss a beat, he's the first to count you back in.",
+    quote: "Loud is a love language.",
+    recommendedTrack: {
+      trackId: "bs-s1-02",
+      title: "Glass Horizon",
+      note: "TORQUE's first lesson: start easy, find your feet. No gig is too small.",
+    },
   },
 };
 

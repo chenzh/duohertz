@@ -22,9 +22,9 @@ export const LIBRARY_PAGE_META: PageMeta = {
 };
 
 export const CHARACTERS_PAGE_META: PageMeta = {
-  title: "Characters — BeatScape",
+  title: "Meet NIGHTSHIFT — BeatScape",
   description:
-    "Three musicians, seven Districts, no record deal — NIGHTSHIFT, the original character crew behind the Scape. Owned, original, RESONANCE-style. Feel the Beat, Own the Scape.",
+    "Meet JUNO, ATLAS and TORQUE: three musicians keeping a pirate radio station alive, one borrowed speaker and one late-night call at a time.",
 };
 
 export const CALIBRATION_PAGE_META: PageMeta = {
@@ -66,7 +66,7 @@ export const PROFILE_PAGE_META: PageMeta = {
 export const RADIO_PAGE_META: PageMeta = {
   title: "The Late Static — BeatScape",
   description:
-    "Season 1: Call-in — the pirate-radio broadcast of NIGHTSHIFT, one episode a week from a rooftop nobody can find. Feel the Beat, Own the Scape.",
+    "Read The Late Static's weekly broadcasts: late-night calls, borrowed gear, and the arguments that keep NIGHTSHIFT together. Start with the playable First shift.",
 };
 
 export function setPageMeta(meta: PageMeta): void {

@@ -13,18 +13,15 @@ export function buildJobPayload(form: FormSnapshot): Record<string, unknown> {
     mode: form.mode,
     duration_sec: form.duration_sec,
   };
-  if (form.prompt) payload.prompt = form.prompt;
-  if (form.style_tags) payload.style_tags = form.style_tags;
-  if (form.lyrics) payload.lyrics = form.lyrics;
+  if (form.mode !== "vocal_lyrics" && form.prompt) payload.prompt = form.prompt;
+  if (form.mode === "vocal_lyrics" && form.style_tags) payload.style_tags = form.style_tags;
+  if ((form.mode === "vocal_lyrics" || form.mode === "game_theme_vocal") && form.lyrics) payload.lyrics = form.lyrics;
   return payload;
 }
 
-export function buildPythonSnippet(form: FormSnapshot, jobId: string | null): string {
+export function buildPythonSnippet(form: FormSnapshot, _jobId: string | null): string {
   const payload = buildJobPayload(form);
   const payloadLiteral = JSON.stringify(JSON.stringify(payload));
-  const pollBlock = jobId
-    ? `job = request("GET", "/v1/jobs/${jobId}")`
-    : `job = request("GET", f"/v1/jobs/{job_id}")`;
   return `#!/usr/bin/env python3
 import json, os, time, urllib.request
 
@@ -47,7 +44,7 @@ job_id = created["data"]["job_id"]
 print("job_id", job_id)
 
 while True:
-    ${pollBlock}
+    job = request("GET", f"/v1/jobs/{job_id}")
     status = job["data"]["status"]
     print(status)
     if status in ("completed", "failed"):

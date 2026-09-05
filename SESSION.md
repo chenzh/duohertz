@@ -10,7 +10,13 @@
 
 > 验收入口：本页 · `pnpm catalog:beatscape` · `pnpm audit:beatscape` · `pnpm earcheck:beatscape`
 
-- [x] **人工验收材料备齐（2026-09-05，未签审）**：当前候选 `74840f1fc466` 的 5 张盲测截图及 SHA-256 清单位于 `data/beatscape-release/2026-09-05/blindtest/`；截图等待字体加载，Play/Results 来自真实对局。9 WARN 已逐项定位到曲目/档位/测量值；资产归档更新为 105 首、7 PNG + 14 WebP、NIGHTSHIFT 三人。用户明确尚未完成耳检/盲测/真机，下一步使用 [`docs/RESONANCE-BLINDTEST.md`](docs/RESONANCE-BLINDTEST.md) 与上线清单记录真实结果后签审。
+- [x] **BeatScape 叙事深度优化（2026-09-05，未提交/未发布）**：新增 First shift 三节点真实歌曲开场、结算回信与本机继续/重读；三人动机/关系、24 集多人英文对白和 105 首虚构来电已统一。139 单测、6 发布器回归、28 桌面/手机模拟浏览器流程及构建/资产核验通过，候选 `fa4bca512a38`，8 张截图已绑定新候选。实现与验收见 [叙事优化交付](docs/BEATSCAPE-NARRATIVE-UPDATE.md)。
+- [ ] **英语叙事真人试玩**：按 [五分钟协议](docs/BEATSCAPE-NARRATIVE-PLAYTEST.md) 收集理解、角色记忆、继续意愿与英语自然度；尚无参与者结果。旧候选 `74840f1fc466` 的视觉截图属于历史工作包，新界面需重新绑定视觉盲测材料；保留原耳检、真机和发布签审待办。
+
+- [x] **MusicSaas 门户技术候选（2026-09-05，未提交/未发布）**：`apps/demo` 增加根路径静态门户，中英文、BeatScape/Scape Music 入口、站内 API 速查、真实标注的两段 5 秒技术样例、OG/404/安全头；生产 Demo BFF 默认关闭、独立 key 与限流。8 前端 + 12 发布器 + 22 浏览器回归通过；Gateway 44、Mock integration 17、Demo HTTP 14 通过。候选 `53f83162ad6e`，详情 [PORTAL-RELEASE-READINESS](docs/PORTAL-RELEASE-READINESS.md)。
+- [ ] **门户发布配置**：等待门户域名与 Cloudflare Pages 项目名；确定后按真实域名重建并复核，发布另需对应授权。当前共享区公司派单脚本造成根 Python 38 项失败；HEAD 基线叠加本任务 HTTP 修改已单独验证 70/70，保留并行改动，不能称整体 CI 已通过。
+
+- [x] **人工验收材料备齐（2026-09-05，未签审）**：当前候选 `74840f1fc466` 的 5 张盲测截图及 SHA-256 清单位于 `data/beatscape-release/2026-09-05/blindtest/`；截图等待字体加载，Play/Results 来自真实对局。9 WARN 已逐项定位到曲目/档位/测量值；资产归档更新为 105 首、7 PNG + 14 WebP、NIGHTSHIFT 三人。用户明确尚未完成耳检/盲测/真机，本目标现阻塞于真实人工记录，下一步使用 [`docs/RESONANCE-BLINDTEST.md`](docs/RESONANCE-BLINDTEST.md) 与上线清单记录真实结果后签审。
 
 - [x] **Agent 规则与工作流审计（2026-09-05，本地未提交）**：按 GPT-6 Astra 官方指导精简 AGENTS、常驻规则、角色与交付模板，新增按需验证/交付 skills，修复 CI/派单/合并资格校验。下一次上游 Harness 同步须审查 diff、保留本仓适配；自动合并须另行明确启用仓库变量。依据、验收与边界见 [AGENT-WORKFLOW-AUDIT](docs/AGENT-WORKFLOW-AUDIT.md)。
 

@@ -6,6 +6,12 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:portal": "tsc --noEmit && vite build --mode portal && node scripts/release.mjs prepare",
+    "preview:portal": "node e2e/serve-portal.mjs",
+    "test": "node --import tsx --test tests/*.test.ts",
+    "test:e2e": "playwright test",
+    "release:verify": "node scripts/release.mjs verify",
+    "release:check": "npm test && node --test scripts/release.test.mjs && npm run build:portal && npm run test:e2e && npm run release:verify",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -13,6 +19,9 @@
     "react-dom": "^19.1.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^22.14.0",
+    "tsx": "^4.19.3",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@vitejs/plugin-react": "^4.4.1",

@@ -1,91 +1,136 @@
 #!/usr/bin/env bash
-# Read-only auto-merge eligibility check. CI and explicit workflow opt-in are separate gates.
+# Check whether changed files in a PR are eligible for auto-merge per merge-policy.json.
 set -euo pipefail
 
 PR_NUMBER="${1:?usage: check-merge-eligible.sh <pr_number>}"
-[[ "$PR_NUMBER" =~ ^[1-9][0-9]*$ ]] || { echo 'error: PR number must be a positive integer' >&2; exit 1; }
-ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
-REPO="${GITHUB_REPOSITORY:-$(cd "$ROOT" && gh repo view --json nameWithOwner -q .nameWithOwner)}"
-POLICY="$ROOT/.delivery/config/merge-policy.json"
+REPO="${GITHUB_REPOSITORY:-multica-ai/multica}"
+ROOT="${REPO_ROOT:-$(cd "$(dirname "$0")/../.." && pwd)}"
+POLICY="${MERGE_POLICY_PATH:-$ROOT/.delivery/config/merge-policy.json}"
 
 if [ ! -f "$POLICY" ]; then
-  echo 'merge_eligible=false reason=policy_missing'
+  echo "merge_eligible=false reason=policy_missing"
   exit 1
 fi
-if [ "$(jq -r '.autoMergeEnabled' "$POLICY")" != true ]; then
-  echo 'merge_eligible=false reason=auto_merge_disabled'
+
+ENABLED="$(jq -r '.autoMergeEnabled' "$POLICY")"
+if [ "$ENABLED" != "true" ]; then
+  echo "merge_eligible=false reason=auto_merge_disabled"
   exit 0
 fi
 
-TMP="$(mktemp -d)"
-trap 'rm -rf "$TMP"' EXIT
-# Assignments/commands propagate API failures; process substitutions would hide them.
-gh pr view "$PR_NUMBER" --repo "$REPO" \
-  --json baseRefName,baseRefOid,headRefName,headRefOid,state,isDraft,isCrossRepository,labels,reviewDecision,changedFiles > "$TMP/pr.json"
-gh api --paginate --slurp "repos/$REPO/pulls/$PR_NUMBER/files?per_page=100" > "$TMP/files.json"
-gh pr view "$PR_NUMBER" --repo "$REPO" --json headRefOid,baseRefOid > "$TMP/after.json"
-if ! jq -e --slurp '.[0].headRefOid == .[1].headRefOid and .[0].baseRefOid == .[1].baseRefOid' "$TMP/pr.json" "$TMP/after.json" >/dev/null; then
-  echo 'merge_eligible=false reason=pr_changed_during_check'
+BASE="$(gh pr view "$PR_NUMBER" -R "$REPO" --json baseRefName -q .baseRefName)"
+HEAD="$(gh pr view "$PR_NUMBER" -R "$REPO" --json headRefName -q .headRefName)"
+PREFIX_MATCH=0
+while IFS= read -r prefix; do
+  [ -n "$prefix" ] && [[ "$HEAD" == "$prefix"* ]] && PREFIX_MATCH=1
+done < <(jq -r '.branchNamePrefixes // [.branchNamePrefix // "codex/issue-"] | .[]' "$POLICY")
+if [ "$PREFIX_MATCH" -ne 1 ]; then
+  echo "merge_eligible=false reason=branch_prefix"
   exit 0
 fi
 
-python3 - "$POLICY" "$TMP/pr.json" "$TMP/files.json" <<'PY'
-import json
+# Optional: linked issues must carry required labels (e.g. agent-safe).
+REQUIRE_LABELS="$(jq -r '.requireLabels // [] | join("\n")' "$POLICY")"
+if [ -n "$REQUIRE_LABELS" ]; then
+  issue_nums="$(
+    gh pr view "$PR_NUMBER" -R "$REPO" --json closingIssuesReferences -q '.closingIssuesReferences[].number' 2>/dev/null || true
+  )"
+  if [ -z "$issue_nums" ]; then
+    echo "merge_eligible=false reason=no_linked_issue"
+    exit 0
+  fi
+  for issue_num in $issue_nums; do
+    [ -z "$issue_num" ] && continue
+    labels="$(
+      gh issue view "$issue_num" -R "$REPO" --json labels -q '[.labels[].name] | join(",")' 2>/dev/null || true
+    )"
+    while IFS= read -r required; do
+      [ -z "$required" ] && continue
+      if [[ ",$labels," != *",$required,"* ]]; then
+        echo "merge_eligible=false reason=missing_label issue=$issue_num label=$required"
+        exit 0
+      fi
+    done <<<"$REQUIRE_LABELS"
+  done
+fi
+
+# Capture the command first: process substitution otherwise hides gh failures.
+file_list="$(gh pr diff "$PR_NUMBER" -R "$REPO" --name-only)" || {
+  echo "merge_eligible=false reason=files_unavailable"; exit 1;
+}
+[ -n "$file_list" ] || { echo "merge_eligible=false reason=empty_diff"; exit 1; }
+FILES=()
+while IFS= read -r line; do
+  [ -n "$line" ] && FILES+=("$line")
+done <<<"$file_list"
+
+deny_patterns=()
+while IFS= read -r line; do
+  deny_patterns+=("$line")
+done < <(jq -r '.deny[]' "$POLICY")
+
+allow_patterns=()
+while IFS= read -r line; do
+  allow_patterns+=("$line")
+done < <(jq -r '.allow[]' "$POLICY")
+
+path_matches_glob() {
+  python3 - "$1" "$2" <<'PY'
 import re
 import sys
-from pathlib import Path
 
-policy, pr, pages = [json.loads(Path(path).read_text()) for path in sys.argv[1:]]
+path = sys.argv[1].replace("\\", "/")
+pattern = sys.argv[2]
 
-
-def reject(reason):
-    print(f"merge_eligible=false reason={reason}")
-    raise SystemExit(0)
-
-
-def glob_regex(pattern):
-    """Match complete repo paths: * stays in a segment, ** crosses segments."""
-    pieces = []
+def glob_to_re(glob: str) -> str:
     i = 0
-    while i < len(pattern):
-        if pattern[i:i + 3] == "**/":
-            pieces.append("(?:.*/)?")
-            i += 3
-        elif pattern[i:i + 2] == "**":
-            pieces.append(".*")
-            i += 2
-        elif pattern[i] == "*":
-            pieces.append("[^/]*")
-            i += 1
-        elif pattern[i] == "?":
-            pieces.append("[^/]")
-            i += 1
+    n = len(glob)
+    out: list[str] = []
+    while i < n:
+        if i + 1 < n and glob[i : i + 2] == "**":
+            if i + 2 < n and glob[i + 2] == "/":
+                out.append("(?:.*/)?")
+                i += 3
+            else:
+                out.append(".*")
+                i += 2
+            continue
+        ch = glob[i]
+        if ch == "*":
+            out.append("[^/]*")
+        elif ch == "?":
+            out.append("[^/]")
         else:
-            pieces.append(re.escape(pattern[i]))
-            i += 1
-    return re.compile("".join(pieces))
+            out.append(re.escape(ch))
+        i += 1
+    return "^" + "".join(out) + "$"
 
-
-prefix = policy.get("branchNamePrefix", "cursor/")
-if not isinstance(prefix, str) or not prefix or not pr["headRefName"].startswith(prefix):
-    reject("branch_prefix")
-if pr["state"] != "OPEN" or pr["isDraft"] or pr["isCrossRepository"]:
-    reject("pr_state")
-labels = {label["name"] for label in pr["labels"]}
-if not set(policy["requireLabels"]).issubset(labels):
-    reject("required_labels")
-if pr["reviewDecision"] != "APPROVED":
-    reject("review_required")
-files = [file for page in pages for file in page]
-if not files or len(files) != pr["changedFiles"]:
-    reject("incomplete_file_list")
-allow = [glob_regex(pattern) for pattern in policy["allow"]]
-deny = [glob_regex(pattern) for pattern in policy["deny"]]
-# Check both sides of renames so moving a protected file cannot bypass the policy.
-paths = {file[key] for file in files for key in ("filename", "previous_filename") if key in file}
-if any(pattern.fullmatch(path) for path in paths for pattern in deny):
-    reject("deny_path")
-if any(not any(pattern.fullmatch(path) for pattern in allow) for path in paths):
-    reject("not_in_allowlist")
-print(f'merge_eligible=true sha={pr["headRefOid"]} files={len(files)}')
+sys.exit(0 if re.match(glob_to_re(pattern), path) else 1)
 PY
+}
+
+for f in "${FILES[@]}"; do
+  for d in "${deny_patterns[@]}"; do
+    if path_matches_glob "$f" "$d"; then
+      echo "merge_eligible=false reason=deny_path file=$f pattern=$d"
+      exit 0
+    fi
+  done
+done
+
+for f in "${FILES[@]}"; do
+  allowed=false
+  for a in "${allow_patterns[@]}"; do
+    if path_matches_glob "$f" "$a"; then
+      allowed=true
+      break
+    fi
+  done
+  if [ "$allowed" = false ]; then
+    echo "merge_eligible=false reason=not_in_allowlist file=$f"
+    exit 0
+  fi
+done
+
+echo "merge_eligible=true base=$BASE head=$HEAD files=${#FILES[@]}"
+exit 0

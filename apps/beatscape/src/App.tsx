@@ -20,6 +20,7 @@ import { Router } from "./router";
 const DuoPage = lazy(() => import("./pages/Duo").then((m) => ({ default: m.DuoPage })));
 const CharactersPage = lazy(() => import("./pages/Characters").then((m) => ({ default: m.CharactersPage })));
 const RadioPage = lazy(() => import("./pages/Radio").then((m) => ({ default: m.RadioPage })));
+const FirstShiftPage = lazy(() => import("./pages/FirstShift").then((m) => ({ default: m.FirstShiftPage })));
 const TrackPage = lazy(() => import("./pages/Track").then((m) => ({ default: m.TrackPage })));
 const CalibrationPage = lazy(() => import("./pages/Calibration").then((m) => ({ default: m.CalibrationPage })));
 const SettingsPage = lazy(() => import("./pages/Settings").then((m) => ({ default: m.SettingsPage })));
@@ -50,6 +51,7 @@ export default function App() {
             { path: "/library", element: <LibraryPage /> },
             { path: "/characters", element: <CharactersPage /> },
             { path: "/radio", element: <RadioPage /> },
+            { path: "/shift", element: <FirstShiftPage /> },
             { path: "/track/:id", element: <TrackPage /> },
             { path: "/play/:id", element: <PlayPage /> },
             { path: "/duo/:id", element: <DuoPage /> },

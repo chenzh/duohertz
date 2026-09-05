@@ -41,15 +41,15 @@ class HttpClient:
         try:
             with urllib.request.urlopen(req, timeout=timeout) as res:
                 raw = res.read()
-                ctype = res.headers.get("Content-Type", "")
-                if "audio" in ctype:
-                    return res.status, raw
-                return res.status, json.loads(raw.decode())
+                ctype = res.headers.get("Content-Type", "").split(";", 1)[0].strip().lower()
+                if ctype == "application/json" or ctype.endswith("+json"):
+                    return res.status, json.loads(raw.decode())
+                return res.status, raw
         except urllib.error.HTTPError as e:
             raw = e.read()
             try:
                 return e.code, json.loads(raw.decode())
-            except json.JSONDecodeError:
+            except (json.JSONDecodeError, UnicodeDecodeError):
                 return e.code, {"raw": raw.decode(errors="replace")}
 
     def get(self, path: str, **kwargs: Any) -> tuple[int, dict[str, Any] | bytes]:

@@ -37,7 +37,7 @@ const zh: LandingContent = {
   ctaTry: "立即体验",
   heroTitle: "本地双引擎音乐 API",
   heroSubtitle: "人声 ACE-Step · 游戏 BGM Stable Audio 3 · 推理在自有 Mac，数据不出内网",
-  heroListen: "30 秒精选试听",
+  heroListen: "5 秒技术样例",
   pillars: [
     { title: "双引擎分工", body: "人声与 BGM 各用最优模型，API 统一调度" },
     { title: "数据在本地", body: "Gateway + Worker 私有化部署，无云端上传" },
@@ -48,8 +48,8 @@ const zh: LandingContent = {
     { label: "引擎", value: "ACE + SA3" },
     { label: "部署", value: "Mac MLX" },
   ],
-  showcaseTitle: "场景橱窗",
-  showcaseLead: "无需生成，点选即可试听精选作品",
+  showcaseTitle: "播放兼容性样例",
+  showcaseLead: "两段 5 秒技术片段，用于检查播放，不代表模型音乐质量",
   trustTitle: "架构与信任",
   trustLead: "从浏览器到 MLX 推理的完整链路",
   deployCards: [
@@ -90,7 +90,7 @@ const en: LandingContent = {
   ctaTry: "Try now",
   heroTitle: "Local dual-engine music API",
   heroSubtitle: "ACE-Step vocals · Stable Audio 3 BGM · inference on your Mac, data stays on-prem",
-  heroListen: "30s featured preview",
+  heroListen: "5s technical sample",
   pillars: [
     { title: "Dual engines", body: "Best model per task behind one REST API" },
     { title: "On-prem data", body: "Gateway + workers in your network" },
@@ -101,8 +101,8 @@ const en: LandingContent = {
     { label: "Engines", value: "ACE + SA3" },
     { label: "Deploy", value: "Mac MLX" },
   ],
-  showcaseTitle: "Showcase",
-  showcaseLead: "Listen to curated samples — no generation required",
+  showcaseTitle: "Playback samples",
+  showcaseLead: "Two 5-second technical clips for playback checks, not model quality demos",
   trustTitle: "Architecture & trust",
   trustLead: "Browser → Gateway → Workers → MLX",
   deployCards: [
