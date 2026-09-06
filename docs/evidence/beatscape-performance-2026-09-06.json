@@ -1,0 +1,3922 @@
+{
+  "schema": 1,
+  "date": "2026-09-06",
+  "sources": [
+    {
+      "path": "data/beatscape-performance/2026-09-06/baseline-load-final/results.json",
+      "sha256": "959430c0529d2e4f07e1600c3e885a2afa7a7b219377d54bf6e7d8988eba190a",
+      "artifactSha256": "fa4bca512a3893919ca619fd6e9e1aa632229203995c3719b16e07c388e5668c",
+      "harnessSha256": "03139124ff5cbab4fcf4dd3ac572e4335784c7d110365f7abaf75f61b9dfc89c",
+      "sourceCommit": "8b710a3c8cdf8176ac7c3f89054a9f413815d169",
+      "sourceDirty": true,
+      "startedAt": "2026-09-06T01:19:18.727Z",
+      "completedAt": "2026-09-06T01:20:43.385Z",
+      "collectorStatus": "measured",
+      "environment": {
+        "platform": "darwin",
+        "arch": "arm64",
+        "osRelease": "25.6.0",
+        "cpu": "Apple M5 Pro",
+        "logicalCores": 18,
+        "ramBytes": 51539607552,
+        "browser": "152.0.7977.76",
+        "node": "v26.7.0",
+        "headless": true,
+        "origin": "loopback static production artifact; Brotli text + artifact _headers + ETag; no CDN",
+        "network": "CDP throughput/latency simulation; external font requests use actual network plus emulation",
+        "deviceCoverage": "automated browser layouts only; physical-device acceptance cancelled by BS-D001"
+      },
+      "config": {
+        "suite": "load",
+        "repeats": 3,
+        "cycles": 8,
+        "profiles": [
+          {
+            "name": "desktop",
+            "viewport": {
+              "width": 1280,
+              "height": 900
+            },
+            "deviceScaleFactor": 1,
+            "cpuSlowdown": 1,
+            "downloadMbps": 25,
+            "uploadMbps": 5,
+            "latencyMs": 40,
+            "isMobile": false,
+            "hasTouch": false
+          },
+          {
+            "name": "mobile-emulated",
+            "viewport": {
+              "width": 412,
+              "height": 915
+            },
+            "deviceScaleFactor": 2,
+            "cpuSlowdown": 4,
+            "downloadMbps": 10,
+            "uploadMbps": 2,
+            "latencyMs": 100,
+            "isMobile": true,
+            "hasTouch": true
+          }
+        ],
+        "track": {
+          "id": "bs-s4-14",
+          "duration": 120,
+          "hardNotes": 929,
+          "notesPerSecond": 7.741666666666666
+        }
+      }
+    },
+    {
+      "path": "data/beatscape-performance/2026-09-06/baseline-game/results.json",
+      "sha256": "9991dbbb44c6414dcb461728b383d37f1bc88b279ef24bd22d1bfc7b2bb79881",
+      "artifactSha256": "fa4bca512a3893919ca619fd6e9e1aa632229203995c3719b16e07c388e5668c",
+      "harnessSha256": "5a16fa80b35cfd9b5416ddc15a2397cf3ea13b65cde33b7213800697d5dcad2e",
+      "sourceCommit": "8b710a3c8cdf8176ac7c3f89054a9f413815d169",
+      "sourceDirty": true,
+      "startedAt": "2026-09-06T01:05:53.119Z",
+      "completedAt": "2026-09-06T01:18:32.054Z",
+      "collectorStatus": "measured",
+      "environment": {
+        "platform": "darwin",
+        "arch": "arm64",
+        "osRelease": "25.6.0",
+        "cpu": "Apple M5 Pro",
+        "logicalCores": 18,
+        "ramBytes": 51539607552,
+        "browser": "152.0.7977.76",
+        "node": "v26.7.0",
+        "headless": true,
+        "origin": "loopback static production artifact; Brotli text + artifact _headers + ETag; no CDN",
+        "network": "CDP throughput/latency simulation; external font requests use actual network plus emulation",
+        "deviceCoverage": "automated browser layouts only; physical-device acceptance cancelled by BS-D001"
+      },
+      "config": {
+        "suite": "game",
+        "repeats": 3,
+        "cycles": 8,
+        "profiles": [
+          {
+            "name": "desktop",
+            "viewport": {
+              "width": 1280,
+              "height": 900
+            },
+            "deviceScaleFactor": 1,
+            "cpuSlowdown": 1,
+            "downloadMbps": 25,
+            "uploadMbps": 5,
+            "latencyMs": 40,
+            "isMobile": false,
+            "hasTouch": false
+          },
+          {
+            "name": "mobile-emulated",
+            "viewport": {
+              "width": 412,
+              "height": 915
+            },
+            "deviceScaleFactor": 2,
+            "cpuSlowdown": 4,
+            "downloadMbps": 10,
+            "uploadMbps": 2,
+            "latencyMs": 100,
+            "isMobile": true,
+            "hasTouch": true
+          }
+        ],
+        "track": {
+          "id": "bs-s4-14",
+          "duration": 120,
+          "hardNotes": 929,
+          "notesPerSecond": 7.741666666666666
+        }
+      }
+    },
+    {
+      "path": "data/beatscape-performance/2026-09-06/baseline-memory/results.json",
+      "sha256": "1eec62e8eb7c844d914ae7b403735aba3b5705b24f3c3ebd5515a1f43660b134",
+      "artifactSha256": "fa4bca512a3893919ca619fd6e9e1aa632229203995c3719b16e07c388e5668c",
+      "harnessSha256": "224bfe47a68325c7a93cfc1b80a9d1e3d770749fb02f313b7a876bc718eb8966",
+      "sourceCommit": "8b710a3c8cdf8176ac7c3f89054a9f413815d169",
+      "sourceDirty": true,
+      "startedAt": "2026-09-06T01:20:53.708Z",
+      "completedAt": "2026-09-06T01:24:53.136Z",
+      "collectorStatus": "measured",
+      "environment": {
+        "platform": "darwin",
+        "arch": "arm64",
+        "osRelease": "25.6.0",
+        "cpu": "Apple M5 Pro",
+        "logicalCores": 18,
+        "ramBytes": 51539607552,
+        "browser": "152.0.7977.76",
+        "node": "v26.7.0",
+        "headless": true,
+        "origin": "loopback static production artifact; Brotli text + artifact _headers + ETag; no CDN",
+        "network": "CDP throughput/latency simulation; external font requests use actual network plus emulation",
+        "deviceCoverage": "automated browser layouts only; physical-device acceptance cancelled by BS-D001"
+      },
+      "config": {
+        "suite": "memory",
+        "repeats": 3,
+        "cycles": 8,
+        "profiles": [
+          {
+            "name": "desktop",
+            "viewport": {
+              "width": 1280,
+              "height": 900
+            },
+            "deviceScaleFactor": 1,
+            "cpuSlowdown": 1,
+            "downloadMbps": 25,
+            "uploadMbps": 5,
+            "latencyMs": 40,
+            "isMobile": false,
+            "hasTouch": false
+          },
+          {
+            "name": "mobile-emulated",
+            "viewport": {
+              "width": 412,
+              "height": 915
+            },
+            "deviceScaleFactor": 2,
+            "cpuSlowdown": 4,
+            "downloadMbps": 10,
+            "uploadMbps": 2,
+            "latencyMs": 100,
+            "isMobile": true,
+            "hasTouch": true
+          }
+        ],
+        "track": {
+          "id": "bs-s4-14",
+          "duration": 120,
+          "hardNotes": 929,
+          "notesPerSecond": 7.741666666666666
+        }
+      }
+    },
+    {
+      "path": "data/beatscape-performance/2026-09-06/after-load-final/results.json",
+      "sha256": "cabd79d384bd4a7185b72fee0c34e2132218ebd80c8b979b0261314f834876ae",
+      "artifactSha256": "bd6f4017a63e6c1e598f347fec4bd483944f0c9d2fc99fcbdf434d9126acf9a0",
+      "harnessSha256": "2c52e12c0e98cd84bf249e0e63ea0dfe06c4a526347dedec2d27f036fa48d797",
+      "sourceCommit": "f34cb731f702dea100c598280a7274202e2a2339",
+      "sourceDirty": true,
+      "startedAt": "2026-09-06T01:42:34.276Z",
+      "completedAt": "2026-09-06T01:43:57.129Z",
+      "collectorStatus": "measured",
+      "environment": {
+        "platform": "darwin",
+        "arch": "arm64",
+        "osRelease": "25.6.0",
+        "cpu": "Apple M5 Pro",
+        "logicalCores": 18,
+        "ramBytes": 51539607552,
+        "browser": "152.0.7977.76",
+        "node": "v26.7.0",
+        "headless": true,
+        "origin": "loopback static production artifact; Brotli text + artifact _headers + ETag; no CDN",
+        "network": "CDP throughput/latency simulation; external font requests use actual network plus emulation",
+        "deviceCoverage": "automated browser layouts only; physical-device acceptance cancelled by BS-D001"
+      },
+      "config": {
+        "suite": "load",
+        "repeats": 3,
+        "cycles": 8,
+        "profiles": [
+          {
+            "name": "desktop",
+            "viewport": {
+              "width": 1280,
+              "height": 900
+            },
+            "deviceScaleFactor": 1,
+            "cpuSlowdown": 1,
+            "downloadMbps": 25,
+            "uploadMbps": 5,
+            "latencyMs": 40,
+            "isMobile": false,
+            "hasTouch": false
+          },
+          {
+            "name": "mobile-emulated",
+            "viewport": {
+              "width": 412,
+              "height": 915
+            },
+            "deviceScaleFactor": 2,
+            "cpuSlowdown": 4,
+            "downloadMbps": 10,
+            "uploadMbps": 2,
+            "latencyMs": 100,
+            "isMobile": true,
+            "hasTouch": true
+          }
+        ],
+        "track": {
+          "id": "bs-s4-14",
+          "duration": 120,
+          "hardNotes": 929,
+          "notesPerSecond": 7.741666666666666
+        }
+      }
+    },
+    {
+      "path": "data/beatscape-performance/2026-09-06/after-game/results.json",
+      "sha256": "a443afdd7cb717d8cde2faaeda5fdc1df0db3bb387de566fb285c1f315d34f4a",
+      "artifactSha256": "bd6f4017a63e6c1e598f347fec4bd483944f0c9d2fc99fcbdf434d9126acf9a0",
+      "harnessSha256": "2c52e12c0e98cd84bf249e0e63ea0dfe06c4a526347dedec2d27f036fa48d797",
+      "sourceCommit": "f34cb731f702dea100c598280a7274202e2a2339",
+      "sourceDirty": true,
+      "startedAt": "2026-09-06T01:44:07.184Z",
+      "completedAt": "2026-09-06T01:56:45.357Z",
+      "collectorStatus": "measured",
+      "environment": {
+        "platform": "darwin",
+        "arch": "arm64",
+        "osRelease": "25.6.0",
+        "cpu": "Apple M5 Pro",
+        "logicalCores": 18,
+        "ramBytes": 51539607552,
+        "browser": "152.0.7977.76",
+        "node": "v26.7.0",
+        "headless": true,
+        "origin": "loopback static production artifact; Brotli text + artifact _headers + ETag; no CDN",
+        "network": "CDP throughput/latency simulation; external font requests use actual network plus emulation",
+        "deviceCoverage": "automated browser layouts only; physical-device acceptance cancelled by BS-D001"
+      },
+      "config": {
+        "suite": "game",
+        "repeats": 3,
+        "cycles": 8,
+        "profiles": [
+          {
+            "name": "desktop",
+            "viewport": {
+              "width": 1280,
+              "height": 900
+            },
+            "deviceScaleFactor": 1,
+            "cpuSlowdown": 1,
+            "downloadMbps": 25,
+            "uploadMbps": 5,
+            "latencyMs": 40,
+            "isMobile": false,
+            "hasTouch": false
+          },
+          {
+            "name": "mobile-emulated",
+            "viewport": {
+              "width": 412,
+              "height": 915
+            },
+            "deviceScaleFactor": 2,
+            "cpuSlowdown": 4,
+            "downloadMbps": 10,
+            "uploadMbps": 2,
+            "latencyMs": 100,
+            "isMobile": true,
+            "hasTouch": true
+          }
+        ],
+        "track": {
+          "id": "bs-s4-14",
+          "duration": 120,
+          "hardNotes": 929,
+          "notesPerSecond": 7.741666666666666
+        }
+      }
+    },
+    {
+      "path": "data/beatscape-performance/2026-09-06/after-memory/results.json",
+      "sha256": "72f794b317ec34ecba4d5b0948ed355cefa889652e0f592dfec73489480b0693",
+      "artifactSha256": "bd6f4017a63e6c1e598f347fec4bd483944f0c9d2fc99fcbdf434d9126acf9a0",
+      "harnessSha256": "2c52e12c0e98cd84bf249e0e63ea0dfe06c4a526347dedec2d27f036fa48d797",
+      "sourceCommit": "f34cb731f702dea100c598280a7274202e2a2339",
+      "sourceDirty": true,
+      "startedAt": "2026-09-06T01:56:55.753Z",
+      "completedAt": "2026-09-06T02:00:54.335Z",
+      "collectorStatus": "measured",
+      "environment": {
+        "platform": "darwin",
+        "arch": "arm64",
+        "osRelease": "25.6.0",
+        "cpu": "Apple M5 Pro",
+        "logicalCores": 18,
+        "ramBytes": 51539607552,
+        "browser": "152.0.7977.76",
+        "node": "v26.7.0",
+        "headless": true,
+        "origin": "loopback static production artifact; Brotli text + artifact _headers + ETag; no CDN",
+        "network": "CDP throughput/latency simulation; external font requests use actual network plus emulation",
+        "deviceCoverage": "automated browser layouts only; physical-device acceptance cancelled by BS-D001"
+      },
+      "config": {
+        "suite": "memory",
+        "repeats": 3,
+        "cycles": 8,
+        "profiles": [
+          {
+            "name": "desktop",
+            "viewport": {
+              "width": 1280,
+              "height": 900
+            },
+            "deviceScaleFactor": 1,
+            "cpuSlowdown": 1,
+            "downloadMbps": 25,
+            "uploadMbps": 5,
+            "latencyMs": 40,
+            "isMobile": false,
+            "hasTouch": false
+          },
+          {
+            "name": "mobile-emulated",
+            "viewport": {
+              "width": 412,
+              "height": 915
+            },
+            "deviceScaleFactor": 2,
+            "cpuSlowdown": 4,
+            "downloadMbps": 10,
+            "uploadMbps": 2,
+            "latencyMs": 100,
+            "isMobile": true,
+            "hasTouch": true
+          }
+        ],
+        "track": {
+          "id": "bs-s4-14",
+          "duration": 120,
+          "hardNotes": 929,
+          "notesPerSecond": 7.741666666666666
+        }
+      }
+    }
+  ],
+  "notes": [
+    "Raw originals remain unchanged. Baseline memory restart attempts are invalid: source starts stayed at 1. The same attempts after the fix must start a new music source each time.",
+    "Coverage validation does not mean performance budget pass. Browser layouts are emulated; physical-device acceptance is cancelled by BS-D001.",
+    "Baseline load uses warmed origin text representations and DOM readiness timestamps. Earlier polling-based exploration is excluded.",
+    "Game runtime probe and conditions are unchanged; readiness observer is installed only for load scenarios. Later harness changes add coverage validation and structured Duo result extraction outside gameplay timing."
+  ],
+  "before": {
+    "load": [
+      {
+        "profile": "desktop",
+        "scenario": "home-first-visit",
+        "readyMs": {
+          "n": 3,
+          "minimum": 266.60000002384186,
+          "median": 274,
+          "maximum": 284
+        },
+        "fcpMs": {
+          "n": 3,
+          "minimum": 192,
+          "median": 196,
+          "maximum": 196
+        },
+        "lcpMs": {
+          "n": 3,
+          "minimum": 276,
+          "median": 276,
+          "maximum": 300
+        },
+        "decodeMs": {
+          "n": 3,
+          "minimum": 0,
+          "median": 0,
+          "maximum": 0
+        },
+        "decodeCounts": [
+          0,
+          0,
+          0
+        ],
+        "liveDecodedBytes": [
+          0,
+          0,
+          0
+        ],
+        "readySamplesMs": [
+          274,
+          284,
+          266.60000002384186
+        ],
+        "runtimeErrors": [],
+        "failedRequests": []
+      },
+      {
+        "profile": "desktop",
+        "scenario": "song-cold",
+        "readyMs": {
+          "n": 3,
+          "minimum": 1834.8999999761581,
+          "median": 1837.6000000238419,
+          "maximum": 1938.7999999523163
+        },
+        "fcpMs": {
+          "n": 3,
+          "minimum": 176,
+          "median": 180,
+          "maximum": 180
+        },
+        "lcpMs": {
+          "n": 3,
+          "minimum": 384,
+          "median": 384,
+          "maximum": 416
+        },
+        "decodeMs": {
+          "n": 3,
+          "minimum": 234,
+          "median": 242.60000002384186,
+          "maximum": 244.69999992847443
+        },
+        "decodeCounts": [
+          1,
+          1,
+          1
+        ],
+        "liveDecodedBytes": [
+          46080000,
+          46080000,
+          46080000
+        ],
+        "readySamplesMs": [
+          1938.7999999523163,
+          1837.6000000238419,
+          1834.8999999761581
+        ],
+        "runtimeErrors": [],
+        "failedRequests": []
+      },
+      {
+        "profile": "desktop",
+        "scenario": "duo-cold",
+        "readyMs": {
+          "n": 3,
+          "minimum": 2154.399999976158,
+          "median": 2154.5,
+          "maximum": 2160.8000000715256
+        },
+        "fcpMs": {
+          "n": 3,
+          "minimum": 156,
+          "median": 164,
+          "maximum": 164
+        },
+        "lcpMs": {
+          "n": 3,
+          "minimum": 668,
+          "median": 672,
+          "maximum": 672
+        },
+        "decodeMs": {
+          "n": 3,
+          "minimum": 492.799999833107,
+          "median": 501.5,
+          "maximum": 503.60000002384186
+        },
+        "decodeCounts": [
+          2,
+          2,
+          2
+        ],
+        "liveDecodedBytes": [
+          92160000,
+          92160000,
+          92160000
+        ],
+        "readySamplesMs": [
+          2160.8000000715256,
+          2154.5,
+          2154.399999976158
+        ],
+        "runtimeErrors": [],
+        "failedRequests": []
+      },
+      {
+        "profile": "mobile-emulated",
+        "scenario": "home-first-visit",
+        "readyMs": {
+          "n": 3,
+          "minimum": 786.0999999046326,
+          "median": 789.6000000238419,
+          "maximum": 794.7999999523163
+        },
+        "fcpMs": {
+          "n": 3,
+          "minimum": 520,
+          "median": 520,
+          "maximum": 524
+        },
+        "lcpMs": {
+          "n": 3,
+          "minimum": 780,
+          "median": 784,
+          "maximum": 788
+        },
+        "decodeMs": {
+          "n": 3,
+          "minimum": 0,
+          "median": 0,
+          "maximum": 0
+        },
+        "decodeCounts": [
+          0,
+          0,
+          0
+        ],
+        "liveDecodedBytes": [
+          0,
+          0,
+          0
+        ],
+        "readySamplesMs": [
+          789.6000000238419,
+          794.7999999523163,
+          786.0999999046326
+        ],
+        "runtimeErrors": [],
+        "failedRequests": []
+      },
+      {
+        "profile": "mobile-emulated",
+        "scenario": "song-cold",
+        "readyMs": {
+          "n": 3,
+          "minimum": 4385.199999928474,
+          "median": 4389.600000023842,
+          "maximum": 4423.899999976158
+        },
+        "fcpMs": {
+          "n": 3,
+          "minimum": 488,
+          "median": 496,
+          "maximum": 496
+        },
+        "lcpMs": {
+          "n": 3,
+          "minimum": 920,
+          "median": 952,
+          "maximum": 952
+        },
+        "decodeMs": {
+          "n": 3,
+          "minimum": 251.39999997615814,
+          "median": 251.60000002384186,
+          "maximum": 253.69999992847443
+        },
+        "decodeCounts": [
+          1,
+          1,
+          1
+        ],
+        "liveDecodedBytes": [
+          46080000,
+          46080000,
+          46080000
+        ],
+        "readySamplesMs": [
+          4389.600000023842,
+          4423.899999976158,
+          4385.199999928474
+        ],
+        "runtimeErrors": [],
+        "failedRequests": []
+      },
+      {
+        "profile": "mobile-emulated",
+        "scenario": "duo-cold",
+        "readyMs": {
+          "n": 3,
+          "minimum": 4628.100000023842,
+          "median": 4646.700000047684,
+          "maximum": 4680.5
+        },
+        "fcpMs": {
+          "n": 3,
+          "minimum": 384,
+          "median": 388,
+          "maximum": 388
+        },
+        "lcpMs": {
+          "n": 3,
+          "minimum": 1068,
+          "median": 1120,
+          "maximum": 1136
+        },
+        "decodeMs": {
+          "n": 3,
+          "minimum": 542,
+          "median": 557.0000001192093,
+          "maximum": 567.5
+        },
+        "decodeCounts": [
+          2,
+          2,
+          2
+        ],
+        "liveDecodedBytes": [
+          92160000,
+          92160000,
+          92160000
+        ],
+        "readySamplesMs": [
+          4628.100000023842,
+          4680.5,
+          4646.700000047684
+        ],
+        "runtimeErrors": [],
+        "failedRequests": []
+      }
+    ],
+    "game": [
+      {
+        "profile": "desktop",
+        "scenario": "hard-fx-off",
+        "measuredMs": 119530.30000007153,
+        "frames": {
+          "samples": 7165,
+          "totalMs": 119461.90000000001,
+          "p50Ms": 16.69999999999709,
+          "p95Ms": 16.79999999998836,
+          "p99Ms": 16.80000000000291,
+          "maxMs": 50,
+          "targetFps": 60,
+          "frameBudgetMs": 16.666666666666668,
+          "missedThresholdMs": 25,
+          "observedFps": 59.9772814596118,
+          "missedIntervals": 2,
+          "missedIntervalPercent": 0.027913468248429867,
+          "estimatedDroppedFrames": 3,
+          "longestConsecutiveMissedIntervals": 1
+        },
+        "appFrameCpu": {
+          "samples": 7166,
+          "totalMs": 2986.5999957323074,
+          "p50Ms": 0.3999999761581421,
+          "p95Ms": 0.7000000476837158,
+          "p99Ms": 0.8999999761581421,
+          "maxMs": 47.299999952316284
+        },
+        "effects": {
+          "surge3Frames": 0,
+          "surge3Ms": 0,
+          "surge3FieldMs": 0,
+          "maxSimultaneousSurge3Fields": 0,
+          "neon3Frames": 0,
+          "neon3Ms": 0
+        },
+        "longTasks": {
+          "samples": 0,
+          "totalMs": 0,
+          "p50Ms": null,
+          "p95Ms": null,
+          "p99Ms": null,
+          "maxMs": null,
+          "entries": []
+        },
+        "outcomes": {
+          "lastRun": {
+            "v": 1,
+            "track_id": "bs-s4-14",
+            "title": "Chrome Mile Anthem",
+            "artist": "Iron Echo",
+            "tier": "hard",
+            "mode": "casual",
+            "score": 1010700,
+            "accuracy": 100,
+            "maxCombo": 929,
+            "grade": "S",
+            "fc": true,
+            "ap": true,
+            "failed": false,
+            "counts": {
+              "perfect": 929,
+              "great": 0,
+              "good": 0,
+              "miss": 0
+            },
+            "totalNotes": 929,
+            "durationMs": 124623.79999995232,
+            "endedAt": "2026-09-06T01:07:58.582Z",
+            "missEvents": [],
+            "surgeMaxTier": 3
+          },
+          "duoResults": null
+        },
+        "autoplay": {
+          "running": true,
+          "chartId": "bs-s4-14",
+          "duo": false,
+          "eventsPerPlayer": 1854,
+          "dispatchedEvents": 1854,
+          "maximumDispatchLatenessMs": 29.333333333332803,
+          "dispatchLateness": {
+            "samples": 1854,
+            "totalMs": 4983.333333329514,
+            "p50Ms": 2.6666666666642413,
+            "p95Ms": 5,
+            "p99Ms": 5.333333333328483,
+            "maxMs": 29.333333333332803
+          },
+          "players": [
+            {
+              "sourceId": 1,
+              "cursor": 1854,
+              "pressed": []
+            }
+          ]
+        },
+        "coverage": null,
+        "errors": [],
+        "failedRequests": []
+      },
+      {
+        "profile": "desktop",
+        "scenario": "hard-fx-max",
+        "measuredMs": 119527.29999995232,
+        "frames": {
+          "samples": 7166,
+          "totalMs": 119461.79999999999,
+          "p50Ms": 16.69999999999709,
+          "p95Ms": 16.70000000001164,
+          "p99Ms": 16.80000000000291,
+          "maxMs": 33.30000000000109,
+          "targetFps": 60,
+          "frameBudgetMs": 16.666666666666668,
+          "missedThresholdMs": 25,
+          "observedFps": 59.9857025425701,
+          "missedIntervals": 2,
+          "missedIntervalPercent": 0.027909572983533353,
+          "estimatedDroppedFrames": 2,
+          "longestConsecutiveMissedIntervals": 1
+        },
+        "appFrameCpu": {
+          "samples": 7167,
+          "totalMs": 4166.499994874001,
+          "p50Ms": 0.5,
+          "p95Ms": 1,
+          "p99Ms": 1.3000000715255737,
+          "maxMs": 42.299999952316284
+        },
+        "effects": {
+          "surge3Frames": 6438,
+          "surge3Ms": 107295.7,
+          "surge3FieldMs": 107295.7,
+          "maxSimultaneousSurge3Fields": 1,
+          "neon3Frames": 5653,
+          "neon3Ms": 94212.9
+        },
+        "longTasks": {
+          "samples": 0,
+          "totalMs": 0,
+          "p50Ms": null,
+          "p95Ms": null,
+          "p99Ms": null,
+          "maxMs": null,
+          "entries": []
+        },
+        "outcomes": {
+          "lastRun": {
+            "v": 1,
+            "track_id": "bs-s4-14",
+            "title": "Chrome Mile Anthem",
+            "artist": "Iron Echo",
+            "tier": "hard",
+            "mode": "casual",
+            "score": 1010700,
+            "accuracy": 100,
+            "maxCombo": 929,
+            "grade": "S",
+            "fc": true,
+            "ap": true,
+            "failed": false,
+            "counts": {
+              "perfect": 929,
+              "great": 0,
+              "good": 0,
+              "miss": 0
+            },
+            "totalNotes": 929,
+            "durationMs": 124376.60000002384,
+            "endedAt": "2026-09-06T01:10:03.339Z",
+            "missEvents": [],
+            "surgeMaxTier": 3
+          },
+          "duoResults": null
+        },
+        "autoplay": {
+          "running": true,
+          "chartId": "bs-s4-14",
+          "duo": false,
+          "eventsPerPlayer": 1854,
+          "dispatchedEvents": 1854,
+          "maximumDispatchLatenessMs": 40.00000000000023,
+          "dispatchLateness": {
+            "samples": 1854,
+            "totalMs": 5076.666666662897,
+            "p50Ms": 2.6666666666642413,
+            "p95Ms": 5,
+            "p99Ms": 7.666666666660385,
+            "maxMs": 40.00000000000023
+          },
+          "players": [
+            {
+              "sourceId": 1,
+              "cursor": 1854,
+              "pressed": []
+            }
+          ]
+        },
+        "coverage": null,
+        "errors": [],
+        "failedRequests": []
+      },
+      {
+        "profile": "desktop",
+        "scenario": "duo-fx-max",
+        "measuredMs": 119720.10000002384,
+        "frames": {
+          "samples": 7164,
+          "totalMs": 119695.2,
+          "p50Ms": 16.69999999999709,
+          "p95Ms": 16.70000000001164,
+          "p99Ms": 16.80000000000291,
+          "maxMs": 166.6999999999989,
+          "targetFps": 60,
+          "frameBudgetMs": 16.666666666666668,
+          "missedThresholdMs": 25,
+          "observedFps": 59.85202414131895,
+          "missedIntervals": 5,
+          "missedIntervalPercent": 0.06979341150195421,
+          "estimatedDroppedFrames": 18,
+          "longestConsecutiveMissedIntervals": 1
+        },
+        "appFrameCpu": {
+          "samples": 7165,
+          "totalMs": 5586.600003361702,
+          "p50Ms": 0.7999999523162842,
+          "p95Ms": 1.100000023841858,
+          "p99Ms": 1.4000000953674316,
+          "maxMs": 38.300000071525574
+        },
+        "effects": {
+          "surge3Frames": 6444,
+          "surge3Ms": 107529,
+          "surge3FieldMs": 215058,
+          "maxSimultaneousSurge3Fields": 2,
+          "neon3Frames": 5666,
+          "neon3Ms": 94446.2
+        },
+        "longTasks": {
+          "samples": 0,
+          "totalMs": 0,
+          "p50Ms": null,
+          "p95Ms": null,
+          "p99Ms": null,
+          "maxMs": null,
+          "entries": []
+        },
+        "outcomes": {
+          "lastRun": null,
+          "duoResults": "Duo · Chrome Mile AnthemDEAD HEATP2S1,010,70010000.00% · x929929/0/0/0P1S1,010,70010000.00% · x929929/0/0/0RematchExit",
+          "duoPlayers": [
+            {
+              "player": "P2",
+              "counts": [
+                929,
+                0,
+                0,
+                0
+              ]
+            },
+            {
+              "player": "P1",
+              "counts": [
+                929,
+                0,
+                0,
+                0
+              ]
+            }
+          ],
+          "derivation": "Legacy DOM text concatenated maxCombo and perfect count; perfect is reconstructed as 929 minus great/good/miss and the preceding combo is validated. Original text preserved."
+        },
+        "autoplay": {
+          "running": true,
+          "chartId": "bs-s4-14",
+          "duo": true,
+          "eventsPerPlayer": 1854,
+          "dispatchedEvents": 3708,
+          "maximumDispatchLatenessMs": 34.666666666666515,
+          "dispatchLateness": {
+            "samples": 3708,
+            "totalMs": 9884.000000006266,
+            "p50Ms": 2.6666666666642413,
+            "p95Ms": 5,
+            "p99Ms": 8.333333333328483,
+            "maxMs": 34.666666666666515
+          },
+          "players": [
+            {
+              "sourceId": 1,
+              "cursor": 1854,
+              "pressed": []
+            },
+            {
+              "sourceId": 2,
+              "cursor": 1854,
+              "pressed": []
+            }
+          ]
+        },
+        "coverage": null,
+        "errors": [],
+        "failedRequests": []
+      },
+      {
+        "profile": "mobile-emulated",
+        "scenario": "hard-fx-off",
+        "measuredMs": 119509.89999997616,
+        "frames": {
+          "samples": 7169,
+          "totalMs": 119478.5,
+          "p50Ms": 16.69999999999709,
+          "p95Ms": 16.70000000001164,
+          "p99Ms": 16.80000000000291,
+          "maxMs": 16.80000000000291,
+          "targetFps": 60,
+          "frameBudgetMs": 16.666666666666668,
+          "missedThresholdMs": 25,
+          "observedFps": 60.00242721493825,
+          "missedIntervals": 0,
+          "missedIntervalPercent": 0,
+          "estimatedDroppedFrames": 0,
+          "longestConsecutiveMissedIntervals": 0
+        },
+        "appFrameCpu": {
+          "samples": 7170,
+          "totalMs": 6601.200000286102,
+          "p50Ms": 0.8999999761581421,
+          "p95Ms": 1.600000023841858,
+          "p99Ms": 1.9000000953674316,
+          "maxMs": 5.5
+        },
+        "effects": {
+          "surge3Frames": 0,
+          "surge3Ms": 0,
+          "surge3FieldMs": 0,
+          "maxSimultaneousSurge3Fields": 0,
+          "neon3Frames": 0,
+          "neon3Ms": 0
+        },
+        "longTasks": {
+          "samples": 0,
+          "totalMs": 0,
+          "p50Ms": null,
+          "p95Ms": null,
+          "p99Ms": null,
+          "maxMs": null,
+          "entries": []
+        },
+        "outcomes": {
+          "lastRun": {
+            "v": 1,
+            "track_id": "bs-s4-14",
+            "title": "Chrome Mile Anthem",
+            "artist": "Iron Echo",
+            "tier": "hard",
+            "mode": "casual",
+            "score": 1010700,
+            "accuracy": 100,
+            "maxCombo": 929,
+            "grade": "S",
+            "fc": true,
+            "ap": true,
+            "failed": false,
+            "counts": {
+              "perfect": 929,
+              "great": 0,
+              "good": 0,
+              "miss": 0
+            },
+            "totalNotes": 929,
+            "durationMs": 127073.30000007153,
+            "endedAt": "2026-09-06T01:14:16.461Z",
+            "missEvents": [],
+            "surgeMaxTier": 3
+          },
+          "duoResults": null
+        },
+        "autoplay": {
+          "running": true,
+          "chartId": "bs-s4-14",
+          "duo": false,
+          "eventsPerPlayer": 1854,
+          "dispatchedEvents": 1854,
+          "maximumDispatchLatenessMs": 15.333333333335759,
+          "dispatchLateness": {
+            "samples": 1854,
+            "totalMs": 6516.666666667485,
+            "p50Ms": 3,
+            "p95Ms": 9.333333333328483,
+            "p99Ms": 10.333333333335759,
+            "maxMs": 15.333333333335759
+          },
+          "players": [
+            {
+              "sourceId": 1,
+              "cursor": 1854,
+              "pressed": []
+            }
+          ]
+        },
+        "coverage": null,
+        "errors": [],
+        "failedRequests": []
+      },
+      {
+        "profile": "mobile-emulated",
+        "scenario": "hard-fx-max",
+        "measuredMs": 119510.20000004768,
+        "frames": {
+          "samples": 7158,
+          "totalMs": 119478.59999999999,
+          "p50Ms": 16.69999999999709,
+          "p95Ms": 16.79999999998836,
+          "p99Ms": 16.80000000000291,
+          "maxMs": 116.70000000000073,
+          "targetFps": 60,
+          "frameBudgetMs": 16.666666666666668,
+          "missedThresholdMs": 25,
+          "observedFps": 59.91031029824588,
+          "missedIntervals": 2,
+          "missedIntervalPercent": 0.02794076557697681,
+          "estimatedDroppedFrames": 11,
+          "longestConsecutiveMissedIntervals": 1
+        },
+        "appFrameCpu": {
+          "samples": 7159,
+          "totalMs": 8658.500003576279,
+          "p50Ms": 1.2000000476837158,
+          "p95Ms": 2,
+          "p99Ms": 2.3000000715255737,
+          "maxMs": 4.800000071525574
+        },
+        "effects": {
+          "surge3Frames": 6433,
+          "surge3Ms": 107312.5,
+          "surge3FieldMs": 107312.5,
+          "maxSimultaneousSurge3Fields": 1,
+          "neon3Frames": 5654,
+          "neon3Ms": 94229.7
+        },
+        "longTasks": {
+          "samples": 0,
+          "totalMs": 0,
+          "p50Ms": null,
+          "p95Ms": null,
+          "p99Ms": null,
+          "maxMs": null,
+          "entries": []
+        },
+        "outcomes": {
+          "lastRun": {
+            "v": 1,
+            "track_id": "bs-s4-14",
+            "title": "Chrome Mile Anthem",
+            "artist": "Iron Echo",
+            "tier": "hard",
+            "mode": "casual",
+            "score": 1010700,
+            "accuracy": 100,
+            "maxCombo": 929,
+            "grade": "S",
+            "fc": true,
+            "ap": true,
+            "failed": false,
+            "counts": {
+              "perfect": 929,
+              "great": 0,
+              "good": 0,
+              "miss": 0
+            },
+            "totalNotes": 929,
+            "durationMs": 126671.80000007153,
+            "endedAt": "2026-09-06T01:16:23.880Z",
+            "missEvents": [],
+            "surgeMaxTier": 3
+          },
+          "duoResults": null
+        },
+        "autoplay": {
+          "running": true,
+          "chartId": "bs-s4-14",
+          "duo": false,
+          "eventsPerPlayer": 1854,
+          "dispatchedEvents": 1854,
+          "maximumDispatchLatenessMs": 15.999999999992724,
+          "dispatchLateness": {
+            "samples": 1854,
+            "totalMs": 6767.333333329601,
+            "p50Ms": 3.3333333333284827,
+            "p95Ms": 9.33333333333394,
+            "p99Ms": 10.490000000000155,
+            "maxMs": 15.999999999992724
+          },
+          "players": [
+            {
+              "sourceId": 1,
+              "cursor": 1854,
+              "pressed": []
+            }
+          ]
+        },
+        "coverage": null,
+        "errors": [],
+        "failedRequests": []
+      },
+      {
+        "profile": "mobile-emulated",
+        "scenario": "duo-fx-max",
+        "measuredMs": 119655,
+        "frames": {
+          "samples": 7156,
+          "totalMs": 119628.5,
+          "p50Ms": 16.69999999999709,
+          "p95Ms": 16.70000000001164,
+          "p99Ms": 16.80000000000291,
+          "maxMs": 33.400000000001455,
+          "targetFps": 60,
+          "frameBudgetMs": 16.666666666666668,
+          "missedThresholdMs": 25,
+          "observedFps": 59.81852150616283,
+          "missedIntervals": 22,
+          "missedIntervalPercent": 0.3074343208496367,
+          "estimatedDroppedFrames": 22,
+          "longestConsecutiveMissedIntervals": 1
+        },
+        "appFrameCpu": {
+          "samples": 7157,
+          "totalMs": 15581.100002884865,
+          "p50Ms": 2.200000047683716,
+          "p95Ms": 3.5999999046325684,
+          "p99Ms": 4,
+          "maxMs": 7.299999952316284
+        },
+        "effects": {
+          "surge3Frames": 6414,
+          "surge3Ms": 107245.7,
+          "surge3FieldMs": 214441.5,
+          "maxSimultaneousSurge3Fields": 2,
+          "neon3Frames": 5647,
+          "neon3Ms": 94396.09999999999
+        },
+        "longTasks": {
+          "samples": 0,
+          "totalMs": 0,
+          "p50Ms": null,
+          "p95Ms": null,
+          "p99Ms": null,
+          "maxMs": null,
+          "entries": []
+        },
+        "outcomes": {
+          "lastRun": null,
+          "duoResults": "Duo · Chrome Mile AnthemP1 WINSP2S1,000,5009925.00% · x929901/28/0/0P1S1,008,6009984.00% · x929923/6/0/0RematchExit",
+          "duoPlayers": [
+            {
+              "player": "P2",
+              "counts": [
+                901,
+                28,
+                0,
+                0
+              ]
+            },
+            {
+              "player": "P1",
+              "counts": [
+                923,
+                6,
+                0,
+                0
+              ]
+            }
+          ],
+          "derivation": "Legacy DOM text concatenated maxCombo and perfect count; perfect is reconstructed as 929 minus great/good/miss and the preceding combo is validated. Original text preserved."
+        },
+        "autoplay": {
+          "running": true,
+          "chartId": "bs-s4-14",
+          "duo": true,
+          "eventsPerPlayer": 1854,
+          "dispatchedEvents": 3708,
+          "maximumDispatchLatenessMs": 43,
+          "dispatchLateness": {
+            "samples": 3708,
+            "totalMs": 24030.666666660934,
+            "p50Ms": 4.666666666671517,
+            "p95Ms": 15.666666666656965,
+            "p99Ms": 31.30999999999569,
+            "maxMs": 43
+          },
+          "players": [
+            {
+              "sourceId": 1,
+              "cursor": 1854,
+              "pressed": []
+            },
+            {
+              "sourceId": 2,
+              "cursor": 1854,
+              "pressed": []
+            }
+          ]
+        },
+        "coverage": null,
+        "errors": [],
+        "failedRequests": []
+      }
+    ],
+    "memory": [
+      {
+        "profile": "desktop",
+        "summary": {
+          "restarts": 8,
+          "songSwitches": 8
+        },
+        "points": [
+          {
+            "label": "library-initial",
+            "heap": {
+              "usedSize": 3351892,
+              "totalSize": 4259840,
+              "embedderHeapUsedSize": 11974856,
+              "backingStorageSize": 350905
+            },
+            "dom": {
+              "documents": 29,
+              "nodes": 6646,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 0,
+            "liveDecodedBuffers": 0,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 0,
+            "decodeAttempts": 0,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "playing-warmup",
+            "heap": {
+              "usedSize": 3685512,
+              "totalSize": 3997696,
+              "embedderHeapUsedSize": 1560008,
+              "backingStorageSize": 461430
+            },
+            "dom": {
+              "documents": 2,
+              "nodes": 375,
+              "jsEventListeners": 181
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 1,
+            "musicSourceStarts": 1,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "restart-1",
+            "heap": {
+              "usedSize": 3757280,
+              "totalSize": 4521984,
+              "embedderHeapUsedSize": 1918784,
+              "backingStorageSize": 461633
+            },
+            "dom": {
+              "documents": 2,
+              "nodes": 375,
+              "jsEventListeners": 181
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 1,
+            "musicSourceStarts": 1,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "restart-2",
+            "heap": {
+              "usedSize": 3748240,
+              "totalSize": 4259840,
+              "embedderHeapUsedSize": 1542632,
+              "backingStorageSize": 461409
+            },
+            "dom": {
+              "documents": 2,
+              "nodes": 375,
+              "jsEventListeners": 181
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 1,
+            "musicSourceStarts": 1,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "restart-3",
+            "heap": {
+              "usedSize": 3781064,
+              "totalSize": 4521984,
+              "embedderHeapUsedSize": 1929384,
+              "backingStorageSize": 461589
+            },
+            "dom": {
+              "documents": 2,
+              "nodes": 375,
+              "jsEventListeners": 181
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 1,
+            "musicSourceStarts": 1,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "restart-4",
+            "heap": {
+              "usedSize": 3766840,
+              "totalSize": 3997696,
+              "embedderHeapUsedSize": 1543864,
+              "backingStorageSize": 461430
+            },
+            "dom": {
+              "documents": 2,
+              "nodes": 375,
+              "jsEventListeners": 181
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 1,
+            "musicSourceStarts": 1,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "restart-5",
+            "heap": {
+              "usedSize": 3768420,
+              "totalSize": 4259840,
+              "embedderHeapUsedSize": 1544032,
+              "backingStorageSize": 461429
+            },
+            "dom": {
+              "documents": 2,
+              "nodes": 375,
+              "jsEventListeners": 181
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 1,
+            "musicSourceStarts": 1,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "restart-6",
+            "heap": {
+              "usedSize": 3788980,
+              "totalSize": 4259840,
+              "embedderHeapUsedSize": 1544960,
+              "backingStorageSize": 461429
+            },
+            "dom": {
+              "documents": 2,
+              "nodes": 375,
+              "jsEventListeners": 181
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 1,
+            "musicSourceStarts": 1,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "restart-7",
+            "heap": {
+              "usedSize": 3843452,
+              "totalSize": 4521984,
+              "embedderHeapUsedSize": 1941416,
+              "backingStorageSize": 461664
+            },
+            "dom": {
+              "documents": 2,
+              "nodes": 375,
+              "jsEventListeners": 181
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 1,
+            "musicSourceStarts": 1,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "restart-8",
+            "heap": {
+              "usedSize": 3806832,
+              "totalSize": 4259840,
+              "embedderHeapUsedSize": 1627208,
+              "backingStorageSize": 461429
+            },
+            "dom": {
+              "documents": 2,
+              "nodes": 375,
+              "jsEventListeners": 181
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 1,
+            "musicSourceStarts": 1,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "after-restarts-exit",
+            "heap": {
+              "usedSize": 4122100,
+              "totalSize": 4784128,
+              "embedderHeapUsedSize": 15129112,
+              "backingStorageSize": 462941
+            },
+            "dom": {
+              "documents": 42,
+              "nodes": 10260,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 0,
+            "liveDecodedBuffers": 0,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 1,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "song-exit-1",
+            "heap": {
+              "usedSize": 4339824,
+              "totalSize": 5046272,
+              "embedderHeapUsedSize": 15114864,
+              "backingStorageSize": 468876
+            },
+            "dom": {
+              "documents": 41,
+              "nodes": 10082,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 0,
+            "liveDecodedBuffers": 0,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 3,
+            "decodeAttempts": 3,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "song-exit-2",
+            "heap": {
+              "usedSize": 4450580,
+              "totalSize": 5308416,
+              "embedderHeapUsedSize": 15283472,
+              "backingStorageSize": 468873
+            },
+            "dom": {
+              "documents": 41,
+              "nodes": 10082,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 0,
+            "liveDecodedBuffers": 0,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 5,
+            "decodeAttempts": 5,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "song-exit-3",
+            "heap": {
+              "usedSize": 4552912,
+              "totalSize": 5308416,
+              "embedderHeapUsedSize": 14930088,
+              "backingStorageSize": 468873
+            },
+            "dom": {
+              "documents": 41,
+              "nodes": 10082,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 0,
+            "liveDecodedBuffers": 0,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 7,
+            "decodeAttempts": 7,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "song-exit-4",
+            "heap": {
+              "usedSize": 4678720,
+              "totalSize": 5832704,
+              "embedderHeapUsedSize": 15424136,
+              "backingStorageSize": 468870
+            },
+            "dom": {
+              "documents": 41,
+              "nodes": 10082,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 0,
+            "liveDecodedBuffers": 0,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 9,
+            "decodeAttempts": 9,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "song-exit-5",
+            "heap": {
+              "usedSize": 4694692,
+              "totalSize": 5832704,
+              "embedderHeapUsedSize": 15326672,
+              "backingStorageSize": 468873
+            },
+            "dom": {
+              "documents": 41,
+              "nodes": 10082,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 0,
+            "liveDecodedBuffers": 0,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 11,
+            "decodeAttempts": 11,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "song-exit-6",
+            "heap": {
+              "usedSize": 4708988,
+              "totalSize": 5570560,
+              "embedderHeapUsedSize": 15478568,
+              "backingStorageSize": 468873
+            },
+            "dom": {
+              "documents": 41,
+              "nodes": 10082,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 0,
+            "liveDecodedBuffers": 0,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 13,
+            "decodeAttempts": 13,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "song-exit-7",
+            "heap": {
+              "usedSize": 4692792,
+              "totalSize": 5832704,
+              "embedderHeapUsedSize": 15409632,
+              "backingStorageSize": 468870
+            },
+            "dom": {
+              "documents": 41,
+              "nodes": 10082,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 0,
+            "liveDecodedBuffers": 0,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 15,
+            "decodeAttempts": 15,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "song-exit-8",
+            "heap": {
+              "usedSize": 4756004,
+              "totalSize": 5570560,
+              "embedderHeapUsedSize": 15318072,
+              "backingStorageSize": 468873
+            },
+            "dom": {
+              "documents": 41,
+              "nodes": 10082,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 0,
+            "liveDecodedBuffers": 0,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 17,
+            "decodeAttempts": 17,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "after-interrupted-loads",
+            "heap": {
+              "usedSize": 4749716,
+              "totalSize": 5308416,
+              "embedderHeapUsedSize": 15930400,
+              "backingStorageSize": 468871
+            },
+            "dom": {
+              "documents": 44,
+              "nodes": 10628,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 0,
+            "liveDecodedBuffers": 0,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 17,
+            "decodeAttempts": 20,
+            "pendingDecodes": 0
+          }
+        ],
+        "coverage": {
+          "covered": false,
+          "reason": "R actions did not start new music sources. Song switching and exit observations remain recorded; repeated-restart coverage is invalid."
+        },
+        "errors": [],
+        "failedRequests": []
+      },
+      {
+        "profile": "mobile-emulated",
+        "summary": {
+          "restarts": 8,
+          "songSwitches": 8
+        },
+        "points": [
+          {
+            "label": "library-initial",
+            "heap": {
+              "usedSize": 3391016,
+              "totalSize": 4259840,
+              "embedderHeapUsedSize": 9214176,
+              "backingStorageSize": 350007
+            },
+            "dom": {
+              "documents": 16,
+              "nodes": 4360,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 0,
+            "liveDecodedBuffers": 0,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 0,
+            "decodeAttempts": 0,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "playing-warmup",
+            "heap": {
+              "usedSize": 3778220,
+              "totalSize": 4521984,
+              "embedderHeapUsedSize": 1864824,
+              "backingStorageSize": 461498
+            },
+            "dom": {
+              "documents": 2,
+              "nodes": 377,
+              "jsEventListeners": 182
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 1,
+            "musicSourceStarts": 1,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "restart-1",
+            "heap": {
+              "usedSize": 3754948,
+              "totalSize": 4521984,
+              "embedderHeapUsedSize": 1959152,
+              "backingStorageSize": 461511
+            },
+            "dom": {
+              "documents": 2,
+              "nodes": 377,
+              "jsEventListeners": 182
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 1,
+            "musicSourceStarts": 1,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "restart-2",
+            "heap": {
+              "usedSize": 3774988,
+              "totalSize": 4521984,
+              "embedderHeapUsedSize": 2209960,
+              "backingStorageSize": 461436
+            },
+            "dom": {
+              "documents": 2,
+              "nodes": 378,
+              "jsEventListeners": 182
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 1,
+            "musicSourceStarts": 1,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "restart-3",
+            "heap": {
+              "usedSize": 3771548,
+              "totalSize": 4259840,
+              "embedderHeapUsedSize": 1518864,
+              "backingStorageSize": 461308
+            },
+            "dom": {
+              "documents": 2,
+              "nodes": 377,
+              "jsEventListeners": 182
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 1,
+            "musicSourceStarts": 1,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "restart-4",
+            "heap": {
+              "usedSize": 3777648,
+              "totalSize": 4259840,
+              "embedderHeapUsedSize": 1519288,
+              "backingStorageSize": 461306
+            },
+            "dom": {
+              "documents": 2,
+              "nodes": 377,
+              "jsEventListeners": 182
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 1,
+            "musicSourceStarts": 1,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "restart-5",
+            "heap": {
+              "usedSize": 3806016,
+              "totalSize": 4521984,
+              "embedderHeapUsedSize": 1973080,
+              "backingStorageSize": 461453
+            },
+            "dom": {
+              "documents": 2,
+              "nodes": 377,
+              "jsEventListeners": 182
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 1,
+            "musicSourceStarts": 1,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "restart-6",
+            "heap": {
+              "usedSize": 3823664,
+              "totalSize": 4521984,
+              "embedderHeapUsedSize": 1910976,
+              "backingStorageSize": 461490
+            },
+            "dom": {
+              "documents": 2,
+              "nodes": 377,
+              "jsEventListeners": 182
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 1,
+            "musicSourceStarts": 1,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "restart-7",
+            "heap": {
+              "usedSize": 3807776,
+              "totalSize": 4259840,
+              "embedderHeapUsedSize": 1519616,
+              "backingStorageSize": 461307
+            },
+            "dom": {
+              "documents": 2,
+              "nodes": 377,
+              "jsEventListeners": 182
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 1,
+            "musicSourceStarts": 1,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "restart-8",
+            "heap": {
+              "usedSize": 3852572,
+              "totalSize": 4521984,
+              "embedderHeapUsedSize": 1898056,
+              "backingStorageSize": 461641
+            },
+            "dom": {
+              "documents": 2,
+              "nodes": 377,
+              "jsEventListeners": 182
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 1,
+            "musicSourceStarts": 1,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "after-restarts-exit",
+            "heap": {
+              "usedSize": 4110564,
+              "totalSize": 4784128,
+              "embedderHeapUsedSize": 8409528,
+              "backingStorageSize": 462959
+            },
+            "dom": {
+              "documents": 14,
+              "nodes": 4882,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 0,
+            "liveDecodedBuffers": 0,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 1,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "song-exit-1",
+            "heap": {
+              "usedSize": 4378608,
+              "totalSize": 5046272,
+              "embedderHeapUsedSize": 8225952,
+              "backingStorageSize": 468894
+            },
+            "dom": {
+              "documents": 13,
+              "nodes": 4704,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 0,
+            "liveDecodedBuffers": 0,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 3,
+            "decodeAttempts": 3,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "song-exit-2",
+            "heap": {
+              "usedSize": 4477808,
+              "totalSize": 5308416,
+              "embedderHeapUsedSize": 8177744,
+              "backingStorageSize": 468888
+            },
+            "dom": {
+              "documents": 13,
+              "nodes": 4704,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 0,
+            "liveDecodedBuffers": 0,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 5,
+            "decodeAttempts": 5,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "song-exit-3",
+            "heap": {
+              "usedSize": 4584244,
+              "totalSize": 5570560,
+              "embedderHeapUsedSize": 8403880,
+              "backingStorageSize": 468891
+            },
+            "dom": {
+              "documents": 13,
+              "nodes": 4704,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 0,
+            "liveDecodedBuffers": 0,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 7,
+            "decodeAttempts": 7,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "song-exit-4",
+            "heap": {
+              "usedSize": 4688412,
+              "totalSize": 5570560,
+              "embedderHeapUsedSize": 8289048,
+              "backingStorageSize": 468894
+            },
+            "dom": {
+              "documents": 13,
+              "nodes": 4704,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 0,
+            "liveDecodedBuffers": 0,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 9,
+            "decodeAttempts": 9,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "song-exit-5",
+            "heap": {
+              "usedSize": 4717776,
+              "totalSize": 5570560,
+              "embedderHeapUsedSize": 8352056,
+              "backingStorageSize": 468888
+            },
+            "dom": {
+              "documents": 13,
+              "nodes": 4704,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 0,
+            "liveDecodedBuffers": 0,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 11,
+            "decodeAttempts": 11,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "song-exit-6",
+            "heap": {
+              "usedSize": 4730084,
+              "totalSize": 5570560,
+              "embedderHeapUsedSize": 8386680,
+              "backingStorageSize": 468888
+            },
+            "dom": {
+              "documents": 13,
+              "nodes": 4704,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 0,
+            "liveDecodedBuffers": 0,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 13,
+            "decodeAttempts": 13,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "song-exit-7",
+            "heap": {
+              "usedSize": 4743664,
+              "totalSize": 5570560,
+              "embedderHeapUsedSize": 8487072,
+              "backingStorageSize": 468888
+            },
+            "dom": {
+              "documents": 13,
+              "nodes": 4704,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 0,
+            "liveDecodedBuffers": 0,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 15,
+            "decodeAttempts": 15,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "song-exit-8",
+            "heap": {
+              "usedSize": 4777284,
+              "totalSize": 5570560,
+              "embedderHeapUsedSize": 8571872,
+              "backingStorageSize": 468888
+            },
+            "dom": {
+              "documents": 13,
+              "nodes": 4704,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 0,
+            "liveDecodedBuffers": 0,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 17,
+            "decodeAttempts": 17,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "after-interrupted-loads",
+            "heap": {
+              "usedSize": 4919440,
+              "totalSize": 5832704,
+              "embedderHeapUsedSize": 9566888,
+              "backingStorageSize": 469365
+            },
+            "dom": {
+              "documents": 16,
+              "nodes": 5268,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 0,
+            "liveDecodedBuffers": 0,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 17,
+            "decodeAttempts": 17,
+            "pendingDecodes": 0
+          }
+        ],
+        "coverage": {
+          "covered": false,
+          "reason": "R actions did not start new music sources. Song switching and exit observations remain recorded; repeated-restart coverage is invalid."
+        },
+        "errors": [],
+        "failedRequests": []
+      }
+    ]
+  },
+  "after": {
+    "load": [
+      {
+        "profile": "desktop",
+        "scenario": "home-first-visit",
+        "readyMs": {
+          "n": 3,
+          "minimum": 179.79999995231628,
+          "median": 182.70000004768372,
+          "maximum": 182.80000007152557
+        },
+        "fcpMs": {
+          "n": 3,
+          "minimum": 188,
+          "median": 192,
+          "maximum": 200
+        },
+        "lcpMs": {
+          "n": 3,
+          "minimum": 212,
+          "median": 236,
+          "maximum": 240
+        },
+        "decodeMs": {
+          "n": 3,
+          "minimum": 0,
+          "median": 0,
+          "maximum": 0
+        },
+        "decodeCounts": [
+          0,
+          0,
+          0
+        ],
+        "liveDecodedBytes": [
+          0,
+          0,
+          0
+        ],
+        "readySamplesMs": [
+          179.79999995231628,
+          182.80000007152557,
+          182.70000004768372
+        ],
+        "runtimeErrors": [],
+        "failedRequests": []
+      },
+      {
+        "profile": "desktop",
+        "scenario": "song-cold",
+        "readyMs": {
+          "n": 3,
+          "minimum": 1769.5999999046326,
+          "median": 1770.2999999523163,
+          "maximum": 1894.3000000715256
+        },
+        "fcpMs": {
+          "n": 3,
+          "minimum": 180,
+          "median": 180,
+          "maximum": 184
+        },
+        "lcpMs": {
+          "n": 3,
+          "minimum": 368,
+          "median": 372,
+          "maximum": 484
+        },
+        "decodeMs": {
+          "n": 3,
+          "minimum": 236.60000002384186,
+          "median": 238.29999995231628,
+          "maximum": 240.79999995231628
+        },
+        "decodeCounts": [
+          1,
+          1,
+          1
+        ],
+        "liveDecodedBytes": [
+          46080000,
+          46080000,
+          46080000
+        ],
+        "readySamplesMs": [
+          1894.3000000715256,
+          1770.2999999523163,
+          1769.5999999046326
+        ],
+        "runtimeErrors": [],
+        "failedRequests": []
+      },
+      {
+        "profile": "desktop",
+        "scenario": "duo-cold",
+        "readyMs": {
+          "n": 3,
+          "minimum": 2037.3000000715256,
+          "median": 2042.2000000476837,
+          "maximum": 2044.8999999761581
+        },
+        "fcpMs": {
+          "n": 3,
+          "minimum": 160,
+          "median": 164,
+          "maximum": 176
+        },
+        "lcpMs": {
+          "n": 3,
+          "minimum": 620,
+          "median": 632,
+          "maximum": 632
+        },
+        "decodeMs": {
+          "n": 3,
+          "minimum": 234.30000007152557,
+          "median": 236.80000007152557,
+          "maximum": 237.39999997615814
+        },
+        "decodeCounts": [
+          1,
+          1,
+          1
+        ],
+        "liveDecodedBytes": [
+          46080000,
+          46080000,
+          46080000
+        ],
+        "readySamplesMs": [
+          2037.3000000715256,
+          2044.8999999761581,
+          2042.2000000476837
+        ],
+        "runtimeErrors": [],
+        "failedRequests": []
+      },
+      {
+        "profile": "mobile-emulated",
+        "scenario": "home-first-visit",
+        "readyMs": {
+          "n": 3,
+          "minimum": 586.2999999523163,
+          "median": 596.1000000238419,
+          "maximum": 603.7000000476837
+        },
+        "fcpMs": {
+          "n": 3,
+          "minimum": 528,
+          "median": 536,
+          "maximum": 540
+        },
+        "lcpMs": {
+          "n": 3,
+          "minimum": 608,
+          "median": 616,
+          "maximum": 640
+        },
+        "decodeMs": {
+          "n": 3,
+          "minimum": 0,
+          "median": 0,
+          "maximum": 0
+        },
+        "decodeCounts": [
+          0,
+          0,
+          0
+        ],
+        "liveDecodedBytes": [
+          0,
+          0,
+          0
+        ],
+        "readySamplesMs": [
+          586.2999999523163,
+          603.7000000476837,
+          596.1000000238419
+        ],
+        "runtimeErrors": [],
+        "failedRequests": []
+      },
+      {
+        "profile": "mobile-emulated",
+        "scenario": "song-cold",
+        "readyMs": {
+          "n": 3,
+          "minimum": 4182.399999976158,
+          "median": 4184.799999952316,
+          "maximum": 4190.5
+        },
+        "fcpMs": {
+          "n": 3,
+          "minimum": 496,
+          "median": 500,
+          "maximum": 504
+        },
+        "lcpMs": {
+          "n": 3,
+          "minimum": 868,
+          "median": 872,
+          "maximum": 872
+        },
+        "decodeMs": {
+          "n": 3,
+          "minimum": 251.10000002384186,
+          "median": 251.89999997615814,
+          "maximum": 259.2000000476837
+        },
+        "decodeCounts": [
+          1,
+          1,
+          1
+        ],
+        "liveDecodedBytes": [
+          46080000,
+          46080000,
+          46080000
+        ],
+        "readySamplesMs": [
+          4190.5,
+          4182.399999976158,
+          4184.799999952316
+        ],
+        "runtimeErrors": [],
+        "failedRequests": []
+      },
+      {
+        "profile": "mobile-emulated",
+        "scenario": "duo-cold",
+        "readyMs": {
+          "n": 3,
+          "minimum": 4454.700000047684,
+          "median": 4461.600000023842,
+          "maximum": 4465.799999952316
+        },
+        "fcpMs": {
+          "n": 3,
+          "minimum": 392,
+          "median": 392,
+          "maximum": 396
+        },
+        "lcpMs": {
+          "n": 3,
+          "minimum": 1120,
+          "median": 1132,
+          "maximum": 1132
+        },
+        "decodeMs": {
+          "n": 3,
+          "minimum": 250.39999997615814,
+          "median": 257.7000000476837,
+          "maximum": 260
+        },
+        "decodeCounts": [
+          1,
+          1,
+          1
+        ],
+        "liveDecodedBytes": [
+          46080000,
+          46080000,
+          46080000
+        ],
+        "readySamplesMs": [
+          4454.700000047684,
+          4461.600000023842,
+          4465.799999952316
+        ],
+        "runtimeErrors": [],
+        "failedRequests": []
+      }
+    ],
+    "game": [
+      {
+        "profile": "desktop",
+        "scenario": "hard-fx-off",
+        "measuredMs": 119546.79999995232,
+        "frames": {
+          "samples": 7167,
+          "totalMs": 119478.5,
+          "p50Ms": 16.69999999999709,
+          "p95Ms": 16.79999999998836,
+          "p99Ms": 16.80000000000291,
+          "maxMs": 33.400000000001455,
+          "targetFps": 60,
+          "frameBudgetMs": 16.666666666666668,
+          "missedThresholdMs": 25,
+          "observedFps": 59.985687801571,
+          "missedIntervals": 2,
+          "missedIntervalPercent": 0.027905678805636946,
+          "estimatedDroppedFrames": 2,
+          "longestConsecutiveMissedIntervals": 1
+        },
+        "appFrameCpu": {
+          "samples": 7168,
+          "totalMs": 4558.100001573563,
+          "p50Ms": 0.6000000238418579,
+          "p95Ms": 1,
+          "p99Ms": 1.100000023841858,
+          "maxMs": 39.60000002384186
+        },
+        "effects": {
+          "surge3Frames": 0,
+          "surge3Ms": 0,
+          "surge3FieldMs": 0,
+          "maxSimultaneousSurge3Fields": 0,
+          "neon3Frames": 0,
+          "neon3Ms": 0
+        },
+        "longTasks": {
+          "samples": 0,
+          "totalMs": 0,
+          "p50Ms": null,
+          "p95Ms": null,
+          "p99Ms": null,
+          "maxMs": null,
+          "entries": []
+        },
+        "outcomes": {
+          "lastRun": {
+            "v": 1,
+            "track_id": "bs-s4-14",
+            "title": "Chrome Mile Anthem",
+            "artist": "Iron Echo",
+            "tier": "hard",
+            "mode": "casual",
+            "score": 1010700,
+            "accuracy": 100,
+            "maxCombo": 929,
+            "grade": "S",
+            "fc": true,
+            "ap": true,
+            "failed": false,
+            "counts": {
+              "perfect": 929,
+              "great": 0,
+              "good": 0,
+              "miss": 0
+            },
+            "totalNotes": 929,
+            "durationMs": 124562.10000002384,
+            "endedAt": "2026-09-06T01:46:12.037Z",
+            "missEvents": [],
+            "surgeMaxTier": 3
+          },
+          "duoResults": null,
+          "duoPlayers": []
+        },
+        "autoplay": {
+          "running": true,
+          "chartId": "bs-s4-14",
+          "duo": false,
+          "eventsPerPlayer": 1854,
+          "dispatchedEvents": 1854,
+          "maximumDispatchLatenessMs": 40.00000000000023,
+          "dispatchLateness": {
+            "samples": 1854,
+            "totalMs": 4983.333333329429,
+            "p50Ms": 2.6666666666569654,
+            "p95Ms": 5,
+            "p99Ms": 7,
+            "maxMs": 40.00000000000023
+          },
+          "players": [
+            {
+              "sourceId": 1,
+              "cursor": 1854,
+              "pressed": []
+            }
+          ]
+        },
+        "coverage": {
+          "covered": true,
+          "kind": "game",
+          "scenario": "hard-fx-off",
+          "players": 1,
+          "judgmentObjectsPerPlayer": 929,
+          "sampledSeconds": 119.4785,
+          "performanceBudgetEvaluated": false
+        },
+        "errors": [],
+        "failedRequests": []
+      },
+      {
+        "profile": "desktop",
+        "scenario": "hard-fx-max",
+        "measuredMs": 119479.39999997616,
+        "frames": {
+          "samples": 7166,
+          "totalMs": 119461.9,
+          "p50Ms": 16.69999999999709,
+          "p95Ms": 16.79999999998836,
+          "p99Ms": 16.80000000000291,
+          "maxMs": 33.39999999999782,
+          "targetFps": 60,
+          "frameBudgetMs": 16.666666666666668,
+          "missedThresholdMs": 25,
+          "observedFps": 59.98565232932006,
+          "missedIntervals": 2,
+          "missedIntervalPercent": 0.027909572983533353,
+          "estimatedDroppedFrames": 2,
+          "longestConsecutiveMissedIntervals": 1
+        },
+        "appFrameCpu": {
+          "samples": 7167,
+          "totalMs": 5357.399991869926,
+          "p50Ms": 0.7999999523162842,
+          "p95Ms": 1.2000000476837158,
+          "p99Ms": 1.399999976158142,
+          "maxMs": 40.200000047683716
+        },
+        "effects": {
+          "surge3Frames": 6437,
+          "surge3Ms": 107295.8,
+          "surge3FieldMs": 107295.8,
+          "maxSimultaneousSurge3Fields": 1,
+          "neon3Frames": 5652,
+          "neon3Ms": 94212.9
+        },
+        "longTasks": {
+          "samples": 0,
+          "totalMs": 0,
+          "p50Ms": null,
+          "p95Ms": null,
+          "p99Ms": null,
+          "maxMs": null,
+          "entries": []
+        },
+        "outcomes": {
+          "lastRun": {
+            "v": 1,
+            "track_id": "bs-s4-14",
+            "title": "Chrome Mile Anthem",
+            "artist": "Iron Echo",
+            "tier": "hard",
+            "mode": "casual",
+            "score": 1010700,
+            "accuracy": 100,
+            "maxCombo": 929,
+            "grade": "S",
+            "fc": true,
+            "ap": true,
+            "failed": false,
+            "counts": {
+              "perfect": 929,
+              "great": 0,
+              "good": 0,
+              "miss": 0
+            },
+            "totalNotes": 929,
+            "durationMs": 124420.80000007153,
+            "endedAt": "2026-09-06T01:48:16.861Z",
+            "missEvents": [],
+            "surgeMaxTier": 3
+          },
+          "duoResults": null,
+          "duoPlayers": []
+        },
+        "autoplay": {
+          "running": true,
+          "chartId": "bs-s4-14",
+          "duo": false,
+          "eventsPerPlayer": 1854,
+          "dispatchedEvents": 1854,
+          "maximumDispatchLatenessMs": 34.666666666666515,
+          "dispatchLateness": {
+            "samples": 1854,
+            "totalMs": 4948.666666671142,
+            "p50Ms": 2.6666666666678793,
+            "p95Ms": 5,
+            "p99Ms": 7.333333333335759,
+            "maxMs": 34.666666666666515
+          },
+          "players": [
+            {
+              "sourceId": 1,
+              "cursor": 1854,
+              "pressed": []
+            }
+          ]
+        },
+        "coverage": {
+          "covered": true,
+          "kind": "game",
+          "scenario": "hard-fx-max",
+          "players": 1,
+          "judgmentObjectsPerPlayer": 929,
+          "sampledSeconds": 119.4619,
+          "performanceBudgetEvaluated": false
+        },
+        "errors": [],
+        "failedRequests": []
+      },
+      {
+        "profile": "desktop",
+        "scenario": "duo-fx-max",
+        "measuredMs": 119931.5,
+        "frames": {
+          "samples": 7192,
+          "totalMs": 119911.9,
+          "p50Ms": 16.69999999999709,
+          "p95Ms": 16.70000000001164,
+          "p99Ms": 16.80000000000291,
+          "maxMs": 33.40000000000873,
+          "targetFps": 60,
+          "frameBudgetMs": 16.666666666666668,
+          "missedThresholdMs": 25,
+          "observedFps": 59.977366716731204,
+          "missedIntervals": 3,
+          "missedIntervalPercent": 0.04171301446051168,
+          "estimatedDroppedFrames": 3,
+          "longestConsecutiveMissedIntervals": 1
+        },
+        "appFrameCpu": {
+          "samples": 7193,
+          "totalMs": 6920.300000190735,
+          "p50Ms": 1,
+          "p95Ms": 1.399999976158142,
+          "p99Ms": 1.600000023841858,
+          "maxMs": 39.89999997615814
+        },
+        "effects": {
+          "surge3Frames": 6463,
+          "surge3Ms": 107745.7,
+          "surge3FieldMs": 215491.4,
+          "maxSimultaneousSurge3Fields": 2,
+          "neon3Frames": 5678,
+          "neon3Ms": 94662.9
+        },
+        "longTasks": {
+          "samples": 0,
+          "totalMs": 0,
+          "p50Ms": null,
+          "p95Ms": null,
+          "p99Ms": null,
+          "maxMs": null,
+          "entries": []
+        },
+        "outcomes": {
+          "lastRun": null,
+          "duoResults": "Duo · Chrome Mile AnthemDEAD HEATP2S1,010,70010000.00% · x929929/0/0/0P1S1,010,70010000.00% · x929929/0/0/0RematchExit",
+          "duoPlayers": [
+            {
+              "player": "P2",
+              "counts": [
+                929,
+                0,
+                0,
+                0
+              ]
+            },
+            {
+              "player": "P1",
+              "counts": [
+                929,
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        "autoplay": {
+          "running": true,
+          "chartId": "bs-s4-14",
+          "duo": true,
+          "eventsPerPlayer": 1854,
+          "dispatchedEvents": 3708,
+          "maximumDispatchLatenessMs": 10.333333333343035,
+          "dispatchLateness": {
+            "samples": 3708,
+            "totalMs": 10027.999999998443,
+            "p50Ms": 2.6666666666642413,
+            "p95Ms": 5,
+            "p99Ms": 8.333333333335759,
+            "maxMs": 10.333333333343035
+          },
+          "players": [
+            {
+              "sourceId": 1,
+              "cursor": 1854,
+              "pressed": []
+            },
+            {
+              "sourceId": 2,
+              "cursor": 1854,
+              "pressed": []
+            }
+          ]
+        },
+        "coverage": {
+          "covered": true,
+          "kind": "game",
+          "scenario": "duo-fx-max",
+          "players": 2,
+          "judgmentObjectsPerPlayer": 929,
+          "sampledSeconds": 119.91189999999999,
+          "performanceBudgetEvaluated": false
+        },
+        "errors": [],
+        "failedRequests": []
+      },
+      {
+        "profile": "mobile-emulated",
+        "scenario": "hard-fx-off",
+        "measuredMs": 119491.70000004768,
+        "frames": {
+          "samples": 7168,
+          "totalMs": 119461.9,
+          "p50Ms": 16.69999999999709,
+          "p95Ms": 16.70000000001164,
+          "p99Ms": 16.80000000000291,
+          "maxMs": 16.80000000000291,
+          "targetFps": 60,
+          "frameBudgetMs": 16.666666666666668,
+          "missedThresholdMs": 25,
+          "observedFps": 60.002394068736564,
+          "missedIntervals": 0,
+          "missedIntervalPercent": 0,
+          "estimatedDroppedFrames": 0,
+          "longestConsecutiveMissedIntervals": 0
+        },
+        "appFrameCpu": {
+          "samples": 7169,
+          "totalMs": 4772.500004768372,
+          "p50Ms": 0.6999999284744263,
+          "p95Ms": 1.399999976158142,
+          "p99Ms": 1.7000000476837158,
+          "maxMs": 4.300000071525574
+        },
+        "effects": {
+          "surge3Frames": 0,
+          "surge3Ms": 0,
+          "surge3FieldMs": 0,
+          "maxSimultaneousSurge3Fields": 0,
+          "neon3Frames": 0,
+          "neon3Ms": 0
+        },
+        "longTasks": {
+          "samples": 0,
+          "totalMs": 0,
+          "p50Ms": null,
+          "p95Ms": null,
+          "p99Ms": null,
+          "maxMs": null,
+          "entries": []
+        },
+        "outcomes": {
+          "lastRun": {
+            "v": 1,
+            "track_id": "bs-s4-14",
+            "title": "Chrome Mile Anthem",
+            "artist": "Iron Echo",
+            "tier": "hard",
+            "mode": "casual",
+            "score": 1010700,
+            "accuracy": 100,
+            "maxCombo": 929,
+            "grade": "S",
+            "fc": true,
+            "ap": true,
+            "failed": false,
+            "counts": {
+              "perfect": 929,
+              "great": 0,
+              "good": 0,
+              "miss": 0
+            },
+            "totalNotes": 929,
+            "durationMs": 126609.89999997616,
+            "endedAt": "2026-09-06T01:52:29.820Z",
+            "missEvents": [],
+            "surgeMaxTier": 3
+          },
+          "duoResults": null,
+          "duoPlayers": []
+        },
+        "autoplay": {
+          "running": true,
+          "chartId": "bs-s4-14",
+          "duo": false,
+          "eventsPerPlayer": 1854,
+          "dispatchedEvents": 1854,
+          "maximumDispatchLatenessMs": 14.333333333328483,
+          "dispatchLateness": {
+            "samples": 1854,
+            "totalMs": 6023.333333337354,
+            "p50Ms": 3,
+            "p95Ms": 8.333333333343035,
+            "p99Ms": 10.33333333333062,
+            "maxMs": 14.333333333328483
+          },
+          "players": [
+            {
+              "sourceId": 1,
+              "cursor": 1854,
+              "pressed": []
+            }
+          ]
+        },
+        "coverage": {
+          "covered": true,
+          "kind": "game",
+          "scenario": "hard-fx-off",
+          "players": 1,
+          "judgmentObjectsPerPlayer": 929,
+          "sampledSeconds": 119.4619,
+          "performanceBudgetEvaluated": false
+        },
+        "errors": [],
+        "failedRequests": []
+      },
+      {
+        "profile": "mobile-emulated",
+        "scenario": "hard-fx-max",
+        "measuredMs": 119492.59999990463,
+        "frames": {
+          "samples": 7168,
+          "totalMs": 119461.79999999999,
+          "p50Ms": 16.69999999999709,
+          "p95Ms": 16.70000000001164,
+          "p99Ms": 16.80000000000291,
+          "maxMs": 16.80000000000291,
+          "targetFps": 60,
+          "frameBudgetMs": 16.666666666666668,
+          "missedThresholdMs": 25,
+          "observedFps": 60.0024442960009,
+          "missedIntervals": 0,
+          "missedIntervalPercent": 0,
+          "estimatedDroppedFrames": 0,
+          "longestConsecutiveMissedIntervals": 0
+        },
+        "appFrameCpu": {
+          "samples": 7169,
+          "totalMs": 7614.000003457069,
+          "p50Ms": 1.100000023841858,
+          "p95Ms": 1.9000000953674316,
+          "p99Ms": 2.299999952316284,
+          "maxMs": 4.099999904632568
+        },
+        "effects": {
+          "surge3Frames": 6438,
+          "surge3Ms": 107295.7,
+          "surge3FieldMs": 107295.7,
+          "maxSimultaneousSurge3Fields": 1,
+          "neon3Frames": 5653,
+          "neon3Ms": 94212.9
+        },
+        "longTasks": {
+          "samples": 0,
+          "totalMs": 0,
+          "p50Ms": null,
+          "p95Ms": null,
+          "p99Ms": null,
+          "maxMs": null,
+          "entries": []
+        },
+        "outcomes": {
+          "lastRun": {
+            "v": 1,
+            "track_id": "bs-s4-14",
+            "title": "Chrome Mile Anthem",
+            "artist": "Iron Echo",
+            "tier": "hard",
+            "mode": "casual",
+            "score": 1010700,
+            "accuracy": 100,
+            "maxCombo": 929,
+            "grade": "S",
+            "fc": true,
+            "ap": true,
+            "failed": false,
+            "counts": {
+              "perfect": 929,
+              "great": 0,
+              "good": 0,
+              "miss": 0
+            },
+            "totalNotes": 929,
+            "durationMs": 126614.20000004768,
+            "endedAt": "2026-09-06T01:54:37.211Z",
+            "missEvents": [],
+            "surgeMaxTier": 3
+          },
+          "duoResults": null,
+          "duoPlayers": []
+        },
+        "autoplay": {
+          "running": true,
+          "chartId": "bs-s4-14",
+          "duo": false,
+          "eventsPerPlayer": 1854,
+          "dispatchedEvents": 1854,
+          "maximumDispatchLatenessMs": 18.999999999992724,
+          "dispatchLateness": {
+            "samples": 1854,
+            "totalMs": 6703.333333337011,
+            "p50Ms": 3.000000000014552,
+            "p95Ms": 9.333333333328483,
+            "p99Ms": 10.666666666664241,
+            "maxMs": 18.999999999992724
+          },
+          "players": [
+            {
+              "sourceId": 1,
+              "cursor": 1854,
+              "pressed": []
+            }
+          ]
+        },
+        "coverage": {
+          "covered": true,
+          "kind": "game",
+          "scenario": "hard-fx-max",
+          "players": 1,
+          "judgmentObjectsPerPlayer": 929,
+          "sampledSeconds": 119.46179999999998,
+          "performanceBudgetEvaluated": false
+        },
+        "errors": [],
+        "failedRequests": []
+      },
+      {
+        "profile": "mobile-emulated",
+        "scenario": "duo-fx-max",
+        "measuredMs": 119710.09999990463,
+        "frames": {
+          "samples": 7171,
+          "totalMs": 119695.09999999999,
+          "p50Ms": 16.69999999999709,
+          "p95Ms": 16.70000000001164,
+          "p99Ms": 16.80000000000291,
+          "maxMs": 33.400000000001455,
+          "targetFps": 60,
+          "frameBudgetMs": 16.666666666666668,
+          "missedThresholdMs": 25,
+          "observedFps": 59.91055607121762,
+          "missedIntervals": 11,
+          "missedIntervalPercent": 0.15339562125226608,
+          "estimatedDroppedFrames": 11,
+          "longestConsecutiveMissedIntervals": 2
+        },
+        "appFrameCpu": {
+          "samples": 7172,
+          "totalMs": 14807.700004816055,
+          "p50Ms": 2.100000023841858,
+          "p95Ms": 3.399999976158142,
+          "p99Ms": 3.899999976158142,
+          "maxMs": 8.200000047683716
+        },
+        "effects": {
+          "surge3Frames": 6430,
+          "surge3Ms": 107295.59999999999,
+          "surge3FieldMs": 214591.19999999998,
+          "maxSimultaneousSurge3Fields": 2,
+          "neon3Frames": 5659,
+          "neon3Ms": 94446.2
+        },
+        "longTasks": {
+          "samples": 0,
+          "totalMs": 0,
+          "p50Ms": null,
+          "p95Ms": null,
+          "p99Ms": null,
+          "maxMs": null,
+          "entries": []
+        },
+        "outcomes": {
+          "lastRun": null,
+          "duoResults": "Duo · Chrome Mile AnthemDEAD HEATP2S1,008,0009978.00% · x929921/8/0/0P1S1,008,0009978.00% · x929921/8/0/0RematchExit",
+          "duoPlayers": [
+            {
+              "player": "P2",
+              "counts": [
+                921,
+                8,
+                0,
+                0
+              ]
+            },
+            {
+              "player": "P1",
+              "counts": [
+                921,
+                8,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        "autoplay": {
+          "running": true,
+          "chartId": "bs-s4-14",
+          "duo": true,
+          "eventsPerPlayer": 1854,
+          "dispatchedEvents": 3708,
+          "maximumDispatchLatenessMs": 52.000000000007276,
+          "dispatchLateness": {
+            "samples": 3708,
+            "totalMs": 22361.333333342736,
+            "p50Ms": 4.333333333343035,
+            "p95Ms": 15.333333333328483,
+            "p99Ms": 33.66666666666424,
+            "maxMs": 52.000000000007276
+          },
+          "players": [
+            {
+              "sourceId": 1,
+              "cursor": 1854,
+              "pressed": []
+            },
+            {
+              "sourceId": 2,
+              "cursor": 1854,
+              "pressed": []
+            }
+          ]
+        },
+        "coverage": {
+          "covered": true,
+          "kind": "game",
+          "scenario": "duo-fx-max",
+          "players": 2,
+          "judgmentObjectsPerPlayer": 929,
+          "sampledSeconds": 119.6951,
+          "performanceBudgetEvaluated": false
+        },
+        "errors": [],
+        "failedRequests": []
+      }
+    ],
+    "memory": [
+      {
+        "profile": "desktop",
+        "summary": {
+          "restarts": 8,
+          "songSwitches": 8
+        },
+        "points": [
+          {
+            "label": "library-initial",
+            "heap": {
+              "usedSize": 3347744,
+              "totalSize": 4259840,
+              "embedderHeapUsedSize": 12008280,
+              "backingStorageSize": 354330
+            },
+            "dom": {
+              "documents": 29,
+              "nodes": 6650,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 0,
+            "liveDecodedBuffers": 0,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 0,
+            "decodeAttempts": 0,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "playing-warmup",
+            "heap": {
+              "usedSize": 3694496,
+              "totalSize": 4259840,
+              "embedderHeapUsedSize": 1564368,
+              "backingStorageSize": 463377
+            },
+            "dom": {
+              "documents": 2,
+              "nodes": 379,
+              "jsEventListeners": 181
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 1,
+            "musicSourceStarts": 1,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "restart-1",
+            "heap": {
+              "usedSize": 3725656,
+              "totalSize": 4259840,
+              "embedderHeapUsedSize": 1542712,
+              "backingStorageSize": 463377
+            },
+            "dom": {
+              "documents": 2,
+              "nodes": 379,
+              "jsEventListeners": 181
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 1,
+            "musicSourceStarts": 2,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "restart-2",
+            "heap": {
+              "usedSize": 3745920,
+              "totalSize": 4259840,
+              "embedderHeapUsedSize": 1542392,
+              "backingStorageSize": 463377
+            },
+            "dom": {
+              "documents": 2,
+              "nodes": 379,
+              "jsEventListeners": 181
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 1,
+            "musicSourceStarts": 3,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "restart-3",
+            "heap": {
+              "usedSize": 3794876,
+              "totalSize": 4259840,
+              "embedderHeapUsedSize": 1933744,
+              "backingStorageSize": 463578
+            },
+            "dom": {
+              "documents": 2,
+              "nodes": 379,
+              "jsEventListeners": 181
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 1,
+            "musicSourceStarts": 4,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "restart-4",
+            "heap": {
+              "usedSize": 3774900,
+              "totalSize": 4259840,
+              "embedderHeapUsedSize": 1542392,
+              "backingStorageSize": 463377
+            },
+            "dom": {
+              "documents": 2,
+              "nodes": 379,
+              "jsEventListeners": 181
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 1,
+            "musicSourceStarts": 5,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "restart-5",
+            "heap": {
+              "usedSize": 3776116,
+              "totalSize": 4259840,
+              "embedderHeapUsedSize": 1542312,
+              "backingStorageSize": 463377
+            },
+            "dom": {
+              "documents": 2,
+              "nodes": 379,
+              "jsEventListeners": 181
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 1,
+            "musicSourceStarts": 6,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "restart-6",
+            "heap": {
+              "usedSize": 3780756,
+              "totalSize": 4259840,
+              "embedderHeapUsedSize": 1542312,
+              "backingStorageSize": 463378
+            },
+            "dom": {
+              "documents": 2,
+              "nodes": 379,
+              "jsEventListeners": 181
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 1,
+            "musicSourceStarts": 7,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "restart-7",
+            "heap": {
+              "usedSize": 3818824,
+              "totalSize": 4521984,
+              "embedderHeapUsedSize": 1908736,
+              "backingStorageSize": 463562
+            },
+            "dom": {
+              "documents": 2,
+              "nodes": 379,
+              "jsEventListeners": 181
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 1,
+            "musicSourceStarts": 8,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "restart-8",
+            "heap": {
+              "usedSize": 3806772,
+              "totalSize": 3997696,
+              "embedderHeapUsedSize": 1542392,
+              "backingStorageSize": 463376
+            },
+            "dom": {
+              "documents": 2,
+              "nodes": 379,
+              "jsEventListeners": 181
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 1,
+            "musicSourceStarts": 9,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "after-restarts-exit",
+            "heap": {
+              "usedSize": 4139760,
+              "totalSize": 4784128,
+              "embedderHeapUsedSize": 15141896,
+              "backingStorageSize": 465324
+            },
+            "dom": {
+              "documents": 42,
+              "nodes": 10264,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 9,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "song-exit-1",
+            "heap": {
+              "usedSize": 4374432,
+              "totalSize": 5308416,
+              "embedderHeapUsedSize": 15171080,
+              "backingStorageSize": 471391
+            },
+            "dom": {
+              "documents": 41,
+              "nodes": 10086,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 11,
+            "decodeAttempts": 2,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "song-exit-2",
+            "heap": {
+              "usedSize": 4475064,
+              "totalSize": 5046272,
+              "embedderHeapUsedSize": 14904464,
+              "backingStorageSize": 471394
+            },
+            "dom": {
+              "documents": 41,
+              "nodes": 10086,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 13,
+            "decodeAttempts": 3,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "song-exit-3",
+            "heap": {
+              "usedSize": 4594668,
+              "totalSize": 5832704,
+              "embedderHeapUsedSize": 15337232,
+              "backingStorageSize": 471391
+            },
+            "dom": {
+              "documents": 41,
+              "nodes": 10086,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 15,
+            "decodeAttempts": 4,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "song-exit-4",
+            "heap": {
+              "usedSize": 4685360,
+              "totalSize": 5570560,
+              "embedderHeapUsedSize": 15242440,
+              "backingStorageSize": 471397
+            },
+            "dom": {
+              "documents": 41,
+              "nodes": 10086,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 17,
+            "decodeAttempts": 5,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "song-exit-5",
+            "heap": {
+              "usedSize": 4719856,
+              "totalSize": 5570560,
+              "embedderHeapUsedSize": 15450832,
+              "backingStorageSize": 471394
+            },
+            "dom": {
+              "documents": 41,
+              "nodes": 10086,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 19,
+            "decodeAttempts": 6,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "song-exit-6",
+            "heap": {
+              "usedSize": 4719528,
+              "totalSize": 5570560,
+              "embedderHeapUsedSize": 15405136,
+              "backingStorageSize": 471394
+            },
+            "dom": {
+              "documents": 41,
+              "nodes": 10086,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 21,
+            "decodeAttempts": 7,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "song-exit-7",
+            "heap": {
+              "usedSize": 4741568,
+              "totalSize": 5570560,
+              "embedderHeapUsedSize": 15383488,
+              "backingStorageSize": 471394
+            },
+            "dom": {
+              "documents": 41,
+              "nodes": 10086,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 23,
+            "decodeAttempts": 8,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "song-exit-8",
+            "heap": {
+              "usedSize": 4779884,
+              "totalSize": 5832704,
+              "embedderHeapUsedSize": 15513920,
+              "backingStorageSize": 471394
+            },
+            "dom": {
+              "documents": 41,
+              "nodes": 10086,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 25,
+            "decodeAttempts": 9,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "after-interrupted-loads",
+            "heap": {
+              "usedSize": 4800380,
+              "totalSize": 5832704,
+              "embedderHeapUsedSize": 16107344,
+              "backingStorageSize": 471518
+            },
+            "dom": {
+              "documents": 44,
+              "nodes": 10632,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 25,
+            "decodeAttempts": 9,
+            "pendingDecodes": 0
+          }
+        ],
+        "coverage": {
+          "covered": true,
+          "kind": "memory",
+          "cycles": 8,
+          "observations": 20,
+          "performanceBudgetEvaluated": false
+        },
+        "errors": [],
+        "failedRequests": [
+          {
+            "url": "http://127.0.0.1:60151/catalog/bs-s6-35/audio.m4a?v=1a3554043f362812",
+            "failure": "net::ERR_ABORTED"
+          },
+          {
+            "url": "http://127.0.0.1:60151/catalog/bs-s6-34/audio.m4a?v=ff760c26ec565314",
+            "failure": "net::ERR_ABORTED"
+          },
+          {
+            "url": "http://127.0.0.1:60151/catalog/bs-s6-33/audio.m4a?v=caebcef6f69612fd",
+            "failure": "net::ERR_ABORTED"
+          }
+        ]
+      },
+      {
+        "profile": "mobile-emulated",
+        "summary": {
+          "restarts": 8,
+          "songSwitches": 8
+        },
+        "points": [
+          {
+            "label": "library-initial",
+            "heap": {
+              "usedSize": 3388956,
+              "totalSize": 4259840,
+              "embedderHeapUsedSize": 9159128,
+              "backingStorageSize": 353357
+            },
+            "dom": {
+              "documents": 16,
+              "nodes": 4364,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 0,
+            "liveDecodedBuffers": 0,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 0,
+            "decodeAttempts": 0,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "playing-warmup",
+            "heap": {
+              "usedSize": 3829816,
+              "totalSize": 4521984,
+              "embedderHeapUsedSize": 1863568,
+              "backingStorageSize": 463882
+            },
+            "dom": {
+              "documents": 2,
+              "nodes": 381,
+              "jsEventListeners": 182
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 1,
+            "musicSourceStarts": 1,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "restart-1",
+            "heap": {
+              "usedSize": 3734736,
+              "totalSize": 4259840,
+              "embedderHeapUsedSize": 1440008,
+              "backingStorageSize": 463714
+            },
+            "dom": {
+              "documents": 2,
+              "nodes": 381,
+              "jsEventListeners": 182
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 1,
+            "musicSourceStarts": 2,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "restart-2",
+            "heap": {
+              "usedSize": 3797684,
+              "totalSize": 4521984,
+              "embedderHeapUsedSize": 1887896,
+              "backingStorageSize": 463844
+            },
+            "dom": {
+              "documents": 2,
+              "nodes": 381,
+              "jsEventListeners": 182
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 1,
+            "musicSourceStarts": 3,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "restart-3",
+            "heap": {
+              "usedSize": 3802560,
+              "totalSize": 4521984,
+              "embedderHeapUsedSize": 1750936,
+              "backingStorageSize": 463843
+            },
+            "dom": {
+              "documents": 2,
+              "nodes": 381,
+              "jsEventListeners": 182
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 1,
+            "musicSourceStarts": 4,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "restart-4",
+            "heap": {
+              "usedSize": 3782508,
+              "totalSize": 4259840,
+              "embedderHeapUsedSize": 1439584,
+              "backingStorageSize": 463698
+            },
+            "dom": {
+              "documents": 2,
+              "nodes": 381,
+              "jsEventListeners": 182
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 1,
+            "musicSourceStarts": 5,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "restart-5",
+            "heap": {
+              "usedSize": 3815628,
+              "totalSize": 4521984,
+              "embedderHeapUsedSize": 1811072,
+              "backingStorageSize": 463861
+            },
+            "dom": {
+              "documents": 2,
+              "nodes": 381,
+              "jsEventListeners": 182
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 1,
+            "musicSourceStarts": 6,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "restart-6",
+            "heap": {
+              "usedSize": 3817960,
+              "totalSize": 4521984,
+              "embedderHeapUsedSize": 1794480,
+              "backingStorageSize": 463862
+            },
+            "dom": {
+              "documents": 2,
+              "nodes": 381,
+              "jsEventListeners": 182
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 1,
+            "musicSourceStarts": 7,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "restart-7",
+            "heap": {
+              "usedSize": 3829012,
+              "totalSize": 4521984,
+              "embedderHeapUsedSize": 1808640,
+              "backingStorageSize": 463862
+            },
+            "dom": {
+              "documents": 2,
+              "nodes": 381,
+              "jsEventListeners": 182
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 1,
+            "musicSourceStarts": 8,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "restart-8",
+            "heap": {
+              "usedSize": 3844976,
+              "totalSize": 4521984,
+              "embedderHeapUsedSize": 1802560,
+              "backingStorageSize": 463860
+            },
+            "dom": {
+              "documents": 2,
+              "nodes": 381,
+              "jsEventListeners": 182
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 1,
+            "musicSourceStarts": 9,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "after-restarts-exit",
+            "heap": {
+              "usedSize": 4162432,
+              "totalSize": 4784128,
+              "embedderHeapUsedSize": 8164440,
+              "backingStorageSize": 465343
+            },
+            "dom": {
+              "documents": 14,
+              "nodes": 4886,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 9,
+            "decodeAttempts": 1,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "song-exit-1",
+            "heap": {
+              "usedSize": 4381772,
+              "totalSize": 5046272,
+              "embedderHeapUsedSize": 8347296,
+              "backingStorageSize": 471416
+            },
+            "dom": {
+              "documents": 13,
+              "nodes": 4708,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 11,
+            "decodeAttempts": 2,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "song-exit-2",
+            "heap": {
+              "usedSize": 4501964,
+              "totalSize": 5308416,
+              "embedderHeapUsedSize": 8267840,
+              "backingStorageSize": 471410
+            },
+            "dom": {
+              "documents": 13,
+              "nodes": 4708,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 13,
+            "decodeAttempts": 3,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "song-exit-3",
+            "heap": {
+              "usedSize": 4611560,
+              "totalSize": 5570560,
+              "embedderHeapUsedSize": 8330824,
+              "backingStorageSize": 471413
+            },
+            "dom": {
+              "documents": 13,
+              "nodes": 4708,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 15,
+            "decodeAttempts": 4,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "song-exit-4",
+            "heap": {
+              "usedSize": 4718312,
+              "totalSize": 5832704,
+              "embedderHeapUsedSize": 8468784,
+              "backingStorageSize": 471416
+            },
+            "dom": {
+              "documents": 13,
+              "nodes": 4708,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 17,
+            "decodeAttempts": 5,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "song-exit-5",
+            "heap": {
+              "usedSize": 4741292,
+              "totalSize": 5832704,
+              "embedderHeapUsedSize": 8252592,
+              "backingStorageSize": 471410
+            },
+            "dom": {
+              "documents": 13,
+              "nodes": 4708,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 19,
+            "decodeAttempts": 6,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "song-exit-6",
+            "heap": {
+              "usedSize": 4748108,
+              "totalSize": 5832704,
+              "embedderHeapUsedSize": 8359864,
+              "backingStorageSize": 471410
+            },
+            "dom": {
+              "documents": 13,
+              "nodes": 4708,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 21,
+            "decodeAttempts": 7,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "song-exit-7",
+            "heap": {
+              "usedSize": 4759536,
+              "totalSize": 5570560,
+              "embedderHeapUsedSize": 8338000,
+              "backingStorageSize": 471410
+            },
+            "dom": {
+              "documents": 13,
+              "nodes": 4708,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 23,
+            "decodeAttempts": 8,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "song-exit-8",
+            "heap": {
+              "usedSize": 4796140,
+              "totalSize": 5570560,
+              "embedderHeapUsedSize": 8519856,
+              "backingStorageSize": 471410
+            },
+            "dom": {
+              "documents": 13,
+              "nodes": 4708,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 25,
+            "decodeAttempts": 9,
+            "pendingDecodes": 0
+          },
+          {
+            "label": "after-interrupted-loads",
+            "heap": {
+              "usedSize": 4799736,
+              "totalSize": 5570560,
+              "embedderHeapUsedSize": 9359416,
+              "backingStorageSize": 471441
+            },
+            "dom": {
+              "documents": 16,
+              "nodes": 5254,
+              "jsEventListeners": 709
+            },
+            "liveDecodedBytes": 46080000,
+            "liveDecodedBuffers": 1,
+            "activeMusicSources": 0,
+            "musicSourceStarts": 25,
+            "decodeAttempts": 9,
+            "pendingDecodes": 0
+          }
+        ],
+        "coverage": {
+          "covered": true,
+          "kind": "memory",
+          "cycles": 8,
+          "observations": 20,
+          "performanceBudgetEvaluated": false
+        },
+        "errors": [],
+        "failedRequests": [
+          {
+            "url": "http://127.0.0.1:60151/catalog/bs-s6-35/audio.m4a?v=1a3554043f362812",
+            "failure": "net::ERR_ABORTED"
+          },
+          {
+            "url": "http://127.0.0.1:60151/catalog/bs-s6-34/audio.m4a?v=ff760c26ec565314",
+            "failure": "net::ERR_ABORTED"
+          },
+          {
+            "url": "http://127.0.0.1:60151/catalog/bs-s6-33/audio.m4a?v=caebcef6f69612fd",
+            "failure": "net::ERR_ABORTED"
+          }
+        ]
+      }
+    ]
+  }
+}

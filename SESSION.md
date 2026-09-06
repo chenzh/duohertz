@@ -3,30 +3,38 @@
 | 字段 | 值 |
 |------|-----|
 | **phase** | 曲库 **105/105**（s1 6 · s2 4 · s3 15 · s4 15 · s5 10 · s6 35 · p3 10 · p4 10）· 315 张谱已按「拍网格亲和力」全量重出 · 线上体验 <https://beatscape.pages.dev> · 待人工耳检 |
-| **updated** | 2026-09-05 |
+| **updated** | 2026-09-06 |
 | **slug** | musicsaas |
+
+## 已取消（不自动恢复）
+
+- **专项真机验收：用户于 2026-09-06 决定不做。** 仅用户明确要求才恢复；不得从历史 PRD、工作日志或旧清单自动补回 TODO。执行取消与尚未调整的发布门禁分开记录，见 [BS-D001](docs/BEATSCAPE-DECISIONS.md#bs-d001)。本页历史条目中的“待真机”不再作为行动项。
 
 ## next（P0）
 
 > 验收入口：本页 · `pnpm catalog:beatscape` · `pnpm audit:beatscape` · `pnpm earcheck:beatscape`
 
+- [x] **BeatScape 自动性能基线与优化（2026-09-06，未部署）**：完成两种固定条件的冷加载、6 场完整 Hard / 最高特效 / Duo，以及每组 8 次重开、8 次切歌、3 次加载中退出的前后测量。实现目录预加载 / 去重、首页按需谱面、选定音频并行、有界 64 MiB 解码缓存 / Duo 共享与取消，修复 R 旧状态导致重开失效。156 应用单测 + 6 发布器回归 + 24 性能工具回归 + 32 生产浏览器流程、构建与资产核验通过；候选 `bd6f4017a63e`。**不等于性能全面达标**：移动模拟冷开局仍为单人 4.18s / 双人 4.46s，Duo 有连续两个异常帧间隔；原始证据、预算结论与复现命令见 [自动性能记录](docs/BEATSCAPE-PERFORMANCE.md)。BS-D001 取消决定保持生效。
+
+- [x] **公司项目文件与 Harness 一致性审计（2026-09-06）**：核验 10 个本地 Git 仓及 openworld 5 个子项目；确认投影断链、行为条款冲突、Company OS 副本落后与项目／单票文档混用。证据、覆盖边界及修复 TODO 统一记录在 [审计报告](docs/COMPANY-PROJECT-HARNESS-AUDIT-2026-09-06.md)。本次只审计，未同步或修改其他仓／Vault；保留并行改动。
+
 - [x] **BeatScape 叙事深度优化（2026-09-05，未提交/未发布）**：新增 First shift 三节点真实歌曲开场、结算回信与本机继续/重读；三人动机/关系、24 集多人英文对白和 105 首虚构来电已统一。139 单测、6 发布器回归、28 桌面/手机模拟浏览器流程及构建/资产核验通过，候选 `fa4bca512a38`，8 张截图已绑定新候选。实现与验收见 [叙事优化交付](docs/BEATSCAPE-NARRATIVE-UPDATE.md)。
-- [ ] **英语叙事真人试玩**：按 [五分钟协议](docs/BEATSCAPE-NARRATIVE-PLAYTEST.md) 收集理解、角色记忆、继续意愿与英语自然度；尚无参与者结果。旧候选 `74840f1fc466` 的视觉截图属于历史工作包，新界面需重新绑定视觉盲测材料；保留原耳检、真机和发布签审待办。
+- [ ] **英语叙事真人试玩**：按 [五分钟协议](docs/BEATSCAPE-NARRATIVE-PLAYTEST.md) 收集理解、角色记忆、继续意愿与英语自然度；尚无参与者结果。旧候选 `74840f1fc466` 的视觉截图属于历史工作包，新界面需重新绑定视觉盲测材料；保留原耳检和发布签审待办；专项真机验收按 BS-D001 取消。
 
 - [x] **MusicSaas 门户技术候选（2026-09-05，未提交/未发布）**：`apps/demo` 增加根路径静态门户，中英文、BeatScape/Scape Music 入口、站内 API 速查、真实标注的两段 5 秒技术样例、OG/404/安全头；生产 Demo BFF 默认关闭、独立 key 与限流。8 前端 + 12 发布器 + 22 浏览器回归通过；Gateway 44、Mock integration 17、Demo HTTP 14 通过。候选 `53f83162ad6e`，详情 [PORTAL-RELEASE-READINESS](docs/PORTAL-RELEASE-READINESS.md)。
 - [ ] **门户发布配置**：等待门户域名与 Cloudflare Pages 项目名；确定后按真实域名重建并复核，发布另需对应授权。当前共享区公司派单脚本造成根 Python 38 项失败；HEAD 基线叠加本任务 HTTP 修改已单独验证 70/70，保留并行改动，不能称整体 CI 已通过。
 
-- [x] **人工验收材料备齐（2026-09-05，未签审）**：当前候选 `74840f1fc466` 的 5 张盲测截图及 SHA-256 清单位于 `data/beatscape-release/2026-09-05/blindtest/`；截图等待字体加载，Play/Results 来自真实对局。9 WARN 已逐项定位到曲目/档位/测量值；资产归档更新为 105 首、7 PNG + 14 WebP、NIGHTSHIFT 三人。用户明确尚未完成耳检/盲测/真机，本目标现阻塞于真实人工记录，下一步使用 [`docs/RESONANCE-BLINDTEST.md`](docs/RESONANCE-BLINDTEST.md) 与上线清单记录真实结果后签审。
+- [x] **人工验收材料备齐（2026-09-05，未签审）**：当前候选 `74840f1fc466` 的 5 张盲测截图及 SHA-256 清单位于 `data/beatscape-release/2026-09-05/blindtest/`；截图等待字体加载，Play/Results 来自真实对局。9 WARN 已逐项定位到曲目/档位/测量值；资产归档更新为 105 首、7 PNG + 14 WebP、NIGHTSHIFT 三人。2026-09-05 用户确认耳检/盲测/真机未完成；2026-09-06 专项真机验收执行已取消，剩余人工工作为耳检与盲测，下一步使用 [`docs/RESONANCE-BLINDTEST.md`](docs/RESONANCE-BLINDTEST.md) 与上线清单记录真实结果后签审。
 
 - [x] **Agent 规则与工作流审计（2026-09-05，本地未提交）**：按 GPT-6 Astra 官方指导精简 AGENTS、常驻规则、角色与交付模板，新增按需验证/交付 skills，修复 CI/派单/合并资格校验。下一次上游 Harness 同步须审查 diff、保留本仓适配；自动合并须另行明确启用仓库变量。依据、验收与边界见 [AGENT-WORKFLOW-AUDIT](docs/AGENT-WORKFLOW-AUDIT.md)。
 
 - [x] **上线技术准备（2026-09-05，本地未提交/未发布）**：105 首 / 315 张谱候选包；统一锁文件/类型检查/构建与 CI 门禁；内容哈希 URL 修旧谱缓存；静态 OG 卡、全模式 Note speed、跨设备同曲分享、音乐站 hash 深链；修损坏存档、Daily 榜上限与误报纪录。`pnpm release:beatscape` 通过：127 单测 + 6 发布器回归 + 16 桌面/移动模拟 E2E，根测试 6+8 通过；产物 591 文件 / 402.7 MiB。详见 [`docs/BEATSCAPE-RELEASE-READINESS.md`](docs/BEATSCAPE-RELEASE-READINESS.md)。
-- [ ] **正式上线放行**：bs-p3-01/04/07 已从当前母带循环扩展至 216s（原版已备份，最终 audit **PASS=4726 WARN=9 FAIL=0**）；接缝听感仍待审核，继续完成 105 首人工耳检、差异化盲测、Safari/iPhone/Android/Windows 真机记录。工作单使用 `python3 scripts/beatscape-earcheck-worksheet.py --all`，带音频指纹与导出。`launch:check` 当前应阻止正式发布；待实际验收后填写 `apps/beatscape/launch-signoff.json`，不得把技术检查通过当成全部上线门禁通过。
+- [ ] **正式上线放行**：bs-p3-01/04/07 已从当前母带循环扩展至 216s（原版已备份，最终 audit **PASS=4726 WARN=9 FAIL=0**）；接缝听感仍待审核，继续完成 105 首人工耳检、差异化盲测。专项真机验收执行按 BS-D001 取消，不再安排；发布门禁尚未调整，按脚本如实报告。工作单使用 `python3 scripts/beatscape-earcheck-worksheet.py --all`，带音频指纹与导出。`launch:check` 当前应阻止正式发布；待实际验收后填写 `apps/beatscape/launch-signoff.json`，不得把技术检查通过当成全部上线门禁通过。
 
 - [x] **三人立绘重出（已完成 2026-09-02）**：本地 MPS + LoRA 重出 JUNO/ATLAS/TORQUE（prompt 母本 v2，锚点前置 + 赛璐璐夜色模板，BPE 66-71 通过）；锚点 checklist 目验过（单耳挂耳机/场强仪/扳手鼓槌+铬面锣/共振菱形 MOTIF）；已替换 `public/characters/` 三图并推送（commit `6b97c2e`）· 剩余市场评估（女性首位风险）为人工判断
 - [ ] **商业化差距决策点 5 项待拍板**：[`docs/BEATSCAPE-COMMERCIALIZATION-GAP.md`](docs/BEATSCAPE-COMMERCIALIZATION-GAP.md) §6（变现模式 / 经营主体 / 后端栈 / 流媒体终点 / 商标批次）——拍板后解锁对应 P0
 - [ ] **世界观 Bible 待办（仅剩人工项）**：[`docs/BEATSCAPE-WORLDBIBLE.md`](docs/BEATSCAPE-WORLDBIBLE.md) §12——文档/文案/判定皮肤/美术/回归语/昵称合规/点歌文案包/**S1 电台剧集包**完成；**商标深检索已完成**（2026-08-30，Justia 全 4 页 73 条 + serial 级核证，§11）：NIGHTSHIFT 游戏内可用但 **Class 41 有 LIVE 在册近邻（Kennelly Reg. 6359178，乐队现场演出）**，商品化/对外品牌化前必须 TSDR 全类正式检索；**备选名初筛已备好**（The Late Static 首推 / Scape City 次选，均无精确同名）；MONOLITH 证实 LIVE（华纳 Reg. 5880307 · Class 9 游戏软件全线）→ 限游戏内叙事不变
-- [ ] **人工耳检 105 首**（与内容失败/盲测/真机共同组成上线门禁）：是否脱口而出第三方名曲 → 有则废弃重生成。**工具已备**：`python3 scripts/beatscape-earcheck-worksheet.py --all` 生成 `apps/beatscape/earcheck-worksheet.html`，浏览器打开逐曲听+勾，进度自动保存且绑定音频指纹，可导出审核记录 · 曲目数 105（s1 6 / s2 4 / s3 15 / s4 15 / s5 10 / s6 35 / p3 10 / p4 10）
+- [ ] **人工耳检 105 首**（专项真机执行已取消，范围见 BS-D001；发布门禁仍按实际脚本）：是否脱口而出第三方名曲 → 有则废弃重生成。**工具已备**：`python3 scripts/beatscape-earcheck-worksheet.py --all` 生成 `apps/beatscape/earcheck-worksheet.html`，浏览器打开逐曲听+勾，进度自动保存且绑定音频指纹，可导出审核记录 · 曲目数 105（s1 6 / s2 4 / s3 15 / s4 15 / s5 10 / s6 35 / p3 10 / p4 10）
 - [x] **重新部署 Cloudflare Pages（已完成）**：线上 95 首（85+P3-10）+ 全部氛围层 + 自定义播放条 + 无红框；audiobar 渲染 30 处、原生控件 0；`bash scripts/deploy-beatscape-cf-pages.sh` 已验证 · 2026-09-02
 - [ ] **差异化盲测**（人类 · 阻塞对外宣称上线）：[`docs/RESONANCE-BLINDTEST.md`](docs/RESONANCE-BLINDTEST.md)
 - [x] **SIGNAL 氛围层已合入主工作区（未提交）**：高命中玩家对局氛围——SIGNAL 表三档 TUNING/LIVE/ON AIR 点亮 PlayField + 进档音效 + 掉档红闪；结算页 PEAK SIGNAL 徽标 + 海报 ON AIR 金章；计分/判定窗零改动 · patch `git apply` 合入 + 主区 vitest **105/105** + 构建干净 · 回退 `git apply -R docs/BEATSCAPE-SURGE-FX.patch` · 待人工：音色听感 / 真机帧率 / 文案入 Bible §9（文档 §8 草案已备）· worktree `../MusicSaas-wt-surge` 保留可删 · 2026-08-30
@@ -78,7 +86,7 @@
 - bs-p3-01/04/07 的 216s 循环扩展候选已过时长审计；接缝待人工耳检，Scape Music 已本地同步但尚未配套发布
 - 耳检需人工（105 首，须记录当前音频版本）
 - 盲测需 5–10 名「不玩日式 RPG」观察者（人工）
-- 真机兼容性与高密度手感/帧率记录待人工；正式发布签审未完成
+- 正式发布签审未完成；专项真机验收执行已按 BS-D001 取消，实际发布门禁状态见 [上线准备](docs/BEATSCAPE-RELEASE-READINESS.md)，不据此重新安排真机 TODO。
 
 ## 角色 IP / LoRA 工作流（并行 · 跨 IDE 真相见 docs/BEATSCAPE-CHARACTER-LORA.md）
 

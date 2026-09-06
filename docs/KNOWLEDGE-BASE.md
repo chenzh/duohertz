@@ -41,6 +41,8 @@
 
 **上线准备当前入口（2026-09-05）**：[BEATSCAPE-RELEASE-READINESS.md](./BEATSCAPE-RELEASE-READINESS.md) — 105 首候选包、技术证据、内容阻塞、人工验收工作包与发布/回退流程。
 
+**自动性能记录（2026-09-06）**：[BEATSCAPE-PERFORMANCE.md](./BEATSCAPE-PERFORMANCE.md) — 同条件冷加载、完整 Hard / 最高特效 / 双人、连续重开及切歌的基线与优化证据；取消项先核对 [项目决策](BEATSCAPE-DECISIONS.md)。
+
 1. [docs/PRD-BEATSCAPE.md](./PRD-BEATSCAPE.md) — 主产品 PRD
 2. [docs/PRD-WEB-RHYTHM-GAME.md](./PRD-WEB-RHYTHM-GAME.md) — NeonBeat 参考
 3. [docs/BEATSCAPE-STAGE1-DUAL-ASSET.md](./BEATSCAPE-STAGE1-DUAL-ASSET.md) — Stage1 双资产改造清单

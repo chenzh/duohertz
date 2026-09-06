@@ -1,5 +1,7 @@
 # BeatScape PRD — 实现真值版（As-Built）
 
+> **2026-09-06 执行决策**：专项真机验收已由用户取消，不自动恢复 TODO。取消执行与发布门禁的区别见 [BS-D001](../../docs/BEATSCAPE-DECISIONS.md#bs-d001)。
+
 > **2026-09-05 上线准备状态优先读**：[发布候选、验收证据与未关闭门禁](../../docs/BEATSCAPE-RELEASE-READINESS.md)。现有曲库为 **105 首 / 315 张谱**；下文 2026-08-30 的规模/测试数/部署状态为历史快照。当前入口 `pnpm release:beatscape`（技术）与 `launch:check`（正式放行）。分享新增跨设备同曲挑战链接，Settings 新增全模式 Note speed，站点静态 OG 与资产哈希发布门禁已实现；内容审计 4726 PASS / 9 WARN / 0 FAIL，三首 216s 循环候选接缝及全库人工耳检/盲测/真机未签审。
 
 > **文档定位**：本文是 `apps/beatscape/` 的**实现级 PRD**，基于 2026-08-30 对全部源码（约 6.2k 行 TS/TSX）逐文件深度分析沉淀而成。

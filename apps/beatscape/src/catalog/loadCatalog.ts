@@ -2,14 +2,20 @@ import type { CatalogJSON, CatalogTrack } from "../types/catalog";
 import type { ChartJSON, ChartTier } from "../types/chart";
 
 let cache: CatalogJSON | null = null;
+let pendingCatalog: Promise<CatalogJSON> | null = null;
 
 export async function loadCatalog(): Promise<CatalogJSON> {
   if (cache) return cache;
-  const base = import.meta.env.BASE_URL;
-  const res = await fetch(`${base}catalog.json`, { cache: "no-cache" });
-  if (!res.ok) throw new Error("Failed to load catalog");
-  cache = (await res.json()) as CatalogJSON;
-  return cache;
+  if (!pendingCatalog) {
+    pendingCatalog = (async () => {
+      const base = import.meta.env.BASE_URL;
+      const res = await fetch(`${base}catalog.json`, { cache: "no-cache" });
+      if (!res.ok) throw new Error("Failed to load catalog");
+      cache = (await res.json()) as CatalogJSON;
+      return cache;
+    })().finally(() => { pendingCatalog = null; });
+  }
+  return pendingCatalog;
 }
 
 export async function getTrack(trackId: string): Promise<CatalogTrack | undefined> {

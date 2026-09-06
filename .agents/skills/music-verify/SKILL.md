@@ -7,6 +7,8 @@ description: 为 MusicSaas 变更选择并执行相关测试、构建和验收�
 
 从仓库根运行。先看本任务 diff、受影响模块和任务 AC，按下表选检查；跨模块变更合并相关行。以当前 `package.json` 和脚本实现为准，命令失效先核对，不猜工具。
 
+BeatScape 先核对 [项目决策](../../../docs/BEATSCAPE-DECISIONS.md)：BS-D001 已取消专项真机验收，不再列为 TODO 或建议，只有用户明确要求才恢复。取消不写 PASS；现有发布门禁按实际脚本核验，不因取消执行自动豁免。
+
 | 变更 | 起点；根据影响补充 |
 |------|--------------------|
 | 文档 / AGENTS / skills | `git diff --check`、核对相对链接与引用命令；新 skill 检查 YAML `name` / `description` 与触发边界。无需启动应用栈 |

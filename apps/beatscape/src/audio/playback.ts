@@ -1,4 +1,5 @@
 import { getAudioContext, unlockAudio } from "./context";
+import { audioLoadAborted, decodedAudioCache, type DecodedAudioLease } from "./decodedAudioCache";
 
 /**
  * 帧内插值上限(ms)：音频时钟每 128 个采样（48k 下约 2.7ms）才推进一次，两跳之间
@@ -38,6 +39,8 @@ export class Conductor {
   private analyser: AnalyserNode;
   private freqData: Uint8Array<ArrayBuffer>;
   private buffer: AudioBuffer | null = null;
+  private audioLease: DecodedAudioLease | null = null;
+  private loadRevision = 0;
   private source: AudioBufferSourceNode | null = null;
 
   private _accumMs = 0; // song time; negative during countdown
@@ -150,11 +153,26 @@ export class Conductor {
   }
 
   async load(url: string): Promise<void> {
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`Audio load failed (${res.status})`);
-    const ab = await res.arrayBuffer();
-    this.buffer = await this.ctx.decodeAudioData(ab.slice(0));
-    this._durationMs = this.buffer.duration * 1000;
+    if (this._disposed) throw audioLoadAborted();
+    this.audioLease?.release();
+    const revision = ++this.loadRevision;
+    this.buffer = null;
+    this._durationMs = 0;
+    const lease = decodedAudioCache.acquire(this.ctx, url);
+    this.audioLease = lease;
+    try {
+      const buffer = await lease.promise;
+      if (this._disposed || revision !== this.loadRevision) throw audioLoadAborted();
+      this.buffer = buffer;
+      this._durationMs = buffer.duration * 1000;
+    } catch (error) {
+      // An earlier load's rejection must not release a newer subscription.
+      if (this.audioLease === lease) {
+        lease.release();
+        this.audioLease = null;
+      }
+      throw error;
+    }
   }
 
   /** Resume the AudioContext inside a user gesture. */
@@ -268,6 +286,9 @@ export class Conductor {
   dispose(): void {
     if (this._disposed) return;
     this._disposed = true;
+    this.loadRevision++;
+    this.audioLease?.release();
+    this.audioLease = null;
     this._playing = false;
     this._paused = false;
     this.onEnded = null;

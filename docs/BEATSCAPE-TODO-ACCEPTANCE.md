@@ -1,5 +1,7 @@
 # BeatScape 待办与验收标准
 
+> **取消项优先**：专项真机验收已于 2026-09-06 由用户取消，后续不得从下文历史验收规格自动恢复 TODO。执行状态与发布门禁区别见 [BS-D001](BEATSCAPE-DECISIONS.md#bs-d001)。
+
 > **当前上线准备（2026-09-05）**：见 [BEATSCAPE-RELEASE-READINESS.md](BEATSCAPE-RELEASE-READINESS.md)，105 首 / 315 张谱。本文以下为 Stage1–3 历史验收规格，旧测试数及勾选状态不能充当当前版本的验收证据。
 
 > **更新**：2026-08-25（Stage3 验收）  

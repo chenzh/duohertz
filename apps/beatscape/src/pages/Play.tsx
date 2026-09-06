@@ -16,6 +16,8 @@ import { useRef } from "react";
 import { makeLiveStats, type LiveStats } from "../components/playfield/liveStats";
 import { shiftStep } from "../data/firstShift";
 import { recordShiftRun } from "../lib/firstShift";
+import { getAudioContext } from "../audio/context";
+import { decodedAudioCache } from "../audio/decodedAudioCache";
 
 export function PlayPage() {
   const { id } = useParams();
@@ -41,6 +43,7 @@ export function PlayPage() {
     if (!id) return;
     finishedRunRef.current = false;
     let cancelled = false;
+    let warmAudio: ReturnType<typeof decodedAudioCache.acquire> | null = null;
     void (async () => {
       setLoadError("");
       setTrack(null);
@@ -54,17 +57,25 @@ export function PlayPage() {
           if (!cancelled) setLoadError(`Track not found: ${id}`);
           return;
         }
+        if (cancelled) return;
+        // Download/decode only the selected song while its chart loads. The
+        // field acquires the same buffer; keep this lease until route cleanup.
+        warmAudio = decodedAudioCache.acquire(getAudioContext(), assetUrl(t.audio));
+        void warmAudio.promise.catch(() => {}); // PlayField owns retry/error UI.
         const c = await loadChart(t, tier);
         if (!cancelled) {
           setTrack(t);
           setChart(c);
         }
       } catch (e) {
+        warmAudio?.release();
+        warmAudio = null;
         if (!cancelled) setLoadError(e instanceof Error ? e.message : "Chart load failed");
       }
     })();
     return () => {
       cancelled = true;
+      warmAudio?.release();
     };
   }, [id, tier, nav]);
 

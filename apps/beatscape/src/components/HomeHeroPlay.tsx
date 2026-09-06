@@ -61,6 +61,7 @@ export function HomeHeroPlay() {
   const [chart, setChart] = useState<ChartJSON | null>(null);
   const [error, setError] = useState("");
   const [live, setLive] = useState(false);
+  const [arming, setArming] = useState(false);
   const [runKey, setRunKey] = useState(0);
   const settings = loadSettings();
   const keys = useMemo(() => keyLabels(loadKeys()), []);
@@ -68,16 +69,11 @@ export function HomeHeroPlay() {
   useEffect(() => {
     let alive = true;
     void (async () => {
-      const t = await getTrack(HOME_HERO_TRACK_ID);
-      if (!t) {
-        if (alive) setError("Strike Vector missing from catalog");
-        return;
-      }
       try {
-        const c = await loadChart(t, "easy");
+        const t = await getTrack(HOME_HERO_TRACK_ID);
+        if (!t) throw new Error("Strike Vector missing from catalog");
         if (!alive) return;
         setTrack(t);
-        setChart(c);
       } catch (e) {
         if (alive) setError(e instanceof Error ? e.message : "Chart load failed");
       }
@@ -88,10 +84,20 @@ export function HomeHeroPlay() {
   }, []);
 
   const armPlay = async () => {
-    await unlockAudio();
-    setLive(true);
-    trackEvent("home_sound_toggle", { muted: 0 });
-    trackEvent("home_hero_play_start", { track: HOME_HERO_TRACK_ID });
+    if (!track || arming) return;
+    setArming(true);
+    try {
+      await unlockAudio();
+      // The idle preview is procedural and does not use a chart. Load the real
+      // chart only after the visitor chooses to play, preserving audio consent.
+      const loaded = await loadChart(track, "easy");
+      setChart(loaded);
+      setLive(true);
+      trackEvent("home_sound_toggle", { muted: 0 });
+      trackEvent("home_hero_play_start", { track: HOME_HERO_TRACK_ID });
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Chart load failed");
+    } finally { setArming(false); }
   };
 
   if (error) {
@@ -105,7 +111,7 @@ export function HomeHeroPlay() {
     );
   }
 
-  if (!track || !chart) {
+  if (!track) {
     return (
       <div className="home-hero-play home-hero-play-loading" aria-busy>
         <div className="loading-spinner" aria-hidden />
@@ -139,9 +145,10 @@ export function HomeHeroPlay() {
                   type="button"
                   className="btn primary unlock-btn home-play-sound-btn"
                   onClick={() => void armPlay()}
+                  disabled={arming}
                 >
                   <SoundIcon on />
-                  <span>{SCAPE_COPY.play}</span>
+                  <span>{arming ? "Loading…" : SCAPE_COPY.play}</span>
                 </button>
                 {!keys.length ? null : (
                   <div className="unlock-keys" aria-hidden>
@@ -156,7 +163,7 @@ export function HomeHeroPlay() {
               </div>
             </div>
           </>
-        ) : (
+        ) : chart ? (
           <PlayField
             key={`${track.track_id}-${runKey}`}
             district={track.district}
@@ -173,7 +180,7 @@ export function HomeHeroPlay() {
               setRunKey((k) => k + 1);
             }}
           />
-        )}
+        ) : null}
       </div>
     </div>
   );

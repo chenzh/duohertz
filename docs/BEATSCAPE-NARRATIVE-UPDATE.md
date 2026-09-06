@@ -38,4 +38,4 @@ Node v26.7.0；本机 pnpm 自动切换项目指定版本时受 registry 网络�
 
 ## 接续工作
 
-使用新候选执行 [叙事试玩协议](BEATSCAPE-NARRATIVE-PLAYTEST.md)，根据参与者原话与实际路径继续编辑。目前没有参与者数据、配音、云端进度或动态城市系统。既有耳检、视觉差异化盲测、真机与正式发布签审仍按 [发布准备](BEATSCAPE-RELEASE-READINESS.md) 独立处理；本次没有代填或关闭这些人工项目。
+使用新候选执行 [叙事试玩协议](BEATSCAPE-NARRATIVE-PLAYTEST.md)，根据参与者原话与实际路径继续编辑。目前没有参与者数据、配音、云端进度或动态城市系统。既有耳检、视觉差异化盲测与正式发布签审仍按 [发布准备](BEATSCAPE-RELEASE-READINESS.md) 独立处理。2026-09-06 用户取消专项真机验收执行，后续不自动补回 TODO，见 [BS-D001](BEATSCAPE-DECISIONS.md#bs-d001)；取消不表示验收通过或发布门禁已变更。

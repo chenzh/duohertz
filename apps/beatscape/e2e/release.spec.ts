@@ -38,6 +38,23 @@ test('catalog, preview audio, and full-track destination', async ({ page }) => {
   await expect.poll(() => audio.evaluate((node: HTMLAudioElement) => node.readyState)).toBeGreaterThan(0);
 });
 
+test('home preview stays light and Play + Sound starts real audio on one click', async ({ page }) => {
+  const requests: string[] = [];
+  page.on('request', request => requests.push(new URL(request.url()).pathname));
+  await page.goto('/');
+  const play = page.locator('.home-play-sound-btn');
+  await expect(play).toBeEnabled();
+  expect(requests.filter(path => path.endsWith('/catalog.json'))).toHaveLength(1);
+  expect(requests.some(path => /chart.*\.json$|\.m4a$/.test(path))).toBe(false);
+  await play.click();
+  const hero = page.locator('.home-hero-play');
+  await expect(hero.locator('canvas.play-canvas')).toBeVisible();
+  await expect(hero.getByRole('button', { name: 'Pause', exact: true })).toBeVisible();
+  expect(requests.some(path => path.endsWith('/audio.m4a'))).toBe(true);
+  await hero.getByRole('button', { name: 'Pause', exact: true }).click();
+  await expect(hero.getByRole('button', { name: /resume/i })).toBeVisible();
+});
+
 test('note speed uses the slider and persists through refresh', async ({ page }) => {
   await page.goto('/settings');
   const slider = page.getByRole('slider', { name: 'Note speed', exact: true });
@@ -69,6 +86,27 @@ test('real M4A decode, start, keyboard/pointer input, pause, resume, and exit', 
   page.once('dialog', (dialog) => dialog.accept());
   await page.locator('.play-exit').click();
   await expect(page).toHaveURL(/\/track\/bs-s1-01/);
+});
+
+test('R really restarts loaded audio repeatedly after the initial loading state', async ({ page }) => {
+  await page.addInitScript(() => {
+    const state = window as typeof window & { __musicStarts: number };
+    state.__musicStarts = 0;
+    const start = AudioBufferSourceNode.prototype.start;
+    AudioBufferSourceNode.prototype.start = function (...args) {
+      if (this.buffer && this.buffer.duration > 1) state.__musicStarts++;
+      return start.apply(this, args);
+    };
+  });
+  await page.goto('/play/bs-s1-01?tier=easy&mode=casual');
+  await page.locator('.overlay-tap button').click();
+  await expect(page.getByRole('button', { name: 'Pause', exact: true })).toBeVisible();
+  const starts = () => page.evaluate(() => (window as typeof window & { __musicStarts: number }).__musicStarts);
+  await expect.poll(starts).toBe(1);
+  for (let i = 0; i < 3; i++) {
+    await page.keyboard.press('KeyR');
+    await expect.poll(starts).toBe(i + 2);
+  }
 });
 
 test('audio failure offers a working retry', async ({ page }) => {

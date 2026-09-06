@@ -11,6 +11,8 @@ import { districtColor } from "../constants/scape";
 import { makeLiveStats, type LiveStats } from "../components/playfield/liveStats";
 import { trackEvent } from "../lib/analytics";
 import { buildPlayPageMeta, usePageMeta } from "../seo/pageMeta";
+import { getAudioContext } from "../audio/context";
+import { decodedAudioCache } from "../audio/decodedAudioCache";
 
 /**
  * DUO · Split-screen versus — two players, one track, one keyboard.
@@ -23,7 +25,7 @@ import { buildPlayPageMeta, usePageMeta } from "../seo/pageMeta";
  *   land in the same React commit — the same frame. Without the gate, P2 would
  *   start a few frames late and the two charts would visibly drift.
  * · **Audio**: P2 gets `muteMusic` so we don't layer the same track on itself
- *   (two decodes = a few ms of delay = flanger/echo). Hit SFX stay on for both,
+ *   (independent source starts can otherwise produce flanger/echo). Hit SFX stay on for both,
  *   so each player still hears their own feedback.
  * · **Keys**: P1 keeps the player's saved binding; P2 is handed the preset that
  *   can't collide with it — and that sits as far away as the board allows
@@ -49,6 +51,7 @@ export function DuoPage() {
   useEffect(() => {
     if (!id) return;
     let cancelled = false;
+    let warmAudio: ReturnType<typeof decodedAudioCache.acquire> | null = null;
     void (async () => {
       setLoadError("");
       setTrack(null);
@@ -59,17 +62,23 @@ export function DuoPage() {
           if (!cancelled) setLoadError(`Track not found: ${id}`);
           return;
         }
+        if (cancelled) return;
+        warmAudio = decodedAudioCache.acquire(getAudioContext(), assetUrl(t.audio));
+        void warmAudio.promise.catch(() => {}); // Each field owns its retry UI.
         const c = await loadChart(t, tier);
         if (!cancelled) {
           setTrack(t);
           setChart(c);
         }
       } catch (e) {
+        warmAudio?.release();
+        warmAudio = null;
         if (!cancelled) setLoadError(e instanceof Error ? e.message : "Chart load failed");
       }
     })();
     return () => {
       cancelled = true;
+      warmAudio?.release();
     };
   }, [id, tier, nav]);
 

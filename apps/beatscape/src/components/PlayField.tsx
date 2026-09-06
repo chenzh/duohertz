@@ -447,7 +447,9 @@ export function PlayField({
   // FEEL PACK: instant retry — same chart, fresh session, straight to countdown.
   const restartRun = () => {
     const conductor = conductorRef.current;
-    if (!conductor || loading) return;
+    // The stable key listener must read current readiness, not the loading=true
+    // value captured when it was installed before the audio finished loading.
+    if (!conductor || conductor.durationMs <= 0) return;
     conductor.stop();
     sessionRef.current = new GameSession(chart, mode, { chordAssist });
     surgeRef.current.reset();

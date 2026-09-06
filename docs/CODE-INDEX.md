@@ -66,6 +66,8 @@ MusicSaas/
 
 **上线准备**：[BEATSCAPE-RELEASE-READINESS.md](./BEATSCAPE-RELEASE-READINESS.md) · `pnpm release:beatscape` 技术检查 · `apps/beatscape/scripts/release.mjs` 构建资产/哈希门禁 · `scripts/launch-check.mjs` 正式放行 · `scripts/live-smoke.mjs` 发布后只读检查 · `e2e/release.spec.ts` 生产包浏览器回归 · `scripts/capture-blindtest.mjs` 捕获绑定候选哈希的 5 张人工盲测截图。
 
+**自动性能**：[BEATSCAPE-PERFORMANCE.md](./BEATSCAPE-PERFORMANCE.md) · `apps/beatscape/scripts/performance.mjs` 测现有生产包的冷加载、完整 Hard / 特效 / Duo、同一 SPA 内重开与切歌内存；`performance-probe.mjs` 采集真实时钟输入与帧 / 音频指标，`performance-coverage.mjs` 拒绝未实际跑完整场景的证据。
+
 | 路径 | 职责 |
 |------|------|
 | `src/App.tsx` | 路由壳 |
