@@ -22,7 +22,7 @@
 | 线上 | BeatScape <https://beatscape.pages.dev> · ScapeMusic <https://scapemusic.pages.dev> |
 | 代码质量 | strict 全开 · 零 `any` · 零 `@ts-ignore` · **源码零 TODO/FIXME 标记**（本次实测 grep 零命中） |
 | 性能 | 第二轮本地完成：`ae15d3778b3f` 同指纹 28 项固定预算全部通过；最慢冷开局 3.908s、8 场整局 0 异常间隔、绘制峰值最高 3.5ms；未提交 / 未部署 |
-| 阻塞发布 | 远端 CI 待新提交复跑 · 耳检 105 首 · 差异化盲测 / 英语叙事试玩 · 最终签审；真机执行取消与门禁冲突保持记录 |
+| 阻塞发布 | 耳检 105 首 · 差异化盲测 / 英语叙事试玩 · 最终签审；真机执行取消与门禁冲突保持记录 |
 
 ---
 
@@ -53,7 +53,7 @@
 - **注意**：叙事优化后界面已变，旧候选 `74840f1fc466` 的视觉截图属历史工作包，**新界面需重新绑定视觉盲测材料**。
 
 ### P0-3 正式上线放行
-- **前置**：P0-1、P0-2、P0-4、P0-7 全部完成。当前本地候选的固定条件性能预算已通过，[同指纹证据与覆盖边界](docs/BEATSCAPE-PERFORMANCE.md) 保持记录。
+- **前置**：P0-1、P0-2、P0-4 全部完成。仓库 CI 已在 `e3ba64f` 通过；当前本地候选的固定条件性能预算已通过，[同指纹证据与覆盖边界](docs/BEATSCAPE-PERFORMANCE.md) 保持记录。
 - **动作**：据实填写 `apps/beatscape/launch-signoff.json`。
 - **门禁**：`launch:check` 当前**应阻止**正式发布（`deviceTestRecord` 缺失，按 BS-D001 如实报告，不得当作通过）；状态详见 [docs/BEATSCAPE-RELEASE-READINESS.md](docs/BEATSCAPE-RELEASE-READINESS.md)。
 
@@ -65,11 +65,7 @@
 ### P0-5 门户发布配置
 - **等待**：门户域名 + Cloudflare Pages 项目名；确定后按真实域名重建并复核，**发布另需对应授权**。
 - **现状**：[docs/PORTAL-RELEASE-READINESS.md](docs/PORTAL-RELEASE-READINESS.md)，候选 `53f83162ad6e`（本地未提交）。
-- **CI 注意**：共享区公司派单脚本造成根 Python **38 项失败**；HEAD 基线叠加本任务 HTTP 修改已单独验证 70/70。**不得称整体 CI 已通过。**
-
-### P0-7 修复仓库 CI
-- **实际状态**：已定位并修复 `harness.sh unit` 中的公司派单校验回归，以及 CI checkout 缺少被 `.gitignore` 排除的 stream masters 导致的 BeatScape 审计失败。审计默认本地仍严格检查母带；CI 显式使用 `--allow-missing-stream`，将外部母带记录为 WARN。当前本地单元 / 审计回归通过，待新提交的远端 CI 复跑。
-- **完成条件**：在最终提交上取得必需 CI 通过；本地性能预算或单测通过不能替代远端结果。保留并行维护中的公司派单脚本改动。
+- **CI 注意**：仓库 CI 已在 `e3ba64f` 通过；门户候选仍需独立按真实域名、Pages 项目和门户发布脚本验收，不能用 BeatScape CI 代替。
 
 ---
 
@@ -78,6 +74,7 @@
 | 事项 | commit | 说明 |
 |---|---|---|
 | 性能保障第二轮 | 本地未提交 | 候选 `ae15d3778b3f` 的 28 项固定预算通过；179 单测、6 当前相关浏览器回归，完整结果见 [性能记录](docs/BEATSCAPE-PERFORMANCE.md)；未部署 |
+| 仓库 CI 修复 | `e3ba64f` | 修复派单校验回归与 CI 外部 stream master 审计口径；CI `34033551898` 的 unit / build / beatscape / integration 全部通过 |
 | 游戏内退出确认（替换 `window.confirm`） | `6418d3f` | 单人 / Duo 顶层面板，打开时暂停音频与判定；156 单测 + 28 浏览器回归通过，**未部署** |
 | 自动性能基线与加载优化（第一轮） | `134115a` | 目录预加载/去重、首页按需谱面、64 MiB 解码缓存；移动冷开局仍 4.18 / 4.46s，**不等于性能达标**，第二轮已完成，见性能记录 |
 

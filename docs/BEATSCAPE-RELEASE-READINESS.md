@@ -10,7 +10,7 @@
 
 以下退出面板及更早候选均为历史阶段，不代表当前候选已经部署。正式上线仍需真实耳检、盲测、英语叙事试玩与最终签审；专项真机执行按 BS-D001 取消，现有门禁状态如实保留。
 
-已定位上一轮远端 CI（提交 `1290f0c`，[运行 34018671896](https://github.com/chenzh/MusicSaas/actions/runs/34018671896)）的两个失败原因：公司派单校验回归，以及 CI checkout 不含被 `.gitignore` 排除的 stream masters。当前修复已在本地通过；CI 审计显式使用 `--allow-missing-stream` 将外部母带记为 WARN，本地默认审计仍严格要求母带。待新提交的远端 CI 复跑；当前本地性能候选尚未提交，不能把本地性能数据当成远端 CI 通过。
+上一轮远端 CI（提交 `1290f0c`、[运行 34018671896](https://github.com/chenzh/MusicSaas/actions/runs/34018671896)）的两个失败原因已修复：公司派单校验回归，以及 CI checkout 不含被 `.gitignore` 排除的 stream masters。新提交 `e3ba64f` 的 [CI 34033551898](https://github.com/chenzh/MusicSaas/actions/runs/34033551898) 已通过 unit / build / beatscape / integration；CI 审计显式使用 `--allow-missing-stream` 将外部母带记为 WARN，本地默认审计仍严格要求母带。性能候选已包含在该提交，但上线仍受人工证据与签审门禁约束。
 
 当前产物已重新执行 `node apps/beatscape/scripts/launch-check.mjs`，按预期退出 1：缺当前产物签审、审核者 / 日期及四类通过证据。原始输出见 [launch-check.log](../data/beatscape-performance/2026-09-06/assurance/launch-check.log)。这不会把已取消的真机执行重新列入待办。
 

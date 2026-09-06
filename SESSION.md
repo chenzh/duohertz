@@ -14,7 +14,9 @@
 
 > 验收入口：本页 · `pnpm catalog:beatscape` · `pnpm audit:beatscape` · `pnpm earcheck:beatscape`
 
-- [x] **BeatScape 性能保障（2026-09-06，本地完成，未提交 / 未部署）**：候选 `ae15d3778b3f` 完成选定音频提前请求、可见音符窗口、里程碑和桌面键名预绘。179 应用单测、11 发布器 / 50 性能脚本回归、6 项当前产物相关浏览器回归通过；更早候选 62 项完整浏览器回归单独记录。同指纹 28 项自动性能预算全部通过：18 次冷加载最慢开局 3.908s，8 场真实 Hard 均约 60 FPS、0 异常间隔、绘制峰值最高 3.5ms；两种配置各 12 次重开 / 切歌后无活动音乐源或待解码，最后四次退出 JS 堆波动约 45 / 38 KiB。保留全部失败阶段，详见 [性能记录](docs/BEATSCAPE-PERFORMANCE.md) 与 [证据](docs/evidence/beatscape-performance-assurance-2026-09-06.json)。仅覆盖固定本地浏览器条件；BS-D001 与发布门禁保持不变。
+- [x] **BeatScape 性能保障（2026-09-06，已提交，未部署）**：候选 `ae15d3778b3f` 完成选定音频提前请求、可见音符窗口、里程碑和桌面键名预绘。179 应用单测、11 发布器 / 50 性能脚本回归、6 项当前产物相关浏览器回归通过；更早候选 62 项完整浏览器回归单独记录。同指纹 28 项自动性能预算全部通过：18 次冷加载最慢开局 3.908s，8 场真实 Hard 均约 60 FPS、0 异常间隔、绘制峰值最高 3.5ms；两种配置各 12 次重开 / 切歌后无活动音乐源或待解码，最后四次退出 JS 堆波动约 45 / 38 KiB。保留全部失败阶段，详见 [性能记录](docs/BEATSCAPE-PERFORMANCE.md) 与 [证据](docs/evidence/beatscape-performance-assurance-2026-09-06.json)。仅覆盖固定本地浏览器条件；BS-D001 与发布门禁保持不变。
+
+- [x] **仓库 CI 修复（2026-09-06，已推送）**：`e3ba64f` 修复公司派单合并资格校验的 PR 快照 / 分支前缀回归，并让 CI 在无 Git stream master 的 checkout 中显式按外部资源口径审计。远端 [CI 34033551898](https://github.com/chenzh/MusicSaas/actions/runs/34033551898) 的 unit / build / beatscape / integration 全部通过；这不替代 BeatScape 人工耳检、盲测与发布签审。
 
 - [x] **BeatScape 游戏内退出确认（2026-09-06，未部署）**：单人与 Duo 的浏览器 confirm 改为游戏内顶层面板，打开时暂停音频和判定；Keep playing / Esc 恢复原暂停状态，Leave 清理全屏并返回曲目页。修复弹窗内释放按键与延迟 R 音频恢复的边界，156 单测 + 28 项桌面／移动布局浏览器回归、类型检查、CF 构建与资产核验通过；候选 `f4015d14bd22`，详情见 [上线准备](docs/BEATSCAPE-RELEASE-READINESS.md)。
 
@@ -26,14 +28,14 @@
 - [ ] **英语叙事真人试玩**：按 [五分钟协议](docs/BEATSCAPE-NARRATIVE-PLAYTEST.md) 收集理解、角色记忆、继续意愿与英语自然度；尚无参与者结果。旧候选 `74840f1fc466` 的视觉截图属于历史工作包，新界面需重新绑定视觉盲测材料；保留原耳检和发布签审待办；专项真机验收按 BS-D001 取消。
 
 - [x] **MusicSaas 门户技术候选（2026-09-05，未提交/未发布）**：`apps/demo` 增加根路径静态门户，中英文、BeatScape/Scape Music 入口、站内 API 速查、真实标注的两段 5 秒技术样例、OG/404/安全头；生产 Demo BFF 默认关闭、独立 key 与限流。8 前端 + 12 发布器 + 22 浏览器回归通过；Gateway 44、Mock integration 17、Demo HTTP 14 通过。候选 `53f83162ad6e`，详情 [PORTAL-RELEASE-READINESS](docs/PORTAL-RELEASE-READINESS.md)。
-- [ ] **门户发布配置**：等待门户域名与 Cloudflare Pages 项目名；确定后按真实域名重建并复核，发布另需对应授权。当前共享区公司派单脚本造成根 Python 38 项失败；HEAD 基线叠加本任务 HTTP 修改已单独验证 70/70，保留并行改动，不能称整体 CI 已通过。
+- [ ] **门户发布配置**：等待门户域名与 Cloudflare Pages 项目名；确定后按真实域名重建并复核，发布另需对应授权。仓库 CI 已在 `e3ba64f` 通过；门户候选 `53f83162ad6e` 仍未提交/发布，保留并行改动，不能以 BeatScape CI 代替门户配置验收。
 
 - [x] **人工验收材料备齐（2026-09-05，未签审）**：当前候选 `74840f1fc466` 的 5 张盲测截图及 SHA-256 清单位于 `data/beatscape-release/2026-09-05/blindtest/`；截图等待字体加载，Play/Results 来自真实对局。9 WARN 已逐项定位到曲目/档位/测量值；资产归档更新为 105 首、7 PNG + 14 WebP、NIGHTSHIFT 三人。2026-09-05 用户确认耳检/盲测/真机未完成；2026-09-06 专项真机验收执行已取消，剩余人工工作为耳检与盲测，下一步使用 [`docs/RESONANCE-BLINDTEST.md`](docs/RESONANCE-BLINDTEST.md) 与上线清单记录真实结果后签审。
 
 - [x] **Agent 规则与工作流审计（2026-09-05，本地未提交）**：按 GPT-6 Astra 官方指导精简 AGENTS、常驻规则、角色与交付模板，新增按需验证/交付 skills，修复 CI/派单/合并资格校验。下一次上游 Harness 同步须审查 diff、保留本仓适配；自动合并须另行明确启用仓库变量。依据、验收与边界见 [AGENT-WORKFLOW-AUDIT](docs/AGENT-WORKFLOW-AUDIT.md)。
 
 - [x] **上线技术准备（2026-09-05，本地未提交/未发布）**：105 首 / 315 张谱候选包；统一锁文件/类型检查/构建与 CI 门禁；内容哈希 URL 修旧谱缓存；静态 OG 卡、全模式 Note speed、跨设备同曲分享、音乐站 hash 深链；修损坏存档、Daily 榜上限与误报纪录。`pnpm release:beatscape` 通过：127 单测 + 6 发布器回归 + 16 桌面/移动模拟 E2E，根测试 6+8 通过；产物 591 文件 / 402.7 MiB。详见 [`docs/BEATSCAPE-RELEASE-READINESS.md`](docs/BEATSCAPE-RELEASE-READINESS.md)。
-- [ ] **正式上线放行**：最新已推送 `1290f0c` 的 [CI](https://github.com/chenzh/MusicSaas/actions/runs/34018671896) 中根 unit 和内容审计仍失败，须在最终提交上修复必需 CI；bs-p3-01/04/07 已从当前母带循环扩展至 216s（原版已备份，最终 audit **PASS=4726 WARN=9 FAIL=0**）；接缝听感仍待审核，继续完成 105 首人工耳检、差异化盲测。专项真机验收执行按 BS-D001 取消，不再安排；发布门禁尚未调整，按脚本如实报告。工作单使用 `python3 scripts/beatscape-earcheck-worksheet.py --all`，带音频指纹与导出。`launch:check` 当前应阻止正式发布；待实际验收后填写 `apps/beatscape/launch-signoff.json`，不得把技术检查通过当成全部上线门禁通过。
+- [ ] **正式上线放行**：仓库 CI 已在 `e3ba64f` 通过；bs-p3-01/04/07 已从当前母带循环扩展至 216s（原版已备份，最终 audit **PASS=4726 WARN=9 FAIL=0**）；接缝听感仍待审核，继续完成 105 首人工耳检、差异化盲测。专项真机验收执行按 BS-D001 取消，不再安排；发布门禁尚未调整，按脚本如实报告。工作单使用 `python3 scripts/beatscape-earcheck-worksheet.py --all`，带音频指纹与导出。`launch:check` 当前应阻止正式发布；待实际验收后填写 `apps/beatscape/launch-signoff.json`，不得把技术检查通过当成全部上线门禁通过。
 
 - [x] **三人立绘重出（已完成 2026-09-02）**：本地 MPS + LoRA 重出 JUNO/ATLAS/TORQUE（prompt 母本 v2，锚点前置 + 赛璐璐夜色模板，BPE 66-71 通过）；锚点 checklist 目验过（单耳挂耳机/场强仪/扳手鼓槌+铬面锣/共振菱形 MOTIF）；已替换 `public/characters/` 三图并推送（commit `6b97c2e`）· 剩余市场评估（女性首位风险）为人工判断
 - [ ] **商业化差距决策点 5 项待拍板**：[`docs/BEATSCAPE-COMMERCIALIZATION-GAP.md`](docs/BEATSCAPE-COMMERCIALIZATION-GAP.md) §6（变现模式 / 经营主体 / 后端栈 / 流媒体终点 / 商标批次）——拍板后解锁对应 P0
