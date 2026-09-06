@@ -79,6 +79,11 @@ function parseRun(raw: string | null): LastRun | null {
       (run.missEvents !== undefined && (!Array.isArray(run.missEvents) ||
         !run.missEvents.every((e) => e && Number.isFinite(e.tMs) && [0, 1, 2, 3].includes(e.lane))))) return null;
     if (run.shiftStep !== undefined && !["studio", "yard", "rooftop"].includes(run.shiftStep)) delete run.shiftStep;
+    // T3 timing profile is additive: a corrupt/foreign shape must not kill the whole save.
+    if (run.timing !== undefined) {
+      const t = run.timing;
+      if (!t || ![t.early, t.late, t.meanMs].every(Number.isFinite)) delete run.timing;
+    }
     return run;
   } catch {
     return null;
@@ -117,6 +122,7 @@ export function writeLastRun(
     prevBestScore: prevBest?.score,
     missEvents: result.missEvents,
     surgeMaxTier: result.surgeMaxTier,
+    ...(result.timing ? { timing: result.timing } : {}),
   };
   const payload = JSON.stringify(run);
   // 这两次写入绝不能因为配额 / 隐私模式抛异常而中断：后面的成绩与排行榜存档

@@ -51,6 +51,18 @@ export type ChartJSON = {
   notes: ChartNote[];
 };
 
+/**
+ * Signed timing profile of one run (T3: judge early/late + results error bar).
+ * `meanMs` is positive when the player hits late (after the note) and negative
+ * when early. Misses carry no reliable delta, so they are excluded from all
+ * three numbers — read them as "how the hits you landed were distributed".
+ */
+export type TimingSummary = {
+  early: number;
+  late: number;
+  meanMs: number;
+};
+
 export type PlayResult = {
   score: number;
   accuracy: number;
@@ -62,6 +74,8 @@ export type PlayResult = {
   judgments: Record<Judgment, number>;
   totalNotes: number;
   missEvents: MissEvent[];
+  /** Absent when no note was actually hit (all-miss run) or the field predates this build. */
+  timing?: TimingSummary;
   /** Highest SIGNAL atmosphere tier reached this run (docs/BEATSCAPE-SURGE-FX.md). Presentation-only. */
   surgeMaxTier?: 0 | 1 | 2 | 3;
 };
@@ -84,6 +98,8 @@ export type LastRun = {
   counts: Record<Judgment, number>;
   totalNotes: number;
   missEvents?: MissEvent[];
+  /** Signed early/late profile copied from `PlayResult.timing`. Optional for old saves. */
+  timing?: TimingSummary;
   durationMs: number;
   endedAt: string;
   /** Optional playable opening-night scene; absent for ordinary free play. */

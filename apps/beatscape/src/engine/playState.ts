@@ -92,6 +92,16 @@ export class GameSession {
   failed = false;
   consecutiveMiss = 0;
 
+  /**
+   * Signed timing profile for the results error bar (T3). `deltaMs = songMs - noteMs`,
+   * so negative = early, positive = late. Only landed notes contribute: a missed
+   * note has no trustworthy delta, so misses stay out of all three numbers.
+   */
+  timingEarly = 0;
+  timingLate = 0;
+  timingSumMs = 0;
+  timingCount = 0;
+
   /** Judged notes — maintained instead of scanning `notes.every(n => n.done)`. */
   private doneCount = 0;
   /**
@@ -185,7 +195,7 @@ export class GameSession {
     const sub = bestSub;
     const delta = sub === "tail" ? songMs - chosen.endMs : songMs - chosen.tMs;
     const j: Judgment = sub === "tail" ? judgeHoldTail(delta, this.mode) : judgeDelta(delta, this.mode);
-    this.register(j, j === "miss" ? { lane, tMs: songMs } : undefined);
+    this.register(j, j === "miss" ? { lane, tMs: songMs } : undefined, delta);
 
     if (sub === "head") {
       chosen.head = j;
@@ -211,7 +221,7 @@ export class GameSession {
       if (n.def.lane !== lane || n.head === null || n.tail !== null) continue;
       const delta = songMs - n.endMs;
       const j: Judgment = Math.abs(delta) <= good + 20 ? judgeHoldTail(delta, this.mode) : "miss";
-      this.register(j, j === "miss" ? { lane, tMs: songMs } : undefined);
+      this.register(j, j === "miss" ? { lane, tMs: songMs } : undefined, delta);
       n.tail = j;
       this.markDone(n);
       return { lane, judgment: j, deltaMs: delta };
@@ -304,6 +314,13 @@ export class GameSession {
       judgments: { ...this.judgments },
       totalNotes: this.totalNotes,
       missEvents: [...this.missEvents],
+      timing: this.timingCount
+        ? {
+            early: this.timingEarly,
+            late: this.timingLate,
+            meanMs: this.timingSumMs / this.timingCount,
+          }
+        : undefined,
     };
   }
 
@@ -325,10 +342,16 @@ export class GameSession {
     return false;
   }
 
-  private register(j: Judgment, meta?: { lane: number; tMs: number }): void {
+  private register(j: Judgment, meta?: { lane: number; tMs: number }, deltaMs?: number): void {
     this.judgments[j]++;
     if (j === "miss" && meta) {
       this.missEvents.push({ lane: meta.lane, tMs: meta.tMs });
+    } else if (typeof deltaMs === "number") {
+      // Landed note: keep the signed offset for the results error bar (T3).
+      this.timingSumMs += deltaMs;
+      this.timingCount++;
+      if (deltaMs < 0) this.timingEarly++;
+      else if (deltaMs > 0) this.timingLate++;
     }
     if (j === "miss" || j === "good") {
       this.combo = 0;

@@ -111,3 +111,52 @@ describe("touch chord assist", () => {
     expect(r.fullCombo).toBe(true);
   });
 });
+
+function tapChartAt(times: number[], lanes: Array<0 | 1 | 2 | 3> = [0, 1, 2, 3]): ChartJSON {
+  return {
+    track_id: "test-timing",
+    tier: "standard",
+    format: 1,
+    bpm: 120,
+    ar: 28,
+    audio_offset_ms: 0,
+    total_notes: times.length,
+    notes: times.map((t, i) => ({ type: "tap", lane: lanes[i] ?? 0, t })),
+  };
+}
+
+describe("GameSession timing profile (T3)", () => {
+  it("counts early and late hits separately and signs the mean", () => {
+    const s = new GameSession(tapChartAt([1, 2, 3]), "arcade");
+    s.press(0, 990); // -10ms → early
+    s.press(1, 2010); // +10ms → late
+    s.press(2, 3000); // exact → neither
+    const t = s.getResult().timing;
+    expect(t).toEqual({ early: 1, late: 1, meanMs: 0 });
+  });
+
+  it("reports a positive mean when the player hits late", () => {
+    const s = new GameSession(tapChartAt([1, 2]), "arcade");
+    s.press(0, 1020); // +20ms
+    s.press(1, 2030); // +30ms (a press far from any note is an empty press, not a hit)
+    const t = s.getResult().timing;
+    expect(t?.late).toBe(2);
+    expect(t?.early).toBe(0);
+    expect(t?.meanMs).toBeCloseTo(25, 5);
+  });
+
+  it("excludes misses — an unhit note has no trustworthy delta", () => {
+    const s = new GameSession(tapChartAt([1, 2]), "arcade");
+    s.press(0, 1005);
+    s.tick(2200); // note 2 auto-misses
+    const t = s.getResult().timing;
+    expect(s.judgments.miss).toBe(1);
+    expect(t).toEqual({ early: 0, late: 1, meanMs: 5 });
+  });
+
+  it("omits the profile when nothing was hit", () => {
+    const s = new GameSession(tapChartAt([1]), "arcade");
+    s.tick(1200);
+    expect(s.getResult().timing).toBeUndefined();
+  });
+});

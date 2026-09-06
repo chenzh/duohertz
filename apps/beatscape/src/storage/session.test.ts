@@ -81,6 +81,24 @@ describe("release storage and sharing regressions", () => {
       expect(readLastRun()).toEqual(sample);
     }
   });
+
+  it("persists the T3 timing profile and drops a corrupt one", () => {
+    const session = memoryStorage();
+    vi.stubGlobal("localStorage", memoryStorage());
+    vi.stubGlobal("sessionStorage", session);
+    const timing = { early: 3, late: 7, meanMs: 12.5 };
+    const result = { score: 900, accuracy: 92, maxCombo: 10, grade: "A" as const, fullCombo: false, allPerfect: false,
+      failed: false, judgments: { perfect: 30, great: 8, good: 2, miss: 0 }, totalNotes: 40, missEvents: [], timing };
+    const track = { track_id: sample.track_id, title: sample.title, artist: sample.artist } as Parameters<typeof writeLastRun>[0];
+    const run = writeLastRun(track, "standard", "arcade", result, 60000);
+    expect(run.timing).toEqual(timing);
+    expect(readLastRun()?.timing).toEqual(timing);
+
+    for (const bad of [null, { early: 1 }, { early: 1, late: 1, meanMs: "x" }, "early"]) {
+      session.setItem("bs_last_run", JSON.stringify({ ...sample, timing: bad }));
+      expect(readLastRun()).toEqual(sample);
+    }
+  });
 });
 
 describe("current-visit results when storage is blocked", () => {

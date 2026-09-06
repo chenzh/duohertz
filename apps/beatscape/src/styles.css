@@ -1441,6 +1441,73 @@ body.play-immersive .play-page {
   color: var(--text);
 }
 
+/* T3 — results timing bar: early on the left, late on the right, centre = on time. */
+.timing-bar {
+  max-width: 420px;
+  margin: 18px auto 4px;
+  animation: barIn 0.5s ease both;
+}
+.timing-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.timing-title {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+}
+.timing-mean {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+.timing-track {
+  display: flex;
+  height: 14px;
+  background: var(--bg);
+  border: var(--stroke-w) solid var(--ink);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+.timing-half {
+  position: relative;
+  flex: 1;
+  display: flex;
+}
+.timing-half + .timing-half {
+  border-left: var(--stroke-w) solid var(--ink);
+}
+.timing-fill {
+  display: block;
+  height: 100%;
+  animation: barGrow 0.7s cubic-bezier(0.2, 0.9, 0.3, 1) both;
+}
+.timing-fill.early {
+  margin-left: auto;
+  background: var(--lane3);
+}
+.timing-fill.late {
+  margin-right: auto;
+  background: var(--accent2);
+}
+.timing-legend {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+@media (prefers-reduced-motion: reduce) {
+  .timing-bar,
+  .timing-fill {
+    animation: none;
+  }
+}
+
 .badge {
   display: inline-block;
   margin: 4px;

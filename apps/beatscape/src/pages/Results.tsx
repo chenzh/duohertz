@@ -163,6 +163,15 @@ export function ResultsPage() {
     { label: JUDGE_COPY.miss, n: counts.miss, color: JUDGE_COLORS.miss },
   ];
   const missEvents = run.missEvents ?? [];
+  // T3: signed early/late profile. Misses carry no delta, so the bar describes
+  // only the notes that were actually hit.
+  const timing = run.timing;
+  const timingTotal = timing ? timing.early + timing.late : 0;
+  // Normalised against the dominant side so the two halves read as a ratio.
+  const timingDenom = Math.max(timing?.early ?? 0, timing?.late ?? 0, 1);
+  const timingMean = timing ? Math.round(timing.meanMs) : 0;
+  const timingVerdict =
+    Math.abs(timingMean) <= 5 ? "Dead centre" : timingMean < 0 ? "You hit early" : "You hit late";
   const chartDurationMs =
     chart?.notes.reduce((max, n) => Math.max(max, ("end" in n && n.end ? n.end : n.t) * 1000), 0) ?? 0;
 
@@ -272,6 +281,34 @@ export function ResultsPage() {
           </div>
         ))}
       </div>
+
+      {timing && timingTotal > 0 && (
+        <div className="timing-bar">
+          <div className="timing-head">
+            <span className="timing-title">TIMING</span>
+            <span className="timing-mean">
+              {timingMean > 0 ? "+" : ""}
+              {timingMean} ms · {timingVerdict}
+            </span>
+          </div>
+          <div
+            className="timing-track"
+            role="img"
+            aria-label={`Early ${timing.early} notes, late ${timing.late} notes, mean ${timingMean} milliseconds`}
+          >
+            <span className="timing-half">
+              <span className="timing-fill early" style={{ width: `${(timing.early / timingDenom) * 100}%` }} />
+            </span>
+            <span className="timing-half right">
+              <span className="timing-fill late" style={{ width: `${(timing.late / timingDenom) * 100}%` }} />
+            </span>
+          </div>
+          <div className="timing-legend">
+            <span>EARLY {timing.early}</span>
+            <span>LATE {timing.late}</span>
+          </div>
+        </div>
+      )}
 
       <MissReplayPanel missEvents={missEvents} sections={chart?.sections} durationMs={chartDurationMs} />
 
