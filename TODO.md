@@ -1,7 +1,7 @@
 # MusicSaas 项目 TODO
 
 > **本文件是待办的唯一入口**，只登记**当前真实未完事项**，细节一律链接到对应权威文档，不在此复制正文。
-> 整理日期：2026-09-06 ｜ 来源：[SESSION.md](SESSION.md) · [docs/BEATSCAPE-DECISIONS.md](docs/BEATSCAPE-DECISIONS.md) · [审计报告 §6](docs/COMPANY-PROJECT-HARNESS-AUDIT-2026-09-06.md)
+> 整理日期：2026-09-06（本次含 `134115a` / `6418d3f` 之后的刷新）｜ 来源：[SESSION.md](SESSION.md) · [docs/BEATSCAPE-DECISIONS.md](docs/BEATSCAPE-DECISIONS.md) · [审计报告 §6](docs/COMPANY-PROJECT-HARNESS-AUDIT-2026-09-06.md)
 > 整理原则：**已取消 ≠ 延期 ≠ 通过**。历史 PRD、工作日志、审计建议中的条目不得自动回填为本文件待办。
 
 ## 维护规则
@@ -20,7 +20,8 @@
 | 曲库 | **105/105**（s1 6 · s2 4 · s3 15 · s4 15 · s5 10 · s6 35 · p3 10 · p4 10） |
 | 谱面 | 315 张已按「拍网格亲和力」全量重出 |
 | 线上 | BeatScape <https://beatscape.pages.dev> · ScapeMusic <https://scapemusic.pages.dev> |
-| 代码质量 | strict 全开 · 零 `any` · 零 `@ts-ignore` · **源码零 TODO/FIXME 标记** |
+| 代码质量 | strict 全开 · 零 `any` · 零 `@ts-ignore` · **源码零 TODO/FIXME 标记**（本次实测 grep 零命中） |
+| 性能 | 第二轮保障**进行中**：当前候选 `198acfbcd3dd` 仅完成功能与定向诊断，**矩阵证据待采集，未整体通过** |
 | 阻塞发布 | 耳检 105 首 · 差异化盲测 · 发布签审（均人工） |
 
 ---
@@ -52,7 +53,7 @@
 - **注意**：叙事优化后界面已变，旧候选 `74840f1fc466` 的视觉截图属历史工作包，**新界面需重新绑定视觉盲测材料**。
 
 ### P0-3 正式上线放行
-- **前置**：P0-1、P0-2、P0-4 全部完成。
+- **前置**：P0-1、P0-2、P0-4 全部完成；另需 P0-6 取得**同一产物指纹**的完整性能矩阵证据（未通过前对外不得宣称性能达标）。
 - **动作**：据实填写 `apps/beatscape/launch-signoff.json`。
 - **门禁**：`launch:check` 当前**应阻止**正式发布（`deviceTestRecord` 缺失，按 BS-D001 如实报告，不得当作通过）；状态详见 [docs/BEATSCAPE-RELEASE-READINESS.md](docs/BEATSCAPE-RELEASE-READINESS.md)。
 
@@ -65,6 +66,25 @@
 - **等待**：门户域名 + Cloudflare Pages 项目名；确定后按真实域名重建并复核，**发布另需对应授权**。
 - **现状**：[docs/PORTAL-RELEASE-READINESS.md](docs/PORTAL-RELEASE-READINESS.md)，候选 `53f83162ad6e`（本地未提交）。
 - **CI 注意**：共享区公司派单脚本造成根 Python **38 项失败**；HEAD 基线叠加本任务 HTTP 修改已单独验证 70/70。**不得称整体 CI 已通过。**
+
+### P0-6 性能保障第二轮（进行中 · 未部署）
+- **为什么**：移动冷开局与 Duo 帧间隔超固定预算，正式发布前须有同指纹完整矩阵证据。
+- **当前**：候选 `198acfbcd3dd`（里程碑文字预渲染缓存 + 提前下载当前曲 + 可见音符窗口）；仅过 172 单测 / 6 浏览器回归 / 11 发布器回归 / 50 性能脚本回归与**定向** Trace 诊断（26.35→14.80 ms）。
+- **待采集**：18 次冷加载 · 两配置完整 Hard 矩阵（移动 Duo 最高特效 3 局复测中）· 两组反复游玩与内存。
+- **预算与证据规则**：[docs/BEATSCAPE-PERFORMANCE.md](docs/BEATSCAPE-PERFORMANCE.md)（固定压力曲 `bs-s4-14`；不允许跨候选合并数据，报告须 `status: measured`）。
+- **纪律**：中间候选 / 第一轮 / 诊断窗口数据**不得**拼成当前产物通过记录；BS-D001 仍生效，自动测量不等于真机验收。
+- **工作区相关未提交文件**：`src/audio/earlyAudio.ts`、`src/components/playfield/milestoneTextSprites.ts`、`visibleNoteEnd.ts`、`scripts/performance-budget*.mjs`、`e2e/early-audio.spec.ts`（归本任务所有者提交）。
+
+---
+
+## 近期已完成（已提交到 main，勿重复列入待办）
+
+| 事项 | commit | 说明 |
+|---|---|---|
+| 游戏内退出确认（替换 `window.confirm`） | `6418d3f` | 单人 / Duo 顶层面板，打开时暂停音频与判定；156 单测 + 28 浏览器回归通过，**未部署** |
+| 自动性能基线与加载优化（第一轮） | `134115a` | 目录预加载/去重、首页按需谱面、64 MiB 解码缓存；移动冷开局仍 4.18 / 4.46s，**不等于性能达标**，第二轮见 P0-6 |
+
+> 其余历史完成项见 [SESSION.md](SESSION.md)「已完成（勿再当 P0）」。
 
 ---
 
@@ -109,7 +129,7 @@
 
 ## P3 — Reddit 首发运营（人工）
 
-> 来源：[docs/TODO.md](docs/TODO.md)（P3/P4 段）
+> 来源：[docs/TODO.md](docs/TODO.md)（P3/P4 段）。**不继承**：「Stage4 40 首」与「真 180s 流媒体母带」已被 105 首曲库 / 216s 双资产覆盖，属过期项。
 
 - [ ] 发帖素材包 — 见 [docs/BEATSCAPE-REDDIT-LAUNCH.md](docs/BEATSCAPE-REDDIT-LAUNCH.md)
 - [ ] 目标 sub 调研
@@ -146,7 +166,10 @@
 - **动作**：标注为历史冲刺归档，或迁移到对应权威文档后清空勾选态。**本文件不继承其中任何条目。**
 
 ### P5-2 整理未提交的工作区改动
-- 截至 2026-09-06，工作区有并行会话未提交改动（`.agents/skills/`、`.codex/`、`AGENTS.md`、`SESSION.md`、`docs/`、`scripts/agent-delivery/` 等）。
+- 截至 2026-09-06（本次刷新时实测 `git status`），工作区有并行会话未提交改动：
+  - **性能保障相关**：`apps/beatscape/src/audio/earlyAudio.ts`、`decodedAudioCache.*`、`renderLoop.ts`、`router.tsx`、`src/components/playfield/{milestoneTextSprites,visibleNoteEnd}.*`、`scripts/{early-audio,performance-budget,performance,performance-probe,release}*.mjs`、`e2e/early-audio.spec.ts`、`docs/BEATSCAPE-PERFORMANCE.md`（→ 归 P0-6 所有者）
+  - **Harness / 派单**：`.agents/skills/company-harness|vault-harness|zbrain-session/`、`.codex/`、`AGENTS.md`、`SESSION.md`、`scripts/agent-delivery/*`（含新增 `review_codex.py`）、`.github/workflows/agent-delivery-dispatch.yml`、`scripts/ai-company/codex-run.py`
+  - **其他**：`.delivery/`、`.workbuddy-ai/memory/`
 - **动作**：由各改动所有者分别提交；**不要 `git add -A` 一次性扫入**，避免把并行会话的半成品混入。
 
 ---
@@ -168,6 +191,10 @@ bash scripts/harness.sh all
 
 # 发布门禁（在 apps/beatscape 包内，当前应阻止正式发布）
 pnpm --filter @musicsaas/beatscape launch:check
+
+# 性能测量与固定预算核验（P0-6，在 apps/beatscape 包内）
+npm run performance:measure   # 采集，产物指纹固定
+npm run performance:check     # 按固定预算核验，缺证据或超预算即不通过
 ```
 
 **说明**：`bash scripts/harness.sh all` = unit + workspace build + mock integration。技术检查通过不替代人工耳检、盲测与上线签审。
