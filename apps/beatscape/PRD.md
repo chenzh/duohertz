@@ -83,6 +83,7 @@
 | 输入 | `input/keyMap.ts` | 物理键码绑定、3 预设、捕获、防重复 |
 | | `input/touchInput.ts` | 判定线几何、触控 tracker、20ms 防抖、边缘 guard、拇指分Hand |
 | 对局 | `components/PlayField.tsx` | 对局容器：加载/解锁 overlay、倒计时、循环、粒子/震屏、暂停 |
+| | `components/ExitGameDialog.tsx` | 单人 / Duo 退出确认：游戏内顶层面板，暂停音画与判定；Keep playing / Esc 恢复原状态，Leave 退出全屏并返回曲目页；焦点限制在面板内 |
 | 页面 | `pages/*.tsx`（10 页） | 见 §9 路由表 |
 | 数据 | `catalog/loadCatalog.ts` | catalog.json + chart JSON 拉取（模块级缓存） |
 | | `catalog/trackVibe.ts` | vibe 四类解析（显式字段 → 关键词推断兜底） |

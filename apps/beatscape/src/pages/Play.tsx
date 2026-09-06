@@ -3,6 +3,7 @@ import { useNavigate, useParams, useSearchParams } from "../router";
 import { writeItem, writeJSON } from "../storage/safeStorage";
 import { assetUrl, getTrack, loadChart } from "../catalog/loadCatalog";
 import { PlayField } from "../components/PlayField";
+import { ExitGameDialog } from "../components/ExitGameDialog";
 import type { ChartJSON, ChartTier, PlayMode, PlayResult } from "../types/chart";
 import type { CatalogTrack } from "../types/catalog";
 import { writeLastRun } from "../storage/session";
@@ -28,6 +29,7 @@ export function PlayPage() {
   const [track, setTrack] = useState<CatalogTrack | null>(null);
   const [chart, setChart] = useState<ChartJSON | null>(null);
   const [loadError, setLoadError] = useState("");
+  const [confirmExit, setConfirmExit] = useState(false);
   const [startedAt] = useState(() => performance.now());
   const [touchUi] = useState(() => isCoarsePointer());
   // B-1 · Live stats bridge for the comic-panel HUD. Created here (stable
@@ -100,8 +102,7 @@ export function PlayPage() {
   };
 
   const exitPlay = () => {
-    if (!window.confirm("Leave the Scape? This run won't be saved.")) return;
-    nav(track ? `/track/${track.track_id}` : "/library");
+    setConfirmExit(true);
   };
 
   const enterFullscreen = async () => {
@@ -163,7 +164,7 @@ export function PlayPage() {
       </div>
       <div className="play-meta">
         {/* X 坐最左：全屏下它是唯一够得着的关闭方式（手机没有 Esc），
-            位置也跟别的全屏 App 一致。误触有 exitPlay 的 confirm 兜底。 */}
+            位置也跟别的全屏 App 一致。误触由游戏内退出面板兜底。 */}
         <button type="button" className="play-exit" onClick={exitPlay} aria-label="Exit the Scape">
           ✕
         </button>
@@ -184,12 +185,20 @@ export function PlayPage() {
         audioUrl={assetUrl(track.audio)}
         mode={mode}
         casualSpeed={settings.casualSpeed}
+        suspended={confirmExit}
         statsRef={statsRef}
         trackTitle={track.title}
         tierLabel={tier}
         onStart={() => trackEvent("play_start", { track: track.track_id, tier, mode })}
         onFinish={finish}
       />
+      {confirmExit && (
+        <ExitGameDialog
+          trackTitle={track.title}
+          onKeepPlaying={() => setConfirmExit(false)}
+          onLeave={() => nav(`/track/${track.track_id}`)}
+        />
+      )}
     </section>
   );
 }

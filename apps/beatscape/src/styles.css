@@ -926,7 +926,7 @@ body.play-immersive .play-page {
 
 /* 退出游戏的 X —— 常驻 .play-meta 最左，也就是屏幕真正的左上角。
    全屏下它是唯一够得着的关闭方式（手机没有 Esc，右上角那个 Fullscreen
-   又只在大屏触屏出现）。误触不会丢进度：exitPlay / exitDuo 有 confirm。 */
+   又只在大屏触屏出现）。误触由游戏内退出面板兜底。 */
 .play-exit {
   display: inline-flex;
   flex: 0 0 auto;

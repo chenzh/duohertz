@@ -101,6 +101,8 @@ type Props = {
    * the same tab-hide), so both sides flip in lockstep and stay in sync.
    */
   pauseSync?: number;
+  /** A parent dialog freezes audio and input without changing the user's pause state. */
+  suspended?: boolean;
 };
 
 export function PlayField({
@@ -127,6 +129,7 @@ export function PlayField({
   hideStartOverlay = false,
   onPauseChange,
   pauseSync,
+  suspended = false,
 }: Props) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -208,8 +211,10 @@ export function PlayField({
 
   const needsStartRef = useRef(needsStart);
   const pausedRef = useRef(paused);
+  const suspendedRef = useRef(suspended);
   needsStartRef.current = needsStart;
-  pausedRef.current = paused;
+  pausedRef.current = paused || suspended;
+  suspendedRef.current = suspended;
   // 这三个开关由 rAF 循环读取，所以走 ref 而不是闭包：
   //   · 写进 rAF effect 的依赖 → 中途改音量/音色会销毁重建整个循环，连带重跑
   //     sprite 预渲染和 halftone 图案，玩家看到一次明显卡帧；
@@ -356,8 +361,9 @@ export function PlayField({
 
   const startRun = async () => {
     const conductor = conductorRef.current;
-    if (!conductor) return;
+    if (!conductor || suspendedRef.current) return;
     await unlockAudio();
+    if (conductorRef.current !== conductor || suspendedRef.current) return;
     conductor.begin(COUNTDOWN_MS);
     setNeedsStart(false);
     setPaused(false);
@@ -380,11 +386,15 @@ export function PlayField({
     autoStartedRef.current = false;
   }, [chart, mode, audioUrl]);
   useEffect(() => {
+    if (suspended) {
+      if (needsStart) autoStartedRef.current = false;
+      return;
+    }
     if (!effectiveAutoStart || loading || error || !needsStart || autoStartedRef.current) return;
     autoStartedRef.current = true;
     void startRun();
     // eslint-disable-next-line react-hooks/exhaustive-deps -- one-shot after load
-  }, [effectiveAutoStart, loading, error, needsStart]);
+  }, [effectiveAutoStart, loading, error, needsStart, suspended]);
 
   // Duo · Start gate. The parent bumps `startGate` from 0 → n once every field
   // has reported `onReady`, so all conductors `begin()` from the same React
@@ -392,12 +402,16 @@ export function PlayField({
   // begin as soon as ITS decode finished and the two charts would drift apart
   // by the decode-time difference (tens of ms — very visible as note offset).
   useEffect(() => {
+    if (suspended) {
+      if (needsStart) autoStartedRef.current = false;
+      return;
+    }
     if (!startGate) return;
     if (loading || error || !needsStart || autoStartedRef.current) return;
     autoStartedRef.current = true;
     void startRun();
     // eslint-disable-next-line react-hooks/exhaustive-deps -- one-shot per gate bump
-  }, [startGate, loading, error, needsStart]);
+  }, [startGate, loading, error, needsStart, suspended]);
 
   // Dev-only QA hook (docs/BEATSCAPE-SURGE-FX.md): lets an injected autoplayer
   // READ game state. Input still flows through the real keyboard event path.
@@ -414,7 +428,7 @@ export function PlayField({
 
   const togglePause = () => {
     const conductor = conductorRef.current;
-    if (!conductor) return;
+    if (!conductor || suspendedRef.current) return;
     // Duo · Hand the toggle to the parent: it bumps `pauseSync`, which flips
     // BOTH fields in the same commit. Toggling locally here would let one
     // player freeze while the other keeps playing — the charts would drift.
@@ -444,12 +458,22 @@ export function PlayField({
     });
   }, [pauseSync]);
 
+  // The exit dialog is a temporary hold, independent of manual pause. Closing
+  // it resumes an active run but keeps an already-paused run paused. Both Duo
+  // fields receive the same value; no toggle broadcast or remount is needed.
+  useEffect(() => {
+    const conductor = conductorRef.current;
+    if (!conductor || needsStart || finishedRef.current) return;
+    if (suspended || paused) conductor.pause();
+    else conductor.resume();
+  }, [suspended, paused, needsStart]);
+
   // FEEL PACK: instant retry — same chart, fresh session, straight to countdown.
   const restartRun = () => {
     const conductor = conductorRef.current;
     // The stable key listener must read current readiness, not the loading=true
     // value captured when it was installed before the audio finished loading.
-    if (!conductor || conductor.durationMs <= 0) return;
+    if (!conductor || conductor.durationMs <= 0 || suspendedRef.current) return;
     conductor.stop();
     sessionRef.current = new GameSession(chart, mode, { chordAssist });
     surgeRef.current.reset();
@@ -477,7 +501,13 @@ export function PlayField({
     if (wrapRef.current) wrapRef.current.dataset.surge = "0";
     setPaused(false);
     onStart?.();
-    void unlockAudio().then(() => conductor.begin(COUNTDOWN_MS));
+    void unlockAudio().then(() => {
+      if (conductorRef.current !== conductor) return;
+      conductor.begin(COUNTDOWN_MS);
+      // AudioContext.resume may finish after an exit/pause action. Preserve
+      // that hold even when this previously requested restart finishes late.
+      if (suspendedRef.current || pausedRef.current) conductor.pause();
+    });
   };
 
   // Juice: burst particles + screen shake on every judged hit/miss.
@@ -652,7 +682,7 @@ export function PlayField({
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.repeat) return;
+      if (e.repeat || suspendedRef.current) return;
       const lane = laneFromKeyEvent(e, keys);
       if (lane >= 0) {
         e.preventDefault();

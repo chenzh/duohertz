@@ -14,6 +14,8 @@
 
 > 验收入口：本页 · `pnpm catalog:beatscape` · `pnpm audit:beatscape` · `pnpm earcheck:beatscape`
 
+- [x] **BeatScape 游戏内退出确认（2026-09-06，未部署）**：单人与 Duo 的浏览器 confirm 改为游戏内顶层面板，打开时暂停音频和判定；Keep playing / Esc 恢复原暂停状态，Leave 清理全屏并返回曲目页。修复弹窗内释放按键与延迟 R 音频恢复的边界，156 单测 + 28 项桌面／移动布局浏览器回归、类型检查、CF 构建与资产核验通过；候选 `f4015d14bd22`，详情见 [上线准备](docs/BEATSCAPE-RELEASE-READINESS.md)。
+
 - [x] **BeatScape 自动性能基线与优化（2026-09-06，未部署）**：完成两种固定条件的冷加载、6 场完整 Hard / 最高特效 / Duo，以及每组 8 次重开、8 次切歌、3 次加载中退出的前后测量。实现目录预加载 / 去重、首页按需谱面、选定音频并行、有界 64 MiB 解码缓存 / Duo 共享与取消，修复 R 旧状态导致重开失效。156 应用单测 + 6 发布器回归 + 24 性能工具回归 + 32 生产浏览器流程、构建与资产核验通过；候选 `bd6f4017a63e`。**不等于性能全面达标**：移动模拟冷开局仍为单人 4.18s / 双人 4.46s，Duo 有连续两个异常帧间隔；原始证据、预算结论与复现命令见 [自动性能记录](docs/BEATSCAPE-PERFORMANCE.md)。BS-D001 取消决定保持生效。
 
 - [x] **公司项目文件与 Harness 一致性审计（2026-09-06）**：核验 10 个本地 Git 仓及 openworld 5 个子项目；确认投影断链、行为条款冲突、Company OS 副本落后与项目／单票文档混用。证据、覆盖边界及修复 TODO 统一记录在 [审计报告](docs/COMPANY-PROJECT-HARNESS-AUDIT-2026-09-06.md)。本次只审计，未同步或修改其他仓／Vault；保留并行改动。

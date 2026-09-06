@@ -81,6 +81,7 @@ MusicSaas/
 | `src/catalog/trackRequests.ts` + `src/data/trackRequests.json` | 105/105 首虚构点歌引语；`scripts/beatscape-track-requests.py --check` 校验覆盖及内容一致 |
 | `e2e/narrative.spec.ts` | 桌面/手机模拟：首访、三首真实歌曲故事推进、回信/重载、退出/失败/练习/存储拒绝 |
 | `src/components/PlayField.tsx` | 谱面渲染、Tap to Start、键盘（默认方向键，物理键码）+ 触控 |
+| `src/components/ExitGameDialog.tsx` + `src/styles/exit-game-dialog.css` | 单人 / Duo 全屏退出确认；暂停、恢复、焦点与全屏清理，回归见 `e2e/exit-dialog.spec.ts` |
 | `src/engine/judge.ts` | 判定窗 15/30/50 ms |
 | `src/engine/surge.ts` + `surge.test.ts` | **SIGNAL 氛围层**：命中质量→热量→三档（TUNING/LIVE/ON AIR）纯逻辑；只驱动表现，不碰计分/判定窗（docs/BEATSCAPE-SURGE-FX.md） |
 | `src/storage/settings.ts` | `bs_*` localStorage |

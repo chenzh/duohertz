@@ -3,6 +3,7 @@ import { useNavigate, useParams, useSearchParams } from "../router";
 import { assetUrl, getTrack, loadChart } from "../catalog/loadCatalog";
 import { unlockAudio } from "../audio/playback";
 import { PlayField } from "../components/PlayField";
+import { ExitGameDialog } from "../components/ExitGameDialog";
 import type { ChartJSON, ChartTier, PlayMode, PlayResult } from "../types/chart";
 import type { CatalogTrack } from "../types/catalog";
 import { loadKeys, loadSettings } from "../storage/settings";
@@ -44,6 +45,7 @@ export function DuoPage() {
   const [track, setTrack] = useState<CatalogTrack | null>(null);
   const [chart, setChart] = useState<ChartJSON | null>(null);
   const [loadError, setLoadError] = useState("");
+  const [confirmExit, setConfirmExit] = useState(false);
   const [startedAt] = useState(() => performance.now());
   const settings = useMemo(loadSettings, []);
   usePageMeta(track ? buildPlayPageMeta(track, tier, mode) : null);
@@ -163,8 +165,7 @@ export function DuoPage() {
   // 左上角 X / 对局途中退出：这一局没打完（DUO 也不写单人档案），确认一次
   // 再走 —— X 就在左上角，误触比原来那个被推到右上角的 Exit 容易得多。
   const exitDuo = () => {
-    if (!window.confirm("Leave the Scape? This run won't be saved.")) return;
-    leaveDuo();
+    setConfirmExit(true);
   };
 
   if (loadError) {
@@ -241,6 +242,7 @@ export function DuoPage() {
       hideStartOverlay
       onPauseChange={broadcastPause}
       pauseSync={pauseSync}
+      suspended={confirmExit}
       onFinish={finish(0)}
     />
   );
@@ -263,6 +265,7 @@ export function DuoPage() {
       hideStartOverlay
       onPauseChange={broadcastPause}
       pauseSync={pauseSync}
+      suspended={confirmExit}
       onFinish={finish(1)}
     />
   );
@@ -341,6 +344,14 @@ export function DuoPage() {
         </div>
       )}
 
+      {confirmExit && (
+        <ExitGameDialog
+          trackTitle={track.title}
+          duo
+          onKeepPlaying={() => setConfirmExit(false)}
+          onLeave={leaveDuo}
+        />
+      )}
       {duoResult && (
         <div className="duo-result" role="dialog" aria-label="Duo results">
           <div className="overlay-card duo-result-card">

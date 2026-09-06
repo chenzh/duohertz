@@ -83,8 +83,8 @@ test('real M4A decode, start, keyboard/pointer input, pause, resume, and exit', 
   await expect(page.getByRole('button', { name: /resume/i })).toBeVisible();
   await page.getByRole('button', { name: /resume/i }).click();
   await expect(page.getByRole('button', { name: 'Pause', exact: true })).toBeVisible();
-  page.once('dialog', (dialog) => dialog.accept());
   await page.locator('.play-exit').click();
+  await page.getByRole('dialog', { name: 'Leave the Scape?' }).getByRole('button', { name: 'Leave', exact: true }).click();
   await expect(page).toHaveURL(/\/track\/bs-s1-01/);
 });
 

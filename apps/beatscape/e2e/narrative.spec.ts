@@ -89,8 +89,9 @@ test('leaving a set and visiting results cannot restore a connection; bad saves 
   await page.goto('/shift');
   await page.getByRole('link', { name: 'Play Voltage Drop', exact: true }).click();
   await page.locator('.overlay-tap button').click();
-  page.once('dialog', (dialog) => dialog.accept());
   await page.locator('.play-exit').click();
+  await page.getByRole('dialog', { name: 'Leave the Scape?' }).getByRole('button', { name: 'Leave', exact: true }).click();
+  await expect(page).toHaveURL(/\/track\/bs-s1-05/);
   await page.goto('/shift');
   await expect(page.locator('.shift-circuit li.restored')).toHaveCount(0);
   await page.goto('/results');
