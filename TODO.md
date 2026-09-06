@@ -21,7 +21,7 @@
 | 谱面 | 315 张已按「拍网格亲和力」全量重出 |
 | 线上 | BeatScape <https://beatscape.pages.dev> · ScapeMusic <https://scapemusic.pages.dev> |
 | 代码质量 | strict 全开 · 零 `any` · 零 `@ts-ignore` · **源码零 TODO/FIXME 标记**（本次实测 grep 零命中） |
-| 性能 | 第二轮本地完成：`ae15d3778b3f` 同指纹 28 项固定预算全部通过；最慢冷开局 3.908s、8 场整局 0 异常间隔、绘制峰值最高 3.5ms；未提交 / 未部署 |
+| 性能 | 第二轮已随 `e3ba64f` 提交：`ae15d3778b3f` 同指纹 28 项固定预算全部通过；最慢冷开局 3.908s、8 场整局 0 异常间隔、绘制峰值最高 3.5ms；未部署 |
 | 阻塞发布 | 耳检 105 首 · 差异化盲测 / 英语叙事试玩 · 最终签审；真机执行取消与门禁冲突保持记录 |
 
 ---
@@ -73,7 +73,7 @@
 
 | 事项 | commit | 说明 |
 |---|---|---|
-| 性能保障第二轮 | 本地未提交 | 候选 `ae15d3778b3f` 的 28 项固定预算通过；179 单测、6 当前相关浏览器回归，完整结果见 [性能记录](docs/BEATSCAPE-PERFORMANCE.md)；未部署 |
+| 性能保障第二轮 | `e3ba64f` | 候选 `ae15d3778b3f` 的 28 项固定预算通过；179 单测、6 当前相关浏览器回归，完整结果见 [性能记录](docs/BEATSCAPE-PERFORMANCE.md)；未部署 |
 | 仓库 CI 修复 | `e3ba64f` | 修复派单校验回归与 CI 外部 stream master 审计口径；CI `34033551898` 的 unit / build / beatscape / integration 全部通过 |
 | 游戏内退出确认（替换 `window.confirm`） | `6418d3f` | 单人 / Duo 顶层面板，打开时暂停音频与判定；156 单测 + 28 浏览器回归通过，**未部署** |
 | 自动性能基线与加载优化（第一轮） | `134115a` | 目录预加载/去重、首页按需谱面、64 MiB 解码缓存；移动冷开局仍 4.18 / 4.46s，**不等于性能达标**，第二轮已完成，见性能记录 |
@@ -161,8 +161,8 @@
 
 ### P5-2 整理未提交的工作区改动
 - 截至 2026-09-06（本次刷新时实测 `git status`），工作区有并行会话未提交改动：
-  - **性能保障相关**：`apps/beatscape/src/audio/earlyAudio.ts`、`decodedAudioCache.*`、`renderLoop.ts`、`router.tsx`、`src/components/playfield/{milestoneTextSprites,keyHintSprites,visibleNoteEnd}.*`、`scripts/{early-audio,performance-budget,performance,performance-probe,release}*.mjs`、`e2e/early-audio.spec.ts`、`docs/BEATSCAPE-PERFORMANCE.md`（→ 归性能任务所有者）
-  - **Harness / 派单**：`.agents/skills/company-harness|vault-harness|zbrain-session/`、`.codex/`、`AGENTS.md`、`SESSION.md`、`scripts/agent-delivery/*`（含新增 `review_codex.py`）、`.github/workflows/agent-delivery-dispatch.yml`、`scripts/ai-company/codex-run.py`
+  - **T3 判定反馈**：`apps/beatscape/src/engine/playState.ts`、`playState.test.ts`、`types/chart.ts`、`pages/Results.tsx`、`styles.css`（→ 归 T3 所有者；未纳入 `e3ba64f` 发布候选）
+  - **Harness / 项目规范**：`.agents/skills/company-harness/`、`.agents/skills/vault-harness/`、`.agents/skills/zbrain-session/`、`.codex/`、`AGENTS.md`
   - **其他**：`.delivery/`、`.workbuddy-ai/memory/`
 - **动作**：由各改动所有者分别提交；**不要 `git add -A` 一次性扫入**，避免把并行会话的半成品混入。
 
