@@ -1,5 +1,12 @@
 # BeatScape 待办与验收标准
 
+> ## 📦 历史冲刺归档（2026-09-06 起生效）
+>
+> **本文件不再承载当前待办。** 正文中 27 条未勾选 `- [ ]` 全部属于 2026-08-25 的 Stage1 / Stage2 冲刺，该阶段目标（曲库 25 首）早已被当前 105 首 / 315 张谱覆盖：
+> - **当前待办唯一入口**：仓库根 [`TODO.md`](../../TODO.md)
+> - **当前上线准备**：[BEATSCAPE-RELEASE-READINESS.md](BEATSCAPE-RELEASE-READINESS.md)
+> - **纪律**：不得把本文件的未勾选项回填为当前 TODO，也不得清空勾选态伪造历史完成。仅作历史验收规格与决策依据查阅。
+
 > **取消项优先**：专项真机验收已于 2026-09-06 由用户取消，后续不得从下文历史验收规格自动恢复 TODO。执行状态与发布门禁区别见 [BS-D001](BEATSCAPE-DECISIONS.md#bs-d001)。
 
 > **当前上线准备（2026-09-05）**：见 [BEATSCAPE-RELEASE-READINESS.md](BEATSCAPE-RELEASE-READINESS.md)，105 首 / 315 张谱。本文以下为 Stage1–3 历史验收规格，旧测试数及勾选状态不能充当当前版本的验收证据。

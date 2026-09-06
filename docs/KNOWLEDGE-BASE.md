@@ -52,7 +52,7 @@
 7. [docs/BEATSCAPE-STAGE4-RESONANCE-MUSIC.md](./BEATSCAPE-STAGE4-RESONANCE-MUSIC.md) — Stage4 第一波 10 首补曲（已上架）
 7. [docs/BEATSCAPE-RESONANCE-PRESETS.md](./BEATSCAPE-RESONANCE-PRESETS.md) — RESONANCE 风格包附录（待合入 PRD）
 8. [docs/BEATSCAPE-STAGE2-DELIVERY.md](./BEATSCAPE-STAGE2-DELIVERY.md) — Stage2 #07–#10 交付清单
-9. [docs/BEATSCAPE-TODO-ACCEPTANCE.md](./BEATSCAPE-TODO-ACCEPTANCE.md) — **待办 + 验收标准（SESSION 镜像）**
+9. [docs/BEATSCAPE-TODO-ACCEPTANCE.md](./BEATSCAPE-TODO-ACCEPTANCE.md) — **历史冲刺归档**：Stage1–3 验收规格（2026-08-25），27 条未勾选项属过期冲刺，**不是当前待办**；当前入口为仓库根 `TODO.md`
 10. 内容流水线见 PRD-BEATSCAPE §6.0 · `catalog.json` · `catalog-roadmap.json` · `scripts/beatscape-*`
 
 ### BeatScape 世界观 / IP / 商业化（2026-08 新增线）
