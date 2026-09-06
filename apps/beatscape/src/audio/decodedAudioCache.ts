@@ -1,3 +1,5 @@
+import { takeEarlyAudio, type EarlyAudioDownload } from "./earlyAudio";
+
 /** A stereo 120s track at 48 kHz uses ~44 MiB of decoded PCM. */
 export const DECODED_AUDIO_CACHE_BYTES = 64 * 1024 * 1024;
 
@@ -53,10 +55,12 @@ export class DecodedAudioCache {
     }
 
     const created = !entry;
+    let early: EarlyAudioDownload | null = null;
     if (!entry) {
+      early = takeEarlyAudio(url);
       entry = {
         key,
-        controller: new AbortController(),
+        controller: early?.controller ?? new AbortController(),
         consumers: new Set(),
         buffer: null,
         bytes: 0,
@@ -70,7 +74,7 @@ export class DecodedAudioCache {
       consumer = { resolve, reject };
       pending.consumers.add(consumer);
     });
-    if (created) void this.load(pending, ctx, url);
+    if (created) void this.load(pending, ctx, url, early);
 
     return {
       promise,
@@ -86,12 +90,16 @@ export class DecodedAudioCache {
     };
   }
 
-  private async load(entry: Entry, ctx: Decoder, url: string): Promise<void> {
+  private async load(entry: Entry, ctx: Decoder, url: string, early: EarlyAudioDownload | null): Promise<void> {
     try {
-      const response = await fetch(url, { signal: entry.controller.signal });
-      if (entry.abandoned) return;
-      if (!response.ok) throw new Error(`Audio load failed (${response.status})`);
-      const encoded = await response.arrayBuffer();
+      let encoded: ArrayBuffer;
+      if (early) encoded = await early.promise;
+      else {
+        const response = await fetch(url, { signal: entry.controller.signal });
+        if (entry.abandoned) return;
+        if (!response.ok) throw new Error(`Audio load failed (${response.status})`);
+        encoded = await response.arrayBuffer();
+      }
       if (entry.abandoned) return;
       // Decoding consumes this freshly fetched buffer; no second copy is needed.
       const buffer = await ctx.decodeAudioData(encoded);

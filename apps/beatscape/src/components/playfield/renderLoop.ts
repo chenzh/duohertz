@@ -6,10 +6,8 @@
 // ~880-line `useEffect` closing over ~39 refs; moving it here keeps PlayField.tsx
 // focused on React (hooks, state, pointer/keyboard input, JSX).
 //
-// The body below is relocated VERBATIM from the component — only `onFinishRef`
-// became the `onFinish` callback passed through the context. All refs/values are
-// received via `PlayfieldRenderContext` and destructured with the SAME names the
-// original code used, so the logic is byte-for-byte identical.
+// Refs/values arrive through PlayfieldRenderContext; the component owns their
+// lifecycle while this module owns drawing and frame updates.
 
 import type { RefObject } from "react";
 import type { ChartJSON, PlayMode, PlayResult } from "../../types/chart";
@@ -58,11 +56,29 @@ import {
   prefersReducedMotion,
   skewPath,
 } from "./canvasHelpers";
+import { visibleNoteEnd } from "./visibleNoteEnd";
+import { MILESTONE_MAX_SCALE, MilestoneTextSprites } from "./milestoneTextSprites";
+import { KeyHintSprites } from "./keyHintSprites";
 
 type Fx = { lane: number; judgment: JudgeFx["judgment"]; born: number; deltaMs: number };
 type ScorePop = { x: number; y: number; text: string; born: number; color: string };
 
 export type { Fx, ScorePop };
+
+export type PlayfieldDrawSample = {
+  startedAtMs: number;
+  durationMs: number;
+  songTimeMs: number;
+  noteObjects: number;
+  canvas: HTMLCanvasElement;
+};
+
+declare global {
+  interface Window {
+    /** Optional diagnostics for draw-command CPU time, not GPU completion. */
+    __bsMeasureDraw?: (sample: PlayfieldDrawSample) => void;
+  }
+}
 
 const LANE_FLASH_MS = 180;
 const JUDGE_LABEL: Record<string, string> = {
@@ -73,6 +89,7 @@ const JUDGE_LABEL: Record<string, string> = {
 };
 const JUDGE_COLOR: Record<string, string> = { ...JUDGE_COLORS };
 const COMBO_MILESTONES = [10, 25, 50, 100, 150, 200, 300];
+const MILESTONE_MESSAGES = [...COMBO_MILESTONES.map(combo => `${combo} COMBO!`), SURGE_COPY.t3];
 
 export interface PlayfieldRenderContext {
   // refs (read + mutated by the loop)
@@ -208,6 +225,15 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
   // alpha 通道完全没有用处，却会让合成器多做一次 blend。关掉它是零风险的白捡。
   const ctx2d = canvas.getContext("2d", { alpha: false }) ?? canvas.getContext("2d")!;
   let raf = 0;
+  let disposed = false;
+  let spriteDpr = 0;
+  const milestoneSprites = new MilestoneTextSprites();
+  const keyHintSprites = touchUi ? null : new KeyHintSprites(keyHint);
+  const prepareMilestones = () => {
+    // Full/compact fields retain the base alphabetic baseline: the legacy HUD
+    // resets it after accuracy, and its rotated gauge uses save/restore.
+    for (const text of MILESTONE_MESSAGES) milestoneSprites.get(text, spriteDpr, ctx2d.textBaseline);
+  };
 
   // Pre-render glowing note sprites once. Per frame we only blit these
   // (drawImage) instead of recomputing shadowBlur on every note — shadowBlur
@@ -257,6 +283,11 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
 
   const resize = () => {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const changedDpr = spriteDpr !== dpr;
+    if (changedDpr) {
+      spriteDpr = dpr;
+      milestoneSprites.clear();
+    }
     const w = wrap.clientWidth;
     const h = wrap.clientHeight;
     canvas.width = Math.round(w * dpr);
@@ -265,6 +296,8 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
     canvas.style.height = `${h}px`;
     ctx2d.setTransform(dpr, 0, 0, dpr, 0, 0);
     dimRef.current = { w, h };
+    if (changedDpr) prepareMilestones();
+    keyHintSprites?.prepare(dpr);
     // Concentration rays are size-dependent — rebuild with the field.
     raysRef.current = makeRaysSprite(w, h);
     edgesOne = [[0, 5, w, 0]];
@@ -276,8 +309,29 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
     ];
   };
   resize();
+  if (document.fonts) keyHintSprites?.observeFonts(document.fonts);
   const ro = new ResizeObserver(resize);
   ro.observe(wrap);
+  let milestoneFontVersion = 0;
+  const refreshMilestoneFonts = () => {
+    if (disposed) return;
+    milestoneFontVersion++;
+    milestoneSprites.clear();
+    prepareMilestones();
+  };
+  const isMilestoneFont = (font: FontFace) => ["anton", "sora"].includes(font.family.replace(/["']/g, "").trim().toLowerCase());
+  const onMilestoneFontsLoaded = (event: FontFaceSetLoadEvent) => {
+    if (event.fontfaces.some(isMilestoneFont)) refreshMilestoneFonts();
+  };
+  document.fonts?.addEventListener("loadingdone", onMilestoneFontsLoaded);
+  // Only await an actual pending milestone font. A completed loadingdone event
+  // already refreshed it, and unrelated UI fonts must not rebuild eight images.
+  if (document.fonts && [...document.fonts].some(font => isMilestoneFont(font) && font.status === "loading")) {
+    const pendingVersion = milestoneFontVersion;
+    void document.fonts.ready.then(() => {
+      if (milestoneFontVersion === pendingVersion) refreshMilestoneFonts();
+    });
+  }
 
   // 循环里的特效开关一律读 ref（见组件顶部 mutedRef 的注释）。
   // prefersReducedMotion() 现在是缓存布尔值，每次调用只是属性读取。
@@ -307,6 +361,9 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
   };
 
   const draw = (effMs: number, st: number) => {
+    const measureDraw = window.__bsMeasureDraw;
+    const drawStartedAtMs = measureDraw ? performance.now() : 0;
+    let noteObjects = 0;
     const { w, h } = dimRef.current;
     const receptorY = receptorYFromGeometry(h, Math.min(w, h));
     const laneW = w / 4;
@@ -315,8 +372,6 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
     const approach = approachRef.current;
     const songSec = effMs / 1000;
     const nowPerf = performance.now();
-
-    ctx2d.clearRect(0, 0, w, h);
 
     const beatPhase = ((songSec * chart.bpm) / 60) % 1;
     // FEEL PACK: blend real FFT bass into the pulse — the field breathes with
@@ -327,6 +382,8 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
     // Flat ink ground; a faint district-coloured beat wash ties the field to
     // the playing track's character (v2.0 language: flat, no gradient/glow).
     // dr/dg/db 已在 effect 作用域算好（见上）。
+    // The previous frame restores the base DPR transform and alpha=1;
+    // source-over stays unchanged. This opaque fill also clears the frame.
     const surgeTier = surgeRef.current.tier();
     ctx2d.fillStyle = "#12100F";
     ctx2d.fillRect(0, 0, w, h);
@@ -420,18 +477,22 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
       ctx2d.fillRect(0, receptorY + 5, w, 3);
     }
 
-    // notes
-    for (const n of session.notes) {
+    // noteScreenY clamps future heads to y=0, so pixel clipping alone would
+    // draw the rest of the chart on the top edge. Cull by the same approach
+    // window first, retaining unfinished hold/slide tails via session.cursor.
+    const noteEnd = visibleNoteEnd(session, effMs, approach);
+    for (let i = session.cursor; i < noteEnd; i++) {
+      const n = session.order[i]!;
+      if (n.done) continue;
+      if (measureDraw) noteObjects++;
       const d = n.def;
       const yHead = noteScreenY(n.tMs / 1000, songSec, receptorY, approach);
       if (yHead < -60 || yHead > h + 60) {
         if (d.type !== "hold" && d.type !== "slide") continue;
       }
       if (d.type === "tap") {
-        if (n.done) continue;
         drawNote(d.lane, (d.lane + 0.5) * laneW, yHead, noteW, 1, receptorY);
       } else if (d.type === "hold") {
-        if (n.done) continue;
         const yTail = noteScreenY(n.endMs / 1000, songSec, receptorY, approach);
         const top = Math.min(yHead, yTail);
         const bodyH = Math.abs(yTail - yHead);
@@ -451,13 +512,11 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
         const headAlpha = n.head ? 0.35 : 1;
         drawNote(d.lane, (d.lane + 0.5) * laneW, yHead, noteW, headAlpha, receptorY);
       } else if (d.type === "chord") {
-        if (n.done) continue;
         for (const l of d.lanes) {
           const a = n.chord[l] != null ? 0.35 : 1;
           drawNote(l, (l + 0.5) * laneW, yHead, noteW, a, receptorY);
         }
       } else if (d.type === "slide") {
-        if (n.done) continue;
         const headDone = n.head !== null;
         drawNote(d.lane, (d.lane + 0.5) * laneW, yHead, noteW, headDone ? 0.35 : 1, receptorY);
         const yTail = noteScreenY(n.endMs / 1000, songSec, receptorY, approach);
@@ -855,12 +914,15 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
         ctx2d.save();
         ctx2d.globalAlpha = 1 - age;
         ctx2d.translate(w / 2, receptorY * 0.6);
-        const sc = 0.7 + age * 0.7;
+        const sc = 0.7 + age * (MILESTONE_MAX_SCALE - 0.7);
         ctx2d.scale(sc, sc);
-        ctx2d.textAlign = "center";
-        ctx2d.font = "400 48px Anton, 'Sora', sans-serif";
-        ctx2d.lineWidth = 10;
-        inkedText(ctx2d, milestoneRef.current.text, 0, 0, "#FFB020");
+        const sprite = milestoneSprites.get(milestoneRef.current.text, spriteDpr, ctx2d.textBaseline);
+        ctx2d.imageSmoothingEnabled = true;
+        ctx2d.imageSmoothingQuality = "high";
+        // Two draws preserve the original stroke-then-fill compositing under
+        // the same fading alpha; the maximum-scale raster never upscales.
+        ctx2d.drawImage(sprite.stroke, sprite.x, sprite.y, sprite.width, sprite.height);
+        ctx2d.drawImage(sprite.fill, sprite.x, sprite.y, sprite.width, sprite.height);
         ctx2d.restore();
       }
     }
@@ -869,19 +931,16 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
     // key's *label*, so arrow keys read as ← ↓ ↑ → instead of "ArrowLeft".
     // Skipped on touch: there is no keyboard there, and the overlay already
     // tells the player to use their thumbs.
-    if (!touchUi) {
+    if (keyHintSprites) {
       ctx2d.save();
-      ctx2d.textAlign = "center";
-      ctx2d.textBaseline = "middle";
+      const hintAlpha = ctx2d.globalAlpha;
       const hintY = Math.min(receptorY + 26, h - 14);
       for (let i = 0; i < 4; i++) {
-        const label = keyHint[i] ?? "";
         const flash = Math.max(
           0,
           1 - (performance.now() - (laneFlashRef.current[i] ?? 0)) / LANE_FLASH_MS,
         );
         const held = pressedRef.current.has(i);
-        const [r, g, b] = LANE_RGB[i] ?? LANE_RGB[0]!;
         const cxm = (i + 0.5) * laneW;
         const capW = Math.min(laneW * 0.7, 46);
         const capH = 24;
@@ -891,11 +950,12 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
         ctx2d.lineWidth = 2;
         ctx2d.strokeStyle = "#000000";
         ctx2d.stroke();
-        ctx2d.font = `700 ${held ? 16 : 14}px 'IBM Plex Sans', sans-serif`;
-        ctx2d.fillStyle = held
-          ? "#12100F"
-          : `rgba(${r},${g},${b},${Math.min(1, 0.6 + flash * 0.4)})`;
-        ctx2d.fillText(label, cxm, hintY + 1);
+        const sprite = keyHintSprites.get(i, held)!;
+        // Idle opacity used to live in fillStyle. Apply it to the opaque text
+        // image only, then restore the original alpha before the next keycap.
+        ctx2d.globalAlpha = hintAlpha * (held ? 1 : Math.min(1, 0.6 + flash * 0.4));
+        ctx2d.drawImage(sprite.canvas, cxm + sprite.x, hintY + 1 + sprite.y, sprite.width, sprite.height);
+        ctx2d.globalAlpha = hintAlpha;
       }
       ctx2d.restore();
     }
@@ -917,6 +977,15 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
       ctx2d.fillStyle = "#E23D3D";
       ctx2d.fillText(text, w / 2, h / 2);
       ctx2d.restore();
+    }
+
+    if (measureDraw) {
+      const durationMs = performance.now() - drawStartedAtMs;
+      try {
+        measureDraw({ startedAtMs: drawStartedAtMs, durationMs, songTimeMs: st, noteObjects, canvas });
+      } catch {
+        // An external diagnostic observer must not interrupt the game loop.
+      }
     }
   };
 
@@ -1080,7 +1149,11 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
 
   raf = requestAnimationFrame(loop);
   return () => {
+    disposed = true;
     cancelAnimationFrame(raf);
     ro.disconnect();
+    document.fonts?.removeEventListener("loadingdone", onMilestoneFontsLoaded);
+    milestoneSprites.clear();
+    keyHintSprites?.dispose();
   };
 }

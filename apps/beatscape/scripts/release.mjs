@@ -4,10 +4,23 @@ import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { startEarlyAudio } from './early-audio.mjs';
 
 const app = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const dist = join(app, 'dist');
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
+const earlyAudioTag = /<script id="beatscape-early-audio">[\s\S]*?<\/script>/g;
+
+function earlyAudioScript(html, catalog) {
+  const tags = [...html.matchAll(earlyAudioTag)];
+  assert(tags.length === 1 && tags[0].index < html.indexOf('</head>'), 'Missing/invalid head audio bootstrap');
+  const base = html.match(/<link\b[^>]*href="([^"?#]*\/)catalog\.json"[^>]*>/)?.[1];
+  assert(base && base.startsWith('/') && !base.startsWith('//'), 'Missing catalog preload/base');
+  // Escape HTML-significant characters even if future catalog IDs contain them.
+  const json = JSON.stringify(Object.fromEntries(catalog.tracks.map(track => [track.track_id, track.audio])))
+    .replace(/</g, '\\u003c').replace(/\u2028/g, '\\u2028').replace(/\u2029/g, '\\u2029');
+  return `<script id="beatscape-early-audio">(${startEarlyAudio.toString()})(${json},${JSON.stringify(base)});</script>`;
+}
 export function filesIn(dir) {
   return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
     const path = join(dir, entry.name);
@@ -80,6 +93,9 @@ export function prepareRelease(root = dist) {
     if (!existsSync(join(root, (track.og ?? '').replace(/^\//, '')))) track.og = '/og.png';
   }
   writeFileSync(join(root, 'catalog.json'), JSON.stringify(catalog, null, 2) + '\n');
+  const htmlPath = join(root, 'index.html');
+  const html = readFileSync(htmlPath, 'utf8');
+  writeFileSync(htmlPath, html.replace(earlyAudioTag, () => earlyAudioScript(html, catalog)));
   const files = Object.fromEntries(filesIn(root).filter((p) => p !== join(root, 'release.json'))
     .map((p) => [relative(root, p).split(sep).join('/'), sha(readFileSync(p))]));
   const manifest = {
@@ -116,6 +132,7 @@ export function verifyRelease(root = dist) {
   assert(sha(JSON.stringify(actual)) === manifest.artifactSha256, 'Artifact hash mismatch');
   assert(manifest.catalogSha256 === actual['catalog.json'], 'Catalog hash mismatch');
   const html = readFileSync(join(root, 'index.html'), 'utf8');
+  assert(html.match(earlyAudioTag)?.[0] === earlyAudioScript(html, catalog), 'Stale audio bootstrap; rebuild the candidate');
   assert(html.includes('property="og:image"') && html.includes('name="twitter:card"'), 'Missing static social cards');
   assert(!html.includes('/beatscape/assets/'), 'Wrong Pages base path');
   const png = readFileSync(join(root, 'og.png'));

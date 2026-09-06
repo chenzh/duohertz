@@ -6,6 +6,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { discardStaleEarlyAudio } from "./audio/earlyAudio";
 
 const APP_BASE = (import.meta.env.BASE_URL || "/beatscape/").replace(/\/$/, "") || "/beatscape";
 
@@ -26,6 +27,7 @@ function toUrl(to: string): string {
 }
 
 function readLocation(): { path: string; search: string } {
+  discardStaleEarlyAudio();
   const raw = window.location.pathname.replace(/\/$/, "") || "/";
   const path = raw.startsWith(APP_BASE) ? raw.slice(APP_BASE.length) || "/" : raw;
   return { path, search: window.location.search };

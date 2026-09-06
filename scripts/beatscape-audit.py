@@ -4,6 +4,7 @@
 Usage:
   python3 scripts/beatscape-audit.py --dir data/beatscape-preview
   python3 scripts/beatscape-audit.py --dir apps/beatscape/public --catalog apps/beatscape/public/catalog.json
+  python3 scripts/beatscape-audit.py --dir apps/beatscape/public --catalog apps/beatscape/public/catalog.json --allow-missing-stream
   python3 scripts/beatscape-audit.py --dir data/beatscape-preview --out data/beatscape-preview/reports
 
 Exit codes: 0 = all PASS (WARN ok), 1 = any FAIL.
@@ -585,7 +586,7 @@ def audit_chart(path: Path, *, stage: int, duration_sec: float) -> list[Check]:
     return checks
 
 
-def audit_catalog_entry(entry: dict[str, Any], base: Path) -> TrackReport:
+def audit_catalog_entry(entry: dict[str, Any], base: Path, *, allow_missing_stream: bool = False) -> TrackReport:
     report = TrackReport(source=entry.get("track_id", "?"), track_id=entry.get("track_id"), title=entry.get("title"))
 
     for key in CATALOG_REQUIRED:
@@ -636,7 +637,10 @@ def audit_catalog_entry(entry: dict[str, Any], base: Path) -> TrackReport:
     if stream_audio:
         sp = base / str(stream_audio).lstrip("/")
         if not sp.is_file():
-            report.checks.append(Check("FAIL", "catalog.stream_audio", f"missing {stream_audio}"))
+            status = "WARN" if allow_missing_stream else "FAIL"
+            code = "catalog.stream_external" if allow_missing_stream else "catalog.stream_audio"
+            suffix = " (external stream asset; not present in CI checkout)" if allow_missing_stream else ""
+            report.checks.append(Check(status, code, f"missing {stream_audio}{suffix}"))
         else:
             report.checks.append(Check("PASS", "catalog.stream_audio", str(stream_audio)))
         if not stream_dur:
@@ -735,7 +739,7 @@ def run_audit(args: argparse.Namespace) -> AuditReport:
         catalog = json.loads(catalog_path.read_text(encoding="utf-8"))
         base = catalog_path.parent
         for entry in catalog.get("tracks", []):
-            tr = audit_catalog_entry(entry, base)
+            tr = audit_catalog_entry(entry, base, allow_missing_stream=args.allow_missing_stream)
             audit.tracks.append(tr)
             if entry.get("track_id"):
                 catalog_by_id[entry["track_id"]] = entry
@@ -838,6 +842,11 @@ def main() -> int:
     parser.add_argument("--catalog", help="Path to catalog.json (optional)")
     parser.add_argument("--audio", nargs="*", help="Explicit audio files to audit")
     parser.add_argument("--out", help="Report output directory (default: <dir>/reports)")
+    parser.add_argument(
+        "--allow-missing-stream",
+        action="store_true",
+        help="Treat absent stream.m4a files as external assets (for CI checkouts without ignored masters)",
+    )
     args = parser.parse_args()
 
     audit = run_audit(args)

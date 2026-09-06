@@ -22,8 +22,13 @@ const suite = option('--suite', 'all');
 const profileFilter = option('--profile', 'all');
 const repeats = Number(option('--repeats', '3'));
 const cycles = Number(option('--cycles', '8'));
+const gameRepeats = Number(option('--game-repeats', '1'));
+const gameScenarios = option('--scenarios', 'hard-fx-off,hard-fx-max,duo-fx-max').split(',');
 assert(['all', 'load', 'game', 'memory'].includes(suite), 'Invalid --suite');
 assert(Number.isInteger(repeats) && repeats > 0 && Number.isInteger(cycles) && cycles > 0);
+assert(Number.isInteger(gameRepeats) && gameRepeats > 0, 'Invalid --game-repeats');
+assert(gameScenarios.length && new Set(gameScenarios).size === gameScenarios.length &&
+  gameScenarios.every(s => ['hard-fx-off', 'hard-fx-max', 'duo-fx-max'].includes(s)), 'Invalid --scenarios');
 const release = verifyRelease();
 const catalog = JSON.parse(readFileSync(resolve(dist, 'catalog.json')));
 const tracks = catalog.tracks.map(track => ({ ...track,
@@ -110,7 +115,7 @@ const result = {
     headless: true, origin: 'loopback static production artifact; Brotli text + artifact _headers + ETag; no CDN',
     network: 'CDP throughput/latency simulation; external font requests use actual network plus emulation',
     deviceCoverage: 'automated browser layouts only; physical-device acceptance cancelled by BS-D001' },
-  config: { suite, repeats, cycles, profiles, track: { id: track.track_id, duration: track.duration_sec,
+  config: { suite, repeats, cycles, gameRepeats, gameScenarios, profiles, track: { id: track.track_id, duration: track.duration_sec,
     hardNotes: track.hard.total_notes, notesPerSecond: track.hard.total_notes / track.duration_sec } },
   observations: [],
 };
@@ -183,7 +188,7 @@ async function memoryPoint(page, cdp, label) {
   await cdp.send('HeapProfiler.collectGarbage');
   await page.waitForTimeout(150);
   await cdp.send('HeapProfiler.collectGarbage');
-  return { label, heap: await cdp.send('Runtime.getHeapUsage'), dom: await cdp.send('Memory.getDOMCounters'), probe: await snapshot(page) };
+  return { label, gc: { completedCollections: 2 }, heap: await cdp.send('Runtime.getHeapUsage'), dom: await cdp.send('Memory.getDOMCounters'), probe: await snapshot(page) };
 }
 async function loadSuite(profile) {
   for (let i = 0; i < repeats; i++) {
@@ -206,7 +211,7 @@ async function loadSuite(profile) {
   }
 }
 async function gameSuite(profile) {
-  for (const scenario of ['hard-fx-off', 'hard-fx-max', 'duo-fx-max']) {
+  for (let iteration = 1; iteration <= gameRepeats; iteration++) for (const scenario of gameScenarios) {
     const duo = scenario.startsWith('duo');
     const run = await session(profile, scenario !== 'hard-fx-off');
     const { page } = run;
@@ -219,7 +224,7 @@ async function gameSuite(profile) {
       await start.click();
       await page.waitForFunction(() => window.__bsPerf.musicTimeMs() >= 0 && window.__bsPerf.musicTimeMs() !== null);
       await page.evaluate(() => window.__bsPerf.reset());
-      console.log(`[${profile.name}] playing ${scenario}: ${track.track_id}, ${track.duration_sec}s, ${track.hard.total_notes} real judgments`);
+      console.log(`[${profile.name}] playing ${scenario} ${iteration}/${gameRepeats}: ${track.track_id}, ${track.duration_sec}s, ${track.hard.total_notes} real judgments`);
       if (duo) await page.locator('.duo-result').waitFor({ state: 'visible', timeout: (track.duration_sec + 25) * 1000 });
       else await page.waitForURL(/\/results$/, { timeout: (track.duration_sec + 25) * 1000 });
       const probe = await snapshot(page);
@@ -229,8 +234,8 @@ async function gameSuite(profile) {
           player: column.querySelector('.duo-scorecol-who')?.textContent,
           counts: column.querySelectorAll('.duo-scorecol-meta')[1]?.textContent.trim().split('/').map(Number),
         })) }));
-      await page.screenshot({ path: resolve(output, `${profile.name}-${scenario}-result.png`) });
-      record({ kind: 'game', scenario, profile: profile.name, summary: { duration: track.duration_sec }, loading, probe, outcomes,
+      await page.screenshot({ path: resolve(output, `${profile.name}-${scenario}-${iteration}-result.png`) });
+      record({ kind: 'game', scenario, profile: profile.name, iteration, summary: { duration: track.duration_sec }, loading, probe, outcomes,
         errors: run.errors, failedRequests: run.failedRequests });
     } finally { await run.context.close(); }
   }

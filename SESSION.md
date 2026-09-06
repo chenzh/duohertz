@@ -14,6 +14,8 @@
 
 > 验收入口：本页 · `pnpm catalog:beatscape` · `pnpm audit:beatscape` · `pnpm earcheck:beatscape`
 
+- [x] **BeatScape 性能保障（2026-09-06，本地完成，未提交 / 未部署）**：候选 `ae15d3778b3f` 完成选定音频提前请求、可见音符窗口、里程碑和桌面键名预绘。179 应用单测、11 发布器 / 50 性能脚本回归、6 项当前产物相关浏览器回归通过；更早候选 62 项完整浏览器回归单独记录。同指纹 28 项自动性能预算全部通过：18 次冷加载最慢开局 3.908s，8 场真实 Hard 均约 60 FPS、0 异常间隔、绘制峰值最高 3.5ms；两种配置各 12 次重开 / 切歌后无活动音乐源或待解码，最后四次退出 JS 堆波动约 45 / 38 KiB。保留全部失败阶段，详见 [性能记录](docs/BEATSCAPE-PERFORMANCE.md) 与 [证据](docs/evidence/beatscape-performance-assurance-2026-09-06.json)。仅覆盖固定本地浏览器条件；BS-D001 与发布门禁保持不变。
+
 - [x] **BeatScape 游戏内退出确认（2026-09-06，未部署）**：单人与 Duo 的浏览器 confirm 改为游戏内顶层面板，打开时暂停音频和判定；Keep playing / Esc 恢复原暂停状态，Leave 清理全屏并返回曲目页。修复弹窗内释放按键与延迟 R 音频恢复的边界，156 单测 + 28 项桌面／移动布局浏览器回归、类型检查、CF 构建与资产核验通过；候选 `f4015d14bd22`，详情见 [上线准备](docs/BEATSCAPE-RELEASE-READINESS.md)。
 
 - [x] **BeatScape 自动性能基线与优化（2026-09-06，未部署）**：完成两种固定条件的冷加载、6 场完整 Hard / 最高特效 / Duo，以及每组 8 次重开、8 次切歌、3 次加载中退出的前后测量。实现目录预加载 / 去重、首页按需谱面、选定音频并行、有界 64 MiB 解码缓存 / Duo 共享与取消，修复 R 旧状态导致重开失效。156 应用单测 + 6 发布器回归 + 24 性能工具回归 + 32 生产浏览器流程、构建与资产核验通过；候选 `bd6f4017a63e`。**不等于性能全面达标**：移动模拟冷开局仍为单人 4.18s / 双人 4.46s，Duo 有连续两个异常帧间隔；原始证据、预算结论与复现命令见 [自动性能记录](docs/BEATSCAPE-PERFORMANCE.md)。BS-D001 取消决定保持生效。
@@ -31,7 +33,7 @@
 - [x] **Agent 规则与工作流审计（2026-09-05，本地未提交）**：按 GPT-6 Astra 官方指导精简 AGENTS、常驻规则、角色与交付模板，新增按需验证/交付 skills，修复 CI/派单/合并资格校验。下一次上游 Harness 同步须审查 diff、保留本仓适配；自动合并须另行明确启用仓库变量。依据、验收与边界见 [AGENT-WORKFLOW-AUDIT](docs/AGENT-WORKFLOW-AUDIT.md)。
 
 - [x] **上线技术准备（2026-09-05，本地未提交/未发布）**：105 首 / 315 张谱候选包；统一锁文件/类型检查/构建与 CI 门禁；内容哈希 URL 修旧谱缓存；静态 OG 卡、全模式 Note speed、跨设备同曲分享、音乐站 hash 深链；修损坏存档、Daily 榜上限与误报纪录。`pnpm release:beatscape` 通过：127 单测 + 6 发布器回归 + 16 桌面/移动模拟 E2E，根测试 6+8 通过；产物 591 文件 / 402.7 MiB。详见 [`docs/BEATSCAPE-RELEASE-READINESS.md`](docs/BEATSCAPE-RELEASE-READINESS.md)。
-- [ ] **正式上线放行**：bs-p3-01/04/07 已从当前母带循环扩展至 216s（原版已备份，最终 audit **PASS=4726 WARN=9 FAIL=0**）；接缝听感仍待审核，继续完成 105 首人工耳检、差异化盲测。专项真机验收执行按 BS-D001 取消，不再安排；发布门禁尚未调整，按脚本如实报告。工作单使用 `python3 scripts/beatscape-earcheck-worksheet.py --all`，带音频指纹与导出。`launch:check` 当前应阻止正式发布；待实际验收后填写 `apps/beatscape/launch-signoff.json`，不得把技术检查通过当成全部上线门禁通过。
+- [ ] **正式上线放行**：最新已推送 `1290f0c` 的 [CI](https://github.com/chenzh/MusicSaas/actions/runs/34018671896) 中根 unit 和内容审计仍失败，须在最终提交上修复必需 CI；bs-p3-01/04/07 已从当前母带循环扩展至 216s（原版已备份，最终 audit **PASS=4726 WARN=9 FAIL=0**）；接缝听感仍待审核，继续完成 105 首人工耳检、差异化盲测。专项真机验收执行按 BS-D001 取消，不再安排；发布门禁尚未调整，按脚本如实报告。工作单使用 `python3 scripts/beatscape-earcheck-worksheet.py --all`，带音频指纹与导出。`launch:check` 当前应阻止正式发布；待实际验收后填写 `apps/beatscape/launch-signoff.json`，不得把技术检查通过当成全部上线门禁通过。
 
 - [x] **三人立绘重出（已完成 2026-09-02）**：本地 MPS + LoRA 重出 JUNO/ATLAS/TORQUE（prompt 母本 v2，锚点前置 + 赛璐璐夜色模板，BPE 66-71 通过）；锚点 checklist 目验过（单耳挂耳机/场强仪/扳手鼓槌+铬面锣/共振菱形 MOTIF）；已替换 `public/characters/` 三图并推送（commit `6b97c2e`）· 剩余市场评估（女性首位风险）为人工判断
 - [ ] **商业化差距决策点 5 项待拍板**：[`docs/BEATSCAPE-COMMERCIALIZATION-GAP.md`](docs/BEATSCAPE-COMMERCIALIZATION-GAP.md) §6（变现模式 / 经营主体 / 后端栈 / 流媒体终点 / 商标批次）——拍板后解锁对应 P0

@@ -92,8 +92,26 @@ export function installPerformanceProbe({ metricsOnly = false } = {}) {
   let measurementStartedAt = performance.now();
   let decodeBaseline = 0;
   let frameIntervals = [];
+  let delayedFrames = [];
   let callbackDurations = [];
   let callbackCpuByFrame = new Map();
+  let drawDurations = [];
+  let visibleNoteCounts = [];
+  let slowDraws = [];
+  let drawsByField = new Map();
+  const fieldIds = new WeakMap();
+  let fieldSequence = 0;
+  const previousDrawObserver = window.__bsMeasureDraw;
+  const observeDraw = ({ startedAtMs, durationMs, songTimeMs, noteObjects, canvas }) => {
+    if (stopped || songTimeMs < 0) return;
+    if (!fieldIds.has(canvas)) fieldIds.set(canvas, ++fieldSequence);
+    const field = fieldIds.get(canvas);
+    drawDurations.push(durationMs);
+    visibleNoteCounts.push(noteObjects);
+    drawsByField.set(field, (drawsByField.get(field) ?? 0) + 1);
+    if (durationMs > 5) slowDraws.push({ startedAtMs, durationMs, songTimeMs, noteObjects, field });
+  };
+  window.__bsMeasureDraw = observeDraw;
   let longTasks = [];
   let previousFrame = null;
   let rafId = null;
@@ -137,6 +155,8 @@ export function installPerformanceProbe({ metricsOnly = false } = {}) {
     if (previousFrame !== null) {
       const interval = timestamp - previousFrame;
       frameIntervals.push(interval);
+      if (interval > 25) delayedFrames.push({ endedAtMs: timestamp, intervalMs: interval,
+        previousFrameCpuMs: callbackCpuByFrame.get(previousFrame) ?? null });
       if (surge3Fields) {
         effects.surge3Frames++;
         effects.surge3Ms += interval;
@@ -315,8 +335,13 @@ export function installPerformanceProbe({ metricsOnly = false } = {}) {
     measurementStartedAt = performance.now();
     decodeBaseline = decodeRecords.length;
     frameIntervals = [];
+    delayedFrames = [];
     callbackDurations = [];
     callbackCpuByFrame = new Map();
+    drawDurations = [];
+    visibleNoteCounts = [];
+    slowDraws = [];
+    drawsByField = new Map();
     longTasks = [];
     previousFrame = null;
     effects = emptyEffects();
@@ -346,11 +371,21 @@ export function installPerformanceProbe({ metricsOnly = false } = {}) {
       measurementStartedAtMs: measurementStartedAt,
       measuredMs: performance.now() - measurementStartedAt,
       frames: summarizeFrames(frameIntervals),
+      delayedFrames: [...delayedFrames],
       appRafCallbacks: summarizeDurations(callbackDurations),
       appFrameCpu: summarizeDurations([...callbackCpuByFrame.values()]),
+      canvasDraw: {
+        ...summarizeDurations(drawDurations),
+        fieldSamples: Object.fromEntries(drawsByField),
+        visibleNotes: { p50: percentile(visibleNoteCounts, 0.5), p95: percentile(visibleNoteCounts, 0.95),
+          max: visibleNoteCounts.length ? Math.max(...visibleNoteCounts) : null },
+        overBudget: [...slowDraws],
+      },
       longTasks: { ...summarizeDurations(longTasks.map((task) => task.durationMs)), entries: [...longTasks] },
       paint: { ...paint },
       audioDecode: decodeSummary(decodeRecords.slice(decodeBaseline)),
+      decodeTimeline: decodeRecords.map(({ startedAtMs, durationMs, failed }) => ({ startedAtMs, durationMs,
+        endedAtMs: durationMs === null ? null : startedAtMs + durationMs, failed })),
       resources: {
         decodedLifetime: decodeSummary(decodeRecords),
         liveDecodedBuffers,
@@ -373,6 +408,7 @@ export function installPerformanceProbe({ metricsOnly = false } = {}) {
       measurementNotes: {
         frames: "Native rAF intervals: cadence evidence, not render CPU or GPU completion time.",
         appFrameCpu: "Sum of application rAF callback CPU per shared timestamp; excludes probe rAF, interval input driver and browser paint/GPU work.",
+        canvasDraw: "Per-field draw() wall time to submit all Canvas2D commands, excluding game judgment, result navigation and observer callback; not GPU completion or browser composition time. Missing samples mean the artifact has no draw observer.",
         liveDecodedBufferBytes: "WeakRef-live buffers decoded through decodeAudioData, estimated as channels * samples * 4; excludes SFX createBuffer and native GPU memory. Collect GC before snapshot for retention comparisons.",
       },
     };
@@ -380,6 +416,7 @@ export function installPerformanceProbe({ metricsOnly = false } = {}) {
 
   function stop() {
     stopped = true;
+    if (window.__bsMeasureDraw === observeDraw) window.__bsMeasureDraw = previousDrawObserver;
     if (rafId !== null) nativeCancelRaf(rafId);
     stopAutoplay();
     mutations.disconnect();

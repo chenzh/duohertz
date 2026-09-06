@@ -20,7 +20,7 @@ def worker_env(workspace):
     return env
 
 
-def route(role=None):
+def route(role=None, allow_job_overrides=True):
     root = Path(os.environ.get("MULTICA_ROOT", Path(__file__).resolve().parents[2]))
     config = Path(os.environ.get("CODEX_MODELS_CONFIG", root / ".ai-company/config/codex-models.json"))
     data = json.loads(config.read_text())
@@ -28,8 +28,9 @@ def route(role=None):
     if role not in data["roles"]:
         raise ValueError(f"Unknown Codex role: {role}")
     selected = dict(data["roles"][role])
-    selected["model"] = os.environ.get("CODEX_MODEL", selected["model"])
-    selected["reasoning_effort"] = os.environ.get("CODEX_REASONING_EFFORT", selected["reasoning_effort"])
+    if allow_job_overrides:
+        selected["model"] = os.environ.get("CODEX_MODEL", selected["model"])
+        selected["reasoning_effort"] = os.environ.get("CODEX_REASONING_EFFORT", selected["reasoning_effort"])
     if selected["reasoning_effort"] not in {"low", "medium", "high", "xhigh", "max", "ultra"}:
         raise ValueError("Invalid CODEX_REASONING_EFFORT")
     return {"role": role, **selected}

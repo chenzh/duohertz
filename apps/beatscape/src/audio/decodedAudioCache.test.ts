@@ -1,5 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { DecodedAudioCache } from "./decodedAudioCache";
+import { startEarlyAudio } from "../../scripts/early-audio.mjs";
+import { discardStaleEarlyAudio } from "./earlyAudio";
 
 function deferred<T>() {
   let resolve!: (value: T) => void;
@@ -22,7 +24,95 @@ function decoder(sampleRate = 48000, decoded = buffer()) {
 
 afterEach(() => vi.unstubAllGlobals());
 
+function earlyAudioWindow(pathname = "/play/selected") {
+  const browser = Object.assign(new EventTarget(), {
+    location: { pathname },
+    setTimeout: vi.fn(() => 1),
+    clearTimeout: vi.fn(),
+    __beatscapeEarlyAudio: undefined as Window["__beatscapeEarlyAudio"],
+  });
+  vi.stubGlobal("window", browser);
+  return browser;
+}
+
 describe("decoded music cache", () => {
+  it("adopts the head download once for both players without copying encoded bytes", async () => {
+    const browser = earlyAudioWindow("/duo/selected");
+    const encoded = new ArrayBuffer(32);
+    const fetchAudio = vi.fn(async () => response(encoded));
+    vi.stubGlobal("fetch", fetchAudio);
+    startEarlyAudio({ selected: "/audio.m4a?v=release" }, "/");
+    expect(fetchAudio).toHaveBeenCalledTimes(1);
+    const ctx = decoder();
+    const cache = new DecodedAudioCache();
+    const first = cache.acquire(ctx, "/audio.m4a?v=release");
+    const second = cache.acquire(ctx, "/audio.m4a?v=release");
+    expect(await first.promise).toBe(await second.promise);
+    expect(fetchAudio).toHaveBeenCalledTimes(1);
+    expect(ctx.decodeAudioData).toHaveBeenCalledExactlyOnceWith(encoded);
+    expect(browser.__beatscapeEarlyAudio).toBeUndefined();
+    expect(browser.clearTimeout).toHaveBeenCalledWith(1);
+  });
+
+  it("aborts an adopted request only at its last release and can remount immediately", async () => {
+    earlyAudioWindow();
+    const network = deferred<Response>();
+    const fetchAudio = vi.fn((_url: string, _init?: RequestInit) => Promise.resolve(response()))
+      .mockReturnValueOnce(network.promise);
+    vi.stubGlobal("fetch", fetchAudio);
+    startEarlyAudio({ selected: "/audio?v=a" }, "/");
+    const ctx = decoder();
+    const cache = new DecodedAudioCache();
+    const first = cache.acquire(ctx, "/audio?v=a");
+    const partner = cache.acquire(ctx, "/audio?v=a");
+    const firstCancelled = expect(first.promise).rejects.toMatchObject({ name: "AbortError" });
+    const partnerCancelled = expect(partner.promise).rejects.toMatchObject({ name: "AbortError" });
+    first.release();
+    expect(fetchAudio.mock.calls[0]![1]!.signal!.aborted).toBe(false);
+    partner.release();
+    expect(fetchAudio.mock.calls[0]![1]!.signal!.aborted).toBe(true);
+    const replacement = cache.acquire(ctx, "/audio?v=a");
+    network.reject(new Error("old request aborted"));
+    await Promise.all([firstCancelled, partnerCancelled, replacement.promise]);
+    expect(fetchAudio).toHaveBeenCalledTimes(2);
+    expect(ctx.decodeAudioData).toHaveBeenCalledTimes(1);
+  });
+
+  it("discards a stale release URL and retries a failed early download normally", async () => {
+    const browser = earlyAudioWindow();
+    const fetchAudio = vi.fn((_url: string, _init?: RequestInit) => Promise.resolve(response()));
+    vi.stubGlobal("fetch", fetchAudio);
+    startEarlyAudio({ selected: "/audio?v=old" }, "/");
+    const cache = new DecodedAudioCache();
+    const ctx = decoder();
+    await cache.acquire(ctx, "/audio?v=new").promise;
+    expect(fetchAudio.mock.calls[0]![1]!.signal!.aborted).toBe(true);
+    expect(fetchAudio.mock.calls[1]![0]).toBe("/audio?v=new");
+    expect(browser.__beatscapeEarlyAudio).toBeUndefined();
+
+    fetchAudio.mockRejectedValueOnce(new Error("temporary network failure"));
+    startEarlyAudio({ selected: "/audio?v=next" }, "/");
+    await Promise.resolve();
+    await Promise.resolve();
+    expect(browser.__beatscapeEarlyAudio).toBeUndefined();
+    await cache.acquire(ctx, "/audio?v=next").promise;
+    expect(fetchAudio).toHaveBeenCalledTimes(4);
+    expect(ctx.decodeAudioData).toHaveBeenCalledTimes(2);
+  });
+
+  it("router cleanup cancels an unadopted request after SPA navigation", () => {
+    const browser = earlyAudioWindow();
+    const fetchAudio = vi.fn((_url: string, _init?: RequestInit) => new Promise<Response>(() => {}));
+    vi.stubGlobal("fetch", fetchAudio);
+    startEarlyAudio({ selected: "/audio?v=a" }, "/");
+    discardStaleEarlyAudio();
+    expect(fetchAudio.mock.calls[0]![1]!.signal!.aborted).toBe(false);
+    browser.location.pathname = "/library";
+    discardStaleEarlyAudio();
+    expect(fetchAudio.mock.calls[0]![1]!.signal!.aborted).toBe(true);
+    expect(browser.__beatscapeEarlyAudio).toBeUndefined();
+  });
+
   it("shares concurrent fetch/decode and hands the fetched bytes directly to the decoder", async () => {
     const encoded = new ArrayBuffer(32);
     const fetchAudio = vi.fn(async () => response(encoded));

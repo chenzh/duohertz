@@ -76,7 +76,7 @@ test("the init function can serialize without module closure dependencies", () =
   assert.equal(serialized.summarizeFrames([16, 16]).samples, 2);
 });
 
-function browserHarness() {
+function browserHarness(previousDrawObserver) {
   let now = 0;
   let sequence = 0;
   const rafs = new Map();
@@ -106,6 +106,7 @@ function browserHarness() {
     disconnect() {}
   }
   const surface = {
+    __bsMeasureDraw: previousDrawObserver,
     requestAnimationFrame(callback) { const id = ++sequence; rafs.set(id, callback); return id; },
     cancelAnimationFrame(id) { rafs.delete(id); },
     BaseAudioContext: FakeAudioContext,
@@ -154,6 +155,84 @@ test("probe aggregates application CPU at a shared frame timestamp and excludes 
   assert.equal(snapshot.appFrameCpu.maxMs, 5);
   assert.equal(snapshot.frames.samples, 1);
   assert.doesNotThrow(() => JSON.stringify(snapshot));
+  harness.probe.stop();
+});
+
+test("draw samples keep independent fields, skip countdown, and reset without claiming missing data passed", () => {
+  const previous = () => {};
+  const harness = browserHarness(previous);
+  const canvas = {};
+  const secondCanvas = {};
+  const emit = (durationMs, songTimeMs, target = canvas) => harness.surface.__bsMeasureDraw({
+    startedAtMs: 10, durationMs, songTimeMs, noteObjects: 4, canvas: target,
+  });
+  emit(100, -1);
+  assert.equal(harness.probe.snapshot().canvasDraw.samples, 0);
+  assert.equal(harness.probe.snapshot().canvasDraw.maxMs, null);
+  emit(2, 0);
+  emit(6, 100, secondCanvas);
+  const draw = harness.probe.snapshot().canvasDraw;
+  assert.equal(draw.samples, 2);
+  assert.equal(draw.maxMs, 6);
+  assert.deepEqual(Object.values(draw.fieldSamples), [1, 1]);
+  assert.equal(draw.visibleNotes.max, 4);
+  assert.equal(draw.overBudget.length, 1);
+  assert.equal(draw.overBudget[0].songTimeMs, 100);
+  assert.equal(draw.overBudget[0].startedAtMs, 10);
+  assert.doesNotThrow(() => JSON.stringify(draw));
+  harness.probe.reset();
+  assert.equal(harness.probe.snapshot().canvasDraw.samples, 0);
+  assert.equal(harness.probe.snapshot().canvasDraw.maxMs, null);
+  emit(1, 200);
+  assert.equal(harness.probe.snapshot().canvasDraw.fieldSamples[1], 1);
+  const observer = harness.surface.__bsMeasureDraw;
+  harness.probe.stop();
+  assert.equal(harness.surface.__bsMeasureDraw, previous);
+  emit(10, 300);
+  observer({ startedAtMs: 30, durationMs: 20, songTimeMs: 300, noteObjects: 4, canvas });
+  assert.equal(harness.probe.snapshot().canvasDraw.samples, 1);
+});
+
+test("stopping the probe preserves a draw observer installed after it", () => {
+  const harness = browserHarness();
+  const replacement = () => {};
+  harness.surface.__bsMeasureDraw = replacement;
+  harness.probe.stop();
+  assert.equal(harness.surface.__bsMeasureDraw, replacement);
+});
+
+test("delayed-frame timestamps retain the previous application CPU and clear on reset", () => {
+  const harness = browserHarness();
+  harness.surface.requestAnimationFrame(() => harness.advance(2));
+  harness.frame(10);
+  harness.frame(60);
+  const delayed = harness.probe.snapshot().delayedFrames;
+  assert.equal(delayed.length, 1);
+  assert.equal(delayed[0].endedAtMs, 60);
+  assert.equal(delayed[0].intervalMs, 50);
+  assert.equal(delayed[0].previousFrameCpuMs, 2);
+  harness.probe.reset();
+  assert.equal(harness.probe.snapshot().delayedFrames.length, 0);
+  harness.probe.stop();
+});
+
+test("decode timeline distinguishes pending and completed work and survives phase reset", async () => {
+  const harness = browserHarness();
+  const ctx = new harness.FakeAudioContext();
+  harness.advance(100);
+  const pending = ctx.decodeAudioData({ length: 48000, numberOfChannels: 2, duration: 1 });
+  const before = harness.probe.snapshot().decodeTimeline[0];
+  assert.equal(before.startedAtMs, 100);
+  assert.equal(before.endedAtMs, null);
+  harness.advance(20);
+  await pending;
+  const after = harness.probe.snapshot().decodeTimeline[0];
+  assert.equal(after.durationMs, 20);
+  assert.equal(after.endedAtMs, 120);
+  assert.equal(after.failed, false);
+  harness.probe.reset();
+  assert.equal(harness.probe.snapshot().decodeTimeline.length, 1);
+  assert.equal(harness.probe.snapshot().audioDecode.attempts, 0);
   harness.probe.stop();
 });
 
