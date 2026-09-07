@@ -1,7 +1,7 @@
 # MusicSaas 项目 TODO
 
 > **本文件是待办的唯一入口**，只登记**当前真实未完事项**，细节一律链接到对应权威文档，不在此复制正文。
-> 整理日期：2026-09-06（本次含 `134115a` / `6418d3f` 之后的刷新）｜ 来源：[SESSION.md](SESSION.md) · [docs/BEATSCAPE-DECISIONS.md](docs/BEATSCAPE-DECISIONS.md) · [审计报告 §6](docs/COMPANY-PROJECT-HARNESS-AUDIT-2026-09-06.md)
+> 整理日期：2026-09-07（本次含 `a136592` 之后的刷新）｜ 来源：[SESSION.md](SESSION.md) · [docs/BEATSCAPE-DECISIONS.md](docs/BEATSCAPE-DECISIONS.md) · [审计报告 §6](docs/COMPANY-PROJECT-HARNESS-AUDIT-2026-09-06.md)
 > 整理原则：**已取消 ≠ 延期 ≠ 通过**。历史 PRD、工作日志、审计建议中的条目不得自动回填为本文件待办。
 
 ## 维护规则
@@ -20,7 +20,8 @@
 | 曲库 | **105/105**（s1 6 · s2 4 · s3 15 · s4 15 · s5 10 · s6 35 · p3 10 · p4 10） |
 | 谱面 | 315 张已按「拍网格亲和力」全量重出 |
 | 线上 | BeatScape <https://beatscape.pages.dev> · ScapeMusic <https://scapemusic.pages.dev> |
-| 代码质量 | strict 全开 · 零 `any` · 零 `@ts-ignore` · **源码零 TODO/FIXME 标记**（本次实测 grep 零命中） |
+| 代码质量 | strict 全开 · 零 `any` · 零 `@ts-ignore` · **源码零 TODO/FIXME 标记**（2026-09-07 实测 `apps/beatscape/src` grep 零命中） |
+| 判定反馈 | T3 结算页误差条已随 `a136592` 推送（未部署）；对局内早/晚即时提示仍待做 |
 | 性能 | 第二轮已随 `e3ba64f` 提交：`ae15d3778b3f` 同指纹 28 项固定预算全部通过；最慢冷开局 3.908s、8 场整局 0 异常间隔、绘制峰值最高 3.5ms；未部署 |
 | 阻塞发布 | 耳检 105 首 · 差异化盲测 / 英语叙事试玩 · 最终签审；真机执行取消与门禁冲突保持记录 |
 
@@ -73,6 +74,7 @@
 
 | 事项 | commit | 说明 |
 |---|---|---|
+| 结算页判定误差条（T3 前半） | `a136592` | `playState` 累计有符号偏差 → `PlayResult.timing` → `LastRun.timing` → 结算页早/晚计数 + 平均偏差条；**已推送**（2026-09-07），未部署 |
 | 性能保障第二轮 | `e3ba64f` | 候选 `ae15d3778b3f` 的 28 项固定预算通过；179 单测、6 当前相关浏览器回归，完整结果见 [性能记录](docs/BEATSCAPE-PERFORMANCE.md)；未部署 |
 | 仓库 CI 修复 | `e3ba64f` | 修复派单校验回归与 CI 外部 stream master 审计口径；CI `34033551898` 的 unit / build / beatscape / integration 全部通过 |
 | 游戏内退出确认（替换 `window.confirm`） | `6418d3f` | 单人 / Duo 顶层面板，打开时暂停音频与判定；156 单测 + 28 浏览器回归通过，**未部署** |
@@ -101,7 +103,13 @@
 - **来源**：[docs/BEATSCAPE-MUSIC-WEB.md](docs/BEATSCAPE-MUSIC-WEB.md)
 - **另注**：「Scape Music」为工作名，对外前需商标初筛。
 
-### P1-4 三人立绘市场评估
+### P1-4 音乐模型候选评估（MiniMax Music 3.0 / YuE）
+- **待办**：MiniMax Music 3.0 **优先于 YuE** 做 10 首小样本（中文歌词 / 器乐 / BPM 与段落结构 / Apple Silicon 内存）；YuE 仅在有 CUDA 机器时做 5 首人声对照。
+- **前置阻塞**：许可与合规留档——MiniMax **Community License**（非 Apache/MIT）需核实品牌展示显著度、年收入门槛、内容安全与版权防护义务（[docs/COMPLIANCE.md](docs/COMPLIANCE.md) C-06）。**完成前不得切为生产默认引擎**，继续用 SA3 + ACE-Step。
+- **来源**：[PRD.md](PRD.md) §19 待决 7/8 · §20.1 验证清单 · [docs/COMPLIANCE.md](docs/COMPLIANCE.md)。
+- **状态**：需求已写入 SESSION/PRD/COMPLIANCE（工作区未提交），**尚未开始实测**。
+
+### P1-5 三人立绘市场评估
 - **性质**：人工判断（非技术项）。
 - **风险点**：女性首位（JUNO）的市场接受度。
 - **背景**：LoRA 重出已完成并上线（commit `6b97c2e`），锚点 checklist 目验已过。
@@ -115,9 +123,9 @@
 | ID | 事项 | 价值 | 状态 |
 |---|---|---|---|
 | **T5a** | 分享文案加 privacy 卖点（无账号 / 数据留在本机） | ★★ 低成本差异点 | ✅ **已核实落地**（2026-09-06）：`session.ts` shareResultsCopy / `pageMeta.ts` description / `index.html` og:description 均已含 "No account, no ads. Scores stay in your browser."，`session.test.ts`、`pageMeta.test.ts` 有断言。此前清单标「待做」属过期 |
-| **T3** | 判定偏早/偏晚提示 + 结算页误差条 | ★★★ 「能玩」→「能练」 | 🟡 **结算页误差条已落地**（2026-09-06）：`playState.ts` 累计有符号偏差 → `PlayResult.timing` → `LastRun.timing` → 结算页双向误差条（早/晚计数 + 平均 ms），184 单测 / tsc 干净。**对局内早/晚即时提示**待做，受 `renderLoop.ts` 归属限制（该文件属性能任务） |
+| **T3** | 判定偏早/偏晚提示 + 结算页误差条 | ★★★ 「能玩」→「能练」 | 🟡 **结算页误差条已落地并推送**（`a136592`，2026-09-07）：`playState.ts` 累计有符号偏差 → `PlayResult.timing` → `LastRun.timing` → 结算页双向误差条（早/晚计数 + 平均 ms），184 单测 / tsc 干净，未部署。**对局内早/晚即时提示**待做，受 `renderLoop.ts` 归属限制（该文件属性能任务） |
 | **T4** | 从失败点重开（挂 `MissReplayPanel`） | ★★ 啃高难度谱的前提 | 待做（跨 5 文件，涉计分完整性） |
-| **T1b / T5b** | OG 随路由同步 / 海报复制到剪贴板 | ★ 锦上添花 | 待做（约 20 行） |
+| **T1b / T5b** | OG 随路由同步 / 海报复制到剪贴板 | ★ 锦上添花 | 🟡 **代码已在工作区、未提交**：`seo/pageMeta.ts` 新增 `socialMetaTags()` 并在 `setPageMeta` 同步 og:/twitter:；`pages/Results.tsx` 新增 `copyImageBlob()` + “Copy poster” 按钮（非安全上下文回落提示下载）。**两处均无单测覆盖**（2026-09-07 grep 仅命中实现文件），提交前需补 `pageMeta.test.ts` / Results 相关断言 + tsc/vitest/build 门禁，并说明爬虫不执行 JS、静态 `index.html` 仍是首次 unfurl 来源 |
 
 ---
 
@@ -157,13 +165,15 @@
 ### P5-1 ~~归档过期冲刺清单~~ ✅ 已完成（2026-09-06）
 - 已给 `docs/BEATSCAPE-TODO-ACCEPTANCE.md` 加**历史冲刺归档**横幅：27 条未勾选项属 2026-08-25 的 Stage1/Stage2 冲刺，明确不得回填为当前待办、不得清空勾选态伪造完成；保留正文作历史验收规格。
 - 同步 `docs/KNOWLEDGE-BASE.md` 第 9 条索引标注为「历史冲刺归档」。
-- **未动**：`docs/CODE-INDEX.md:155` 的同条索引（该文件正被并行会话修改，留待其所有者一并提交）。
+- **未动**：`docs/CODE-INDEX.md:155` 的同条索引仍未标注「历史冲刺归档」（2026-09-07 复查依旧），可由本仓任何一次收尾提交顺手补上。
 
 ### P5-2 整理未提交的工作区改动
-- 截至 2026-09-06（本次刷新时实测 `git status`），工作区有并行会话未提交改动：
-  - **T3 判定反馈**：`apps/beatscape/src/engine/playState.ts`、`playState.test.ts`、`types/chart.ts`、`pages/Results.tsx`、`styles.css`（→ 归 T3 所有者；未纳入 `e3ba64f` 发布候选）
-  - **Harness / 项目规范**：`.agents/skills/company-harness/`、`.agents/skills/vault-harness/`、`.agents/skills/zbrain-session/`、`.codex/`、`AGENTS.md`
-  - **其他**：`.delivery/`、`.workbuddy-ai/memory/`
+- 截至 **2026-09-07**（本次刷新时实测 `git status`，`origin/main` 与本地已同步 0/0），工作区有并行会话未提交改动：
+  - **T1b / T5b（新）**：`apps/beatscape/src/seo/pageMeta.ts`（`socialMetaTags` + 路由同步 og:/twitter:）、`apps/beatscape/src/pages/Results.tsx`（`copyImageBlob` + “Copy poster”）——**无测试覆盖**，见 P2 表
+  - **需求文档**：`PRD.md`（§19 待决 7/8、§20.1 验证清单、MiniMax/YuE 官方链接）、`docs/COMPLIANCE.md`（许可表 + C-06）、`SESSION.md`（P1-4 音乐模型候选评估）
+  - **Harness / 项目规范**：`AGENTS.md`（追加 cursor-codex-sync 区块）、未跟踪的 `.agents/skills/{company-harness,vault-harness,zbrain-session}/`、`.codex/`
+  - **其他**：`.delivery/README.md`、`.delivery/prompts/orchestrator-kickoff.md`、`worklog/2026-09-06.md`、`.workbuddy-ai/memory/`
+- **已落地不再列**：T3 结算页误差条的原工作区改动已随 `a136592` 提交并推送。
 - **动作**：由各改动所有者分别提交；**不要 `git add -A` 一次性扫入**，避免把并行会话的半成品混入。
 
 ---
