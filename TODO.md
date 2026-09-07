@@ -1,7 +1,8 @@
 # MusicSaas 项目 TODO
 
 > **本文件是待办的唯一入口**，只登记**当前真实未完事项**，细节一律链接到对应权威文档，不在此复制正文。
-> 整理日期：2026-09-07（第二次刷新；实测 `origin/main` 与本地 0/0 同步，最新 commit `c9f948c` 即上一次 TODO 刷新，**本轮无新落地项**）｜ 来源：[SESSION.md](SESSION.md) · [docs/BEATSCAPE-DECISIONS.md](docs/BEATSCAPE-DECISIONS.md) · [审计报告 §6](docs/COMPANY-PROJECT-HARNESS-AUDIT-2026-09-06.md)
+> 整理日期：2026-09-07（第三次刷新；实测 `origin/main` 与本地 0/0 同步，HEAD `89b0b5d` 即上一次 TODO 刷新，**本轮无新落地项**）｜ 来源：[SESSION.md](SESSION.md) · [docs/BEATSCAPE-DECISIONS.md](docs/BEATSCAPE-DECISIONS.md) · [审计报告 §6](docs/COMPANY-PROJECT-HARNESS-AUDIT-2026-09-06.md)
+> **本轮改动（2026-09-07 第三次）**：① P1-3 更正过期数据——曲库已 105 首，per-track `stream_app_url` 为 **0/105**（非 0/85），且深链实际依赖构建期注入 `VITE_STREAM_APP_URL`；② P0-3 补实测证据 `launch-signoff.json` 六字段全为 `null`；③ P5-2 按本次 `git status` 重写；④ 源码零 TODO/FIXME 复查确认。
 > 整理原则：**已取消 ≠ 延期 ≠ 通过**。历史 PRD、工作日志、审计建议中的条目不得自动回填为本文件待办。
 
 ## 维护规则
@@ -20,7 +21,7 @@
 | 曲库 | **105/105**（s1 6 · s2 4 · s3 15 · s4 15 · s5 10 · s6 35 · p3 10 · p4 10） |
 | 谱面 | 315 张已按「拍网格亲和力」全量重出 |
 | 线上 | BeatScape <https://beatscape.pages.dev> · ScapeMusic <https://scapemusic.pages.dev> |
-| 代码质量 | strict 全开 · 零 `any` · 零 `@ts-ignore` · **源码零 TODO/FIXME 标记**（2026-09-07 实测 `apps/beatscape/src` grep 零命中） |
+| 代码质量 | strict 全开 · 零 `any` · 零 `@ts-ignore` · **源码零 TODO/FIXME 标记**（2026-09-07 第三次复查 `apps/beatscape/src` grep 仍零命中） |
 | 判定反馈 | T3 结算页误差条已随 `a136592` 推送（未部署）；对局内早/晚即时提示仍待做 |
 | 性能 | 第二轮已随 `e3ba64f` 提交：`ae15d3778b3f` 同指纹 28 项固定预算全部通过；最慢冷开局 3.908s、8 场整局 0 异常间隔、绘制峰值最高 3.5ms；未部署 |
 | 阻塞发布 | 耳检 105 首 · 差异化盲测 / 英语叙事试玩 · 最终签审；真机执行取消与门禁冲突保持记录 |
@@ -56,6 +57,7 @@
 ### P0-3 正式上线放行
 - **前置**：P0-1、P0-2、P0-4 全部完成。仓库 CI 已在 `e3ba64f` 通过；当前本地候选的固定条件性能预算已通过，[同指纹证据与覆盖边界](docs/BEATSCAPE-PERFORMANCE.md) 保持记录。
 - **动作**：据实填写 `apps/beatscape/launch-signoff.json`。
+- **实测现状（2026-09-07 第三次复查）**：`launch-signoff.json` 七个字段 `artifactSha256` / `reviewedBy` / `reviewedAt` / `contentAudit` / `earcheckReport` / `blindtestRecord` / `deviceTestRecord` **全部仍为 `null`**，即放行材料一份未填。
 - **门禁**：`launch:check` 当前**应阻止**正式发布（`deviceTestRecord` 缺失，按 BS-D001 如实报告，不得当作通过）；状态详见 [docs/BEATSCAPE-RELEASE-READINESS.md](docs/BEATSCAPE-RELEASE-READINESS.md)。
 
 ### P0-4 英语叙事真人试玩
@@ -99,8 +101,10 @@
   - 备选名初筛已备：The Late Static（首推）/ Scape City（次选），均无精确同名
 
 ### P1-3 ScapeMusic 游戏侧接线
-- **问题**：游戏侧 `VITE_STREAM_APP_URL` 仍 **0/85** 指向流媒体站。
-- **来源**：[docs/BEATSCAPE-MUSIC-WEB.md](docs/BEATSCAPE-MUSIC-WEB.md)
+- **实测（2026-09-07 第三次复查，更正早期「0/85」的过期表述）**：`apps/beatscape/public/catalog.json` 现 **105 首**，其中 per-track `stream_app_url` 字段 **0/105 有值**，`stream_audio` **105/105 有值**。
+- **真实阻塞点**：深链由 `src/lib/streamLink.ts` 按「per-track `stream_app_url` → 构建期 `VITE_STREAM_APP_URL`」两级回落解析；仓库内**只有** `apps/beatscape/package.json` 的 `build:cf` 脚本注入 `VITE_STREAM_APP_URL=https://scapemusic.pages.dev`，dev / 其他构建方式下该 env 为空 → 回落为 `null`，UI 显示 "App link coming soon"。
+- **待办**：确认 CF Pages 生产构建确实走 `build:cf`（否则线上深链仍不生效），并拉取真实线上页面验证 `/#/track/{id}` 可达；再决定是否补齐 per-track `stream_app_url`。
+- **来源**：[docs/BEATSCAPE-MUSIC-WEB.md](docs/BEATSCAPE-MUSIC-WEB.md) · `apps/beatscape/PRD.md:400`（记录「数据中无 `stream_app_url` 字段，深链走全局 env」）
 - **另注**：「Scape Music」为工作名，对外前需商标初筛。
 
 ### P1-4 音乐模型候选评估（MiniMax Music 3.0 / YuE）
@@ -167,12 +171,12 @@
 - 两处索引均已标注「历史冲刺归档」：`docs/KNOWLEDGE-BASE.md` 第 9 条（2026-09-06）、`docs/CODE-INDEX.md:155`（2026-09-07 补，并指向本文件为当前入口）。**本项无剩余动作。**
 
 ### P5-2 整理未提交的工作区改动
-- 截至 **2026-09-07**（本次刷新时实测 `git status`，`origin/main` 与本地已同步 0/0），工作区有并行会话未提交改动：
-  - **T1b / T5b（新）**：`apps/beatscape/src/seo/pageMeta.ts`（`socialMetaTags` + 路由同步 og:/twitter:）、`apps/beatscape/src/pages/Results.tsx`（`copyImageBlob` + “Copy poster”）——**无测试覆盖**，见 P2 表
+- 截至 **2026-09-07 第三次刷新**（实测 `git status`，`origin/main` 与本地已同步 0/0，HEAD `89b0b5d`），工作区有并行会话未提交改动：
+  - **T1b / T5b（新）**：`apps/beatscape/src/seo/pageMeta.ts:80`（`socialMetaTags`）、`pageMeta.ts:113`（`setPageMeta` 内同步 og:/twitter:）、`apps/beatscape/src/pages/Results.tsx:72`（`copyImageBlob`）、`Results.tsx:242`（调用点）——**本次复查仍无任何测试文件命中这两个符号**，见 P2 表
   - **需求文档**：`PRD.md`（§19 待决 7/8、§20.1 验证清单、MiniMax/YuE 官方链接）、`docs/COMPLIANCE.md`（许可表 + C-06）、`SESSION.md`（P1-4 音乐模型候选评估）
   - **Harness / 项目规范**：`AGENTS.md`（追加 cursor-codex-sync 区块）、未跟踪的 `.agents/skills/{company-harness,vault-harness,zbrain-session}/`、`.codex/`
   - **其他**：`.delivery/README.md`、`.delivery/prompts/orchestrator-kickoff.md`、`worklog/2026-09-06.md`、`.workbuddy-ai/memory/`
-- **已落地不再列**：T3 结算页误差条的原工作区改动已随 `a136592` 提交并推送；`docs/CODE-INDEX.md` 的历史冲刺归档标注随本次 TODO 刷新一并提交（P5-1 收口）。
+- **已落地不再列**：T3 结算页误差条的原工作区改动已随 `a136592` 提交并推送；`docs/CODE-INDEX.md` 的历史冲刺归档标注随上一轮 TODO 刷新一并提交（P5-1 收口）。
 - **动作**：由各改动所有者分别提交；**不要 `git add -A` 一次性扫入**，避免把并行会话的半成品混入。
 
 ---
