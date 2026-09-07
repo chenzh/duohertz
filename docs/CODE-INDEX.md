@@ -152,7 +152,7 @@ Mac 启停：`scripts/mac-services-up.sh` · `scripts/mac-stack-verify.sh`
 | `pnpm audit:beatscape` | Stage1 catalog QA |
 | `pnpm catalog:beatscape` | 路线图 vs 已上架缺口统计 |
 
-BeatScape 待办与验收：[BEATSCAPE-TODO-ACCEPTANCE.md](./BEATSCAPE-TODO-ACCEPTANCE.md)
+BeatScape 待办与验收：[BEATSCAPE-TODO-ACCEPTANCE.md](./BEATSCAPE-TODO-ACCEPTANCE.md) — **历史冲刺归档**：Stage1–3 验收规格（2026-08-25），27 条未勾选项属过期冲刺，**不是当前待办**；当前入口为仓库根 [TODO.md](../../TODO.md)
 
 ---
 
