@@ -1,8 +1,8 @@
 # MusicSaas 项目 TODO
 
 > **本文件是待办的唯一入口**，只登记**当前真实未完事项**，细节一律链接到对应权威文档，不在此复制正文。
-> 整理日期：2026-09-08（**第六次刷新**；实测 `origin/main` 与本地 0/0 同步，上一轮 TODO 刷新为 `d71d806`，**连续第五轮无新落地项**，因此仍是**校验型刷新**——本轮新增两个核对维度：**GitHub Actions 部署管道**与**ScapeMusic 线上产物**）｜ 来源：[SESSION.md](SESSION.md) · [docs/BEATSCAPE-DECISIONS.md](docs/BEATSCAPE-DECISIONS.md) · [审计报告 §6](docs/COMPANY-PROJECT-HARNESS-AUDIT-2026-09-06.md)
-> **本轮改动（2026-09-08 第六次）**：① **找到 P0-6 的真正根因**——不是「忘了重新部署」，而是**部署管道被 `launch:check` 结构性卡死**：Deploy BeatScape 工作流自 2026-09-05 起**连续 5 次 failure**，失败点全部是 `launch:check`，而它排在 "Publish to Cloudflare Pages" **之前**；最后一次成功部署停留在 **2026-09-04 `33895713222`**；② **推翻上一轮 P0-6 的两条证据**——`scapemusic.pages.dev` 字面量与 `release.json` 生成逻辑都是 `8b710a3`（2026-09-05）才进源码的，**晚于最后一次成功部署**，所以「bundle 0 命中」「`/release.json` 回落页」是必然现象，**不能**证明 env 未注入或非 `build:cf` 产物；据此**把 P1-3 的线上结论改回「未验证」**；③ 更正 P0-6 的动作项：上一轮写的「推送触发工作流」**无效（必挂）**，且 `scripts/deploy-beatscape-cf-pages.sh` **自身也含 `launch:check`**，两条路径当前**都不可达**；④ 新增 **P1-6 决策点：部署门禁与 BS-D001 冲突**（`deviceTestRecord` 无法产生 → 部署永远不可能通过）；⑤ 新增核对维度：ScapeMusic 线上 `index-DwW6K_-S.js` 含 `beatscape.pages.dev`、**`127.0.0.1:5175` 0 命中**（反向深链已修并上线）；main 最新 CI `34181282548` success；⑥ 验收命令新增 `gh run list/view` 与 ScapeMusic 线上核对。**其余断言（105 首 / 315 谱面 / 各季分布 / 零 TODO-FIXME / 放行七字段全 null / T1b·T5b 仍无单测）本轮实测全部仍成立。**
+> 整理日期：2026-09-08（**第七次刷新**；实测 `origin/main` 与本地 0/0 同步，上一轮 TODO 刷新为 `778e2be`，**连续第六轮无新落地项**，仍是**校验型刷新**——本轮新增两个维度：**部署门禁引入点溯源**（精确定位到单个 commit `8b710a3`）与 **`workflow_dispatch` / PR 触发路径排查**（结论：均不可达））｜ 来源：[SESSION.md](SESSION.md) · [docs/BEATSCAPE-DECISIONS.md](docs/BEATSCAPE-DECISIONS.md) · [审计报告 §6](docs/COMPANY-PROJECT-HARNESS-AUDIT-2026-09-06.md)
+> **本轮改动（2026-09-08 第七次）**：① **溯源到部署门禁的引入点**——`git log -S` 实测：workflow 的 "Check launch sign-off" 步骤与 `launch-check.mjs` 的 `deviceTestRecord` 必需项，是**同一个 commit `8b710a3`**（2026-09-05 16:06 +0800，"chore: audit agent guidance and release workflow"）**一次性**加进去的；它与 `735208b`（09-05 21:51）同批推送，触发了**首个失败 run `33970422633`**（09-05T13:58:22Z），而此前 `33895713222`(09-04) / `33895023150` / `33817015569` **全部 success** → 部署受阻**不是渐进退化，而是门禁上线当天一次性造成**；② **排除第四条路径**——读 workflow 全文确认 `workflow_dispatch` 在 main 上**照样跑 `launch:check`**（"Check launch sign-off" 与 "Publish to Cloudflare Pages" **共用**条件 `github.event_name != 'pull_request' && github.ref == 'refs/heads/main'`），非 main 分支派发或 PR 事件则两个步骤**一起跳过**（含发布）→ **不存在任何「只跳门禁、保留发布」的路径**，P1-6 的三选一仍待用户拍板；③ main 最新 CI 更新为 **`34207150512`**（对应 `778e2be`）；④ **本轮线上核对未能执行**：`beatscape.pages.dev` / `scapemusic.pages.dev` / `api.github.com` 经代理与直连**均 SSL 握手失败**（本地网络中断），P0-6 / P1-3 的线上断言**沿用上一轮 09-08 实测、未重新取证**；⑤ 其余断言（105 首 / 各季分布 / 315 谱面 / `stream_app_url` 0-105 / 放行七字段全 null / 源码零 TODO-FIXME / 零 `@ts-ignore` / 非测试源码零 `any` / T1b·T5b 仍无单测 / 文档链接完整）本轮实测**全部仍成立**；链接自检唯一 MISS 是 `#bs-d001` 锚点，经查位于 `docs/BEATSCAPE-DECISIONS.md:5`，属假阳性。
 > 整理原则：**已取消 ≠ 延期 ≠ 通过**。历史 PRD、工作日志、审计建议中的条目不得自动回填为本文件待办。
 
 ## 维护规则
@@ -21,7 +21,7 @@
 | 曲库 | **105/105**（s1 6 · s2 4 · s3 15 · s4 15 · s5 10 · s6 35 · p3 10 · p4 10） |
 | 谱面 | 315 张已按「拍网格亲和力」全量重出 |
 | 线上 | BeatScape <https://beatscape.pages.dev> · ScapeMusic <https://scapemusic.pages.dev> · **BeatScape 线上产物落后于 `main`（最后一次成功部署 2026-09-04 `33895713222`）→ 见 P0-6** |
-| CI / 部署管道 | **CI 绿**（main 最新 `34181282548` success）· **Deploy BeatScape 连续 5 次 failure**，全部卡在 `launch:check` → 见 P0-6 / P1-6 |
+| CI / 部署管道 | **CI 绿**（main 最新 `34207150512` success）· **Deploy BeatScape 连续 5 次 failure**，全部卡在 `launch:check`（门禁由 `8b710a3` 于 09-05 一次性引入）→ 见 P0-6 / P1-6 |
 | 代码质量 | `strict: true` · **非测试源码零 `any`** · 零 `@ts-ignore`/`@ts-expect-error` · **零 TODO/FIXME 标记**（2026-09-08 第四次复查：`apps/beatscape/src` 全量 grep 确认）。**例外（仅测试桩）**：`audio/hitsounds.test.ts:6/69/73` 共 3 处 `any`，用于伪造 `OfflineAudioContext`，非生产代码 |
 | 判定反馈 | T3 结算页误差条已随 `a136592` 推送（未部署）；对局内早/晚即时提示仍待做 |
 | 性能 | 第二轮已随 `e3ba64f` 提交：`ae15d3778b3f` 同指纹 28 项固定预算全部通过；最慢冷开局 3.908s、8 场整局 0 异常间隔、绘制峰值最高 3.5ms；未部署 |
@@ -77,10 +77,13 @@
   - **失败点是 `launch:check`，且它排在发布之前**：`.github/workflows/deploy-beatscape-cloudflare.yml` 的顺序是 `Verify release candidate` → `Check launch sign-off` → `Publish to Cloudflare Pages`；`34064117995` 的日志显示「Release verified: 105 tracks / 315 charts / 594 files / 402.7 MiB」之后立刻 `Launch blocked` 六条并 exit 1，**wrangler 从未执行**。
   - **后果**：T3 误差条（`a136592`）、退出弹窗（`6418d3f`）、性能第二轮（`e3ba64f`）等「已推送」改动**线上均不存在**，与实测一致——线上 bundle `/assets/index-CDXE9BO-.js`（325,768 B）不含 `No account, no ads`。
   - 注：09-07 之后没有新的部署 run，是因为后续 commit 都是 docs-only，不命中工作流的 `paths` 过滤（`apps/beatscape/**` 等）；**不代表管道恢复**。
+  - **门禁引入点（2026-09-08 第七次新测）**：`git log -S "Check launch sign-off" -- .github/workflows/deploy-beatscape-cloudflare.yml` 与 `git log -S "deviceTestRecord" -- apps/beatscape/scripts/launch-check.mjs` **两条命令都只命中 `8b710a3`**（2026-09-05 16:06 +0800，"chore: audit agent guidance and release workflow"）→ workflow 的门禁步骤与 `launch-check.mjs` 的必需字段是**同一 commit 一次性引入**。该 commit 与 `735208b`（09-05 21:51）同批推送 → 首个失败 run `33970422633`；此前 `33895713222`/`33895023150`/`33817015569` 全部 success。**部署是自 09-05 当天起被一次性卡死的，不是逐步退化。**
 - **更正上一轮的两条证据（均作废）**：上一轮用「bundle 中 `scapemusic.pages.dev` 0 命中」和「`/release.json` 返回回落页」推断「线上不是 `build:cf` 产物」。实测二者都是 `8b710a3`（2026-09-05 `chore: audit agent guidance and release workflow`）才引入源码的（`streamLink.ts` 的域名字面量、`release.mjs prepare` 生成 `dist/release.json`），**均晚于最后一次成功部署（09-04）** → 线上没有它们是必然，不能证明 env 未注入。**教训：用「线上缺某字符串」当证据前，必须先确认该字符串进入源码的时间早于线上部署时间。**
-- **更正上一轮的动作项（两条路径当前都不可达）**：
+- **动作项（四条路径目前全部不可达）**：
   - ~~推送触发 `.github/workflows/deploy-beatscape-cloudflare.yml`~~ —— **无效**，只要 `apps/beatscape/**` 有改动就必挂（已连续 5 次）。
   - ~~`bash scripts/deploy-beatscape-cf-pages.sh`~~ —— **同样被拦**：该脚本在 `pnpm release:beatscape` 之后紧接着执行 `pnpm --filter @musicsaas/beatscape launch:check`（脚本内可见），不是上一轮认为的「只走 `release:beatscape`」。
+  - ~~GitHub 手动 `workflow_dispatch`~~ —— **本轮排除**：workflow 确有 `workflow_dispatch:` 触发器，但 "Check launch sign-off" 与 "Publish to Cloudflare Pages" **共用**条件 `github.event_name != 'pull_request' && github.ref == 'refs/heads/main'` → 在 main 上手动派发**照样跑 `launch:check`**；若在**非 main 分支**派发（或走 PR 事件），两个步骤**一起被跳过**，发布也不会发生 → **无法只跳门禁而保留发布**。
+  - ~~本地 `wrangler pages deploy`~~ —— 未验证（需 `CLOUDFLARE_API_TOKEN`）。**若走这条路，等于绕开全部发布门禁，属于 P1-6 方案 2 的同级决策，须用户明确授权，不得自行执行。**
 - **因此**：「线上未部署」**不是遗漏，而是现行门禁下的必然状态**。要解决必须先解 P1-6 的决策冲突。
 - **为什么仍阻塞 P0-3**：放行要填 `artifactSha256`，但待签审产物与线上运行产物不是同一个；且即使签审完成，部署仍会因 `deviceTestRecord` 继续失败（见 P1-6）。
 - **复测**：部署真正发生后，确认线上 bundle 出现 `scapemusic.pages.dev`、`/release.json` 返回 JSON 而非回落页，再回填本条结论。**重新部署 ≠ 放行**，P0-1 / P0-2 / P0-4 仍是人工阻塞项。
@@ -120,7 +123,7 @@
 - **真实阻塞点**：深链由 `src/lib/streamLink.ts` 按「per-track `stream_app_url` → 构建期 `VITE_STREAM_APP_URL`」两级回落解析；仓库内**只有** `apps/beatscape/package.json` 的 `build:cf` 脚本注入 `VITE_STREAM_APP_URL=https://scapemusic.pages.dev`，dev / 其他构建方式下该 env 为空 → 回落为 `null`，UI 显示 "App link coming soon"。
 - **线上状态（2026-09-08 第六次，更正为「未验证」）**：上一轮断言「深链线上确实不生效」**证据不成立**——所依据的 `scapemusic.pages.dev` 字面量是 `8b710a3`（09-05）才进 `streamLink.ts` 的，晚于最后一次成功部署（09-04）。**当前线上深链是否生效属于未验证**，须等 P0-6 部署成功后再实测。理论路径本身没问题：两条部署路径都经 `release:check` → `build:cf`（`apps/beatscape/package.json`，`release:check` 内含 `npm run build:cf`）注入 `VITE_STREAM_APP_URL=https://scapemusic.pages.dev`。
 - **更正**：上一轮收窄为「确认 CF Pages 控制台构建命令」也是错的——`.github/workflows/deploy-beatscape-cloudflare.yml` 用 `wrangler pages deploy dist` **直接上传预构建产物**，不存在控制台构建这一环。真实阻塞是 **P0-6 的 `launch:check`**，不是管道配置。
-- **反向深链已实测 OK**：ScapeMusic 线上 `index-DwW6K_-S.js`（264,752 B）中 `beatscape.pages.dev` 命中 **1 次**、遗留 bug 串 `127.0.0.1:5175` 命中 **0 次** → `VITE_GAME_URL` 修复已上线，游戏↔流媒体**只有 BeatScape→ScapeMusic 这一侧未验证**。
+- **反向深链已实测 OK**：ScapeMusic 线上 `index-DwW6K_-S.js`（264,752 B）中 `beatscape.pages.dev` 命中 **1 次**、遗留 bug 串 `127.0.0.1:5175` 命中 **0 次** → `VITE_GAME_URL` 修复已上线，游戏↔流媒体**只有 BeatScape→ScapeMusic 这一侧未验证**。（2026-09-08 第七次复核：三个域名经代理与直连**均 SSL 握手失败**，本轮**线上取证未能重做**，该结论仍为上一轮 09-08 实测值。）
 - **待办**：① 随 **P0-6** 先解除部署门禁；② 部署后复测线上 bundle 是否出现 `scapemusic.pages.dev`、并实测 `/#/track/{id}` 可达；③ 再决定是否补齐 per-track `stream_app_url`（当前 0/105，本地与线上 catalog 一致）。
 - **来源**：[docs/BEATSCAPE-MUSIC-WEB.md](docs/BEATSCAPE-MUSIC-WEB.md) · `apps/beatscape/PRD.md:400`（记录「数据中无 `stream_app_url` 字段，深链走全局 env」）
 - **另注**：「Scape Music」为工作名，对外前需商标初筛。
@@ -144,7 +147,10 @@
   2. 授权调整/移除 `deviceTestRecord` 门禁 —— 此前移除该必需门禁的补丁已被自动审批拒绝（无放宽授权），需明确授权；
   3. 维持现状 —— 接受线上停留在 09-04 版本，所有「已推送未部署」项继续挂起。
 - **不可选**：不得为绕过门禁而伪造 `deviceTestRecord`，也不得把「技术检查通过」记为真机通过（BS-D001）。
-- **来源**：本轮实测 `gh run view 34064117995 --log-failed` + `launch-check.mjs:19`。
+- **本轮新增（2026-09-08 第七次）**：
+  1. 已排除 `workflow_dispatch` 与 PR 触发这两条「只跳门禁、保留发布」的路径（依据见 P0-6），**当前零可行路径**，方案 3「维持现状」是默认生效状态而非需要额外操作。
+  2. 门禁的**精确引入点是 `8b710a3`**——该 commit 同时改了 `.github/workflows/deploy-beatscape-cloudflare.yml`（新增门禁步骤）与 `apps/beatscape/scripts/launch-check.mjs`（新增 `deviceTestRecord` 必需项）。若用户选方案 2，改动范围可直接定位到这两处，无需全仓搜索。
+- **来源**：`launch-check.mjs:19` · 本轮 `git log -S` 溯源 · 上一轮 `gh run view 34064117995 --log-failed`。
 
 ---
 
@@ -199,7 +205,7 @@
 - 两处索引均已标注「历史冲刺归档」：`docs/KNOWLEDGE-BASE.md` 第 9 条（2026-09-06）、`docs/CODE-INDEX.md:155`（2026-09-07 补，并指向本文件为当前入口）。**本项无剩余动作。**
 
 ### P5-2 整理未提交的工作区改动
-- 截至 **2026-09-08 第六次刷新**（实测 `git status`，`origin/main` 与本地已同步 0/0，HEAD `d71d806`），工作区有并行会话未提交改动（与上一轮相比**构成不变**）：
+- 截至 **2026-09-08 第七次刷新**（实测 `git status`，`origin/main` 与本地已同步 0/0，HEAD `778e2be`），工作区有并行会话未提交改动（与上一轮相比**构成不变**，仍是 11 改 + 7 项未跟踪）：
   - **T1b / T5b（新）**：`apps/beatscape/src/seo/pageMeta.ts:80`（`socialMetaTags`）、`pageMeta.ts:113`（`setPageMeta` 内同步 og:/twitter:）、`apps/beatscape/src/pages/Results.tsx:72`（`copyImageBlob`）、`Results.tsx:242`（调用点）——**本轮复查仍无任何测试文件命中这两个符号**，见 P2 表
   - **需求文档**：`PRD.md`（§19 待决 7/8、§20.1 验证清单、MiniMax/YuE 官方链接）、`docs/COMPLIANCE.md`（许可表 + C-06）、`SESSION.md`（P1-4 音乐模型候选评估）
   - **Harness / 项目规范**：`AGENTS.md`（追加 cursor-codex-sync 区块）、未跟踪的 `.agents/skills/{company-harness,vault-harness,zbrain-session}/`、`.codex/`
@@ -236,6 +242,10 @@ gh run list --workflow=deploy-beatscape-cloudflare.yml --limit 10   # 看 Deploy
 gh run view <run-id> --log-failed                                   # 看失败点：是否卡在 launch:check
 gh run list --branch main --limit 5                                 # CI 工作流（unit/build）结论
 
+# 门禁溯源：定位某条门禁/字段是哪一个 commit 引入的（实测两条都只命中 8b710a3）
+git log -S "Check launch sign-off" --oneline -- .github/workflows/deploy-beatscape-cloudflare.yml
+git log -S "deviceTestRecord" --oneline -- apps/beatscape/scripts/launch-check.mjs
+
 # 线上产物核对（P0-6 / P1-3：确认线上跑的就是待签审的那份）
 curl -s https://beatscape.pages.dev/ | grep -oE 'src="[^"]*\.js"'          # 取当前 bundle 名
 curl -s https://beatscape.pages.dev/assets/index-CDXE9BO-.js | grep -c "scapemusic.pages.dev"  # 期望 >=1；注：09-04 产物必为 0，不构成证据
@@ -244,3 +254,5 @@ curl -s https://scapemusic.pages.dev/assets/index-DwW6K_-S.js | grep -c "127.0.0
 ```
 
 **说明**：`bash scripts/harness.sh all` = unit + workspace build + mock integration。技术检查通过不替代人工耳检、盲测与上线签审。
+
+> **2026-09-08 第七次刷新提示**：线上核对命令本轮**未能执行**——`beatscape.pages.dev`、`scapemusic.pages.dev`、`api.github.com` 经代理与直连均报 `SSL_connect: SSL_ERROR_SYSCALL`（本地网络中断，`gh` 亦中途开始 EOF）。**网络不可达时不得把「拿不到返回」记为「线上异常」**，线上断言一律沿用上一次成功取证的日期与结论，恢复网络后再重新取证。
