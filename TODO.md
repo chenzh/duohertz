@@ -1,8 +1,8 @@
 # MusicSaas 项目 TODO
 
 > **本文件是待办的唯一入口**，只登记**当前真实未完事项**，细节一律链接到对应权威文档，不在此复制正文。
-> 整理日期：2026-09-08（第四次刷新；实测 `origin/main` 与本地 0/0 同步，HEAD `524f12a` 即上一次 TODO 刷新，**本轮无新落地项**，因此本轮为**校验型刷新**——逐条实测已有断言是否仍成立，而非新增条目）｜ 来源：[SESSION.md](SESSION.md) · [docs/BEATSCAPE-DECISIONS.md](docs/BEATSCAPE-DECISIONS.md) · [审计报告 §6](docs/COMPANY-PROJECT-HARNESS-AUDIT-2026-09-06.md)
-> **本轮改动（2026-09-08 第四次）**：① 更正上一轮摘要笔误——`launch-signoff.json` 是**七字段**（非「六字段」）全为 `null`；② 更正「零 `any`」口径：非测试源码确实零 `any`，但 `audio/hitsounds.test.ts` 有 **3 处测试桩 `any`**，原表述过强；③ P1-3 补实测：`release:check` 自身即调用 `build:cf`，待确认范围收窄为「CF Pages 控制台构建命令」；④ P5-2 按本次 `git status` 重写。**其余断言（105 首 / 315 谱面 / 各季分布 / 零 TODO-FIXME / 零 ts-ignore / strict / T1b·T5b 仍无单测 / P5-1 归档标注）本轮实测全部仍成立。**
+> 整理日期：2026-09-08（**第五次刷新**；实测 `origin/main` 与本地 0/0 同步，上一轮 TODO 刷新为 `1fee76f`，**本轮无新落地项**，因此仍是**校验型刷新**——逐条实测已有断言是否仍成立，而非新增条目）｜ 来源：[SESSION.md](SESSION.md) · [docs/BEATSCAPE-DECISIONS.md](docs/BEATSCAPE-DECISIONS.md) · [审计报告 §6](docs/COMPANY-PROJECT-HARNESS-AUDIT-2026-09-06.md)
+> **本轮改动（2026-09-08 第五次）**：① 更正表头残留的过期 HEAD 号（原写 `524f12a`，上一轮实际已推进到 `1fee76f`）；② **实测线上产物**（`beatscape.pages.dev`）后新增 **P0-6 线上部署与 main 不同步**，并据此**重写 P1-3**——深链失效的成因不是上一轮猜的「CF Pages 控制台构建命令」，而是线上 dist 很可能根本不是 `build:cf` 产出；③ 新增校验维度：本文件引用的 **17 条文档/脚本路径 + `docs/BEATSCAPE-DECISIONS.md#bs-d001` 锚点 + 验收命令里的 3 个性能数据路径 + 3 个根脚本**全部实测存在；④ P5-2 按本次 `git status` 重写。**其余断言（105 首 / 315 谱面 / 各季分布 / 零 TODO-FIXME / 零 ts-ignore / 非测试源码零 `any` / 放行七字段全 null / T1b·T5b 仍无单测）本轮实测全部仍成立。**
 > 整理原则：**已取消 ≠ 延期 ≠ 通过**。历史 PRD、工作日志、审计建议中的条目不得自动回填为本文件待办。
 
 ## 维护规则
@@ -20,11 +20,11 @@
 |---|---|
 | 曲库 | **105/105**（s1 6 · s2 4 · s3 15 · s4 15 · s5 10 · s6 35 · p3 10 · p4 10） |
 | 谱面 | 315 张已按「拍网格亲和力」全量重出 |
-| 线上 | BeatScape <https://beatscape.pages.dev> · ScapeMusic <https://scapemusic.pages.dev> |
+| 线上 | BeatScape <https://beatscape.pages.dev> · ScapeMusic <https://scapemusic.pages.dev> · **BeatScape 线上产物落后于 `main` → 见 P0-6** |
 | 代码质量 | `strict: true` · **非测试源码零 `any`** · 零 `@ts-ignore`/`@ts-expect-error` · **零 TODO/FIXME 标记**（2026-09-08 第四次复查：`apps/beatscape/src` 全量 grep 确认）。**例外（仅测试桩）**：`audio/hitsounds.test.ts:6/69/73` 共 3 处 `any`，用于伪造 `OfflineAudioContext`，非生产代码 |
 | 判定反馈 | T3 结算页误差条已随 `a136592` 推送（未部署）；对局内早/晚即时提示仍待做 |
 | 性能 | 第二轮已随 `e3ba64f` 提交：`ae15d3778b3f` 同指纹 28 项固定预算全部通过；最慢冷开局 3.908s、8 场整局 0 异常间隔、绘制峰值最高 3.5ms；未部署 |
-| 阻塞发布 | 耳检 105 首 · 差异化盲测 / 英语叙事试玩 · 最终签审；真机执行取消与门禁冲突保持记录 |
+| 阻塞发布 | 耳检 105 首 · 差异化盲测 / 英语叙事试玩 · **线上产物与 `main` 不同步（P0-6）** · 最终签审；真机执行取消与门禁冲突保持记录 |
 
 ---
 
@@ -70,6 +70,17 @@
 - **现状**：[docs/PORTAL-RELEASE-READINESS.md](docs/PORTAL-RELEASE-READINESS.md)，候选 `53f83162ad6e`（本地未提交）。
 - **CI 注意**：仓库 CI 已在 `e3ba64f` 通过；门户候选仍需独立按真实域名、Pages 项目和门户发布脚本验收，不能用 BeatScape CI 代替。
 
+### P0-6 线上部署与 `main` 不同步 🆕
+- **实测（2026-09-08 第五次刷新，首次对比线上产物）**：线上 `https://beatscape.pages.dev` 的前端产物与 `main` **不是同一份**：
+  - 线上 bundle `/assets/index-CDXE9BO-.js`（325,768 B）中 `scapemusic.pages.dev` 命中 **0 次**、`App link coming soon` 命中 1 次 → 流媒体深链线上**确实未生效**（非理论风险）；
+  - 同一 bundle 不含 `a136592`（2026-09-07 已推送）引入的分享文案 `No account, no ads` → **线上 JS 落后于 `main`**；
+  - `GET /release.json` 返回的是 SPA 回落页（与任意缺失路径同为 2146 B 的 index.html），而 `build:cf` 会经 `release.mjs prepare` 生成 `dist/release.json`（`scripts/release.mjs:113`）→ **线上 dist 很可能不是 `build:cf` 产物**；
+  - 注：线上 `catalog.json` 已是 105 首、各季分布与本地一致，所以「曲库对得上」**不等于**「产物是最新的」。
+- **为什么阻塞 P0-3**：放行要填 `artifactSha256`，但**待签审的产物与线上实际运行的产物不是同一个**，此时填任何 sha 都无意义；且 T3 误差条（`a136592`）、退出弹窗（`6418d3f`）、性能第二轮（`e3ba64f`）等「已推送未部署」改动线上均不存在。
+- **动作**：用仓库管道重新部署——推送触发 `.github/workflows/deploy-beatscape-cloudflare.yml`，或执行 `bash scripts/deploy-beatscape-cf-pages.sh`；**部署需对应授权**。两条路径都会经 `release:check` → `build:cf`，因此会同时修复 P1-3 的 env 注入。
+- **复测**：部署后确认线上 bundle 出现 `scapemusic.pages.dev`、`/release.json` 返回 JSON 而非回落页，再回填本条结论。
+- **注意**：重新部署 ≠ 放行。P0-1 / P0-2 / P0-4 仍是人工阻塞项。
+
 ---
 
 ## 近期已完成（区分本地候选与已推送提交）
@@ -103,7 +114,9 @@
 ### P1-3 ScapeMusic 游戏侧接线
 - **实测（2026-09-07 第三次复查，更正早期「0/85」的过期表述）**：`apps/beatscape/public/catalog.json` 现 **105 首**，其中 per-track `stream_app_url` 字段 **0/105 有值**，`stream_audio` **105/105 有值**。
 - **真实阻塞点**：深链由 `src/lib/streamLink.ts` 按「per-track `stream_app_url` → 构建期 `VITE_STREAM_APP_URL`」两级回落解析；仓库内**只有** `apps/beatscape/package.json` 的 `build:cf` 脚本注入 `VITE_STREAM_APP_URL=https://scapemusic.pages.dev`，dev / 其他构建方式下该 env 为空 → 回落为 `null`，UI 显示 "App link coming soon"。
-- **待办（2026-09-08 收窄）**：仓库自带的 `release:check` 脚本本身已串接 `build:cf`（`package.json:18`），所以**走仓库发布流程时 env 一定被注入**；剩余不确定项只有一处 —— **CF Pages 控制台里配的构建命令是否为 `build:cf`**（若写的是裸 `vite build`，线上深链仍不生效）。确认后拉取真实线上页面验证 `/#/track/{id}` 可达；再决定是否补齐 per-track `stream_app_url`。
+- **实测线上（2026-09-08 第五次，更正上一轮的收窄结论）**：直接拉线上产物验证，三条证据（详见 **P0-6**）：线上 bundle 中 `scapemusic.pages.dev` **0 命中**、`App link coming soon` 1 命中、`/release.json` 为 SPA 回落页。即**深链线上确实不生效**，且线上 dist 很可能不是 `build:cf` 产出。
+- **更正**：上一轮把它收窄为「确认 CF Pages 控制台构建命令」是**错的**。查部署管道后确认：`.github/workflows/deploy-beatscape-cloudflare.yml` 用 `wrangler pages deploy dist` **直接上传预构建产物**（不存在控制台构建命令这一环），`scripts/deploy-beatscape-cf-pages.sh:12` 走 `pnpm release:beatscape`；两条路径**都**会经 `release:check` → `build:cf`（`package.json`，`release:check` 内含 `npm run build:cf`）注入 `VITE_STREAM_APP_URL`。所以**只要按仓库管道重新部署，env 必定被注入**——问题不在管道配置，而在当前线上产物根本没走这条管道。
+- **待办**：① 随 **P0-6** 按仓库管道重新部署；② 复测线上 bundle 是否出现 `scapemusic.pages.dev`、并实测 `/#/track/{id}` 可达；③ 再决定是否补齐 per-track `stream_app_url`（当前 0/105，本地与线上 catalog 一致）。
 - **来源**：[docs/BEATSCAPE-MUSIC-WEB.md](docs/BEATSCAPE-MUSIC-WEB.md) · `apps/beatscape/PRD.md:400`（记录「数据中无 `stream_app_url` 字段，深链走全局 env」）
 - **另注**：「Scape Music」为工作名，对外前需商标初筛。
 
@@ -129,7 +142,7 @@
 | **T5a** | 分享文案加 privacy 卖点（无账号 / 数据留在本机） | ★★ 低成本差异点 | ✅ **已核实落地**（2026-09-06）：`session.ts` shareResultsCopy / `pageMeta.ts` description / `index.html` og:description 均已含 "No account, no ads. Scores stay in your browser."，`session.test.ts`、`pageMeta.test.ts` 有断言。此前清单标「待做」属过期 |
 | **T3** | 判定偏早/偏晚提示 + 结算页误差条 | ★★★ 「能玩」→「能练」 | 🟡 **结算页误差条已落地并推送**（`a136592`，2026-09-07）：`playState.ts` 累计有符号偏差 → `PlayResult.timing` → `LastRun.timing` → 结算页双向误差条（早/晚计数 + 平均 ms），184 单测 / tsc 干净，未部署。**对局内早/晚即时提示**待做，受 `renderLoop.ts` 归属限制（该文件属性能任务） |
 | **T4** | 从失败点重开（挂 `MissReplayPanel`） | ★★ 啃高难度谱的前提 | 待做（跨 5 文件，涉计分完整性） |
-| **T1b / T5b** | OG 随路由同步 / 海报复制到剪贴板 | ★ 锦上添花 | 🟡 **代码已在工作区、未提交**：`seo/pageMeta.ts` 新增 `socialMetaTags()` 并在 `setPageMeta` 同步 og:/twitter:；`pages/Results.tsx` 新增 `copyImageBlob()` + “Copy poster” 按钮（非安全上下文回落提示下载）。**两处仍无单测覆盖**（2026-09-08 第四次复查，grep 仍只命中实现文件 `pageMeta.ts:80/113`、`Results.tsx:72/242`，零测试文件命中），提交前需补 `pageMeta.test.ts` / Results 相关断言 + tsc/vitest/build 门禁，并说明爬虫不执行 JS、静态 `index.html` 仍是首次 unfurl 来源 |
+| **T1b / T5b** | OG 随路由同步 / 海报复制到剪贴板 | ★ 锦上添花 | 🟡 **代码已在工作区、未提交**：`seo/pageMeta.ts` 新增 `socialMetaTags()` 并在 `setPageMeta` 同步 og:/twitter:；`pages/Results.tsx` 新增 `copyImageBlob()` + “Copy poster” 按钮（非安全上下文回落提示下载）。**两处仍无单测覆盖**（2026-09-08 第五次复查，grep 仍只命中实现文件 `pageMeta.ts:80/113`、`Results.tsx:72/242`，零测试文件命中），提交前需补 `pageMeta.test.ts` / Results 相关断言 + tsc/vitest/build 门禁，并说明爬虫不执行 JS、静态 `index.html` 仍是首次 unfurl 来源 |
 
 ---
 
@@ -171,11 +184,11 @@
 - 两处索引均已标注「历史冲刺归档」：`docs/KNOWLEDGE-BASE.md` 第 9 条（2026-09-06）、`docs/CODE-INDEX.md:155`（2026-09-07 补，并指向本文件为当前入口）。**本项无剩余动作。**
 
 ### P5-2 整理未提交的工作区改动
-- 截至 **2026-09-08 第四次刷新**（实测 `git status`，`origin/main` 与本地已同步 0/0，HEAD `524f12a`），工作区有并行会话未提交改动（与 2026-09-07 相比**构成基本不变，无新增类别**）：
+- 截至 **2026-09-08 第五次刷新**（实测 `git status`，`origin/main` 与本地已同步 0/0，HEAD `1fee76f`），工作区有并行会话未提交改动（与上一轮相比**构成基本不变**，仅新增未跟踪的 `.workbuddy-ai/memory/2026-09-08.md`）：
   - **T1b / T5b（新）**：`apps/beatscape/src/seo/pageMeta.ts:80`（`socialMetaTags`）、`pageMeta.ts:113`（`setPageMeta` 内同步 og:/twitter:）、`apps/beatscape/src/pages/Results.tsx:72`（`copyImageBlob`）、`Results.tsx:242`（调用点）——**本轮复查仍无任何测试文件命中这两个符号**，见 P2 表
   - **需求文档**：`PRD.md`（§19 待决 7/8、§20.1 验证清单、MiniMax/YuE 官方链接）、`docs/COMPLIANCE.md`（许可表 + C-06）、`SESSION.md`（P1-4 音乐模型候选评估）
   - **Harness / 项目规范**：`AGENTS.md`（追加 cursor-codex-sync 区块）、未跟踪的 `.agents/skills/{company-harness,vault-harness,zbrain-session}/`、`.codex/`
-  - **其他**：`.delivery/README.md`、`.delivery/prompts/orchestrator-kickoff.md`、`worklog/2026-09-06.md`、`.workbuddy-ai/memory/2026-09-06.md` 与 `2026-09-07.md`
+  - **其他**：`.delivery/README.md`、`.delivery/prompts/orchestrator-kickoff.md`、`worklog/2026-09-06.md`、`.workbuddy-ai/memory/2026-09-06.md` / `2026-09-07.md` / `2026-09-08.md`
 - **已落地不再列**：T3 结算页误差条的原工作区改动已随 `a136592` 提交并推送；`docs/CODE-INDEX.md` 的历史冲刺归档标注随上一轮 TODO 刷新一并提交（P5-1 收口，本轮复查三处归档横幅均仍在）。
 - **动作**：由各改动所有者分别提交；**不要 `git add -A` 一次性扫入**，避免把并行会话的半成品混入。
 
@@ -202,6 +215,11 @@ pnpm --filter @musicsaas/beatscape launch:check
 # 性能测量与固定预算核验（在 apps/beatscape 包内）
 npm run performance:measure   # 采集，产物指纹固定
 npm run performance:check -- ../../data/beatscape-performance/2026-09-06/assurance/release-all/results.json ../../data/beatscape-performance/2026-09-06/assurance/release-peak-second/results.json ../../data/beatscape-performance/2026-09-06/assurance/release-peak-objects/results.json
+
+# 线上产物核对（P0-6 / P1-3：确认线上跑的就是待签审的那份）
+curl -s https://beatscape.pages.dev/ | grep -oE 'src="[^"]*\.js"'          # 取当前 bundle 名
+curl -s https://beatscape.pages.dev/assets/index-CDXE9BO-.js | grep -c "scapemusic.pages.dev"  # 期望 >=1，0 = env 未注入
+curl -s https://beatscape.pages.dev/release.json | head -c 80              # 期望 JSON；返回 <!doctype html> = 非 build:cf 产物
 ```
 
 **说明**：`bash scripts/harness.sh all` = unit + workspace build + mock integration。技术检查通过不替代人工耳检、盲测与上线签审。
