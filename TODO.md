@@ -1,14 +1,16 @@
 # MusicSaas 项目 TODO
 
 > **本文件是待办的唯一入口**，只登记**当前真实未完事项**，细节一律链接到对应权威文档，不在此复制正文。
-> 整理日期：2026-09-10（**第十次刷新**；实测 `origin/main` 与本地 0/0 同步，上一轮 TODO 刷新为 `b882307`，**连续第九轮无新落地项**，仍是**校验型刷新**——本轮新增维度：**「版本控制与工作流文件」盘点**（git tag / GitHub Release / 分支 / 磁盘 workflow 文件 vs `gh workflow list`），并**修正了上一轮「仓库共 6 条工作流」的结论：实为 7 条**）｜ 来源：[SESSION.md](SESSION.md) · [docs/BEATSCAPE-DECISIONS.md](docs/BEATSCAPE-DECISIONS.md) · [审计报告 §6](docs/COMPANY-PROJECT-HARNESS-AUDIT-2026-09-06.md)
-> **本轮改动（2026-09-10 第十次）**：① **更正过期的 CI run 号**（连续第二轮命中同类问题）：main 最新 CI 实为 **`34340240726`**（success，09-09T10:26:44Z），经 `gh run view --json headSha` 核对为 **`b882307`**（= 当前 HEAD）；上一轮写的 `34310382154` 对应的是再上一个 commit `696431b`。**这类「会随时间变化的值」每轮开头必须复查**；② **推翻上一轮「仓库共 6 条工作流」——实为 7 条**：`.github/workflows/` 磁盘上有 **7 个** yml 文件，但 `gh workflow list`（即使加 `--limit 50`）**只返回 6 条**，漏掉的是 `agent-delivery-dispatch.yml`；实测该文件**确有 7 次 run** → `gh workflow list` 会漏报，**可靠盘点手法是枚举磁盘文件而非信任 `gh workflow list`**；③ **该第 7 条工作流的 7 次 failure 是「设计如此」，不是坏掉的门禁**：`agent-delivery-dispatch.yml` 只有 `workflow_dispatch` 触发，唯一 job 以 `exit 1` 结束并打印「工程派单已迁移到指定执行主机的 Codex CLI / 本工作流未领取任何 issue、未启动任何实现」的路标文案 → **不得当成故障去修，也不计入阻塞项**；④ **新增「版本与分支」盘点**：**0 个 git tag、0 个 GitHub Release**（`git tag | wc -l` = 0、`gh release list` 为空）→ **没有任何版本化发布物，部署完全靠 main 持续部署**；对 P0-3 的意义是**签审没有 tag/release 可锚定，只能锚 commit SHA**；本地 **32** 个分支 / 远程 **11** 个，其中 **6 个已合并到 main**（含大量 `agent/musicsaas/*` 历史分支）；⑤ **复核 API contract gate**：文件 `on:` 块确认为 `pull_request`（4 条 paths，**含 workflow 自身**）+ `workflow_dispatch`，**确无 push 触发**，与上一轮一致；它为何会出现 `event: push` 的 run **仍未查清，继续标注「不臆断、不作阻塞项」**；⑥ 其余断言本轮实测**全部仍成立且与上一轮一致、无变化**：线上 bundle 仍 `index-CDXE9BO-.js`（325,768 B，`scapemusic.pages.dev` / `No account, no ads` 均 0 命中、`App link coming soon` 1 命中）、线上 catalog **105 首 / 315 谱面 / `stream_app_url` 0-105 且曲目 ID 集合与本地完全一致**、p4 谱面 **200**、`release.json` 与缺失路径同为 2146 B（仍 SPA 回落）、放行七字段全 null、源码零 TODO-FIXME、零 `@ts-ignore`、非测试源码零 `any`（4 命中中 3 处已知测试桩 + 1 处 `Duo.tsx:114` 注释假阳性）、T1b·T5b 零测试命中、文档链接完整（唯一 MISS 仍是 `#bs-d001` 锚点假阳性）；部署管道仍 5 连败、最后成功 `33895713222`（09-04）、**无新增 run**。
+> 整理日期：2026-09-10（**第十一次刷新**；实测 `origin/main` 与本地 0/0 同步，上一轮 TODO 刷新为 `5c9e9a7`，**连续第十轮无新落地项**，仍是**校验型刷新**——本轮新增维度：**「孤儿资产」盘点**（`scripts/` 与 `docs/` 中从未被任何受控文本文件按名引用的文件），并**连续第三轮抓到 CI run 号过期**、**更正部署债务 23 → 25**）｜ 来源：[SESSION.md](SESSION.md) · [docs/BEATSCAPE-DECISIONS.md](docs/BEATSCAPE-DECISIONS.md) · [审计报告 §6](docs/COMPANY-PROJECT-HARNESS-AUDIT-2026-09-06.md)
+> **本轮改动（2026-09-10 第十一次）**：① **CI run 号连续第三轮「写入即过期」，已更正**：main 最新 CI 实为 **`34384329456`**（success，09-09T17:40:18Z），`gh run view --json headSha` 核对为 `5c9e9a7c…` = 当前 HEAD；TODO 里写的 `34340240726` 对应的是再上一个 commit `b882307`。**结论已连续三轮一致：run 号这类值不可跨轮沿用，每轮开头必查**；② **部署债务数字过期，23 → 25**：`git rev-list --count ffe1ec0..HEAD` 实测 **25**（上一轮记 23，期间又落了两个 docs-only commit）；触及 `apps/beatscape/**` 的**仍为 6 个、名单不变** → 债务增长全部来自 TODO 刷新自身，代码侧无新增未部署项；③ **新增「孤儿资产」维度（详见 [专节](#孤儿资产盘点2026-09-10-第十一次新增维度)）**：`scripts/` 下 **92 个脚本中有 22 个（24%）**从未被任何受控 md/json/yml/sh/py/ts 文件按名引用；`docs/` 下 **49 个 md 中有 1 个孤儿**（`docs/BEATSCAPE-STAGE4-RESONANCE-SONIC-BATCH.md`）；逐一抽查 5 个疑似脚本均确认为真孤儿（直接 `grep -rl` 全仓 0 命中）；④ **从孤儿清单里挖出一条候选接线项**：`scripts/beatscape-chart-sync-check.py`（121 行，谱面音符 × 音频 onset 能量**互相关**对齐诊断，文档字符串明确写了为什么不能只用「最近 onset 距离」）**不在任何验收命令或 CI 中**——而 [验收命令](#验收命令) 段目前**没有任何谱面-音频对齐 QA 命令**。仅登记为候选，**不认领、不列为阻塞项**；⑤ 其余断言本轮实测**全部仍成立且与上一轮一致、无变化**：曲库 105 首（s1 6/s2 4/s3 15/s4 15/s5 10/s6 35/p3 10/p4 10）、315 谱面、`stream_app_url` 0-105 / `stream_audio` 105-105、线上 catalog **105 首 / 315 谱面 / `stream_app_url` 0-105 且曲目 ID 集合与本地一致**、p4 谱面 **200**、线上 bundle 仍 `index-CDXE9BO-.js`（325,768 B，`scapemusic.pages.dev` / `No account, no ads` 0 命中、`App link coming soon` 1 命中）、`release.json` 与缺失路径同为 2146 B `text/html`（仍 SPA 回落）、放行七字段全 null、源码零 TODO/FIXME、零 `@ts-ignore`、非测试源码零 `any`（4 命中 = 3 处 `hitsounds.test.ts:6/69/73` 测试桩 + `Duo.tsx:114` 注释英文假阳性）、T1b·T5b 零测试命中、17 条文档链接全 OK（唯一 MISS 仍是 `#bs-d001` 锚点假阳性）、部署管道仍 5 连败、最后成功 `33895713222`（09-04）、无新增 run、`gh workflow list` **仍只返回 6 条**（再次印证它漏报 `agent-delivery-dispatch.yml`）。
 >
-> **上一轮（2026-09-09 第九次）**：① **更正过期的 CI run 号**：main 最新 CI 实为 **`34310382154`**（success，对应 HEAD `696431b`，09-09T04:17:19Z），上一轮写的 `34242405531` 已过期——原因是该 run 在上一轮 TODO 提交的同一时刻才刚触发、尚未出结果，本轮补齐；② **部署债务首次量化**：自最后一次成功部署 head `ffe1ec0`（09-04）起**累计 23 个 commit 未部署**，其中**触及 `apps/beatscape/**` 的共 6 个**（`8b710a3` / `735208b` / `134115a` / `6418d3f` / `e3ba64f` / `a136592`），正好对应全部 5 次失败 run（`8b710a3` 与 `735208b` 同批推送共用一个 run）→ **每个触及 BeatScape 代码的 commit 都确实触发并失败了，不存在「漏触发」**，说明 `paths` 过滤工作正常，问题 100% 在门禁；③ **澄清上一轮的时区表述**：最后一次部署 run `34064117995`（09-06T22:28:24Z）**正是由 `a136592` 触发的**（该 commit 本地时间 09-07 06:28 +0800 = 22:28Z），所以「09-07 之后没有新 run」的准确说法是「`a136592` 之后的 **8 个 commit 全是 docs-only**，不命中 `paths` 过滤」，而非「09-07 之后的提交都没触发」；④ **P1-6 新增可操作结论**：`on.push.paths` 同时包含 `apps/beatscape/**`（覆盖 `apps/beatscape/scripts/launch-check.mjs`）**与** `.github/workflows/deploy-beatscape-cloudflare.yml` → **按方案 2 改门禁的那个提交会自动触发重新部署，无需再补一个「空提交」去 kick**，这是此前各轮都没确认的关键一环；⑤ **新增「全仓工作流」维度**（见 [专节](#全仓工作流盘点2026-09-09-新增维度)）：仓库共 **6 条**工作流，此前只跟踪 2 条；其中 **Portal release check 最后一次是 success**（`33970422632`，09-05），与 P0-5 门户发布直接相关；⑥ 其余断言本轮实测**全部仍成立且与上一轮一致、无变化**：线上 bundle 仍 `index-CDXE9BO-.js`、线上 catalog **105 首 / 315 谱面 / `stream_app_url` 0-105**、p4 谱面 **200**、`release.json` 仍 2146 B 回落页（与缺失路径同字节）、放行七字段全 null、源码零 TODO-FIXME、零 `@ts-ignore`、非测试源码零 `any`、T1b·T5b 零测试命中、文档链接完整（唯一 MISS 仍是 `#bs-d001` 锚点假阳性）。
+> **上一轮（2026-09-10 第十次）**：① **更正过期的 CI run 号**（连续第二轮命中同类问题）：main 最新 CI 实为 **`34340240726`**（success，09-09T10:26:44Z），经 `gh run view --json headSha` 核对为 **`b882307`**（= 当前 HEAD）；上一轮写的 `34310382154` 对应的是再上一个 commit `696431b`。**这类「会随时间变化的值」每轮开头必须复查**；② **推翻上一轮「仓库共 6 条工作流」——实为 7 条**：`.github/workflows/` 磁盘上有 **7 个** yml 文件，但 `gh workflow list`（即使加 `--limit 50`）**只返回 6 条**，漏掉的是 `agent-delivery-dispatch.yml`；实测该文件**确有 7 次 run** → `gh workflow list` 会漏报，**可靠盘点手法是枚举磁盘文件而非信任 `gh workflow list`**；③ **该第 7 条工作流的 7 次 failure 是「设计如此」，不是坏掉的门禁**：`agent-delivery-dispatch.yml` 只有 `workflow_dispatch` 触发，唯一 job 以 `exit 1` 结束并打印「工程派单已迁移到指定执行主机的 Codex CLI / 本工作流未领取任何 issue、未启动任何实现」的路标文案 → **不得当成故障去修，也不计入阻塞项**；④ **新增「版本与分支」盘点**：**0 个 git tag、0 个 GitHub Release**（`git tag | wc -l` = 0、`gh release list` 为空）→ **没有任何版本化发布物，部署完全靠 main 持续部署**；对 P0-3 的意义是**签审没有 tag/release 可锚定，只能锚 commit SHA**；本地 **32** 个分支 / 远程 **11** 个，其中 **6 个已合并到 main**（含大量 `agent/musicsaas/*` 历史分支）；⑤ **复核 API contract gate**：文件 `on:` 块确认为 `pull_request`（4 条 paths，**含 workflow 自身**）+ `workflow_dispatch`，**确无 push 触发**，与上一轮一致；它为何会出现 `event: push` 的 run **仍未查清，继续标注「不臆断、不作阻塞项」**；⑥ 其余断言本轮实测**全部仍成立且与上一轮一致、无变化**：线上 bundle 仍 `index-CDXE9BO-.js`（325,768 B，`scapemusic.pages.dev` / `No account, no ads` 均 0 命中、`App link coming soon` 1 命中）、线上 catalog **105 首 / 315 谱面 / `stream_app_url` 0-105 且曲目 ID 集合与本地完全一致**、p4 谱面 **200**、`release.json` 与缺失路径同为 2146 B（仍 SPA 回落）、放行七字段全 null、源码零 TODO-FIXME、零 `@ts-ignore`、非测试源码零 `any`（4 命中中 3 处已知测试桩 + 1 处 `Duo.tsx:114` 注释假阳性）、T1b·T5b 零测试命中、文档链接完整（唯一 MISS 仍是 `#bs-d001` 锚点假阳性）；部署管道仍 5 连败、最后成功 `33895713222`（09-04）、**无新增 run**。
+>
+> **上上轮（2026-09-09 第九次）**：① **更正过期的 CI run 号**：main 最新 CI 实为 **`34310382154`**（success，对应 HEAD `696431b`，09-09T04:17:19Z），上一轮写的 `34242405531` 已过期——原因是该 run 在上一轮 TODO 提交的同一时刻才刚触发、尚未出结果，本轮补齐；② **部署债务首次量化**：自最后一次成功部署 head `ffe1ec0`（09-04）起**累计 23 个 commit 未部署**，其中**触及 `apps/beatscape/**` 的共 6 个**（`8b710a3` / `735208b` / `134115a` / `6418d3f` / `e3ba64f` / `a136592`），正好对应全部 5 次失败 run（`8b710a3` 与 `735208b` 同批推送共用一个 run）→ **每个触及 BeatScape 代码的 commit 都确实触发并失败了，不存在「漏触发」**，说明 `paths` 过滤工作正常，问题 100% 在门禁；③ **澄清上一轮的时区表述**：最后一次部署 run `34064117995`（09-06T22:28:24Z）**正是由 `a136592` 触发的**（该 commit 本地时间 09-07 06:28 +0800 = 22:28Z），所以「09-07 之后没有新 run」的准确说法是「`a136592` 之后的 **8 个 commit 全是 docs-only**，不命中 `paths` 过滤」，而非「09-07 之后的提交都没触发」；④ **P1-6 新增可操作结论**：`on.push.paths` 同时包含 `apps/beatscape/**`（覆盖 `apps/beatscape/scripts/launch-check.mjs`）**与** `.github/workflows/deploy-beatscape-cloudflare.yml` → **按方案 2 改门禁的那个提交会自动触发重新部署，无需再补一个「空提交」去 kick**，这是此前各轮都没确认的关键一环；⑤ **新增「全仓工作流」维度**（见 [专节](#全仓工作流盘点2026-09-09-新增维度)）：仓库共 **6 条**工作流，此前只跟踪 2 条；其中 **Portal release check 最后一次是 success**（`33970422632`，09-05），与 P0-5 门户发布直接相关；⑥ 其余断言本轮实测**全部仍成立且与上一轮一致、无变化**：线上 bundle 仍 `index-CDXE9BO-.js`、线上 catalog **105 首 / 315 谱面 / `stream_app_url` 0-105**、p4 谱面 **200**、`release.json` 仍 2146 B 回落页（与缺失路径同字节）、放行七字段全 null、源码零 TODO-FIXME、零 `@ts-ignore`、非测试源码零 `any`、T1b·T5b 零测试命中、文档链接完整（唯一 MISS 仍是 `#bs-d001` 锚点假阳性）。
 >
 > **上一轮（2026-09-09 第八次）**：① **线上「内容」其实是当前版本，落后的只有「JS 代码」**（推翻此前「线上整体落后」的笼统表述）：实测 `https://beatscape.pages.dev/catalog.json`（115,172 B，真 JSON）为 **105 首 / 315 谱面 / `stream_app_url` 0-105**，曲目 ID 集合与本地**完全一致**；`/catalog/bs-p4-01/easy.json`（19,241 B）与 `/catalog/bs-p4-10/hard.json`（51,507 B）均返回 **200** → p4 内容确实在线上。成因已查明：p4 进入 catalog 的 `f9d8c8f`（2026-09-04T16:31:54Z）经 `git merge-base --is-ancestor` 确认是最后一次成功部署 head `ffe1ec0` 的**祖先**，两者仅相隔 **35 秒**（部署 run `33895713222` 于 16:32:29Z）→ 线上内容本就落在部署窗口内；② **代码侧确实陈旧**：线上 bundle 仍为 `index-CDXE9BO-.js`（325,768 B），其中 `No account, no ads`（`a136592`，09-07）**0 命中**、`scapemusic.pages.dev`（`8b710a3`，09-05）**0 命中**，且二者引入时间**均晚于** 09-04 部署 → 与「代码落后」一致（本轮已按上一轮教训逐一核对引入时间，避免「缺字符串即证据」的误判）；③ **`/release.json` 线上确实不存在**：返回 2146 B 的 `text/html`，与一个确定不存在的路径 `/definitely-not-here-xyz` **字节数完全相同** → 是 SPA 回落页而非真文件（上一轮因网络中断只能沿用旧值，本轮实测确认）；④ **部署管道无新变化**：仍为 5 连败，最后一次成功 `33895713222`（09-04），**截至 09-09 无新增 run**（最新一条仍是 09-06 的 `34064117995`）；⑤ main 最新 CI 更新为 **`34242405531`**（success，对应 `38c0243`）；GitHub **无未关闭 PR、无未关闭 Issue**（本轮新增盘点）；⑥ 其余断言（105 首 / 各季分布 / 315 谱面 / `stream_app_url` 0-105 / 放行七字段全 null / 源码零 TODO-FIXME / 零 `@ts-ignore` / 非测试源码零 `any` / T1b·T5b 仍无单测 / 文档链接完整）本轮实测**全部仍成立**；链接自检唯一 MISS 仍是 `#bs-d001` 锚点假阳性。
 >
-> **上上轮（2026-09-08 第七次，已归档、仅备查）**：① **溯源到部署门禁的引入点**——`git log -S` 实测：workflow 的 "Check launch sign-off" 步骤与 `launch-check.mjs` 的 `deviceTestRecord` 必需项，是**同一个 commit `8b710a3`**（2026-09-05 16:06 +0800，"chore: audit agent guidance and release workflow"）**一次性**加进去的；它与 `735208b`（09-05 21:51）同批推送，触发了**首个失败 run `33970422633`**（09-05T13:58:22Z），而此前 `33895713222`(09-04) / `33895023150` / `33817015569` **全部 success** → 部署受阻**不是渐进退化，而是门禁上线当天一次性造成**；② **排除第四条路径**——读 workflow 全文确认 `workflow_dispatch` 在 main 上**照样跑 `launch:check`**（"Check launch sign-off" 与 "Publish to Cloudflare Pages" **共用**条件 `github.event_name != 'pull_request' && github.ref == 'refs/heads/main'`），非 main 分支派发或 PR 事件则两个步骤**一起跳过**（含发布）→ **不存在任何「只跳门禁、保留发布」的路径**，P1-6 的三选一仍待用户拍板；③ main 最新 CI 更新为 **`34207150512`**（对应 `778e2be`）；④ **本轮线上核对未能执行**：`beatscape.pages.dev` / `scapemusic.pages.dev` / `api.github.com` 经代理与直连**均 SSL 握手失败**（本地网络中断），P0-6 / P1-3 的线上断言**沿用上一轮 09-08 实测、未重新取证**；⑤ 其余断言（105 首 / 各季分布 / 315 谱面 / `stream_app_url` 0-105 / 放行七字段全 null / 源码零 TODO-FIXME / 零 `@ts-ignore` / 非测试源码零 `any` / T1b·T5b 仍无单测 / 文档链接完整）本轮实测**全部仍成立**；链接自检唯一 MISS 是 `#bs-d001` 锚点，经查位于 `docs/BEATSCAPE-DECISIONS.md:5`，属假阳性。
+> **更早（2026-09-08 第七次，已归档、仅备查）**：① **溯源到部署门禁的引入点**——`git log -S` 实测：workflow 的 "Check launch sign-off" 步骤与 `launch-check.mjs` 的 `deviceTestRecord` 必需项，是**同一个 commit `8b710a3`**（2026-09-05 16:06 +0800，"chore: audit agent guidance and release workflow"）**一次性**加进去的；它与 `735208b`（09-05 21:51）同批推送，触发了**首个失败 run `33970422633`**（09-05T13:58:22Z），而此前 `33895713222`(09-04) / `33895023150` / `33817015569` **全部 success** → 部署受阻**不是渐进退化，而是门禁上线当天一次性造成**；② **排除第四条路径**——读 workflow 全文确认 `workflow_dispatch` 在 main 上**照样跑 `launch:check`**（"Check launch sign-off" 与 "Publish to Cloudflare Pages" **共用**条件 `github.event_name != 'pull_request' && github.ref == 'refs/heads/main'`），非 main 分支派发或 PR 事件则两个步骤**一起跳过**（含发布）→ **不存在任何「只跳门禁、保留发布」的路径**，P1-6 的三选一仍待用户拍板；③ main 最新 CI 更新为 **`34207150512`**（对应 `778e2be`）；④ **本轮线上核对未能执行**：`beatscape.pages.dev` / `scapemusic.pages.dev` / `api.github.com` 经代理与直连**均 SSL 握手失败**（本地网络中断），P0-6 / P1-3 的线上断言**沿用上一轮 09-08 实测、未重新取证**；⑤ 其余断言（105 首 / 各季分布 / 315 谱面 / `stream_app_url` 0-105 / 放行七字段全 null / 源码零 TODO-FIXME / 零 `@ts-ignore` / 非测试源码零 `any` / T1b·T5b 仍无单测 / 文档链接完整）本轮实测**全部仍成立**；链接自检唯一 MISS 是 `#bs-d001` 锚点，经查位于 `docs/BEATSCAPE-DECISIONS.md:5`，属假阳性。
 > 整理原则：**已取消 ≠ 延期 ≠ 通过**。历史 PRD、工作日志、审计建议中的条目不得自动回填为本文件待办。
 
 ## 维护规则
@@ -32,6 +34,7 @@
 | GitHub 未决项 | **无未关闭 PR、无未关闭 Issue**（2026-09-09 实测） |
 | 仓库工作流 | **共 7 条**（2026-09-10 更正：上一轮写 6 条是错的，`gh workflow list` 漏报了 `agent-delivery-dispatch.yml`）：CI success · Deploy BeatScape 5 连败 · **Portal release check success** · Deploy NeonBeat failure · API contract gate 存疑 · Agent delivery gate 仅 PR · **Agent delivery dispatch 7 连败但属设计如此** → 见 [专节](#全仓工作流盘点2026-09-09-新增维度) |
 | 版本与分支 | **0 个 git tag · 0 个 GitHub Release**（无版本化发布物，部署靠 main 持续部署）· 本地 **32** 分支 / 远程 **11**，其中 6 个已合并到 main（2026-09-10 新增维度）→ 见 [版本与分支盘点](#版本与分支盘点2026-09-10-新增维度) |
+| 孤儿资产 🆕 | `scripts/` **92 个脚本中 22 个（24%）**未被任何受控文件按名引用；`docs/` **49 个 md 中 1 个孤儿**（2026-09-10 第十一次新增维度）→ 见 [孤儿资产盘点](#孤儿资产盘点2026-09-10-第十一次新增维度) |
 | 代码质量 | `strict: true` · **非测试源码零 `any`** · 零 `@ts-ignore`/`@ts-expect-error` · **零 TODO/FIXME 标记**（2026-09-09 第八次复查：`apps/beatscape/src` 全量 grep 确认，命中 0）。**例外（仅测试桩）**：`audio/hitsounds.test.ts:6/69/73` 共 3 处 `any`，用于伪造 `OfflineAudioContext`，非生产代码 |
 | 判定反馈 | T3 结算页误差条已随 `a136592` 推送（未部署）；对局内早/晚即时提示仍待做 |
 | 性能 | 第二轮已随 `e3ba64f` 提交：`ae15d3778b3f` 同指纹 28 项固定预算全部通过；最慢冷开局 3.908s、8 场整局 0 异常间隔、绘制峰值最高 3.5ms；未部署 |
@@ -45,7 +48,7 @@
 
 | 工作流 | 触发方式 | 最新 run | 结论 | 备注 |
 |---|---|---|---|---|
-| **CI** | push main | `34310382154`（09-09T04:17Z） | ✅ success | 对应 HEAD `696431b`。**CI 绿 ≠ 部署成功**，这是两条独立工作流 |
+| **CI** | push main | `34384329456`（09-09T17:40Z） | ✅ success | 对应 HEAD `5c9e9a7`（2026-09-10 第十一次更正：上一轮写的 `34310382154` 对应的是 `696431b`）。**CI 绿 ≠ 部署成功**，这是两条独立工作流 |
 | **Deploy BeatScape (Cloudflare Pages)** | push main（6 条 `paths`） | `34064117995`（09-06T22:28Z） | ❌ failure | 5 连败，卡在 `launch:check` → 见 P0-6 / P1-6 |
 | **Portal release check** | push main | `33970422632`（09-05T13:58Z） | ✅ success | 与 **P0-5 门户发布**直接相关：**门户门禁本身是通的**，门户不是被门禁卡住的一方 |
 | **Deploy NeonBeat** | push main（`apps/neonbeat/**`） | `33524238082`（09-01T15:11Z） | ❌ failure | `apps/neonbeat` 存在，但 NeonBeat 本阶段**明确不做**（见「已取消」）→ 不认领、不修 |
@@ -66,10 +69,11 @@
 
 ### 部署债务（2026-09-09 量化）
 
-- **23 个 commit 未部署**（`git rev-list --count ffe1ec0..HEAD`），起点是最后一次成功部署 head `ffe1ec0`（09-04T16:32Z）。
-- 其中**触及 `apps/beatscape/**` 的只有 6 个**：`8b710a3` → `735208b` → `134115a` → `6418d3f` → `e3ba64f` → `a136592`，正好对应 5 次失败 run（`8b710a3` 与 `735208b` 同批推送共用一个 run）。
+- **25 个 commit 未部署**（`git rev-list --count ffe1ec0..HEAD`，2026-09-10 第十一次实测；上一轮记的 23 已过期），起点是最后一次成功部署 head `ffe1ec0`（本地时间 09-05 00:31:54 +0800 = 09-04T16:31:54Z）。
+- 其中**触及 `apps/beatscape/**` 的只有 6 个，名单与上一轮完全一致**：`8b710a3` → `735208b` → `134115a` → `6418d3f` → `e3ba64f` → `a136592`，正好对应 5 次失败 run（`8b710a3` 与 `735208b` 同批推送共用一个 run）。
 - **因此「每个改了 BeatScape 代码的 commit 都触发并失败了」，`paths` 过滤工作正常，问题 100% 在 `launch:check` 门禁**，不存在「提交没触发部署」这种情况。
-- `a136592` 之后的 8 个 commit 全是 docs-only（TODO 刷新），不命中 `paths` → 无新 run 属预期，**不代表管道恢复**。
+- `a136592` 之后的 **10 个** commit 全是 docs-only（TODO 刷新），不命中 `paths` → 无新 run 属预期，**不代表管道恢复**。
+- **注意（2026-09-10 第十一次）**：债务从 23 涨到 25，**增量全部是本文件自身的刷新 commit**，不是新代码堆积——触及代码的仍是那 6 个。**解读债务数字时必须同时看「总数」与「其中触及代码的个数」，否则会把「文档刷新」误读成「功能积压」。**
 
 ---
 
@@ -88,6 +92,47 @@
 - **对 P0-3 的实质影响（本轮最有价值的一条）**：仓库**没有任何版本化发布物**——既无 tag 也无 Release，线上跑的就是 main 上某个 commit 的构建产物。因此**「正式上线放行」没有 tag/release 可以锚定，只能锚定 commit SHA**。填写 `launch-signoff.json` 的 `artifactSha256` 时，必须同时记录**对应的 commit SHA**，否则「已签审的产物」将无法追溯到底是哪份代码。建议在 P0-3 动作里补上「记录签审所对应 commit SHA」这一步。
 - **不建议现在做**：清理 26 个未合并的历史分支属仓库整理，但其中可能仍有并行会话在用，**不动、不删、不列为待办**，仅在此留档。
 - **可复用手法**：`git tag | wc -l` + `gh release list --limit 10` 判有无版本化发布；`git branch | wc -l` / `git branch -r | wc -l` / `git branch --merged main | wc -l` 快速摸清分支规模。
+
+---
+
+## 孤儿资产盘点（2026-09-10 第十一次新增维度）
+
+> 前十轮从未查过「哪些文件从来没有被任何地方引用过」。本轮以「文件名是否出现在任何受控文本文件（`.md` / `.json` / `.yml` / `.sh` / `.py` / `.ts` / `.js` / `.txt`，排除 `node_modules` / `apps/beatscape/public` / `data/`）中」为判据实测。**孤儿 ≠ 死代码**，多数是一次性流水线脚本，本来就靠人手动跑而不写进文档；本维度的价值是**把它们从「不可发现」变成「可发现」**。
+
+| 范围 | 总数 | 孤儿数 | 占比 |
+|---|---|---|---|
+| `scripts/`（`.sh` + `.py`） | 92 | **22** | 24% |
+| `docs/`（`.md`） | 49 | **1** | 2% |
+
+**22 个孤儿脚本**（抽查 5 个用 `grep -rl "<文件名>"` 全仓直查均 0 命中，确认为真孤儿，非脚本误判）：
+
+- **模型 / 训练**：`_train_text_to_image_lora.py`、`_train_text_to_image_lora_sdxl.py`（以下划线开头，本就暗示内部/实验用）
+- **ACE-Step 环境**：`mac-ace-macos-only.py`、`mac-ace-pip-install.sh`、`mac-ace-pip-staged.sh`、`mac-ace-verify.py`、`mac-mlx-benchmark.sh`（`mac-ace-verify.py` 仅 8 行，是个 import 冒烟脚本）
+- **曲库生成流水线（一次性 Ingest）**：`beatscape-ingest-p3.py`、`beatscape-ingest-p4.py`、`beatscape-p3-specs.py`、`beatscape-p4-specs.py`、`beatscape-generate-hum.py`、`beatscape-cover-character.py`、`beatscape-make-preview.py`
+- **诊断 / 验证**：`beatscape-chart-sync-check.py`、`verify-examples.py`、`run-benchmark.py`
+- **派单 Harness**：`agent-delivery/dispatch-cursor-agent-cli.sh`、`agent-delivery/dispatch-cursor-agent.sh`、`agent-delivery/merge-evidence.py`、`agent-delivery/review_codex.py`、`ai-company/codex-run.py`
+
+**1 个孤儿文档**：`docs/BEATSCAPE-STAGE4-RESONANCE-SONIC-BATCH.md` —— 未被任何 md/索引引用。按下方「已取消（不自动恢复）」段的口径，「Stage4 40 首」类历史冲刺项**不回填为待办**，因此**只留档、不动、不删**。
+
+### 从孤儿清单里挖出的唯一候选接线项（登记但不认领）
+
+- **`scripts/beatscape-chart-sync-check.py`（121 行）不在任何验收命令或 CI 中**。它做的是「谱面音符 × 音频 onset 能量**互相关**对齐诊断」，且文档字符串里明确解释了**为什么不能只用「最近 onset 距离」**（120s 的曲子有 1300+ onset，平均每 88ms 一个，任意时间点附近都能找到 onset，「最近距离 18ms」与随机猜测无异，是假阳性指标）——这不是随手写的玩具，作者踩过坑。
+- **相关性**：本文件[当前状态速览](#当前状态速览)记的是「315 张已按『拍网格亲和力』全量重出」，而[验收命令](#验收命令)段目前**没有任何一条谱面-音频对齐 QA 命令**（`catalog:beatscape` / `audit:beatscape` / `earcheck:beatscape` 分别管 catalog、内容审计、人工耳检）。
+- **处理意见**：仅登记为候选，**不认领、不列为 P0/P1 阻塞项**。是否把它接进验收命令，取决于用户是否认为「重出后的 315 张谱面」需要一次对齐复核——**这是产品判断，不是技术问题**。若要做，动作是：先跑一遍看基线结论，再决定是否固化进 `scripts/harness.sh` 或文档。
+
+### 可复用手法
+
+```bash
+# 孤儿扫描：文件名是否出现在任何受控文本文件里（排除产物/数据目录）
+git ls-files | grep -E '\.(md|json|yml|yaml|sh|ts|tsx|mjs|js|txt)$' \
+  | grep -v node_modules | grep -v 'apps/beatscape/public' | grep -v '^data/' > /tmp/corpus.txt
+
+# 逐个待查文件判是否被引（用 basename 与相对路径各查一次，避免漏判）
+grep -Fq "$(basename $f)" $(cat /tmp/corpus.txt) || echo "ORPHAN $f"
+```
+
+- **判读纪律（本轮最重要的一条）**：**孤儿 ≠ 该删**。一次性 Ingest / 训练 / 环境脚本天然不被引；**只有「诊断类」脚本落单才值得追问**（诊断没人跑等于没诊断）。因此本清单不生成「清理 22 个脚本」这种待办——那会制造噪音并可能误删流水线工具。
+- **另一条**：扫描判据是「文件名字符串」，若某脚本通过变量拼接或 glob 间接调用会被误判为孤儿。**抽查确认后再下结论**（本轮抽查 5 个全为真孤儿）。
 
 ---
 
@@ -271,7 +316,7 @@
 - 两处索引均已标注「历史冲刺归档」：`docs/KNOWLEDGE-BASE.md` 第 9 条（2026-09-06）、`docs/CODE-INDEX.md:155`（2026-09-07 补，并指向本文件为当前入口）。**本项无剩余动作。**
 
 ### P5-2 整理未提交的工作区改动
-- 截至 **2026-09-10 第十次刷新**（实测 `git status`，`origin/main` 与本地已同步 0/0，HEAD `b882307`），工作区有并行会话未提交改动（与上一轮相比**构成不变，仅未跟踪项自然增长**：仍 **10 项改动** + 未跟踪由 8 增至 **9 项**，新增的是 `.workbuddy-ai/memory/2026-09-09.md`；另加本文件 `TODO.md` 待提交）：
+- 截至 **2026-09-10 第十一次刷新**（实测 `git status`，`origin/main` 与本地已同步 0/0，HEAD `5c9e9a7`），工作区有并行会话未提交改动（与上一轮相比**构成不变，仅未跟踪项自然增长**：仍 **10 项改动** + 未跟踪由 9 增至 **10 项**，新增的是 `.workbuddy-ai/memory/2026-09-10.md`；另加本文件 `TODO.md` 待提交）：
   - **T1b / T5b（新）**：`apps/beatscape/src/seo/pageMeta.ts:80`（`socialMetaTags`）、`pageMeta.ts:113`（`setPageMeta` 内同步 og:/twitter:）、`apps/beatscape/src/pages/Results.tsx:72`（`copyImageBlob`）、`Results.tsx:242`（调用点）——**本轮复查仍无任何测试文件命中这两个符号**，见 P2 表
   - **需求文档**：`PRD.md`（§19 待决 7/8、§20.1 验证清单、MiniMax/YuE 官方链接）、`docs/COMPLIANCE.md`（许可表 + C-06）、`SESSION.md`（P1-4 音乐模型候选评估）
   - **Harness / 项目规范**：`AGENTS.md`（追加 cursor-codex-sync 区块）、未跟踪的 `.agents/skills/{company-harness,vault-harness,zbrain-session}/`、`.codex/`
@@ -349,11 +394,23 @@ awk '/^on:/,/^jobs:/' .github/workflows/<file>.yml           # 看真实触发�
 # 版本与分支盘点（2026-09-10 新增维度）
 git tag | wc -l ; gh release list --limit 10                 # 有无版本化发布物（本仓 0/0）
 git branch | wc -l ; git branch -r | wc -l ; git branch --merged main | wc -l
+
+# 孤儿资产盘点（2026-09-10 第十一次新增维度：脚本 92 个中 22 个、docs 49 个中 1 个从未被引）
+# 语料 = 受控文本文件，排除产物/数据目录
+git ls-files | grep -E '\.(md|json|yml|yaml|sh|ts|tsx|mjs|js|txt)$' \
+  | grep -v node_modules | grep -v 'apps/beatscape/public' | grep -v '^data/' > /tmp/corpus.txt
+for f in scripts/*.py scripts/*.sh docs/*.md; do
+  grep -Fq "$(basename $f)" $(cat /tmp/corpus.txt) || echo "ORPHAN $f"
+done
+# 抽查：文件名直接全仓搜，确认不是脚本误判（期望 0 命中）
+grep -rl "beatscape-chart-sync-check.py" . 2>/dev/null | grep -v node_modules
 ```
 
 **说明**：`bash scripts/harness.sh all` = unit + workspace build + mock integration。技术检查通过不替代人工耳检、盲测与上线签审。
 
 > **2026-09-09 第八次刷新提示**：网络已于本轮恢复（代理端口 `7897` 可用），**上一轮搁置的线上取证已全部补做**，结论见 P0-6 / P1-3。沿用规则不变：**网络不可达时不得把「拿不到返回」记为「线上异常」**，须沿用上一次成功取证的日期与结论；恢复后优先补做。另本轮确认一条易错点：**「线上内容落后」与「线上代码落后」必须分开断言**——`catalog.json` 与谱面资产是数据文件，可能已随早先成功部署上线，只有 bundle JS 才必然落后于 `main`；合并成一句「线上落后」会误导判断。
+>
+> **2026-09-10 第十一次刷新提示**：连续第十轮无新落地项。本轮两条经验：① **「孤儿清单」是一种此前完全没查过的维度，而且它带来的是「候选」而不是「待办」**——92 个脚本里 22 个从未被引，但其中绝大多数是一次性 Ingest / 训练 / 环境脚本，**落单是它们的正常形态**；真正值得追问的只有**诊断类**脚本（诊断没人跑等于没诊断）。**盘点出新清单时，先问「这类文件落单是否正常」，再决定要不要生成待办**，否则会批量制造噪音（本轮因此拒绝生成「清理 22 个孤儿脚本」这种条目）。② **债务类数字要拆成两个看**：本轮部署债务 23→25，看着像恶化，但拆开看「触及 `apps/beatscape/**` 的仍是 6 个、名单不变」，增量全是 TODO 刷新自身 → **「总数」与「其中触及代码的个数」必须同时记录**，否则文档刷新会被误读成功能积压。另注：CI run 号**连续第三轮**出现「写入即过期」，这类值已被反复证明不可跨轮沿用。
 >
 > **2026-09-10 第十次刷新提示**：连续第九轮无新落地项，价值仍来自**纠错与新增盘点维度**。本轮三条经验：① **`gh workflow list` 不是全集**——它漏报了 `agent-delivery-dispatch.yml`（磁盘 7 个 yml，list 只给 6 行，加 `--limit 50` 也没用），但该文件的 run 一查就有 7 条。**盘点「有哪些工作流」必须枚举磁盘文件；判断「是否废弃」要看有没有 run，而不是在不在 list 里。** ② **看到 `failure` 先读 job 结尾再下结论**——`agent-delivery-dispatch.yml` 的 7 次失败全是主动 `exit 1` 的路标文案（派单已迁到本地 Codex CLI，本工作流不干活），只看结论列会凭空造出一个不存在的待办。这提醒一个通用风险：**本文件里的「failure」若不加判读，会持续污染待办清单。** ③ **把「没有的东西」也记下来**——「0 tag / 0 Release」这种负面事实平时没人查，但它直接决定了 P0-3 的签审只能锚 commit SHA；**盘点维度不必都是「有什么」，「没有什么」同样能改变结论。** 另注：CI run 号已连续两轮出现「写入即过期」，这类值已被证明不可跨轮沿用。
 >
