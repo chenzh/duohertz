@@ -1,8 +1,8 @@
 # MusicSaas 项目 TODO
 
 > **本文件是待办的唯一入口**，只登记**当前真实未完事项**，细节一律链接到对应权威文档，不在此复制正文。
-> 整理日期：2026-09-10（**第十一次刷新**；实测 `origin/main` 与本地 0/0 同步，上一轮 TODO 刷新为 `5c9e9a7`，**连续第十轮无新落地项**，仍是**校验型刷新**——本轮新增维度：**「孤儿资产」盘点**（`scripts/` 与 `docs/` 中从未被任何受控文本文件按名引用的文件），并**连续第三轮抓到 CI run 号过期**、**更正部署债务 23 → 25**）｜ 来源：[SESSION.md](SESSION.md) · [docs/BEATSCAPE-DECISIONS.md](docs/BEATSCAPE-DECISIONS.md) · [审计报告 §6](docs/COMPANY-PROJECT-HARNESS-AUDIT-2026-09-06.md)
-> **本轮改动（2026-09-10 第十一次）**：① **CI run 号连续第三轮「写入即过期」，已更正**：main 最新 CI 实为 **`34384329456`**（success，09-09T17:40:18Z），`gh run view --json headSha` 核对为 `5c9e9a7c…` = 当前 HEAD；TODO 里写的 `34340240726` 对应的是再上一个 commit `b882307`。**结论已连续三轮一致：run 号这类值不可跨轮沿用，每轮开头必查**；② **部署债务数字过期，23 → 25**：`git rev-list --count ffe1ec0..HEAD` 实测 **25**（上一轮记 23，期间又落了两个 docs-only commit）；触及 `apps/beatscape/**` 的**仍为 6 个、名单不变** → 债务增长全部来自 TODO 刷新自身，代码侧无新增未部署项；③ **新增「孤儿资产」维度（详见 [专节](#孤儿资产盘点2026-09-10-第十一次新增维度)）**：`scripts/` 下 **92 个脚本中有 22 个（24%）**从未被任何受控 md/json/yml/sh/py/ts 文件按名引用；`docs/` 下 **49 个 md 中有 1 个孤儿**（`docs/BEATSCAPE-STAGE4-RESONANCE-SONIC-BATCH.md`）；逐一抽查 5 个疑似脚本均确认为真孤儿（直接 `grep -rl` 全仓 0 命中）；④ **从孤儿清单里挖出一条候选接线项**：`scripts/beatscape-chart-sync-check.py`（121 行，谱面音符 × 音频 onset 能量**互相关**对齐诊断，文档字符串明确写了为什么不能只用「最近 onset 距离」）**不在任何验收命令或 CI 中**——而 [验收命令](#验收命令) 段目前**没有任何谱面-音频对齐 QA 命令**。仅登记为候选，**不认领、不列为阻塞项**；⑤ 其余断言本轮实测**全部仍成立且与上一轮一致、无变化**：曲库 105 首（s1 6/s2 4/s3 15/s4 15/s5 10/s6 35/p3 10/p4 10）、315 谱面、`stream_app_url` 0-105 / `stream_audio` 105-105、线上 catalog **105 首 / 315 谱面 / `stream_app_url` 0-105 且曲目 ID 集合与本地一致**、p4 谱面 **200**、线上 bundle 仍 `index-CDXE9BO-.js`（325,768 B，`scapemusic.pages.dev` / `No account, no ads` 0 命中、`App link coming soon` 1 命中）、`release.json` 与缺失路径同为 2146 B `text/html`（仍 SPA 回落）、放行七字段全 null、源码零 TODO/FIXME、零 `@ts-ignore`、非测试源码零 `any`（4 命中 = 3 处 `hitsounds.test.ts:6/69/73` 测试桩 + `Duo.tsx:114` 注释英文假阳性）、T1b·T5b 零测试命中、17 条文档链接全 OK（唯一 MISS 仍是 `#bs-d001` 锚点假阳性）、部署管道仍 5 连败、最后成功 `33895713222`（09-04）、无新增 run、`gh workflow list` **仍只返回 6 条**（再次印证它漏报 `agent-delivery-dispatch.yml`）。
+> 整理日期：2026-09-10（**第十二次刷新**；实测 `origin/main` 与本地 0/0 同步，上一轮 TODO 刷新为 `80351d5`，**连续第十一轮无新落地项**，仍是**校验型刷新**——本轮新增维度：**「散落待办清单」盘点**（除本文件外，仓库里还有哪些受控文件在承载未勾选项，直接检验「待办唯一入口」这个主张是否成立），并**连续第四轮抓到 CI run 号过期**、**更正部署债务 25 → 26**、**修正速览表残留的 23**）｜ 来源：[SESSION.md](SESSION.md) · [docs/BEATSCAPE-DECISIONS.md](docs/BEATSCAPE-DECISIONS.md) · [审计报告 §6](docs/COMPANY-PROJECT-HARNESS-AUDIT-2026-09-06.md)
+> **本轮改动（2026-09-10 第十二次）**：① **CI run 号连续第四轮「写入即过期」，已更正**：main 最新 CI 实为 **`34397187366`**（success，09-09T19:47:51Z），`gh run view --json headSha` 核对为 `80351d5b…` = 当前 HEAD；本文件里写的 `34384329456` 对应的是再上一个 commit `5c9e9a7`。**该值已连续四轮证明不可跨轮沿用；本轮还发现它同时污染了正文与速览表两处（见 ②）**；② **部署债务 25 → 26，并修正速览表残留**：`git rev-list --count ffe1ec0..HEAD` 实测 **26**；触及 `apps/beatscape/**` 的**仍为 6 个、名单不变**。**同时发现上一轮只改了正文没改速览表——速览仍写着 23** → 同一数字在文件两处互相矛盾，本轮一并统一为 26；③ **新增「散落待办清单」维度（详见 [专节](#散落待办清单盘点2026-09-10-第十二次新增维度)）**：本文件自称「待办唯一入口」，实测仓库内**另有 5 个受控文件在承载未勾选项，共 91 个未勾复选框**（不含本文件自身的 8 个与 `SESSION.md` 的 8 个）。其中 `.delivery/beatscape/backlog.md` 是本文件**从未提及过**的一处，含 **1 条仍未关闭的 TICKET-B05**（Reddit 启动页 CTA 文案）。**但判读结论是「不该批量回填」**：未勾最多的 `docs/RESONANCE-VISUAL-PLAN.md`（26 个）经实测其描述的「霓虹 → 漫画硬边」改造**已基本落地**（Anton 15 命中 / `halftone` 10 命中 / `--glow-accent: none`），**是计划文档的勾选态与事实脱节，不是真有 26 件事没做**；④ **因此只登记 1 条真实候选**：`docs/_visual-baseline/` 视觉回归截图基线目录**确认不存在**（`RESONANCE-VISUAL-PLAN.md:247` 要求建立），属小而明确、**未被本文件任何条目覆盖**的缺口，登记为候选、不认领、不列阻塞项；⑤ 其余断言本轮实测**全部仍成立且与上一轮一致、无变化**：曲库 105 首（s1 6/s2 4/s3 15/s4 15/s5 10/s6 35/p3 10/p4 10）、315 谱面、`stream_app_url` 0-105 / `stream_audio` 105-105、线上 catalog **105 首 / 315 谱面 / `stream_app_url` 0** 且 ID 集合与本地一致、p4 谱面 **200**、线上 bundle 仍 `index-CDXE9BO-.js`、`release.json` 与缺失路径同为 **2146 B**（仍 SPA 回落）、放行七字段全 null、源码零 TODO/FIXME、零 `@ts-ignore`、非测试源码零 `any`（4 命中 = 3 处 `hitsounds.test.ts:6/69/73` 测试桩 + `Duo.tsx:114` 注释英文假阳性）、T1b·T5b 零测试命中、17 条文档链接全 OK（唯一 MISS 仍是 `#bs-d001` 锚点假阳性）、部署管道仍 5 连败、最后成功 `33895713222`（09-04）、无新增 run、`gh workflow list` **仍只返回 6 条**（连续第三轮印证它漏报）。
 >
 > **上一轮（2026-09-10 第十次）**：① **更正过期的 CI run 号**（连续第二轮命中同类问题）：main 最新 CI 实为 **`34340240726`**（success，09-09T10:26:44Z），经 `gh run view --json headSha` 核对为 **`b882307`**（= 当前 HEAD）；上一轮写的 `34310382154` 对应的是再上一个 commit `696431b`。**这类「会随时间变化的值」每轮开头必须复查**；② **推翻上一轮「仓库共 6 条工作流」——实为 7 条**：`.github/workflows/` 磁盘上有 **7 个** yml 文件，但 `gh workflow list`（即使加 `--limit 50`）**只返回 6 条**，漏掉的是 `agent-delivery-dispatch.yml`；实测该文件**确有 7 次 run** → `gh workflow list` 会漏报，**可靠盘点手法是枚举磁盘文件而非信任 `gh workflow list`**；③ **该第 7 条工作流的 7 次 failure 是「设计如此」，不是坏掉的门禁**：`agent-delivery-dispatch.yml` 只有 `workflow_dispatch` 触发，唯一 job 以 `exit 1` 结束并打印「工程派单已迁移到指定执行主机的 Codex CLI / 本工作流未领取任何 issue、未启动任何实现」的路标文案 → **不得当成故障去修，也不计入阻塞项**；④ **新增「版本与分支」盘点**：**0 个 git tag、0 个 GitHub Release**（`git tag | wc -l` = 0、`gh release list` 为空）→ **没有任何版本化发布物，部署完全靠 main 持续部署**；对 P0-3 的意义是**签审没有 tag/release 可锚定，只能锚 commit SHA**；本地 **32** 个分支 / 远程 **11** 个，其中 **6 个已合并到 main**（含大量 `agent/musicsaas/*` 历史分支）；⑤ **复核 API contract gate**：文件 `on:` 块确认为 `pull_request`（4 条 paths，**含 workflow 自身**）+ `workflow_dispatch`，**确无 push 触发**，与上一轮一致；它为何会出现 `event: push` 的 run **仍未查清，继续标注「不臆断、不作阻塞项」**；⑥ 其余断言本轮实测**全部仍成立且与上一轮一致、无变化**：线上 bundle 仍 `index-CDXE9BO-.js`（325,768 B，`scapemusic.pages.dev` / `No account, no ads` 均 0 命中、`App link coming soon` 1 命中）、线上 catalog **105 首 / 315 谱面 / `stream_app_url` 0-105 且曲目 ID 集合与本地完全一致**、p4 谱面 **200**、`release.json` 与缺失路径同为 2146 B（仍 SPA 回落）、放行七字段全 null、源码零 TODO-FIXME、零 `@ts-ignore`、非测试源码零 `any`（4 命中中 3 处已知测试桩 + 1 处 `Duo.tsx:114` 注释假阳性）、T1b·T5b 零测试命中、文档链接完整（唯一 MISS 仍是 `#bs-d001` 锚点假阳性）；部署管道仍 5 连败、最后成功 `33895713222`（09-04）、**无新增 run**。
 >
@@ -29,8 +29,8 @@
 | 曲库 | **105/105**（s1 6 · s2 4 · s3 15 · s4 15 · s5 10 · s6 35 · p3 10 · p4 10）· **线上同 105**（2026-09-09 实测 `catalog.json` 曲目集合与本地一致） |
 | 谱面 | 315 张已按「拍网格亲和力」全量重出 · **线上可下载**（p4 谱面实测 200） |
 | 线上 | BeatScape <https://beatscape.pages.dev> · ScapeMusic <https://scapemusic.pages.dev> · **内容已同步、仅 JS 代码落后于 `main`**（最后一次成功部署 2026-09-04 `33895713222`）→ 见 P0-6 |
-| CI / 部署管道 | **CI 绿**（main 最新 `34340240726` success，对应 HEAD `b882307`）· **Deploy BeatScape 连续 5 次 failure**，全部卡在 `launch:check`（门禁由 `8b710a3` 于 09-05 一次性引入；截至 09-10 仍无新增 run）→ 见 P0-6 / P1-6 |
-| **部署债务** | 自最后一次成功部署 `ffe1ec0`（09-04）起 **23 个 commit 未部署**，其中触及 `apps/beatscape/**` 的 **6 个**（每个都触发并失败，无「漏触发」）→ 见 [全仓工作流盘点](#全仓工作流盘点2026-09-09-新增维度) |
+| CI / 部署管道 | **CI 绿**（main 最新 `34397187366` success，对应 HEAD `80351d5`；2026-09-10 第十二次更正——**速览此处原写 `34340240726`／`b882307`，比正文还落后两轮**，本轮与正文统一）· **Deploy BeatScape 连续 5 次 failure**，全部卡在 `launch:check`（门禁由 `8b710a3` 于 09-05 一次性引入；截至 09-10 仍无新增 run）→ 见 P0-6 / P1-6 |
+| **部署债务** | 自最后一次成功部署 `ffe1ec0`（09-04）起 **26 个 commit 未部署**，其中触及 `apps/beatscape/**` 的 **6 个**（每个都触发并失败，无「漏触发」）→ 见 [全仓工作流盘点](#全仓工作流盘点2026-09-09-新增维度)（2026-09-10 第十二次：速览原写 23、正文写 25，实测 **26**，两处旧值均已统一） |
 | GitHub 未决项 | **无未关闭 PR、无未关闭 Issue**（2026-09-09 实测） |
 | 仓库工作流 | **共 7 条**（2026-09-10 更正：上一轮写 6 条是错的，`gh workflow list` 漏报了 `agent-delivery-dispatch.yml`）：CI success · Deploy BeatScape 5 连败 · **Portal release check success** · Deploy NeonBeat failure · API contract gate 存疑 · Agent delivery gate 仅 PR · **Agent delivery dispatch 7 连败但属设计如此** → 见 [专节](#全仓工作流盘点2026-09-09-新增维度) |
 | 版本与分支 | **0 个 git tag · 0 个 GitHub Release**（无版本化发布物，部署靠 main 持续部署）· 本地 **32** 分支 / 远程 **11**，其中 6 个已合并到 main（2026-09-10 新增维度）→ 见 [版本与分支盘点](#版本与分支盘点2026-09-10-新增维度) |
@@ -48,7 +48,7 @@
 
 | 工作流 | 触发方式 | 最新 run | 结论 | 备注 |
 |---|---|---|---|---|
-| **CI** | push main | `34384329456`（09-09T17:40Z） | ✅ success | 对应 HEAD `5c9e9a7`（2026-09-10 第十一次更正：上一轮写的 `34310382154` 对应的是 `696431b`）。**CI 绿 ≠ 部署成功**，这是两条独立工作流 |
+| **CI** | push main | `34397187366`（09-09T19:47Z） | ✅ success | 对应 HEAD `80351d5`（2026-09-10 第十二次更正：上一轮写的 `34384329456` 对应的是 `5c9e9a7`）。**CI 绿 ≠ 部署成功**，这是两条独立工作流 |
 | **Deploy BeatScape (Cloudflare Pages)** | push main（6 条 `paths`） | `34064117995`（09-06T22:28Z） | ❌ failure | 5 连败，卡在 `launch:check` → 见 P0-6 / P1-6 |
 | **Portal release check** | push main | `33970422632`（09-05T13:58Z） | ✅ success | 与 **P0-5 门户发布**直接相关：**门户门禁本身是通的**，门户不是被门禁卡住的一方 |
 | **Deploy NeonBeat** | push main（`apps/neonbeat/**`） | `33524238082`（09-01T15:11Z） | ❌ failure | `apps/neonbeat` 存在，但 NeonBeat 本阶段**明确不做**（见「已取消」）→ 不认领、不修 |
@@ -69,11 +69,12 @@
 
 ### 部署债务（2026-09-09 量化）
 
-- **25 个 commit 未部署**（`git rev-list --count ffe1ec0..HEAD`，2026-09-10 第十一次实测；上一轮记的 23 已过期），起点是最后一次成功部署 head `ffe1ec0`（本地时间 09-05 00:31:54 +0800 = 09-04T16:31:54Z）。
+- **26 个 commit 未部署**（`git rev-list --count ffe1ec0..HEAD`，2026-09-10 第十二次实测；上一轮正文记 25、**速览还残留 23**，均已过期），起点是最后一次成功部署 head `ffe1ec0`（本地时间 09-05 00:31:54 +0800 = 09-04T16:31:54Z）。
 - 其中**触及 `apps/beatscape/**` 的只有 6 个，名单与上一轮完全一致**：`8b710a3` → `735208b` → `134115a` → `6418d3f` → `e3ba64f` → `a136592`，正好对应 5 次失败 run（`8b710a3` 与 `735208b` 同批推送共用一个 run）。
 - **因此「每个改了 BeatScape 代码的 commit 都触发并失败了」，`paths` 过滤工作正常，问题 100% 在 `launch:check` 门禁**，不存在「提交没触发部署」这种情况。
-- `a136592` 之后的 **10 个** commit 全是 docs-only（TODO 刷新），不命中 `paths` → 无新 run 属预期，**不代表管道恢复**。
-- **注意（2026-09-10 第十一次）**：债务从 23 涨到 25，**增量全部是本文件自身的刷新 commit**，不是新代码堆积——触及代码的仍是那 6 个。**解读债务数字时必须同时看「总数」与「其中触及代码的个数」，否则会把「文档刷新」误读成「功能积压」。**
+- `a136592` 之后的 **11 个** commit 全是 docs-only（TODO 刷新），不命中 `paths` → 无新 run 属预期，**不代表管道恢复**。
+- **注意（2026-09-10 第十二次）**：债务 23 → 25 → **26**，**增量全部是本文件自身的刷新 commit**，不是新代码堆积——触及代码的仍是那 6 个。**解读债务数字时必须同时看「总数」与「其中触及代码的个数」，否则会把「文档刷新」误读成「功能积压」。**
+- **同一数字在本文件里出现过三个版本（23 / 25 / 26）**：上一轮改了正文（→25）却漏了速览（仍 23），本轮实测 26 并**同时改正文与速览**。**教训：任何一个会变的数字，在本文件里往往有多处出现，改动时必须全局搜一遍该数字再统一**（本轮用 `grep -n "部署债务\|个 commit 未部署" TODO.md` 一次性定位三处）。
 
 ---
 
@@ -133,6 +134,65 @@ grep -Fq "$(basename $f)" $(cat /tmp/corpus.txt) || echo "ORPHAN $f"
 
 - **判读纪律（本轮最重要的一条）**：**孤儿 ≠ 该删**。一次性 Ingest / 训练 / 环境脚本天然不被引；**只有「诊断类」脚本落单才值得追问**（诊断没人跑等于没诊断）。因此本清单不生成「清理 22 个脚本」这种待办——那会制造噪音并可能误删流水线工具。
 - **另一条**：扫描判据是「文件名字符串」，若某脚本通过变量拼接或 glob 间接调用会被误判为孤儿。**抽查确认后再下结论**（本轮抽查 5 个全为真孤儿）。
+
+---
+
+## 散落待办清单盘点（2026-09-10 第十二次新增维度）
+
+> 本文件第 3 行主张「**待办的唯一入口**」。前十一轮从未检验过这个主张——本轮首次实测：**除本文件外，仓库里还有 5 个受控文件在承载未勾选项，共 91 个未勾复选框**。本维度的价值不是把它们回填进来，而是**判断哪些是真的漏登记、哪些只是计划文档的勾选态没跟上事实**。
+
+| 文件 | 未勾 / 已勾 | 最后一次改动 | 与本文件的关系 | 判读 |
+|---|---|---|---|---|
+| `docs/BEATSCAPE-TODO-ACCEPTANCE.md` | **28** / 0 | 2026-08-25 | 已在 P5-1 加「历史冲刺归档」横幅 | 历史冲刺规格，**不回填**（已有横幅，无需再动） |
+| `docs/RESONANCE-VISUAL-PLAN.md` | **26** / 0 | 2026-08-29 | **本文件从未提及** | ⚠️ **勾选态与事实脱节**，见下方判读 |
+| `docs/PRD-BEATSCAPE.md` | **15** / 2 | 持续 | PRD，非待办清单 | 属需求文档的待决项，不属「漏登记待办」 |
+| `docs/BEATSCAPE-IP-STRATEGY.md` | **12** / 6 | 2026-08-30 | **本文件只通过 P1-2 覆盖了商标部分** | IP 策略其余未勾项（授权文件归档等）**未被本文件任何条目覆盖** → 候选，见下 |
+| `docs/TODO.md` | **10** / 20 | 2026-08-25 | 已作为 P3 与「明确不做」的来源被引用 | 已覆盖（P3 段已声明不继承其中两条过期项） |
+
+**另有 1 处非复选框形态的清单**：`.delivery/beatscape/backlog.md`（30 行，2026-08-29）——**本文件从未提及**。含 5 个 TICKET，B01–B04 已 `[done]`，**`TICKET-B05` Reddit 启动页 CTA 文案（AC：CEO 勾文案后再 merge）仍未关闭**。它实质落在 P3「发帖素材包 — 见 docs/BEATSCAPE-REDDIT-LAUNCH.md」这一条的范围内，**因此不新开条目，仅在此登记该位置，避免两处状态分叉**。
+
+### 关键判读：26 个未勾 ≠ 26 件事没做
+
+`docs/RESONANCE-VISUAL-PLAN.md` 是未勾最多的一份（26/26 全未勾，0 个已勾），内容是「霓虹 → 漫画硬边」视觉改造。若只看复选框会以为这套改造完全没做。**本轮实测代码，它其实已基本落地**：
+
+| 计划条目 | 实测证据 | 结论 |
+|---|---|---|
+| 移除霓虹辉光（`--glow-accent`） | `styles.css:40` 为 `--glow-accent: none;`，全仓 `.ts/.tsx` **0 处引用** | ✅ 已落地（变量保留但置空，未物理删除） |
+| 引入 Anton 字体 | `styles.css` 中 `Anton` **15 处命中** | ✅ 已落地 |
+| 半调网点背景（`.bg-fx`） | `styles.css` 中 `halftone` **10 处命中** | ✅ 已落地 |
+| 视觉回归截图存档到 `docs/_visual-baseline/` | **该目录不存在**（`ls` 报 No such file or directory） | ❌ **确实未做** |
+
+- **结论**：这份计划文档是**「做完了但没人回头勾选」**，不是「26 件事待办」。若据此生成 26 条待办，会一次性制造 25 条假待办。
+- **可复用规则（下轮必守）**：**计划文档里的未勾复选框，必须先回到代码里实测再决定要不要登记**。判据是「找该条目必然留下的代码痕迹」（字体名、CSS 变量、目录、函数名），而不是读文档文字。「0 个已勾」本身就是强烈信号——**一份 26 项全未勾的计划，通常不是因为一项都没做，而是因为做完后没人回来维护**。
+- **与上一轮「孤儿资产」维度的同一条纪律呼应**：盘点出新清单时，先问「这类东西落单/未勾是否正常」，再决定要不要生成待办。
+
+### 本维度登记的唯一候选（不认领、不阻塞）
+
+- **`docs/_visual-baseline/` 视觉回归基线目录不存在**（`RESONANCE-VISUAL-PLAN.md:247`：「视觉回归：截图存档到 `docs/_visual-baseline/`，便于后续比对」）。
+  - 这是本轮 91 个未勾项中，**唯一既有明确验收物、又确认未在代码/仓库中落地、且未被本文件任何条目覆盖**的一条。
+  - 性质是「锦上添花的基线建设」，不是发布阻塞。**不认领、不列 P 级条目**——是否建库取决于用户是否要做视觉回归比对。
+- 其余（`docs/BEATSCAPE-IP-STRATEGY.md` 的 12 项、`docs/PRD-BEATSCAPE.md` 的 15 项）：属需求/策略文档的待决项，**本文件已通过 P1-1 / P1-2 覆盖其决策出口**，补一份文件级索引收益低于制造重复维护成本，故**只留档、不建立条目**。
+
+### 可复用手法
+
+```bash
+# 1) 找出所有名似清单的受控文件
+git ls-files | grep -iE '(^|/)(todo|backlog|next|checklist|roadmap)'
+
+# 2) 统计每个受控 md 的未勾/已勾数量（比只看未勾更能发现「全未勾」的漂移文档）
+for f in $(git ls-files '*.md' | grep -v node_modules); do
+  u=$(grep -c '\[ \]' "$f"); d=$(grep -c '\[x\]' "$f")
+  [ "$u" -gt 0 ] && echo "$u 未勾 / $d 已勾  $f"
+done | sort -rn
+
+# 3) 判读：把条目翻译成「必然留下的代码痕迹」再实测，不要读文字就下结论
+grep -c "Anton" apps/beatscape/src/styles.css
+grep -n "glow-accent" apps/beatscape/src/styles.css
+ls -d docs/_visual-baseline 2>&1
+
+# 4) 本文件内部的数字一致性检查（本轮就是靠它发现 23/25/26 三个版本）
+grep -n "个 commit 未部署\|部署债务" TODO.md
+```
 
 ---
 
@@ -281,6 +341,7 @@ grep -Fq "$(basename $f)" $(cat /tmp/corpus.txt) || echo "ORPHAN $f"
 ## P3 — Reddit 首发运营（人工）
 
 > 来源：[docs/TODO.md](docs/TODO.md)（P3/P4 段）。**不继承**：「Stage4 40 首」与「真 180s 流媒体母带」已被 105 首曲库 / 216s 双资产覆盖，属过期项。
+> **2026-09-10 第十二次新增**：另有 **`.delivery/beatscape/backlog.md:21` 的 `TICKET-B05`（Reddit 启动页 CTA 文案，AC「CEO 勾文案后再 merge」）仍未关闭**，它落在本段首条「发帖素材包」范围内 → **不新开条目，但两处状态需保持一致**：关闭本段首条时应同步把 `TICKET-B05` 标记为 done。详见 [散落待办清单盘点](#散落待办清单盘点2026-09-10-第十二次新增维度)。
 
 - [ ] 发帖素材包 — 见 [docs/BEATSCAPE-REDDIT-LAUNCH.md](docs/BEATSCAPE-REDDIT-LAUNCH.md)
 - [ ] 目标 sub 调研
@@ -316,11 +377,11 @@ grep -Fq "$(basename $f)" $(cat /tmp/corpus.txt) || echo "ORPHAN $f"
 - 两处索引均已标注「历史冲刺归档」：`docs/KNOWLEDGE-BASE.md` 第 9 条（2026-09-06）、`docs/CODE-INDEX.md:155`（2026-09-07 补，并指向本文件为当前入口）。**本项无剩余动作。**
 
 ### P5-2 整理未提交的工作区改动
-- 截至 **2026-09-10 第十一次刷新**（实测 `git status`，`origin/main` 与本地已同步 0/0，HEAD `5c9e9a7`），工作区有并行会话未提交改动（与上一轮相比**构成不变，仅未跟踪项自然增长**：仍 **10 项改动** + 未跟踪由 9 增至 **10 项**，新增的是 `.workbuddy-ai/memory/2026-09-10.md`；另加本文件 `TODO.md` 待提交）：
+- 截至 **2026-09-10 第十二次刷新**（实测 `git status`，`origin/main` 与本地已同步 0/0，HEAD `80351d5`），工作区有并行会话未提交改动（与上一轮相比**构成完全一致、零变化**：仍 **10 项改动** + **10 项未跟踪**；另加本文件 `TODO.md` 待提交）：
   - **T1b / T5b（新）**：`apps/beatscape/src/seo/pageMeta.ts:80`（`socialMetaTags`）、`pageMeta.ts:113`（`setPageMeta` 内同步 og:/twitter:）、`apps/beatscape/src/pages/Results.tsx:72`（`copyImageBlob`）、`Results.tsx:242`（调用点）——**本轮复查仍无任何测试文件命中这两个符号**，见 P2 表
   - **需求文档**：`PRD.md`（§19 待决 7/8、§20.1 验证清单、MiniMax/YuE 官方链接）、`docs/COMPLIANCE.md`（许可表 + C-06）、`SESSION.md`（P1-4 音乐模型候选评估）
   - **Harness / 项目规范**：`AGENTS.md`（追加 cursor-codex-sync 区块）、未跟踪的 `.agents/skills/{company-harness,vault-harness,zbrain-session}/`、`.codex/`
-  - **其他**：`.delivery/README.md`、`.delivery/prompts/orchestrator-kickoff.md`、`worklog/2026-09-06.md`、`.workbuddy-ai/memory/2026-09-06.md` / `2026-09-07.md` / `2026-09-08.md`、`.workbuddy-ai/memory/automations/ff19e388-…/memory.md`（本自动化自己的记录）
+  - **其他**：`.delivery/README.md`、`.delivery/prompts/orchestrator-kickoff.md`、`worklog/2026-09-06.md`、`.workbuddy-ai/memory/2026-09-06.md` ~ `2026-09-10.md`（5 个日志文件）、`.workbuddy-ai/memory/automations/ff19e388-…/memory.md`（本自动化自己的记录）
 - **已落地不再列**：T3 结算页误差条的原工作区改动已随 `a136592` 提交并推送；`docs/CODE-INDEX.md` 的历史冲刺归档标注随上一轮 TODO 刷新一并提交（P5-1 收口，本轮复查三处归档横幅均仍在）。
 - **动作**：由各改动所有者分别提交；**不要 `git add -A` 一次性扫入**，避免把并行会话的半成品混入。
 
@@ -404,10 +465,24 @@ for f in scripts/*.py scripts/*.sh docs/*.md; do
 done
 # 抽查：文件名直接全仓搜，确认不是脚本误判（期望 0 命中）
 grep -rl "beatscape-chart-sync-check.py" . 2>/dev/null | grep -v node_modules
+
+# 散落待办清单盘点（2026-09-10 第十二次新增维度：本文件自称「唯一入口」，实测另有 5 个文件 91 个未勾）
+git ls-files | grep -iE '(^|/)(todo|backlog|next|checklist|roadmap)'
+for f in $(git ls-files '*.md' | grep -v node_modules); do
+  u=$(grep -c '\[ \]' "$f"); d=$(grep -c '\[x\]' "$f")
+  [ "$u" -gt 0 ] && echo "$u 未勾 / $d 已勾  $f"
+done | sort -rn
+# 判读：把条目翻译成「必然留下的代码痕迹」再实测，不要读文档文字就下结论
+grep -n "glow-accent" apps/beatscape/src/styles.css ; ls -d docs/_visual-baseline 2>&1
+
+# 本文件内部数字一致性检查（本轮靠它发现同一数字有 23/25/26 三个版本）
+grep -n "个 commit 未部署\|部署债务" TODO.md
 ```
 
 **说明**：`bash scripts/harness.sh all` = unit + workspace build + mock integration。技术检查通过不替代人工耳检、盲测与上线签审。
 
+> **2026-09-10 第十二次刷新提示**：连续第十一轮无新落地项。本轮两条经验：① **「未勾复选框」是最容易骗人的待办来源**——`docs/RESONANCE-VISUAL-PLAN.md` 有 26 个未勾、0 个已勾，看着像一整份没做的改造，实测代码后发现 Anton / halftone / `--glow-accent: none` 全部已落地，**真正没做的只有 1 条**（视觉回归基线目录）。**一份「全未勾」的计划文档，通常不是因为一项都没做，而是因为做完后没人回来勾选。** 判读手法是把条目翻译成「必然留下的代码痕迹」（字体名、CSS 变量、目录、函数名）再实测。② **同一个会变的数字在本文件里可能有多处副本**：本轮部署债务出现了 23（速览）/ 25（正文）/ 26（实测）三个版本——上一轮只改了正文。**改任何数字前先 `grep -n` 全局找一遍它的所有出现位置**，本轮 CI run 号同样是「正文 + 速览」两处不一致（且速览比正文还落后两轮）。
+>
 > **2026-09-09 第八次刷新提示**：网络已于本轮恢复（代理端口 `7897` 可用），**上一轮搁置的线上取证已全部补做**，结论见 P0-6 / P1-3。沿用规则不变：**网络不可达时不得把「拿不到返回」记为「线上异常」**，须沿用上一次成功取证的日期与结论；恢复后优先补做。另本轮确认一条易错点：**「线上内容落后」与「线上代码落后」必须分开断言**——`catalog.json` 与谱面资产是数据文件，可能已随早先成功部署上线，只有 bundle JS 才必然落后于 `main`；合并成一句「线上落后」会误导判断。
 >
 > **2026-09-10 第十一次刷新提示**：连续第十轮无新落地项。本轮两条经验：① **「孤儿清单」是一种此前完全没查过的维度，而且它带来的是「候选」而不是「待办」**——92 个脚本里 22 个从未被引，但其中绝大多数是一次性 Ingest / 训练 / 环境脚本，**落单是它们的正常形态**；真正值得追问的只有**诊断类**脚本（诊断没人跑等于没诊断）。**盘点出新清单时，先问「这类文件落单是否正常」，再决定要不要生成待办**，否则会批量制造噪音（本轮因此拒绝生成「清理 22 个孤儿脚本」这种条目）。② **债务类数字要拆成两个看**：本轮部署债务 23→25，看着像恶化，但拆开看「触及 `apps/beatscape/**` 的仍是 6 个、名单不变」，增量全是 TODO 刷新自身 → **「总数」与「其中触及代码的个数」必须同时记录**，否则文档刷新会被误读成功能积压。另注：CI run 号**连续第三轮**出现「写入即过期」，这类值已被反复证明不可跨轮沿用。
