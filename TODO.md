@@ -37,7 +37,7 @@
 | 线上 | BeatScape <https://beatscape.pages.dev> · ScapeMusic <https://scapemusic.pages.dev> · **内容已同步、仅 JS 代码落后于 `main`**（最后一次成功部署 2026-09-04 `33895713222`）→ 见 P0-6 |
 | CI / 部署管道 | **CI 绿**（main 最新 `34428724668` success，对应 HEAD `89c5cd6`；2026-09-10 第十五次更正，**连续第七轮**命中「写入即过期」）· **Deploy BeatScape 连续 5 次 failure**，全部卡在 `launch:check`（门禁由 `8b710a3` 于 09-05 一次性引入；截至 09-10 仍无新增 run）→ 见 P0-6 / P1-6 |
 | **部署债务** | 自最后一次成功部署 `ffe1ec0`（09-04）起 **29 个 commit 未部署**，其中触及 `apps/beatscape/**` 的 **6 个**（每个都触发并失败，无「漏触发」）→ 见 [全仓工作流盘点](#全仓工作流盘点2026-09-09-新增维度)（2026-09-10 第十五次：28 → **29**，增量仍全部来自本文件自身的刷新） |
-| **构建期环境变量** 🆕 | 全仓 3 个自定义 `VITE_*`：`VITE_STREAM_APP_URL` 仅 `build:cf` 注入（已知）· **`VITE_GAME_URL` 仅部署脚本注入、`pnpm build` 会产出 `127.0.0.1:5175` 死链** · **`VITE_API_BASE` 全仓零注入**（仅 NeonBeat，本阶段不做）。**另：hash 路由修正硬编码为单一域名** · **ScapeMusic 完全无 CI/CD 工作流** → 见 [专节](#构建期环境变量与部署路径盘点2026-09-10-第十五次新增维度) |
+| **构建期环境变量** 🆕 | 全仓 3 个自定义 `VITE_*`：`VITE_STREAM_APP_URL` 仅 `build:cf` 注入（已知）· **`VITE_GAME_URL` 仅部署脚本注入、`pnpm build` 会产出 `127.0.0.1:5175` 死链** · **`VITE_API_BASE` 全仓零注入**（仅 NeonBeat，本阶段不做）。**另：hash 路由修正硬编码为单一域名**，**全仓 11 个源文件写死生产域名**(5 处静默 / 3 处护栏) · **ScapeMusic 完全无 CI/CD 工作流** → 见 [专节](#构建期环境变量与部署路径盘点2026-09-10-第十五次新增维度) |
 | **公开资产暴露面** 🆕 | `apps/scapemusic/public/trials/` **5 个 m4a / 27.81 MiB 未被任何源码或 catalog 引用，却已上线可公开下载**（`scapemusic.pages.dev/trials/*.m4a` 全 200）→ **不在 P0-1 耳检的 105 首范围内**，见 [专节](#受控二进制资产与公开资产暴露面盘点2026-09-10-第十四次新增维度) |
 | **测试覆盖** 🆕 | `apps/beatscape/src` **81 源码 / 25 单测**；**6 个目录零单测**（`pages/` 15 · `components/` 16 · `data/` 2 · `types/` 2 · `constants/` 1 · 根 3）→ 但由 `e2e/` 4 个 Playwright spec 部分覆盖。**⚠️ e2e 不在 CI 里，只在部署管道跑 → 自 09-06 起未在 GitHub 执行过**；同期 13 次 CI 全绿但均无浏览器回归；15 个页面中 **4 个**（Calibration / FirstShift / Legal / NotFound）**两种测试都未触及** → 见 [测试覆盖盲区盘点](#测试覆盖盲区盘点2026-09-10-第十三次新增维度) |
 | GitHub 未决项 | **无未关闭 PR、无未关闭 Issue**（2026-09-09 实测） |
@@ -379,6 +379,21 @@ grep -c "demo-" apps/beatscape/public/catalog.json   # 0 = 不在曲库
 - **现有单测不会发现**：`streamLink.test.ts` 只有 2 个用例，第 1 个用的**恰好就是** `https://scapemusic.pages.dev/`（断言得到 `/#/track/…`），**没有任何用例覆盖「非该域名」的分支** → 换域名后测试仍全绿。**这是一条「测试只覆盖了硬编码生效的那条路径」的覆盖缺口**，与第十三次「e2e 不在 CI」是同类问题：测试存在，但覆盖不到会变的地方。
 - **与 P1-3 的关系（已同步写入 P1-3 动作项）**：P1-3 现有动作是「部署后复测 `/#/track/{id}` 可达」，这只在**域名不变**的前提下成立。**补充：若 `VITE_STREAM_APP_URL` 的取值将来不是 `https://scapemusic.pages.dev`，必须同步修改 `streamLink.ts:10` 的判等（或改为按路由类型推导的通用规则），并补一个「非该域名」用例。** 属**登记、不认领**——是否改取决于是否打算换域名，那是 P1-1「流媒体终点」的拍板范围。
 
+### 顺带：全仓硬编码生产域名清单（换域名的 blast radius）
+
+> 上一条是「有一个变量的值被硬编码进逻辑分支」，顺手把范围扩大到全仓：**除构建产物外，共 13 个文件 / 30 处**写死了 `*.pages.dev` 生产域名。（构建产物 `dist/` `dist-deploy/` `dist-portal/` 已确认**全部 gitignore、受控数 0**，不计入，也不是仓库污染。）
+
+| 类型 | 文件（命中数） | 换域名后的表现 |
+|---|---|---|
+| **静默失效（5 个文件）** | `beatscape/index.html`(4：canonical / og:url / og:image / twitter:image)、`beatscape/public/sitemap.xml`(8)、`beatscape/public/robots.txt`(1)、`beatscape/src/lib/streamLink.ts`(1)、`demo/src/Portal.tsx`(2：两个产品外链) | **指向旧域名且不报错** —— SEO 与 og 图错、深链落 Discover、门户外链失效 |
+| **显式护栏（3 个文件）** | `beatscape/e2e/release.spec.ts`(1)、`demo/e2e/portal.spec.ts`(2)、`demo/scripts/release.mjs`(1) | **断言直接红**，能挡住遗漏 |
+| 配置 / 默认参数（2） | `beatscape/package.json`(1：`build:cf` 的 env)、`beatscape/scripts/live-smoke.mjs`(1：CLI 默认 URL) | 属配置入口，需同步改 |
+| 注释 / 测试夹具（3） | `scapemusic/src/vite-env.d.ts`(1 注释)、`beatscape/src/lib/streamLink.test.ts`(2)、`demo/scripts/release.test.mjs`(5，用的是 `portal.` / `musicsaas.` 示例域) | 不随生产域名变化；但 `streamLink.test.ts` 那 2 处正是上一条「只覆盖硬编码生效路径」的来源 |
+
+- **可操作结论**：**一次域名变更要动 11 个真实文件**（13 减去注释与夹具），其中 **5 个静默失效、3 个会显式报错**。
+- **本条最有价值的一点（与上一条同源，但结论相反）**：**同样是硬编码域名，写在 `assert` 里是护栏，写在 `if` / 静态资源里是陷阱。** `streamLink.ts:10` 是全仓**唯一**把域名写进**逻辑分支**的地方（`===` 判等决定是否补 `/#`），因此它既静默失效、又没有护栏；而 `e2e/release.spec.ts:35` 把同一个域名写进 `expect(...).toHaveAttribute('href', ...)`，反而会在域名变更时立刻报错。**判读硬编码时，看它在「表达式」还是「断言」里，比数它出现几次更有意义。**
+- **不生成待办**：是否换域名属 P1-1「流媒体终点」与 P1-3「Scape Music 为工作名」的拍板范围，本条只提供**变更成本**供拍板参考。
+
 ### 第二条：ScapeMusic 完全没有 CI/CD 工作流
 
 - `grep -rn "scapemusic" .github/workflows/` → **0 命中**。7 条工作流里没有任何一条构建、测试或部署 ScapeMusic；`ci.yml` 只跑 `pnpm --filter @musicsaas/beatscape test`。
@@ -407,6 +422,15 @@ curl -s -o /dev/null -w "missing=%{http_code}(%{size_download}B)\n" https://scap
 
 # 5) 看硬编码分支是否被测试覆盖：测试里用的值恰好等于硬编码值时 = 只覆盖了「生效」那条路
 grep -n "scapemusic.pages.dev" apps/beatscape/src/lib/streamLink.test.ts
+
+# 6) 硬编码生产域名 blast radius（排除 dist 等构建产物，先看它们是否被 gitignore）
+for d in apps/beatscape/dist apps/scapemusic/dist-deploy apps/demo/dist-portal; do
+  echo "$d tracked=$(git ls-files $d | wc -l)"
+done
+grep -rnE "https?://[a-zA-Z0-9._-]*pages\.dev" apps/*/src apps/*/public apps/*/e2e apps/*/scripts \
+  apps/*/index.html apps/*/package.json | grep -vE "/dist|dist-deploy|dist-portal" \
+  | awk -F: '{print $1}' | sort | uniq -c | sort -rn
+# 判读：看命中行在「表达式/if」还是「expect/assert」里 —— 前者是陷阱，后者是护栏
 ```
 
 - **判读纪律（第五次印证「零 ≠ 该补 / 该删」，且比前四次更进一步）**：`VITE_API_BASE` 零注入看着像缺陷，但它只被本阶段明确不做的 NeonBeat 引用 → **不生成待办**。**反过来，「有值」也不等于安全**：`VITE_STREAM_APP_URL` 是有注入的，可它的正确性依赖一个硬编码的域名判等。**因此判据应是「这个变量错了会不会被谁发现」，而不是「它有没有被注入」**——后者只能发现「完全没配」，发现不了「配的值已经不适用了」。
