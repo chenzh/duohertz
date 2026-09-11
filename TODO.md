@@ -1,7 +1,9 @@
 # MusicSaas 项目 TODO
 
 > **本文件是待办的唯一入口**，只登记**当前真实未完事项**，细节一律链接到对应权威文档，不在此复制正文。
-> **本轮改动（2026-09-10 第二十次）**：① **CI run 号连续第十二轮「写入即过期」，已更正**：main 最新 CI 实为 **`34481257223`**（success，09-10T13:13:03Z），`headSha` = `5889955567…` = 当前 HEAD；上一轮写的 `34469117993` 对应的是再上一个 commit `c105e2d`（速览表与工作流表**两处**均已同步更正）；② **部署债务 34 → 35**（触及 `apps/beatscape/**` 的**仍为 6 个、名单不变**；`a136592` 之后的 docs-only 由 19 → **20**）；③ **新增「可访问性与社交预览资产」维度（详见 [专节](#可访问性与社交预览资产盘点2026-09-10-第二十次新增维度)）——本轮最有价值的是一条此前无人记录的、用户可见的症状**：**`og.png` 本地存在（1,200×630、39,195 B、已受控），线上却返回 2146 B 的 SPA 回落页**（与一个确定不存在的路径**字节数完全相同**）→ **所有社交分享预览（Reddit / X / Discord / Slack 抓取 `og:image` / `twitter:image`）当前拿到的都是一段 HTML 而不是图片**。已按纪律溯源：`git log -1 -- apps/beatscape/public/og.png` 显示它由 **`8b710a3`（2026-09-05 16:06 +0800）**引入，**比最后一次成功部署 `ffe1ec0`（09-05 00:31）晚约 15.5 小时** → **这是 P0-6 部署阻断的直接后果，不是「忘了上传」，不得记为独立缺陷**；④ **同源的第二条证据**：线上 `sitemap.xml`（**911 B**）与本地（**1,025 B**）**逐行 diff 只差一行**——线上缺 `<url><loc>https://beatscape.pages.dev/shift</loc>…</url>`；该文件最后由 `735208b`（09-05 21:51）修改，同样晚于最后成功部署 → **线上跑的是旧版 sitemap**（`robots.txt` 线上 133 B 与本地一致，部署前已存在，无差异）。**这两条把「线上落后」从「JS 代码」进一步精确到「静态资产」层面，且逐文件结论不同**——再次印证第八次「『线上内容落后』必须分文件断言，不能合成一句」；⑤ **a11y 基线实测为「干净」，据此不生成任何待办**：`apps/beatscape/src` 有 **87 处 `aria-`（39 `aria-label` · 33 `aria-hidden`）· 15 处 `role=` · 12 处 `:focus-visible`**；`styles.css` 有 **12 个 `@media (prefers-reduced-motion: reduce)` 块**（对应 49 `animation` / 28 `transition` / 19 `@keyframes`）；**38 个 `<button>` vs 48 处 `onClick`**；`index.html` 有**完整静态 meta**（description · canonical · og:type/title/description/url/image/image:alt · twitter:card/title/description/image）→ 不依赖 JS 注入。**唯一一处可点击非按钮元素**是 `Duo.tsx:326` 的 `<div className="duo-start" onClick=…>`（无 `role`、无 `tabIndex`）→ 键盘用户无法启动 Duo 模式，**登记为候选、本轮不改**（改源码超出「只提交 TODO.md」的范围，需单独提交）；⑥ 其余断言本轮实测**全部仍成立且与上一轮一致、无变化**：曲库 105 首（s1 6/s2 4/s3 15/s4 15/s5 10/s6 35/p3 10/p4 10）、315 谱面、`stream_app_url` 0-105 / `stream_audio` 105-105、线上 catalog **105 首 / 315 谱面 / `stream_app_url` 0** 且**曲目 ID 集合与本地完全一致**、p4 谱面 **200**、线上 bundle 仍 `index-CDXE9BO-.js`（325,768 B；`scapemusic.pages.dev` 0 / `No account, no ads` 0 / `App link coming soon` 1）、`release.json` 与缺失路径同为 **2146 B**、放行**七字段全 null**、源码零 TODO/FIXME、零 `@ts-ignore`、非测试源码零 `any`（4 命中 = 3 处 `hitsounds.test.ts:6/69/73` 测试桩 + `Duo.tsx:114` 注释英文假阳性）、**16 条文件链接 + 32 个内部锚点全部解析成功、MISS 为 0**、部署管道仍 5 连败、最后成功 `33895713222`（09-04）、**无新增 run**、`gh workflow list` **仍只返回 6 条**（连续第十一轮印证它漏报）。
+> **本轮改动（2026-09-11 第二十一次）**：① **CI run 号连续第十三轮「写入即过期」，已更正**：main 最新 CI 实为 **`34493338937`**（success，09-10T15:05:17Z），`headSha` = `4553e363275f…` = 当前 HEAD；上一轮写的 `34481257223` 对应的是再上一个 commit `5889955`（速览表与工作流表**两处**均已同步更正）；② **部署债务 35 → 36**（触及 `apps/beatscape/**` 的**仍为 6 个、名单不变**；`a136592` 之后的 docs-only 由 20 → **21**，增量仍全部来自本文件自身的刷新 commit）；③ **新增「运行时错误可观测性与崩溃兜底」维度（详见 [专节](#运行时错误可观测性与崩溃兜底盘点2026-09-11-第二十一次新增维度)）——前二十轮从未问过「线上崩了之后谁能知道」**，六条实测结论：(a) **BeatScape 有且仅有 1 个 ErrorBoundary，且已上线**（`components/ErrorBoundary.tsx` 包在 Router 外，fallback「Signal lost」；引入 commit `51489b3`（09-01 12:12）经 `git merge-base --is-ancestor` 确认**是最后成功部署 `ffe1ec0` 的祖先** → 线上 bundle 实测 `grep -c "Signal lost"` = **1**，兜底确实生效）→ **干净结论，不生成待办**；(b) **ScapeMusic / Demo / NeonBeat 零 ErrorBoundary**（`grep -rl` 全 0），ScapeMusic 线上 bundle `index-DwW6K_-S.js`（264,752 B）`Signal lost` **0 命中** → **ScapeMusic 任何渲染期异常即白屏、无兜底**；(c) **零全局错误兜底**：全仓 `window.onerror` / 窗口级 `addEventListener('error')` / `unhandledrejection` **0 命中**（唯一 1 处是 ScapeMusic `playerContext.tsx:292` 给 `<audio>` 元素挂的 error 监听）→ **渲染期之外的异步异常无人接管**；(d) **零错误上报**：与第十六次维度交叉印证——受控源码 17 个外部域名里**运行时真正发起请求的只有 Google Fonts**，**没有任何监控 / 上报端点**；全仓 `console.error` 仅 **1 处**（就是 ErrorBoundary 那一行），ScapeMusic 5 处 → **用户真机崩溃时没有任何一条错误信息能回到开发侧**；(e) **无 sourcemap**：三个 app 的 vite config **均未配 `sourcemap`**（默认 false），`dist/assets/*.map` **0 个**、git 受控 `.map` **0 个**、线上 `.map` 均返回 SPA 回落页（BeatScape 2146 B / ScapeMusic 1944 B）→ **一面干净（不泄露源码），一面也无任何生产可调试性**；(f) 45 个 catch 中**空 catch 为 0**（无静默吞异常）→ 这一条干净。④ **本维度最有价值的一条是 (d)+(e) 合成**：**已上线的 BeatScape / ScapeMusic 对真机错误是「全盲」的**——既无上报也无 sourcemap，唯一线索是用户手动打开 devtools 抄 console。**这直接影响 P0-4「英语叙事真人试玩」**：试玩中若发生崩溃，**没有任何取证手段**，只能依赖用户口述复现。已在 P0-4 登记为前置确认项。⑤ **判读纪律（第九次印证「零 ≠ 该补」）**：(a) 的「1 个 ErrorBoundary」与 (f) 的「0 个空 catch」是**干净**的，不生成待办；(b)(c)(e) 的「零」里，**只有 (d)+(e) 会改变「能否发现用户遇到的问题」**。另外 (b) 之所以值得登记而非忽略，依据是**本项目自己的判准**——`ErrorBoundary.tsx:9` 的 docstring 明确写着「改造前项目里一个错误边界都没有……用户看到的是一片纯白，连发生了什么都无从得知」，即**白屏无兜底已被本项目定义为不可接受**，故 ScapeMusic 的现状不是中性事实；⑥ 其余断言本轮实测**全部仍成立且与上一轮一致、无变化**：曲库 105 首（s1 6/s2 4/s3 15/s4 15/s5 10/s6 35/p3 10/p4 10）、315 谱面、`stream_app_url` 0-105 / `stream_audio` 105-105、线上 catalog **105 首 / 315 谱面 / `stream_app_url` 0** 且**曲目 ID 集合与本地完全一致**（only-online 0 / only-local 0）、p4 谱面 **200**（19,241 B）、线上 bundle 仍 `index-CDXE9BO-.js`（325,768 B；`scapemusic.pages.dev` 0 / `No account, no ads` 0 / `App link coming soon` 1）、`release.json` 与缺失路径同为 **2146 B**（仍 SPA 回落）、**`og.png` 仍 2146 B（仍不存在）**、放行七字段全 null、源码零 TODO/FIXME/XXX/HACK、零 `@ts-ignore`、非测试源码零 `any`（4 命中 = 3 处 `hitsounds.test.ts:6/69/73` 测试桩 + `Duo.tsx:114` 注释英文假阳性）、`socialMetaTags` 仍只命中 `pageMeta.ts:80/113`、`copyImageBlob` 仍只命中 `Results.tsx:72/242`（**两者仍零测试命中**）、**16 条文件链接 + 34 个内部锚点全 OK、MISS 为 0**（连续第六轮确认 `#bs-d001` 从来不是问题）、部署管道仍 5 连败、最后成功 `33895713222`（09-04）、**无新增 run**、`gh workflow list` **仍只返回 6 条**（连续第十一轮印证它漏报 `agent-delivery-dispatch.yml`）。
+>
+> **历史（2026-09-10 第二十次）**：① **CI run 号连续第十二轮「写入即过期」，已更正**：main 最新 CI 实为 **`34481257223`**（success，09-10T13:13:03Z），`headSha` = `5889955567…` = 当前 HEAD；上一轮写的 `34469117993` 对应的是再上一个 commit `c105e2d`（速览表与工作流表**两处**均已同步更正）；② **部署债务 34 → 35**（触及 `apps/beatscape/**` 的**仍为 6 个、名单不变**；`a136592` 之后的 docs-only 由 19 → **20**）；③ **新增「可访问性与社交预览资产」维度（详见 [专节](#可访问性与社交预览资产盘点2026-09-10-第二十次新增维度)）——本轮最有价值的是一条此前无人记录的、用户可见的症状**：**`og.png` 本地存在（1,200×630、39,195 B、已受控），线上却返回 2146 B 的 SPA 回落页**（与一个确定不存在的路径**字节数完全相同**）→ **所有社交分享预览（Reddit / X / Discord / Slack 抓取 `og:image` / `twitter:image`）当前拿到的都是一段 HTML 而不是图片**。已按纪律溯源：`git log -1 -- apps/beatscape/public/og.png` 显示它由 **`8b710a3`（2026-09-05 16:06 +0800）**引入，**比最后一次成功部署 `ffe1ec0`（09-05 00:31）晚约 15.5 小时** → **这是 P0-6 部署阻断的直接后果，不是「忘了上传」，不得记为独立缺陷**；④ **同源的第二条证据**：线上 `sitemap.xml`（**911 B**）与本地（**1,025 B**）**逐行 diff 只差一行**——线上缺 `<url><loc>https://beatscape.pages.dev/shift</loc>…</url>`；该文件最后由 `735208b`（09-05 21:51）修改，同样晚于最后成功部署 → **线上跑的是旧版 sitemap**（`robots.txt` 线上 133 B 与本地一致，部署前已存在，无差异）。**这两条把「线上落后」从「JS 代码」进一步精确到「静态资产」层面，且逐文件结论不同**——再次印证第八次「『线上内容落后』必须分文件断言，不能合成一句」；⑤ **a11y 基线实测为「干净」，据此不生成任何待办**：`apps/beatscape/src` 有 **87 处 `aria-`（39 `aria-label` · 33 `aria-hidden`）· 15 处 `role=` · 12 处 `:focus-visible`**；`styles.css` 有 **12 个 `@media (prefers-reduced-motion: reduce)` 块**（对应 49 `animation` / 28 `transition` / 19 `@keyframes`）；**38 个 `<button>` vs 48 处 `onClick`**；`index.html` 有**完整静态 meta**（description · canonical · og:type/title/description/url/image/image:alt · twitter:card/title/description/image）→ 不依赖 JS 注入。**唯一一处可点击非按钮元素**是 `Duo.tsx:326` 的 `<div className="duo-start" onClick=…>`（无 `role`、无 `tabIndex`）→ 键盘用户无法启动 Duo 模式，**登记为候选、本轮不改**（改源码超出「只提交 TODO.md」的范围，需单独提交）；⑥ 其余断言本轮实测**全部仍成立且与上一轮一致、无变化**：曲库 105 首（s1 6/s2 4/s3 15/s4 15/s5 10/s6 35/p3 10/p4 10）、315 谱面、`stream_app_url` 0-105 / `stream_audio` 105-105、线上 catalog **105 首 / 315 谱面 / `stream_app_url` 0** 且**曲目 ID 集合与本地完全一致**、p4 谱面 **200**、线上 bundle 仍 `index-CDXE9BO-.js`（325,768 B；`scapemusic.pages.dev` 0 / `No account, no ads` 0 / `App link coming soon` 1）、`release.json` 与缺失路径同为 **2146 B**、放行**七字段全 null**、源码零 TODO/FIXME、零 `@ts-ignore`、非测试源码零 `any`（4 命中 = 3 处 `hitsounds.test.ts:6/69/73` 测试桩 + `Duo.tsx:114` 注释英文假阳性）、**16 条文件链接 + 32 个内部锚点全部解析成功、MISS 为 0**、部署管道仍 5 连败、最后成功 `33895713222`（09-04）、**无新增 run**、`gh workflow list` **仍只返回 6 条**（连续第十一轮印证它漏报）。
 >
 > **历史（2026-09-10 第十九次）**：① **CI run 号连续第十一轮「写入即过期」，已更正**：main 最新 CI 实为 **`34469117993`**（success，09-10T11:01:42Z），`headSha` = `c105e2df0800…` = 当前 HEAD；上一轮写的 `34457550792` 对应的是再上一个 commit `0d4151b`（速览表与工作流表**两处**均已同步更正）；② **部署债务 33 → 34**（`git rev-list --count ffe1ec0..HEAD`；触及 `apps/beatscape/**` 的**仍为 6 个、名单不变**，增量仍全部来自本文件自身的刷新 commit；`a136592` 之后的 docs-only 由 18 → **19**）；③ **新增「依赖与运行环境」维度（详见 [专节](#依赖与运行环境清单盘点2026-09-10-第十九次新增维度)）——前十八轮只查过「代码里写了什么」，从未查过「声明的依赖与实际的引用是否对得上」**，四条结论：(a) **Node 侧完全干净：6 个包零「幽灵依赖」**（import 了却没声明，pnpm 严格链接下这类问题本就会立刻炸），实测确为 0；而所谓「声明了却从未 import」的 9 项**全部**是 `@types/*` / `typescript` / `tsx` / `prisma`，经 tsconfig 与 CLI **隐式**使用 → **据此不生成任何清理待办**（第八次印证「零 ≠ 该补 / 清单 ≠ 该清」）；(b) **Python 侧是三分的**：`tests/` 有 `tests/requirements.txt`、`workers/ace-step` 与 `workers/sa3` 各有一份，而 **`scripts/`（全仓 82 个受控 `.py` 中的绝大多数）需要 17 个第三方包**（`torch` / `diffusers` / `transformers` / `accelerate` / `PIL` / `peft` / `datasets` / `torchvision` / `wandb` / `xformers` / `bitsandbytes` / `mlx` / `mlx_lm` / `acestep` …）**却没有任何 requirements 文件**；(c) **但这不是 CI 阻塞——本维度最反直觉的一条**：7 条工作流的 yml 里 `grep "pip install\|requirements.txt"` **零命中**，Python 依赖的安装发生在 `scripts/harness.sh:34-40` 的 `ensure_py_env`（自建 `tests/.venv` 并装 `tests/` + `workers/ace-step` 两份），**只服务 unit / integration / e2e 三个 tier**；而 CI 的 `beatscape` job **不经过 harness.sh**，是 `setup-python@v5` 后直接 `python3` 跑三个脚本 → 实测这三个脚本（`beatscape-audit.py` / `beatscape-catalog-status.py` / `beatscape-earcheck.py`）**100% 标准库**，`scripts/` 未声明依赖的缺口**完全落在 CI 之外**；(d) 由此得到一条**此前无人记录、且极易踩的隐藏约束**：**那 3 个脚本必须永远保持纯标准库**——一旦有人给 `beatscape-audit.py` 加上 `import numpy`，**本地（开发机装有 torch/numpy）照常通过，CI 的 beatscape job 却会直接红**，而现有流程没有任何环节会提前拦住它；④ **顺带查实两条次要事实**：`mlx` / `mlx_lm` / `acestep` **仅出现在 `scripts/mac-ace-verify.py`** → 内容生产链的这一环**绑定 Apple Silicon**；`workers/sa3/requirements.txt` **从未被任何自动化安装**（harness 只装 ace-step 那份），但两者**逐行相同**（fastapi / uvicorn / numpy 同版本）→ 无实际缺口，**仅留档、不生成待办**；⑤ 其余断言本轮实测**全部仍成立且与上一轮一致、无变化**：曲库 105 首（s1 6/s2 4/s3 15/s4 15/s5 10/s6 35/p3 10/p4 10）、315 谱面、`stream_app_url` 0-105 / `stream_audio` 105-105、线上 catalog **105 首 / 315 谱面 / `stream_app_url` 0** 且**曲目 ID 集合与本地完全一致**、p4 谱面 **200**、线上 bundle 仍 `index-CDXE9BO-.js`（325,768 B；`scapemusic.pages.dev` 0 / `No account, no ads` 0 / `App link coming soon` 1 / `127.0.0.1:5175` 0）、`release.json` 与缺失路径同为 **2146 B**（仍 SPA 回落）、放行七字段全 null、源码零 TODO/FIXME、零 `@ts-ignore`、非测试源码零 `any`（4 命中 = 3 处 `hitsounds.test.ts:6/69/73` 测试桩 + `Duo.tsx:114` 注释英文假阳性）、`socialMetaTags` 仍只命中 `pageMeta.ts:80/113`、`copyImageBlob` 仍只命中 `Results.tsx:72/242`（**两者仍零测试命中**）、**16 条文件链接 + 30 个内部锚点全部解析成功、MISS 为 0**（`#bs-d001` 经查确在 `docs/BEATSCAPE-DECISIONS.md:5`，连续第五轮确认不是问题）、部署管道仍 5 连败、最后成功 `33895713222`（09-04）、**无新增 run**、`gh workflow list` **仍只返回 6 条**（连续第十轮印证它漏报）。
 >
@@ -13,7 +15,7 @@
 >
 > **历史（2026-09-10 第十五次）**：① **CI run 号连续第七轮「写入即过期」，已更正**：main 最新 CI 实为 **`34428724668`**（success，09-10T02:15:24Z），`headSha` = `89c5cd6fc643…` = 当前 HEAD；上一轮写的 `34419589870` 对应的是再上一个 commit `119d50a`。**该值已连续七轮证明不可跨轮沿用，每轮开头必须复查**（速览表与工作流表**两处**均已同步更正）；② **部署债务 28 → 29**（`git rev-list --count ffe1ec0..HEAD`；触及 `apps/beatscape/**` 的**仍为 6 个、名单不变**，增量仍全部来自本文件自身的刷新 commit）；③ **新增「构建期环境变量与部署路径」维度（详见 [专节](#构建期环境变量与部署路径盘点2026-09-10-第十五次新增维度)），首次枚举全部构建期变量引用点并逐个反查注入方**，三条结论：(a) 3 个自定义 `VITE_*` 中 **`VITE_GAME_URL` 只在部署脚本注入、`VITE_API_BASE` 全仓零注入**（后者只被本阶段明确不做的 NeonBeat 引用 → 不认领）；(b) **`VITE_STREAM_APP_URL` 的 hash 路由修正被硬编码成「域名字符串精确等于 `https://scapemusic.pages.dev`」**（`streamLink.ts:10`）——实测 ScapeMusic 确为自研 hash 路由（`App.tsx` 全为 `#/` `#/library` …），且**路径式深链 `scapemusic.pages.dev/track/bs-s1-01` 返回 200 / 1944 B，与确定缺失路径字节数完全相同 = 命中 SPA 回落**，故该修正**必要但脆弱**：换任何域名即静默失效，而现有 2 个单测**恰好只测了这个字面域名**，换域名后仍全绿；(c) **ScapeMusic 完全没有 CI/CD 工作流**（`grep -rn "scapemusic" .github/workflows/` **0 命中**），部署只靠 `scripts/deploy-scapemusic-cf-pages.sh`，而该脚本**全仓只在 `SESSION.md:68` 与 `worklog/2026-09-05.md:59` 被提到过** → **这正好解释了上一轮暴露面发现的成因**：`public/trials/` 下 5 个 m4a 能上线不是一次意外，而是「ScapeMusic 没有管道、任何丢进 `public/` 的文件都会在下一次手动部署时直接对外」的必然结果；④ **修正一条连续六轮重复的错误结论**：此前每轮都写「链接自检唯一 MISS 是 `#bs-d001` 锚点假阳性」，实测**是自检脚本本身没对 `#` 切分**，把带锚点的文件链接整串当路径判不存在。本轮脚本改为按 `#` 切分后再判 → **23 条文件链接 + 17 个内部锚点全部存在，MISS 为 0**，`#bs-d001` 从来不是问题；⑤ 其余断言本轮实测**全部仍成立且与上一轮一致、无变化**：曲库 105 首（s1 6/s2 4/s3 15/s4 15/s5 10/s6 35/p3 10/p4 10）、315 谱面、`stream_app_url` 0-105 / `stream_audio` 105-105、线上 catalog **105 首 / 315 谱面 / `stream_app_url` 0 且曲目 ID 集合与本地完全一致**、p4 谱面 **200**、线上 bundle 仍 `index-CDXE9BO-.js`（325,768 B；`scapemusic.pages.dev` 0 / `No account, no ads` 0 / `App link coming soon` 1 / `127.0.0.1:5175` 0）、`release.json` 与缺失路径同为 **2146 B**（仍 SPA 回落）、放行七字段全 null、源码零 TODO/FIXME、零 `@ts-ignore`、非测试源码零 `any`（4 命中 = 3 处 `hitsounds.test.ts:6/69/73` 测试桩 + `Duo.tsx:114` 注释英文假阳性）、T1b·T5b 仍零测试命中、部署管道仍 5 连败、最后成功 `33895713222`（09-04）、**无新增 run**、`gh workflow list` **仍只返回 6 条**（连续第六轮印证它漏报，磁盘实为 7 个）。
 >
-> 整理日期：2026-09-10（**第二十次刷新**；实测 `origin/main` 与本地 **0/0** 同步，HEAD `5889955` 即上一轮 TODO 刷新，本轮 `git log --stat` 与 `worklog/` 均无新完成项 → **连续第十九轮无新落地项**，仍是**校验型刷新**——本轮新增维度：**「可访问性与社交预览资产」盘点**（a11y 基线实测干净、不生成待办；但抓到 **`og.png` 线上返回 SPA 回落页 → 社交分享预览全线失效**，经溯源为 `8b710a3` 引入、晚于最后一次成功部署 15.5 小时，属 P0-6 的直接后果而非独立缺陷），并**连续第十二轮抓到 CI run 号过期**、**更正部署债务 34 → 35**）｜ 来源：[SESSION.md](SESSION.md) · [docs/BEATSCAPE-DECISIONS.md](docs/BEATSCAPE-DECISIONS.md) · [审计报告 §6](docs/COMPANY-PROJECT-HARNESS-AUDIT-2026-09-06.md)
+> 整理日期：2026-09-11（**第二十一次刷新**；实测 `origin/main` 与本地 **0/0** 同步，HEAD `4553e36` 即上一轮 TODO 刷新，本轮 `git log --stat` 与 `worklog/` 均无新完成项 → **连续第二十轮无新落地项**，仍是**校验型刷新**——本轮新增维度：**「运行时错误可观测性与崩溃兜底」盘点**（BeatScape 的 ErrorBoundary **已上线、兜底生效**；但 **ScapeMusic 零兜底**，且**全仓零全局错误接管、零错误上报、零 sourcemap** → 已上线产品对真机错误**全盲**，直接影响 P0-4 试玩取证），并**连续第十三轮抓到 CI run 号过期**、**更正部署债务 35 → 36**）｜ 来源：[SESSION.md](SESSION.md) · [docs/BEATSCAPE-DECISIONS.md](docs/BEATSCAPE-DECISIONS.md) · [审计报告 §6](docs/COMPANY-PROJECT-HARNESS-AUDIT-2026-09-06.md)
 > **上一轮（2026-09-10 第十四次）**：① **CI run 号连续第六轮「写入即过期」，已更正**：main 最新 CI 实为 **`34419589870`**（success，09-10T00:03:18Z），`headSha` 核对为 `119d50a73d…` = 当前 HEAD；上一轮写的 `34409481296` 对应的是再上一个 commit `a29bc04`。**该值已连续六轮证明不可跨轮沿用，每轮开头必须复查**；② **部署债务 27 → 28**（触及 `apps/beatscape/**` 的**仍为 6 个、名单不变**，增量仍全部来自本文件自身的刷新 commit）；③ **新增「受控二进制资产与公开资产暴露面」维度（详见 [专节](#受控二进制资产与公开资产暴露面盘点2026-09-10-第十四次新增维度)），并挖到本轮最有价值的一条**：`apps/scapemusic/public/trials/` 下 **5 个 m4a（共 27.81 MiB）未被任何源码或 catalog 引用，却已随 ScapeMusic 部署上线、`https://scapemusic.pages.dev/trials/*.m4a` 全部返回 200 可公开下载**。其中 `demo-b1/b2/b3` 命名像生成变体，属疑似实验残留。**与 P0-1 的关系（本条真正的价值）**：P0-1 耳检范围是 catalog 里的 **105 首**，而这 5 个文件**不在任何 catalog 中**（`grep -c "demo-" catalog.json` = 0），因此**从未进入耳检范围，却已可从生产域名下载**——P0-1 的目的是「确认无第三方名曲衍生风险」，这是一个此前没人看到的覆盖缺口。**本文件不判断这 5 个文件是否有风险（未听过），只登记为待确认项**；④ **顺带摸清仓库体积结构**：受控文件 **1209 个 / 440.1 MiB**，其中 `.m4a` 占 **410.9 MiB（93.4%）**；`git lfs` 已安装但**未使用**（无 `.gitattributes`、`git lfs ls-files` 为空），所有二进制直接进 git → `.git` 目录 **1.4 G**。另查明 `apps/scapemusic/public/catalog` 是指向 `../../beatscape/public/catalog` 的**符号链接**（ScapeMusic 复用 BeatScape 音频，非重复资产）；⑤ 其余断言本轮实测**全部仍成立且与上一轮一致、无变化**：曲库 105 首（s1 6/s2 4/s3 15/s4 15/s5 10/s6 35/p3 10/p4 10）、315 谱面、`stream_app_url` 0-105 / `stream_audio` 105-105、线上 catalog **105 首 / 315 谱面 / `stream_app_url` 0 且曲目 ID 集合与本地完全一致**、p4 谱面 **200**、线上 bundle 仍 `index-CDXE9BO-.js`（325,768 B；`scapemusic.pages.dev` 0 / `No account, no ads` 0 / `App link coming soon` 1）、`release.json` 与缺失路径同为 **2146 B**（仍 SPA 回落）、放行七字段全 null、源码零 TODO/FIXME、零 `@ts-ignore`、非测试源码零 `any`（4 命中 = 3 处 `hitsounds.test.ts:6/69/73` 测试桩 + `Duo.tsx:114` 注释英文假阳性）、T1b·T5b 零测试命中、17 条文档链接 + 7 个内部锚点全 OK（唯一 MISS 仍是 `#bs-d001` 锚点假阳性）、部署管道仍 5 连败、最后成功 `33895713222`（09-04）、**无新增 run**、`gh workflow list` **仍只返回 6 条**（连续第五轮印证它漏报）。
 >
 > **历史（2026-09-10 第十三次）**：① **CI run 号连续第五轮「写入即过期」，已更正**：main 最新 CI 实为 **`34409481296`**（success，09-09T21:54:54Z），`gh run view --json headSha` 核对为 `a29bc0427f…` = 当前 HEAD；上一轮写的 `34397187366` 对应的是再上一个 commit `80351d5`。**该值已连续五轮证明不可跨轮沿用**；② **部署债务 26 → 27**（触及 `apps/beatscape/**` 的**仍为 6 个、名单不变**，增量仍全部来自本文件自身的刷新 commit，不是功能积压）；③ **新增「测试覆盖盲区」维度（详见 [专节](#测试覆盖盲区盘点2026-09-10-第十三次新增维度)），并挖到本轮最有价值的一条**：**Playwright e2e 不在 CI 工作流里，只在部署管道里跑** —— `ci.yml` 的 beatscape job 只有 `pnpm --filter @musicsaas/beatscape test`（= `vitest run`）+ 2 个 python 脚本，**没有 playwright**；4 个 e2e spec 只在部署工作流 "Verify release candidate"（`pnpm release:beatscape` → `release:check` → `test:e2e`）中执行，该工作流才会 `playwright install --with-deps chromium`。**后果：e2e 自 2026-09-06（最后一次部署 run `34064117995`）起未在 GitHub 上跑过**；同期主 CI 已跑 **13 次、全部 success**，但**没有一次包含浏览器回归** → 本文件与 SESSION 里反复出现的「CI 绿」**覆盖范围比字面窄**；④ **15 个页面中有 4 个既无单测、也无任何 e2e 触及**：`Calibration` / `FirstShift` / `Legal` / `NotFound`（在 `apps/beatscape/e2e/` 全目录 grep 0 命中）；⑤ **判读纪律（与「孤儿 ≠ 该删」「未勾 ≠ 没做」同源）：零单测 ≠ 未覆盖**——`pages/` 15 个文件虽零单测，但由 e2e 覆盖，因此**拒绝生成「补 39 个单测」这种条目**，只登记「是否把 e2e 接入 CI」一条候选（代价是 CI 时长 + 装 chromium，属用户判断）；⑥ 其余断言本轮实测**全部仍成立且与上一轮一致、无变化**：曲库 105 首（s1 6/s2 4/s3 15/s4 15/s5 10/s6 35/p3 10/p4 10）、315 谱面、`stream_app_url` 0-105 / `stream_audio` 105-105、线上 catalog **105 首 / 315 谱面 / `stream_app_url` 0**、p4 谱面 **200**、线上 bundle 仍 `index-CDXE9BO-.js`、`release.json` 与缺失路径同为 **2146 B**（仍 SPA 回落）、放行七字段全 null、源码零 TODO/FIXME、零 `@ts-ignore`、非测试源码零 `any`（4 命中 = 3 处 `hitsounds.test.ts:6/69/73` 测试桩 + `Duo.tsx:114` 注释英文假阳性）、T1b·T5b 零测试命中、17 条文档链接全 OK（唯一 MISS 仍是 `#bs-d001` 锚点假阳性）、部署管道仍 5 连败、最后成功 `33895713222`（09-04）、**无新增 run**、`gh workflow list` **仍只返回 6 条**（连续第四轮印证它漏报）。
@@ -45,8 +47,9 @@
 | 曲库 | **105/105**（s1 6 · s2 4 · s3 15 · s4 15 · s5 10 · s6 35 · p3 10 · p4 10）· **线上同 105**（2026-09-09 实测 `catalog.json` 曲目集合与本地一致） |
 | 谱面 | 315 张已按「拍网格亲和力」全量重出 · **线上可下载**（p4 谱面实测 200） |
 | 线上 | BeatScape <https://beatscape.pages.dev> · ScapeMusic <https://scapemusic.pages.dev> · **内容已同步、仅 JS 代码落后于 `main`**（最后一次成功部署 2026-09-04 `33895713222`）→ 见 P0-6 |
-| CI / 部署管道 | **CI 绿**（main 最新 `34481257223` success，对应 HEAD `5889955`；2026-09-10 第二十次更正，**连续第十二轮**命中「写入即过期」）· **Deploy BeatScape 连续 5 次 failure**，全部卡在 `launch:check`（门禁由 `8b710a3` 于 09-05 一次性引入；截至 09-10 仍无新增 run）→ 见 P0-6 / P1-6 |
-| **部署债务** | 自最后一次成功部署 `ffe1ec0`（09-04）起 **35 个 commit 未部署**，其中触及 `apps/beatscape/**` 的 **6 个**（每个都触发并失败，无「漏触发」）→ 见 [全仓工作流盘点](#全仓工作流盘点2026-09-09-新增维度)（2026-09-10 第二十次：34 → **35**，增量仍全部来自本文件自身的刷新） |
+| CI / 部署管道 | **CI 绿**（main 最新 **`34493338937`** success，对应 HEAD **`4553e36`**；2026-09-11 第二十一次更正，**连续第十三轮**命中「写入即过期」）· **Deploy BeatScape 连续 5 次 failure**，全部卡在 `launch:check`（门禁由 `8b710a3` 于 09-05 一次性引入；截至 09-11 仍无新增 run）→ 见 P0-6 / P1-6 |
+| **部署债务** | 自最后一次成功部署 `ffe1ec0`（09-04）起 **36 个 commit 未部署**，其中触及 `apps/beatscape/**` 的 **6 个**（每个都触发并失败，无「漏触发」）→ 见 [全仓工作流盘点](#全仓工作流盘点2026-09-09-新增维度)（2026-09-11 第二十一次：35 → **36**，增量仍全部来自本文件自身的刷新） |
+| **错误可观测性与崩溃兜底** 🆕 | BeatScape **1 个 ErrorBoundary 且已上线**（线上 bundle 实测含 `Signal lost`）· **ScapeMusic / Demo / NeonBeat 零兜底**（ScapeMusic 线上 bundle `Signal lost` 0 命中 → 渲染异常即白屏）· **零全局错误接管**（`window.onerror`/`unhandledrejection` 0）· **零错误上报**（运行时外域只有 Google Fonts）· **零 sourcemap**（3 个 app 均未配置）→ **已上线产品对真机错误全盲，直接影响 P0-4 试玩取证**；45 个 catch 中**空 catch 0**（干净）→ 见 [专节](#运行时错误可观测性与崩溃兜底盘点2026-09-11-第二十一次新增维度) |
 | **可访问性与社交预览** 🆕 | **a11y 基线干净、不生成待办**：87 处 `aria-` / 15 `role=` / 12 `:focus-visible` / **12 个 `prefers-reduced-motion` 媒体查询** / 38 `<button>` vs 48 `onClick` / `index.html` 完整静态 meta。**但 `og.png` 线上返回 SPA 回落页 → 社交分享预览全线失效**（该图由 `8b710a3` 引入、晚于最后成功部署 15.5h，属 P0-6 后果）；线上 `sitemap.xml` 亦缺 `/shift` 一行 → 见 [专节](#可访问性与社交预览资产盘点2026-09-10-第二十次新增维度) |
 | **依赖与运行环境** 🆕 | Node 侧 **6 个包零幽灵依赖**（「声明未 import」的 9 项全是 `@types/*`/`typescript`/`tsx`/`prisma` 工具链，非真闲置）；Python 侧 **`scripts/`（内容生产链）需 17 个第三方包却无 requirements**，但 **CI 实际执行的 3 个脚本是纯标准库 → 不阻塞**；`mlx`/`acestep` 仅 `scripts/mac-ace-verify.py` → 绑定 Apple Silicon → 见 [专节](#依赖与运行环境清单盘点2026-09-10-第十九次新增维度) |
 | **i18n / 文案** 🆕 | 共 **40 个**文案 key（en/zh 双份），但**只有 10 个真被接线**；15 个页面里**仅 Home / Track** 走 i18n。**`zh` locale 运行时不可达**（3 个 `getMessages()` 全不传参 → 恒 `en`，无切换入口、无 `navigator.language` 探测、`<html lang="en">` 硬编码）；`leaderboard` 命名空间 9 个 key **零调用点却有 2 个单测** → 见 [专节](#i18n-与文案清单盘点2026-09-10-第十八次新增维度) |
@@ -72,7 +75,7 @@
 
 | 工作流 | 触发方式 | 最新 run | 结论 | 备注 |
 |---|---|---|---|---|
-| **CI** | push main | `34481257223`（09-10T13:13Z） | ✅ success | 对应 HEAD `5889955`（2026-09-10 第二十次更正，`headSha` 核对；**连续第十二轮**「写入即过期」）。**CI 绿 ≠ 部署成功**，这是两条独立工作流。**另注（第十三次新增）：该 CI 不跑 e2e**，见 [测试覆盖盲区盘点](#测试覆盖盲区盘点2026-09-10-第十三次新增维度) |
+| **CI** | push main | **`34493338937`**（09-10T15:05Z） | ✅ success | 对应 HEAD **`4553e36`**（2026-09-11 第二十一次更正，`headSha` 核对；**连续第十三轮**「写入即过期」）。**CI 绿 ≠ 部署成功**，这是两条独立工作流。**另注（第十三次新增）：该 CI 不跑 e2e**，见 [测试覆盖盲区盘点](#测试覆盖盲区盘点2026-09-10-第十三次新增维度) |
 | **Deploy BeatScape (Cloudflare Pages)** | push main（6 条 `paths`） | `34064117995`（09-06T22:28Z） | ❌ failure | 5 连败，卡在 `launch:check` → 见 P0-6 / P1-6 |
 | **Portal release check** | push main | `33970422632`（09-05T13:58Z） | ✅ success | 与 **P0-5 门户发布**直接相关：**门户门禁本身是通的**，门户不是被门禁卡住的一方 |
 | **Deploy NeonBeat** | push main（`apps/neonbeat/**`） | `33524238082`（09-01T15:11Z） | ❌ failure | `apps/neonbeat` 存在，但 NeonBeat 本阶段**明确不做**（见「已取消」）→ 不认领、不修 |
@@ -93,10 +96,10 @@
 
 ### 部署债务（2026-09-09 量化）
 
-- **35 个 commit 未部署**（`git rev-list --count ffe1ec0..HEAD`，2026-09-10 第二十次实测；上一轮为 34，本轮 34 → **35**），起点是最后一次成功部署 head `ffe1ec0`（本地时间 09-05 00:31:54 +0800 = 09-04T16:31:54Z）。
+- **36 个 commit 未部署**（`git rev-list --count ffe1ec0..HEAD`，2026-09-11 第二十一次实测；上一轮为 35，本轮 35 → **36**），起点是最后一次成功部署 head `ffe1ec0`（本地时间 09-05 00:31:54 +0800 = 09-04T16:31:54Z）。
 - 其中**触及 `apps/beatscape/**` 的只有 6 个，名单与上一轮完全一致**：`8b710a3` → `735208b` → `134115a` → `6418d3f` → `e3ba64f` → `a136592`，正好对应 5 次失败 run（`8b710a3` 与 `735208b` 同批推送共用一个 run）。
 - **因此「每个改了 BeatScape 代码的 commit 都触发并失败了」，`paths` 过滤工作正常，问题 100% 在 `launch:check` 门禁**，不存在「提交没触发部署」这种情况。
-- `a136592` 之后的 **20 个** commit 全是 docs-only（TODO 刷新；`git rev-list --count a136592..HEAD` = 20，且其中触及 `apps/beatscape/` 的为 **0**），不命中 `paths` → 无新 run 属预期，**不代表管道恢复**。
+- `a136592` 之后的 **21 个** commit 全是 docs-only（TODO 刷新；`git rev-list --count a136592..HEAD` = 21，且其中触及 `apps/beatscape/` 的为 **0**），不命中 `paths` → 无新 run 属预期，**不代表管道恢复**。
 - **注意（2026-09-10 第十二次）**：债务 23 → 25 → **26**，**增量全部是本文件自身的刷新 commit**，不是新代码堆积——触及代码的仍是那 6 个。**解读债务数字时必须同时看「总数」与「其中触及代码的个数」，否则会把「文档刷新」误读成「功能积压」。**
 - **同一数字在本文件里出现过三个版本（23 / 25 / 26）**：上一轮改了正文（→25）却漏了速览（仍 23），本轮实测 26 并**同时改正文与速览**。**教训：任何一个会变的数字，在本文件里往往有多处出现，改动时必须全局搜一遍该数字再统一**（本轮用 `grep -n "部署债务\|个 commit 未部署" TODO.md` 一次性定位三处）。
 
@@ -838,6 +841,62 @@ git log -1 --format='%h %ad' --date=iso ffe1ec0
 
 ---
 
+## 运行时错误可观测性与崩溃兜底盘点（2026-09-11 第二十一次新增维度）
+
+> 前二十轮查过构建期变量、运行时外域、CF 路由、a11y，却**从未问过「线上崩了之后谁能知道」**。本轮以「兜底 → 接管 → 上报 → 可调试性」四层逐层实测。
+
+### 四层实测结果
+
+| 层 | 实测值 | 判读 |
+|---|---|---|
+| **① 崩溃兜底（ErrorBoundary）** | BeatScape **1 个**（`components/ErrorBoundary.tsx`，`App.tsx:44/68` 包在 Router 外）；**ScapeMusic / Demo / NeonBeat 各 0 个** | BeatScape **已上线且生效**：引入 commit `51489b3`（09-01 12:12），`git merge-base --is-ancestor` 确认是最后成功部署 `ffe1ec0` 的**祖先**，线上 bundle 实测 `grep -c "Signal lost"` = **1**。ScapeMusic 线上 bundle（`index-DwW6K_-S.js`，264,752 B）`Signal lost` **0 命中** |
+| **② 全局错误接管** | `window.onerror` / 窗口级 `addEventListener('error')` / `unhandledrejection` **全仓 0 命中** | 唯一 1 处命中是 ScapeMusic `playerContext.tsx:292` 给 `<audio>` 元素挂的 error 监听（**不是全局接管**）。→ **渲染期之外的异步异常、Promise rejection、资源加载失败全部无人接管** |
+| **③ 错误上报** | **零上报端点**；全仓 `console.error` 仅 **1 处**（BeatScape `ErrorBoundary.tsx:25`），ScapeMusic 5 处 | 与第十六次维度交叉印证：受控源码 17 个外部域名里**运行时真正发起请求的只有 Google Fonts** → **没有任何监控 / 遥测** |
+| **④ 可调试性（sourcemap）** | 3 个 app 的 vite config **均未配 `sourcemap`**（默认 false）；`dist/assets/*.map` **0 个**、git 受控 `.map` **0 个**、线上 `.map` 均返回 SPA 回落页（BeatScape 2146 B / ScapeMusic 1944 B） | **一面干净：不泄露源码**（无 source-exposure 风险）；**一面为零：无任何生产可调试性** |
+| 附：静默吞异常 | 45 个 `catch` 中**空 catch 为 0**（`grep -E "catch\s*\{\s*\}"` = 0） | **干净，不生成待办** |
+
+### 本维度最有价值的一条：已上线产品对真机错误是「全盲」的
+
+- **③ + ④ 合成**：既无错误上报、也无 sourcemap，且**全局无接管** → **用户真机上发生任何非渲染期异常，开发侧拿不到任何信息**；唯一取证途径是「用户手动打开 devtools 抄 console」。
+- **对 P0-4「英语叙事真人试玩」的直接冲击（此前无人记录）**：试玩的设计目的就是让真人在真实设备上跑一遍英语叙事流程；而**当前若发生崩溃，没有任何取证手段**，只能依赖用户口述复现。已在 P0-4 登记为前置确认项。
+- **另一条此前不可见的**：ScapeMusic 已是**公开可访问**的线上产品（第十四次已实测 `scapemusic.pages.dev/trials/*.m4a` 全部 200），却**零崩溃兜底** → 任何渲染期异常即白屏，且**连一句提示都没有**。
+
+### 判读纪律（第九次印证「零 ≠ 该补」）
+
+- **不生成待办的「零」**：第 ④ 层的「零 sourcemap」**不能**单独当成「该开 sourcemap」——它同时意味着**不泄露源码**，开不开是安全与可调试性的权衡，**需用户判断**。空 catch 为 0 同样是干净结论。
+- **值得登记的「零」**：只有**会改变「能否发现用户遇到的问题」**的那几个（②③ + ④ 的可调试性一半）。
+- **(b) ScapeMusic 零兜底为何不是中性事实**：依据是**本项目自己的判准**——`ErrorBoundary.tsx:9` 的 docstring 明确写着「改造前项目里一个错误边界都没有……用户看到的是一片纯白，连『发生了什么』都无从得知」。即**「白屏无兜底」已被本项目定义为不可接受**，因此 ScapeMusic 的现状属于偏离自建标准，而非单纯的「还没做」。
+- **处理意见**：合并登记为 **1 条候选**（「是否补 ScapeMusic 崩溃兜底 + 是否引入错误上报 / sourcemap」），**不认领、不阻塞**——属工程与产品权衡。
+
+### 可复用手法
+
+```bash
+# 1) 崩溃兜底：有没有 ErrorBoundary，且是否真的包在根上
+grep -rn -E "ErrorBoundary|componentDidCatch|getDerivedStateFromError" apps/*/src
+# → BeatScape 7 命中（3 个文件）；scapemusic/demo/neonbeat 各 0
+
+# 2) 关键：兜底到底上没上线？先溯源引入时间，再直接 grep 线上 bundle
+git log -1 --format='%h %ad %s' --date=iso -- apps/beatscape/src/components/ErrorBoundary.tsx
+git merge-base --is-ancestor <该commit> ffe1ec0 && echo "已在部署内" || echo "晚于部署"
+curl -s -x http://127.0.0.1:7897 https://beatscape.pages.dev/assets/<bundle>.js | grep -c "Signal lost"
+# ⚠️ 只查源码会得出「有兜底」，但必须再查线上，否则不知道用户实际有没有
+
+# 3) 全局错误接管（注意排除元素级监听的假阳性）
+grep -rn -E "window\.onerror|addEventListener\(.error.|unhandledrejection" apps/*/src apps/*/index.html
+
+# 4) 静默吞异常：空 catch 数量
+grep -rn -E "catch\s*\{?\s*\}" apps/beatscape/src | wc -l
+
+# 5) sourcemap 三连问：配置 / 产物 / 线上是否暴露
+grep -n "sourcemap" apps/*/vite.config.ts          # 均无 = 默认 false
+ls -1 apps/beatscape/dist/assets/*.map 2>/dev/null | wc -l
+git ls-files | grep -c "\.map$"
+curl -s -o /dev/null -w "%{http_code} %{size_download}\n" -x http://127.0.0.1:7897 \
+  https://beatscape.pages.dev/assets/<bundle>.js.map   # 2146 B = SPA 回落 = 不存在
+```
+
+---
+
 ## 已取消（不自动恢复）
 
 | ID | 事项 | 依据 |
@@ -877,6 +936,7 @@ git log -1 --format='%h %ad' --date=iso ffe1ec0
 - **规格**：[docs/BEATSCAPE-NARRATIVE-PLAYTEST.md](docs/BEATSCAPE-NARRATIVE-PLAYTEST.md)（五分钟协议）
 - **采集**：理解度 · 角色记忆 · 继续意愿 · 英语自然度。**尚无参与者结果。**
 - **背景**：叙事深度优化候选 `fa4bca512a38`（139 单测 / 6 发布器回归 / 28 浏览器流程通过，本地未提交）。
+- **2026-09-11 第二十一次新增（试玩取证能力前置确认）**：实测本仓库**零错误上报、零 sourcemap、零全局错误接管**（见 [运行时错误可观测性与崩溃兜底盘点](#运行时错误可观测性与崩溃兜底盘点2026-09-11-第二十一次新增维度)）→ **试玩过程中若发生崩溃，开发侧拿不到任何信息，只能依赖参与者口述复现**。BeatScape 侧至少有 ErrorBoundary 兜底并会 `console.error("[beatscape] render error:")` 带上 `componentStack`（且该兜底**已上线**）；但**渲染期之外的异常无人接管**。→ **建议试玩前确认取证方式**（例如：让参与者遇到问题直接截图 console，或临时开 sourcemap 构建一份试玩专用产物）。**登记为前置确认项，不阻塞试玩本身。**
 
 ### P0-5 门户发布配置
 - **等待**：门户域名 + Cloudflare Pages 项目名；确定后按真实域名重建并复核，**发布另需对应授权**。
@@ -1202,6 +1262,27 @@ for f in scripts/beatscape-audit.py scripts/beatscape-catalog-status.py scripts/
   grep -hoE "^\s*(import|from)\s+[A-Za-z_][A-Za-z_0-9]*" "$f" | sort -u | tr '\n' ' '; echo
 done
 
+# 运行时错误可观测性与崩溃兜底盘点（2026-09-11 第二十一次新增维度）
+# 核心问法：线上崩了之后谁能知道？按「兜底 → 接管 → 上报 → 可调试性」四层逐层查
+# 1) 崩溃兜底：有没有 ErrorBoundary，哪些 app 有
+grep -rn -E "ErrorBoundary|componentDidCatch|getDerivedStateFromError" apps/*/src
+for a in beatscape scapemusic demo neonbeat; do echo -n "$a: "; grep -rl -E "ErrorBoundary|componentDidCatch" apps/$a/src 2>/dev/null | wc -l; done
+# 2) 关键：兜底到底上没上线？先溯源引入时间，再直接 grep 线上 bundle
+git log -1 --format='%h %ad %s' --date=iso -- apps/beatscape/src/components/ErrorBoundary.tsx
+git merge-base --is-ancestor <该commit> ffe1ec0 && echo "已在部署内" || echo "晚于部署"
+curl -s -x http://127.0.0.1:7897 https://beatscape.pages.dev/assets/<bundle>.js | grep -c "Signal lost"
+#    ⚠️ 只查源码会得出「有兜底」，但必须再查线上，否则不知道用户实际有没有
+# 3) 全局错误接管（注意排除元素级监听的假阳性）
+grep -rn -E "window\.onerror|addEventListener\(.error.|unhandledrejection" apps/*/src apps/*/index.html
+# 4) 静默吞异常：空 catch 数量（0 = 没有静默吞）
+grep -rn -E "catch\s*\{?\s*\}" apps/beatscape/src | wc -l
+# 5) sourcemap 三连问：配置 / 产物 / 线上是否暴露
+grep -n "sourcemap" apps/*/vite.config.ts                       # 均无 = 默认 false
+ls -1 apps/beatscape/dist/assets/*.map 2>/dev/null | wc -l
+git ls-files | grep -c "\.map$"
+curl -s -o /dev/null -w "%{http_code} %{size_download}\n" -x http://127.0.0.1:7897 \
+  https://beatscape.pages.dev/assets/<bundle>.js.map            # 2146 B = SPA 回落 = 不存在
+
 # 链接自检（2026-09-10 第十五次修正：必须按 # 切分，否则带锚点的链接会假报 MISS）
 python3 -c "
 import re,os
@@ -1213,6 +1294,8 @@ print('MISS:',[f for f in files if not os.path.exists(f.split('#')[0])])   # 注
 
 **说明**：`bash scripts/harness.sh all` = unit + workspace build + mock integration。技术检查通过不替代人工耳检、盲测与上线签审。
 
+> **2026-09-11 第二十一次刷新提示**：连续第二十轮无新落地项。本轮两条经验：① **「有没有兜底」必须查线上，不能只查源码**——这是第六次「先溯源再定性」的变体。源码里有 `ErrorBoundary.tsx` 只说明「写了」，本轮用 `git log -1 -- <文件>`（`51489b3`，09-01）→ `git merge-base --is-ancestor … ffe1ec0` 确认它是最后成功部署的祖先 → 再 grep 线上 bundle 拿到 `Signal lost` **1 命中**，才敢断言「兜底**已上线且生效**」。同一手法反过来用在 ScapeMusic 上，就得到「线上 bundle `Signal lost` **0 命中** → 渲染异常即白屏」——**同一条命令，在两个 app 上给出相反结论，这正是必须逐个 app 实测、不能用一个 app 代表全仓的理由。** ② **四个「零」里只有一个值得登记，判据是「会不会改变我们能否发现用户遇到的问题」**：零 sourcemap（同时也意味着不泄露源码，是安全与可调试性的权衡，**不单独立待办**）· 零全局接管 · 零上报 · 零空 catch（**干净**）。真正有价值的是**零上报 + 零 sourcemap 的合成结论**：**已上线产品对真机错误全盲**，而 P0-4 英语叙事真人试玩恰恰完全依赖真机反馈 → **试玩中崩溃将无任何取证手段**。这条直接影响 P0-4 的可执行性，此前二十轮无人提出。另注：CI run 号已**连续第十三轮**写入即过期；本轮工作区 10 项改动 + 10 项未跟踪，**连续第九轮构成完全一致**。
+>
 > **2026-09-10 第二十次刷新提示**：连续第十九轮无新落地项。本轮两条经验：① **把「线上落后」的粒度从「代码 / 内容」再往下拆到「逐文件」**——此前只断言到「内容（catalog / 谱面）是最新的、只有 JS 代码落后」，本轮一查静态资产就发现**逐文件结论完全不同**：`robots.txt` 线上与本地一致、`sitemap.xml` 落后一行（缺 `/shift`）、**`og.png` 线上根本不存在**（返回 2146 B SPA 回落页）。而 `og.png` 是 `og:image` / `twitter:image` 的唯一来源 → **所有站外分享（Reddit / X / Discord / Slack）当前都拿不到预览图**，这对 P3 Reddit 首发是发帖前必验项。**判据：只要断言对象是一个「目录」或「一类文件」，就还要再往下拆一层。** ② **抓到「线上缺某个文件」时的正确动作是溯源，不是登记**：本轮先 `git log -1 -- apps/beatscape/public/og.png` 查出它由 `8b710a3`（09-05 16:06）引入、比最后一次成功部署 `ffe1ec0`（09-05 00:31）晚约 15.5 小时 → **直接判定为 P0-6 的症状、归到 P0-6，不新开「补图片」待办**（补了也没用，只有部署通了它才会出现，见「判断标准是这个缺口有没有独立解法」）。③ **a11y 是本轮又一类「查完发现干净」的维度**（此前有凭据卫生、依赖声明、构建产物覆盖）：87 处 `aria-`、15 `role=`、**12 个 `prefers-reduced-motion` 媒体查询**、38 `<button>` vs 48 `onClick`、`index.html` 静态 meta 齐全且不依赖 JS 注入 → **零待办**。唯一缺口是 `Duo.tsx:326` 一个可点击 `div`（无 `role` / `tabIndex`），**因属源码改动、需单独提交，本轮只登记不动手**。另注：CI run 号已**连续第十二轮**写入即过期；工作区 10 项改动 + 10 项未跟踪，**连续第八轮构成完全一致**。
 >
 > **2026-09-10 第十九次刷新提示**：连续第十八轮无新落地项。本轮两条经验：① **「声明的依赖」与「实际的引用」是前十八轮唯一没交叉比对过的一整类清单，一查就出现三分局面**：Node 侧 6 个包**零幽灵依赖**（pnpm 严格链接下本就不可能存活），而那份「声明了却从未 import」的 9 项**全部**是 `@types/*` / `typescript` / `tsx` / `prisma` 经 tsconfig 与 CLI 隐式使用的工具链 → **再次印证「清单 ≠ 该清」，拒绝生成清理待办**；Python 侧则相反——`tests/` 与 `workers/*` 都有 requirements，**唯独 `scripts/`（内容生产链、全仓最大的 Python 面，需 17 个第三方包）一份都没有**。② **但「有缺口」不等于「会炸」，本轮最有价值的是把边界查清楚了**：7 条工作流的 yml 里 `grep "pip install|requirements.txt"` 零命中，**差点就写成「CI 装不上依赖」——实际安装发生在 `scripts/harness.sh:34-40` 的 `ensure_py_env`**，只服务 unit/integration/e2e 三个 tier；而 CI 的 `beatscape` job **不经过 harness.sh**，是裸 `python3` 直跑脚本，实测那 3 个脚本 **100% 标准库** → **缺口完全落在 CI 之外，当前零影响，不构成阻塞项**。**教训：发现「少了某个文件」后，下一步必须查「谁会用到它」，而不是直接登记待办。** 由此沉淀出一条此前无人记录的隐藏约束：**那 3 个脚本必须永远保持纯标准库**——开发机装了 torch/numpy，加一句 `import numpy` 本地照过、CI 立刻红，而现有流程无任何环节拦得住（仅留档，不生成待办）。另注：CI run 号已**连续第十一轮**写入即过期；本轮工作区 10 项改动 + 10 项未跟踪，**连续第七轮构成完全一致**。
