@@ -217,7 +217,8 @@ async function gameSuite(profile) {
     const { page } = run;
     try {
       await page.goto(`${base}/${duo ? 'duo' : 'play'}/${track.track_id}?tier=hard&mode=casual`, { waitUntil: 'domcontentloaded' });
-      const start = page.locator(duo ? '.duo-start button' : '.overlay-tap button');
+      // 改版后 overlay 有 Start playing + Sound check 两个按钮，必须指名主按钮（同 e2e 约定）。
+      const start = page.locator(duo ? '.duo-start button' : '.overlay-tap .unlock-btn');
       await start.waitFor({ state: 'visible' });
       const loading = await snapshot(page);
       await page.evaluate(({ chart, duo }) => window.__bsPerf.autoplay(chart, { duo, offsetMs: 0 }), { chart: track.hard, duo });
@@ -248,7 +249,7 @@ async function memorySuite(profile) {
     await page.locator('.track-card').first().waitFor();
     const points = [await memoryPoint(page, cdp, 'library-initial')];
     await spa(page, `/play/${track.track_id}?tier=hard&mode=casual`);
-    await page.locator('.overlay-tap button').click();
+    await page.locator('.overlay-tap .unlock-btn').click();
     await page.waitForTimeout(4500);
     points.push(await memoryPoint(page, cdp, 'playing-warmup'));
     for (let i = 0; i < cycles; i++) {

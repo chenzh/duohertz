@@ -2,6 +2,20 @@
 
 本页记录 2026-09-06 本地生产包的自动测量。专项真机验收已按 [BS-D001](BEATSCAPE-DECISIONS.md#bs-d001) 取消，不恢复为待办。自动测量的覆盖范围与发布签审分别记录。
 
+## 第三轮：首页改版候选重测（2026-09-12，已完成，本地未部署）
+
+**当前候选 `604cebd9…`（首页即开局改版 + 视觉走查 + 谱面门禁，产物 SHA-256 `604cebd9c0464532cea180aa9334e9884b4ce35895334df99161cfd8df14533c`）的同指纹 28 项固定条件自动性能预算全部通过，预算检查器退出 0。** 改版只动 CSS / 文案 / 组件结构，未触碰渲染循环；测量结论与第二轮候选一致。
+
+| 条件 | 结果 |
+|---|---|
+| 冷加载（18 次） | 桌面 song-cold / duo-cold 最慢 **1693.2 / 1693.2 ms**；移动模拟 home **623.5 ms**、song-cold **3892.8 ms**、duo-cold **3905.1 ms**（预算 ≤4000 ms） |
+| 完整 Hard（8 场，含补充压力曲 bs-s6-11 / bs-p3-06） | 两档均 **60.00 FPS**、`longestConsecutiveMissedIntervals = 0` |
+| 内存循环（2 组 × 12 次重开 / 切歌） | 预算内通过（`performance:check` 逐项判定） |
+
+**已知边缘用例如实记录**：补充压力曲 bs-s6-11 duo-fx-max（移动模拟）在首次单局复测中 `probe.frames.longestConsecutiveMissedIntervals = 2 > 1`（判定失败，保留在 `peak-second/` 原始数据中）；按 `--game-repeats 3` 复测 3 局均为 **0**，全部计入最终检查。该曲在第二轮候选复测中也出现过 1 / 2 / 1 的波动，属同一边缘抖动，非本轮改版回归。**测量前修复**：`performance.mjs` 的 `.overlay-tap button` 宽选择器被改版新增的 Sound check 按钮命中两元素（与 e2e 同款回归），已改为 `.overlay-tap .unlock-btn`。
+
+原始数据与检查输出：[final-all](../data/beatscape-performance/2026-09-12/assurance/final-all/results.json) · [peak-second-r3](../data/beatscape-performance/2026-09-12/assurance/peak-second-r3/results.json) · [peak-objects](../data/beatscape-performance/2026-09-12/assurance/peak-objects/results.json) · [budget.json（pass）](../data/beatscape-performance/2026-09-12/assurance/budget.json)。自动化测量仅覆盖固定本地浏览器条件；人工耳检、盲测与签审门禁状态见 [上线准备](BEATSCAPE-RELEASE-READINESS.md)。
+
 ## 第二轮：性能保障（2026-09-06，已完成，本地未部署）
 
 **当前候选的固定条件自动性能预算已全部通过。** 本轮重新采集完整基线，修复冷开局等待、双人最高特效与桌面键名的绘制开销，并增加独立预算检查器。以下阶段分别绑定产物指纹；中间版本通过的项目不能替代最终候选的同项证据。
