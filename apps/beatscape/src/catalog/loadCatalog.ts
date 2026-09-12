@@ -9,7 +9,17 @@ export async function loadCatalog(): Promise<CatalogJSON> {
   if (!pendingCatalog) {
     pendingCatalog = (async () => {
       const base = import.meta.env.BASE_URL;
-      const res = await fetch(`${base}catalog.json`, { cache: "no-cache" });
+      // Must exactly match the index.html preload (<link rel=preload
+      // as=fetch>, no crossorigin) or the preload is wasted. WebKit does not
+      // reuse cors-mode preloads for fetch() (bugs 236009/268370/284067);
+      // same-origin no-cors + credentials:"include" is the only combination
+      // that dedupes across Chromium/Firefox/WebKit. Staleness is still
+      // guarded by the server's max-age=0, must-revalidate (Cloudflare Pages
+      // default for non-hashed assets), which forces a 304 revalidation.
+      const res = await fetch(`${base}catalog.json`, {
+        mode: "no-cors",
+        credentials: "include",
+      });
       if (!res.ok) throw new Error("Failed to load catalog");
       cache = (await res.json()) as CatalogJSON;
       return cache;
