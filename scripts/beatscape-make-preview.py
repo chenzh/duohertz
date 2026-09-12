@@ -7,6 +7,7 @@ import argparse
 import json
 import subprocess
 import sys
+import tempfile
 import wave
 from pathlib import Path
 
@@ -22,16 +23,17 @@ def clip_wav_to_m4a(src_wav: Path, dest_m4a: Path, duration: float = PREVIEW_SEC
         rate = r.getframerate()
         n = min(int(duration * rate), r.getnframes())
         chunk = r.readframes(n)
-    tmp = dest_m4a.with_suffix(".wav")
-    tmp.parent.mkdir(parents=True, exist_ok=True)
-    with wave.open(str(tmp), "wb") as w:
-        w.setparams(params)
-        w.writeframes(chunk)
-    subprocess.run(
-        ["afconvert", "-f", "m4af", "-d", "aac", "-b", "192000", str(tmp), str(dest_m4a)],
-        check=True,
-    )
-    tmp.unlink(missing_ok=True)
+    # 中间产物放系统临时目录：绝不能落在 public/（会被发布，且可能超
+    # release.mjs 的 25MiB 单文件上限）。try/finally 保证中断也能清掉。
+    with tempfile.TemporaryDirectory(prefix="beatscape-preview-") as tmpdir:
+        tmp = Path(tmpdir) / "clip.wav"
+        with wave.open(str(tmp), "wb") as w:
+            w.setparams(params)
+            w.writeframes(chunk)
+        subprocess.run(
+            ["afconvert", "-f", "m4af", "-d", "aac", "-b", "192000", str(tmp), str(dest_m4a)],
+            check=True,
+        )
 
 
 def main() -> int:
@@ -55,14 +57,15 @@ def main() -> int:
             print(f"SKIP {tid}: missing {src}")
             continue
         dest = PUBLIC / "catalog" / tid / "preview_48s.m4a"
-        # decode m4a via afconvert round-trip
-        tmp_wav = dest.parent / "_preview_src.wav"
-        subprocess.run(
-            ["afconvert", "-f", "WAVE", "-d", "LEI16@44100", str(src), str(tmp_wav)],
-            check=True,
-        )
-        clip_wav_to_m4a(tmp_wav, dest)
-        tmp_wav.unlink(missing_ok=True)
+        # decode m4a via afconvert round-trip；中间 wav 放系统临时目录，
+        # 不能落在 public/（会被发布且超 release.mjs 25MiB 上限）。
+        with tempfile.TemporaryDirectory(prefix="beatscape-preview-") as tmpdir:
+            tmp_wav = Path(tmpdir) / "src.wav"
+            subprocess.run(
+                ["afconvert", "-f", "WAVE", "-d", "LEI16@44100", str(src), str(tmp_wav)],
+                check=True,
+            )
+            clip_wav_to_m4a(tmp_wav, dest)
         entry["preview"] = f"/catalog/{tid}/preview_48s.m4a"
         print(f"OK {tid} -> {dest.name}")
 
