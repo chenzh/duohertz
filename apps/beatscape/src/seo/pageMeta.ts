@@ -69,6 +69,27 @@ export const RADIO_PAGE_META: PageMeta = {
     "Read The Late Static's weekly broadcasts: late-night calls, borrowed gear, and the arguments that keep NIGHTSHIFT together. Start with the playable First shift.",
 };
 
+/**
+ * Social preview tags for one route (T1b). Kept pure and exported so it can be
+ * asserted without a DOM — `setPageMeta` only applies the result.
+ *
+ * Scope note: crawlers that build link previews do not run JS, so these updates
+ * serve in-app share sheets and clients that re-read the live DOM. The static
+ * tags in `index.html` remain the source for the initial unfurl.
+ */
+export function socialMetaTags(
+  meta: PageMeta,
+  url: string,
+): Array<{ attr: "property" | "name"; key: string; content: string }> {
+  return [
+    { attr: "property", key: "og:title", content: meta.title },
+    { attr: "property", key: "og:description", content: meta.description },
+    { attr: "property", key: "og:url", content: url },
+    { attr: "name", key: "twitter:title", content: meta.title },
+    { attr: "name", key: "twitter:description", content: meta.description },
+  ];
+}
+
 export function setPageMeta(meta: PageMeta): void {
   document.title = meta.title;
   let el = document.querySelector('meta[name="description"]');
@@ -86,7 +107,19 @@ export function setPageMeta(meta: PageMeta): void {
       link.setAttribute("rel", "canonical");
       document.head.appendChild(link);
     }
-    link.setAttribute("href", `${window.location.origin}${window.location.pathname}`);
+    const url = `${window.location.origin}${window.location.pathname}`;
+    link.setAttribute("href", url);
+    // T1b: keep og:/twitter: in step with the route instead of always advertising Home.
+    for (const tag of socialMetaTags(meta, url)) {
+      const sel = `meta[${tag.attr}="${tag.key}"]`;
+      let node = document.querySelector(sel);
+      if (!node) {
+        node = document.createElement("meta");
+        node.setAttribute(tag.attr, tag.key);
+        document.head.appendChild(node);
+      }
+      node.setAttribute("content", tag.content);
+    }
   }
 }
 

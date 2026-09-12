@@ -53,6 +53,10 @@ def main() -> int:
     run(["python3", str(SCRIPTS / "beatscape-stitch-stream.py"), "--all-stage3"])
     run(["python3", str(SCRIPTS / "beatscape-ingest-stage3.py")])
     run(["python3", str(SCRIPTS / "beatscape-chartgen.py")])
+    # 门禁：谱面必须与音频匹配（onset 踩点 / 互相关偏移 / 贴格率），失败即中断，
+    # 坏谱不会进 catalog.json。chartgen 这里是全量重生成的，所以门禁也全量卡；
+    # 老曲重跑若卡在音频硬上限，用 --min-* 放宽。
+    run(["python3", str(SCRIPTS / "beatscape-chart-gate.py"), "--all"])
     run(["python3", str(SCRIPTS / "beatscape-ingest-stream.py")])
     run(["python3", str(SCRIPTS / "beatscape-audit.py"), "--dir", "apps/beatscape/public", "--catalog", "apps/beatscape/public/catalog.json"])
     run(["python3", str(SCRIPTS / "beatscape-catalog-status.py"), "--stage", "3"])

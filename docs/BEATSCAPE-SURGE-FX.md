@@ -22,7 +22,7 @@
 
 ## 2. 方案：SIGNAL 信号强度表（电台世界观原生）
 
-命名沿用 World Bible §9 信号链口径（In Phase / Locked / Streak / Full Broadcast）：表叫 **SIGNAL**，三档 **TUNING → LIVE → ON AIR**——玩得热，电台就真的在"直播"，街区和驻场乐手跟着被点亮。英文单词、无拟声词，符合 PRD §7.4。
+命名按 World Bible §9.1 的「氛围层」口径（与判定术语分开，判定已改用 Perfect / Great / Good / Miss + Combo）：表叫 **SIGNAL**，三档 **TUNING → LIVE → ON AIR**——玩得热，电台就真的在"直播"，街区和驻场乐手跟着被点亮。英文单词、无拟声词，符合 PRD §7.4。
 
 ### 2.1 机制（纯逻辑，`src/engine/surge.ts`）
 
@@ -173,7 +173,7 @@ pnpm dev:beatscape         # http://localhost:5175/beatscape/play/bs-s1-01?tier=
 
 ## 8. 附录：World Bible §9 文案包（草案 · 待定稿）
 
-> 拍板后可整块搬入 `BEATSCAPE-WORLDBIBLE.md` §9 文案包。术语口径与 In Phase / Locked / Dropout、Signal Streak / Full Broadcast 同链；英文单词、无拟声词、无表情贴纸（PRD §7.4 / §7.6 合规）。
+> 拍板后可整块搬入 `BEATSCAPE-WORLDBIBLE.md` §9 文案包。术语口径属氛围层（电台状态），与判定术语（Perfect / Great / Good / Miss、Combo）分开，见 World Bible §9.1；英文单词、无拟声词、无表情贴纸（PRD §7.4 / §7.6 合规）。
 
 | 场景 | EN 文案 | 备注 |
 |------|---------|------|
@@ -182,6 +182,6 @@ pnpm dev:beatscape         # http://localhost:5175/beatscape/play/bs-s1-01?tier=
 | 档 2（heat ≥55） | `LIVE` | 电台在播；结算徽标 `PEAK SIGNAL · LIVE` |
 | 档 3（heat ≥85） | `ON AIR` | 直播中；进档全屏闪现 + 海报金章；呼应 JUNO 的 ON AIR badge |
 | 升档音效旁白（可选，Settings 文案） | `The station is live.` | 仅 Settings/帮助页使用，对局内无旁白 |
-| 掉档（无文案，仅红闪） | — | 不加 Dropout 复用——判定皮肤已占用 Dropout，语义不混用 |
+| 掉档（无文案，仅红闪） | — | 不加判定词复用——Miss 已属判定层，氛围层不占用，语义不混用 |
 
-**红线自查**：无日文拟声 ✓ · 无第三方作品名 ✓ · 素材全自有 ✓ · 不与判定文案（In Phase/Locked）语义冲突 ✓（TUNING/LIVE/ON AIR 描述的是"电台状态"而非"判定质量"）。
+**红线自查**：无日文拟声 ✓ · 无第三方作品名 ✓ · 素材全自有 ✓ · 不与判定文案（Perfect/Great/Good/Miss）语义冲突 ✓（TUNING/LIVE/ON AIR 描述的是"电台状态"而非"判定质量"）。

@@ -10,6 +10,11 @@ export type BsSettings = {
   sfxVolume: number;
   /** Touch-only: forgive a same-hand double tap when one thumb covers both lanes. */
   chordAssist: boolean;
+  /**
+   * 关掉非必要的镜头运动：屏震、背景霓虹与转场。
+   * 系统的 prefers-reduced-motion 永远生效，这里只是让玩家自己也能关。
+   */
+  reduceMotion: boolean;
 };
 
 const DEFAULT: BsSettings = {
@@ -20,6 +25,7 @@ const DEFAULT: BsSettings = {
   musicVolume: 0.7,
   sfxVolume: 0.55,
   chordAssist: true,
+  reduceMotion: false,
 };
 
 const bool = (v: unknown, d: boolean): boolean => (typeof v === "boolean" ? v : d);
@@ -45,6 +51,7 @@ function coerceSettings(v: unknown): BsSettings | null {
     musicVolume: isFiniteNum(o.musicVolume) ? clamp(o.musicVolume, 0, 1) : DEFAULT.musicVolume,
     sfxVolume: isFiniteNum(o.sfxVolume) ? clamp(o.sfxVolume, 0, 1) : DEFAULT.sfxVolume,
     chordAssist: bool(o.chordAssist, DEFAULT.chordAssist),
+    reduceMotion: bool(o.reduceMotion, DEFAULT.reduceMotion),
   };
 }
 

@@ -71,7 +71,7 @@ export function HomeHeroPlay() {
     void (async () => {
       try {
         const t = await getTrack(HOME_HERO_TRACK_ID);
-        if (!t) throw new Error("Strike Vector missing from catalog");
+        if (!t) throw new Error(`${HOME_HERO_TRACK_ID} missing from catalog`);
         if (!alive) return;
         setTrack(t);
       } catch (e) {
@@ -115,7 +115,7 @@ export function HomeHeroPlay() {
     return (
       <div className="home-hero-play home-hero-play-loading" aria-busy>
         <div className="loading-spinner" aria-hidden />
-        <p>Loading Strike Vector…</p>
+        <p>Loading the first track…</p>
       </div>
     );
   }

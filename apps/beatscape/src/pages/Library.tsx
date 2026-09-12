@@ -12,6 +12,9 @@ import {
 } from "../catalog/trackVibe";
 import type { TrackVibe } from "../types/catalog";
 import { loadFavorites } from "../storage/settings";
+import { loadShiftProgress } from "../lib/firstShift";
+import { curatedPicks } from "../data/curated";
+import { CuratedRow } from "../components/CuratedRow";
 import { DistrictBadge } from "../components/DistrictBadge";
 import { CharacterAvatar } from "../components/CharacterAvatar";
 import { VibeBadge } from "../components/VibeBadge";
@@ -30,6 +33,9 @@ export function LibraryPage() {
   const [vocalsOnly, setVocalsOnly] = useState(false);
   const [favOnly, setFavOnly] = useState(false);
   const [favorites, setFavorites] = useState<string[]>([]);
+  // 上层推荐跟着本机 First Shift 进度走：没打完给入口曲，打完了给下一组。
+  const [progress] = useState(loadShiftProgress);
+  const curated = useMemo(() => curatedPicks(progress.completed.length), [progress.completed.length]);
 
   useEffect(() => {
     // 曲库加载交给 useCatalog；这里只负责收藏列表（同步读 localStorage）。
@@ -67,6 +73,13 @@ export function LibraryPage() {
         <p className="tagline">The request board is open — pick a vibe and JUNO cues it up.</p>
         {tracks.length > 0 && <span className="page-count">{filtered.length} of {tracks.length} tracks</span>}
       </header>
+
+      <CuratedRow
+        title={curated.title}
+        subtitle={curated.subtitle}
+        picks={curated.picks}
+        tracks={tracks}
+      />
 
       <div className="showcase-chips">
         <span className="chip">Showcase charts:</span>

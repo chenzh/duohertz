@@ -5,6 +5,9 @@ Analyzes each track's m4a (BPM, first-beat offset, onsets) and places notes on
 real hit points instead of a synthetic BPM grid. Regenerates chart JSON + updates
 catalog BPM when detection diverges from hint.
 
+单跑本脚本不做质量门禁（便于调参实验）；stage3/4/6 pipeline 在 chartgen 之后、
+catalog 入库之前会跑 beatscape-chart-gate.py 卡谱面-音频匹配质量。
+
 Usage:
   python3 scripts/beatscape-chartgen.py
   python3 scripts/beatscape-chartgen.py --track bs-s1-02

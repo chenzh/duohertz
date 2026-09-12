@@ -225,8 +225,8 @@ JUNO × ATLAS 的分歧是公开与验证；TORQUE × ATLAS 是赶工与可靠�
 
 | 游戏真值（不改代码语义） | 世界内说法 | 状态与边界 |
 |--------------------------|------------|------------|
-| Perfect / Great / Good / Miss | In Phase / Locked / Drifting / Dropout | `constants/scape.ts` → `JUDGE_COPY`，判定逻辑与 15/30/50 真值不动 |
-| Combo / Full Combo / All Perfect | Signal Streak / Full Broadcast / All In Phase | 文案皮肤，计分不变 |
+| Perfect / Great / Good / Miss | **不换词**：打歌与结算一律 Perfect / Great / Good / Miss | `constants/scape.ts` → `JUDGE_COPY`；判定逻辑与 15/30/50 真值不动。2026-09-12 起取消 In Phase / Locked / Drifting / Dropout 皮肤（见 §9.1） |
+| Combo / Full Combo / All Perfect | **不换词**：Combo / Max Combo / Full Combo / All Perfect | 同上，取消 Signal Streak / Full Broadcast / All In Phase；计分不变 |
 | 当前舞台的命中反馈 | 给线路送回一个清楚的节拍 | 不保存全城亮度，不映射成真实共享城市状态 |
 | District 主题舞台 | 当地演出场景 | 当前舞台视觉层 |
 | First shift 三节点 | 演播室、扬声器、天台转播器恢复 | 顺序推进、本机保存，见 §6.1 |
@@ -235,6 +235,14 @@ JUNO × ATLAS 的分歧是公开与验证；TORQUE × ATLAS 是赶工与可靠�
 | Night Drive / Groove / Battle / Chill | 四档电台栏目 | 产品 Vibe 命名不变 |
 | 48h 回归提示 | 给老听众留座 | 无缺席惩罚，无进度衰减 |
 | 判定窗 15/30/50 | 不进入叙事 | 工程真值 |
+
+### 9.1 两种文字的分工（2026-09-12 修订）
+
+**操作文字**——判定、连击、设置、导航——一律用节奏游戏通用术语：Perfect / Great / Good / Miss、Combo / Max Combo / Full Combo / All Perfect、Play / Tracks / Radio / Settings。正在读谱的人不该还要推断“Locked 和 In Phase 哪个更好”。
+
+**故事文字**才用世界内说法，负责让人记住这个电台：角色对白、章节标题、场景装饰、结算页下方的广播回信，以及 SIGNAL 氛围表的 TUNING / LIVE / ON AIR（描述电台状态，不是判定质量，语义不与判定冲突）。
+
+因此结算页主结果是 FULL COMBO / ALL PERFECT，下面再跟一句 JUNO 或 ATLAS 的回信；导航与设置保持普通英文。这不是削弱世界观，而是把两套文字各放回它们擅长的岗位：操作文字负责让人做对事情，故事文字负责让人记住这个世界。
 
 ---
 

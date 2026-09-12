@@ -7,15 +7,21 @@ export type AnalyticsEvent =
   | "home_hero_play_start"
   | "home_hero_play_finish"
   | "daily_challenge_click"
-  | "intro_start"
-  | "intro_dismiss"
   | "radio_view"
   | "play_start"
   | "play_finish"
   | "duo_start"
   | "duo_finish"
   | "share_copy"
-  | "share_poster";
+  | "share_poster"
+  | "share_poster_copy"
+  /** 首页/曲库的人工精选被点开。 */
+  | "curated_play"
+  /** 结算页"继续下一关"按钮。 */
+  | "shift_continue"
+  /** 打歌前的声音检查 / 校准入口。 */
+  | "sound_check"
+  | "calibrate_open";
 
 const BUFFER_KEY = "bs_analytics";
 

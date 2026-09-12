@@ -33,11 +33,11 @@ export type RankId = "echo-novice" | "beat-player" | "rhythm-master" | "scape-le
 export const RANKS: Array<{ id: RankId; label: string; condition: string }> = [
   { id: "echo-novice", label: "Echo Novice", condition: "Finish your first run" },
   { id: "beat-player", label: "Beat Player", condition: "5 clears, or one run at 90% accuracy" },
-  { id: "rhythm-master", label: "Rhythm Master", condition: "3 Full Broadcasts, and 92% recent accuracy" },
+  { id: "rhythm-master", label: "Rhythm Master", condition: "3 Full Combos, and 92% recent accuracy" },
   {
     id: "scape-legend",
     label: "Scape Legend",
-    condition: "1 All In Phase, 3 Hard clears, and 95% recent accuracy",
+    condition: "1 All Perfect, 3 Hard clears, and 95% recent accuracy",
   },
 ];
 
@@ -53,10 +53,10 @@ export type AchievementId =
 
 export const ACHIEVEMENTS: Array<{ id: AchievementId; label: string; condition: string }> = [
   { id: "ach-first-clear", label: "First Light", condition: "Finish any track once" },
-  { id: "ach-first-fc", label: "Full Circuit", condition: "First Full Broadcast" },
-  { id: "ach-first-ap", label: "Absolute Pulse", condition: "First All In Phase" },
-  { id: "ach-combo-100", label: "Hundred Echo", condition: "Max Streak 100 in one run" },
-  { id: "ach-combo-200", label: "Overload", condition: "Max Streak 200 in one run" },
+  { id: "ach-first-fc", label: "Full Circuit", condition: "First Full Combo" },
+  { id: "ach-first-ap", label: "Absolute Pulse", condition: "First All Perfect" },
+  { id: "ach-combo-100", label: "Hundred Echo", condition: "Max Combo 100 in one run" },
+  { id: "ach-combo-200", label: "Overload", condition: "Max Combo 200 in one run" },
   { id: "ach-hard-clear", label: "Core Breach", condition: "Clear any Hard chart" },
   { id: "ach-district-5", label: "City Walker", condition: "Play tracks from 5 districts" },
   { id: "ach-streak-3", label: "Three Nights", condition: "Play on 3 calendar days in a row" },

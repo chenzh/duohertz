@@ -18,7 +18,7 @@ BeatScape 先核对 [项目决策](../../../docs/BEATSCAPE-DECISIONS.md)：BS-D0
 | Gateway / Worker unit | `pnpm test`（Gateway Vitest + `tests/unit` pytest）；脚本会创建测试 venv、同步测试数据库 |
 | Gateway 接口 / Job / shared | 上一行 + `pnpm test:integration`（mock Worker）与相关包 build；API 契约变化核对 `api-contract-gate.yml` |
 | Demo UI / BFF | `pnpm --filter demo build`；用户流程/BFF 变化加 `pnpm test:e2e`，后者启动 mock Gateway |
-| 曲库 / 谱面 | `pnpm catalog:beatscape` + `pnpm audit:beatscape`；音频变化加 `pnpm earcheck:beatscape`；生成逻辑变化跑相关脚本回归 |
+| 曲库 / 谱面 | `pnpm catalog:beatscape` + `pnpm audit:beatscape`；音频变化加 `pnpm earcheck:beatscape`；生成逻辑变化跑相关脚本回归。**生成/重生成谱面必须过 `python3 scripts/beatscape-chart-gate.py --track <id>` 门禁**（BS-D002），失败不得入库 |
 | CI / 交付脚本 | YAML 解析，修改的 shell 用 `bash -n`；运行相关脚本回归。核对 job 名、事件、权限、checkout ref 与 required checks，勿用真实合并/部署验证 |
 | BeatScape 发布候选 | `pnpm release:beatscape`（单测、发布器回归、CF 构建、Playwright E2E、资产校验）；需先安装对应 Chromium |
 

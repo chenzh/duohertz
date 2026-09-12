@@ -11,7 +11,9 @@ import { laneFromClientX, isCoarsePointer, TouchLaneTracker, receptorYFromGeomet
 import { keyLabels, laneFromKeyEvent } from "../input/keyMap";
 import { loadKeys, loadOffsetMs, loadSettings } from "../storage/settings";
 import { SCAPE_COPY, districtColor, characterArtWebp, LANE_RGB } from "../constants/scape";
-import { fancyFxOn } from "./playfield/canvasHelpers";
+import { Link } from "../router";
+import { trackEvent } from "../lib/analytics";
+import { fancyFxOn, prefersReducedMotion } from "./playfield/canvasHelpers";
 import { createPlayfieldRenderer } from "./playfield/renderLoop";
 import { useDevQaParams } from "./playfield/useDevQaParams";
 import { PlayHud } from "./playfield/PlayHud";
@@ -205,6 +207,8 @@ export function PlayField({
   const [error, setError] = useState("");
   const [needsStart, setNeedsStart] = useState(true);
   const [paused, setPaused] = useState(false);
+  // 开始前的声音自检：点过一次就把按钮标成"已确认有声"。
+  const [soundChecked, setSoundChecked] = useState(false);
   // Two-thumb grip needs forgiveness for chords stacked on one hand (touch only).
   const [touchUi] = useState(isCoarsePointer);
   const chordAssist = touchUi && settings.chordAssist;
@@ -224,6 +228,9 @@ export function PlayField({
   const muteMusicRef = useRef(muteMusic);
   const hitsoundRef = useRef(settings.hitsound);
   const fancyFxRef = useRef(settings.fancyFx);
+  // 玩家设置 or 系统偏好，两者取或（settings 是稳定对象，所以用 ref 读最新值）。
+  const reduceMotionRef = useRef(settings.reduceMotion || prefersReducedMotion());
+  reduceMotionRef.current = settings.reduceMotion || prefersReducedMotion();
   mutedRef.current = muted;
   muteMusicRef.current = muteMusic;
   hitsoundRef.current = settings.hitsound;
@@ -234,9 +241,12 @@ export function PlayField({
   useEffect(() => {
     if (variant !== "full") return;
     document.body.classList.add("play-immersive");
+    // CSS 侧的非必要背景运动（霓虹管、灯牌、呼吸边框）跟着同一个开关走。
+    if (reduceMotionRef.current) document.body.dataset.reduceMotion = "1";
     return () => {
       document.body.classList.remove("play-immersive");
       delete document.body.dataset.neon;
+      delete document.body.dataset.reduceMotion;
     };
   }, [variant]);
 
@@ -358,6 +368,21 @@ export function PlayField({
     setNeedsStart(true);
     setPaused(false);
   }, [chart, mode, audioUrl]);
+
+  /**
+   * 开始前的声音自检：一次用户点击里解锁 AudioContext 并打一记打击音，
+   * 让玩家在进歌之前就知道有没有声音 —— 而不是进歌后才发现。
+   */
+  const soundCheck = async () => {
+    trackEvent("sound_check");
+    await unlockAudio();
+    // 自检结束后音量要回到玩家本来的设置，不能因为听过一次就把 SFX 顶到 0.6。
+    const restore = muted || !settings.hitsound ? 0 : settings.sfxVolume;
+    setSfxVolume(0.6);
+    playHit("perfect", 0);
+    setSoundChecked(true);
+    window.setTimeout(() => setSfxVolume(restore), 900);
+  };
 
   const startRun = async () => {
     const conductor = conductorRef.current;
@@ -549,9 +574,13 @@ export function PlayField({
           size: 1.6 + Math.random() * (isPerfect ? 3.2 : 2.4),
         });
       }
-      const mag =
-        judgment === "perfect" ? 6 : judgment === "great" ? 3.5 : judgment === "good" ? 2 : 7;
-      shakeRef.current = { mag, until: performance.now() + 150 };
+      // 镜头运动（屏震）属于可关闭的非必要动效；判定粒子留在判定线附近，
+      // 属于"我按下去这里有回应"的反馈，不在这里一起关掉。
+      if (!reduceMotionRef.current) {
+        const mag =
+          judgment === "perfect" ? 6 : judgment === "great" ? 3.5 : judgment === "good" ? 2 : 7;
+        shakeRef.current = { mag, until: performance.now() + 150 };
+      }
     }
   };
 
@@ -861,6 +890,31 @@ export function PlayField({
                 ? SCAPE_COPY.heroPlayHintTouch
                 : `${SCAPE_COPY.heroPlayHintKeys} · ${keyHintJoined}`}
             </p>
+            {/* 校准不是开玩的前置考试：先说明操作与声音状态，需要的人再点进去。 */}
+            <div className="unlock-extras" onClick={(e) => e.stopPropagation()}>
+              <button
+                type="button"
+                className="btn compact unlock-sound"
+                onClick={() => void soundCheck()}
+              >
+                {soundChecked ? "Sound check ✓" : "Sound check"}
+              </button>
+              <Link
+                className="unlock-link"
+                to="/calibrate"
+                onClick={() => trackEvent("calibrate_open")}
+              >
+                Adjust timing
+              </Link>
+              <details className="unlock-nosound">
+                <summary>No sound?</summary>
+                <p>
+                  Check your device volume and system mute first. Music and SFX have their
+                  own sliders in <Link to="/settings">Settings</Link>; the offset lives under
+                  Adjust timing.
+                </p>
+              </details>
+            </div>
           </div>
         </div>
       )}

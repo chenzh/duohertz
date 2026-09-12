@@ -73,7 +73,7 @@ test.afterEach(async ({ page }) => {
 });
 
 const modes = [
-  { route: 'play', fields: 1, start: '.overlay-tap button' },
+  { route: 'play', fields: 1, start: '.overlay-tap .unlock-btn' },
   { route: 'duo', fields: 2, start: '.duo-start button' },
 ] as const;
 const dialogFor = (page: Page) => page.getByRole('dialog', { name: 'Leave the Scape?' });
@@ -245,7 +245,7 @@ for (const mode of modes) {
 
 test('play: a delayed audio unlock from R stays paused inside exit and resumes after cancel', async ({ page }) => {
   await page.goto('/play/bs-s1-01?tier=easy&mode=casual');
-  await page.locator('.overlay-tap button').click();
+  await page.locator('.overlay-tap .unlock-btn').click();
   await expect.poll(async () => (await audio(page)).active).toBe(1);
   await page.evaluate(async () => {
     const context = window.__exitAudioContext;

@@ -1,4 +1,5 @@
 /** PRD §7.5 · §6.0.10 · §6.0.11 — BeatScape design & copy tokens */
+import type { CrewLine } from "../data/firstShift";
 
 export const SCAPE_COPY = {
   tagline: "Feel the Beat. Own the Scape.",
@@ -19,10 +20,6 @@ export const SCAPE_COPY = {
   calibrateSkip: "Playing with zero offset — recalibrate anytime in Settings.",
   emptyFavorites: "No favorites yet — pin a track from the Library.",
   weakNetwork: "Loading core beat first…",
-  introTitle: "You're through. This is The Late Static.",
-  introBody: "JUNO here. You're the only line that's not static. We call you the Listener. Start with an Easy · Casual warm-up: tap the four lanes as notes reach the line. Or pick a song of your own.",
-  introStart: "Play the warm-up",
-  introDismiss: "Pick my own song",
 } as const;
 
 // PRD §7.5 v2.0 · RESONANCE palette.
@@ -44,19 +41,24 @@ export const JUDGE_COLORS = {
   miss: "#E23D3D",
 } as const;
 
-/** 判定文案皮肤（World Bible §9）：工程真值 Perfect/Great/Good/Miss 与 15/30/50 窗不变，玩家可见层用信号链用语。 */
+/**
+ * 判定与成绩的玩家可见文案。
+ *
+ * 读谱时玩家不该还要推断哪个词更好，所以打歌与结算一律用 rhythm game 通用术语
+ * （Perfect / Great / Good / Miss、Combo / Full Combo），底层仍是
+ * 15/30/50 ms 与同一套计分。世界观命名只保留在角色对白、章节标题与场景装饰里。
+ */
 export const JUDGE_COPY = {
-  perfect: "In Phase",
-  great: "Locked",
-  good: "Drifting",
-  miss: "Dropout",
+  perfect: "Perfect",
+  great: "Great",
+  good: "Good",
+  miss: "Miss",
 } as const;
 
-/** Combo 文案皮肤：Signal Streak / Full Broadcast（World Bible §9）。 */
 export const COMBO_COPY = {
-  combo: "Streak",
-  maxCombo: "Max Streak",
-  fullCombo: "Full Broadcast",
+  combo: "Combo",
+  maxCombo: "Max Combo",
+  fullCombo: "Full Combo",
 } as const;
 
 /** SIGNAL 氛围层文案皮肤（docs/BEATSCAPE-SURGE-FX.md）：电台术语，无拟声词，符合 PRD §7.4。 */
@@ -199,6 +201,21 @@ export const FEATURED_TRACK_IDS = ["bs-s1-01", "bs-s1-02", "bs-s1-05"] as const;
 
 /** High-density / showcase charts for marketing clips (slide · hold · drop). */
 export const SHOWCASE_TRACK_IDS = ["bs-s1-01", "bs-s1-05", "bs-s2-01", "bs-s1-04", "bs-s3-06"] as const;
+
+/**
+ * 首页入口文案。
+ *
+ * 首页不是"介绍游戏"，而是第一局的入口：标题一句话说清这是什么，
+ * 下面只跟一条角色台词和一个绑定了确定曲目的主按钮。
+ * First Shift 作为辅助说明留在下面，不再要求新人先理解世界再玩。
+ */
+export const HOME_COPY = {
+  kicker: "4-lane rhythm game · keyboard or touch",
+  title: "KEEP THE CITY LOUD.",
+  subtitle: "A browser rhythm game set around a late-night radio station.",
+  browse: "Browse all tracks",
+  crew: { speaker: "JUNO", text: "Our studio link's down. Let's start with this track." } as CrewLine,
+} as const;
 
 export const SCAPE_COPY_EXTRA = {
   dailyChallenge: "Today's Scape Challenge",

@@ -41,7 +41,7 @@ for (const route of ['/play/bs-s1-01', '/duo/bs-s1-01', '/beatscape/play/bs-s1-0
     const errors: string[] = [];
     page.on('pageerror', error => errors.push(error.message));
     await page.goto(`${route}?tier=easy&mode=casual`);
-    await expect(page.locator(route.includes('/duo/') ? '.duo-start button' : '.overlay-tap button')).toBeEnabled();
+    await expect(page.locator(route.includes('/duo/') ? '.duo-start button' : '.overlay-tap .unlock-btn')).toBeEnabled();
     expect(await probe(page)).toEqual({ requests: [{ url: audioUrl, script: 'beatscape-early-audio', aborted: false }], decodes: 1 });
     expect(await page.evaluate(() => '__beatscapeEarlyAudio' in window)).toBe(false);
     expect(errors).toEqual([]);

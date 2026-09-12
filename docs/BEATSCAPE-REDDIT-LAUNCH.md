@@ -98,7 +98,7 @@
 | # | 内容 | 位置 |
 |---|------|------|
 | 1 | 首页 hero + On Air 横幅（电台第一集可见） | `/beatscape/` |
-| 2 | Play 中段 In Phase 连击 + STREAK 字样 | 玩 `bs-s1-01` Easy |
+| 2 | Play 中段 Perfect 判定 + COMBO 字样 | 玩 `bs-s1-01` Easy |
 | 3 | Results 页 + Download poster | 打完一局 |
 | 4 | Characters 页三人立绘 | `/characters` |
 | 5 | The Late Static 节目单（EP1 On air now） | `/radio` |

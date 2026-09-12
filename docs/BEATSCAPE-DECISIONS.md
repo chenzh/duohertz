@@ -19,4 +19,18 @@
 
 **发布门禁现状**：本决策记录取消执行和待办，不改变发布质量门槛。现有 `launch-check.mjs` 仍要求 `deviceTestRecord`，该项目前没有通过记录；如报告实际发布检查结果，应如实说明，不能将取消当作通过。移除这一必需门禁的补丁被自动审批拒绝，理由为尚无明确放宽发布门槛的授权；脚本及签审数据保持原状。
 
+## BS-D002
+
+| 字段 | 决定 |
+|---|---|
+| 日期 | 2026-09-12 |
+| 决策者 | 用户，本项目对话中明确指示（“应该作为后面新增曲目的一个门禁”） |
+| 事项 | 谱面-音频匹配门禁（新曲入库） |
+| 执行状态 | **生效** |
+| 载体 | `scripts/beatscape-chart-gate.py`，挂在 stage3/4/6 pipeline 的 chartgen 之后、`beatscape-ingest-stream.py`（写 catalog.json）之前；失败退出码 1 中断管线 |
+| 检查项 | ① onset 踩点率 ≥95%（±60ms）② 互相关系统性错位 >50ms 且峰值显著 ③ gridfit 贴格率下限 easy/standard 55、hard 85 |
+| 阈值依据 | 2026-09-12 全量基线：315 张谱灾难级检查（①②）0 失败；贴格率中位 easy 81.7 / standard 79.6 / hard 97.1，下限卡现库约 p15 |
+| 放宽规则 | 重跑老曲（不规整音频尾段，23 首 / 54 谱在现库中低于下限）用 `--min-easy/--min-standard/--min-hard` 放宽；灾难级检查项①②不允许放宽 |
+| 覆盖范围 | 生成新曲或重生成谱面必须过门禁；CI 不跑（`beatscape-audio.py` 依赖 macOS `afconvert`） |
+
 当前待办入口：[SESSION](../SESSION.md)。发布要求：[上线准备](BEATSCAPE-RELEASE-READINESS.md)。

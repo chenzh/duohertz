@@ -69,7 +69,7 @@ test('note speed uses the slider and persists through refresh', async ({ page })
 
 test('real M4A decode, start, keyboard/pointer input, pause, resume, and exit', async ({ page }, info) => {
   await page.goto('/play/bs-s1-01?tier=easy&mode=casual');
-  await page.locator('.overlay-tap button').click();
+  await page.locator('.overlay-tap .unlock-btn').click();
   await expect(page.getByRole('button', { name: 'Pause', exact: true })).toBeVisible();
   await page.waitForTimeout(4200);
   if (info.project.name === 'mobile') {
@@ -99,7 +99,7 @@ test('R really restarts loaded audio repeatedly after the initial loading state'
     };
   });
   await page.goto('/play/bs-s1-01?tier=easy&mode=casual');
-  await page.locator('.overlay-tap button').click();
+  await page.locator('.overlay-tap .unlock-btn').click();
   await expect(page.getByRole('button', { name: 'Pause', exact: true })).toBeVisible();
   const starts = () => page.evaluate(() => (window as typeof window & { __musicStarts: number }).__musicStarts);
   await expect.poll(starts).toBe(1);
@@ -115,7 +115,7 @@ test('audio failure offers a working retry', async ({ page }) => {
   await expect(page.getByText('Signal lost', { exact: true })).toBeVisible();
   await page.unroute('**/audio.m4a*');
   await page.getByRole('button', { name: 'Retry loading' }).click();
-  await expect(page.locator('.overlay-tap button')).toBeVisible();
+  await expect(page.locator('.overlay-tap .unlock-btn')).toBeVisible();
 });
 
 test('bad local saves recover without a results crash', async ({ page }) => {
@@ -154,7 +154,7 @@ test('Duo starts and pauses both players together', async ({ page }, info) => {
 test('complete a real chart and export the results poster', async ({ page }, info) => {
   test.setTimeout(95000);
   await page.goto('/play/bs-s1-05?tier=easy&mode=casual');
-  await page.locator('.overlay-tap button').click();
+  await page.locator('.overlay-tap .unlock-btn').click();
   await expect(page).toHaveURL(/\/results$/, { timeout: 80000 });
   await expect(page.getByRole('heading', { name: 'Voltage Drop' })).toBeVisible();
   const saved = await page.evaluate(() => JSON.parse(sessionStorage.getItem('bs_last_run')!));
@@ -163,7 +163,7 @@ test('complete a real chart and export the results poster', async ({ page }, inf
   expect(saved.accuracy).toBe(0);
   await expect(page.getByText('NEW RECORD', { exact: true })).toHaveCount(0);
   const download = page.waitForEvent('download');
-  await page.getByRole('button', { name: /poster/i }).click();
+  await page.getByRole('button', { name: 'Download poster', exact: true }).click();
   expect((await download).suggestedFilename()).toMatch(/beatscape-bs-s1-05-D\.png/);
   await page.screenshot({ path: info.outputPath('results.png'), fullPage: true, animations: 'disabled' });
 });

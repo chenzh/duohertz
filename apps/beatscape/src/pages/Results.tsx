@@ -63,6 +63,29 @@ async function copyText(text: string): Promise<boolean> {
   }
 }
 
+/**
+ * Copy a rendered poster image (T5b). Image clipboard needs `ClipboardItem` and a
+ * secure context — both missing on plain-http previews and in several in-app
+ * browsers — so this reports `false` instead of throwing and the caller keeps the
+ * download path as the fallback.
+ */
+async function copyImageBlob(blob: Blob): Promise<boolean> {
+  const w = window as unknown as {
+    isSecureContext?: boolean;
+    ClipboardItem?: new (items: Record<string, Blob>) => unknown;
+    navigator?: { clipboard?: { write?: (items: unknown[]) => Promise<void> } };
+  };
+  if (!w.isSecureContext || typeof w.ClipboardItem !== "function") return false;
+  const write = w.navigator?.clipboard?.write;
+  if (typeof write !== "function") return false;
+  try {
+    await write.call(navigator.clipboard, [new w.ClipboardItem({ "image/png": blob })]);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 /** Honor progress won this run (PRD §17) — stashed by Play.finish, shown once. */
 function takeNewHonor(): { achievements: AchievementId[]; rankUp: RankId | null } {
   const achievements = readJSON<AchievementId[]>(
@@ -85,6 +108,7 @@ export function ResultsPage() {
   const [copyFailed, setCopyFailed] = useState(false);
   const [posterBusy, setPosterBusy] = useState(false);
   const [posterError, setPosterError] = useState("");
+  const [posterCopied, setPosterCopied] = useState(false);
   const [track, setTrack] = useState<CatalogTrack | null>(null);
   const [chart, setChart] = useState<ChartJSON | null>(null);
   const [honor] = useState(() => takeNewHonor());
@@ -209,13 +233,33 @@ export function ResultsPage() {
     }
   }
 
+  async function onCopyPoster() {
+    if (!run) return;
+    setPosterBusy(true);
+    setPosterError("");
+    try {
+      const blob = await renderSharePoster(run, track?.district ?? "");
+      if (!(await copyImageBlob(blob))) {
+        setPosterError("This browser blocks image copy — use Download poster");
+        return;
+      }
+      trackEvent("share_poster_copy", { track: run.track_id, grade: run.grade });
+      setPosterCopied(true);
+      window.setTimeout(() => setPosterCopied(false), 2000);
+    } catch (e) {
+      setPosterError(e instanceof Error ? e.message : "Poster copy failed");
+    } finally {
+      setPosterBusy(false);
+    }
+  }
+
   return (
     <section className="results">
       <div className={`results-hero-card grade-border-${run.grade}${run.fc || run.ap ? " moment" : ""}`}>
         <div className={`grade-big grade-${run.grade}`}>{run.grade}</div>
         <div className="badges">
-          {run.fc && <span className="badge">FC</span>}
-          {run.ap && <span className="badge ap">AP</span>}
+          {run.fc && <span className="badge">{COMBO_COPY.fullCombo.toUpperCase()}</span>}
+          {run.ap && <span className="badge ap">{`ALL ${JUDGE_COPY.perfect.toUpperCase()}`}</span>}
           {isRecord && <span className="badge record">NEW RECORD</span>}
           {(run.surgeMaxTier ?? 0) >= 2 && (
             <span className={`badge signal${run.surgeMaxTier === 3 ? " onair" : ""}`}>
@@ -341,6 +385,15 @@ export function ResultsPage() {
         </button>
         <button type="button" className="btn" onClick={() => void onDownloadPoster()} disabled={posterBusy}>
           {posterBusy ? "Rendering…" : SCAPE_COPY_EXTRA.sharePoster}
+        </button>
+        <button
+          type="button"
+          className="btn"
+          onClick={() => void onCopyPoster()}
+          disabled={posterBusy}
+          title="Copies the poster as an image (needs a secure context; use Download poster otherwise)"
+        >
+          {posterCopied ? "Poster copied" : "Copy poster"}
         </button>
         {posterError && (
           <p className="error" role="alert">

@@ -11,6 +11,16 @@ type Props = {
   label?: string;
   preload?: "metadata" | "none";
   className?: string;
+  /**
+   * 人工选段的试听起点（秒）。
+   *
+   * 每首入口曲挑的是最能代表它的那一段（一般是 drop 起点），而不是从歌曲
+   * 开头的铺垫放起 —— 玩家不该先听 20 秒前奏再猜这首适不适合自己。
+   * 0 / 省略 = 从头播放。
+   */
+  startSec?: number;
+  /** 试听长度（秒）。到点自动停回起点；0 / 省略 = 整首。 */
+  segmentSec?: number;
 };
 
 /** MM:SS — shared by the readout, the drag bubble and aria-valuetext. */
@@ -53,7 +63,7 @@ function durationOf(el: HTMLAudioElement | null): number {
  * twice per gesture instead of once per pointermove. The track rect is cached
  * at pointerdown for the same reason (getBoundingClientRect forces layout).
  */
-export function AudioBar({ src, label, preload = "metadata", className }: Props) {
+export function AudioBar({ src, label, preload = "metadata", className, startSec = 0, segmentSec = 0 }: Props) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
   const barRef = useRef<HTMLDivElement>(null);
@@ -79,11 +89,21 @@ export function AudioBar({ src, label, preload = "metadata", className }: Props)
     dragRef.current = false;
   }, [src]);
 
+  /** 选段终点（秒）；没有选段时为 Infinity。 */
+  const segmentEnd = startSec > 0 && segmentSec > 0 ? startSec + segmentSec : Infinity;
+
   const toggle = () => {
     const el = audioRef.current;
     if (!el) return;
-    if (el.paused) void el.play();
-    else el.pause();
+    if (!el.paused) {
+      el.pause();
+      return;
+    }
+    // 选段：起点之前、或已经放完一段，都回到选段起点再开始。
+    if (startSec > 0 && (el.currentTime < startSec - 0.1 || el.currentTime >= segmentEnd - 0.05)) {
+      if (el.readyState > 0) el.currentTime = startSec;
+    }
+    void el.play();
   };
 
   /** Paint the bar without a React re-render (used during pointer drags). */
@@ -200,7 +220,15 @@ export function AudioBar({ src, label, preload = "metadata", className }: Props)
         // timeupdate would fight the drag we are painting by hand.
         onTimeUpdate={(e) => {
           if (dragRef.current) return;
-          setTime((e.target as HTMLAudioElement).currentTime);
+          const el = e.target as HTMLAudioElement;
+          // 选段播完就停回起点，而不是一路放到下一首的段落里去。
+          if (el.currentTime >= segmentEnd) {
+            el.pause();
+            el.currentTime = startSec;
+            setTime(startSec);
+            return;
+          }
+          setTime(el.currentTime);
         }}
         onProgress={(e) => {
           if (dragRef.current) return;
@@ -212,9 +240,9 @@ export function AudioBar({ src, label, preload = "metadata", className }: Props)
         // Without this the toggle button stays stuck on the "pause" icon.
         onEnded={() => {
           setPlaying(false);
-          setTime(0);
+          setTime(startSec);
           const el = audioRef.current;
-          if (el) el.currentTime = 0;
+          if (el) el.currentTime = startSec;
         }}
       />
       <button

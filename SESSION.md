@@ -3,7 +3,7 @@
 | 字段 | 值 |
 |------|-----|
 | **phase** | 曲库 **105/105**（s1 6 · s2 4 · s3 15 · s4 15 · s5 10 · s6 35 · p3 10 · p4 10）· 315 张谱已按「拍网格亲和力」全量重出 · 线上体验 <https://beatscape.pages.dev> · 待人工耳检 |
-| **updated** | 2026-09-06 |
+| **updated** | 2026-09-12 |
 | **slug** | musicsaas |
 
 ## 已取消（不自动恢复）
@@ -13,6 +13,10 @@
 ## next（P0）
 
 > 验收入口：本页 · `pnpm catalog:beatscape` · `pnpm audit:beatscape` · `pnpm earcheck:beatscape`
+
+- [x] **谱面-音频匹配门禁（2026-09-12，未提交）**：用户要求把“打点与音乐匹配”固化为新增曲目的门禁。新增 `scripts/beatscape-chart-gate.py`（onset 踩点率 ≥95% · 互相关系统性错位 >50ms · gridfit 贴格率下限 easy/standard 55 / hard 85），挂在 stage3/4/6 pipeline 的 chartgen 之后、catalog 入库之前，失败即中断；复用 `beatscape-chart-gridfit.gridfit()` 与 `beatscape-audio.analyze_audio()`。全量基线：315 张谱灾难级检查 0 失败，贴格率拦下 23 首 / 54 张老谱（不规整音频尾段，重跑用 `--min-*` 放宽，记录于 [BS-D002](docs/BEATSCAPE-DECISIONS.md#bs-d002)）；music-verify skill 曲库/谱面行已加门禁要求。CI 不跑门禁（音频分析依赖 macOS `afconvert`）。详见 [worklog](worklog/2026-09-12.md)。
+
+- [x] **BeatScape 首页入口 / 判定术语 / 首曲结算改版（2026-09-12，未提交/未部署）**：首页按本机进度给出唯一主入口（未开始 `Play first track` → 1/3 后 `Continue First Shift · 2/3` → 通关后人工精选曲 `Play Neon Pulse`），First Shift 降为下方辅助卡片；判定与连击改回通用术语（Perfect / Great / Good / Miss、Combo / Max Combo / Full Combo），世界观说法只留在对白、章节标题、结算回信与 SIGNAL 氛围表；三节点各带「线路恢复前后」状态与下一首入口；曲库上层人工精选（含 why 与人工选段试听）、下层保留搜索筛选；新增 `reduceMotion` 设置（与 `prefers-reduced-motion` 取或）关掉非必要镜头运动与背景霓虹；打歌前提供 `Sound check` / `Adjust timing` / `No sound?`，校准不再是开玩前置。修复 PlayField 缺失 import（曾致 tsc/build 失败）、声音自检音量还原、unlock 区块缺样式；World Bible §9.1 记录两种文字分工。**验证**：`tsc` 干净 · vitest **193/193** · `build:cf` 绿（release 核验 105 曲 / 315 谱）· 桌面 e2e **31/31**（含三首真实对局全流程）· 生产产物 Chromium 冒烟三种进度状态与打歌入口文案全中、零 JS 报错。改版顺带打破的既有 e2e（起始浮层多按钮的宽选择器、结算页两个 poster 按钮、旧欢迎弹窗用例、结算页主按钮改直连下一首）已同步修正；跑 e2e 必须用 `build:cf` 产物。详见 [worklog](worklog/2026-09-12.md)。
 
 - [x] **BeatScape 性能保障（2026-09-06，已提交，未部署）**：候选 `ae15d3778b3f` 完成选定音频提前请求、可见音符窗口、里程碑和桌面键名预绘。179 应用单测、11 发布器 / 50 性能脚本回归、6 项当前产物相关浏览器回归通过；更早候选 62 项完整浏览器回归单独记录。同指纹 28 项自动性能预算全部通过：18 次冷加载最慢开局 3.908s，8 场真实 Hard 均约 60 FPS、0 异常间隔、绘制峰值最高 3.5ms；两种配置各 12 次重开 / 切歌后无活动音乐源或待解码，最后四次退出 JS 堆波动约 45 / 38 KiB。保留全部失败阶段，详见 [性能记录](docs/BEATSCAPE-PERFORMANCE.md) 与 [证据](docs/evidence/beatscape-performance-assurance-2026-09-06.json)。仅覆盖固定本地浏览器条件；BS-D001 与发布门禁保持不变。
 
@@ -39,6 +43,7 @@
 
 - [x] **三人立绘重出（已完成 2026-09-02）**：本地 MPS + LoRA 重出 JUNO/ATLAS/TORQUE（prompt 母本 v2，锚点前置 + 赛璐璐夜色模板，BPE 66-71 通过）；锚点 checklist 目验过（单耳挂耳机/场强仪/扳手鼓槌+铬面锣/共振菱形 MOTIF）；已替换 `public/characters/` 三图并推送（commit `6b97c2e`）· 剩余市场评估（女性首位风险）为人工判断
 - [ ] **商业化差距决策点 5 项待拍板**：[`docs/BEATSCAPE-COMMERCIALIZATION-GAP.md`](docs/BEATSCAPE-COMMERCIALIZATION-GAP.md) §6（变现模式 / 经营主体 / 后端栈 / 流媒体终点 / 商标批次）——拍板后解锁对应 P0
+- [ ] **音乐模型候选评估**：MiniMax Music 3.0 优先做 10 首中文/器乐/结构/Apple Silicon 内存小样本；YuE 有 CUDA 时做 5 首人声对照。A/B 与许可留档完成前继续使用 SA3 + ACE-Step，详见 [`PRD.md`](PRD.md) §19–20、[`docs/COMPLIANCE.md`](docs/COMPLIANCE.md)。
 - [ ] **世界观 Bible 待办（仅剩人工项）**：[`docs/BEATSCAPE-WORLDBIBLE.md`](docs/BEATSCAPE-WORLDBIBLE.md) §12——文档/文案/判定皮肤/美术/回归语/昵称合规/点歌文案包/**S1 电台剧集包**完成；**商标深检索已完成**（2026-08-30，Justia 全 4 页 73 条 + serial 级核证，§11）：NIGHTSHIFT 游戏内可用但 **Class 41 有 LIVE 在册近邻（Kennelly Reg. 6359178，乐队现场演出）**，商品化/对外品牌化前必须 TSDR 全类正式检索；**备选名初筛已备好**（The Late Static 首推 / Scape City 次选，均无精确同名）；MONOLITH 证实 LIVE（华纳 Reg. 5880307 · Class 9 游戏软件全线）→ 限游戏内叙事不变
 - [ ] **人工耳检 105 首**（专项真机执行已取消，范围见 BS-D001；发布门禁仍按实际脚本）：是否脱口而出第三方名曲 → 有则废弃重生成。**工具已备**：`python3 scripts/beatscape-earcheck-worksheet.py --all` 生成 `apps/beatscape/earcheck-worksheet.html`，浏览器打开逐曲听+勾，进度自动保存且绑定音频指纹，可导出审核记录 · 曲目数 105（s1 6 / s2 4 / s3 15 / s4 15 / s5 10 / s6 35 / p3 10 / p4 10）
 - [x] **重新部署 Cloudflare Pages（已完成）**：线上 95 首（85+P3-10）+ 全部氛围层 + 自定义播放条 + 无红框；audiobar 渲染 30 处、原生控件 0；`bash scripts/deploy-beatscape-cf-pages.sh` 已验证 · 2026-09-02

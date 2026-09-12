@@ -1,9 +1,9 @@
 import { test, expect, type Page } from '@playwright/test';
 
 const scenes = [
-  { song: 'Voltage Drop', node: 'Studio return', next: 'One borrowed speaker' },
-  { song: 'Chrome Riff', node: 'Yard speaker', next: 'Room on the roof' },
-  { song: 'Skyline Hook', node: 'Rooftop relay', next: '' },
+  { song: 'Voltage Drop', node: 'Studio return', next: 'One borrowed speaker', nextTrack: 'bs-s1-06' },
+  { song: 'Chrome Riff', node: 'Yard speaker', next: 'Room on the roof', nextTrack: 'bs-s2-02' },
+  { song: 'Skyline Hook', node: 'Rooftop relay', next: '', nextTrack: '' },
 ];
 const errors = new WeakMap<Page, string[]>();
 test.beforeEach(async ({ page }) => {
@@ -40,7 +40,7 @@ test('all three real songs carry the opening story through results, reload, next
   await page.goto('/shift');
   for (const [index, scene] of scenes.entries()) {
     await page.getByRole('link', { name: `Play ${scene.song}`, exact: true }).click();
-    await page.locator('.overlay-tap button').click();
+    await page.locator('.overlay-tap .unlock-btn').click();
     await expect(page.getByRole('button', { name: 'Pause', exact: true })).toBeVisible();
     await expect.poll(async () => {
       for (let lane = 0; lane < 4; lane++) {
@@ -63,8 +63,15 @@ test('all three real songs carry the opening story through results, reload, next
     await expect(page.getByRole('heading', { name: `${scene.node} restored`, exact: true })).toBeVisible();
     await expect(page.locator('.shift-result .shift-circuit li.restored')).toHaveCount(index + 1);
     if (index === 0) await page.screenshot({ path: info.outputPath('first-reply.png'), fullPage: true, animations: 'disabled' });
+    // 结算页的主按钮直指下一首确定的歌，不再先把人送回目录页。
+    const nextHref = await page.locator('.shift-result .btn.primary').getAttribute('href');
     await page.locator('.shift-result .btn.primary').click();
-    if (scene.next) await expect(page.getByRole('heading', { name: scene.next, exact: true })).toBeVisible();
+    if (scene.next) {
+      expect(nextHref).toContain(`/play/${scene.nextTrack}`);
+      await expect(page.getByRole('button', { name: 'Start playing', exact: true })).toBeVisible();
+      await page.goto('/shift');
+      await expect(page.getByRole('heading', { name: scene.next, exact: true })).toBeVisible();
+    }
   }
   await expect(page.getByRole('heading', { name: 'Welcome to the crew.', exact: true })).toBeVisible();
   await expect(page.locator('.shift-journal details')).toHaveCount(3);
@@ -75,20 +82,27 @@ test('all three real songs carry the opening story through results, reload, next
   await expect(page.locator('.shift-home-card').getByRole('heading', { name: 'Four chairs. One crew.' })).toBeVisible();
 });
 
-test('a new visitor can take the call straight from the welcome dialog', async ({ page }) => {
+test('a new visitor starts the first track straight from the home page, without reading the world first', async ({ page }) => {
   await page.addInitScript(() => localStorage.removeItem('bs_onboarded'));
   await page.goto('/');
-  const welcome = page.getByRole('dialog');
-  await expect(welcome).toBeVisible();
-  await welcome.getByRole('link', { name: 'Take the call · Story', exact: true }).click();
-  await expect(page.getByRole('heading', { name: 'A voice on the line', exact: true })).toBeVisible();
-  expect(await page.evaluate(() => localStorage.getItem('bs_onboarded'))).toBe('true');
+  // 首页主入口就是第一首确定的歌，不要求先理解 First Shift 或进剧情页。
+  const cta = page.locator('.hero-play');
+  await expect(cta).toHaveText('Play first track');
+  await expect(page.locator('.hero-entry-meta')).toContainText('Voltage Drop');
+  await expect(page.locator('.shift-home-card')).toBeVisible();
+  await cta.click();
+  await expect(page).toHaveURL(/\/play\/bs-s1-05/);
+  await expect(page.getByRole('button', { name: 'Start playing', exact: true })).toBeVisible();
+  // 开始之前能确认操作方式与声音状态，校准仍可跳过。
+  await expect(page.getByRole('button', { name: 'Sound check', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Adjust timing', exact: true })).toBeVisible();
+  await expect(page.locator('.unlock-nosound summary')).toHaveText('No sound?');
 });
 
 test('leaving a set and visiting results cannot restore a connection; bad saves recover', async ({ page }) => {
   await page.goto('/shift');
   await page.getByRole('link', { name: 'Play Voltage Drop', exact: true }).click();
-  await page.locator('.overlay-tap button').click();
+  await page.locator('.overlay-tap .unlock-btn').click();
   await page.locator('.play-exit').click();
   await page.getByRole('dialog', { name: 'Leave the Scape?' }).getByRole('button', { name: 'Leave', exact: true }).click();
   await expect(page).toHaveURL(/\/track\/bs-s1-05/);
@@ -116,7 +130,7 @@ test('failed, listening-only and practice sets get honest replies without story 
   await shortStudioChart(page);
   for (const [mode, reply] of [['arcade', 'Rough take.'], ['casual', 'Just listening?'], ['practice', "That's what rehearsal is for."]]) {
     await page.goto(`/play/bs-s1-05?tier=easy&mode=${mode}&shift=studio`);
-    await page.locator('.overlay-tap button').click();
+    await page.locator('.overlay-tap .unlock-btn').click();
     await expect(page).toHaveURL(/\/results$/, { timeout: 16000 });
     await expect(page.locator('.shift-result')).toContainText(reply!);
     await expect(page.locator('.shift-result')).not.toContainText('Studio return restored');
@@ -131,7 +145,7 @@ test('blocked storage keeps the current result and next scene for this visit, wi
   });
   await page.goto('/shift');
   await page.getByRole('link', { name: 'Play Voltage Drop', exact: true }).click();
-  await page.locator('.overlay-tap button').click();
+  await page.locator('.overlay-tap .unlock-btn').click();
   await expect.poll(async () => {
     for (const key of ['ArrowLeft', 'ArrowDown', 'ArrowUp', 'ArrowRight']) await page.keyboard.press(key);
     return (await page.locator('.hud-judge:not(.hud-judge-miss) .hud-judge-count').allTextContents()).reduce((sum, t) => sum + Number(t), 0);
@@ -140,5 +154,6 @@ test('blocked storage keeps the current result and next scene for this visit, wi
   await expect(page.getByRole('heading', { name: 'Studio return restored', exact: true })).toBeVisible();
   await expect(page.locator('.shift-result')).toContainText('Progress lasts for this visit.');
   await page.locator('.shift-result .btn.primary').click();
-  await expect(page.getByRole('heading', { name: 'One borrowed speaker', exact: true })).toBeVisible();
+  await expect(page).toHaveURL(/\/play\/bs-s1-06/);
+  await expect(page.getByRole('button', { name: 'Start playing', exact: true })).toBeVisible();
 });

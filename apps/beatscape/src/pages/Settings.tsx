@@ -145,6 +145,18 @@ export function SettingsPage() {
               onChange={(e) => setSettings({ ...settings, fancyFx: e.target.checked })}
             />
           </label>
+          <label className="field toggle-field">
+            Reduce motion (screen shake, moving backgrounds)
+            <input
+              type="checkbox"
+              checked={settings.reduceMotion}
+              onChange={(e) => setSettings({ ...settings, reduceMotion: e.target.checked })}
+            />
+          </label>
+          <p className="field-hint">
+            Your system&apos;s “reduce motion” setting is always honored. This switch
+            is for when you want the same thing without changing the whole system.
+          </p>
           <label className="field">
             Note speed · {(1 / (1 + settings.scrollBias)).toFixed(2)}×
             <input

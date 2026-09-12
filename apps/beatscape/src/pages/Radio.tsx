@@ -34,7 +34,10 @@ function tickPos(season: number): number {
 }
 
 function scrollToSeason(season: number): void {
-  document.getElementById(`season-${season}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  // 跳转目标若是折叠的归档季，先展开再滚动。
+  const el = document.getElementById(`season-${season}`);
+  if (el instanceof HTMLDetailsElement) el.open = true;
+  el?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 export function RadioDialogue({ lines }: { lines: readonly RadioLine[] }) {
@@ -144,14 +147,22 @@ export function RadioPage() {
       {RADIO_SEASONS.map((season) => {
         const episodes = RADIO_EPISODES.filter((e) => e.season === season.number);
         if (episodes.length === 0) return null;
+        // 只默认展开正在播的这一季；旧季折叠归档，点季标题或拨盘频道展开。
+        const isTuned = season.number === tuned;
         return (
-          <section
+          <details
             key={season.number}
             id={`season-${season.number}`}
             className="radio-season"
+            open={isTuned}
             aria-label={`Season ${season.number} — ${season.name}`}
           >
-            <h2 className="radio-season-title">{`Season ${season.number} · ${season.name}`}</h2>
+            <summary className="radio-season-title">
+              <span>{`Season ${season.number} · ${season.name}`}</span>
+              <span className="radio-season-count">
+                {episodes.length} eps{isTuned ? " · on air" : ""}
+              </span>
+            </summary>
             <div className="radio-episode-list">
               {episodes.map((episode) => {
                 const index = RADIO_EPISODES.indexOf(episode);
@@ -179,7 +190,7 @@ export function RadioPage() {
                 );
               })}
             </div>
-          </section>
+          </details>
         );
       })}
     </section>

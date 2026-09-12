@@ -43,16 +43,31 @@ export function ShiftResult({ run, district }: { run: LastRun; district?: string
   const step = shiftStep(receipt?.id);
   const attempted = shiftStep(run.shiftStep);
   const next = FIRST_SHIFT[progress.completed.length];
+  const done = progress.completed.length;
+  // 下一关只用一句台词介绍人，不重复讲一遍城市设定。
+  const nextLine = next ? next.opening?.[0] ?? next.before[0] : undefined;
   return <section className="shift-result" aria-labelledby="shift-response-title">
     <p className="eyebrow">The Late Static · A reply for you</p>
     <h2 id="shift-response-title">{step ? `${step.node} restored` : "Still on the line."}</h2>
+    {/* 玩家要能说清"刚刚通了什么"：这条线路在这一关前后的状态。 */}
+    {step && <p className="shift-link-change">
+      <span className="shift-link-from">{step.link.from}</span>
+      <span className="shift-link-arrow" aria-hidden>→</span>
+      <span className="shift-link-to">{step.link.to}</span>
+    </p>}
     <CrewDialogue lines={step ? step.after : [crewResponse(run, district)]} />
-    {step && <><p className="shift-change">{step.restored}</p><ShiftCircuit completed={progress.completed.length} /></>}
+    {step && <><p className="shift-change">{step.restored}</p><ShiftCircuit completed={done} /></>}
+    {/* 续玩按钮直指下一首确定的歌，不把人先送回一个目录页。 */}
+    {step && next && nextLine && <div className="shift-next">
+      <p className="eyebrow">Next · Connection {done + 1} of {FIRST_SHIFT.length} · {next.district}</p>
+      <CrewDialogue lines={[nextLine]} />
+      <Link className="btn primary" to={shiftPlayHref(next)}>Play {next.trackTitle} · {done + 1}/{FIRST_SHIFT.length}</Link>
+    </div>}
     <div className="cta-row">
-      {step && next && <Link className="btn primary" to="/shift">Meet {next.speaker} · Next connection</Link>}
       {step && !next && <Link className="btn primary" to="/shift">Your seat at the station</Link>}
       {!step && attempted && next?.id === attempted.id && <Link className="btn primary" to={shiftPlayHref(attempted)}>Try this connection again</Link>}
-      {!step && <Link className="btn ghost" to="/shift">{progress.completed.length ? "Back to the station" : "Meet the crew · First shift"}</Link>}
+      {!step && <Link className="btn ghost" to="/shift">{done ? "Back to the station" : "Meet the crew · First shift"}</Link>}
+      {step && next && <Link className="btn ghost" to="/shift">Back to the station</Link>}
       {step && !next && <Link className="btn ghost" to="/radio">Read the broadcasts</Link>}
     </div>
     {step && <p className="shift-storage-note" role="status">{shiftStorageNotice()}</p>}

@@ -6,6 +6,12 @@
   --scape-text: #f5efe6;
   --scape-muted: #a8928b;
   --scape-accent: #e23d3d;
+  /* 品牌红的两个可达性变体（WCAG AA）：
+     --accent-deep 承载奶油字（.btn.primary / 头像 / 灯牌），#BA3030 对 #F2E4C9 = 4.70:1；
+     --accent-text 用作深底上的红字（eyebrow / section-link 等），#EB4E4E 对最浅的 elevated 底 = 4.63:1。
+     品牌主红 #E23D3D 只留给大色块与装饰（lane、focus ring、key-chip 底）。 */
+  --accent-deep: #ba3030;
+  --accent-text: #eb4e4e;
   --scape-accent-2: #f2e4c9;
   --scape-warn: #ffb020;
   --scape-gold: #ffb020;
@@ -56,6 +62,13 @@ input:focus-visible,
 select:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
+}
+
+/* 程序化聚焦的路由宿主不画 ring：React 会给 <main> 标 tabindex="-1" 并聚焦
+   （焦点管理），Tab 永远不会停在它身上——不排除的话就是一圈包住全页的红框。 */
+main:focus-visible,
+[tabindex="-1"]:focus-visible {
+  outline: none;
 }
 
 body {
@@ -193,7 +206,7 @@ h2,
   margin-left: 8px;
   padding: 0;
   border: none;
-  background: var(--accent);
+  background: var(--accent-deep);
   color: var(--scape-accent-2);
   font-family: Anton, "Sora", sans-serif;
   font-size: 13px;
@@ -235,12 +248,20 @@ a.header-avatar:hover {
   min-height: min(72vh, 560px);
 }
 
+/* 保险：文案永远在 hero 演示层之上（移动端曾因舞台溢出被 mask 盖住 + 拦点击）。 */
+.hero-copy {
+  position: relative;
+  z-index: 6;
+}
+
 .hero-copy h1 {
-  font-size: clamp(2.4rem, 5.5vw, 3.75rem);
-  line-height: 1.02;
+  font-size: clamp(2.35rem, 5.5vw, 3.75rem);
+  line-height: 1.08;
   margin: 0 0 16px;
   font-weight: 800;
-  letter-spacing: -0.03em;
+  /* 全大写标语原本 -0.03em 压字距，四个单词挤成一块；改为微正字距 + 词距透气。 */
+  letter-spacing: 0.015em;
+  word-spacing: 0.08em;
 }
 
 .eyebrow {
@@ -249,7 +270,7 @@ a.header-avatar:hover {
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 .hero-copy .tagline {
@@ -278,7 +299,7 @@ a.header-avatar:hover {
   font-weight: 700;
   /* Skewed flat slab. clip-path would eat a real border, so the drop shadow
      lives on the parent and the edge is pure geometry. */
-  color: var(--bg);
+  color: #000;
   background: var(--accent);
   clip-path: polygon(7px 0, 100% 0, calc(100% - 7px) 100%, 0 100%);
 }
@@ -287,6 +308,106 @@ a.header-avatar:hover {
   position: relative;
   height: min(420px, 52vw);
   min-height: 280px;
+}
+
+/* 精选入口卡（人排的"从这里开始"）：横排紧凑卡，封面 96px、标题一处、
+   理由一行——装饰退后，让三首入口曲能在一屏内对比。桌面 3 列、窄屏单列。 */
+.curated-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.curated-subtitle {
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.curated-card {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 14px;
+  padding: 14px;
+  background: var(--bg-elevated);
+  border: var(--stroke-w) solid var(--ink);
+  border-radius: var(--radius-md);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+.curated-cover {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border: 2px solid var(--ink);
+  align-self: start;
+}
+
+.curated-body {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.curated-body h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+}
+
+.curated-meta {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--muted);
+}
+
+.curated-why {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.curated-line {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.curated-line strong {
+  color: var(--accent-text);
+}
+
+.curated-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.curated-preview {
+  margin-top: 2px;
+}
+
+@media (max-width: 640px) {
+  /* 手机上更紧：封面 72px，只留标题/理由/按钮，三首一屏可比。 */
+  .curated-card {
+    grid-template-columns: 72px 1fr;
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .curated-cover {
+    width: 72px;
+    height: 72px;
+  }
+
+  .curated-line {
+    display: none;
+  }
 }
 
 .trending-section {
@@ -309,10 +430,13 @@ a.header-avatar:hover {
 }
 
 .section-link {
-  color: var(--accent);
+  color: var(--accent-text);
   text-decoration: none;
   font-size: 14px;
   font-weight: 600;
+  /* 热区 ≥38px：padding 撑高、负 margin 抵消，版式不动。 */
+  padding: 10px 0;
+  margin: -10px 0;
 }
 
 .back-link {
@@ -550,7 +674,7 @@ a.header-avatar:hover {
 }
 
 .btn.primary {
-  background: var(--accent);
+  background: var(--accent-deep);
   border: var(--stroke-w) solid var(--ink);
   color: var(--lime);
   font-weight: 700;
@@ -683,6 +807,7 @@ a.header-avatar:hover {
   flex: 0 0 auto;
   width: 26px;
   height: 24px;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -692,6 +817,12 @@ a.header-avatar:hover {
   cursor: pointer;
   padding: 0;
   transform: skewX(-6deg);
+  /* 视觉保持小图标；命中区用伪元素扩到 ~44px 触控标准。 */
+}
+.audiobar-toggle::after {
+  content: "";
+  position: absolute;
+  inset: -9px;
 }
 .audiobar-toggle:disabled {
   opacity: 0.45;
@@ -1093,7 +1224,7 @@ body.play-immersive .play-page {
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 .overlay-title {
@@ -1147,7 +1278,9 @@ body.play-immersive .play-page {
   font-size: 1rem;
   letter-spacing: 0.03em;
   text-transform: uppercase;
-  line-height: 1;
+  /* Anton 的 cap height 高于 1em：line-height:1 + overflow:hidden 会把大写字母
+     上下各切掉约 2px。 */
+  line-height: 1.4;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1229,7 +1362,7 @@ body.play-immersive .play-page {
   font: 800 11px/1 "IBM Plex Mono", monospace;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 /* 底部判定计数条：四色硬边小面板，顶部色条对应判定色。 */
@@ -1265,10 +1398,10 @@ body.play-immersive .play-page {
   color: var(--scape-accent-2);
   font-variant-numeric: tabular-nums;
 }
-.hud-judge-perfect { border-top: 3px solid var(--lane1); } /* In Phase · 米 */
-.hud-judge-great { border-top: 3px solid var(--lane2); }   /* Locked · 琥珀 */
-.hud-judge-good { border-top: 3px solid var(--lane3); }    /* Drifting · 蓝 */
-.hud-judge-miss { border-top: 3px solid var(--lane0); }    /* Dropout · 红 */
+.hud-judge-perfect { border-top: 3px solid var(--lane1); } /* Perfect · 米 */
+.hud-judge-great { border-top: 3px solid var(--lane2); }   /* Great · 琥珀 */
+.hud-judge-good { border-top: 3px solid var(--lane3); }    /* Good · 蓝 */
+.hud-judge-miss { border-top: 3px solid var(--lane0); }    /* Miss · 红 */
 
 @media (max-width: 420px) {
   .hud-combo-num { font-size: 2.6rem; }
@@ -1304,6 +1437,71 @@ body.play-immersive .play-page {
   min-width: 36px;
   padding: 6px 10px;
   font-size: 13px;
+}
+
+/* 打歌前的声音 / 时序入口。
+   校准不是开玩的前置考试：这些入口要一眼可见，但不能盖过上面的 Play。 */
+.unlock-extras {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px 14px;
+  margin-top: 12px;
+}
+
+.unlock-sound {
+  padding: 7px 14px;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+.unlock-link {
+  color: var(--scape-accent-2);
+  padding: 12px 0;
+  font-family: "Sora", "IBM Plex Sans", sans-serif;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* "No sound?" 段内行内链接（Settings）热区扩到 ~32px 高，不影响行文。 */
+.unlock-nosound a {
+  position: relative;
+}
+.unlock-nosound a::after {
+  content: "";
+  position: absolute;
+  inset: -9px -5px;
+}
+
+.unlock-nosound {
+  max-width: 260px;
+  text-align: left;
+  font-size: 0.74rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.unlock-nosound > summary {
+  cursor: pointer;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--scape-accent-2);
+}
+
+.unlock-nosound p {
+  margin: 6px 0 0;
+}
+
+.unlock-nosound a {
+  color: var(--accent2);
 }
 
 .error {
@@ -1637,6 +1835,9 @@ body[data-neon="3"] .neon-layer .breathe {
 @media (prefers-reduced-motion: reduce) {
   .neon-layer { display: none; }
 }
+/* 玩家在设置里主动关掉镜头/背景运动（W3C：非必要动效要允许关闭）。
+   系统偏好由上面的媒体查询兜住，两者取或。 */
+body[data-reduce-motion="1"] .neon-layer { display: none; }
 
 /* ===== FEEL PACK: results dopamine (docs/BEATSCAPE-SURGE-FX.md §2.2c) ===== */
 @keyframes gradeStamp {
@@ -1728,10 +1929,12 @@ td {
   .hero-split {
     grid-template-columns: 1fr;
     min-height: auto;
+    /* 缩短 hero 底距：移动端主按钮必须完整留在首屏（底部还有 64px tabbar）。 */
+    margin-bottom: 20px;
   }
 
+  /* 文案在前：先知道"这是音游"，demo 只做佐证（旧版 order:-1 让 demo 抢了首屏）。 */
   .hero-visual {
-    order: -1;
     height: 240px;
     min-height: 200px;
     margin-bottom: 8px;
@@ -2006,6 +2209,14 @@ td {
   margin: 0;
 }
 
+/* 移动端 .hero-visual 只有 240px 高，舞台必须跟着收：否则 demo 会溢出容器、
+   带着 55% 黑色 mask（z-index 5）盖到下面的 hero 文案上，还拦掉点击。 */
+@media (max-width: 860px) {
+  .hero-visual-play {
+    height: auto;
+  }
+}
+
 .play-wrap-hero .unlock-hint {
   max-width: 220px;
 }
@@ -2015,9 +2226,16 @@ td {
     max-width: 100%;
   }
 
+  /* 键位提示只对键盘玩家有意义：移动端藏掉，把主按钮完整留在首屏内。 */
+  .key-chips {
+    display: none;
+  }
+
+  /* 首屏优先级：kicker → H1 → 主按钮要先于 demo 出现（改版核心）。
+     旧的 58dvh 会把文案整个推出首屏；32dvh 让主按钮完整留在 tabbar 之上。 */
   .play-wrap-hero {
-    height: min(58dvh, 520px);
-    min-height: 340px;
+    height: min(32dvh, 260px);
+    min-height: 180px;
   }
 }
 
@@ -2205,11 +2423,11 @@ td {
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--accent-text);
   padding: 4px 10px;
   border-radius: 999px;
   background: rgba(226, 61, 61, 0.1);
-  border: 1px solid rgba(226, 61, 61, 0.2);
+  border: 1px solid rgba(235, 78, 78, 0.25);
 }
 
 .panel {
@@ -3374,7 +3592,7 @@ td {
 .radio-readout-band {
   font: 800 11px/1 "IBM Plex Mono", monospace;
   letter-spacing: 0.14em;
-  color: #12100f;
+  color: #000;
   background: var(--accent);
   padding: 3px 6px;
   border: 2px solid var(--ink);
@@ -3498,6 +3716,9 @@ td {
   align-items: flex-start;
   gap: 2px;
   padding: 8px 12px;
+  /* button 的 UA 默认字色是纯黑：不显式给色的话，未选中频道在 #221b19 上
+     对比度只有 1.24:1，字直接隐身。 */
+  color: var(--scape-accent-2);
   background: var(--bg-elevated);
   border: 2px solid var(--ink);
   box-shadow: 3px 3px 0 var(--ink);
@@ -3520,7 +3741,7 @@ td {
 }
 .radio-channel.active {
   background: var(--accent);
-  color: #12100f;
+  color: #000;
 }
 .radio-channel-num {
   font: 800 10px/1 "IBM Plex Mono", monospace;
@@ -3606,6 +3827,7 @@ td {
 .radio-season {
   margin-top: 26px;
 }
+/* 季标题即折叠开关（<details><summary>）：正在播的季默认展开，旧季收起。 */
 .radio-season-title {
   margin: 0 0 12px;
   font-size: 0.95rem;
@@ -3613,6 +3835,31 @@ td {
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--muted);
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  cursor: pointer;
+  list-style: none;
+  padding: 6px 0;
+}
+.radio-season-title::-webkit-details-marker {
+  display: none;
+}
+.radio-season-title::before {
+  content: "+";
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 1rem;
+  color: var(--accent-text);
+  width: 1em;
+}
+.radio-season[open] > .radio-season-title::before {
+  content: "–";
+}
+.radio-season-count {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  opacity: 0.8;
 }
 .radio-episode-head h3 {
   flex: 1;
@@ -3790,7 +4037,8 @@ td {
   position: absolute;
   top: 10px;
   left: -6px;
-  z-index: 4;
+  /* 灯牌要浮在 demo mask（z-index 5）之上，否则会被 55% 黑蒙版压暗。 */
+  z-index: 6;
   display: inline-flex;
   align-items: center;
   gap: 7px;
@@ -3799,7 +4047,7 @@ td {
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--scape-accent-2);
-  background: var(--accent);
+  background: var(--accent-deep);
   border: var(--stroke-w) solid var(--ink);
   box-shadow: 3px 3px 0 var(--ink);
   transform: skewX(-8deg);

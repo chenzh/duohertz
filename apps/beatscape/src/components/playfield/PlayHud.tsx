@@ -1,6 +1,6 @@
 import { useEffect, useRef, type RefObject } from "react";
 import type { LiveStats } from "./liveStats";
-import { SURGE_COPY, COMBO_COPY } from "../../constants/scape";
+import { SURGE_COPY, COMBO_COPY, JUDGE_COPY } from "../../constants/scape";
 
 /**
  * B-1 · Comic-panel HUD overlaid on the PlayField canvas.
@@ -27,11 +27,13 @@ const SURGE_LABEL: Record<number, string> = {
   3: SURGE_COPY.t3,
 };
 
+// 打歌中的判定词一律走 JUDGE_COPY（通用术语，见 World Bible §9.1），
+// 这里只负责大写排版，避免 HUD 与结算页各写一套。
 const JUDGE_PANELS = [
-  { key: "perfect", label: "PERFECT" },
-  { key: "great", label: "GREAT" },
-  { key: "good", label: "GOOD" },
-  { key: "miss", label: "MISS" },
+  { key: "perfect", label: JUDGE_COPY.perfect.toUpperCase() },
+  { key: "great", label: JUDGE_COPY.great.toUpperCase() },
+  { key: "good", label: JUDGE_COPY.good.toUpperCase() },
+  { key: "miss", label: JUDGE_COPY.miss.toUpperCase() },
 ] as const;
 
 type JudgeKey = (typeof JUDGE_PANELS)[number]["key"];

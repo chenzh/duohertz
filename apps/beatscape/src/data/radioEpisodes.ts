@@ -135,7 +135,7 @@ export const RADIO_EPISODES: RadioEpisode[] = [
     lines: [
       { speaker: "JUNO", text: "The Board's up. City scores in lights. TORQUE has been staring at it for ten minutes." },
       { speaker: "TORQUE", text: "I'm trying to read it without my glasses." },
-      { speaker: "ATLAS", text: "Full Broadcast means you finished without dropping a note. It doesn't mean every hit was in phase." },
+      { speaker: "ATLAS", text: "Full Combo means you finished without dropping a note. It doesn't mean every hit was Perfect." },
       { speaker: "JUNO", text: "There goes my speech about perfection." },
       { speaker: "TORQUE", text: "Keep a set for yourself, too. No score to chase. Play something you like until it feels good." },
       { speaker: "JUNO", text: "I'll put your glasses next to that very sensible advice." },

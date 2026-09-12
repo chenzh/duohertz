@@ -3,98 +3,59 @@ import { Link } from "../router";
 import { getMessages } from "../i18n";
 import { assetUrl } from "../catalog/loadCatalog";
 import { useCatalog } from "../catalog/useCatalog";
-import type { CatalogTrack } from "../types/catalog";
-import { FEATURED_TRACK_IDS, SCAPE_COPY, SCAPE_COPY_EXTRA } from "../constants/scape";
-import { CHARACTER_LIST } from "../constants/scape";
+import { CHARACTER_LIST, HOME_COPY, SCAPE_COPY } from "../constants/scape";
 import { HomeHeroPlay } from "../components/HomeHeroPlay";
-import { AudioBar } from "../components/AudioBar";
 import { CharacterAvatar } from "../components/CharacterAvatar";
-import { DistrictBadge } from "../components/DistrictBadge";
+import { CuratedRow } from "../components/CuratedRow";
 import { useReveal } from "../components/useReveal";
-import { FIRST_PLAY_TRACK_ID, INTRO_TRACK_ID, duoHref, firstPlayHref } from "../lib/firstPlay";
+import { duoHref } from "../lib/firstPlay";
+import { homeEntry } from "../lib/homeEntry";
+import { curatedPicks } from "../data/curated";
 import { dailyPlayHref, getDailyChallenge } from "../lib/dailyChallenge";
 import { trackEvent } from "../lib/analytics";
 import { RADIO_EPISODES } from "../data/radioEpisodes";
 import { episodeIndexAt } from "../lib/radio";
 import { keyLabels } from "../input/keyMap";
-import { isOnboarded, loadKeys, setOnboarded } from "../storage/settings";
+import { loadKeys } from "../storage/settings";
 import { readLastRun } from "../storage/session";
 import { HOME_PAGE_META, usePageMeta } from "../seo/pageMeta";
 import { ShiftHomeCard } from "../components/ShiftStory";
+import { loadShiftProgress } from "../lib/firstShift";
 
 /** A friendly return greeting; elapsed time never removes story progress. */
 const QUIET_BLOCK_MS = 48 * 60 * 60 * 1000;
-
-function FeaturedCard({ track }: { track: CatalogTrack }) {
-  const preview = track.preview ?? track.audio;
-  return (
-    <div className="trend-card-wrap">
-      <Link to={`/track/${track.track_id}`} className="trend-card">
-        <div className="trend-cover">
-          <img
-            className="trend-cover-img"
-            src={assetUrl(track.cover)}
-            alt=""
-            loading="lazy"
-            decoding="async"
-            width={512}
-            height={512}
-          />
-          <span className="trend-bpm">{track.bpm} BPM</span>
-        </div>
-        <div className="trend-meta">
-          <strong>{track.title}</strong>
-          <span>{track.artist}</span>
-          <div className="tier-chips">
-            <DistrictBadge district={track.district} />
-          </div>
-        </div>
-      </Link>
-      <AudioBar className="trend-preview-audio" preload="none" src={assetUrl(preview)} label={`Preview ${track.title}`} />
-    </div>
-  );
-}
 
 export function HomePage() {
   usePageMeta(HOME_PAGE_META);
   // 曲库走统一的 useCatalog：取不到时有 error 状态，而不是 unhandled rejection + 空列表。
   const { tracks, error: catalogError } = useCatalog();
   const t = getMessages();
-  const [showIntro, setShowIntro] = useState(() => !isOnboarded());
   const keys = useMemo(() => keyLabels(loadKeys()), []);
+  // 进度只存在本机：回来的玩家直接看到"下一首"，而不是再看一遍欢迎词。
+  const [progress] = useState(loadShiftProgress);
+  const entry = useMemo(() => homeEntry(tracks, progress), [tracks, progress]);
+  const curated = useMemo(() => curatedPicks(progress.completed.length), [progress.completed.length]);
 
   useEffect(() => {
     trackEvent("home_view");
   }, []);
 
-  const introTrack = tracks.find((t) => t.track_id === INTRO_TRACK_ID) ?? null;
-
-  const dismissIntro = () => {
-    setOnboarded();
-    setShowIntro(false);
-    trackEvent("intro_dismiss");
-  };
-
-  const heroTrack = tracks.find((t) => t.track_id === FIRST_PLAY_TRACK_ID) ?? tracks[0];
   const cameBackQuiet = useMemo(() => {
     const last = readLastRun();
     if (!last) return false;
     return Date.now() - new Date(last.endedAt).getTime() >= QUIET_BLOCK_MS;
   }, []);
   const onAir = RADIO_EPISODES[episodeIndexAt(Date.now())];
-  const featured = FEATURED_TRACK_IDS.map((id) => tracks.find((t) => t.track_id === id)).filter(
-    Boolean,
-  ) as CatalogTrack[];
-  const featuredSet = new Set<string>(FEATURED_TRACK_IDS);
-  const explore = tracks.filter((t) => !featuredSet.has(t.track_id));
-  const daily = getDailyChallenge(tracks.map((t) => t.track_id));
-  const dailyTrack = daily ? tracks.find((t) => t.track_id === daily.trackId) : null;
+  const curatedIds = new Set(curated.picks.map((p) => p.trackId));
+  const explore = tracks.filter((x) => !curatedIds.has(x.track_id)).slice(0, 18);
+  const daily = getDailyChallenge(tracks.map((x) => x.track_id));
+  const dailyTrack = daily ? tracks.find((x) => x.track_id === daily.trackId) : null;
 
   // Reveal the sections below the hero as you scroll. Keyed on tracks.length so
   // the blocks that only exist after the catalog resolves still get picked up.
   const homeRef = useReveal<HTMLElement>(
     tracks.length,
-    ".radio-episode-banner, .meet-characters, .daily-challenge-banner, .trending-section",
+    ".curated-section, .radio-episode-banner, .meet-characters, .daily-challenge-banner, .trending-section",
   );
 
   return (
@@ -106,40 +67,32 @@ export function HomePage() {
       )}
       <div className="hero-split">
         <div className="hero-copy">
-          <p className="eyebrow">{SCAPE_COPY.rightsShort} · 4-lane rhythm · play in browser</p>
-          <h1>
-            Feel the Beat.
-            <br />
-            Own the Scape.
-          </h1>
-          <p className="tagline">
-            A city running on music. A pirate radio crew keeping it together.
-            Play original pop &amp; EDM tracks in your browser — or take the call and meet NIGHTSHIFT.
-          </p>
-          <div className="key-chips" aria-label="Keyboard lanes">
-            {keys.map((k, i) => (
-              <span key={i} className="key-chip">
-                {k}
-              </span>
-            ))}
+          {/* 先一句话说清"这是个音游"，再让按钮直指第一首。 */}
+          <p className="eyebrow">{HOME_COPY.kicker}</p>
+          <h1>{HOME_COPY.title}</h1>
+          <p className="tagline">{HOME_COPY.subtitle}</p>
+          {/* 一句角色台词就够了 —— 世界观在打歌之后讲，不在打歌之前。 */}
+          <blockquote className="hero-quote">
+            <span className="hero-quote-speaker">{entry.line.speaker}</span>
+            <p>“{entry.line.text}”</p>
+          </blockquote>
+          <div className="hero-entry">
+            <Link
+              className="btn primary hero-play"
+              to={entry.href}
+              onClick={() => trackEvent("home_play_click", { track: entry.track?.track_id ?? "", cta: entry.cta })}
+            >
+              {entry.cta}
+            </Link>
+            <p className="hero-entry-meta">{entry.sub}</p>
           </div>
           <div className="cta-row">
-            {heroTrack && (
-              <Link
-                className="btn primary"
-                to={firstPlayHref()}
-                onClick={() => trackEvent("home_play_click", { track: heroTrack.track_id })}
-              >
-                {SCAPE_COPY.playNow}
-              </Link>
-            )}
             <Link className="btn ghost" to="/library">
-              {t.ui.browseTracks}
+              {HOME_COPY.browse}
             </Link>
-            <Link className="btn ghost" to="/shift">First shift · Story</Link>
-            {/* DUO · 两人一键盘同屏对战，入口跟着主 CTA 走。 */}
-            {heroTrack && (
-              <Link className="btn ghost" to={duoHref(heroTrack.track_id)}>
+            {/* Duo 对还没开始的人来说是噪音：打过至少一个节点再出现。 */}
+            {entry.track && progress.completed.length > 0 && (
+              <Link className="btn ghost" to={duoHref(entry.track.track_id)}>
                 Duo
               </Link>
             )}
@@ -147,6 +100,14 @@ export function HomePage() {
               Calibrate
             </Link>
           </div>
+          <div className="key-chips" aria-label="Keyboard lanes">
+            {keys.map((k, i) => (
+              <span key={i} className="key-chip">
+                {k}
+              </span>
+            ))}
+          </div>
+          <p className="hero-rights">{SCAPE_COPY.rightsShort}</p>
         </div>
 
         <div className="hero-visual hero-visual-play">
@@ -161,7 +122,16 @@ export function HomePage() {
         </p>
       )}
 
+      {/* First Shift 是辅助说明，不是进入游戏的前置条件。 */}
       <ShiftHomeCard />
+
+      <CuratedRow
+        title={curated.title}
+        subtitle={curated.subtitle}
+        picks={curated.picks}
+        tracks={tracks}
+        className="curated-section"
+      />
 
       {onAir && (
         <section className="radio-episode-banner" aria-label="On air now — The Late Static">
@@ -198,7 +168,7 @@ export function HomePage() {
       {daily && dailyTrack && (
         <section className="daily-challenge-banner">
           <div>
-            <p className="eyebrow">{SCAPE_COPY_EXTRA.dailyChallenge}</p>
+            <p className="eyebrow">Today's pick</p>
             <h2>{dailyTrack.title}</h2>
             <p className="tagline">
               {dailyTrack.artist} · {daily.tier} · {daily.mode} · {daily.dateKey}
@@ -209,99 +179,42 @@ export function HomePage() {
             to={dailyPlayHref(daily)}
             onClick={() => trackEvent("daily_challenge_click", { track: daily.trackId })}
           >
-            {SCAPE_COPY_EXTRA.dailyPlay}
+            Play daily
           </Link>
         </section>
       )}
-
-      <section className="trending-section">
-        <div className="section-head">
-          <h2>{t.ui.featuredInScape}</h2>
-          <Link to="/library" className="section-link">
-            {t.ui.seeAll}
-          </Link>
-        </div>
-        <div className="trending-scroll">
-          {featured.map((t) => (
-            <FeaturedCard key={t.track_id} track={t} />
-          ))}
-        </div>
-      </section>
 
       {explore.length > 0 && (
         <section className="trending-section">
           <div className="section-head">
             <h2>{t.ui.exploreCity}</h2>
+            <Link to="/library" className="section-link">
+              {t.ui.seeAll}
+            </Link>
           </div>
           <div className="trending-scroll">
-            {explore.map((t) => (
-              <Link key={t.track_id} to={`/track/${t.track_id}`} className="trend-card">
+            {explore.map((x) => (
+              <Link key={x.track_id} to={`/track/${x.track_id}`} className="trend-card">
                 <div className="trend-cover">
                   <img
                     className="trend-cover-img"
-                    src={assetUrl(t.cover)}
+                    src={assetUrl(x.cover)}
                     alt=""
                     loading="lazy"
                     decoding="async"
                     width={512}
                     height={512}
                   />
-                  <span className="trend-bpm">{t.bpm} BPM</span>
+                  <span className="trend-bpm">{x.bpm} BPM</span>
                 </div>
                 <div className="trend-meta">
-                  <strong>{t.title}</strong>
-                  <span>{t.artist}</span>
+                  <strong>{x.title}</strong>
+                  <span>{x.artist}</span>
                 </div>
               </Link>
             ))}
           </div>
         </section>
-      )}
-
-      {showIntro && (
-        <div className="home-intro-backdrop" role="dialog" aria-modal="true" aria-label={SCAPE_COPY.introTitle}>
-          <div className="home-intro">
-            <p className="eyebrow">{SCAPE_COPY.introTitle}</p>
-            {introTrack && (
-              <div className="home-intro-track">
-              <img
-                className="home-intro-cover"
-                src={assetUrl(introTrack.cover)}
-                alt=""
-                loading="lazy"
-                decoding="async"
-                width={512}
-                height={512}
-                aria-hidden
-              />
-                <div className="home-intro-track-meta">
-                  <strong>{introTrack.title}</strong>
-                  <span>
-                    {introTrack.artist} · Easy · Casual
-                  </span>
-                </div>
-              </div>
-            )}
-            <p className="tagline">{SCAPE_COPY.introBody}</p>
-            <div className="cta-row">
-              <Link className="btn primary" to="/shift" onClick={dismissIntro}>Take the call · Story</Link>
-              <Link
-                className="btn"
-                to={firstPlayHref(introTrack ? introTrack.track_id : undefined)}
-                onClick={() => {
-                  setOnboarded();
-                  setShowIntro(false);
-                  trackEvent("intro_start", { track: introTrack ? introTrack.track_id : INTRO_TRACK_ID });
-                }}
-              >
-                {SCAPE_COPY.introStart}
-              </Link>
-              <button type="button" className="btn ghost" onClick={dismissIntro}>
-                {SCAPE_COPY.introDismiss}
-              </button>
-            </div>
-          </div>
-        </div>
       )}
     </section>
   );

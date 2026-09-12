@@ -1,10 +1,16 @@
 import { Link } from "../router";
-import { FIRST_SHIFT, shiftPlayHref } from "../data/firstShift";
+import { FIRST_SHIFT, shiftPlayHref, type ShiftStep } from "../data/firstShift";
 import { loadShiftProgress, shiftStorageNotice } from "../lib/firstShift";
 import { CrewDialogue, ShiftCircuit } from "../components/ShiftStory";
+import type { CrewLine } from "../data/firstShift";
 import { usePageMeta } from "../seo/pageMeta";
 
 const META = { title: "Your First Shift — BeatScape", description: "A broken radio, three musicians, and your first night on the line. Play three short rhythm sets and help NIGHTSHIFT get back on air." };
+
+/** 开场台词：有人物就用人物的那几句，没有就念全部（见 data/firstShift.ts）。 */
+function openingLines(step: ShiftStep): readonly CrewLine[] {
+  return step.opening ?? step.before;
+}
 
 export function FirstShiftPage() {
   usePageMeta(META);
@@ -21,9 +27,10 @@ export function FirstShiftPage() {
     <p className="shift-storage-note" role="status">{shiftStorageNotice()}</p>
     {next ? <article className="shift-scene" aria-labelledby="shift-scene-title">
       <div className="shift-scene-heading"><p className="eyebrow">Connection {count + 1} of 3 · {next.district}</p><h2 id="shift-scene-title">{next.title}</h2><p className="shift-setup">{next.setup}</p></div>
-      <CrewDialogue lines={next.before} />
+      <CrewDialogue lines={openingLines(next)} />
       <div className="shift-play-card">
-        <div><p className="eyebrow">Your part</p><h3>{next.trackTitle}</h3><p>Easy · Casual. Tap the lanes as notes reach the line. Stay to the end and land a note to carry the signal; every grade counts.</p></div>
+        <div><p className="eyebrow">Your part</p><h3>{next.trackTitle}</h3><p>Easy · Casual. Tap the lanes as notes reach the line. Stay to the end and land a note to carry the signal; every grade counts.</p>
+        <p className="shift-link-goal"><span className="shift-link-from">{next.link.from}</span><span className="shift-link-arrow" aria-hidden>→</span><span className="shift-link-to">{next.link.to}</span></p></div>
         <Link className="btn primary" to={shiftPlayHref(next)}>Play {next.trackTitle}</Link>
       </div>
     </article> : <article className="shift-scene shift-finale" aria-labelledby="shift-finale-title">

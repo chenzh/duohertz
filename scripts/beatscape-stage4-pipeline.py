@@ -65,6 +65,12 @@ def main() -> int:
     run(["python3", str(SCRIPTS / "beatscape-ingest-stage4.py")])
     for tr in tracks:
         run(["python3", str(SCRIPTS / "beatscape-chartgen.py"), "--track", tr["track_id"]])
+    # 门禁：谱面必须与音频匹配（onset 踩点 / 互相关偏移 / 贴格率），失败即中断，
+    # 坏谱不会进 catalog.json。老曲重跑若卡在音频硬上限，用 --min-* 放宽。
+    run(
+        ["python3", str(SCRIPTS / "beatscape-chart-gate.py")]
+        + sum((["--track", tr["track_id"]] for tr in tracks), [])
+    )
     run(["python3", str(SCRIPTS / "beatscape-ingest-stream.py")])
     run(["python3", str(SCRIPTS / "beatscape-cover.py"), "--all-catalog"])
     run(["python3", str(SCRIPTS / "beatscape-generate-og.py"), "--all-catalog"])
