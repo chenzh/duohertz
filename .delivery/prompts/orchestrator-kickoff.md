@@ -9,6 +9,8 @@ Use the Issue's linked task documents when present; the default product package 
 - Implement, verify required checks, review actionable risks, and fix failures. Respect the unattended queue's grading and retry policy when running as a queued job.
 - Return the requested artifact with command evidence and remaining blockers. Prepare a PR when the task calls for one; commit, push, create PRs, post comments/notifications, merge, or deploy only within existing authorization. A passing agent process or local test suite is not evidence that PR CI or release sign-off passed.
 
+When invoked by `dispatch_codex.py`, the worker implements and verifies in its assigned worktree, then commits locally and reports evidence. The supervisor invokes the independent read-only review and owns authorized push, PR creation and issue-state updates. Do not perform those actions or send comments/notifications from the worker; do not merge or deploy. This supervised route uses `.ai-company/config/codex-models.json` for its model roles.
+
 Issue: <GITHUB_ISSUE_URL>
 
 Start by identifying this Issue's outcome, scope, and acceptance criteria.

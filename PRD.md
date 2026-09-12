@@ -653,6 +653,8 @@ InferenceNode
 | 4 | **产品正式品牌名 + 17 个商标注册** | **IP 战略阻塞项**：没有商标就没有可衍生的品牌 | M1 前必须确定（**v1.3 升级为阻塞**） | **阻塞** |
 | 5 | YuE 是否 v0.2 默认开启 | 资源与质量 | 先 A/B，非默认 | 待定 |
 | 6 | 角色 IP 与 BeatScape 无角色原则的兼容（v1.3 新增） | 视觉/法律 | 删除 RESONANCE-VISUAL-PLAN §1.1/§8「无角色」约束，明列角色系统 | 进行中 |
+| 7 | MiniMax Music 3.0 是否作为本地候选引擎 | 中文歌词、器乐结构、Apple Silicon 内存与商业许可 | **优先于 YuE 做 10 首小样本**；通过 A/B 与许可留档前，不切换现有 SA3 + ACE-Step 生产 | 待验证 |
+| 8 | YuE 是否作为人声质量对照基线 | CUDA 资源、歌词清晰度与长段落稳定性 | 有 CUDA 机器时做 5 首对照；不优先接入当前本地管线 | 待验证 |
 
 ---
 
@@ -666,6 +668,9 @@ InferenceNode
 - [ ] 局域网 Windows → Mac API P95 延迟
 - [ ] BGM 无人声泄漏抽检（10 首）
 - [ ] 24h 连续生成：温升、降频、稳定性
+- [ ] MiniMax Music 3.0：中文歌词、器乐、BPM 稳定性、段落结构与 Apple Silicon 内存各做小样本记录（目标 10 首）
+- [ ] MiniMax Music 3.0：确认 Community License、显著品牌展示、年收入门槛、内容安全与版权防护义务；未完成前不得作为生产默认引擎
+- [ ] YuE：有 CUDA 机器时生成 5 首对照，记录人声表现、歌词清晰度、长段落稳定性与耗时
 
 ### 20.2 官方链接速查
 
@@ -674,6 +679,9 @@ InferenceNode
 | ACE-Step 1.5 | https://github.com/ace-step/ACE-Step-1.5 |
 | Stable Audio 3 | https://github.com/Stability-AI/stable-audio-3 |
 | SA3 MLX 安装 | https://github.com/Stability-AI/stable-audio-3/tree/main/optimized/mlx |
+| MiniMax Music 3.0 官方介绍 | https://www.minimax.io/blog/minimax-music-3-0-next-generation-open-weights-production-ready-versatile-music-model |
+| MiniMax Music 3.0 许可证 | https://huggingface.co/MiniMaxAI/MiniMax-Music3/blob/main/LICENSE |
+| MiniMax Music 3.0 MLX（第三方，Alpha） | https://github.com/appautomaton/mlx-minimax-music3 |
 | YuE | https://github.com/multimodal-art-projection/YuE |
 | tadpole-studio | https://github.com/proximasan/tadpole-studio |
 | SaaS 模板参考 | https://github.com/Andreaswt/ai-music-generation-saas |

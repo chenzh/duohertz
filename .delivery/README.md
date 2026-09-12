@@ -29,22 +29,22 @@
 
 ## 操作入口
 
-脚本使用 Cursor Cloud API 或已登录的 `cursor-agent`；这是现有执行器集成，不改变当前 Codex 任务的模型配置。详细参数见 [scripts/agent-delivery](../scripts/agent-delivery/README.md)。
+工程派单已接入官方 Codex CLI，按 `.ai-company/config/codex-models.json` 分别选择实现与独立审查岗位。普通交互任务继续使用其当前模型；公司监督式派单的实际模型以运行回执为准。详细参数见 [scripts/agent-delivery](../scripts/agent-delivery/README.md)。
 
-前置：`gh` 已认证、`jq` / `curl` 可用；Cloud 路径配置 `CURSOR_API_KEY`，本地 CLI 路径使用会话登录。GitHub 设置中配置队列标签、required checks 和所需 Secrets，密钥不写入仓库。
+执行主机需要 `codex login status` 成功、已认证的 `gh`、Git 与 Python 3。`--local-only` 仍调用模型并更新 Issue 状态，只保留本地提交与审查结果；不把它当成离线命令。GitHub 的旧云端派单入口迁移为手动提示并返回非零，实际工程任务通过指定执行主机派单。
 
 ```bash
 # 生成可检查的 prompt；先准备 gh issue view --json title,body,url,number 的 JSON
 bash scripts/agent-delivery/build-prompt.sh /tmp/issue.json
 
 # 已授权派单时，123 为 Issue 编号
-bash scripts/agent-delivery/dispatch-cursor-agent.sh 123
+bash scripts/agent-delivery/dispatch-codex-cli.sh 123 --local-only
 
 # 查询 PR 456 的自动合并资格
 bash scripts/agent-delivery/check-merge-eligible.sh 456
 ```
 
-GitHub 集成入口：[派单 workflow](../.github/workflows/agent-delivery-dispatch.yml)、[合并门禁](../.github/workflows/agent-delivery-gate.yml)、[Issue 模板](../.github/ISSUE_TEMPLATE/agent_safe_task.yml)。以当前文件和仓库设置为准；修改文档不会启用 schedule、Secrets 或通知。
+GitHub 集成入口：[旧派单迁移提示](../.github/workflows/agent-delivery-dispatch.yml)、[合并门禁](../.github/workflows/agent-delivery-gate.yml)、[Issue 模板](../.github/ISSUE_TEMPLATE/agent_safe_task.yml)。以当前文件和仓库设置为准；修改文档不会启用 schedule、Secrets 或通知。
 
 ## 同步维护
 

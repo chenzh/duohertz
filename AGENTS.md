@@ -31,3 +31,14 @@
 - agent-safe Issue 按需使用 [music-delivery](.agents/skills/music-delivery/SKILL.md)；普通开发不预读公司手册。
 - 不提交 `.env`、密钥、token；未经要求不 commit/push。部署、合并、外部消息须有对应授权；技术检查不替代人工耳检、真机验收或上线签审。
 - 有实质推进时更新 `SESSION.md` 的 `updated` 和本任务相关 `next`，追加 `worklog/YYYY-MM-DD.md`“已完成”；保留其他工作线。已有会话文件只更新本会话。里程碑可用现有工具沉淀第二大脑，工具不可用则本地记录。
+
+<!-- cursor-codex-sync:project-harness:start -->
+<!-- Managed by cursor-codex-sync/project-sync. Source project: /Users/zhenhuachen/Desktop/MusicSaas -->
+若本区块与同一 AGENTS.md 标记外的既有 Codex 指南冲突，以标记外指南及用户当前指令为准。
+<!-- source: .cursor/rules/code-index.mdc -->
+
+遵循仓库根 [AGENTS.md](../../AGENTS.md)；已加载时不重复读取。
+按任务从 [CODE-INDEX](../../docs/CODE-INDEX.md) 定位模块；索引排除项见 [.cursorignore](../../.cursorignore)。
+
+<!-- /source: .cursor/rules/code-index.mdc -->
+<!-- cursor-codex-sync:project-harness:end -->

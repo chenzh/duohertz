@@ -13,12 +13,14 @@
 |------|------|----------|----------|
 | ACE-Step 1.5 | **MIT** | 允许商用 | 官方鼓励商用；用户自担侵权风险 |
 | Stable Audio 3 | **Community License** | 组织年收入 **&lt;100 万美元** 免费商用 | **产出归用户**（Stability 声明） |
+| MiniMax Music 3.0（候选） | **MiniMax Community License** | 需核对当前许可证；商业产品需显著显示 **MiniMax-Music3**，年收入及服务开放场景存在额外条件 | 未完成许可审查、内容安全与版权防护留档前，不进入生产默认路径 |
 | YuE（v0.2 备选） | Apache 2.0 | 允许；建议署名 | 用户自担侵权风险 |
 
 **官方 LICENSE：**
 
 - ACE-Step 1.5: https://github.com/ace-step/ACE-Step-1.5/blob/main/LICENSE
 - SA3: https://huggingface.co/stabilityai/stable-audio-3-medium/blob/main/LICENSE.md
+- MiniMax Music 3.0: https://huggingface.co/MiniMaxAI/MiniMax-Music3/blob/main/LICENSE
 - YuE: https://github.com/multimodal-art-projection/YuE/blob/main/LICENSE
 
 ---
@@ -32,6 +34,7 @@
 | C-03 | 禁止用户 prompt 模仿指定艺人（RULES 可 enforcement） | ⬜ | 产品 |
 | C-04 | 年收入接近 100 万美元时启动 SA3 Enterprise 评估 | ⬜ | 财务 |
 | C-05 | 保存 Job 元数据备查（engine、时间、mode） | ⬜ | 工程 |
+| C-06 | MiniMax Music 3.0 候选：保存许可证版本、品牌展示、收入门槛、内容安全与版权防护审查记录 | ⬜ | 法务/产品 |
 
 ---
 
@@ -56,6 +59,7 @@
 | ACE-Step 全是 Apache 2.0 | **1.5 = MIT** |
 | MusicGen 代码 MIT 即可 | **权重 NC** |
 | 开源 = 无版权纠纷 | 风格相似仍可能侵权 |
+| MiniMax Music 3.0 可直接按 Apache/MIT 使用 | **不是**；以 MiniMax Community License 当前原文和商业条件为准 |
 
 ---
 
