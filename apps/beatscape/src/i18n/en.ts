@@ -38,7 +38,7 @@ export const en: Messages = {
     play: "Play",
     loading: "Loading…",
     copyLink: "Copy link",
-    downloadPoster: "Download poster",
+    downloadPoster: "Download 4:5",
     shareRun: "Share your run",
     newHonor: "New honor unlocked",
     copyFailed: "Copy failed",

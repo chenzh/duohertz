@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "date": "2026-09-20",
+  "artifactSha256": "92e132b857496a93070ee70198579f29637bf8bd46f91b9985b297e22c65ae49",
+  "scope": "Local headless Chrome laboratory diagnostic, not a physical-device or launch acceptance test.",
+  "profile": {
+    "viewport": "412x915",
+    "deviceScaleFactor": 2,
+    "cpuSlowdown": 4,
+    "downloadMbps": 10,
+    "uploadMbps": 2,
+    "latencyMs": 100,
+    "serviceWorkers": "blocked",
+    "browserCache": "disabled"
+  },
+  "method": {
+    "ready": "Time from a Play link click until .overlay-tap .unlock-btn is enabled, measured with performance.now() in the same SPA realm.",
+    "home": "Fresh browser context per repeat; navigate to Home, wait for Start first run, click directly to Play.",
+    "shift": "Fresh context per repeat; navigate to /shift and dwell 3000 ms after Play Voltage Drop is visible. The comparison stubs navigator.connection.saveData=true to suppress only the optional story prefetch; no other application code reads saveData."
+  },
+  "homeDirect": [
+    { "clickToReadyMs": 1691.5, "audioStartAfterClickMs": 224.5, "audioTransferMs": 1311.8, "audioTransferBytes": 1467796 },
+    { "clickToReadyMs": 1601.5, "audioStartAfterClickMs": 137.0, "audioTransferMs": 1309.0, "audioTransferBytes": 1467796 },
+    { "clickToReadyMs": 1607.0, "audioStartAfterClickMs": 136.3, "audioTransferMs": 1313.5, "audioTransferBytes": 1467796 }
+  ],
+  "shiftAfterDwell": {
+    "prefetch": [
+      { "clickToReadyMs": 711.4, "audioCompletedBeforeClick": true, "audioTransferBytes": 1467796 },
+      { "clickToReadyMs": 612.2, "audioCompletedBeforeClick": true, "audioTransferBytes": 1467796 },
+      { "clickToReadyMs": 584.6, "audioCompletedBeforeClick": true, "audioTransferBytes": 1467796 }
+    ],
+    "saveDataNoPrefetch": [
+      { "clickToReadyMs": 1568.8, "audioCompletedBeforeClick": false, "audioTransferBytes": 1467796 },
+      { "clickToReadyMs": 1574.2, "audioCompletedBeforeClick": false, "audioTransferBytes": 1467796 },
+      { "clickToReadyMs": 1568.9, "audioCompletedBeforeClick": false, "audioTransferBytes": 1467796 }
+    ]
+  },
+  "limits": [
+    "Three repeats are a diagnostic, not the fixed 26-observation performance budget.",
+    "The shift prefetch helps only visitors who open /shift and remain long enough; the Home primary CTA goes directly to Play.",
+    "A warm, service-worker-served first attempt was excluded after showing zero network transfer; every recorded observation used a fresh context with service workers blocked and cache disabled."
+  ]
+}

@@ -8,13 +8,13 @@
 
 | 字体 | 当前用途 | 归档授权 | 授权文本 |
 |------|----------|----------|----------|
-| **Anton** | Display：标题、HUD 数字、判定文案；站点 OG 卡 | SIL OFL 1.1 | [fonts/anton-OFL.txt](fonts/anton-OFL.txt) |
+| **Anton** | Display：标题、HUD 数字、判定文案；站点与单曲 OG 卡 | SIL OFL 1.1 | [fonts/anton-OFL.txt](fonts/anton-OFL.txt) |
 | **Sora** | 次级标题、强调标签 | SIL OFL 1.1 | [fonts/sora-OFL.txt](fonts/sora-OFL.txt) |
-| **IBM Plex Sans** | 数据、正文、UI | SIL OFL 1.1 | [fonts/ibmplexsans-OFL.txt](fonts/ibmplexsans-OFL.txt) |
+| **IBM Plex Sans** | 数据、正文、UI；单曲 OG 元数据与 CTA | SIL OFL 1.1 | [fonts/ibmplexsans-OFL.txt](fonts/ibmplexsans-OFL.txt) |
 
-字体引用见 [index.html](../../apps/beatscape/index.html) 与 [styles.css](../../apps/beatscape/src/styles.css)；归档文本来自 Google Fonts 上游仓库的 `ofl/<family>/OFL.txt`。站点 OG 的 [HTML 模板](../../apps/beatscape/scripts/og-card.html) 与[生成脚本](../../apps/beatscape/scripts/generate-site-og.mjs)使用 Anton。
+字体引用见 [index.html](../../apps/beatscape/index.html) 与 [styles.css](../../apps/beatscape/src/styles.css)；归档文本来自 Google Fonts 上游仓库的 `ofl/<family>/OFL.txt`。站点 OG 的 [HTML 模板](../../apps/beatscape/scripts/og-card.html) 与[生成脚本](../../apps/beatscape/scripts/generate-site-og.mjs)使用 Anton；[单曲 OG 生成器](../../scripts/beatscape-generate-og.py)固定读取仓内 Anton / IBM Plex Sans WOFF2，不使用系统商业字体。
 
-历史记录：单曲 OG 生成器 [beatscape-generate-og.py](../../scripts/beatscape-generate-og.py) 曾修正系统 Arial 字体路径，现有实现从候选字体中查找、缺少字体时省略文字。该脚本生成的本地单曲 OG 不属于当前 BeatScape 发布包；本段不构成对所有历史图片的重新验收。
+当前单曲 OG 生成器要求 Pillow 与仓内字体；缺少依赖或字体会失败，不允许静默退化为无文字几何图。105 张当前卡均由该脚本生成，发布器逐张校验 PNG 签名与 1200×630 尺寸。技术校验和三张跨街区视觉抽样不替代完整人工美术签审。
 
 ## 2. 音频资产快照
 
@@ -35,7 +35,7 @@
 |------|----------|-----------------|
 | 曲目封面 | 105 张 `catalog/<track_id>/cover.svg` | [public/catalog](../../apps/beatscape/public/catalog/)；[封面生成器](../../scripts/beatscape-cover.py) |
 | 站点 OG | 1 张 `og.png`，1200 × 630 | [当前站点图](../../apps/beatscape/public/og.png)；§1 中的模板与生成脚本 |
-| 本地单曲 OG | `public/catalog` 可存在单曲 `og.png`；当前发布流程剔除这些文件，曲目分享图回退站点 OG | [release.mjs](../../apps/beatscape/scripts/release.mjs)；当前 `dist` 中仅根目录 `og.png` |
+| 单曲 OG | 105 张 `catalog/<track_id>/og.png`，1200 × 630，约 4.8 MiB；当前随静态 Track 页发布 | [单曲 OG 生成器](../../scripts/beatscape-generate-og.py)；[release.mjs](../../apps/beatscape/scripts/release.mjs) 强制存在、尺寸与内容哈希 |
 | 角色位图 | **7 个 District 文件组，共 7 张 PNG + 14 张 WebP**，当前均随发布包复制 | [public/characters](../../apps/beatscape/public/characters/)；当前 `dist/characters` 文件清单 |
 
 七个文件组的名称为 `afterhours-lane`、`chrome-yard`、`glass-rim`、`night-grid`、`pulse-core`、`skyline-hook`、`slide-district`；每组包含 `<slug>.png`、`<slug>-128.webp`、`<slug>-512.webp`。不能继续将当前站点描述为“无人物位图”或“全部程序化几何素材”。

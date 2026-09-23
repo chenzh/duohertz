@@ -1,6 +1,11 @@
+export type AudioLoadProgress =
+  | { phase: "download"; loadedBytes: number; totalBytes: number | null }
+  | { phase: "decode" };
+
 export type EarlyAudioDownload = {
   controller: AbortController;
   promise: Promise<ArrayBuffer>;
+  subscribe(listener: (progress: AudioLoadProgress) => void): () => void;
 };
 
 declare global {

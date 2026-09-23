@@ -1,5 +1,11 @@
 import { defineConfig, devices } from '@playwright/test';
 
+const requestedPort = Number(process.env.PLAYWRIGHT_PORT ?? 4176);
+const port = Number.isInteger(requestedPort) && requestedPort > 0 && requestedPort <= 65535
+  ? requestedPort
+  : 4176;
+const baseURL = `http://127.0.0.1:${port}`;
+
 export default defineConfig({
   testDir: './e2e',
   timeout: 45000,
@@ -7,7 +13,7 @@ export default defineConfig({
   workers: 1,
   reporter: 'list',
   use: {
-    baseURL: 'http://127.0.0.1:4176',
+    baseURL,
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
     channel: process.env.PLAYWRIGHT_CHANNEL,
@@ -17,8 +23,8 @@ export default defineConfig({
     { name: 'mobile', use: { ...devices['Pixel 7'] } },
   ],
   webServer: {
-    command: 'VITE_BASE=/ npm run preview -- --port 4176 --strictPort',
-    url: 'http://127.0.0.1:4176',
+    command: `npm run preview -- --port ${port} --strictPort`,
+    url: baseURL,
     reuseExistingServer: false,
   },
 });

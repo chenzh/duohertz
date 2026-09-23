@@ -27,8 +27,9 @@ test('production navigation and layouts', async ({ page }, info) => {
 
 test('catalog, preview audio, and full-track destination', async ({ page }) => {
   await page.goto('/library');
-  await expect(page.locator('.track-card')).toHaveCount(catalog.tracks.length);
-  await page.getByRole('textbox').fill('Neon Pulse');
+  await expect(page.locator('.track-card')).toHaveCount(Math.min(24, catalog.tracks.length));
+  await expect(page.getByRole('button', { name: 'Show 24 more tracks', exact: true })).toBeVisible();
+  await page.getByRole('searchbox', { name: 'Search tracks', exact: true }).fill('Neon Pulse');
   await expect(page.locator('.track-card')).toHaveCount(1);
   await page.locator('.track-card').click();
   await expect(page.getByRole('heading', { name: 'Neon Pulse', exact: true })).toBeVisible();
@@ -60,7 +61,7 @@ test('note speed uses the slider and persists through refresh', async ({ page })
   const slider = page.getByRole('slider', { name: 'Note speed', exact: true });
   await slider.focus();
   for (let i = 0; i < 10; i++) await slider.press('ArrowRight');
-  await page.getByRole('button', { name: 'Save settings' }).click();
+  await expect(page.getByRole('status')).toContainText('Saved on this device');
   await page.reload();
   await expect(slider).toHaveValue('1.5');
   const bias = await page.evaluate(() => JSON.parse(localStorage.getItem('bs_settings')!).scrollBias);
@@ -109,13 +110,94 @@ test('R really restarts loaded audio repeatedly after the initial loading state'
   }
 });
 
-test('audio failure offers a working retry', async ({ page }) => {
-  await page.route('**/audio.m4a*', (route) => route.fulfill({ status: 503, body: 'Temporarily unavailable' }));
-  await page.goto('/play/bs-s1-01?tier=easy&mode=casual');
-  await expect(page.getByText('Signal lost', { exact: true })).toBeVisible();
-  await page.unroute('**/audio.m4a*');
-  await page.getByRole('button', { name: 'Retry loading' }).click();
-  await expect(page.locator('.overlay-tap .unlock-btn')).toBeVisible();
+test.describe('direct audio failure recovery', () => {
+  // Playwright routes cannot intercept requests made by a service worker. Keep
+  // this app-level fault injection direct; PWA behavior has dedicated coverage.
+  test.use({ serviceWorkers: 'block' });
+
+  test('transient audio failures recover without interrupting the player', async ({ page }) => {
+    let attempts = 0;
+    await page.route('**/audio.m4a*', (route) => {
+      attempts++;
+      return attempts <= 2
+        ? route.fulfill({ status: 503, body: 'Temporarily unavailable' })
+        : route.continue();
+    });
+    await page.goto('/play/bs-s1-01?tier=easy&mode=casual');
+
+    await expect(page.locator('.overlay-tap .unlock-btn')).toBeVisible();
+    await expect(page.getByText('Signal lost', { exact: true })).toHaveCount(0);
+    expect(attempts).toBe(3);
+  });
+
+  test('audio failure retries in place and returns keyboard focus to Start playing', async ({ page }, info) => {
+    await page.route('**/audio.m4a*', (route) => route.fulfill({ status: 503, body: 'Temporarily unavailable' }));
+    await page.goto('/play/bs-s1-01?tier=easy&mode=casual');
+    const dialog = page.getByRole('alertdialog', { name: 'Audio loading failed' });
+    await expect(dialog).toBeVisible();
+    await expect(dialog.getByText('Support code: AUDIO-503', { exact: true })).toBeVisible();
+    await expect(dialog).not.toContainText('Audio load failed (503)');
+    const retry = dialog.getByRole('button', { name: 'Retry loading' });
+    await expect(retry).toBeFocused();
+    const back = dialog.getByRole('button', { name: 'Back to track' });
+    await page.keyboard.press('Shift+Tab');
+    await expect(back).toBeFocused();
+    await page.keyboard.press('Tab');
+    await expect(retry).toBeFocused();
+    const documentMarker = await page.evaluate(() => {
+      const value = crypto.randomUUID();
+      (window as typeof window & { __audioRetryDocument?: string }).__audioRetryDocument = value;
+      return value;
+    });
+    await page.screenshot({ path: info.outputPath('solo-audio-error.png'), animations: 'disabled' });
+    await page.unroute('**/audio.m4a*');
+    await retry.click();
+    const start = page.locator('.overlay-tap .unlock-btn');
+    await expect(start).toBeVisible();
+    await expect(start).toBeFocused();
+    expect(await page.evaluate(() => (window as typeof window & { __audioRetryDocument?: string }).__audioRetryDocument)).toBe(documentMarker);
+  });
+
+  test('Duo shows one failure dialog and retries both receivers in place', async ({ page }, info) => {
+    await page.route('**/audio.m4a*', (route) => route.fulfill({ status: 503, body: 'Temporarily unavailable' }));
+    await page.goto('/duo/bs-s1-01?tier=easy&mode=casual');
+    const dialog = page.getByRole('alertdialog', { name: 'Both receivers offline' });
+    await expect(dialog).toBeVisible();
+    await expect(page.getByText('Signal lost', { exact: true })).toHaveCount(1);
+    await expect(dialog.getByText('Support code: AUDIO-503', { exact: true })).toBeVisible();
+    await expect(dialog).not.toContainText('Audio load failed (503)');
+    const retry = dialog.getByRole('button', { name: 'Retry both receivers' });
+    await expect(retry).toBeFocused();
+    const back = dialog.getByRole('button', { name: 'Back to track' });
+    await page.keyboard.press('Shift+Tab');
+    await expect(back).toBeFocused();
+    await page.keyboard.press('Tab');
+    await expect(retry).toBeFocused();
+    const documentMarker = await page.evaluate(() => {
+      const value = crypto.randomUUID();
+      (window as typeof window & { __audioRetryDocument?: string }).__audioRetryDocument = value;
+      return value;
+    });
+    await page.screenshot({ path: info.outputPath('duo-audio-error.png'), animations: 'disabled' });
+    await page.unroute('**/audio.m4a*');
+    let releaseRetry!: () => void;
+    const retryHeld = new Promise<void>((resolve) => { releaseRetry = resolve; });
+    await page.route('**/audio.m4a*', async (route) => {
+      await retryHeld;
+      await route.continue();
+    });
+    try {
+      await retry.click();
+      await expect(dialog.getByRole('button', { name: 'Reconnecting…' })).toBeDisabled();
+      await expect(dialog).toBeVisible();
+    } finally {
+      releaseRetry();
+    }
+    const start = page.locator('.duo-start .unlock-btn');
+    await expect(start).toBeEnabled();
+    await expect(start).toBeFocused();
+    expect(await page.evaluate(() => (window as typeof window & { __audioRetryDocument?: string }).__audioRetryDocument)).toBe(documentMarker);
+  });
 });
 
 test('bad local saves recover without a results crash', async ({ page }) => {
@@ -125,7 +207,8 @@ test('bad local saves recover without a results crash', async ({ page }) => {
     localStorage.setItem('bs_last_run_local', '{"v":1}');
   });
   await page.goto('/results');
-  await expect(page.getByText('No recent run on this device.')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'No result yet', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Choose a track', exact: true })).toHaveAttribute('href', '/library');
 });
 
 test('Duo starts and pauses both players together', async ({ page }, info) => {
@@ -134,8 +217,9 @@ test('Duo starts and pauses both players together', async ({ page }, info) => {
   await page.locator('.duo-start button').click();
   await expect(page.getByRole('button', { name: 'Pause', exact: true })).toHaveCount(2);
   await page.getByRole('button', { name: 'Pause', exact: true }).first().click();
-  await expect(page.getByRole('button', { name: /resume/i })).toHaveCount(2);
-  await page.getByRole('button', { name: /resume/i }).last().click();
+  const pauseDialog = page.getByRole('dialog', { name: 'Duo paused', exact: true });
+  await expect(pauseDialog).toBeVisible();
+  await pauseDialog.getByRole('button', { name: 'Resume', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Pause', exact: true })).toHaveCount(2);
   if (info.project.name === 'desktop') {
     const p1 = page.locator('.play-hud').filter({ has: page.locator('[data-player="P1"]') });
@@ -153,7 +237,7 @@ test('Duo starts and pauses both players together', async ({ page }, info) => {
 
 test('complete a real chart and export the results poster', async ({ page }, info) => {
   test.setTimeout(95000);
-  await page.goto('/play/bs-s1-05?tier=easy&mode=casual');
+  await page.goto('/play/bs-s1-05?tier=easy&mode=casual&challenge=1&target=100&acc=10&grade=D');
   await page.locator('.overlay-tap .unlock-btn').click();
   await expect(page).toHaveURL(/\/results$/, { timeout: 80000 });
   await expect(page.getByRole('heading', { name: 'Voltage Drop' })).toBeVisible();
@@ -161,9 +245,13 @@ test('complete a real chart and export the results poster', async ({ page }, inf
   expect(saved.totalNotes).toBeGreaterThan(0);
   expect(saved.counts.miss).toBe(saved.totalNotes);
   expect(saved.accuracy).toBe(0);
+  expect(saved.challenge).toEqual({ score: 100, accuracy: 10, grade: 'D' });
   await expect(page.getByText('NEW RECORD', { exact: true })).toHaveCount(0);
+  const challenge = page.locator('.challenge-result');
+  await expect(challenge).toHaveAttribute('data-outcome', 'missed');
+  await expect(challenge).toContainText('100 pts short');
   const download = page.waitForEvent('download');
-  await page.getByRole('button', { name: 'Download poster', exact: true }).click();
-  expect((await download).suggestedFilename()).toMatch(/beatscape-bs-s1-05-D\.png/);
+  await page.getByRole('button', { name: 'Download 4:5', exact: true }).click();
+  expect((await download).suggestedFilename()).toMatch(/beatscape-bs-s1-05-D-4x5\.png/);
   await page.screenshot({ path: info.outputPath('results.png'), fullPage: true, animations: 'disabled' });
 });

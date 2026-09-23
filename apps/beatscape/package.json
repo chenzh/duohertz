@@ -17,6 +17,7 @@
     "generate:og:site": "node scripts/generate-site-og.mjs",
     "release:check": "npm test && node --test scripts/release.test.mjs && npm run test:performance && npm run build:cf && npm run test:e2e && npm run release:verify",
     "test:e2e": "playwright test",
+    "test:e2e:webkit:core": "playwright test --config playwright.webkit.config.ts e2e/input-ownership.spec.ts e2e/slide-scoring.spec.ts",
     "preview": "vite preview --host 127.0.0.1 --port 5175",
     "test": "vitest run",
     "test:prd": "vitest run src/acceptance/prdAcceptance.test.ts",

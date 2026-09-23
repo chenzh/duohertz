@@ -66,8 +66,6 @@ export function HeroGameplayPreview({ keyHints }: Props) {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
     resize();
-    const ro = new ResizeObserver(resize);
-    ro.observe(wrap);
 
     const spawnNote = (now: number) => {
       const lane = LANE_PATTERN[patternIdx % LANE_PATTERN.length]!;
@@ -197,6 +195,32 @@ export function HeroGameplayPreview({ keyHints }: Props) {
       }
     };
 
+    const seedNotes = (now: number) => {
+      notes.length = 0;
+      for (const [lane, progress] of [[0, 0.7], [1, 0.32], [2, 0.54], [3, 0.18]] as const) {
+        notes.push({ lane, born: now - progress * APPROACH_MS });
+      }
+    };
+
+    // Both motion modes should show the chart on the first painted frame.
+    const drawStill = () => {
+      const now = performance.now();
+      lastSpawn = now;
+      judgeFx = null;
+      laneHeld.fill(false);
+      laneFlash.fill(0);
+      seedNotes(now);
+      draw(now);
+      notes.length = 0;
+    };
+
+    const drawOpening = () => {
+      const now = performance.now();
+      lastSpawn = now;
+      seedNotes(now);
+      draw(now);
+    };
+
     const loop = (t: number) => {
       draw(t);
       raf = requestAnimationFrame(loop);
@@ -205,6 +229,12 @@ export function HeroGameplayPreview({ keyHints }: Props) {
     // 无障碍 + 省电：prefers-reduced-motion 只画一帧静态画面（不跑动画）；
     // 离开视口就停掉 rAF，避免首页常驻空转吃 CPU / 电量。
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const ro = new ResizeObserver(() => {
+      resize();
+      if (mq.matches) drawStill();
+      else draw(performance.now());
+    });
+    ro.observe(wrap);
     const startLoop = () => {
       if (!raf && !mq.matches) raf = requestAnimationFrame(loop);
     };
@@ -217,7 +247,7 @@ export function HeroGameplayPreview({ keyHints }: Props) {
 
     let io: IntersectionObserver | null = null;
     if (mq.matches) {
-      draw(performance.now());
+      drawStill();
     } else {
       io = new IntersectionObserver(
         (entries) => {
@@ -227,14 +257,16 @@ export function HeroGameplayPreview({ keyHints }: Props) {
         { threshold: 0 },
       );
       io.observe(wrap);
+      drawOpening();
       startLoop();
     }
 
     const onMqChange = () => {
       if (mq.matches) {
         stopLoop();
-        draw(performance.now());
+        drawStill();
       } else {
+        drawOpening();
         startLoop();
       }
     };

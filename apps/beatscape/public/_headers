@@ -34,6 +34,18 @@
 /release.json
   Cache-Control: no-cache
 
+# The browser must revalidate the worker itself so a new release can replace
+# its shell list immediately. Manifest/icons change rarely but stay revalidatable.
+/sw.js
+  Cache-Control: no-cache
+  Service-Worker-Allowed: /
+
+/manifest.webmanifest
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/icons/*
+  Cache-Control: public, max-age=86400, must-revalidate
+
 /*
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin

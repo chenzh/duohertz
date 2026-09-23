@@ -8,6 +8,8 @@ export const NOTE_PROXIMITY_GROWTH = 0.22;
 /** Hold body width as a fraction of tap note width. */
 export const HOLD_BODY_RATIO = 0.58;
 export const HOLD_STROKE_RATIO = 0.64;
+/** Hold release diamond scale vs its head; wide enough to cap the body clearly. */
+export const HOLD_TAIL_SCALE = 0.95;
 /** Slide tail diamond scale vs tap head. */
 export const SLIDE_TAIL_SCALE = 0.95;
 

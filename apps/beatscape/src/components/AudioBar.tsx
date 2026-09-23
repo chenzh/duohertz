@@ -5,12 +5,16 @@ import {
   type KeyboardEvent as ReactKeyboardEvent,
   type PointerEvent as ReactPointerEvent,
 } from "react";
+import { connectPreviewOutput } from "../audio/previewOutput";
+import { useMusicVolume } from "../storage/useMusicVolume";
 
 type Props = {
   src: string;
   label?: string;
   preload?: "metadata" | "none";
   className?: string;
+  /** Toggle-only presentation for dense discovery cards. */
+  compact?: boolean;
   /**
    * 人工选段的试听起点（秒）。
    *
@@ -34,6 +38,10 @@ function fmt(s: number): string {
 /** Arrow-key step (s) and PageUp/PageDown step (s) for the seek slider. */
 const STEP = 5;
 const PAGE = 10;
+
+// Media previews are one listening surface, even when a page renders many
+// players. Claiming a new one pauses the previous owner before it can overlap.
+let activePreviewAudio: HTMLAudioElement | null = null;
 
 /** End of the buffered range that contains the playhead (0 if unknown). */
 function bufferedEnd(el: HTMLAudioElement): number {
@@ -63,7 +71,16 @@ function durationOf(el: HTMLAudioElement | null): number {
  * twice per gesture instead of once per pointermove. The track rect is cached
  * at pointerdown for the same reason (getBoundingClientRect forces layout).
  */
-export function AudioBar({ src, label, preload = "metadata", className, startSec = 0, segmentSec = 0 }: Props) {
+export function AudioBar({
+  src,
+  label,
+  preload = "metadata",
+  className,
+  compact = false,
+  startSec = 0,
+  segmentSec = 0,
+}: Props) {
+  const musicVolume = useMusicVolume();
   const audioRef = useRef<HTMLAudioElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
   const barRef = useRef<HTMLDivElement>(null);
@@ -74,36 +91,134 @@ export function AudioBar({ src, label, preload = "metadata", className, startSec
   const rectRef = useRef<DOMRect | null>(null);
   const dragRef = useRef(false);
   const pendingRef = useRef(0);
+  const pendingSeekRef = useRef(false);
+  const outputRef = useRef<ReturnType<typeof connectPreviewOutput> | null>(null);
+
+  const hasSegment = segmentSec > 0;
+  const segmentStart = hasSegment ? Math.max(0, startSec) : 0;
+  const segmentEnd = hasSegment ? segmentStart + segmentSec : Infinity;
 
   const [playing, setPlaying] = useState(false);
-  const [time, setTime] = useState(0);
+  const [outputError, setOutputError] = useState(false);
+  const [resumeError, setResumeError] = useState(false);
+  // Keep media time absolute internally. Segmented previews translate it to a
+  // 0…segmentSec timeline for the visible slider and readout.
+  const [time, setTime] = useState(segmentStart);
   const [dur, setDur] = useState(0);
   const [buf, setBuf] = useState(0);
 
   useEffect(() => {
+    const el = audioRef.current;
+    if (el && activePreviewAudio === el) {
+      el.pause();
+      activePreviewAudio = null;
+    }
     setPlaying(false);
-    setTime(0);
+    setOutputError(false);
+    setResumeError(false);
+    setTime(segmentStart);
     setDur(0);
     setBuf(0);
+    pendingRef.current = segmentStart;
+    pendingSeekRef.current = false;
     rectRef.current = null;
     dragRef.current = false;
-  }, [src]);
+  }, [segmentSec, segmentStart, src]);
 
-  /** 选段终点（秒）；没有选段时为 Infinity。 */
-  const segmentEnd = startSec > 0 && segmentSec > 0 ? startSec + segmentSec : Infinity;
+  useEffect(() => {
+    const el = audioRef.current;
+    const pauseWhenHidden = () => {
+      if (document.visibilityState === "hidden") el?.pause();
+    };
+    document.addEventListener("visibilitychange", pauseWhenHidden);
+    return () => {
+      document.removeEventListener("visibilitychange", pauseWhenHidden);
+      outputRef.current?.disconnect();
+      outputRef.current = null;
+      if (el && activePreviewAudio === el) {
+        el.pause();
+        activePreviewAudio = null;
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    const el = audioRef.current;
+    if (!el) return;
+    if (outputRef.current) outputRef.current.setVolume(musicVolume);
+    else {
+      el.volume = musicVolume;
+      el.muted = musicVolume === 0;
+    }
+    if (musicVolume === 0 && !el.paused) el.pause();
+  }, [musicVolume]);
+
+  const visibleDuration = hasSegment ? segmentSec : dur;
+  const visibleTime = hasSegment
+    ? Math.min(visibleDuration, Math.max(0, time - segmentStart))
+    : time;
+  const visibleBuffer = hasSegment
+    ? Math.min(visibleDuration, Math.max(0, buf - segmentStart))
+    : buf;
+  const toMediaTime = (seconds: number) => hasSegment ? segmentStart + seconds : seconds;
+  const toVisibleTime = (seconds: number) => hasSegment
+    ? Math.min(visibleDuration, Math.max(0, seconds - segmentStart))
+    : seconds;
 
   const toggle = () => {
     const el = audioRef.current;
-    if (!el) return;
+    if (!el || musicVolume === 0 || outputError) return;
     if (!el.paused) {
       el.pause();
       return;
     }
-    // 选段：起点之前、或已经放完一段，都回到选段起点再开始。
-    if (startSec > 0 && (el.currentTime < startSec - 0.1 || el.currentTime >= segmentEnd - 0.05)) {
-      if (el.readyState > 0) el.currentTime = startSec;
+    if (!outputRef.current) {
+      try {
+        outputRef.current = connectPreviewOutput(el, musicVolume);
+      } catch {
+        // Never fall back to a potentially full-volume native preview on iOS.
+        el.muted = true;
+        setOutputError(true);
+        return;
+      }
     }
-    void el.play();
+    outputRef.current.setVolume(musicVolume);
+    setResumeError(false);
+    // 选段：起点之前、或已经放完一段，都回到选段起点再开始。
+    if (hasSegment && (el.currentTime < segmentStart - 0.1 || el.currentTime >= segmentEnd - 0.05)) {
+      if (el.readyState > 0) {
+        el.currentTime = segmentStart;
+        setTime(segmentStart);
+      } else {
+        // preload="none" deliberately keeps the network idle. Preserve the
+        // highlight start until metadata arrives after this user-initiated play.
+        pendingRef.current = segmentStart;
+        pendingSeekRef.current = true;
+      }
+    }
+    // Start both operations in this click gesture: iOS requires a user action
+    // for media playback, and a suspended Web Audio context needs resuming.
+    void outputRef.current.resume().catch(() => {
+      el.muted = true;
+      el.pause();
+      setResumeError(true);
+    });
+    void el.play().catch(() => {
+      if (activePreviewAudio === el) activePreviewAudio = null;
+      setPlaying(false);
+    });
+  };
+
+  const onPlay = (el: HTMLAudioElement) => {
+    const previous = activePreviewAudio;
+    activePreviewAudio = el;
+    if (previous && previous !== el) previous.pause();
+    setPlaying(true);
+  };
+
+  const onPause = (el: HTMLAudioElement) => {
+    if (activePreviewAudio === el) activePreviewAudio = null;
+    setPlaying(false);
   };
 
   /** Paint the bar without a React re-render (used during pointer drags). */
@@ -118,14 +233,21 @@ export function AudioBar({ src, label, preload = "metadata", className, startSec
     }
   };
 
-  /** Jump to an absolute position (keyboard Home / End). */
+  /** Jump to a position on the visible timeline (segment-relative when set). */
   const seekTo = (seconds: number) => {
     const el = audioRef.current;
     if (!el) return;
-    const total = durationOf(el);
-    const next = total > 0 ? Math.min(total, Math.max(0, seconds)) : 0;
+    const total = hasSegment ? segmentSec : durationOf(el);
+    const nextVisible = total > 0 ? Math.min(total, Math.max(0, seconds)) : 0;
+    const next = toMediaTime(nextVisible);
     // Safari throws InvalidStateError when currentTime is set before metadata.
-    if (el.readyState > 0 && total > 0) el.currentTime = next;
+    if (el.readyState > 0 && total > 0) {
+      el.currentTime = next;
+      pendingSeekRef.current = false;
+    } else if (hasSegment) {
+      pendingRef.current = next;
+      pendingSeekRef.current = true;
+    }
     setTime(next);
   };
 
@@ -133,9 +255,9 @@ export function AudioBar({ src, label, preload = "metadata", className, startSec
   const nudge = (delta: number) => {
     const el = audioRef.current;
     if (!el) return;
-    const total = durationOf(el);
+    const total = hasSegment ? segmentSec : durationOf(el);
     if (total <= 0) return;
-    const base = el.readyState > 0 ? el.currentTime : time;
+    const base = toVisibleTime(el.readyState > 0 ? el.currentTime : time);
     seekTo(base + delta);
   };
 
@@ -143,12 +265,18 @@ export function AudioBar({ src, label, preload = "metadata", className, startSec
     const el = audioRef.current;
     const rect = rectRef.current;
     if (!el || !rect || rect.width <= 0) return;
-    const total = durationOf(el);
+    const total = hasSegment ? segmentSec : durationOf(el);
     if (total <= 0) return;
     const ratio = Math.min(1, Math.max(0, (clientX - rect.left) / rect.width));
-    const next = ratio * total;
-    paint(next, total);
-    if (el.readyState > 0) el.currentTime = next;
+    const nextVisible = ratio * total;
+    const next = toMediaTime(nextVisible);
+    paint(nextVisible, total);
+    if (el.readyState > 0) {
+      el.currentTime = next;
+      pendingSeekRef.current = false;
+    } else {
+      pendingSeekRef.current = true;
+    }
     pendingRef.current = next;
   };
 
@@ -193,7 +321,7 @@ export function AudioBar({ src, label, preload = "metadata", className, startSec
         break;
       case "End":
         // Stop just short of the end so we don't immediately fire `ended`.
-        seekTo(Math.max(0, durationOf(audioRef.current) - 0.25));
+        seekTo(Math.max(0, (hasSegment ? segmentSec : durationOf(audioRef.current)) - 0.25));
         break;
       case " ":
       case "Enter":
@@ -205,27 +333,42 @@ export function AudioBar({ src, label, preload = "metadata", className, startSec
     e.preventDefault();
   };
 
-  const pct = dur > 0 ? Math.min(100, (time / dur) * 100) : 0;
-  const bufPct = dur > 0 ? Math.min(100, (buf / dur) * 100) : 0;
+  const pct = visibleDuration > 0 ? Math.min(100, (visibleTime / visibleDuration) * 100) : 0;
+  const bufPct = visibleDuration > 0 ? Math.min(100, (visibleBuffer / visibleDuration) * 100) : 0;
+  const controlLabel = outputError
+    ? `Preview unavailable — ${label ?? "track"}`
+    : musicVolume === 0
+    ? `Preview muted — ${label ?? "track"}. Music muted in Settings`
+    : resumeError
+    ? `Retry preview — ${label ?? "track"}`
+    : compact
+    ? `${playing ? "Pause" : "Play"} preview — ${label ?? "track"}`
+    : label
+      ? `${playing ? "Pause" : "Play"} — ${label}`
+      : playing ? "Pause" : "Play";
 
   return (
-    <div className={`audiobar${className ? ` ${className}` : ""}`} ref={rootRef}>
+    <div
+      className={`audiobar${compact ? " audiobar-compact" : ""}${className ? ` ${className}` : ""}`}
+      data-playing={playing || undefined}
+      ref={rootRef}
+    >
       <audio
         ref={audioRef}
         src={src}
         preload={preload}
-        aria-label={label}
-        onPlay={() => setPlaying(true)}
-        onPause={() => setPlaying(false)}
+        aria-label={compact && label ? `Preview ${label}` : label}
+        onPlay={(event) => onPlay(event.currentTarget)}
+        onPause={(event) => onPause(event.currentTarget)}
         // timeupdate would fight the drag we are painting by hand.
         onTimeUpdate={(e) => {
           if (dragRef.current) return;
           const el = e.target as HTMLAudioElement;
           // 选段播完就停回起点，而不是一路放到下一首的段落里去。
-          if (el.currentTime >= segmentEnd) {
+          if (hasSegment && el.currentTime >= segmentEnd) {
             el.pause();
-            el.currentTime = startSec;
-            setTime(startSec);
+            el.currentTime = segmentStart;
+            setTime(segmentStart);
             return;
           }
           setTime(el.currentTime);
@@ -234,57 +377,81 @@ export function AudioBar({ src, label, preload = "metadata", className, startSec
           if (dragRef.current) return;
           setBuf(bufferedEnd(e.target as HTMLAudioElement));
         }}
-        onLoadedMetadata={(e) => setDur((e.target as HTMLAudioElement).duration)}
+        onLoadedMetadata={(e) => {
+          const el = e.target as HTMLAudioElement;
+          setDur(el.duration);
+          if (!hasSegment) return;
+          const requested = pendingSeekRef.current ? pendingRef.current : segmentStart;
+          const lastPlayable = Math.max(0, el.duration - 0.01);
+          const next = Math.min(lastPlayable, Math.max(segmentStart, requested));
+          el.currentTime = next;
+          setTime(next);
+          pendingSeekRef.current = false;
+        }}
         onDurationChange={(e) => setDur((e.target as HTMLAudioElement).duration)}
-        onError={() => setPlaying(false)}
+        onError={(event) => {
+          if (activePreviewAudio === event.currentTarget) activePreviewAudio = null;
+          setPlaying(false);
+        }}
         // Without this the toggle button stays stuck on the "pause" icon.
         onEnded={() => {
           setPlaying(false);
-          setTime(startSec);
+          setTime(segmentStart);
           const el = audioRef.current;
-          if (el) el.currentTime = startSec;
+          if (el) {
+            if (activePreviewAudio === el) activePreviewAudio = null;
+            el.currentTime = segmentStart;
+          }
         }}
       />
       <button
         type="button"
         className="audiobar-toggle"
         onClick={toggle}
-        aria-label={playing ? "Pause" : "Play"}
+        aria-label={controlLabel}
+        title={outputError ? "Audio preview unavailable in this browser" : musicVolume === 0 ? "Music muted in Settings" : resumeError ? "Audio interrupted; tap to retry" : undefined}
         // 只能用 src 判空，不能用 ready/dur 门禁：首页用 preload="none"，
         // 浏览器不预拉元数据 → onLoadedMetadata / onCanPlay 都不触发 →
         // dur=0 且 ready=false，按钮会被永久 disabled。而"点播放"恰恰是
         // 唯一能触发加载的动作，形成死锁（首页播放条点不动）。
         // 元数据迟到由 seekTo/nudge 里的 readyState>0 兜住。
-        disabled={!src}
+        disabled={!src || musicVolume === 0 || outputError}
       >
         {playing ? <span className="audiobar-ic audiobar-ic-pause" /> : <span className="audiobar-ic audiobar-ic-play" />}
+        {compact && <span className="audiobar-compact-label">{outputError ? "Unavailable" : musicVolume === 0 ? "Muted" : resumeError ? "Retry" : playing ? "Pause" : "Preview"}</span>}
       </button>
-      <div
-        className="audiobar-track"
-        ref={barRef}
-        role="slider"
-        tabIndex={0}
-        aria-label={label ? `Seek — ${label}` : "Seek"}
-        aria-valuemin={0}
-        aria-valuemax={Math.round(dur) || 0}
-        aria-valuenow={Math.round(time)}
-        aria-valuetext={`${fmt(time)} of ${fmt(dur)}`}
-        onPointerDown={onDown}
-        onPointerMove={onMove}
-        onPointerUp={onUp}
-        onPointerCancel={onUp}
-        onLostPointerCapture={onUp}
-        onKeyDown={onKeyDown}
-      >
-        <div className="audiobar-buffer" style={{ width: `${bufPct}%` }} />
-        <div className="audiobar-fill" ref={fillRef} style={{ width: `${pct}%` }} />
-        <div className="audiobar-thumb" ref={thumbRef} style={{ left: `calc(${pct}% - 4px)` }} />
-        <span className="audiobar-bubble" ref={bubbleRef} style={{ left: `${pct}%` }}>{fmt(time)}</span>
-      </div>
-      {/* Single interpolated child on purpose: paint() rewrites this span via
-          textContent during drags, which only reuses (and keeps React's
-          reference to) the existing node when there is exactly one Text child. */}
-      <span className="audiobar-time" ref={timeRef}>{`${fmt(time)} / ${fmt(dur)}`}</span>
+      {!compact && (
+        <>
+          <div
+            className="audiobar-track"
+            ref={barRef}
+            role="slider"
+            tabIndex={0}
+            aria-label={label ? `Seek — ${label}` : "Seek"}
+            aria-valuemin={0}
+            aria-valuemax={Math.round(visibleDuration) || 0}
+            aria-valuenow={Math.round(visibleTime)}
+            aria-valuetext={`${fmt(visibleTime)} of ${fmt(visibleDuration)}`}
+            onPointerDown={onDown}
+            onPointerMove={onMove}
+            onPointerUp={onUp}
+            onPointerCancel={onUp}
+            onLostPointerCapture={onUp}
+            onKeyDown={onKeyDown}
+          >
+            <div className="audiobar-buffer" style={{ width: `${bufPct}%` }} />
+            <div className="audiobar-fill" ref={fillRef} style={{ width: `${pct}%` }} />
+            <div className="audiobar-thumb" ref={thumbRef} style={{ left: `calc(${pct}% - 4px)` }} />
+            <span className="audiobar-bubble" ref={bubbleRef} style={{ left: `${pct}%` }}>{fmt(time)}</span>
+          </div>
+          {/* Single interpolated child on purpose: paint() rewrites this span via
+              textContent during drags, which only reuses (and keeps React's
+              reference to) the existing node when there is exactly one Text child. */}
+          <span className="audiobar-time" ref={timeRef}>
+            {outputError ? "Unavailable" : musicVolume === 0 ? "Muted" : resumeError ? "Tap to retry" : `${fmt(visibleTime)} / ${fmt(visibleDuration)}`}
+          </span>
+        </>
+      )}
     </div>
   );
 }

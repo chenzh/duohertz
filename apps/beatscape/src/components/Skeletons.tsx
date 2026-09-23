@@ -1,10 +1,10 @@
 /**
  * 骨架屏（D 档）。
  *
- * 曲库有 85 首，catalog.json 到手前 Library 是一个空 grid —— 改造前这里会
+ * 曲库有 105 首，catalog.json 到手前 Library 是一个空 grid —— 改造前这里会
  * 闪一句 "No tracks match your filters."（因为 Library 根本没解构 `loading`，
  * `filtered.length === 0` 在加载期同样成立）。骨架屏既挡掉了这句误导文案，
- * 也让布局不跳：骨架行复刻 .track-card 的 72px 封面 + 三行文本结构，
+ * 也让布局不跳：骨架行复刻 .track-card 的 72px 封面、三行文本与试听动作，
  * 真实卡片替换进来时尺寸一致，CLS ≈ 0。
  *
  * 刻意不复用 `.track-card` 类名：Library 的滚动揭示是按 `.track-card` 选择器
@@ -24,12 +24,15 @@ type TrackCardSkeletonProps = {
 export function TrackCardSkeleton({ delayMs = 0 }: TrackCardSkeletonProps) {
   return (
     <div className="skeleton-card" style={delayMs ? { animationDelay: `${delayMs}ms` } : undefined}>
-      <div className="skeleton-block skeleton-cover" />
-      <div className="skeleton-lines">
-        <div className="skeleton-block skeleton-line skeleton-line-lg" />
-        <div className="skeleton-block skeleton-line" />
-        <div className="skeleton-block skeleton-line skeleton-line-sm" />
+      <div className="skeleton-card-main">
+        <div className="skeleton-block skeleton-cover" />
+        <div className="skeleton-lines">
+          <div className="skeleton-block skeleton-line skeleton-line-lg" />
+          <div className="skeleton-block skeleton-line" />
+          <div className="skeleton-block skeleton-line skeleton-line-sm" />
+        </div>
       </div>
+      <div className="skeleton-block skeleton-action" />
     </div>
   );
 }

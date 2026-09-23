@@ -1,5 +1,6 @@
 import { getAudioContext, unlockAudio } from "./context";
 import { audioLoadAborted, decodedAudioCache, type DecodedAudioLease } from "./decodedAudioCache";
+import type { AudioLoadProgress } from "./earlyAudio";
 
 /**
  * 帧内插值上限(ms)：音频时钟每 128 个采样（48k 下约 2.7ms）才推进一次，两跳之间
@@ -46,10 +47,18 @@ export class Conductor {
   private _accumMs = 0; // song time; negative during countdown
   private _lastCtx = 0;
   private _rate = 1;
+  /** Player-selected Practice tempo restored after any temporary assist. */
+  private _baseRate = 1;
   private _playing = false;
   private _paused = false;
   private _finished = false;
   private _durationMs = 0;
+  /** Absolute audio position where the scheduled source begins after its lead-in. */
+  private _playbackStartMs = 0;
+  /** Audio-clock deadline for a frozen re-entry countdown; -1 outside re-entry. */
+  private _resumeAtCtx = -1;
+  /** Remaining re-entry time retained when the countdown itself is paused. */
+  private _resumeCountdownRemainingMs = 0;
 
   /**
    * 音频时钟锚点：在 `_anchorCtx` 这一刻，音源的真实位置正好是 `_anchorSongMs`。
@@ -100,6 +109,7 @@ export class Conductor {
     if (this.ctx.state === "running" && this._suspendedAtCtx >= 0) {
       const lost = Math.max(0, this.ctx.currentTime - this._suspendedAtCtx);
       this._anchorCtx += lost;
+      if (this._resumeAtCtx >= 0) this._resumeAtCtx += lost;
       this._suspendedAtCtx = -1;
     }
   };
@@ -148,17 +158,47 @@ export class Conductor {
     return this._paused;
   }
 
+  /** Real milliseconds remaining before the scheduled song source starts. */
+  get countdownRemainingMs(): number {
+    if (!this._playing) return 0;
+    if (this._resumeCountdownRemainingMs > 0) return this._resumeCountdownRemainingMs;
+    if (this._resumeAtCtx >= 0) {
+      return Math.max(0, (this._resumeAtCtx - this.ctx.currentTime) * 1000);
+    }
+    const songRemainingMs = this._playbackStartMs - this.songTimeMs();
+    return Math.max(0, songRemainingMs / Math.max(0.01, this._rate));
+  }
+
   get finished(): boolean {
     return this._finished;
   }
 
-  async load(url: string): Promise<void> {
+  /** Current music speed; exposed so Practice slowdown never looks like an unexplained audio fault. */
+  get playbackRate(): number {
+    this.update();
+    return this._rate;
+  }
+
+  /** Persistent run tempo; temporary miss-assist slowdown never overwrites it. */
+  get basePlaybackRate(): number {
+    return this._baseRate;
+  }
+
+  /** Real-time duration left on the temporary Practice assist (0 when inactive). */
+  get rateRemainingMs(): number {
+    this.update();
+    return this.pendingRateUntil > 0
+      ? Math.max(0, this.pendingRateUntil - performance.now())
+      : 0;
+  }
+
+  async load(url: string, onProgress?: (progress: AudioLoadProgress) => void): Promise<void> {
     if (this._disposed) throw audioLoadAborted();
     this.audioLease?.release();
     const revision = ++this.loadRevision;
     this.buffer = null;
     this._durationMs = 0;
-    const lease = decodedAudioCache.acquire(this.ctx, url);
+    const lease = decodedAudioCache.acquire(this.ctx, url, onProgress);
     this.audioLease = lease;
     try {
       const buffer = await lease.promise;
@@ -180,30 +220,40 @@ export class Conductor {
     if (this.ctx.state === "suspended") await this.ctx.resume();
   }
 
-  /** Begin playback with a `countdownMs` lead-in (song time starts negative). */
-  begin(countdownMs = 3000): void {
+  /** Begin playback with a lead-in, optionally from an absolute audio position. */
+  begin(countdownMs = 3000, startAtMs = 0): void {
     if (!this.buffer) return;
     this.stopSource();
     // Reset the drop gate — every run starts with the song wide open.
     const now = this.ctx.currentTime;
     this.filter.frequency.cancelScheduledValues(now);
     this.filter.frequency.setValueAtTime(20000, now);
-    this._accumMs = -countdownMs;
+    const safeCountdownMs = Number.isFinite(countdownMs) ? Math.max(0, countdownMs) : 0;
+    const latestStartMs = Math.max(0, this._durationMs - 1);
+    this._playbackStartMs = Number.isFinite(startAtMs)
+      ? Math.min(latestStartMs, Math.max(0, startAtMs))
+      : 0;
+    this._rate = this._baseRate;
+    // Countdown is always measured in real seconds. At a slower Practice
+    // tempo the song clock starts proportionally closer to the source offset,
+    // then reaches it on the same audio-clock frame that playback begins.
+    this._accumMs = this._playbackStartMs - safeCountdownMs * this._rate;
     this._lastCtx = now;
-    this._rate = 1;
     this._playing = true;
     this._paused = false;
     this._finished = false;
+    this._resumeAtCtx = -1;
+    this._resumeCountdownRemainingMs = 0;
     this.pendingRateUntil = 0;
     this._audioMs = this._accumMs;
     this._tickPerf = performance.now();
-    this.startSource(this._accumMs < 0 ? -this._accumMs / 1000 : 0);
+    this.startSource(safeCountdownMs / 1000, this._playbackStartMs / 1000);
   }
 
-  /** Authoritative song time in milliseconds (negative during countdown). */
+  /** Authoritative absolute audio time; full runs are negative during countdown. */
   songTimeMs(): number {
     this.update();
-    if (!this._playing || this._paused) return this._accumMs;
+    if (!this._playing || this._paused || this._resumeAtCtx >= 0) return this._accumMs;
     // 音频时钟值是权威的；它两跳之间用 performance.now() 插值，抹掉 128 采样的
     // 台阶，让同一帧内多次读取也能平滑推进（判定的正确性仍由音频时钟保证）。
     const ahead = Math.min(MAX_INTERP_MS, Math.max(0, performance.now() - this._tickPerf));
@@ -212,6 +262,19 @@ export class Conductor {
 
   private update(): void {
     const now = this.ctx.currentTime;
+    // A resume countdown deliberately freezes chart time. The source is
+    // scheduled against the same AudioContext deadline, so there is no UI
+    // timer drift and no note can age into a Miss while hands return to lanes.
+    if (this._resumeAtCtx >= 0) {
+      if (now < this._resumeAtCtx) {
+        if (now > this._lastCtx) this._lastCtx = now;
+        this._audioMs = this._accumMs;
+        this._tickPerf = performance.now();
+        return;
+      }
+      this._lastCtx = Math.max(this._lastCtx, this._resumeAtCtx);
+      this._resumeAtCtx = -1;
+    }
     // 音频时钟还停在同一个 128 采样量子上 —— 不重复积分，交给帧内插值。
     if (now <= this._lastCtx) return;
     const dt = (now - this._lastCtx) * 1000;
@@ -227,7 +290,7 @@ export class Conductor {
       }
       if (this.pendingRateUntil && performance.now() >= this.pendingRateUntil) {
         this.pendingRateUntil = 0;
-        this.setRate(1);
+        this.setRate(this._baseRate);
       }
     }
     this._audioMs = this._accumMs;
@@ -255,19 +318,53 @@ export class Conductor {
     this.pendingRateUntil = durationMs > 0 ? performance.now() + durationMs : 0;
   }
 
+  /**
+   * Set the player's persistent tempo for this run. A deliberate pause-menu
+   * choice cancels any temporary miss assist immediately; subsequent starts,
+   * resumes and drill repetitions all inherit the selected rate.
+   */
+  setBaseRate(rate: number): void {
+    const safeRate = Number.isFinite(rate) ? Math.min(2, Math.max(0.25, rate)) : 1;
+    this._baseRate = safeRate;
+    this.pendingRateUntil = 0;
+    this.setRate(safeRate);
+  }
+
   pause(): void {
     if (!this._playing || this._paused) return;
+    this._resumeCountdownRemainingMs = this._resumeAtCtx >= 0
+      ? Math.max(0, (this._resumeAtCtx - this.ctx.currentTime) * 1000)
+      : 0;
     this.update();
+    this._resumeAtCtx = -1;
     this._paused = true;
     this.stopSource();
   }
 
-  resume(): void {
+  /** Resume now, or after an AudioContext-aligned frozen re-entry countdown. */
+  resume(countdownMs = 0): void {
     if (!this._playing || !this._paused) return;
+    const requestedCountdownMs = Number.isFinite(countdownMs) ? Math.max(0, countdownMs) : 0;
+    const carriedCountdownMs = this._resumeCountdownRemainingMs;
+    this._resumeCountdownRemainingMs = 0;
     this._paused = false;
-    this._lastCtx = this.ctx.currentTime;
-    const offsetSec = Math.max(0, this._accumMs / 1000);
-    const delaySec = this._accumMs < 0 ? -this._accumMs / 1000 : 0;
+    const now = this.ctx.currentTime;
+    this._lastCtx = now;
+    // During a section-practice lead-in `_accumMs` can be positive even though
+    // the source has not started yet. Compare with the scheduled audio start,
+    // not zero, so pausing countdown never skips the rest of it.
+    const waitingForSource = this._accumMs < this._playbackStartMs;
+    const resumeCountdownMs = waitingForSource
+      ? 0
+      : carriedCountdownMs > 0
+        ? carriedCountdownMs
+        : requestedCountdownMs;
+    const offsetSec = Math.max(0, waitingForSource ? this._playbackStartMs : this._accumMs) / 1000;
+    const initialDelaySec = waitingForSource
+      ? (this._playbackStartMs - this._accumMs) / (1000 * Math.max(0.01, this._rate))
+      : 0;
+    const delaySec = initialDelaySec + resumeCountdownMs / 1000;
+    this._resumeAtCtx = resumeCountdownMs > 0 ? now + resumeCountdownMs / 1000 : -1;
     this.startSource(delaySec, offsetSec);
   }
 
@@ -275,6 +372,8 @@ export class Conductor {
   stop(): void {
     this._playing = false;
     this._paused = false;
+    this._resumeAtCtx = -1;
+    this._resumeCountdownRemainingMs = 0;
     this.stopSource();
   }
 
@@ -291,6 +390,8 @@ export class Conductor {
     this.audioLease = null;
     this._playing = false;
     this._paused = false;
+    this._resumeAtCtx = -1;
+    this._resumeCountdownRemainingMs = 0;
     this.onEnded = null;
     this.pendingRateUntil = 0;
     this.ctx.removeEventListener("statechange", this.onCtxStateChange);
@@ -319,12 +420,14 @@ export class Conductor {
     };
     this.source = src;
     const when = this.ctx.currentTime + Math.max(0, delaySec);
-    src.start(when, Math.max(0, offsetSec));
-    // 起播瞬间重设锚点：此刻歌曲时间（累加器）就是音源的真实位置；倒计时
-    // 走完时歌曲时间正好归零，音频也正好在这一刻发声。
-    this._anchorCtx = this.ctx.currentTime;
-    this._anchorSongMs = this._accumMs;
-    this._lastCtx = this._anchorCtx;
+    const safeOffsetSec = Math.max(0, offsetSec);
+    src.start(when, safeOffsetSec);
+    // Anchor to the source's actual scheduled start. During the initial
+    // countdown this is mathematically equivalent to a negative song clock;
+    // during resume countdowns the update loop freezes until this deadline.
+    this._anchorCtx = when;
+    this._anchorSongMs = safeOffsetSec * 1000;
+    this._lastCtx = this.ctx.currentTime;
     this._suspendedAtCtx = -1;
     this._audioMs = this._accumMs;
     this._tickPerf = performance.now();

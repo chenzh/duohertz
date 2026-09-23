@@ -27,7 +27,10 @@ function game(scenario = 'hard-fx-max', profile = 'desktop') {
         fieldSamples: duo ? { 1: 6000, 2: 6000 } : { 1: 6000 }, visibleNotes: { p50: 3, p95: 6, max: 8 }, overBudget: [] },
       effects: { maxSimultaneousSurge3Fields: count, surge3Frames: 4000, surge3Ms: 60000,
         surge3FieldMs: 60000 * count, neon3Frames: 4000, neon3Ms: 60000 },
-      autoplay: { chartId: track.id, duo, eventsPerPlayer: 1200, dispatchedEvents: 1200 * count,
+      autoplay: { chartId: track.id, duo, inputSurface: profile === 'mobile-emulated' ? 'touch' : 'keyboard',
+        eventsPerPlayer: 1200, dispatchedEvents: 1200 * count,
+        keyboardEventsDispatched: profile === 'mobile-emulated' ? 0 : 1200 * count,
+        pointerEventsDispatched: profile === 'mobile-emulated' ? 1200 * count : 0,
         players: Array.from({ length: count }, () => ({ cursor: 1200 })) },
     },
     outcomes: duo ? { duoPlayers: [{ player: 'P1', counts: [600, 0, 0, 0] }, { player: 'P2', counts: [600, 0, 0, 0] }] }
@@ -70,6 +73,7 @@ test('a complete fixed matrix passes only after independent coverage and every b
   assert.equal(result.matrix.length, 14);
   assert.equal(result.missing.length, 0);
   assert.match(result.scope.notes.join(' '), /not GPU completion/);
+  assert.match(result.scope.notes.join(' '), /synthetic touch PointerEvents/);
   assert.match(result.scope.notes.join(' '), /not proof of indefinitely/);
 });
 

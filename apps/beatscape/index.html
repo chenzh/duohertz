@@ -6,8 +6,12 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="theme-color" content="#12100F" />
+    <link rel="manifest" href="%BASE_URL%manifest.webmanifest" />
+    <link rel="apple-touch-icon" sizes="180x180" href="%BASE_URL%icons/apple-touch-icon.png" />
     <!-- The release preparer fills this with the selected deep-link audio request. -->
     <script id="beatscape-early-audio"></script>
+    <!-- The release preparer fills this with a pathname-aware lazy-route preload. -->
+    <script id="beatscape-early-route"></script>
     <!-- Discover the small catalog while the application module downloads.
          No crossorigin: must match loadCatalog's fetch (same-origin
          no-cors) exactly or WebKit's preload cache misses and fetches
@@ -36,24 +40,6 @@
     <meta name="twitter:title" content="BeatScape — Feel the Beat, Own the Scape" />
     <meta name="twitter:description" content="Play AI original beats in your browser. No account, no ads. Scores stay on your device." />
     <meta name="twitter:image" content="https://beatscape.pages.dev/og.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Anton (display), Sora (secondary), IBM Plex Sans (body) — all SIL OFL.
-         Sora 只用到 600/700/800（见 styles.css），500 是白下载的 face，已去掉。
-         字体 CSS 改为非阻塞加载：preload 成 stylesheet，onload 再切换 rel，
-         避免首屏渲染被跨域字体 CSS 卡住；无 JS 时走 noscript 兜底。 -->
-    <link
-      rel="preload"
-      as="style"
-      href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Sora:wght@600;700;800&display=swap"
-      onload="this.onload=null;this.rel='stylesheet'"
-    />
-    <noscript>
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Sora:wght@600;700;800&display=swap"
-      />
-    </noscript>
   </head>
   <body>
     <div id="root"></div>

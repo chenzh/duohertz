@@ -39,7 +39,7 @@ export const zh: Messages = {
     play: "开始",
     loading: "加载中…",
     copyLink: "复制链接",
-    downloadPoster: "下载海报",
+    downloadPoster: "下载 4:5 海报",
     shareRun: "分享战绩",
     newHonor: "解锁新荣誉",
     copyFailed: "复制失败",

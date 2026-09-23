@@ -1,2 +1,4 @@
-# Cloudflare Pages — SPA fallback (client router)
-/*    /index.html   200
+# Cloudflare Pages — release.mjs fills exact track-card rewrites above the SPA fallback.
+# beatscape-track-routes:start
+# beatscape-track-routes:end
+/* /index.html 200

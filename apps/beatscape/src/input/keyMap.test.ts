@@ -2,18 +2,22 @@ import { describe, expect, it } from "vitest";
 import {
   DEFAULT_KEYS,
   KEY_PRESETS,
+  captureKeyCode,
   codesForPreset,
+  hasBrowserShortcutModifier,
   hasDuplicateKeys,
   keyLabel,
   keyLabels,
+  keyLabelsForDisplayLayout,
+  keyLabelsForLayout,
   laneFromKeyEvent,
   normalizeKeys,
   partnerKeysFor,
   presetIdFor,
 } from "./keyMap";
 
-function ev(code: string, key: string): KeyboardEvent {
-  return { code, key } as KeyboardEvent;
+function ev(code: string, key: string, modifiers: Partial<KeyboardEvent> = {}): KeyboardEvent {
+  return { code, key, ...modifiers } as KeyboardEvent;
 }
 
 describe("keyMap", () => {
@@ -59,6 +63,29 @@ describe("keyMap", () => {
     expect(laneFromKeyEvent(ev("KeyW", "z"), wasd)).toBe(2);
   });
 
+  it("prefers a physical binding over an earlier legacy glyph on AZERTY", () => {
+    const mixed = ["q", "KeyA", "KeyS", "KeyD"];
+    expect(laneFromKeyEvent(ev("KeyA", "q"), mixed)).toBe(1);
+    expect(laneFromKeyEvent(ev("KeyQ", "q"), mixed)).toBe(0);
+  });
+
+  it("leaves browser modifier chords unbound while retaining shifted lane input", () => {
+    const arrows = codesForPreset("arrows");
+    expect(laneFromKeyEvent(ev("ArrowLeft", "ArrowLeft", { altKey: true }), arrows)).toBe(-1);
+    expect(laneFromKeyEvent(ev("ArrowLeft", "ArrowLeft", { ctrlKey: true }), arrows)).toBe(-1);
+    expect(laneFromKeyEvent(ev("ArrowLeft", "ArrowLeft", { metaKey: true }), arrows)).toBe(-1);
+    expect(laneFromKeyEvent(ev("ArrowLeft", "ArrowLeft", { shiftKey: true }), arrows)).toBe(0);
+    expect(hasBrowserShortcutModifier(ev("KeyR", "r", { ctrlKey: true }))).toBe(true);
+    expect(hasBrowserShortcutModifier(ev("KeyR", "R", { shiftKey: true }))).toBe(false);
+  });
+
+  it("never captures a browser shortcut while rebinding", () => {
+    expect(captureKeyCode(ev("KeyR", "r", { ctrlKey: true }))).toBeNull();
+    expect(captureKeyCode(ev("KeyP", "p", { metaKey: true }))).toBeNull();
+    expect(captureKeyCode(ev("ArrowLeft", "ArrowLeft", { altKey: true }))).toBeNull();
+    expect(captureKeyCode(ev("KeyZ", "Z", { shiftKey: true }))).toBe("KeyZ");
+  });
+
   it("identifies which preset is bound", () => {
     expect(presetIdFor(["KeyD", "KeyF", "KeyJ", "KeyK"])).toBe("dfjk");
     expect(presetIdFor(["KeyA", "KeyS", "KeyW", "KeyD"])).toBe("wasd");
@@ -76,6 +103,39 @@ describe("keyMap", () => {
     expect(keyLabel("KeyD")).toBe("D");
     expect(keyLabel("Digit1")).toBe("1");
     expect(keyLabel("")).toBe("—");
+  });
+
+  it("renders physical codes with the glyphs from an AZERTY layout map", () => {
+    const azerty = new Map([
+      ["KeyA", "q"],
+      ["KeyS", "s"],
+      ["KeyW", "z"],
+      ["KeyD", "d"],
+    ]);
+    expect(keyLabelsForLayout(codesForPreset("wasd"), azerty)).toEqual(["Q", "S", "Z", "D"]);
+    expect(keyLabelsForLayout(DEFAULT_KEYS, azerty)).toEqual(["←", "↓", "↑", "→"]);
+  });
+
+  it("falls back when a layout map omits or returns unsafe labels", () => {
+    const partial = new Map([
+      ["KeyA", ""],
+      ["KeyS", "Dead"],
+      ["KeyW", "Unidentified"],
+      ["KeyD", "d"],
+    ]);
+    expect(keyLabelsForLayout(codesForPreset("wasd"), partial)).toEqual(["A", "S", "W", "D"]);
+    expect(keyLabelsForLayout(codesForPreset("wasd"), null)).toEqual(["A", "S", "W", "D"]);
+  });
+
+  it("lets players override unavailable or inaccurate keyboard maps without changing bindings", () => {
+    const wasd = codesForPreset("wasd");
+    const detected = new Map([["KeyA", "a"], ["KeyW", "w"]]);
+    expect(keyLabelsForDisplayLayout(wasd, "auto", detected)).toEqual(["A", "S", "W", "D"]);
+    expect(keyLabelsForDisplayLayout(wasd, "azerty", detected)).toEqual(["Q", "S", "Z", "D"]);
+    expect(keyLabelsForDisplayLayout(wasd, "qwerty", new Map([["KeyA", "q"]]))).toEqual(["A", "S", "W", "D"]);
+    expect(keyLabelsForDisplayLayout(["KeyY", "KeyZ", "ArrowLeft", "Semicolon"], "qwertz"))
+      .toEqual(["Z", "Y", "←", ";"]);
+    expect(wasd).toEqual(["KeyA", "KeyS", "KeyW", "KeyD"]);
   });
 
   it("keeps every preset at four distinct lanes", () => {

@@ -1,8 +1,13 @@
-import type { LastRun, PlayResult } from "../types/chart";
+import type { ChartTier, LastRun, PlayMode, PlayResult } from "../types/chart";
 import type { CatalogTrack } from "../types/catalog";
-import { maxScore } from "../engine/judge";
+import { isAllPerfect, isFullCombo, maxScore } from "../engine/judge";
 import { saveScore, getPersonalBest } from "./settings";
 import { readItem, readJSON, writeItem, writeJSON } from "./safeStorage";
+import { challengeTargetForRun, isChallengeTarget } from "../lib/challenge";
+import { isDateKey } from "../lib/dailyChallenge";
+import type { DailyChallenge } from "../lib/dailyChallenge";
+import { CURRENT_SCORING_VERSION, isCompatibleScoringVersion } from "../engine/scoringRules";
+import { normalizePracticeAttempts, normalizePracticeRepetitions } from "../lib/practiceDrill";
 
 const SESSION_RUN_KEY = "bs_last_run";
 /** Survives new-tab share links (`?run=local`, PRD §6.0.24). */
@@ -13,17 +18,25 @@ let needsVisitRun = false;
 export type BoardEntry = {
   track_id: string;
   title?: string;
-  tier: string;
+  tier: ChartTier;
   score: number;
   accuracy: number;
   name: string;
   at: string;
+  scoringVersion?: number;
 };
 
 function isEntry(v: unknown): v is BoardEntry {
   if (typeof v !== "object" || v === null) return false;
   const e = v as Record<string, unknown>;
-  return typeof e.track_id === "string" && typeof e.tier === "string" && typeof e.name === "string";
+  return typeof e.track_id === "string" && e.track_id.trim().length > 0 &&
+    (e.title === undefined || typeof e.title === "string") &&
+    typeof e.tier === "string" && ["easy", "standard", "hard"].includes(e.tier) &&
+    typeof e.score === "number" && Number.isFinite(e.score) && e.score >= 0 &&
+    typeof e.accuracy === "number" && Number.isFinite(e.accuracy) && e.accuracy >= 0 && e.accuracy <= 100 &&
+    typeof e.name === "string" && e.name.trim().length > 0 &&
+    typeof e.at === "string" && e.at.length > 0 &&
+    isCompatibleScoringVersion(e.track_id as string, e.tier as string, e.scoringVersion);
 }
 
 function boardEntries(v: unknown): BoardEntry[] | null {
@@ -36,6 +49,7 @@ export function loadBoard(): BoardEntry[] {
 }
 
 export function saveBoardEntry(entry: BoardEntry, cap = 50) {
+  if (!isEntry(entry)) return;
   const board = loadBoard();
   const next = [...board, entry].sort((a, b) => b.score - a.score).slice(0, cap);
   writeJSON("bs_board", next);
@@ -43,10 +57,14 @@ export function saveBoardEntry(entry: BoardEntry, cap = 50) {
 
 export type DailyBoardEntry = BoardEntry & { dateKey: string };
 
+function isDailyEntry(v: unknown): v is DailyBoardEntry {
+  return isEntry(v) && isDateKey((v as { dateKey?: unknown }).dateKey);
+}
+
 export function loadDailyBoard(dateKey = new Date().toISOString().slice(0, 10)): DailyBoardEntry[] {
-  const all = readJSON<(BoardEntry & { dateKey?: string })[]>("bs_daily_board", [], (v) => {
+  const all = readJSON<DailyBoardEntry[]>("bs_daily_board", [], (v) => {
     if (!Array.isArray(v)) return null;
-    return v.filter(isEntry) as (BoardEntry & { dateKey?: string })[];
+    return v.filter(isDailyEntry);
   });
   return all
     .filter((e) => e.dateKey === dateKey)
@@ -57,9 +75,19 @@ export function loadDailyBoard(dateKey = new Date().toISOString().slice(0, 10)):
 export function saveDailyBoardEntry(entry: DailyBoardEntry, cap = 200) {
   const all = readJSON<DailyBoardEntry[]>("bs_daily_board", [], (v) => {
     if (!Array.isArray(v)) return null;
-    return v.filter(isEntry) as DailyBoardEntry[];
+    return v.filter(isDailyEntry);
   });
-  const next = [...all, entry].sort((a, b) => b.score - a.score).slice(0, cap);
+  if (!isDailyEntry(entry)) return;
+  // The cap bounds history, not an all-time hall of fame. Keeping globally
+  // highest scores would let old days permanently evict a lower-scoring new
+  // challenge, making today's completed state disappear from Home.
+  const next = [...all, entry]
+    .sort((a, b) =>
+      b.dateKey.localeCompare(a.dateKey) ||
+      b.at.localeCompare(a.at) ||
+      b.score - a.score,
+    )
+    .slice(0, cap);
   writeJSON("bs_daily_board", next);
 }
 
@@ -78,12 +106,50 @@ function parseRun(raw: string | null): LastRun | null {
       !run.counts || ![run.counts.perfect, run.counts.great, run.counts.good, run.counts.miss].every(Number.isFinite) ||
       (run.missEvents !== undefined && (!Array.isArray(run.missEvents) ||
         !run.missEvents.every((e) => e && Number.isFinite(e.tMs) && [0, 1, 2, 3].includes(e.lane))))) return null;
+    if (!isCompatibleScoringVersion(run.track_id, run.tier, run.scoringVersion)) return null;
     if (run.shiftStep !== undefined && !["studio", "yard", "rooftop"].includes(run.shiftStep)) delete run.shiftStep;
+    if (run.seekedFrom !== undefined && (!Number.isFinite(run.seekedFrom) || run.seekedFrom < 0)) {
+      delete run.seekedFrom;
+    }
+    if (run.seekedUntil !== undefined &&
+      (run.seekedFrom === undefined || !Number.isFinite(run.seekedUntil) || run.seekedUntil <= run.seekedFrom)) {
+      delete run.seekedUntil;
+    }
+    const practiceRepetitions = normalizePracticeRepetitions(
+      typeof run.practiceRepetitions === "number" ? run.practiceRepetitions : undefined,
+      run.seekedFrom !== undefined && run.seekedUntil !== undefined,
+    );
+    if (practiceRepetitions > 1) run.practiceRepetitions = practiceRepetitions;
+    else delete run.practiceRepetitions;
+    const practiceAttempts = normalizePracticeAttempts(
+      run.practiceAttempts,
+      practiceRepetitions,
+      run.totalNotes,
+    );
+    if (practiceAttempts) run.practiceAttempts = practiceAttempts;
+    else delete run.practiceAttempts;
     // T3 timing profile is additive: a corrupt/foreign shape must not kill the whole save.
     if (run.timing !== undefined) {
       const t = run.timing;
-      if (!t || ![t.early, t.late, t.meanMs].every(Number.isFinite)) delete run.timing;
+      if (!t ||
+        !Number.isInteger(t.early) || t.early < 0 ||
+        !Number.isInteger(t.late) || t.late < 0 ||
+        t.early + t.late <= 0 ||
+        !Number.isFinite(t.meanMs)) delete run.timing;
     }
+    if (run.challenge !== undefined && (run.seekedFrom !== undefined || !isChallengeTarget(run.challenge))) {
+      delete run.challenge;
+    }
+    if (run.dailyDateKey !== undefined && (
+      !isDateKey(run.dailyDateKey) ||
+      run.tier !== "standard" ||
+      run.mode !== "arcade" ||
+      run.seekedFrom !== undefined
+    )) delete run.dailyDateKey;
+    // Badges are derived facts, not trusted storage. This also repairs a
+    // legacy Good-only result that was incorrectly persisted as Full Combo.
+    run.fc = isFullCombo(run.counts, run.totalNotes);
+    run.ap = isAllPerfect(run.counts, run.totalNotes);
     return run;
   } catch {
     return null;
@@ -92,27 +158,52 @@ function parseRun(raw: string | null): LastRun | null {
 
 export function writeLastRun(
   track: CatalogTrack,
-  tier: string,
-  mode: string,
+  tier: ChartTier,
+  mode: PlayMode,
   result: PlayResult,
   durationMs: number,
-  opts?: { daily?: boolean; shiftStep?: LastRun["shiftStep"] },
+  opts?: {
+    daily?: DailyChallenge;
+    shiftStep?: LastRun["shiftStep"];
+    challenge?: LastRun["challenge"];
+  },
 ) {
   // Capture the standing record BEFORE this run is saved, so Results can flag a true new best.
   const prevBest = getPersonalBest(track.track_id, tier, mode);
+  const daily = opts?.daily;
+  const validDaily = daily &&
+    isDateKey(daily.dateKey) &&
+    daily.trackId === track.track_id &&
+    daily.tier === tier &&
+    daily.mode === mode &&
+    daily.tier === "standard" &&
+    daily.mode === "arcade" &&
+    result.seekedFrom === undefined
+      ? daily
+      : null;
+  const practiceRepetitions = normalizePracticeRepetitions(
+    result.practiceRepetitions,
+    result.seekedFrom !== undefined && result.seekedUntil !== undefined,
+  );
+  const practiceAttempts = normalizePracticeAttempts(
+    result.practiceAttempts,
+    practiceRepetitions,
+    result.totalNotes,
+  );
   const run: LastRun = {
     v: 1,
+    scoringVersion: CURRENT_SCORING_VERSION,
     track_id: track.track_id,
     title: track.title,
     artist: track.artist,
-    tier: tier as LastRun["tier"],
-    mode: mode as LastRun["mode"],
+    tier,
+    mode,
     score: result.score,
     accuracy: result.accuracy,
     maxCombo: result.maxCombo,
     grade: result.grade,
-    fc: result.fullCombo,
-    ap: result.allPerfect,
+    fc: isFullCombo(result.judgments, result.totalNotes),
+    ap: isAllPerfect(result.judgments, result.totalNotes),
     failed: result.failed,
     counts: result.judgments,
     totalNotes: result.totalNotes,
@@ -123,6 +214,14 @@ export function writeLastRun(
     missEvents: result.missEvents,
     surgeMaxTier: result.surgeMaxTier,
     ...(result.timing ? { timing: result.timing } : {}),
+    ...(result.seekedFrom !== undefined ? { seekedFrom: result.seekedFrom } : {}),
+    ...(result.seekedUntil !== undefined ? { seekedUntil: result.seekedUntil } : {}),
+    ...(practiceRepetitions > 1 ? { practiceRepetitions } : {}),
+    ...(practiceAttempts ? { practiceAttempts } : {}),
+    ...(validDaily ? { dailyDateKey: validDaily.dateKey } : {}),
+    ...(result.seekedFrom === undefined && opts?.challenge && isChallengeTarget(opts.challenge)
+      ? { challenge: opts.challenge }
+      : {}),
   };
   const payload = JSON.stringify(run);
   // 这两次写入绝不能因为配额 / 隐私模式抛异常而中断：后面的成绩与排行榜存档
@@ -135,7 +234,14 @@ export function writeLastRun(
   needsVisitRun = readItem(SESSION_RUN_KEY, "session") !== payload;
 
   const ceiling = maxScore(result.totalNotes) * 1.01;
-  if (result.score <= ceiling && mode === "arcade" && !result.failed) {
+  const counts = Object.values(result.judgments);
+  const rankableResult = Number.isInteger(result.totalNotes) && result.totalNotes > 0 &&
+    counts.every((count) => Number.isInteger(count) && count >= 0) &&
+    counts.reduce((sum, count) => sum + count, 0) === result.totalNotes &&
+    Number.isFinite(result.score) && result.score >= 0 && result.score <= ceiling &&
+    Number.isFinite(result.accuracy) && result.accuracy >= 0 && result.accuracy <= 100 &&
+    Number.isInteger(result.maxCombo) && result.maxCombo >= 0 && result.maxCombo <= result.totalNotes;
+  if (rankableResult && mode === "arcade" && !result.failed && result.seekedFrom === undefined) {
     saveScore({
       track_id: track.track_id,
       tier,
@@ -143,6 +249,7 @@ export function writeLastRun(
       score: result.score,
       accuracy: result.accuracy,
       at: run.endedAt,
+      scoringVersion: CURRENT_SCORING_VERSION,
     });
     saveBoardEntry({
       track_id: track.track_id,
@@ -152,10 +259,11 @@ export function writeLastRun(
       accuracy: result.accuracy,
       name: getDisplayName(),
       at: run.endedAt,
+      scoringVersion: CURRENT_SCORING_VERSION,
     });
   }
 
-  if (opts?.daily && result.score <= ceiling && mode === "arcade" && !result.failed) {
+  if (validDaily && rankableResult && mode === "arcade" && !result.failed && result.seekedFrom === undefined) {
     saveDailyBoardEntry({
       track_id: track.track_id,
       title: track.title,
@@ -164,7 +272,8 @@ export function writeLastRun(
       accuracy: result.accuracy,
       name: getDisplayName(),
       at: run.endedAt,
-      dateKey: new Date().toISOString().slice(0, 10),
+      dateKey: validDaily.dateKey,
+      scoringVersion: CURRENT_SCORING_VERSION,
     });
   }
   return run;
@@ -185,11 +294,29 @@ export function shareResultsUrl(origin = typeof window !== "undefined" ? window.
 }
 
 export function shareResultsCopy(run: LastRun, url: string): string {
+  if (run.seekedFrom !== undefined) {
+    const totalSeconds = Math.max(0, Math.floor(run.seekedFrom));
+    const clock = `${Math.floor(totalSeconds / 60)}:${String(totalSeconds % 60).padStart(2, "0")}`;
+    const range = run.seekedUntil === undefined
+      ? `from ${clock}`
+      : `${clock}–${Math.floor(run.seekedUntil / 60)}:${String(Math.floor(run.seekedUntil) % 60).padStart(2, "0")}`;
+    return run.practiceRepetitions
+      ? `I ran a ${run.practiceRepetitions}-rep drill on ${run.title} ${range} in BeatScape — final rep ${run.accuracy}% ${run.grade}. Practice scores stay off the rankings. Try the full chart: ${url}`
+      : `I practiced ${run.title} ${range} on BeatScape — ${run.accuracy}% ${run.grade}. Practice scores stay off the rankings. Try the full chart: ${url}`;
+  }
   return `I just ran ${run.title} on BeatScape — ${run.accuracy}% ${run.grade}. No account, no ads. Scores stay in your browser. Try this chart: ${url}`;
 }
 
 /** A recipient can play the same chart without access to the sender's local save. */
 export function shareChallengeUrl(run: LastRun, origin = typeof window !== "undefined" ? window.location.origin : ""): string {
   const base = (import.meta.env.BASE_URL || "/beatscape/").replace(/\/$/, "");
-  return `${origin}${base}/play/${encodeURIComponent(run.track_id)}?tier=${run.tier}&mode=${run.mode}`;
+  const params = new URLSearchParams({ tier: run.tier, mode: run.mode });
+  const target = challengeTargetForRun(run);
+  if (target) {
+    params.set("challenge", "1");
+    params.set("target", String(target.score));
+    params.set("acc", String(target.accuracy));
+    params.set("grade", target.grade);
+  }
+  return `${origin}${base}/play/${encodeURIComponent(run.track_id)}?${params}`;
 }

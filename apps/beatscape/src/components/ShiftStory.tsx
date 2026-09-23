@@ -1,6 +1,10 @@
+import { useState } from "react";
 import { Link } from "../router";
 import { FIRST_SHIFT, shiftPlayHref, shiftStep, type CrewLine } from "../data/firstShift";
-import { crewResponse, loadShiftProgress, shiftStorageNotice, shiftReceiptFor } from "../lib/firstShift";
+import { crewResponse, loadShiftProgress, shiftInputSurface, shiftStorageNotice, shiftReceiptFor } from "../lib/firstShift";
+import { isCoarsePointer } from "../input/touchInput";
+import { useGamepadAssignments } from "../input/useGamepadAssignments";
+import { usePhysicalKeyboardInput } from "../input/usePhysicalKeyboardInput";
 import type { LastRun } from "../types/chart";
 import "../styles/first-shift.css";
 
@@ -22,6 +26,42 @@ export function ShiftCircuit({ completed }: { completed: number }) {
   ))}</ol>;
 }
 
+export function ShiftSignalPath({
+  from,
+  to,
+  className = "",
+  compact = false,
+}: {
+  from: string;
+  to: string;
+  className?: string;
+  compact?: boolean;
+}) {
+  const visibleState = (value: string) => {
+    if (!compact) return value;
+    const separator = " · ";
+    const stateStart = value.indexOf(separator);
+    return stateStart >= 0 ? value.slice(stateStart + separator.length) : value;
+  };
+  return (
+    <p
+      className={`shift-signal-path${className ? ` ${className}` : ""}`}
+      role="img"
+      aria-label={`Signal path: ${from} becomes ${to}`}
+    >
+      <span className="shift-link-from" aria-hidden="true">
+        <small>From</small>
+        <strong>{visibleState(from)}</strong>
+      </span>
+      <span className="shift-link-arrow" aria-hidden="true">→</span>
+      <span className="shift-link-to" aria-hidden="true">
+        <small>To</small>
+        <strong>{visibleState(to)}</strong>
+      </span>
+    </p>
+  );
+}
+
 export function ShiftHomeCard() {
   const progress = loadShiftProgress();
   const count = progress.completed.length;
@@ -38,6 +78,9 @@ export function ShiftHomeCard() {
 }
 
 export function ShiftResult({ run, district }: { run: LastRun; district?: string }) {
+  const [touchUi] = useState(isCoarsePointer);
+  const physicalKeyboardSeen = usePhysicalKeyboardInput();
+  const [gamepadIndex] = useGamepadAssignments(1);
   const progress = loadShiftProgress();
   const receipt = shiftReceiptFor(run, progress);
   const step = shiftStep(receipt?.id);
@@ -47,24 +90,40 @@ export function ShiftResult({ run, district }: { run: LastRun; district?: string
   // 下一关只用一句台词介绍人，不重复讲一遍城市设定。
   const nextLine = next ? next.opening?.[0] ?? next.before[0] : undefined;
   return <section className="shift-result" aria-labelledby="shift-response-title">
-    <p className="eyebrow">The Late Static · A reply for you</p>
+    <p className="eyebrow">The Late Static · Connection update</p>
     <h2 id="shift-response-title">{step ? `${step.node} restored` : "Still on the line."}</h2>
-    {/* 玩家要能说清"刚刚通了什么"：这条线路在这一关前后的状态。 */}
-    {step && <p className="shift-link-change">
-      <span className="shift-link-from">{step.link.from}</span>
-      <span className="shift-link-arrow" aria-hidden>→</span>
-      <span className="shift-link-to">{step.link.to}</span>
-    </p>}
-    <CrewDialogue lines={step ? step.after : [crewResponse(run, district)]} />
-    {step && <><p className="shift-change">{step.restored}</p><ShiftCircuit completed={done} /></>}
-    {/* 续玩按钮直指下一首确定的歌，不把人先送回一个目录页。 */}
+    {!step && <CrewDialogue lines={[crewResponse(
+      run,
+      district,
+      shiftInputSurface(touchUi, physicalKeyboardSeen, gamepadIndex !== null),
+    )]} />}
+    {/* The headline confirms this connection; make the next run reachable
+        before the longer receipt on short phones. */}
     {step && next && nextLine && <div className="shift-next">
       <p className="eyebrow">Next · Connection {done + 1} of {FIRST_SHIFT.length} · {next.district}</p>
-      <CrewDialogue lines={[nextLine]} />
       <Link className="btn primary" to={shiftPlayHref(next)}>Play {next.trackTitle} · {done + 1}/{FIRST_SHIFT.length}</Link>
+      <CrewDialogue lines={[nextLine]} />
     </div>}
+    {step && !next && <div className="shift-next shift-next-complete">
+      <p className="eyebrow">First Shift complete</p>
+      <p>The station is live. Your seat and the weekly broadcasts are ready whenever you return.</p>
+      <Link className="btn primary" to="/shift">Your seat at the station</Link>
+    </div>}
+    {/* Keep the concrete before/after state visible without making the player
+        scroll past it to continue. */}
+    {step && (
+      <ShiftSignalPath compact className="shift-link-change" from={step.link.from} to={step.link.to} />
+    )}
+    {step && <p className="shift-change">{step.restored}</p>}
+    {step && <details className="shift-result-details">
+      <summary>
+        <span>Read the crew reply &amp; circuit</span>
+        <small>{done}/{FIRST_SHIFT.length} connections restored</small>
+      </summary>
+      <CrewDialogue lines={step.after} />
+      <ShiftCircuit completed={done} />
+    </details>}
     <div className="cta-row">
-      {step && !next && <Link className="btn primary" to="/shift">Your seat at the station</Link>}
       {!step && attempted && next?.id === attempted.id && <Link className="btn primary" to={shiftPlayHref(attempted)}>Try this connection again</Link>}
       {!step && <Link className="btn ghost" to="/shift">{done ? "Back to the station" : "Meet the crew · First shift"}</Link>}
       {step && next && <Link className="btn ghost" to="/shift">Back to the station</Link>}

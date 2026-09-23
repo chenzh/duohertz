@@ -17,7 +17,12 @@ export function getAudioContext(): AudioContext {
 
 export async function unlockAudio(): Promise<void> {
   const c = getAudioContext();
-  if (c.state === "suspended") {
-    await c.resume();
-  }
+  const state = String(c.state);
+  if (state === "closed") throw new Error("Audio context is closed");
+  // Safari can expose the non-standard `interrupted` state after calls,
+  // Bluetooth route changes, or another app taking audio focus. Treat every
+  // non-running recoverable state like `suspended` instead of silently
+  // scheduling music on a clock that cannot advance.
+  if (state !== "running") await c.resume();
+  if (String(c.state) !== "running") throw new Error("Audio context did not resume");
 }

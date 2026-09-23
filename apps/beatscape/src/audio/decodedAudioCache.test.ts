@@ -1,7 +1,8 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { DecodedAudioCache } from "./decodedAudioCache";
+import { DECODED_AUDIO_CACHE_BYTES, DecodedAudioCache } from "./decodedAudioCache";
 import { startEarlyAudio } from "../../scripts/early-audio.mjs";
 import { discardStaleEarlyAudio } from "./earlyAudio";
+import type { AudioLoadProgress } from "./earlyAudio";
 
 function deferred<T>() {
   let resolve!: (value: T) => void;
@@ -14,15 +15,23 @@ function buffer(bytes = 16): AudioBuffer {
   return { length: bytes / 8, numberOfChannels: 2, sampleRate: 48000, duration: 120 } as AudioBuffer;
 }
 
-function response(encoded = new ArrayBuffer(8)): Response {
-  return { ok: true, arrayBuffer: async () => encoded } as Response;
+function response(encoded = new ArrayBuffer(8), status = 200): Response {
+  return {
+    ok: status >= 200 && status < 300,
+    status,
+    arrayBuffer: async () => encoded,
+  } as Response;
 }
 
 function decoder(sampleRate = 48000, decoded = buffer()) {
   return { sampleRate, decodeAudioData: vi.fn(async () => decoded) };
 }
 
-afterEach(() => vi.unstubAllGlobals());
+afterEach(() => {
+  vi.useRealTimers();
+  vi.restoreAllMocks();
+  vi.unstubAllGlobals();
+});
 
 function earlyAudioWindow(pathname = "/play/selected") {
   const browser = Object.assign(new EventTarget(), {
@@ -36,6 +45,60 @@ function earlyAudioWindow(pathname = "/play/selected") {
 }
 
 describe("decoded music cache", () => {
+  it("reports real streamed byte progress to both leases and decodes the exact assembled bytes once", async () => {
+    let stream!: ReadableStreamDefaultController<Uint8Array>;
+    const body = new ReadableStream<Uint8Array>({ start(controller) { stream = controller; } });
+    vi.stubGlobal("fetch", vi.fn(async () => ({
+      ok: true,
+      status: 200,
+      headers: new Headers({ "Content-Length": "8" }),
+      body,
+    } as Response)));
+    const ctx = decoder();
+    const cache = new DecodedAudioCache();
+    const p1: AudioLoadProgress[] = [];
+    const p2: AudioLoadProgress[] = [];
+    const first = cache.acquire(ctx, "/song", (progress) => p1.push(progress));
+    const second = cache.acquire(ctx, "/song", (progress) => p2.push(progress));
+    stream.enqueue(new Uint8Array([1, 2, 3]));
+    await vi.waitFor(() => expect(p1).toContainEqual({ phase: "download", loadedBytes: 3, totalBytes: 8 }));
+    expect(p2).toContainEqual({ phase: "download", loadedBytes: 3, totalBytes: 8 });
+    stream.enqueue(new Uint8Array([4, 5, 6, 7, 8]));
+    stream.close();
+    await Promise.all([first.promise, second.promise]);
+    expect(p1.at(-1)).toEqual({ phase: "decode" });
+    expect(p2.at(-1)).toEqual({ phase: "decode" });
+    expect(new Uint8Array(ctx.decodeAudioData.mock.calls[0]![0])).toEqual(new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8]));
+    expect(ctx.decodeAudioData).toHaveBeenCalledTimes(1);
+  });
+
+  it("adopts parser byte progress already in flight without a second download", async () => {
+    earlyAudioWindow();
+    let stream!: ReadableStreamDefaultController<Uint8Array>;
+    const body = new ReadableStream<Uint8Array>({ start(controller) { stream = controller; } });
+    const fetchAudio = vi.fn(async () => ({
+      ok: true,
+      status: 200,
+      headers: new Headers({ "Content-Length": "4" }),
+      body,
+    } as Response));
+    vi.stubGlobal("fetch", fetchAudio);
+    startEarlyAudio({ selected: "/song" }, "/");
+    stream.enqueue(new Uint8Array([1, 2]));
+    await Promise.resolve();
+    await Promise.resolve();
+    const progress: AudioLoadProgress[] = [];
+    const ctx = decoder();
+    const lease = new DecodedAudioCache().acquire(ctx, "/song", (update) => progress.push(update));
+    await vi.waitFor(() => expect(progress).toContainEqual({ phase: "download", loadedBytes: 2, totalBytes: 4 }));
+    stream.enqueue(new Uint8Array([3, 4]));
+    stream.close();
+    await lease.promise;
+    expect(fetchAudio).toHaveBeenCalledTimes(1);
+    expect(progress.at(-1)).toEqual({ phase: "decode" });
+    expect(new Uint8Array(ctx.decodeAudioData.mock.calls[0]![0])).toEqual(new Uint8Array([1, 2, 3, 4]));
+  });
+
   it("adopts the head download once for both players without copying encoded bytes", async () => {
     const browser = earlyAudioWindow("/duo/selected");
     const encoded = new ArrayBuffer(32);
@@ -100,6 +163,24 @@ describe("decoded music cache", () => {
     expect(ctx.decodeAudioData).toHaveBeenCalledTimes(2);
   });
 
+  it("recovers an adopted parser download through the shared retry path", async () => {
+    earlyAudioWindow();
+    const firstNetwork = deferred<Response>();
+    const fetchAudio = vi.fn((_url: string, _init?: RequestInit) => Promise.resolve(response()))
+      .mockReturnValueOnce(firstNetwork.promise);
+    vi.stubGlobal("fetch", fetchAudio);
+    startEarlyAudio({ selected: "/audio?v=release" }, "/");
+    const cache = new DecodedAudioCache(DECODED_AUDIO_CACHE_BYTES, [0, 0]);
+    const ctx = decoder();
+    const audio = cache.acquire(ctx, "/audio?v=release");
+    firstNetwork.resolve(response(new ArrayBuffer(0), 503));
+
+    await expect(audio.promise).resolves.toBeDefined();
+    expect(fetchAudio).toHaveBeenCalledTimes(2);
+    expect(fetchAudio.mock.calls[0]![1]!.signal!.aborted).toBe(false);
+    expect(ctx.decodeAudioData).toHaveBeenCalledTimes(1);
+  });
+
   it("router cleanup cancels an unadopted request after SPA navigation", () => {
     const browser = earlyAudioWindow();
     const fetchAudio = vi.fn((_url: string, _init?: RequestInit) => new Promise<Response>(() => {}));
@@ -147,13 +228,60 @@ describe("decoded music cache", () => {
     expect(ctx44.decodeAudioData).toHaveBeenCalledTimes(1);
   });
 
-  it.each(["fetch", "decode"])("allows retry after a %s failure", async (stage) => {
+  it("shares automatic recovery from transient transport failures", async () => {
+    const ctx = decoder();
+    const fetchAudio = vi.fn(async () => response())
+      .mockRejectedValueOnce(new TypeError("network"))
+      .mockResolvedValueOnce(response(new ArrayBuffer(0), 503));
+    vi.stubGlobal("fetch", fetchAudio);
+    const cache = new DecodedAudioCache(DECODED_AUDIO_CACHE_BYTES, [0, 0]);
+    const first = cache.acquire(ctx, "/audio");
+    const partner = cache.acquire(ctx, "/audio");
+
+    expect(await first.promise).toBe(await partner.promise);
+    expect(fetchAudio).toHaveBeenCalledTimes(3);
+    expect(ctx.decodeAudioData).toHaveBeenCalledTimes(1);
+  });
+
+  it("does not retry permanent HTTP failures", async () => {
+    const fetchAudio = vi.fn(async () => response(new ArrayBuffer(0), 404));
+    vi.stubGlobal("fetch", fetchAudio);
+    const cache = new DecodedAudioCache(DECODED_AUDIO_CACHE_BYTES, [0, 0]);
+
+    await expect(cache.acquire(decoder(), "/missing").promise).rejects.toThrow("Audio load failed (404)");
+    expect(fetchAudio).toHaveBeenCalledTimes(1);
+  });
+
+  it("stops after three failed transport attempts", async () => {
+    const fetchAudio = vi.fn(async () => response(new ArrayBuffer(0), 503));
+    vi.stubGlobal("fetch", fetchAudio);
+    const cache = new DecodedAudioCache(DECODED_AUDIO_CACHE_BYTES, [0, 0]);
+
+    await expect(cache.acquire(decoder(), "/offline").promise).rejects.toThrow("Audio load failed (503)");
+    expect(fetchAudio).toHaveBeenCalledTimes(3);
+  });
+
+  it("aborts a pending backoff when the final player leaves", async () => {
+    vi.useFakeTimers();
+    const fetchAudio = vi.fn(async () => response(new ArrayBuffer(0), 503));
+    vi.stubGlobal("fetch", fetchAudio);
+    const cache = new DecodedAudioCache(DECODED_AUDIO_CACHE_BYTES, [1_000, 1_000]);
+    const audio = cache.acquire(decoder(), "/leave");
+    const cancelled = expect(audio.promise).rejects.toMatchObject({ name: "AbortError" });
+    await Promise.resolve();
+    audio.release();
+
+    await cancelled;
+    await vi.runAllTimersAsync();
+    expect(fetchAudio).toHaveBeenCalledTimes(1);
+  });
+
+  it("allows a manual retry after a decode failure", async () => {
     const ctx = decoder();
     const fetchAudio = vi.fn(async () => response());
-    if (stage === "fetch") fetchAudio.mockRejectedValueOnce(new Error("network"));
-    else ctx.decodeAudioData.mockRejectedValueOnce(new Error("decode"));
+    ctx.decodeAudioData.mockRejectedValueOnce(new Error("decode"));
     vi.stubGlobal("fetch", fetchAudio);
-    const cache = new DecodedAudioCache();
+    const cache = new DecodedAudioCache(DECODED_AUDIO_CACHE_BYTES, [0, 0]);
     await expect(cache.acquire(ctx, "/audio").promise).rejects.toThrow();
     await expect(cache.acquire(ctx, "/audio").promise).resolves.toBeDefined();
     expect(fetchAudio).toHaveBeenCalledTimes(2);

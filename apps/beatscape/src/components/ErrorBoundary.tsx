@@ -25,12 +25,8 @@ export class ErrorBoundary extends Component<Props, State> {
     console.error("[beatscape] render error:", error, info.componentStack);
   }
 
-  private reset = (): void => {
-    this.setState({ error: null });
-  };
-
-  private goHome = (): void => {
-    window.location.href = "/";
+  private reload = (): void => {
+    window.location.reload();
   };
 
   render(): ReactNode {
@@ -38,16 +34,19 @@ export class ErrorBoundary extends Component<Props, State> {
     if (!error) return this.props.children;
     return (
       <section className="error-screen" role="alert">
+        <span className="track-load-mark" aria-hidden>◇</span>
+        <p className="eyebrow">The Late Static</p>
         <h1>Signal lost</h1>
-        <p className="tagline">Something broke while drawing the Scape. Your scores are safe.</p>
-        <pre className="error-detail">{error.message}</pre>
+        <p className="tagline">
+          BeatScape couldn’t load this screen. Reload to try the same page. Your scores are safe.
+        </p>
         <div className="cta-row">
-          <button type="button" className="btn primary" onClick={this.reset}>
-            Try again
+          <button type="button" className="btn primary" onClick={this.reload}>
+            Reload page
           </button>
-          <button type="button" className="btn" onClick={this.goHome}>
+          <a className="btn" href={import.meta.env.BASE_URL}>
             Back to home
-          </button>
+          </a>
         </div>
       </section>
     );

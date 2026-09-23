@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { CatalogTrack } from "../types/catalog";
 import { loadCatalog } from "./loadCatalog";
 
@@ -6,6 +6,7 @@ export type CatalogState = {
   tracks: CatalogTrack[];
   loading: boolean;
   error: string;
+  retry: () => void;
 };
 
 /**
@@ -16,9 +17,13 @@ export type CatalogState = {
  * rejection，页面呈现为"空列表"—— 没有任何提示，用户还以为曲库本来就是空的。
  */
 export function useCatalog(): CatalogState {
-  const [state, setState] = useState<CatalogState>({ tracks: [], loading: true, error: "" });
+  const [state, setState] = useState<Omit<CatalogState, "retry">>({ tracks: [], loading: true, error: "" });
+  const [attempt, setAttempt] = useState(0);
+  const retry = useCallback(() => setAttempt((value) => value + 1), []);
+
   useEffect(() => {
     let cancelled = false;
+    setState((current) => ({ ...current, loading: true, error: "" }));
     loadCatalog()
       .then((c) => {
         if (!cancelled) setState({ tracks: c.tracks, loading: false, error: "" });
@@ -35,6 +40,6 @@ export function useCatalog(): CatalogState {
     return () => {
       cancelled = true;
     };
-  }, []);
-  return state;
+  }, [attempt]);
+  return { ...state, retry };
 }

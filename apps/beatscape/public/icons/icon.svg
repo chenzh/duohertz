@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="BeatScape">
+  <rect width="512" height="512" fill="#12100f"/>
+  <g opacity="0.22" fill="#e23d3d">
+    <circle cx="32" cy="32" r="4"/><circle cx="64" cy="32" r="4"/><circle cx="96" cy="32" r="4"/><circle cx="128" cy="32" r="4"/><circle cx="160" cy="32" r="4"/><circle cx="192" cy="32" r="4"/><circle cx="224" cy="32" r="4"/><circle cx="256" cy="32" r="4"/><circle cx="288" cy="32" r="4"/><circle cx="320" cy="32" r="4"/><circle cx="352" cy="32" r="4"/><circle cx="384" cy="32" r="4"/><circle cx="416" cy="32" r="4"/><circle cx="448" cy="32" r="4"/><circle cx="480" cy="32" r="4"/>
+    <circle cx="32" cy="480" r="4"/><circle cx="64" cy="480" r="4"/><circle cx="96" cy="480" r="4"/><circle cx="128" cy="480" r="4"/><circle cx="160" cy="480" r="4"/><circle cx="192" cy="480" r="4"/><circle cx="224" cy="480" r="4"/><circle cx="256" cy="480" r="4"/><circle cx="288" cy="480" r="4"/><circle cx="320" cy="480" r="4"/><circle cx="352" cy="480" r="4"/><circle cx="384" cy="480" r="4"/><circle cx="416" cy="480" r="4"/><circle cx="448" cy="480" r="4"/><circle cx="480" cy="480" r="4"/>
+  </g>
+  <polygon points="256,76 436,256 256,436 76,256" fill="#1c1717" stroke="#e23d3d" stroke-width="24"/>
+  <polygon points="256,142 370,256 256,370 142,256" fill="none" stroke="#f2e4c9" stroke-width="16"/>
+  <polygon points="256,205 307,256 256,307 205,256" fill="#e23d3d"/>
+</svg>

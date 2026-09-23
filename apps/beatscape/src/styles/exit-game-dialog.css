@@ -81,6 +81,16 @@
 .exit-game-actions .exit-game-keep:hover { background: var(--text); }
 .exit-game-actions .exit-game-leave { background: transparent; color: var(--muted); box-shadow: none; }
 .exit-game-actions .exit-game-leave:hover { color: var(--text); background: var(--bg); }
+.exit-game-resume-error {
+  margin: 14px 0 0;
+  color: var(--danger, #ff5f57);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.exit-game-dialog .gamepad-dialog-hint {
+  margin-top: 14px;
+}
 
 @media (max-width: 360px) {
   .exit-game-actions { grid-template-columns: 1fr; }

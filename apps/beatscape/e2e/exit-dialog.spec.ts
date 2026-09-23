@@ -4,6 +4,7 @@ type AudioProbe = {
   starts: number;
   active: number;
   offsets: number[];
+  delays: number[];
   stoppedOffsets: number[];
 };
 declare global {
@@ -29,7 +30,13 @@ test.beforeEach(async ({ page }) => {
     localStorage.setItem('bs_onboarded', 'true');
     // Observe real production Web Audio nodes without replacing audio, charts,
     // clocks, or game state. Both Duo sources count, including its silent side.
-    const probe: AudioProbe = window.__exitAudioProbe = { starts: 0, active: 0, offsets: [], stoppedOffsets: [] };
+    const probe: AudioProbe = window.__exitAudioProbe = {
+      starts: 0,
+      active: 0,
+      offsets: [],
+      delays: [],
+      stoppedOffsets: [],
+    };
     window.__exitLiveSfxStarts = 0;
     const active = new Map<AudioBufferSourceNode, { when: number; offset: number }>();
     const originalStart = AudioBufferSourceNode.prototype.start;
@@ -44,9 +51,11 @@ test.beforeEach(async ({ page }) => {
       if (this.buffer && this.buffer.duration > 1) {
         window.__exitAudioContext = this.context as AudioContext;
         const offset = args[1] ?? 0;
-        active.set(this, { when: args[0] || this.context.currentTime, offset });
+        const when = args[0] || this.context.currentTime;
+        active.set(this, { when, offset });
         probe.starts++;
         probe.offsets.push(offset);
+        probe.delays.push(Math.max(0, when - this.context.currentTime));
         probe.active = active.size;
         this.addEventListener('ended', () => {
           active.delete(this);
@@ -92,6 +101,16 @@ async function openExit(page: Page) {
   return dialog;
 }
 
+async function openPausedExit(page: Page, route: "play" | "duo") {
+  await page.getByRole("button", { name: route === "play" ? "Leave track" : "Leave duel", exact: true }).click();
+  const dialog = dialogFor(page);
+  await expect(dialog).toBeVisible();
+  await expect(dialog.getByRole("button", { name: "Keep playing", exact: true })).toBeFocused();
+  expect(await dialog.evaluate(node => node instanceof HTMLDialogElement && node.matches(":modal"))).toBe(true);
+  await expect.poll(async () => (await audio(page)).active).toBe(0);
+  return dialog;
+}
+
 async function expectNoSavedRun(page: Page) {
   expect(await page.evaluate(() => ({
     sessionRun: sessionStorage.getItem('bs_last_run'),
@@ -102,7 +121,7 @@ async function expectNoSavedRun(page: Page) {
 }
 
 for (const mode of modes) {
-  test(`${mode.route}: themed exit freezes real audio and judgment, restores play, and leaves fullscreen cleanly`, async ({ page }, info) => {
+  test(`${mode.route}: themed exit freezes real audio and judgment, restores play, and cleans up fullscreen when available`, async ({ page }, info) => {
     await page.goto(`/${mode.route}/bs-s1-01?tier=easy&mode=casual`);
     await page.locator(mode.start).click();
     await expect.poll(async () => (await audio(page)).active).toBe(mode.fields);
@@ -154,6 +173,13 @@ for (const mode of modes) {
       expect(offset).toBeGreaterThan(0);
       expect(Math.abs(offset - stoppedOffsets[index]!)).toBeLessThan(0.1);
     }
+    for (const delay of resumed.delays.slice(-mode.fields)) {
+      expect(delay).toBeGreaterThan(2.8);
+      expect(delay).toBeLessThan(3.2);
+    }
+    await page.waitForTimeout(1_200);
+    expect(await judgments(page)).toEqual(frozenJudgments);
+    await page.screenshot({ path: info.outputPath(`${mode.route}-resume-countdown.png`), animations: 'disabled' });
     await expect.poll(judgments.bind(null, page)).not.toEqual(frozenJudgments);
 
     await openExit(page);
@@ -163,38 +189,46 @@ for (const mode of modes) {
 
     // Fullscreen is a real browser document state. Re-enter after Escape, which
     // may also dismiss fullscreen in Chromium, to verify confirm's cleanup.
-    await page.evaluate(async () => {
-      if (!document.fullscreenElement) await document.documentElement.requestFullscreen();
-    });
-    await expect.poll(() => page.evaluate(() => !!document.fullscreenElement)).toBe(true);
+    const canFullscreen = await page.evaluate(() => typeof document.documentElement.requestFullscreen === 'function');
+    if (canFullscreen) {
+      await page.evaluate(async () => {
+        if (!document.fullscreenElement) await document.documentElement.requestFullscreen();
+      });
+      await expect.poll(() => page.evaluate(() => !!document.fullscreenElement)).toBe(true);
+    }
     await openExit(page);
     await leave.click();
-    await expect(page).toHaveURL(/\/track\/bs-s1-01/);
+    await expect(page).toHaveURL(/\/track\/bs-s1-01\?tier=easy&mode=casual$/);
     await expect.poll(() => page.evaluate(() => document.fullscreenElement === null)).toBe(true);
     await expect.poll(async () => (await audio(page)).active).toBe(0);
     await expectNoSavedRun(page);
   });
 
   test(`${mode.route}: canceling exit preserves a prior manual pause`, async ({ page }) => {
+    const resumeCount = mode.route === 'duo' ? 1 : mode.fields;
     await page.goto(`/${mode.route}/bs-s1-01?tier=easy&mode=casual`);
     await page.locator(mode.start).click();
     await expect.poll(async () => (await audio(page)).active).toBe(mode.fields);
     await page.getByRole('button', { name: 'Pause', exact: true }).first().click();
-    await expect(page.getByRole('button', { name: /resume/i })).toHaveCount(mode.fields);
+    await expect(page.getByRole('button', { name: /resume/i })).toHaveCount(resumeCount);
     await expect.poll(async () => (await audio(page)).active).toBe(0);
     const pausedAudio = await audio(page);
-    await openExit(page);
+    await openPausedExit(page, mode.route);
     await dialogFor(page).getByRole('button', { name: 'Keep playing', exact: true }).click();
     await expect(dialogFor(page)).not.toBeVisible();
-    await expect(page.getByRole('button', { name: /resume/i })).toHaveCount(mode.fields);
+    await expect(page.getByRole('button', { name: /resume/i })).toHaveCount(resumeCount);
     expect(await audio(page)).toEqual(pausedAudio);
-    await openExit(page);
+    await openPausedExit(page, mode.route);
     await page.keyboard.press('Escape');
     await expect(dialogFor(page)).not.toBeVisible();
-    await expect(page.getByRole('button', { name: /resume/i })).toHaveCount(mode.fields);
+    await expect(page.getByRole('button', { name: /resume/i })).toHaveCount(resumeCount);
     expect(await audio(page)).toEqual(pausedAudio);
     await page.getByRole('button', { name: /resume/i }).last().click();
     await expect.poll(async () => (await audio(page)).active).toBe(mode.fields);
+    for (const delay of (await audio(page)).delays.slice(-mode.fields)) {
+      expect(delay).toBeGreaterThan(2.8);
+      expect(delay).toBeLessThan(3.2);
+    }
   });
 
   test(`${mode.route}: releasing held lane keys inside exit does not swallow the next press`, async ({ page }) => {
@@ -211,6 +245,9 @@ for (const mode of modes) {
     await dialogFor(page).getByRole('button', { name: 'Keep playing', exact: true }).click();
     await expect(dialogFor(page)).not.toBeVisible();
     await expect.poll(async () => (await audio(page)).active).toBe(mode.fields);
+    // Inputs are intentionally inert until GO; wait for the AudioContext
+    // deadline before proving modal key releases did not leave a lane stuck.
+    await page.waitForTimeout(3_100);
     const newPressSounds = await page.evaluate(keys => keys.map(({ key, code }) => {
       // No rAF/countdown/judgment callbacks can interleave this synchronous
       // observation. Every accepted press produces either a hit or key tick.
@@ -225,21 +262,30 @@ for (const mode of modes) {
     }
   });
 
-  test(`${mode.route}: exit before starting never starts audio or writes a result`, async ({ page }) => {
+  test(`${mode.route}: exit before starting returns immediately without inventing unsaved progress`, async ({ page }) => {
     await page.goto(`/${mode.route}/bs-s1-01?tier=easy&mode=casual`);
     await expect(page.locator(mode.start)).toBeEnabled();
-    await openExit(page);
-    await page.keyboard.press('KeyR');
-    await page.keyboard.press('KeyP');
-    await page.keyboard.press('Escape');
-    await expect(dialogFor(page)).not.toBeVisible();
-    await expect(page.locator(mode.start)).toBeEnabled();
-    expect((await audio(page)).starts).toBe(0);
-    await openExit(page);
-    await dialogFor(page).getByRole('button', { name: 'Leave', exact: true }).click();
-    await expect(page).toHaveURL(/\/track\/bs-s1-01/);
+    await page.getByRole('button', { name: 'Exit the Scape', exact: true }).click();
+    await expect(page).toHaveURL(/\/track\/bs-s1-01\?tier=easy&mode=casual$/);
+    await expect(dialogFor(page)).toHaveCount(0);
     expect((await audio(page)).starts).toBe(0);
     await expectNoSavedRun(page);
+  });
+
+  test(`${mode.route}: Keep playing re-unlocks audio interrupted behind the exit panel`, async ({ page }) => {
+    await page.goto(`/${mode.route}/bs-s1-01?tier=easy&mode=casual`);
+    await page.locator(mode.start).click();
+    await expect.poll(async () => (await audio(page)).active).toBe(mode.fields);
+
+    const dialog = await openExit(page);
+    await expect.poll(async () => (await audio(page)).active).toBe(0);
+    await page.evaluate(async () => { await window.__exitAudioContext.suspend(); });
+    expect(await page.evaluate(() => window.__exitAudioContext.state)).toBe("suspended");
+
+    await dialog.getByRole("button", { name: "Keep playing", exact: true }).click();
+    await expect(dialog).toHaveCount(0);
+    await expect.poll(() => page.evaluate(() => window.__exitAudioContext.state)).toBe("running");
+    await expect.poll(async () => (await audio(page)).active).toBe(mode.fields);
   });
 }
 
@@ -275,9 +321,18 @@ test('play: a delayed audio unlock from R stays paused inside exit and resumes a
       });
     };
   });
-  await page.keyboard.press('KeyR');
+  // Dispatch at the listener's window target to deterministically model an R
+  // keydown that was already routed before the interruption's pause modal
+  // committed focus. A normal key pressed after the modal owns interaction is
+  // intentionally contained by that modal.
+  await page.evaluate(() => window.dispatchEvent(new KeyboardEvent('keydown', {
+    key: 'r',
+    code: 'KeyR',
+    bubbles: true,
+    cancelable: true,
+  })));
   await expect.poll(() => page.evaluate(() => window.__exitResumeHold.pending)).toBe(1);
-  const dialog = await openExit(page);
+  const dialog = await openPausedExit(page, 'play');
   const frozenJudgments = await judgments(page);
   await page.evaluate(() => window.__exitResumeHold.release());
   expect(await page.evaluate(() => window.__exitResumeHold.resumed && window.__exitAudioContext.state === 'running')).toBe(true);

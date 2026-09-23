@@ -1,9 +1,17 @@
-import type { ChartSection, MissEvent } from "../types/chart";
+import { Link } from "../router";
+import { withLibraryReturn } from "../lib/libraryReturn";
+import { chartSectionClock, chartSectionLabel } from "../lib/chartSections";
+import { MISS_DRILL_REPETITIONS } from "../lib/practiceDrill";
+import type { ChartSection, ChartTier, MissEvent } from "../types/chart";
 
 type Props = {
   missEvents: MissEvent[];
+  totalMisses?: number;
   sections?: ChartSection[];
   durationMs?: number;
+  trackId: string;
+  tier: ChartTier;
+  libraryReturnHref?: string;
 };
 
 function sectionAt(sections: ChartSection[] | undefined, tMs: number): string | null {
@@ -45,12 +53,32 @@ function MissLaneMap({ missEvents, durationMs }: { missEvents: MissEvent[]; dura
   );
 }
 
-export function MissReplayPanel({ missEvents, sections, durationMs = 0 }: Props) {
+export function MissReplayPanel({
+  missEvents,
+  totalMisses,
+  sections,
+  durationMs = 0,
+  trackId,
+  tier,
+  libraryReturnHref = "/library",
+}: Props) {
+  const reportedMisses = Number.isFinite(totalMisses)
+    ? Math.max(0, Math.trunc(totalMisses ?? 0))
+    : 0;
+  const missCount = Math.max(reportedMisses, missEvents.length);
   if (!missEvents.length) {
     return (
-      <details className="miss-replay" open>
-        <summary>Replay — Miss timeline</summary>
-        <p className="miss-replay-empty">No misses — clean run.</p>
+      <details id="miss-review" className="miss-replay">
+        <summary>
+          {missCount > 0
+            ? `Miss review — ${missCount} miss${missCount === 1 ? "" : "es"}`
+            : "Miss review — clean run"}
+        </summary>
+        <p className="miss-replay-empty">
+          {missCount > 0
+            ? "Detailed miss positions aren't available for this run."
+            : "No misses — clean run."}
+        </p>
       </details>
     );
   }
@@ -62,18 +90,46 @@ export function MissReplayPanel({ missEvents, sections, durationMs = 0 }: Props)
   }
 
   return (
-    <details className="miss-replay" open>
-      <summary>Replay — {missEvents.length} miss{missEvents.length === 1 ? "" : "es"}</summary>
+    <details id="miss-review" className="miss-replay">
+      <summary>Miss review — {missCount} miss{missCount === 1 ? "" : "es"}</summary>
+      {missCount > missEvents.length && (
+        <p className="miss-replay-empty">
+          Showing {missEvents.length} recorded position{missEvents.length === 1 ? "" : "s"}; details for the other {missCount - missEvents.length} {missCount - missEvents.length === 1 ? "miss are" : "misses are"} unavailable.
+        </p>
+      )}
       <MissLaneMap missEvents={missEvents} durationMs={durationMs} />
       {bySection.size > 0 && (
-        <div className="miss-section-stats">
+        <div className="miss-section-stats" aria-label="Practice missed sections">
           {[...bySection.entries()]
             .sort((a, b) => b[1] - a[1])
-            .map(([id, n]) => (
-              <span key={id} className="miss-section-chip">
-                {id}: {n}
-              </span>
-            ))}
+            .map(([id, n]) => {
+              const section = sections?.find((item) => item.id === id);
+              if (!section) {
+                return (
+                  <span key={id} className="miss-section-chip">
+                    Unknown section · {n}
+                  </span>
+                );
+              }
+              const href = withLibraryReturn(
+                `/play/${encodeURIComponent(trackId)}?tier=${tier}&mode=practice&seek=${section.t0}&until=${section.t1}&reps=${MISS_DRILL_REPETITIONS}`,
+                libraryReturnHref,
+              );
+              return (
+                <Link
+                  key={id}
+                  className="miss-section-retry"
+                  to={href}
+                  aria-label={`Drill ${chartSectionLabel(id)} ${MISS_DRILL_REPETITIONS} times from ${chartSectionClock(section.t0)}, ${n} misses`}
+                >
+                  <span>
+                    <strong>{chartSectionLabel(id)}</strong>
+                    <small>{n} miss{n === 1 ? "" : "es"} · {chartSectionClock(section.t0)}–{chartSectionClock(section.t1)}</small>
+                  </span>
+                  <span className="miss-section-retry-action">Drill ×{MISS_DRILL_REPETITIONS} →</span>
+                </Link>
+              );
+            })}
         </div>
       )}
       <ol className="miss-timeline">

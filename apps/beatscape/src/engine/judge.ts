@@ -84,6 +84,24 @@ export function accuracyPercent(counts: Record<Judgment, number>, totalNotes: nu
   return Math.round((weighted / totalNotes) * 10000) / 100;
 }
 
+function hasCompleteJudgmentTotal(counts: Record<Judgment, number>, totalNotes: number): boolean {
+  const values = Object.values(counts);
+  return Number.isInteger(totalNotes)
+    && totalNotes > 0
+    && values.every((count) => Number.isInteger(count) && count >= 0)
+    && values.reduce((sum, count) => sum + count, 0) === totalNotes;
+}
+
+/** Full Combo means no combo-breaking judgment: Great is allowed, Good/Miss are not. */
+export function isFullCombo(counts: Record<Judgment, number>, totalNotes: number): boolean {
+  return hasCompleteJudgmentTotal(counts, totalNotes) && counts.good === 0 && counts.miss === 0;
+}
+
+/** All Perfect is stricter than FC and requires every complete judgment to be Perfect. */
+export function isAllPerfect(counts: Record<Judgment, number>, totalNotes: number): boolean {
+  return hasCompleteJudgmentTotal(counts, totalNotes) && counts.perfect === totalNotes;
+}
+
 /** Theoretical max for leaderboard sanity checks (PRD §4.4). */
 export function maxScore(totalNotes: number): number {
   return totalNotes * 300 * 4;

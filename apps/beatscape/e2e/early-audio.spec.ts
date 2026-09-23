@@ -67,8 +67,8 @@ test('leaving while the adopted audio is downloading aborts it and clears the bo
   try {
     await page.goto('/play/bs-s1-01?tier=easy&mode=casual');
     await page.locator('.play-exit').click();
-    await page.getByRole('dialog', { name: 'Leave the Scape?' }).getByRole('button', { name: 'Leave', exact: true }).click();
     await expect(page).toHaveURL(/\/track\/bs-s1-01/);
+    await expect(page.getByRole('dialog', { name: 'Leave the Scape?' })).toHaveCount(0);
     await expect.poll(async () => (await probe(page)).requests[0]?.aborted).toBe(true);
     expect((await probe(page)).decodes).toBe(0);
     expect(await page.evaluate(() => '__beatscapeEarlyAudio' in window)).toBe(false);
@@ -76,4 +76,24 @@ test('leaving while the adopted audio is downloading aborts it and clears the bo
     finishRequest();
     await page.unrouteAll({ behavior: 'wait' });
   }
+});
+
+test.describe('home gameplay bundle', () => {
+  test.use({ serviceWorkers: 'block' });
+
+  test('defers the real playfield until Play + Sound', async ({ page }) => {
+    const playFieldAssets = () => page.evaluate(() => (
+      performance.getEntriesByType('resource')
+        .map((entry) => entry.name)
+        .filter((url) => /\/assets\/PlayField-[^/]+\.js(?:\?|$)/.test(url))
+    ));
+
+    await page.goto('/');
+    await expect(page.locator('.home-play-sound-btn')).toBeVisible();
+    expect(await playFieldAssets()).toEqual([]);
+
+    await page.locator('.home-play-sound-btn').click();
+    await expect(page.locator('.play-wrap-hero canvas.play-canvas')).toBeVisible();
+    await expect.poll(playFieldAssets).toHaveLength(1);
+  });
 });

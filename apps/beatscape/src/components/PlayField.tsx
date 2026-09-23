@@ -1,32 +1,114 @@
-import { useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
-import type { ChartJSON, PlayMode, PlayResult } from "../types/chart";
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type KeyboardEvent as ReactKeyboardEvent,
+  type PointerEvent as ReactPointerEvent,
+} from "react";
+import type {
+  ChallengeTarget,
+  ChartJSON,
+  PlayMode,
+  PlayResult,
+  PracticeAttemptSummary,
+} from "../types/chart";
 import type { RefObject } from "react";
-import type { LiveStats } from "./playfield/liveStats";
+import type { LiveScoreTarget, LiveStats } from "./playfield/liveStats";
 import { Conductor, unlockAudio } from "../audio/playback";
+import { getAudioContext } from "../audio/context";
 import { playHit, playKeyTick, setSfxVolume } from "../audio/hitsounds";
-import { vibrate } from "../lib/haptics";
+import { playHapticCue, type HapticCue, type HapticTargets } from "../lib/haptics";
 import { GameSession, type JudgeFx } from "../engine/playState";
 import { approachSec } from "../engine/geometry";
-import { laneFromClientX, isCoarsePointer, TouchLaneTracker, receptorYFromGeometry } from "../input/touchInput";
-import { keyLabels, laneFromKeyEvent } from "../input/keyMap";
-import { loadKeys, loadOffsetMs, loadSettings } from "../storage/settings";
-import { SCAPE_COPY, districtColor, characterArtWebp, LANE_RGB } from "../constants/scape";
-import { Link } from "../router";
+import {
+  isCoarsePointer,
+  LaneInputTracker,
+  laneFromClientX,
+  laneFromTouchDrag,
+  receptorYFromGeometry,
+  type LaneInputTransition,
+} from "../input/touchInput";
+import { hasBrowserShortcutModifier, laneFromKeyEvent } from "../input/keyMap";
+import { inputEventPerformanceTimeMs, songTimeAtInputMs } from "../input/eventTiming";
+import {
+  gamepadButtonIsPressed,
+  laneFromStandardGamepadButton,
+  pressedStandardGamepadButtons,
+  STANDARD_GAMEPAD_BOTTOM_FACE_BUTTON,
+  STANDARD_GAMEPAD_MENU_BUTTON,
+} from "../input/gamepadInput";
+import { useKeyLabels } from "../input/useKeyLabels";
+import { usePhysicalKeyboardInput } from "../input/usePhysicalKeyboardInput";
+import { loadKeys, loadOffsetMs, loadSettings, saveSettings } from "../storage/settings";
+import { useDeviceSettings } from "../storage/useDeviceSettings";
+import { SCAPE_COPY, districtColor, JUDGE_COLORS, LANE_RGB } from "../constants/scape";
+import { Link, useNavigate, useRouter } from "../router";
 import { trackEvent } from "../lib/analytics";
-import { fancyFxOn, prefersReducedMotion } from "./playfield/canvasHelpers";
+import { calibrationHref } from "../lib/calibration";
+import { chartMechanicGuides } from "../lib/runSetup";
+import {
+  approachMultiplierFromScrollBias,
+  formatNoteSpeed,
+  NOTE_SPEED_MAX,
+  NOTE_SPEED_MIN,
+  noteSpeedFromScrollBias,
+  nudgeNoteSpeed,
+  scrollBiasFromNoteSpeed,
+} from "../lib/noteSpeed";
+import { prefersReducedMotion } from "./playfield/canvasHelpers";
 import { createPlayfieldRenderer } from "./playfield/renderLoop";
 import { useDevQaParams } from "./playfield/useDevQaParams";
 import { PlayHud } from "./playfield/PlayHud";
 import type { Fx, ScorePop } from "./playfield/renderLoop";
 import { ScoreStreak, SurgeMeter, type SurgeTier } from "../engine/surge";
+import {
+  exitGameFullscreen,
+  FULLSCREEN_CHANGE_EVENTS,
+  gameFullscreenElement,
+  requestGameFullscreen,
+} from "../lib/fullscreen";
+import { cycleModalFocus } from "../lib/modalFocus";
+import { PauseAudioControls } from "./PauseAudioControls";
+import { PracticeTempoPicker } from "./PracticeTempoPicker";
+import { GamepadDialogHint } from "./GamepadDialogHint";
+import { audioLoadSupportCode, type AudioLoadSupportCode } from "../audio/audioLoadIssue";
+import type { AudioLoadProgress as AudioProgress } from "../audio/earlyAudio";
+import { AudioLoadProgress } from "./AudioLoadProgress";
+import { loadRuns } from "../lib/progress";
+import { useGamepadDialogNavigation } from "../input/useGamepadDialogNavigation";
+import { normalizePracticeRepetitions } from "../lib/practiceDrill";
+import type { PracticeTempo } from "../lib/practiceTempo";
 
 const COUNTDOWN_MS = 3000;
+const GAMEPAD_LANE_HINT = ["◀", "▼", "▲", "▶"];
+
+type DrillRecap = {
+  completedRepetition: number;
+  nextRepetition: number;
+  totalRepetitions: number;
+  accuracy: number;
+  misses: number;
+};
 
 type Props = {
   chart: ChartJSON;
   audioUrl: string;
   mode: PlayMode;
-  casualSpeed: number;
+  /** Untrusted-but-sanitized friendly target carried by a cross-device share URL. */
+  challengeTarget?: ChallengeTarget;
+  /** Validated device-local Arcade record captured before this run starts. */
+  personalBest?: { score: number; accuracy: number };
+  /** UTC date of a validated Daily route; absent for forged or stale query flags. */
+  dailyDateKey?: string;
+  /** Absolute chart time for a section-practice retry. Ignored outside Practice. */
+  startAtMs?: number;
+  /** Exclusive chart-time end for a bounded section-practice retry. */
+  endAtMs?: number;
+  /** Number of automatic passes through a bounded practice section. */
+  practiceRepetitions?: number;
+  /** Reports the current automatic practice pass for page-level context. */
+  onPracticeRepetitionChange?: (repetition: number) => void;
   onStart?: () => void;
   onFinish: (result: PlayResult) => void;
   /** Home hero embed — no immersive chrome / fullscreen. */
@@ -43,10 +125,10 @@ type Props = {
    * comic-panel HUD can read the values without ever re-rendering React.
    */
   statsRef?: RefObject<LiveStats>;
-  /** Track title for the HUD capsule (static per run). */
-  trackTitle?: string;
-  /** Chart tier label (easy/standard/hard) for the HUD capsule. */
-  tierLabel?: string;
+  /** First Shift · surface a receptor-line rescue after three opening misses. */
+  openingCoach?: boolean;
+  /** Optional player-facing context for the ready card, e.g. a First Shift node. */
+  startContext?: string;
   /**
    * B-1 · When true, the renderer's built-in score / accuracy / SIGNAL-gauge
    * panels are skipped so the comic-panel PlayHud is the single source of
@@ -62,6 +144,15 @@ type Props = {
    * Must be a stable array reference (the caller memoizes it).
    */
   keys?: string[];
+  /**
+   * Browser Gamepad API index assigned to this field. Only controllers with a
+   * W3C `standard` mapping are assigned; keyboard and touch stay active.
+   */
+  gamepadIndex?: number;
+  /** Duo parent hook for controller Menu pause/resume ownership. */
+  onGamepadPause?: () => void;
+  /** Duo parent hook for a controller disappearing or changing mid-run. */
+  onGamepadInterrupted?: (message: string) => void;
   /** Duo · Short label rendered in the HUD capsule (e.g. "P1" / "P2"). */
   playerLabel?: string;
   /** Appended to the field's own `.play-wrap` classes (duo side-swap uses it). */
@@ -70,8 +161,9 @@ type Props = {
    * Duo · Mute the MUSIC bus only — hit SFX keep playing. Two fields decoding
    * and playing the same track simultaneously would layer it on itself with
    * the decode skew as a delay, which reads as a flanger / echo artefact. So
-   * in duo mode P1 carries the music and P2 runs silent, while both players
-   * still hear their own hitsounds.
+   * in duo mode P1 carries the music and shared count-in cues while P2 runs
+   * silent for those global sounds; both players still hear their own judgment
+   * hitsounds.
    */
   muteMusic?: boolean;
   /**
@@ -97,6 +189,12 @@ type Props = {
    * together. Without it (single player) behaviour is unchanged.
    */
   onPauseChange?: () => void;
+  /** Reports the field's settled pause state to page-level run services. */
+  onPauseStateChange?: (paused: boolean) => void;
+  /** Single player · Opens the page-owned leave confirmation from the pause dialog. */
+  onExitRequest?: () => void;
+  /** Duo · Hide this field's duplicate pause card behind the parent's shared dialog. */
+  hidePauseOverlay?: boolean;
   /**
    * Duo · Pause broadcast counter. Every bump toggles this field's pause.
    * The parent bumps once per user action (debounced when both fields report
@@ -105,13 +203,29 @@ type Props = {
   pauseSync?: number;
   /** A parent dialog freezes audio and input without changing the user's pause state. */
   suspended?: boolean;
+  /** Duo · Parent-owned retry counter; one bump restarts both receivers together. */
+  audioRetrySync?: number;
+  /** Duo · Report terminal audio failure so the parent can show one shared dialog. */
+  onAudioLoadError?: (supportCode: AudioLoadSupportCode) => void;
+  /** Duo · Reports the shared download to the page-owned loading card. */
+  onAudioLoadProgress?: (progress: AudioProgress) => void;
+  /** Duo · Hide this field's duplicate error card behind the shared dialog. */
+  hideAudioLoadError?: boolean;
+  /** Duo · The parent shows one shared loading card for both fields. */
+  hideAudioLoadingOverlay?: boolean;
 };
 
 export function PlayField({
   chart,
   audioUrl,
   mode,
-  casualSpeed,
+  challengeTarget,
+  personalBest,
+  dailyDateKey,
+  startAtMs,
+  endAtMs,
+  practiceRepetitions,
+  onPracticeRepetitionChange,
   onStart,
   onFinish,
   variant = "full",
@@ -119,10 +233,13 @@ export function PlayField({
   autoStart = false,
   district,
   statsRef,
-  trackTitle = "",
-  tierLabel = "",
+  openingCoach = false,
+  startContext,
   useComicHud,
   keys: keysProp,
+  gamepadIndex,
+  onGamepadPause,
+  onGamepadInterrupted,
   playerLabel,
   className,
   muteMusic = false,
@@ -130,19 +247,36 @@ export function PlayField({
   onReady,
   hideStartOverlay = false,
   onPauseChange,
+  onPauseStateChange,
+  onExitRequest,
+  hidePauseOverlay = false,
   pauseSync,
   suspended = false,
+  audioRetrySync = 0,
+  onAudioLoadError,
+  onAudioLoadProgress,
+  hideAudioLoadError = false,
+  hideAudioLoadingOverlay = false,
 }: Props) {
+  const { path, search } = useRouter();
+  const nav = useNavigate();
+  const timingHref = calibrationHref(`${path}${search}`);
   const wrapRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const conductorRef = useRef<Conductor | null>(null);
   const sessionRef = useRef<GameSession | null>(null);
   const pressedRef = useRef<Set<number>>(new Set());
-  const pointerLane = useRef<Map<number, number>>(new Map());
-  const touchTracker = useRef(new TouchLaneTracker());
+  const inputTrackerRef = useRef(new LaneInputTracker());
+  const gamepadPollRef = useRef<((frameTimeMs: number) => void) | null>(null);
+  const clearActiveInputs = () => {
+    inputTrackerRef.current.clear();
+    pressedRef.current.clear();
+    sessionRef.current?.clearHeldInputs();
+  };
   const fxRef = useRef<Fx[]>([]);
   const finishedRef = useRef(false);
-  const lastComboRef = useRef(0);
+  const failureRef = useRef<HTMLDivElement>(null);
+  const seenComboBreaksRef = useRef(0);
   const lastCountInt = useRef<number>(-1);
   const offsetMsRef = useRef(0);
   const approachRef = useRef(1);
@@ -180,8 +314,12 @@ export function PlayField({
   const lastLaneRef = useRef(0);
   const lightComboPrevRef = useRef(0);
   const lastShowBarRef = useRef(-1);
+  const fullscreenWasActiveRef = useRef(false);
   const onFinishRef = useRef(onFinish);
   onFinishRef.current = onFinish;
+  const finishCycleRef = useRef<(result: PlayResult) => void>(() => {});
+  const onPracticeRepetitionChangeRef = useRef(onPracticeRepetitionChange);
+  onPracticeRepetitionChangeRef.current = onPracticeRepetitionChange;
   // Duo · Kept in a ref so a new inline `onReady` closure from the parent does
   // NOT re-run the audio-load effect below (which would re-decode the track).
   const onReadyRef = useRef(onReady);
@@ -189,66 +327,421 @@ export function PlayField({
   // Duo · Same trick for the pause broadcast: stable ref, no effect churn.
   const onPauseChangeRef = useRef(onPauseChange);
   onPauseChangeRef.current = onPauseChange;
+  const onGamepadPauseRef = useRef(onGamepadPause);
+  onGamepadPauseRef.current = onGamepadPause;
+  const onGamepadInterruptedRef = useRef(onGamepadInterrupted);
+  onGamepadInterruptedRef.current = onGamepadInterrupted;
+  const onPauseStateChangeRef = useRef(onPauseStateChange);
+  onPauseStateChangeRef.current = onPauseStateChange;
+  const onAudioLoadErrorRef = useRef(onAudioLoadError);
+  onAudioLoadErrorRef.current = onAudioLoadError;
+  const onAudioLoadProgressRef = useRef(onAudioLoadProgress);
+  onAudioLoadProgressRef.current = onAudioLoadProgress;
 
-  const settings = useMemo(loadSettings, []);
+  const sectionPractice = mode === "practice" && startAtMs !== undefined && Number.isFinite(startAtMs);
+  const sectionStartMs = sectionPractice
+    ? Math.max(0, startAtMs)
+    : 0;
+  const sectionEndMs = sectionPractice && Number.isFinite(endAtMs) && (endAtMs ?? 0) > sectionStartMs
+    ? endAtMs
+    : undefined;
+  const practiceRepetitionTotal = normalizePracticeRepetitions(
+    practiceRepetitions,
+    sectionEndMs !== undefined,
+  );
+  const practiceRepetitionRef = useRef(1);
+  const practiceAttemptsRef = useRef<PracticeAttemptSummary[]>([]);
+
+  const [settings, setSettings] = useState(loadSettings);
+  const startKicker = variant === "hero"
+    ? SCAPE_COPY.heroPlayKicker
+    : startContext
+      ?? (mode === "practice"
+        ? practiceRepetitionTotal > 1
+          ? `${practiceRepetitionTotal}-rep drill`
+          : sectionPractice ? "Section practice" : SCAPE_COPY.practiceRun
+        : mode === "arcade"
+          ? SCAPE_COPY.arcadeRun
+          : SCAPE_COPY.runReady);
+  // Pause-menu mix and accessibility controls are live during a run. Note
+  // speed and thumb assist may change while this field is ready or frozen;
+  // active judging keeps its current geometry/settings until Pause gives the
+  // player a safe 3-second re-entry. Timing offset stays locked once started.
+  const liveAudioSettings = useDeviceSettings();
   // Stable reference: the keyboard effect below keys off this array.
   // Duo · `keysProp` overrides it (P2 gets its own binding). Both hooks run
   // unconditionally so the hook order stays fixed across renders; the caller
   // memoizes keysProp so the reference is stable.
   const savedKeys = useMemo(loadKeys, []);
   const keys = keysProp ?? savedKeys;
-  const keyHint = useMemo(() => keyLabels(keys), [keys]);
+  const keyHint = useKeyLabels(keys);
   const keyHintJoined = useMemo(() => keyHint.join(" · "), [keyHint]);
+  const pauseKeyIsLane = keys.includes("KeyP");
+  const restartKeyIsLane = keys.includes("KeyR");
+  const liveLaneHint = gamepadIndex === undefined ? keyHint : GAMEPAD_LANE_HINT;
+  const persistentKeyHints = useMemo(() => (
+    variant === "hero"
+    || Boolean(playerLabel)
+    || mode === "practice"
+    || loadRuns().length < 3
+  ), [mode, playerLabel, variant]);
+  const liveScoreTarget = useMemo<LiveScoreTarget | undefined>(() => {
+    if (challengeTarget) return { kind: "challenge", score: challengeTarget.score };
+    if (personalBest) return { kind: "personal-best", score: personalBest.score };
+    return undefined;
+  }, [challengeTarget?.score, personalBest?.score]);
   // Dev-only visual-QA URL params (?surge / ?autostart / ?streak|?combo),
   // compiled out of production builds — extracted to keep PlayField focused.
   const { demoSurge, devAutoStart, demoStreak } = useDevQaParams();
 
   const [loading, setLoading] = useState(true);
+  const [audioProgress, setAudioProgress] = useState<AudioProgress | null>(null);
   const [error, setError] = useState("");
+  const [audioRetryAttempt, setAudioRetryAttempt] = useState(0);
+  const loadRetryButtonRef = useRef<HTMLButtonElement>(null);
+  const loadBackButtonRef = useRef<HTMLButtonElement>(null);
+  const startButtonRef = useRef<HTMLButtonElement>(null);
+  const pauseButtonRef = useRef<HTMLButtonElement>(null);
+  const pauseResumeButtonRef = useRef<HTMLButtonElement>(null);
+  const pauseRestartButtonRef = useRef<HTMLButtonElement>(null);
+  const pauseExitButtonRef = useRef<HTMLButtonElement>(null);
+  const pauseDialogRef = useRef<HTMLDivElement>(null);
+  const pauseDialogWasOpenRef = useRef(false);
+  const focusStartAfterLoadRef = useRef(false);
   const [needsStart, setNeedsStart] = useState(true);
+  const [starting, setStarting] = useState(false);
+  const [startError, setStartError] = useState("");
+  const [noteSpeedSaveFailed, setNoteSpeedSaveFailed] = useState(false);
+  const startingRef = useRef(false);
+  const [audioReadyForControllerStart, setAudioReadyForControllerStart] = useState(false);
+  const audioReadyForControllerStartRef = useRef(false);
   const [paused, setPaused] = useState(false);
+  const [resuming, setResuming] = useState(false);
+  const [restarting, setRestarting] = useState(false);
+  const [resumeError, setResumeError] = useState("");
+  const [gamepadInterruption, setGamepadInterruption] = useState("");
+  const [drillRecap, setDrillRecap] = useState<DrillRecap | null>(null);
+  const [practiceTempo, setPracticeTempo] = useState<PracticeTempo>(1);
+  const practiceTempoRef = useRef<PracticeTempo>(1);
+  const previousGamepadIndexRef = useRef(gamepadIndex);
+  const gamepadWasInterruptedRef = useRef(false);
+  const resumingRef = useRef(false);
+  const pauseDialogVisible = paused && !hidePauseOverlay && !suspended;
+  const pauseGamepadIndexes = useMemo(
+    () => gamepadIndex === undefined ? [] : [gamepadIndex],
+    [gamepadIndex],
+  );
+  useEffect(() => {
+    const context = getAudioContext();
+    const sync = () => {
+      const ready = String(context.state) === "running";
+      audioReadyForControllerStartRef.current = ready;
+      setAudioReadyForControllerStart(ready);
+    };
+    sync();
+    context.addEventListener("statechange", sync);
+    return () => context.removeEventListener("statechange", sync);
+  }, []);
+  useEffect(() => {
+    onPauseStateChangeRef.current?.(paused);
+  }, [paused]);
+
+  const changePracticeTempo = (tempo: PracticeTempo) => {
+    if (mode !== "practice") return;
+    practiceTempoRef.current = tempo;
+    setPracticeTempo(tempo);
+    conductorRef.current?.setBaseRate(tempo);
+    trackEvent("practice_tempo_change", { tempo });
+  };
+  useEffect(() => {
+    if (pauseDialogVisible) {
+      pauseDialogWasOpenRef.current = true;
+      pauseResumeButtonRef.current?.focus();
+      return;
+    }
+    // Keep the marker while the page-owned exit confirmation temporarily
+    // covers a manually paused run. If the player cancels, Resume takes focus
+    // again; only an actual resume/restart returns focus to the HUD control.
+    if (!paused && pauseDialogWasOpenRef.current) {
+      pauseDialogWasOpenRef.current = false;
+      pauseButtonRef.current?.focus();
+    }
+  }, [pauseDialogVisible, paused]);
+  useEffect(() => {
+    if (error && !hideAudioLoadError) loadRetryButtonRef.current?.focus();
+  }, [error, hideAudioLoadError]);
+  useEffect(() => {
+    if (
+      focusStartAfterLoadRef.current
+      && !loading
+      && !error
+      && needsStart
+      && !autoStart
+      && !hideStartOverlay
+    ) {
+      focusStartAfterLoadRef.current = false;
+      startButtonRef.current?.focus();
+    }
+  }, [loading, error, needsStart, autoStart, hideStartOverlay]);
   // 开始前的声音自检：点过一次就把按钮标成"已确认有声"。
   const [soundChecked, setSoundChecked] = useState(false);
-  // Two-thumb grip needs forgiveness for chords stacked on one hand (touch only).
+  const [soundChecking, setSoundChecking] = useState(false);
+  const [soundCheckError, setSoundCheckError] = useState("");
+  const soundCheckingRef = useRef(false);
+  // Eligibility is attached to each real touch press below, rather than to the
+  // whole device. A Surface-style coarse-pointer device may still be played by
+  // keyboard, and those key hits must never receive two-thumb scoring help.
   const [touchUi] = useState(isCoarsePointer);
-  const chordAssist = touchUi && settings.chordAssist;
+  const physicalKeyboardSeen = usePhysicalKeyboardInput();
+  const showTouchLegend = touchUi && !physicalKeyboardSeen;
+  const showLiveKeyHintsRef = useRef(!touchUi || physicalKeyboardSeen);
+  showLiveKeyHintsRef.current = !touchUi || physicalKeyboardSeen;
+  const chordAssistRef = useRef(settings.chordAssist);
 
+  // A phone rotation rebuilds the usable viewport while the OS animates and
+  // the player moves both thumbs. Letting the audio clock continue through
+  // that transition creates unavoidable misses. Pause only when the viewport
+  // truly crosses portrait/landscape, not for browser-chrome or desktop window
+  // resizes. The existing Resume path supplies the safe 3-second re-entry.
+  // Duo fields both report the same resize; the parent collapses them into one
+  // pauseSync bump so the two conductors remain locked together.
+  useEffect(() => {
+    if (variant !== "full" || !touchUi) return;
+    const orientation = () => window.innerWidth > window.innerHeight ? "landscape" : "portrait";
+    let previous = orientation();
+    const onResize = () => {
+      const next = orientation();
+      if (next === previous) return;
+      previous = next;
+      if (
+        needsStartRef.current
+        || pausedRef.current
+        || suspendedRef.current
+        || finishedRef.current
+      ) return;
+      const conductor = conductorRef.current;
+      if (!conductor?.playing) return;
+      clearActiveInputs();
+      if (onPauseChangeRef.current) onPauseChangeRef.current();
+      else {
+        conductor.pause();
+        setPaused(true);
+      }
+    };
+    window.addEventListener("resize", onResize, { passive: true });
+    return () => window.removeEventListener("resize", onResize);
+  }, [touchUi, variant]);
+
+  const noteSpeed = noteSpeedFromScrollBias(settings.scrollBias);
+  useEffect(() => {
+    if (!needsStart && !paused) return;
+    const scrollBias = liveAudioSettings.scrollBias;
+    setSettings((current) => (
+      Object.is(current.scrollBias, scrollBias)
+        ? current
+        : { ...current, scrollBias }
+    ));
+  }, [liveAudioSettings.scrollBias, needsStart, paused]);
+  useEffect(() => {
+    if (!needsStart && !paused) return;
+    chordAssistRef.current = liveAudioSettings.chordAssist;
+    sessionRef.current?.setChordAssist(liveAudioSettings.chordAssist);
+  }, [liveAudioSettings.chordAssist, needsStart, paused]);
+  const changeNoteSpeed = (direction: -1 | 1) => {
+    if (!needsStart || starting) return;
+    const nextSpeed = nudgeNoteSpeed(noteSpeed, direction);
+    const scrollBias = scrollBiasFromNoteSpeed(nextSpeed);
+    setSettings((current) => ({ ...current, scrollBias }));
+    setNoteSpeedSaveFailed(!saveSettings({ scrollBias }));
+    trackEvent("note_speed_ready_change", { noteSpeed: nextSpeed });
+  };
+  // Scroll speed changes only approach geometry. Updating it before Start must
+  // not tear down the decoded track or reconstruct the conductor/session.
+  useEffect(() => {
+    approachRef.current = approachSec(
+      chart.ar,
+      chart.bpm,
+      approachMultiplierFromScrollBias(settings.scrollBias),
+    );
+  }, [chart.ar, chart.bpm, settings.scrollBias]);
+  const mechanicGuides = useMemo(
+    () => variant === "full"
+      ? chartMechanicGuides(chart, showTouchLegend && gamepadIndex === undefined ? "touch" : "press")
+      : [],
+    [chart, gamepadIndex, showTouchLegend, variant],
+  );
   const needsStartRef = useRef(needsStart);
   const pausedRef = useRef(paused);
   const suspendedRef = useRef(suspended);
   needsStartRef.current = needsStart;
   pausedRef.current = paused || suspended;
   suspendedRef.current = suspended;
-  // 这三个开关由 rAF 循环读取，所以走 ref 而不是闭包：
+
+  // A drill changes sessions inside the same page, so the player needs one
+  // explicit hand-off between attempts. Keep the recap for exactly the safe
+  // count-in (including a paused count-in) and remove it when live judging
+  // resumes. This adds feedback without extending the drill by another gate.
+  useEffect(() => {
+    if (!drillRecap) return;
+    let frame = 0;
+    const watchCountIn = () => {
+      const conductor = conductorRef.current;
+      if (
+        !conductor
+        || needsStartRef.current
+        || finishedRef.current
+        || conductor.countdownRemainingMs <= 0
+      ) {
+        setDrillRecap(null);
+        return;
+      }
+      frame = requestAnimationFrame(watchCountIn);
+    };
+    frame = requestAnimationFrame(watchCountIn);
+    return () => cancelAnimationFrame(frame);
+  }, [drillRecap]);
+
+  // Losing the controller that owns this field must never turn into a stream
+  // of unavoidable misses. Freeze the run (or the whole Duo through the
+  // parent broadcast), release held lanes, and explain the keyboard/touch
+  // fallback. A replacement controller may take the same seat, but resuming
+  // remains an explicit player decision with the normal safe count-in.
+  useEffect(() => {
+    const previous = previousGamepadIndexRef.current;
+    previousGamepadIndexRef.current = gamepadIndex;
+    if (previous === gamepadIndex) return;
+
+    const subject = playerLabel ? `${playerLabel} controller` : "Controller";
+    if (previous !== undefined) {
+      if (needsStartRef.current || finishedRef.current) {
+        gamepadWasInterruptedRef.current = false;
+        setGamepadInterruption("");
+        return;
+      }
+      gamepadWasInterruptedRef.current = true;
+      const message = gamepadIndex === undefined
+        ? `${subject} disconnected. Keyboard and touch stay active.`
+        : `${subject} changed. A replacement pad is ready.`;
+      setGamepadInterruption(message);
+      onGamepadInterruptedRef.current?.(message);
+
+      if (
+        paused
+      ) return;
+      const conductor = conductorRef.current;
+      if (!conductor) return;
+      clearActiveInputs();
+      if (onPauseChangeRef.current) onPauseChangeRef.current();
+      else {
+        conductor.pause();
+        pausedRef.current = true;
+        setPaused(true);
+      }
+      return;
+    }
+
+    if (gamepadIndex !== undefined && gamepadWasInterruptedRef.current) {
+      const message = `${subject} reconnected. Resume when ready.`;
+      setGamepadInterruption(message);
+      onGamepadInterruptedRef.current?.(message);
+    }
+    // Mutable gameplay refs deliberately avoid re-subscribing this effect.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gamepadIndex, playerLabel]);
+
+  // Leaving fullscreen via a browser/system gesture does not necessarily hide
+  // the document, so visibilitychange cannot protect the run. Pause here before
+  // the player collects misses behind browser chrome. Duo reports from both
+  // fields collapse through the parent's existing broadcast debounce.
+  useEffect(() => {
+    if (variant !== "full") return;
+    const syncFullscreen = () => {
+      const active = gameFullscreenElement() !== null;
+      if (active) {
+        fullscreenWasActiveRef.current = true;
+        return;
+      }
+      // Some engines resolve an explicit exit before React observes the entry
+      // event. An inactive fullscreen-change during a live run is still an
+      // exit transition and must freeze the chart before browser chrome can
+      // swallow inputs. The initial inactive sync is harmless because the run
+      // still has its start gate up.
+      fullscreenWasActiveRef.current = false;
+      if (
+        needsStartRef.current
+        || pausedRef.current
+        || suspendedRef.current
+        || finishedRef.current
+      ) return;
+      const conductor = conductorRef.current;
+      if (!conductor) return;
+      clearActiveInputs();
+      if (onPauseChangeRef.current) onPauseChangeRef.current();
+      else {
+        conductor.pause();
+        setPaused(true);
+      }
+    };
+    syncFullscreen();
+    for (const event of FULLSCREEN_CHANGE_EVENTS) document.addEventListener(event, syncFullscreen);
+    return () => {
+      for (const event of FULLSCREEN_CHANGE_EVENTS) document.removeEventListener(event, syncFullscreen);
+    };
+  }, [variant]);
+  // 这些开关由 rAF / input listeners 读取，所以走 ref 而不是闭包：
   //   · 写进 rAF effect 的依赖 → 中途改音量/音色会销毁重建整个循环，连带重跑
   //     sprite 预渲染和 halftone 图案，玩家看到一次明显卡帧；
   //   · 不写进依赖、直接读 settings.xxx → 读到的是 effect 上次运行时的过期值
-  //     （settings 是 useMemo([]) 的稳定对象，属性变了引用不变）。
+  //     （监听器会保留启动时的闭包）。
   const mutedRef = useRef(muted);
   const muteMusicRef = useRef(muteMusic);
-  const hitsoundRef = useRef(settings.hitsound);
+  const hitsoundRef = useRef(liveAudioSettings.hitsound);
+  const backgroundDimRef = useRef(liveAudioSettings.backgroundDim);
+  const hapticsRef = useRef(liveAudioSettings.haptics);
   const fancyFxRef = useRef(settings.fancyFx);
-  // 玩家设置 or 系统偏好，两者取或（settings 是稳定对象，所以用 ref 读最新值）。
-  const reduceMotionRef = useRef(settings.reduceMotion || prefersReducedMotion());
-  reduceMotionRef.current = settings.reduceMotion || prefersReducedMotion();
+  // Keep the in-app preference live without rebuilding the renderer. Canvas
+  // combines it with the cached system media query on every frame so an OS
+  // change during a run is honored immediately in both directions.
+  const reduceMotionRef = useRef(liveAudioSettings.reduceMotion);
+  reduceMotionRef.current = liveAudioSettings.reduceMotion;
   mutedRef.current = muted;
   muteMusicRef.current = muteMusic;
-  hitsoundRef.current = settings.hitsound;
+  hitsoundRef.current = liveAudioSettings.hitsound;
+  backgroundDimRef.current = liveAudioSettings.backgroundDim;
+  hapticsRef.current = liveAudioSettings.haptics;
   fancyFxRef.current = settings.fancyFx;
+  const hapticTargetsRef = useRef<HapticTargets>({ touch: touchUi, gamepadIndex });
+  hapticTargetsRef.current.touch = touchUi;
+  hapticTargetsRef.current.gamepadIndex = gamepadIndex;
+  const emitHaptic = (cue: HapticCue) => {
+    if (!hapticsRef.current || mutedRef.current) return;
+    playHapticCue(cue, hapticTargetsRef.current);
+  };
 
   // Immersive: hide site chrome while playing (full page only). Also owns the
   // viewport NEON level attribute — cleaned up on unmount.
   useEffect(() => {
     if (variant !== "full") return;
+    document.documentElement.classList.add("play-immersive");
     document.body.classList.add("play-immersive");
-    // CSS 侧的非必要背景运动（霓虹管、灯牌、呼吸边框）跟着同一个开关走。
-    if (reduceMotionRef.current) document.body.dataset.reduceMotion = "1";
     return () => {
+      document.documentElement.classList.remove("play-immersive");
       document.body.classList.remove("play-immersive");
       delete document.body.dataset.neon;
-      delete document.body.dataset.reduceMotion;
     };
   }, [variant]);
+
+  // Keep the CSS motion layer in lockstep with the live Canvas ref. This is a
+  // safety control: changing it while paused must take effect before Resume,
+  // without rebuilding the renderer or restarting the authoritative clock.
+  useEffect(() => {
+    if (variant !== "full") return;
+    if (liveAudioSettings.reduceMotion) document.body.dataset.reduceMotion = "1";
+    else delete document.body.dataset.reduceMotion;
+    return () => {
+      delete document.body.dataset.reduceMotion;
+    };
+  }, [variant, liveAudioSettings.reduceMotion]);
 
   // B-1 · Low-frequency (~20Hz) stats bridge. Copies the live session + SIGNAL
   // tier into `statsRef` so the comic-panel HUD can read it on its own rAF
@@ -278,6 +771,9 @@ export function PlayField({
       out.judged = s.judgments.perfect + s.judgments.great + s.judgments.good + s.judgments.miss;
       out.total = s.totalNotes;
       out.surgeTier = surgeTierRef.current;
+      const conductor = conductorRef.current;
+      out.playbackRate = conductor?.playbackRate ?? 1;
+      out.rateRemainingMs = conductor?.rateRemainingMs ?? 0;
     };
     raf = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(raf);
@@ -286,11 +782,13 @@ export function PlayField({
   // Load audio + build the session once per chart.
   useEffect(() => {
     let cancelled = false;
+    setAudioProgress(null);
     finishedRef.current = false;
-    lastComboRef.current = 0;
+    seenComboBreaksRef.current = 0;
+    prevComboRef.current = 0;
     lastCountInt.current = -1;
     fxRef.current = [];
-    pressedRef.current.clear();
+    clearActiveInputs();
     surgeRef.current.reset();
     streakRef.current.reset();
     prevNeonRef.current = 0;
@@ -308,16 +806,31 @@ export function PlayField({
     const conductor = new Conductor();
     // Initial bus levels; live mute toggles via the effect below.
     // 走 ref 读 muted，好让音量相关设置不必进依赖（见下面的 deps 注释）。
-    conductor.setMusicVolume(mutedRef.current || muteMusicRef.current ? 0 : settings.musicVolume);
-    setSfxVolume(mutedRef.current || !settings.hitsound ? 0 : settings.sfxVolume);
+    conductor.setMusicVolume(
+      mutedRef.current || muteMusicRef.current ? 0 : liveAudioSettings.musicVolume,
+    );
+    setSfxVolume(
+      mutedRef.current || !liveAudioSettings.hitsound ? 0 : liveAudioSettings.sfxVolume,
+    );
     conductorRef.current = conductor;
-    const session = new GameSession(chart, mode, { chordAssist });
+    const session = new GameSession(chart, mode, {
+      chordAssist: chordAssistRef.current,
+      startAtMs: sectionStartMs,
+      endAtMs: sectionEndMs,
+      sectionPractice,
+    });
     sessionRef.current = session;
 
-    const scrollBiasMult = (1 + settings.scrollBias) * (mode === "casual" ? casualSpeed : 1);
-    approachRef.current = approachSec(chart.ar, chart.bpm, scrollBiasMult);
+    approachRef.current = approachSec(
+      chart.ar,
+      chart.bpm,
+      approachMultiplierFromScrollBias(settings.scrollBias),
+    );
     offsetMsRef.current = loadOffsetMs() + (chart.audio_offset_ms || 0);
-    lastNoteMsRef.current = Math.max(...session.notes.map((n) => n.endMs), 0) + 500;
+    const judgedThroughMs = Math.max(...session.notes.map((n) => n.endMs), 0) + 500;
+    lastNoteMsRef.current = sectionEndMs === undefined
+      ? judgedThroughMs
+      : Math.max(sectionEndMs, judgedThroughMs);
 
     conductor.onEnded = () => {
       // handled in the rAF loop; kept as a safety net
@@ -325,7 +838,21 @@ export function PlayField({
 
     void (async () => {
       try {
-        await conductor.load(audioUrl);
+        await conductor.load(audioUrl, (progress) => {
+          if (cancelled) return;
+          if (!hideAudioLoadingOverlay) {
+            setAudioProgress((previous) => {
+              if (progress.phase === "decode") return previous?.phase === "decode" ? previous : progress;
+              if (previous?.phase === "download" && previous.totalBytes === progress.totalBytes) {
+                const before = previous.totalBytes === null ? null : Math.floor(previous.loadedBytes / previous.totalBytes * 100);
+                const after = progress.totalBytes === null ? null : Math.floor(progress.loadedBytes / progress.totalBytes * 100);
+                if (before === after) return previous;
+              }
+              return progress;
+            });
+          }
+          onAudioLoadProgressRef.current?.(progress);
+        });
         if (cancelled) return;
         setLoading(false);
         setNeedsStart(true);
@@ -333,7 +860,12 @@ export function PlayField({
         // and bumps `startGate` only once every field is ready.
         onReadyRef.current?.();
       } catch (e) {
-        if (!cancelled) setError(e instanceof Error ? e.message : "Audio load failed");
+        if (!cancelled) {
+          const supportCode = audioLoadSupportCode(e);
+          setLoading(false);
+          setError(supportCode);
+          onAudioLoadErrorRef.current?.(supportCode);
+        }
       }
     })();
 
@@ -345,60 +877,159 @@ export function PlayField({
       conductor.dispose();
       conductorRef.current = null;
       sessionRef.current = null;
+      clearActiveInputs();
     };
     // 依赖里刻意不含 settings.musicVolume / sfxVolume / hitsound / muted：
     // 它们属于"实时生效"的音量，由下面那个 effect 直接作用在当前 conductor 上。
     // 放进依赖的话，改一次音量就会重跑这里 —— 重新 new Conductor + 重新 fetch
     // 并解码整段音频，玩家在对局中途调音量会直接被丢回加载态。
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chart, mode, audioUrl, casualSpeed, chordAssist, settings.scrollBias]);
+  }, [chart, mode, audioUrl, sectionPractice, sectionStartMs, sectionEndMs, audioRetryAttempt, audioRetrySync]);
 
   // Live mute toggle (home sound button) without remounting the chart.
   useEffect(() => {
     const conductor = conductorRef.current;
     if (!conductor) return;
-    conductor.setMusicVolume(muted || muteMusic ? 0 : settings.musicVolume);
-    setSfxVolume(muted || !settings.hitsound ? 0 : settings.sfxVolume);
-  }, [muted, muteMusic, settings.musicVolume, settings.sfxVolume, settings.hitsound]);
+    conductor.setMusicVolume(muted || muteMusic ? 0 : liveAudioSettings.musicVolume);
+    setSfxVolume(muted || !liveAudioSettings.hitsound ? 0 : liveAudioSettings.sfxVolume);
+  }, [
+    muted,
+    muteMusic,
+    liveAudioSettings.musicVolume,
+    liveAudioSettings.sfxVolume,
+    liveAudioSettings.hitsound,
+  ]);
 
   // Reset state when the chart changes.
   useEffect(() => {
     setLoading(true);
     setError("");
     setNeedsStart(true);
+    startingRef.current = false;
+    setStarting(false);
+    setStartError("");
+    soundCheckingRef.current = false;
+    setSoundChecked(false);
+    setSoundChecking(false);
+    setSoundCheckError("");
     setPaused(false);
-  }, [chart, mode, audioUrl]);
+    resumingRef.current = false;
+    setResuming(false);
+    setRestarting(false);
+    setResumeError("");
+    setGamepadInterruption("");
+    practiceTempoRef.current = 1;
+    setPracticeTempo(1);
+    setDrillRecap(null);
+    gamepadWasInterruptedRef.current = false;
+    practiceRepetitionRef.current = 1;
+    practiceAttemptsRef.current = [];
+    onPracticeRepetitionChangeRef.current?.(1);
+  }, [chart, mode, audioUrl, sectionStartMs, sectionEndMs, practiceRepetitionTotal, audioRetryAttempt, audioRetrySync]);
+
+  const retryAudioLoad = () => {
+    focusStartAfterLoadRef.current = true;
+    setLoading(true);
+    setError("");
+    setNeedsStart(true);
+    startingRef.current = false;
+    setStarting(false);
+    setStartError("");
+    setAudioRetryAttempt((attempt) => attempt + 1);
+  };
+
+  const leaveAudioError = () => {
+    nav(variant === "hero" ? "/" : `/track/${chart.track_id}`);
+  };
+
+  const handleAudioErrorKeyDown = (event: ReactKeyboardEvent<HTMLDivElement>) => {
+    event.stopPropagation();
+    if (event.key === "Escape") {
+      event.preventDefault();
+      leaveAudioError();
+      return;
+    }
+    if (event.key !== "Tab") return;
+    event.preventDefault();
+    const retry = loadRetryButtonRef.current;
+    const back = loadBackButtonRef.current;
+    if (event.shiftKey) (document.activeElement === retry ? back : retry)?.focus();
+    else (document.activeElement === back ? retry : back)?.focus();
+  };
 
   /**
    * 开始前的声音自检：一次用户点击里解锁 AudioContext 并打一记打击音，
    * 让玩家在进歌之前就知道有没有声音 —— 而不是进歌后才发现。
    */
   const soundCheck = async () => {
+    // React cannot commit disabled=true between two same-turn activations.
+    // Keep the browser-permission attempt single-shot with a synchronous ref.
+    if (soundCheckingRef.current) return;
+    soundCheckingRef.current = true;
+    setSoundChecking(true);
+    setSoundCheckError("");
     trackEvent("sound_check");
-    await unlockAudio();
-    // 自检结束后音量要回到玩家本来的设置，不能因为听过一次就把 SFX 顶到 0.6。
-    const restore = muted || !settings.hitsound ? 0 : settings.sfxVolume;
-    setSfxVolume(0.6);
-    playHit("perfect", 0);
-    setSoundChecked(true);
-    window.setTimeout(() => setSfxVolume(restore), 900);
+    try {
+      await unlockAudio();
+      // 自检结束后音量要回到玩家本来的设置，不能因为听过一次就把 SFX 顶到 0.6。
+      const restore = muted || !settings.hitsound ? 0 : settings.sfxVolume;
+      setSfxVolume(0.6);
+      playHit("perfect", 0);
+      setSoundChecked(true);
+      window.setTimeout(() => setSfxVolume(restore), 900);
+    } catch {
+      setSoundChecked(false);
+      setSoundCheckError("Sound check could not start. Check browser sound permission, then try again.");
+    } finally {
+      soundCheckingRef.current = false;
+      setSoundChecking(false);
+    }
   };
 
   const startRun = async () => {
     const conductor = conductorRef.current;
-    if (!conductor || suspendedRef.current) return;
-    await unlockAudio();
-    if (conductorRef.current !== conductor || suspendedRef.current) return;
-    conductor.begin(COUNTDOWN_MS);
-    setNeedsStart(false);
-    setPaused(false);
-    onStart?.();
-    if (variant === "full") {
-      try {
-        await document.documentElement.requestFullscreen?.();
-      } catch {
-        /* optional */
+    if (!conductor || suspendedRef.current || startingRef.current) return;
+    startingRef.current = true;
+    setStarting(true);
+    setStartError("");
+    // Invoke both gated APIs before the first await so mobile browsers see the
+    // same direct pointer gesture for audio unlock and fullscreen.
+    const audioUnlock = unlockAudio();
+    const fullscreenWasActive = gameFullscreenElement() !== null;
+    // Duo's parent owns the real gesture and fullscreen request. Its gated
+    // child effects run later and would only issue two redundant, usually
+    // denied requests outside the activation stack.
+    const fullscreenRequest = variant === "full" && !hideStartOverlay
+      ? requestGameFullscreen()
+      : null;
+    try {
+      await audioUnlock;
+      if (conductorRef.current !== conductor || suspendedRef.current) {
+        startingRef.current = false;
+        setStarting(false);
+        return;
       }
+      const audioStartMs = sectionPractice
+        ? Math.max(0, sectionStartMs + offsetMsRef.current)
+        : 0;
+      conductor.setBaseRate(practiceTempoRef.current);
+      conductor.begin(COUNTDOWN_MS, audioStartMs);
+      setNeedsStart(false);
+      setPaused(false);
+      onStart?.();
+    } catch {
+      startingRef.current = false;
+      setStarting(false);
+      setStartError("Audio could not start. Check browser sound permission, then try again.");
+      if (fullscreenRequest && !fullscreenWasActive) {
+        void fullscreenRequest.then((result) => {
+          if (result === "requested" && !startingRef.current && needsStartRef.current) {
+            return exitGameFullscreen();
+          }
+        });
+      }
+    } finally {
+      if (fullscreenRequest) void fullscreenRequest;
     }
   };
 
@@ -409,7 +1040,7 @@ export function PlayField({
   const effectiveAutoStart = autoStart || devAutoStart || (import.meta.env.DEV && demoSurge > 0);
   useEffect(() => {
     autoStartedRef.current = false;
-  }, [chart, mode, audioUrl]);
+  }, [chart, mode, audioUrl, sectionStartMs, sectionEndMs]);
   useEffect(() => {
     if (suspended) {
       if (needsStart) autoStartedRef.current = false;
@@ -451,22 +1082,63 @@ export function PlayField({
     return () => { delete (window as unknown as { __bs?: unknown }).__bs; };
   }, []);
 
+  const resumeRun = async () => {
+    const conductor = conductorRef.current;
+    if (
+      !conductor
+      || !pausedRef.current
+      || suspendedRef.current
+      || finishedRef.current
+      || resumingRef.current
+    ) return;
+    resumingRef.current = true;
+    setResuming(true);
+    setResumeError("");
+    try {
+      // Must be called directly from the Resume click/key gesture. A system
+      // interruption can leave the shared context suspended even though the
+      // chart itself is correctly frozen.
+      await unlockAudio();
+      if (
+        conductorRef.current !== conductor
+        || suspendedRef.current
+        || finishedRef.current
+        || !pausedRef.current
+      ) return;
+      lastCountInt.current = -1;
+      conductor.resume(conductor.countdownRemainingMs > 0 ? 0 : COUNTDOWN_MS);
+      pausedRef.current = false;
+      setPaused(false);
+      gamepadWasInterruptedRef.current = false;
+      setGamepadInterruption("");
+    } catch {
+      setResumeError("Audio could not resume. Check browser sound permission, then try again.");
+    } finally {
+      resumingRef.current = false;
+      setResuming(false);
+    }
+  };
+
   const togglePause = () => {
     const conductor = conductorRef.current;
-    if (!conductor || suspendedRef.current) return;
+    if (!conductor || suspendedRef.current || finishedRef.current) return;
     // Duo · Hand the toggle to the parent: it bumps `pauseSync`, which flips
     // BOTH fields in the same commit. Toggling locally here would let one
     // player freeze while the other keeps playing — the charts would drift.
     if (onPauseChangeRef.current) {
+      if (!pausedRef.current) clearActiveInputs();
       onPauseChangeRef.current();
       return;
     }
-    // 用函数式更新读最新 paused，确保从按键监听（依赖只有 [keys]，closure 可能是旧的）调用也正确。
-    setPaused((prev) => {
-      if (prev) conductor.resume();
-      else conductor.pause();
-      return !prev;
-    });
+    if (pausedRef.current) {
+      void resumeRun();
+      return;
+    }
+    setResumeError("");
+    clearActiveInputs();
+    conductor.pause();
+    pausedRef.current = true;
+    setPaused(true);
   };
 
   // Duo · Parent's pause broadcast: flip this field once per bump. Bumps are
@@ -475,10 +1147,18 @@ export function PlayField({
   useEffect(() => {
     if (!pauseSync) return;
     const conductor = conductorRef.current;
-    if (!conductor) return;
+    if (!conductor || finishedRef.current) return;
     setPaused((prev) => {
-      if (prev) conductor.resume();
-      else conductor.pause();
+      if (prev) {
+        lastCountInt.current = -1;
+        conductor.resume(conductor.countdownRemainingMs > 0 ? 0 : COUNTDOWN_MS);
+        gamepadWasInterruptedRef.current = false;
+        setGamepadInterruption("");
+      }
+      else {
+        clearActiveInputs();
+        conductor.pause();
+      }
       return !prev;
     });
   }, [pauseSync]);
@@ -489,18 +1169,24 @@ export function PlayField({
   useEffect(() => {
     const conductor = conductorRef.current;
     if (!conductor || needsStart || finishedRef.current) return;
-    if (suspended || paused) conductor.pause();
-    else conductor.resume();
+    if (suspended || paused) {
+      clearActiveInputs();
+      conductor.pause();
+    }
+    else if (conductor.isPaused) {
+      lastCountInt.current = -1;
+      conductor.resume(conductor.countdownRemainingMs > 0 ? 0 : COUNTDOWN_MS);
+    }
   }, [suspended, paused, needsStart]);
 
-  // FEEL PACK: instant retry — same chart, fresh session, straight to countdown.
-  const restartRun = () => {
-    const conductor = conductorRef.current;
-    // The stable key listener must read current readiness, not the loading=true
-    // value captured when it was installed before the audio finished loading.
-    if (!conductor || conductor.durationMs <= 0 || suspendedRef.current) return;
+  const resetLiveSession = (conductor: Conductor) => {
     conductor.stop();
-    sessionRef.current = new GameSession(chart, mode, { chordAssist });
+    sessionRef.current = new GameSession(chart, mode, {
+      chordAssist: chordAssistRef.current,
+      startAtMs: sectionStartMs,
+      endAtMs: sectionEndMs,
+      sectionPractice,
+    });
     surgeRef.current.reset();
     streakRef.current.reset();
     prevNeonRef.current = 0;
@@ -513,7 +1199,7 @@ export function PlayField({
     lightComboPrevRef.current = 0;
     lastShowBarRef.current = -1;
     surgeDropRef.current = 0;
-    lastComboRef.current = 0;
+    seenComboBreaksRef.current = 0;
     prevComboRef.current = 0;
     finishedRef.current = false;
     lastCountInt.current = -1;
@@ -521,28 +1207,150 @@ export function PlayField({
     fxRef.current = [];
     scorePopsRef.current = [];
     milestoneRef.current = null;
-    pressedRef.current.clear();
+    clearActiveInputs();
     laneFlashRef.current = [0, 0, 0, 0];
     if (wrapRef.current) wrapRef.current.dataset.surge = "0";
+    if (failureRef.current) {
+      failureRef.current.dataset.show = "0";
+      failureRef.current.setAttribute("aria-hidden", "true");
+    }
+  };
+
+  const beginFreshSession = (conductor: Conductor) => {
+    resetLiveSession(conductor);
+    const audioStartMs = sectionPractice
+      ? Math.max(0, sectionStartMs + offsetMsRef.current)
+      : 0;
+    conductor.setBaseRate(practiceTempoRef.current);
+    conductor.begin(COUNTDOWN_MS, audioStartMs);
+    pausedRef.current = false;
     setPaused(false);
-    onStart?.();
-    void unlockAudio().then(() => {
-      if (conductorRef.current !== conductor) return;
-      conductor.begin(COUNTDOWN_MS);
-      // AudioContext.resume may finish after an exit/pause action. Preserve
-      // that hold even when this previously requested restart finishes late.
-      if (suspendedRef.current || pausedRef.current) conductor.pause();
+    if (suspendedRef.current) conductor.pause();
+  };
+
+  finishCycleRef.current = (result) => {
+    const conductor = conductorRef.current;
+    const currentRepetition = practiceRepetitionRef.current;
+    const attempt: PracticeAttemptSummary = {
+      accuracy: result.accuracy,
+      misses: result.judgments.miss,
+      score: result.score,
+      grade: result.grade,
+    };
+    const attempts = practiceRepetitionTotal > 1
+      ? [...practiceAttemptsRef.current, attempt]
+      : [];
+    if (practiceRepetitionTotal > 1) practiceAttemptsRef.current = attempts;
+    if (
+      conductor
+      && practiceRepetitionTotal > 1
+      && currentRepetition < practiceRepetitionTotal
+    ) {
+      const nextRepetition = currentRepetition + 1;
+      practiceRepetitionRef.current = nextRepetition;
+      beginFreshSession(conductor);
+      setDrillRecap({
+        completedRepetition: currentRepetition,
+        nextRepetition,
+        totalRepetitions: practiceRepetitionTotal,
+        accuracy: result.accuracy,
+        misses: result.judgments.miss,
+      });
+      onPracticeRepetitionChangeRef.current?.(nextRepetition);
+      return;
+    }
+    onFinishRef.current({
+      ...result,
+      ...(practiceRepetitionTotal > 1
+        ? {
+            practiceRepetitions: practiceRepetitionTotal,
+            practiceAttempts: attempts,
+          }
+        : {}),
     });
   };
 
+  // FEEL PACK: instant retry — same chart, fresh session, straight to countdown.
+  const restartRun = async () => {
+    const conductor = conductorRef.current;
+    // The stable key listener must read current readiness, not the loading=true
+    // value captured when it was installed before the audio finished loading.
+    if (
+      !conductor
+      || conductor.durationMs <= 0
+      || suspendedRef.current
+      || finishedRef.current
+      || resumingRef.current
+    ) return;
+
+    // Restart is one transaction: never discard the existing session until
+    // the same click/key gesture has restored system audio. If an interruption
+    // beat the statechange handler, freeze here before awaiting permission.
+    if (String(getAudioContext().state) !== "running" && !pausedRef.current) {
+      clearActiveInputs();
+      conductor.pause();
+      pausedRef.current = true;
+      setPaused(true);
+    }
+    resumingRef.current = true;
+    setRestarting(true);
+    setResumeError("");
+    try {
+      await unlockAudio();
+      if (
+        conductorRef.current !== conductor
+        || finishedRef.current
+      ) return;
+
+      setDrillRecap(null);
+      beginFreshSession(conductor);
+      onStart?.();
+      // The user may open the exit panel while the audio permission promise is
+      // pending. Preserve their Restart intent, but keep the fresh run frozen
+      // behind that panel until Keep playing releases the page-owned hold.
+      if (suspendedRef.current) conductor.pause();
+    } catch {
+      setResumeError("Audio could not restart. Check browser sound permission, then try again.");
+    } finally {
+      resumingRef.current = false;
+      setRestarting(false);
+    }
+  };
+
+  const handlePauseKeyDown = (event: ReactKeyboardEvent<HTMLDivElement>) => {
+    // Browser/OS commands keep their native behavior. Every plain gameplay
+    // key stays inside the modal so a lane press cannot leak into the field.
+    if (hasBrowserShortcutModifier(event)) return;
+    event.stopPropagation();
+    const pauseShortcut = !pauseKeyIsLane && (event.key === "p" || event.key === "P");
+    if (event.key === "Escape" || pauseShortcut) {
+      event.preventDefault();
+      if (!event.repeat) togglePause();
+      return;
+    }
+    if (!restartKeyIsLane && event.code === "KeyR" && !onPauseChangeRef.current) {
+      event.preventDefault();
+      if (!event.repeat) void restartRun();
+      return;
+    }
+    if (event.key !== "Tab") return;
+    event.preventDefault();
+    cycleModalFocus(event.currentTarget, event.shiftKey);
+  };
+
+  useGamepadDialogNavigation({
+    containerRef: pauseDialogRef,
+    enabled: pauseDialogVisible,
+    gamepadIndexes: pauseGamepadIndexes,
+    onBack: togglePause,
+  });
+
   // Juice: burst particles + screen shake on every judged hit/miss.
   const spawnHitFx = (lane: number, judgment: JudgeFx["judgment"]) => {
-    // FEEL PACK haptics (Android/Chromium): light tick per scoring hit, firm
-    // pulse on miss. Gated by the hitsound setting as the feedback master.
-    if (settings.hitsound) {
-      if (judgment === "miss") vibrate(35, 60);
-      else vibrate(8);
-    }
+    // FEEL PACK haptics: crisp tick per scoring hit, firm pulse on miss.
+    // Touch and an assigned controller share the setting but remain entirely
+    // independent from hitsound audio. Unsupported surfaces are safe no-ops.
+    emitHaptic(judgment === "miss" ? "miss" : "hit");
     const { w, h } = dimRef.current;
     if (!w || !h) return;
     const receptorY = receptorYFromGeometry(h, Math.min(w, h));
@@ -555,7 +1363,7 @@ export function PlayField({
         : isPerfect
           ? [255, 214, 10]
           : LANE_RGB[lane];
-    if (fancyFxOn(settings)) {
+    if (fancyFxRef.current && !reduceMotionRef.current && !prefersReducedMotion()) {
       const count =
         judgment === "perfect" ? 22 : judgment === "great" ? 14 : judgment === "good" ? 8 : 8;
       for (let i = 0; i < count; i++) {
@@ -574,13 +1382,11 @@ export function PlayField({
           size: 1.6 + Math.random() * (isPerfect ? 3.2 : 2.4),
         });
       }
-      // 镜头运动（屏震）属于可关闭的非必要动效；判定粒子留在判定线附近，
-      // 属于"我按下去这里有回应"的反馈，不在这里一起关掉。
-      if (!reduceMotionRef.current) {
-        const mag =
-          judgment === "perfect" ? 6 : judgment === "great" ? 3.5 : judgment === "good" ? 2 : 7;
-        shakeRef.current = { mag, until: performance.now() + 150 };
-      }
+      // Screen shake and particles are optional motion. Essential judgment and
+      // score feedback stay visible through the renderer's stationary fade.
+      const mag =
+        judgment === "perfect" ? 6 : judgment === "great" ? 3.5 : judgment === "good" ? 2 : 7;
+      shakeRef.current = { mag, until: performance.now() + 150 };
     }
   };
 
@@ -593,30 +1399,61 @@ export function PlayField({
       judgment: fx.judgment,
       born: performance.now(),
       deltaMs: fx.deltaMs,
+      ...(fx.accent ? { accent: fx.accent } : {}),
+      ...(fx.chordFeedback ? { chordFeedback: fx.chordFeedback } : {}),
     });
+    // The engine attaches the exact awarded points before any subsequent event
+    // can mutate combo. This keeps direct input and batched auto-judgments on
+    // one score-feedback truth, including a Good's reset x1 award.
+    const { w, h } = dimRef.current;
+    if (w && h && fx.scoreGain > 0) {
+      scorePopsRef.current.push({
+        x: (fx.lane + 0.5) * (w / 4),
+        y: receptorYFromGeometry(h, Math.min(w, h)) - 78,
+        text: `+${fx.scoreGain}`,
+        born: performance.now(),
+        color: JUDGE_COLORS[fx.judgment],
+      });
+    }
     surgeRef.current.apply(fx.judgment);
     streakRef.current.apply(fx.judgment);
     spawnHitFx(fx.lane, fx.judgment);
-    if (settings.hitsound) playHit(fx.judgment, surgeTierRef.current);
+    if (hitsoundRef.current) playHit(fx.judgment, surgeTierRef.current, fx.accent);
   };
 
-  // Auto-pause when the tab is hidden; user resumes on return (PRD §4.11).
+  // Auto-pause when the tab is hidden, the browser window loses focus, OR the
+  // shared AudioContext is interrupted; user
+  // resumes explicitly on return (PRD §4.11). `visibilitychange` alone misses
+  // desktop app switching and system chrome that can swallow keyup/pointerup.
   // Duo · Broadcast instead of pausing locally, so both fields freeze together.
-  // Both fields fire this on the same tab-hide; the parent debounces the two
+  // Both fields fire the same interruption; the parent debounces the two
   // reports into a single `pauseSync` bump.
   useEffect(() => {
-    const onVis = () => {
-      if (document.hidden && conductorRef.current?.playing) {
-        if (onPauseChangeRef.current) {
-          onPauseChangeRef.current();
-          return;
-        }
-        conductorRef.current.pause();
-        setPaused(true);
+    const pauseForInterruption = () => {
+      if (finishedRef.current || !conductorRef.current?.playing) return;
+      clearActiveInputs();
+      if (onPauseChangeRef.current) {
+        onPauseChangeRef.current();
+        return;
       }
+      conductorRef.current.pause();
+      setPaused(true);
+    };
+    const onVis = () => {
+      if (document.hidden) pauseForInterruption();
+    };
+    const audioContext = getAudioContext();
+    const onAudioStateChange = () => {
+      if (String(audioContext.state) !== "running") pauseForInterruption();
     };
     document.addEventListener("visibilitychange", onVis);
-    return () => document.removeEventListener("visibilitychange", onVis);
+    window.addEventListener("blur", pauseForInterruption);
+    audioContext.addEventListener("statechange", onAudioStateChange);
+    return () => {
+      document.removeEventListener("visibilitychange", onVis);
+      window.removeEventListener("blur", pauseForInterruption);
+      audioContext.removeEventListener("statechange", onAudioStateChange);
+    };
   }, []);
 
   // The game loop. Reads the audio clock, draws to canvas, never re-renders React.
@@ -627,6 +1464,7 @@ export function PlayField({
     return createPlayfieldRenderer({
       canvasRef,
       wrapRef,
+      failureRef,
       conductorRef,
       sessionRef,
       pressedRef,
@@ -643,7 +1481,7 @@ export function PlayField({
       scorePopsRef,
       comboBreakRef,
       prevComboRef,
-      lastComboRef,
+      seenComboBreaksRef,
       surgeRef,
       streakRef,
       prevNeonRef,
@@ -659,84 +1497,184 @@ export function PlayField({
       needsStartRef,
       pausedRef,
       mutedRef,
+      muteMusicRef,
       hitsoundRef,
+      backgroundDimRef,
       fancyFxRef,
+      reduceMotionRef,
       offsetMsRef,
       approachRef,
       lastNoteMsRef,
       lastCountInt,
       finishedRef,
+      showKeyHintsRef: showLiveKeyHintsRef,
       chart,
-      mode,
+      sectionPractice,
       variant,
-      touchUi,
       district,
       demoSurge,
       demoStreak,
-      keyHint,
+      keyHint: liveLaneHint,
+      persistentKeyHints,
+      beforeSessionAdvance: (frameTimeMs) => gamepadPollRef.current?.(frameTimeMs),
       spawnHitFx,
-      onFinish,
+      emitHaptic,
+      onFinish: (result) => finishCycleRef.current(result),
       useComicHud: useComicHudRef.current,
     });
-  }, [mode, keyHint, chart.bpm, touchUi, district, demoSurge, demoStreak]);
+  }, [
+    mode,
+    liveLaneHint,
+    persistentKeyHints,
+    chart.bpm,
+    district,
+    demoSurge,
+    demoStreak,
+    sectionPractice,
+    sectionStartMs,
+    variant,
+  ]);
 
-  const handlePress = (lane: number) => {
+  const effectiveInputSongTimeMs = (
+    conductor: Conductor,
+    inputPerformanceTimeMs?: number,
+  ): number => {
+    const playbackRate = conductor.playbackRate;
+    const songTimeMs = conductor.songTimeMs();
+    const inputSongTimeMs = inputPerformanceTimeMs === undefined
+      ? songTimeMs
+      : songTimeAtInputMs(
+          songTimeMs,
+          playbackRate,
+          inputPerformanceTimeMs,
+          performance.now(),
+        );
+    return inputSongTimeMs - offsetMsRef.current;
+  };
+
+  const handlePress = (
+    lane: number,
+    touchChordAssist: boolean,
+    inputPerformanceTimeMs?: number,
+  ) => {
     const conductor = conductorRef.current;
     const session = sessionRef.current;
-    if (!conductor || !session || needsStartRef.current || pausedRef.current) return;
+    if (
+      !conductor
+      || !session
+      || needsStartRef.current
+      || pausedRef.current
+      || finishedRef.current
+    ) return;
     if (pressedRef.current.has(lane)) return;
+    // Fresh notes stay inert throughout every countdown. The sole exception is
+    // an already-landed Hold or armed Slide whose physical owner was cleared by
+    // Pause/blur: the player can re-grab it before GO instead of receiving an
+    // unavoidable Miss after doing exactly what the safe re-entry UI asked.
+    if (conductor.countdownRemainingMs > 0) {
+      const rearmedHold = session.canRearmHold(lane);
+      const rearmedSlide = session.rearmSlideTarget(lane);
+      if (!rearmedHold && !rearmedSlide) return;
+      pressedRef.current.add(lane);
+      laneFlashRef.current[lane] = performance.now();
+      lastLaneRef.current = lane;
+      if (rearmedSlide) emitHaptic("confirm");
+      return;
+    }
     pressedRef.current.add(lane);
     laneFlashRef.current[lane] = performance.now();
     lastLaneRef.current = lane;
-    const eff = conductor.songTimeMs() - offsetMsRef.current;
-    const fx = session.press(lane, eff);
+    const eff = effectiveInputSongTimeMs(conductor, inputPerformanceTimeMs);
+    const fx = session.press(lane, eff, { touchChordAssist });
     if (fx) {
       commitFx(fx);
-    } else if (settings.hitsound) {
-      playKeyTick();
+    } else {
+      // The locked rail can be obscured by a thumb or missed in peripheral
+      // vision. Pair it with a tiny tactile tick on the active feedback surface
+      // so early Slide arrival is confirmed before the endpoint judgment.
+      if (session.isSlideTargetHeld(lane)) emitHaptic("confirm");
+      if (hitsoundRef.current) playKeyTick();
     }
   };
 
-  const handleRelease = (lane: number) => {
-    pressedRef.current.delete(lane);
+  const handleRelease = (lane: number, inputPerformanceTimeMs?: number) => {
+    if (!pressedRef.current.delete(lane)) return;
     const conductor = conductorRef.current;
     const session = sessionRef.current;
-    if (!conductor || !session || needsStartRef.current || pausedRef.current) return;
-    const eff = conductor.songTimeMs() - offsetMsRef.current;
+    if (
+      !conductor
+      || !session
+      || needsStartRef.current
+      || pausedRef.current
+      || finishedRef.current
+      || conductor.countdownRemainingMs > 0
+    ) return;
+    const eff = effectiveInputSongTimeMs(conductor, inputPerformanceTimeMs);
     const fx = session.release(lane, eff);
     if (fx) {
       commitFx(fx);
     }
   };
 
+  const applyInputTransition = (
+    transition: LaneInputTransition,
+    touchChordAssist: boolean,
+    inputPerformanceTimeMs?: number,
+  ) => {
+    if (transition.release !== null) handleRelease(transition.release, inputPerformanceTimeMs);
+    if (transition.press !== null) {
+      handlePress(transition.press, touchChordAssist, inputPerformanceTimeMs);
+    }
+  };
+
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.repeat || suspendedRef.current) return;
+      if (e.repeat || suspendedRef.current || finishedRef.current) return;
+      // Preserve browser/OS commands such as Ctrl/Cmd+R, Ctrl/Cmd+P and
+      // Alt+Arrow navigation. Keyup still flows below so adding a modifier
+      // after a valid lane press cannot strand its physical owner.
+      if (hasBrowserShortcutModifier(e)) return;
+      // Before the run starts, the ready overlay owns keyboard interaction.
+      // A bindable Space/Enter must still activate its focused native button;
+      // gameplay begins owning those keys only after the start transaction.
+      if (needsStartRef.current) return;
       const lane = laneFromKeyEvent(e, keys);
       if (lane >= 0) {
         e.preventDefault();
-        handlePress(lane);
+        const inputTimeMs = inputEventPerformanceTimeMs(
+          e.timeStamp,
+          performance.now(),
+          performance.timeOrigin,
+        );
+        applyInputTransition(
+          inputTrackerRef.current.begin(`key:${e.code}`, lane, inputTimeMs),
+          false,
+          inputTimeMs,
+        );
         return;
       }
       // FEEL PACK: instant retry — R restarts the chart unless R is lane-bound.
       // Duo · disabled: this restarts only THIS field, and the two charts would
       // leave the lockstep they started in. Rematch on the result card is the
       // duo way to replay.
-      if (e.code === "KeyR" && !needsStartRef.current && !onPauseChangeRef.current) {
+      if (e.code === "KeyR" && !finishedRef.current && !onPauseChangeRef.current) {
         e.preventDefault();
-        restartRun();
+        void restartRun();
         return;
       }
       // Escape / P 暂停或继续——对局里玩家没有别的退出键，必须有键盘暂停。
-      if ((e.key === "Escape" || e.key === "p" || e.key === "P") && !needsStartRef.current) {
+      if (e.key === "Escape" || e.key === "p" || e.key === "P") {
         e.preventDefault();
         togglePause();
       }
     };
     const onKeyUp = (e: KeyboardEvent) => {
-      const lane = laneFromKeyEvent(e, keys);
-      if (lane < 0) return;
-      handleRelease(lane);
+      const inputTimeMs = inputEventPerformanceTimeMs(
+        e.timeStamp,
+        performance.now(),
+        performance.timeOrigin,
+      );
+      applyInputTransition(inputTrackerRef.current.end(`key:${e.code}`), false, inputTimeMs);
     };
     window.addEventListener("keydown", onKeyDown);
     window.addEventListener("keyup", onKeyUp);
@@ -747,9 +1685,120 @@ export function PlayField({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [keys]);
 
+  // Gamepad buttons expose state snapshots rather than key-style press/release
+  // events, so read the assigned controller once per game-render frame. The W3C
+  // timestamp records the browser's latest hardware update; bounded timing
+  // normalization keeps rAF / long-task queueing from degrading a physical
+  // Perfect. Unsupported, stale or invalid timestamps safely fall back to the
+  // poll time. The renderer invokes this sampler before session.tick(), so a
+  // still-valid edge cannot lose the same frame to automatic Miss. D-pad and
+  // face-button sources remain independent owners: holding both controls for
+  // one lane cannot cut a Hold when only one is released.
+  useEffect(() => {
+    if (gamepadIndex === undefined || typeof navigator.getGamepads !== "function") return;
+
+    let activeButtons = new Set<number>();
+    let menuPressed = false;
+    const sourceFor = (button: number) => `gamepad:${gamepadIndex}:button:${button}`;
+    const readGamepad = (): Gamepad | null => {
+      try {
+        const gamepad = navigator.getGamepads()[gamepadIndex];
+        return gamepad?.connected === true && gamepad.mapping === "standard" ? gamepad : null;
+      } catch {
+        return null;
+      }
+    };
+
+    // A controller may be discovered because the player is already holding a
+    // button. Seed the edge state without scoring that stale press; the next
+    // release + press becomes the first intentional gameplay input.
+    const initialGamepad = readGamepad();
+    if (initialGamepad) {
+      activeButtons = pressedStandardGamepadButtons(initialGamepad);
+      menuPressed = gamepadButtonIsPressed(initialGamepad?.buttons[STANDARD_GAMEPAD_MENU_BUTTON]);
+    }
+
+    const poll = (now: number) => {
+      const gamepad = readGamepad();
+      const inputTimeMs = inputEventPerformanceTimeMs(
+        gamepad?.timestamp ?? 0,
+        now,
+        performance.timeOrigin,
+      );
+      const pressed = gamepad
+        ? pressedStandardGamepadButtons(gamepad)
+        : new Set<number>();
+      const acceptsInput = !needsStartRef.current
+        && !pausedRef.current
+        && !suspendedRef.current
+        && !finishedRef.current;
+      const nextMenuPressed = gamepadButtonIsPressed(
+        gamepad?.buttons[STANDARD_GAMEPAD_MENU_BUTTON],
+      );
+      if (
+        nextMenuPressed
+        && !menuPressed
+        && !needsStartRef.current
+        && !suspendedRef.current
+        && !finishedRef.current
+      ) {
+        if (onGamepadPauseRef.current) onGamepadPauseRef.current();
+        else togglePause();
+      }
+      menuPressed = nextMenuPressed;
+
+      for (const button of pressed) {
+        if (activeButtons.has(button)) continue;
+        activeButtons.add(button);
+        if (
+          button === STANDARD_GAMEPAD_BOTTOM_FACE_BUTTON
+          && needsStartRef.current
+          && !suspendedRef.current
+          && !finishedRef.current
+          && !startingRef.current
+          && audioReadyForControllerStartRef.current
+          && variant === "full"
+          && !autoStart
+          && !hideStartOverlay
+        ) {
+          void startRun();
+          continue;
+        }
+        if (!acceptsInput) continue;
+        const lane = laneFromStandardGamepadButton(button);
+        if (lane === null) continue;
+        applyInputTransition(
+          inputTrackerRef.current.begin(sourceFor(button), lane, inputTimeMs),
+          false,
+          inputTimeMs,
+        );
+      }
+
+      for (const button of [...activeButtons]) {
+        if (pressed.has(button)) continue;
+        activeButtons.delete(button);
+        applyInputTransition(
+          inputTrackerRef.current.end(sourceFor(button)),
+          false,
+          inputTimeMs,
+        );
+      }
+    };
+
+    gamepadPollRef.current = poll;
+    return () => {
+      if (gamepadPollRef.current === poll) gamepadPollRef.current = null;
+      for (const button of activeButtons) {
+        applyInputTransition(inputTrackerRef.current.end(sourceFor(button)), false);
+      }
+    };
+    // Handlers intentionally read the same current refs as keyboard/pointer.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gamepadIndex]);
+
   // getBoundingClientRect() 会强制浏览器同步算一次布局。pointermove 在移动端能到
   // 120Hz+，每移动一次都读就是在反复强制回流。DOMRect 是快照而非活对象，所以缓存
-  // 是安全的 —— 只在窗口 resize、页面滚动后失效即可。
+  // 并在画布尺寸、视口位置或全屏状态变化时失效。
   const rectRef = useRef<DOMRect | null>(null);
   useEffect(() => {
     const invalidate = () => {
@@ -758,50 +1807,98 @@ export function PlayField({
     window.addEventListener("resize", invalidate);
     // capture=true 才能收到内部滚动容器的滚动事件。
     window.addEventListener("scroll", invalidate, { passive: true, capture: true });
+    const canvas = canvasRef.current;
+    const observer = canvas && typeof ResizeObserver !== "undefined"
+      ? new ResizeObserver(invalidate)
+      : null;
+    if (canvas) observer?.observe(canvas);
+    for (const event of FULLSCREEN_CHANGE_EVENTS) document.addEventListener(event, invalidate);
     return () => {
       window.removeEventListener("resize", invalidate);
       window.removeEventListener("scroll", invalidate, true);
+      observer?.disconnect();
+      for (const event of FULLSCREEN_CHANGE_EVENTS) document.removeEventListener(event, invalidate);
     };
   }, []);
   const fieldRect = (): DOMRect | null => {
     if (!rectRef.current) {
-      const w = wrapRef.current;
-      if (!w) return null;
-      rectRef.current = w.getBoundingClientRect();
+      const canvas = canvasRef.current;
+      if (!canvas) return null;
+      rectRef.current = canvas.getBoundingClientRect();
     }
     return rectRef.current;
   };
 
   const onPointerDown = (e: ReactPointerEvent) => {
+    // A right-click or stylus barrel button must not become a lane hit before
+    // the subsequent contextmenu event is suppressed.
+    if (e.button !== 0) {
+      e.preventDefault();
+      return;
+    }
+    if (finishedRef.current) return;
     const rect = fieldRect();
     if (!rect) return;
-    const localX = e.clientX - rect.left;
-    const lane = laneFromClientX(localX, rect);
+    const lane = laneFromClientX(e.clientX, rect);
     if (lane == null) return;
-    if (touchTracker.current.press(e.pointerId, lane, performance.now()) === null) return;
-    (e.target as Element).setPointerCapture?.(e.pointerId);
-    pointerLane.current.set(e.pointerId, lane);
-    handlePress(lane);
+    const inputTimeMs = inputEventPerformanceTimeMs(
+      e.timeStamp,
+      performance.now(),
+      performance.timeOrigin,
+    );
+    const transition = inputTrackerRef.current.begin(e.pointerId, lane, inputTimeMs);
+    e.currentTarget.setPointerCapture?.(e.pointerId);
+    applyInputTransition(transition, e.pointerType === "touch", inputTimeMs);
   };
   const onPointerMove = (e: ReactPointerEvent) => {
-    if (!pointerLane.current.has(e.pointerId)) return;
+    if (!inputTrackerRef.current.hasSource(e.pointerId)) return;
     const rect = fieldRect();
     if (!rect) return;
-    const lane = laneFromClientX(e.clientX - rect.left, rect);
-    if (lane == null) return;
-    const prev = pointerLane.current.get(e.pointerId);
-    if (prev === lane) return;
-    if (prev != null) handleRelease(prev);
-    pointerLane.current.set(e.pointerId, lane);
-    handlePress(lane);
+    const lane = e.pointerType === "touch"
+      ? laneFromTouchDrag(e.clientX, rect, inputTrackerRef.current.laneForSource(e.pointerId))
+      : laneFromClientX(e.clientX, rect);
+    const inputTimeMs = inputEventPerformanceTimeMs(
+      e.timeStamp,
+      performance.now(),
+      performance.timeOrigin,
+    );
+    applyInputTransition(
+      inputTrackerRef.current.move(e.pointerId, lane, inputTimeMs),
+      e.pointerType === "touch",
+      inputTimeMs,
+    );
   };
   const onPointerUp = (e: ReactPointerEvent) => {
-    const lane = pointerLane.current.get(e.pointerId);
-    if (lane != null) {
-      handleRelease(lane);
-      pointerLane.current.delete(e.pointerId);
-    }
+    const inputTimeMs = inputEventPerformanceTimeMs(
+      e.timeStamp,
+      performance.now(),
+      performance.timeOrigin,
+    );
+    applyInputTransition(inputTrackerRef.current.end(e.pointerId), false, inputTimeMs);
   };
+
+  const startControl = (
+    <>
+      <button
+        ref={startButtonRef}
+        type="button"
+        className="btn primary unlock-btn"
+        data-loading={loading}
+        onClick={() => void startRun()}
+        disabled={loading || starting}
+        aria-busy={loading || starting}
+      >
+        {loading
+          ? "Loading song…"
+          : starting
+          ? "Starting…"
+          : variant === "hero" ? SCAPE_COPY.heroPlayAction : SCAPE_COPY.tapToEnter}
+      </button>
+      {loading && <AudioLoadProgress progress={audioProgress} />}
+      {startError && <p className="start-run-error" role="alert">{startError}</p>}
+    </>
+  );
+  const showReadyDuringLoad = variant === "full" && needsStart && !autoStart && !hideStartOverlay;
 
   return (
     <div
@@ -809,99 +1906,293 @@ export function PlayField({
         playerLabel ? " play-wrap-duo" : ""
       }${className ? ` ${className}` : ""}`}
       ref={wrapRef}
+      data-background-dim={Math.round(liveAudioSettings.backgroundDim * 100)}
+      data-note-speed={formatNoteSpeed(noteSpeed)}
       style={district ? ({ "--district-color": districtColor(district) } as React.CSSProperties) : undefined}
     >
       <canvas
         ref={canvasRef}
         className="play-canvas"
+        onContextMenu={(event) => event.preventDefault()}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
         onPointerCancel={onPointerUp}
+        onLostPointerCapture={onPointerUp}
       />
       {statsRef && (
         <PlayHud
           statsRef={statsRef}
-          title={trackTitle || "—"}
-          tier={tierLabel || "easy"}
           mode={mode}
           playerLabel={playerLabel}
+          scoreTarget={liveScoreTarget}
+          openingCoach={openingCoach}
+          openingCoachTouch={showTouchLegend}
+          practiceTempo={practiceTempo}
         />
       )}
-      {district && (
-        <img
-          className="play-char-watermark"
-          src={`${import.meta.env.BASE_URL}${characterArtWebp(district, 512)}`}
-          alt=""
-          aria-hidden
-        />
+      {drillRecap && (
+        <div
+          className="drill-recap"
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          <span>Rep {drillRecap.completedRepetition} complete</span>
+          <strong>
+            {drillRecap.accuracy}% · {drillRecap.misses === 0
+              ? "clean"
+              : `${drillRecap.misses} ${drillRecap.misses === 1 ? "miss" : "misses"}`}
+          </strong>
+          <small>Next · Rep {drillRecap.nextRepetition}/{drillRecap.totalRepetitions}</small>
+        </div>
       )}
-      {loading && !error && (
+      <div
+        ref={failureRef}
+        className="play-failure"
+        data-show="0"
+        role="alert"
+        aria-hidden="true"
+        aria-atomic="true"
+      >
+        <div className="play-failure-card">
+          <span>ARCADE RUN</span>
+          <strong>SIGNAL LOST</strong>
+          <span>HP DEPLETED</span>
+        </div>
+      </div>
+      {loading && !error && !showReadyDuringLoad && !hideAudioLoadingOverlay && (
         <div className="overlay">
           <div className="overlay-card">
             <p className="overlay-kicker">Loading</p>
             <p className="overlay-title">Cueing audio</p>
+            <AudioLoadProgress progress={audioProgress} />
           </div>
         </div>
       )}
-      {error && (
-        <div className="overlay load-error">
-          <div className="overlay-card">
-            <p className="overlay-kicker">Signal lost</p>
-            <p>{error}</p>
-            <button type="button" className="btn primary" onClick={() => window.location.reload()}>
-              Retry loading
-            </button>
-          </div>
-        </div>
-      )}
-      {!loading && !error && needsStart && !autoStart && !hideStartOverlay && (
-        // 外层 div 只负责"点任意处开始"的指针便捷（onClick），不做 button 语义；
-        // 真正可被键盘聚焦/激活的是里面的 <button>，避免 button 套 button 的非法结构。
+      {error && !hideAudioLoadError && (
         <div
-          className="overlay overlay-tap"
-          onClick={() => void startRun()}
+          className="overlay load-error"
+          role="alertdialog"
+          aria-modal="true"
+          aria-label="Audio loading failed"
+          onKeyDown={handleAudioErrorKeyDown}
         >
           <div className="overlay-card">
-            <p className="overlay-kicker">
-              {variant === "hero" ? SCAPE_COPY.heroPlayKicker : SCAPE_COPY.rightsShort}
+            <p className="overlay-kicker">Signal lost</p>
+            <p>We couldn't cue this track. Check your connection, then try again.</p>
+            <small className="load-error-detail">Support code: {error}</small>
+            <div className="audio-load-actions">
+              <button ref={loadRetryButtonRef} type="button" className="btn primary" onClick={retryAudioLoad}>
+                Retry loading
+              </button>
+              <button ref={loadBackButtonRef} type="button" className="btn" onClick={leaveAudioError}>
+                {variant === "hero" ? "Back to Home" : "Back to track"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {!error && needsStart && !autoStart && !hideStartOverlay && (!loading || showReadyDuringLoad) && (
+        // One explicit button owns activation. The card also contains audio,
+        // timing and help controls, so making its backdrop a second invisible
+        // start target would turn harmless taps into accidental runs.
+        <div className="overlay overlay-tap">
+          <div className="overlay-card">
+            <p className="overlay-kicker" aria-live={startKicker === SCAPE_COPY.runReady ? "polite" : undefined}>
+              {loading && startKicker === SCAPE_COPY.runReady ? "Preparing your run" : startKicker}
             </p>
-            <button
-              type="button"
-              className="btn primary unlock-btn"
-              onClick={(e) => {
-                e.stopPropagation();
-                void startRun();
-              }}
-            >
-              {variant === "hero" ? SCAPE_COPY.play : SCAPE_COPY.tapToEnter}
-            </button>
-            {!touchUi && (
-              <div className="unlock-keys" aria-hidden>
+            {dailyDateKey && variant === "full" && (
+              <div
+                className="daily-run-context"
+                role="note"
+                aria-label={`Daily challenge for ${dailyDateKey}`}
+              >
+                <span>Daily challenge</span>
+                <strong>Standard Arcade</strong>
+                <small>{dailyDateKey} UTC · Local score</small>
+              </div>
+            )}
+            {challengeTarget && variant === "full" && (
+              <div className="challenge-target" role="note" aria-label="Shared score challenge">
+                <span>Shared challenge</span>
+                <strong>Beat {challengeTarget.score.toLocaleString("en-US")} pts</strong>
+                <small>{challengeTarget.accuracy}% accuracy · Grade {challengeTarget.grade}</small>
+              </div>
+            )}
+            {personalBest && !challengeTarget && variant === "full" && (
+              <div className="personal-best-target" role="note" aria-label="Personal best score target">
+                <span>Personal best</span>
+                <strong>Beat {personalBest.score.toLocaleString("en-US")} pts</strong>
+                <small>{personalBest.accuracy}% accuracy · Arcade record</small>
+              </div>
+            )}
+            {!openingCoach && startControl}
+            {showTouchLegend ? (
+              <div
+                className="unlock-touch-lanes"
+                role="img"
+                aria-label="Four touch lanes"
+              >
+                <span aria-hidden />
+                <span aria-hidden />
+                <span aria-hidden />
+                <span aria-hidden />
+              </div>
+            ) : (
+              <div
+                className="unlock-keys"
+                role="img"
+                aria-label={`Lane keys: ${keyHintJoined}`}
+              >
                 {keyHint.map((k, i) => (
-                  <span key={i} className="key-chip">
+                  <span key={i} className="key-chip" aria-hidden>
                     {k}
                   </span>
                 ))}
               </div>
             )}
+            {gamepadIndex !== undefined && (
+              <div
+                className="unlock-gamepad"
+                role="note"
+                aria-label="Controller ready. Use the D-pad or four face buttons."
+              >
+                <span className="unlock-gamepad-buttons" aria-hidden>◀ ▼ ▲ ▶</span>
+                <span>
+                  <strong>Controller ready</strong>
+                  <small>D-pad or face buttons</small>
+                </span>
+              </div>
+            )}
+            {gamepadIndex !== undefined && variant === "full" && (
+              <p
+                className="unlock-gamepad-start"
+                data-ready={audioReadyForControllerStart}
+                role="note"
+                aria-label={audioReadyForControllerStart
+                  ? "Controller start ready. Press the bottom face button to start."
+                  : "Controller start unavailable until browser audio is unlocked. Activate Start playing once."}
+              >
+                {audioReadyForControllerStart
+                  ? "Face down · Start"
+                  : `${touchUi ? "Tap" : "Click"} Start once · Browser audio`}
+              </p>
+            )}
             <p className="unlock-hint">
-              {touchUi
-                ? SCAPE_COPY.heroPlayHintTouch
-                : `${SCAPE_COPY.heroPlayHintKeys} · ${keyHintJoined}`}
+              {gamepadIndex !== undefined
+                ? touchUi
+                  ? "Controller connected · touch lanes stay active"
+                  : "Controller connected · keyboard stays active"
+                : physicalKeyboardSeen && touchUi
+                  ? "External keyboard ready · touch lanes stay active"
+                  : touchUi
+                    ? variant === "hero"
+                      ? SCAPE_COPY.heroPlayHintTouch
+                      : SCAPE_COPY.touchPlayHint
+                    : SCAPE_COPY.heroPlayHintKeys}
             </p>
+            {variant === "full" && !openingCoach ? (
+              <div
+                className="unlock-note-speed-control"
+                role="group"
+                aria-label="Note speed · visual only · saves for all modes"
+              >
+                <button
+                  type="button"
+                  aria-label="Decrease note speed"
+                  onClick={() => changeNoteSpeed(-1)}
+                  disabled={starting || noteSpeed <= NOTE_SPEED_MIN}
+                >
+                  −
+                </button>
+                <output aria-live="polite">
+                  <span>Note speed</span>
+                  <strong>{formatNoteSpeed(noteSpeed)}</strong>
+                  <small>{noteSpeedSaveFailed ? "This run only" : "Visual · saves"}</small>
+                </output>
+                <button
+                  type="button"
+                  aria-label="Increase note speed"
+                  onClick={() => changeNoteSpeed(1)}
+                  disabled={starting || noteSpeed >= NOTE_SPEED_MAX}
+                >
+                  +
+                </button>
+              </div>
+            ) : (
+              <p className="unlock-note-speed">
+                Note speed <strong>{formatNoteSpeed(noteSpeed)}</strong>
+                <span>Visual only</span>
+              </p>
+            )}
+            {mode === "practice" && (
+              <PracticeTempoPicker
+                className="unlock-practice-tempo"
+                tempo={practiceTempo}
+                onChange={changePracticeTempo}
+              />
+            )}
+            {mechanicGuides.length > 0 && (
+              <div className="unlock-mechanics" aria-label="Chart moves">
+                <span className="unlock-mechanics-label">Chart moves</span>
+                <div className="unlock-mechanics-list">
+                  {mechanicGuides.map((guide) => (
+                    <span className={`unlock-mechanic unlock-mechanic-${guide.type}`} key={guide.type}>
+                      <span
+                        className="unlock-mechanic-preview"
+                        data-mechanic-preview={guide.type}
+                        aria-hidden="true"
+                      >
+                        <i className="unlock-mechanic-path" />
+                        <i className="unlock-mechanic-note unlock-mechanic-note-start" />
+                        <i className="unlock-mechanic-note unlock-mechanic-note-end" />
+                      </span>
+                      <span className="unlock-mechanic-copy">
+                        <b>{guide.label}</b>
+                        <small>{guide.detail}</small>
+                      </span>
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+            {openingCoach && startControl}
+            {variant === "full" && !touchUi && !onPauseChange && (
+              <p
+                className="unlock-shortcuts"
+                role="note"
+                aria-label={`Keyboard shortcuts. ${pauseKeyIsLane ? "Escape" : "P or Escape"} pauses.${
+                  restartKeyIsLane ? "" : " R restarts."
+                }`}
+              >
+                <span>
+                  {!pauseKeyIsLane && <><kbd>P</kbd><i aria-hidden>/</i></>}
+                  <kbd>Esc</kbd>
+                  <b>Pause</b>
+                </span>
+                {!restartKeyIsLane && (
+                  <span>
+                    <kbd>R</kbd>
+                    <b>Restart</b>
+                  </span>
+                )}
+              </p>
+            )}
             {/* 校准不是开玩的前置考试：先说明操作与声音状态，需要的人再点进去。 */}
-            <div className="unlock-extras" onClick={(e) => e.stopPropagation()}>
+            <div className="unlock-extras">
               <button
                 type="button"
                 className="btn compact unlock-sound"
                 onClick={() => void soundCheck()}
+                disabled={soundChecking}
+                aria-busy={soundChecking}
               >
-                {soundChecked ? "Sound check ✓" : "Sound check"}
+                {soundChecking ? "Checking…" : soundChecked ? "Sound check ✓" : "Sound check"}
               </button>
               <Link
                 className="unlock-link"
-                to="/calibrate"
+                to={timingHref}
                 onClick={() => trackEvent("calibrate_open")}
               >
                 Adjust timing
@@ -915,6 +2206,12 @@ export function PlayField({
                 </p>
               </details>
             </div>
+            {soundCheckError && (
+              <p className="start-run-error unlock-sound-error" role="alert">{soundCheckError}</p>
+            )}
+            {variant === "full" && (
+              <p className="unlock-rights">{SCAPE_COPY.rightsShort}</p>
+            )}
           </div>
         </div>
       )}
@@ -927,17 +2224,100 @@ export function PlayField({
         </div>
       )}
       {!loading && !error && !needsStart && !paused && (
-        <button type="button" className="pause-btn" onClick={togglePause} aria-label="Pause">
-          ‖
+        <button
+          ref={pauseButtonRef}
+          type="button"
+          className="pause-btn"
+          onClick={togglePause}
+          aria-label="Pause"
+        >
+          <span className="pause-btn-visual" aria-hidden>
+            <svg viewBox="0 0 24 24" focusable="false">
+              <rect x="6" y="4" width="4" height="16" rx="1" />
+              <rect x="14" y="4" width="4" height="16" rx="1" />
+            </svg>
+          </span>
         </button>
       )}
-      {paused && (
-        <div className="overlay">
+      {pauseDialogVisible && (
+        <div
+          ref={pauseDialogRef}
+          className="overlay pause-dialog"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="single-pause-title"
+          aria-describedby="single-pause-copy"
+          onKeyDown={handlePauseKeyDown}
+        >
           <div className="overlay-card">
-            <p className="overlay-title">{SCAPE_COPY.pauseTitle}</p>
-            <button type="button" className="btn primary unlock-btn" onClick={togglePause}>
-              {SCAPE_COPY.resume}
-            </button>
+            <p className="overlay-kicker">Receiver holding</p>
+            <p className="overlay-title" id="single-pause-title">{SCAPE_COPY.pauseTitle}</p>
+            <p className="pause-copy" id="single-pause-copy">
+              Audio and chart are frozen. Resume starts a 3-second count-in.
+              {gamepadIndex !== undefined
+                ? " Press Menu to resume."
+                : !showTouchLegend
+                  ? ` Press ${pauseKeyIsLane ? "Esc" : "P or Esc"} to resume.`
+                  : ""}
+            </p>
+            {gamepadInterruption && (
+              <p className="gamepad-interruption" role="status">
+                <span aria-hidden>⌁</span>
+                {gamepadInterruption}
+              </p>
+            )}
+            <PauseAudioControls
+              practiceTempo={mode === "practice" ? practiceTempo : undefined}
+              onPracticeTempoChange={mode === "practice" ? changePracticeTempo : undefined}
+            />
+            {onPauseChange ? (
+              <button
+                ref={pauseResumeButtonRef}
+                type="button"
+                className="btn primary unlock-btn"
+                onClick={togglePause}
+              >
+                {SCAPE_COPY.resume}
+              </button>
+            ) : (
+              <div className="pause-actions">
+                <button
+                  ref={pauseResumeButtonRef}
+                  type="button"
+                  className="btn primary"
+                  data-gamepad-default
+                  onClick={togglePause}
+                  disabled={resuming || restarting}
+                  aria-busy={resuming}
+                >
+                  {resuming ? "Resuming…" : SCAPE_COPY.resume}
+                </button>
+                <button
+                  ref={pauseRestartButtonRef}
+                  type="button"
+                  className="btn"
+                  onClick={() => void restartRun()}
+                  disabled={resuming || restarting}
+                  aria-busy={restarting}
+                >
+                  {restarting
+                    ? "Restarting…"
+                    : sectionPractice ? "Restart section" : "Restart track"}
+                </button>
+                {onExitRequest && (
+                  <button
+                    ref={pauseExitButtonRef}
+                    type="button"
+                    className="btn pause-exit"
+                    onClick={onExitRequest}
+                  >
+                    Leave track
+                  </button>
+                )}
+              </div>
+            )}
+            {pauseGamepadIndexes.length > 0 && <GamepadDialogHint />}
+            {resumeError && <p className="start-run-error" role="alert">{resumeError}</p>}
           </div>
         </div>
       )}

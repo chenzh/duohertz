@@ -11,7 +11,12 @@ import os from 'node:os';
 import { chromium } from '@playwright/test';
 import { verifyRelease } from './release.mjs';
 import { installPerformanceProbe } from './performance-probe.mjs';
-import { assertGameCoverage, assertLoadCoverage, assertMemoryCoverage } from './performance-coverage.mjs';
+import {
+  assertGameCoverage,
+  assertLoadCoverage,
+  assertMemoryCoverage,
+  parseDuoJudgmentCounts,
+} from './performance-coverage.mjs';
 
 const app = fileURLToPath(new URL('../', import.meta.url));
 const dist = resolve(app, 'dist');
@@ -148,10 +153,14 @@ async function session(profile, fancyFx = true, onboarded = true, measureReady =
       for (const selector of selectors) {
         if (window.__bsReadyMarks[selector] !== undefined) continue;
         const element = document.querySelector(selector);
-        if (element?.getClientRects().length) window.__bsReadyMarks[selector] = performance.now();
+        // A formal run now shows its guide and a disabled loading control while
+        // audio downloads. Keep "ready" tied to the first actionable button.
+        if (element?.getClientRects().length && !(element instanceof HTMLButtonElement && element.disabled)) {
+          window.__bsReadyMarks[selector] = performance.now();
+        }
       }
     });
-    observer.observe(document, { childList: true, subtree: true });
+    observer.observe(document, { childList: true, attributes: true, attributeFilter: ['disabled'], subtree: true });
   });
   const page = await context.newPage();
   page.setDefaultTimeout(30000);
@@ -168,7 +177,9 @@ async function session(profile, fancyFx = true, onboarded = true, measureReady =
 }
 const snapshot = page => page.evaluate(() => window.__bsPerf.snapshot());
 async function navigationTiming(page, selector) {
-  await page.locator(selector).first().waitFor({ state: 'visible' });
+  // The button can be visible but disabled while the song loads. Wait for the
+  // observer's actionable-state mark, not just the control's DOM presence.
+  await page.waitForFunction(selector => Number.isFinite(window.__bsReadyMarks?.[selector]), selector);
   // Mutation time avoids Playwright's increasing polling interval inflating
   // readiness by hundreds of milliseconds, especially on slow profiles.
   return page.evaluate(selector => {
@@ -180,6 +191,19 @@ async function navigationTiming(page, selector) {
 async function spa(page, path) {
   await page.evaluate(path => { history.pushState({}, '', path); dispatchEvent(new PopStateEvent('popstate')); }, path);
 }
+async function leaveActiveRunToLibrary(page) {
+  // Active Play/Duo routes deliberately block synthetic same-document history
+  // changes so a player cannot lose a run without confirmation. Follow the
+  // real exit path before returning to Library; this keeps the same JS realm
+  // for memory measurements without bypassing the product safety contract.
+  await page.locator('.play-exit').click();
+  const dialog = page.locator('.exit-game-dialog');
+  await dialog.waitFor({ state: 'visible' });
+  await dialog.getByRole('button', { name: 'Leave', exact: true }).click();
+  await page.waitForURL(/\/track\//);
+  await spa(page, '/library');
+  await page.locator('.track-card').first().waitFor();
+}
 async function memoryPoint(page, cdp, label) {
   // No full navigation: the same SPA/JS realm survives all cycles.
   // Discard probe sample arrays before GC so the observer's own history cannot
@@ -190,6 +214,8 @@ async function memoryPoint(page, cdp, label) {
   await cdp.send('HeapProfiler.collectGarbage');
   return { label, gc: { completedCollections: 2 }, heap: await cdp.send('Runtime.getHeapUsage'), dom: await cdp.send('Memory.getDOMCounters'), probe: await snapshot(page) };
 }
+const duoReadyStart = page => page.getByRole('dialog', { name: 'Duel ready' })
+  .getByRole('button', { name: 'Start', exact: true });
 async function loadSuite(profile) {
   for (let i = 0; i < repeats; i++) {
     for (const scenario of ['home-first-visit', 'song-cold', 'duo-cold']) {
@@ -218,10 +244,13 @@ async function gameSuite(profile) {
     try {
       await page.goto(`${base}/${duo ? 'duo' : 'play'}/${track.track_id}?tier=hard&mode=casual`, { waitUntil: 'domcontentloaded' });
       // 改版后 overlay 有 Start playing + Sound check 两个按钮，必须指名主按钮（同 e2e 约定）。
-      const start = page.locator(duo ? '.duo-start button' : '.overlay-tap .unlock-btn');
+      // The Duo loading card also has buttons. Wait for the actual ready
+      // dialog so the performance run cannot start (or stall) on loading UI.
+      const start = duo ? duoReadyStart(page) : page.locator('.overlay-tap .unlock-btn');
       await start.waitFor({ state: 'visible' });
       const loading = await snapshot(page);
-      await page.evaluate(({ chart, duo }) => window.__bsPerf.autoplay(chart, { duo, offsetMs: 0 }), { chart: track.hard, duo });
+      await page.evaluate(({ chart, duo, inputSurface }) => window.__bsPerf.autoplay(chart, { duo, offsetMs: 0, inputSurface }),
+        { chart: track.hard, duo, inputSurface: profile.hasTouch ? 'touch' : 'keyboard' });
       await start.click();
       await page.waitForFunction(() => window.__bsPerf.musicTimeMs() >= 0 && window.__bsPerf.musicTimeMs() !== null);
       await page.evaluate(() => window.__bsPerf.reset());
@@ -229,12 +258,19 @@ async function gameSuite(profile) {
       if (duo) await page.locator('.duo-result').waitFor({ state: 'visible', timeout: (track.duration_sec + 25) * 1000 });
       else await page.waitForURL(/\/results$/, { timeout: (track.duration_sec + 25) * 1000 });
       const probe = await snapshot(page);
-      const outcomes = await page.evaluate(() => ({ lastRun: JSON.parse(sessionStorage.getItem('bs_last_run') ?? 'null'),
+      const rawOutcomes = await page.evaluate(() => ({ lastRun: JSON.parse(sessionStorage.getItem('bs_last_run') ?? 'null'),
         duoResults: document.querySelector('.duo-result')?.textContent ?? null,
         duoPlayers: [...document.querySelectorAll('.duo-scorecol')].map(column => ({
           player: column.querySelector('.duo-scorecol-who')?.textContent,
-          counts: column.querySelectorAll('.duo-scorecol-meta')[1]?.textContent.trim().split('/').map(Number),
+          countsText: column.querySelectorAll('.duo-scorecol-meta')[1]?.textContent,
         })) }));
+      const outcomes = {
+        ...rawOutcomes,
+        duoPlayers: rawOutcomes.duoPlayers.map(({ countsText, ...player }) => ({
+          ...player,
+          counts: parseDuoJudgmentCounts(countsText),
+        })),
+      };
       await page.screenshot({ path: resolve(output, `${profile.name}-${scenario}-${iteration}-result.png`) });
       record({ kind: 'game', scenario, profile: profile.name, iteration, summary: { duration: track.duration_sec }, loading, probe, outcomes,
         errors: run.errors, failedRequests: run.failedRequests });
@@ -258,8 +294,7 @@ async function memorySuite(profile) {
       points.push(await memoryPoint(page, cdp, `restart-${i + 1}`));
       console.log(`[${profile.name}] memory restart ${i + 1}/${cycles}`);
     }
-    await spa(page, '/library');
-    await page.locator('.track-card').first().waitFor();
+    await leaveActiveRunToLibrary(page);
     await page.waitForTimeout(500);
     points.push(await memoryPoint(page, cdp, 'after-restarts-exit'));
     const alternates = tracks.filter(t => t.track_id !== track.track_id).slice(0, cycles);
@@ -267,12 +302,12 @@ async function memorySuite(profile) {
       const next = alternates[i % alternates.length];
       const at = await page.evaluate(() => performance.now());
       await spa(page, `/duo/${next.track_id}?tier=hard&mode=casual`);
-      await page.locator('.duo-start button').waitFor({ state: 'visible' });
+      const start = duoReadyStart(page);
+      await start.waitFor({ state: 'visible' });
       const readyMs = await page.evaluate(at => performance.now() - at, at);
-      await page.locator('.duo-start button').click();
+      await start.click();
       await page.waitForTimeout(4500);
-      await spa(page, '/library');
-      await page.locator('.track-card').first().waitFor();
+      await leaveActiveRunToLibrary(page);
       await page.waitForTimeout(500);
       points.push({ ...await memoryPoint(page, cdp, `song-exit-${i + 1}`), track: next.track_id, readyMs });
       console.log(`[${profile.name}] memory song switch ${i + 1}/${cycles}`);

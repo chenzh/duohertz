@@ -5,20 +5,21 @@ export const SCAPE_COPY = {
   tagline: "Feel the Beat. Own the Scape.",
   rights: "AI Original · Owned Rights · Generated with MusicSaas",
   rightsShort: "AI Original · Owned Rights",
+  runReady: "Ready to play",
+  arcadeRun: "Arcade run",
+  practiceRun: "Practice run",
   tapToEnter: "Start playing",
   playNow: "Play Now",
-  play: "Play",
-  heroPlayKicker: "Strike Vector",
-  heroPlayHintTouch: "Thumbs on the lanes — hit as notes land",
+  heroPlayAction: "Try it here",
+  heroPlayKicker: "Try the beat",
+  heroPlayHintTouch: "Demo · no progress saved",
   heroPlayHintKeys: "Hit the line",
-  heroPlaySoundHint: "One tap — sound on & play",
+  heroPlaySoundHint: "Demo · no progress saved",
+  touchPlayHint: "Tap notes on the line",
   pauseTitle: "Scape paused",
   resume: "Resume",
   calibrateTitle: "Tap with the pulse",
-  calibrateHint: "Tap each lane as it flashes — sync once, then play.",
-  calibrateDone: "Offset saved. You're synced to the Scape.",
-  calibrateSkip: "Playing with zero offset — recalibrate anytime in Settings.",
-  emptyFavorites: "No favorites yet — pin a track from the Library.",
+  emptyFavorites: "No favorites yet — use ☆ on any track.",
   weakNetwork: "Loading core beat first…",
 } as const;
 
@@ -57,6 +58,7 @@ export const JUDGE_COPY = {
 
 export const COMBO_COPY = {
   combo: "Combo",
+  break: "Combo Break",
   maxCombo: "Max Combo",
   fullCombo: "Full Combo",
 } as const;
@@ -210,7 +212,10 @@ export const SHOWCASE_TRACK_IDS = ["bs-s1-01", "bs-s1-05", "bs-s2-01", "bs-s1-04
  * First Shift 作为辅助说明留在下面，不再要求新人先理解世界再玩。
  */
 export const HOME_COPY = {
-  kicker: "4-lane rhythm game · keyboard or touch",
+  kickerKeys: "4-lane rhythm game · keyboard + controller",
+  kickerTouch: "4-lane rhythm game · touch ready",
+  kickerKeyboardTouch: "4-lane rhythm game · keyboard + touch",
+  kickerController: "4-lane rhythm game · controller ready",
   title: "KEEP THE CITY LOUD.",
   subtitle: "A browser rhythm game set around a late-night radio station.",
   browse: "Browse all tracks",
@@ -220,8 +225,8 @@ export const HOME_COPY = {
 export const SCAPE_COPY_EXTRA = {
   dailyChallenge: "Today's Scape Challenge",
   dailyPlay: "Play Daily Challenge",
-  offsetHint: "Feeling late? Adjust offset in Settings or run a quick calibrate.",
+  offsetHint: "Hits feel early or late? Run a quick calibration, or fine-tune Global offset below.",
   recalibrate: "Recalibrate timing",
-  sharePoster: "Download poster",
+  sharePoster: "Download 4:5",
   playerName: "Board name",
 } as const;

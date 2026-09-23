@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import type { CatalogTrack } from "../types/catalog";
 import {
   buildPlayPageMeta,
+  buildResultsPageMeta,
+  buildTrackPageMeta,
   CALIBRATION_PAGE_META,
   DEFAULT_PAGE_META,
   HOME_PAGE_META,
@@ -9,6 +11,7 @@ import {
   NOT_FOUND_PAGE_META,
   PRIVACY_PAGE_META,
   SETTINGS_PAGE_META,
+  socialMetaTags,
   TERMS_PAGE_META,
 } from "./pageMeta";
 
@@ -73,6 +76,29 @@ describe("buildPlayPageMeta", () => {
 
   it("default site meta matches index.html title", () => {
     expect(DEFAULT_PAGE_META.title).toBe("BeatScape — Feel the Beat, Own the Scape");
+  });
+});
+
+describe("shareable route meta", () => {
+  it("builds a track selection preview from catalog SEO", () => {
+    expect(buildTrackPageMeta(baseTrack)).toEqual({
+      title: "Neon Pulse — BeatScape AI Original",
+      description: "Own the Scape. 160 BPM EDM chart. Choose a chart and play solo or Duo in your browser.",
+    });
+  });
+
+  it("builds an English-formatted result preview", () => {
+    expect(buildResultsPageMeta({
+      title: "Neon Pulse",
+      artist: "Pulse Atlas",
+      grade: "B",
+      score: 82_400,
+      accuracy: 82.4,
+      maxCombo: 44,
+    })).toEqual({
+      title: "B on Neon Pulse — BeatScape",
+      description: "82,400 points · 82.4% accuracy · 44 max combo on Neon Pulse by Pulse Atlas. Play the challenge in your browser.",
+    });
   });
 });
 
@@ -152,5 +178,17 @@ describe("NOT_FOUND_PAGE_META", () => {
   it("includes not-found semantics and site tagline", () => {
     expect(NOT_FOUND_PAGE_META.description).toContain("This page does not exist");
     expect(NOT_FOUND_PAGE_META.description).toContain("Feel the Beat, Own the Scape.");
+  });
+});
+
+describe("socialMetaTags", () => {
+  it("maps route title, description, and canonical URL to Open Graph and X tags", () => {
+    expect(socialMetaTags(LIBRARY_PAGE_META, "https://beatscape.example/library")).toEqual([
+      { attr: "property", key: "og:title", content: "Library — BeatScape" },
+      { attr: "property", key: "og:description", content: LIBRARY_PAGE_META.description },
+      { attr: "property", key: "og:url", content: "https://beatscape.example/library" },
+      { attr: "name", key: "twitter:title", content: "Library — BeatScape" },
+      { attr: "name", key: "twitter:description", content: LIBRARY_PAGE_META.description },
+    ]);
   });
 });

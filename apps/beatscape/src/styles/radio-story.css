@@ -77,6 +77,62 @@
   line-height: 1.6;
 }
 
+.radio-episode-toggle {
+  width: 100%;
+  min-height: 48px;
+  padding: 0;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.radio-episode-toggle-heading {
+  margin: 0;
+}
+
+.radio-episode-toggle:focus-visible {
+  outline: 3px solid var(--accent2);
+  outline-offset: 5px;
+}
+
+.radio-episode-title {
+  flex: 1;
+  font-size: 1.02rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.radio-episode-toggle-mark {
+  display: grid;
+  flex: 0 0 28px;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border: 2px solid var(--ink);
+  background: var(--accent);
+  box-shadow: 2px 2px 0 var(--ink);
+  color: #000;
+  font: 800 1rem/1 "IBM Plex Mono", monospace;
+}
+
+.radio-episode-content[hidden] {
+  display: none;
+}
+
+.radio-channel-live {
+  margin-top: 3px;
+  padding: 3px 5px;
+  border: 1.5px solid var(--ink);
+  background: var(--accent2);
+  color: #000;
+  font: 800 0.57rem/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
 @media (max-width: 520px) {
   .radio-dialogue-turn {
     grid-template-columns: minmax(0, 1fr);
@@ -87,7 +143,17 @@
     flex-wrap: wrap;
   }
 
-  .radio-page .radio-episode-head h3 {
+  .radio-page .radio-episode-head h3,
+  .radio-page .radio-episode-title {
     flex: 1 1 calc(100% - 70px);
+  }
+
+  .radio-page .radio-episode-toggle {
+    align-items: center;
+    min-height: 56px;
+  }
+
+  .radio-page .radio-episode-toggle .radio-ep-air {
+    margin-left: calc(42px + 10px);
   }
 }

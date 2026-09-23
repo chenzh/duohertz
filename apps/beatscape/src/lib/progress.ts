@@ -1,5 +1,6 @@
-import type { ChartTier, PlayMode, PlayResult } from "../types/chart";
+import type { ChartTier, PlayMode, PlayResult, TimingSummary } from "../types/chart";
 import type { CatalogTrack } from "../types/catalog";
+import { isAllPerfect, isFullCombo } from "../engine/judge";
 import { readItem, readJSON, writeItem, writeJSON } from "../storage/safeStorage";
 
 // PRD-BEATSCAPE §17 — honor ranks + achievements, localStorage only (no account).
@@ -26,7 +27,14 @@ export type RunRecord = {
   durationMs: number;
   endedAt: string;
   dateKey: string;
+  /** Optional for history written before persistent timing coaching shipped. */
+  timing?: TimingSummary;
 };
+
+/** A run that ended without one successful judgment still needs recovery language. */
+export function runNeedsRetry(run: Pick<RunRecord, "failed" | "accuracy">): boolean {
+  return run.failed || run.accuracy <= 0;
+}
 
 export type RankId = "echo-novice" | "beat-player" | "rhythm-master" | "scape-legend";
 
@@ -52,7 +60,7 @@ export type AchievementId =
   | "ach-streak-3";
 
 export const ACHIEVEMENTS: Array<{ id: AchievementId; label: string; condition: string }> = [
-  { id: "ach-first-clear", label: "First Light", condition: "Finish any track once" },
+  { id: "ach-first-clear", label: "First Light", condition: "Land a note and finish any track" },
   { id: "ach-first-fc", label: "Full Circuit", condition: "First Full Combo" },
   { id: "ach-first-ap", label: "Absolute Pulse", condition: "First All Perfect" },
   { id: "ach-combo-100", label: "Hundred Echo", condition: "Max Combo 100 in one run" },
@@ -75,22 +83,118 @@ export type PlayStats = {
   districtsPlayed: number;
   uniqueTracks: number;
   totalPlayMs: number;
+  /** Consecutive local calendar days ending today, or yesterday while still recoverable today. */
+  activeStreakDays: number;
   /** Longest run of consecutive calendar days with ≥1 run. */
   bestStreakDays: number;
+  /** Whether today's local-calendar run is complete, still recoverable, or no longer active. */
+  streakStatus: "played-today" | "ready-today" | "inactive";
 };
 
+export type RankProgressRequirement = {
+  id: "clears" | "accuracy" | "full-combos" | "all-perfect" | "hard-clears";
+  label: string;
+  current: number;
+  target: number;
+  format: "count" | "percent";
+};
+
+export type NextRankProgress = {
+  rank: (typeof RANKS)[number];
+  rule: "any" | "all";
+  requirements: RankProgressRequirement[];
+};
+
+const VALID_TIERS = new Set<ChartTier>(["easy", "standard", "hard"]);
+const VALID_MODES = new Set<PlayMode>(["casual", "arcade", "practice"]);
+const VALID_ACHIEVEMENTS = new Set<AchievementId>(ACHIEVEMENTS.map((achievement) => achievement.id));
+
+function isCalendarDateKey(value: unknown): value is string {
+  if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const parsed = new Date(`${value}T00:00:00.000Z`);
+  return Number.isFinite(parsed.getTime()) && parsed.toISOString().slice(0, 10) === value;
+}
+
+function isTimingSummary(value: unknown): value is TimingSummary {
+  if (!value || typeof value !== "object") return false;
+  const timing = value as Partial<TimingSummary>;
+  return Number.isInteger(timing.early)
+    && (timing.early ?? -1) >= 0
+    && Number.isInteger(timing.late)
+    && (timing.late ?? -1) >= 0
+    && (timing.early ?? 0) + (timing.late ?? 0) > 0
+    && Number.isFinite(timing.meanMs);
+}
+
+function isRunRecord(value: unknown): value is RunRecord {
+  if (!value || typeof value !== "object") return false;
+  const run = value as Partial<RunRecord>;
+  const valid = typeof run.track_id === "string"
+    && typeof run.district === "string"
+    && VALID_TIERS.has(run.tier as ChartTier)
+    && VALID_MODES.has(run.mode as PlayMode)
+    && [run.score, run.accuracy, run.maxCombo, run.durationMs].every(Number.isFinite)
+    && (run.score ?? -1) >= 0
+    && (run.accuracy ?? -1) >= 0
+    && (run.accuracy ?? 101) <= 100
+    && (run.maxCombo ?? -1) >= 0
+    && (run.durationMs ?? -1) >= 0
+    && typeof run.fc === "boolean"
+    && typeof run.ap === "boolean"
+    && typeof run.failed === "boolean"
+    && typeof run.endedAt === "string"
+    && Number.isFinite(Date.parse(run.endedAt))
+    && isCalendarDateKey(run.dateKey);
+  if (!valid) return false;
+  // Timing was added after the base run-history schema. Drop only this optional
+  // profile when a foreign/corrupt save supplies an impossible shape.
+  if (run.timing !== undefined && !isTimingSummary(run.timing)) delete run.timing;
+  return true;
+}
+
+/** Local calendar day for player streaks. Daily Challenge uses its own global UTC key. */
 export function todayKey(d = new Date()): string {
-  return d.toISOString().slice(0, 10);
+  return [
+    d.getFullYear(),
+    String(d.getMonth() + 1).padStart(2, "0"),
+    String(d.getDate()).padStart(2, "0"),
+  ].join("-");
 }
 
 export function loadRuns(): RunRecord[] {
-  return readJSON<RunRecord[]>(RUNS_KEY, [], (v) => (Array.isArray(v) ? (v as RunRecord[]) : null));
+  return readJSON<RunRecord[]>(RUNS_KEY, [], (v) => (
+    Array.isArray(v) ? v.filter(isRunRecord) : null
+  ));
+}
+
+/** Newest full run whose track still exists in the current playable catalog. */
+export function latestRunForTrackIds(
+  runs: RunRecord[],
+  trackIds: Iterable<string>,
+): RunRecord | null {
+  const playable = new Set(trackIds);
+  let latest: RunRecord | null = null;
+  let latestAt = Number.NEGATIVE_INFINITY;
+
+  for (const run of runs) {
+    if (!playable.has(run.track_id)) continue;
+    const endedAt = Date.parse(run.endedAt);
+    if (!Number.isFinite(endedAt) || endedAt < latestAt) continue;
+    latest = run;
+    latestAt = endedAt;
+  }
+
+  return latest;
 }
 
 export function loadUnlockedAchievements(): AchievementId[] {
   // 顺手过滤掉已下线的成就 id：旧存档里可能留着不再存在的条目。
   return readJSON<AchievementId[]>(ACHIEVEMENTS_KEY, [], (v) =>
-    Array.isArray(v) ? (v.filter((id): id is AchievementId => typeof id === "string") as AchievementId[]) : null,
+    Array.isArray(v)
+      ? [...new Set(v.filter((id): id is AchievementId => (
+          typeof id === "string" && VALID_ACHIEVEMENTS.has(id as AchievementId)
+        )))]
+      : null,
   );
 }
 
@@ -112,14 +216,26 @@ function dayDiff(a: string, b: string): number {
   return Math.round((db - da) / 86400000);
 }
 
-export function computeStats(runs: RunRecord[]): PlayStats {
-  const clears = runs.filter((r) => !r.failed);
-  const arcade = runs.filter((r) => r.mode === "arcade");
+/**
+ * Lifetime growth starts when the player actually joins the chart. A complete
+ * no-input/no-hit attempt remains valuable run history and recovery context,
+ * but must not claim a clear, streak night, district visit, or honor unlock.
+ * Score is the backwards-compatible persisted proof of a successful judgment:
+ * every Perfect/Great/Good awards points, while every all-Miss run stays at 0.
+ */
+function runCountsForProgress(run: Pick<RunRecord, "score">): boolean {
+  return run.score > 0;
+}
+
+export function computeStats(runs: RunRecord[], currentDateKey = todayKey()): PlayStats {
+  const progressRuns = runs.filter(runCountsForProgress);
+  const clears = progressRuns.filter((r) => !r.failed);
+  const arcade = progressRuns.filter((r) => r.mode === "arcade");
   const window = arcade.slice(-AVG_WINDOW);
   const recentArcadeAccuracy = window.length
     ? window.reduce((sum, r) => sum + r.accuracy, 0) / window.length
     : 0;
-  const days = [...new Set(runs.map((r) => r.dateKey))].sort();
+  const days = [...new Set(progressRuns.map((r) => r.dateKey).filter(isCalendarDateKey))].sort();
   let bestStreak = 0;
   let current = 0;
   let prev: string | null = null;
@@ -127,6 +243,20 @@ export function computeStats(runs: RunRecord[]): PlayStats {
     current = prev !== null && dayDiff(prev, day) === 1 ? current + 1 : 1;
     bestStreak = Math.max(bestStreak, current);
     prev = day;
+  }
+  let activeStreakDays = 0;
+  let streakStatus: PlayStats["streakStatus"] = "inactive";
+  const lastDay = days.at(-1);
+  if (lastDay && isCalendarDateKey(currentDateKey)) {
+    const gapToToday = dayDiff(lastDay, currentDateKey);
+    if (gapToToday === 0 || gapToToday === 1) {
+      activeStreakDays = 1;
+      for (let index = days.length - 1; index > 0; index--) {
+        if (dayDiff(days[index - 1]!, days[index]!) !== 1) break;
+        activeStreakDays += 1;
+      }
+      streakStatus = gapToToday === 0 ? "played-today" : "ready-today";
+    }
   }
   return {
     totalRuns: runs.length,
@@ -137,10 +267,12 @@ export function computeStats(runs: RunRecord[]): PlayStats {
     bestMaxCombo: runs.reduce((max, r) => Math.max(max, r.maxCombo), 0),
     bestAccuracy: runs.reduce((max, r) => Math.max(max, r.accuracy), 0),
     recentArcadeAccuracy: Math.round(recentArcadeAccuracy * 100) / 100,
-    districtsPlayed: new Set(runs.map((r) => r.district).filter(Boolean)).size,
-    uniqueTracks: new Set(runs.map((r) => r.track_id)).size,
+    districtsPlayed: new Set(progressRuns.map((r) => r.district).filter(Boolean)).size,
+    uniqueTracks: new Set(progressRuns.map((r) => r.track_id)).size,
     totalPlayMs: runs.reduce((sum, r) => sum + r.durationMs, 0),
+    activeStreakDays,
     bestStreakDays: bestStreak,
+    streakStatus,
   };
 }
 
@@ -152,6 +284,55 @@ export function rankFor(stats: PlayStats): RankId {
   if (stats.fcCount >= 3 && stats.recentArcadeAccuracy >= 92) return "rhythm-master";
   if (stats.totalClears >= 5 || stats.bestAccuracy >= 90) return "beat-player";
   return "echo-novice";
+}
+
+/** Quantified requirements for the rank immediately above the saved rank. */
+export function nextRankProgress(stats: PlayStats, currentRank: RankId): NextRankProgress | null {
+  const currentIndex = RANKS.findIndex((rank) => rank.id === currentRank);
+  const next = RANKS[currentIndex + 1];
+  if (!next) return null;
+
+  if (next.id === "beat-player") {
+    return {
+      rank: next,
+      rule: "any",
+      requirements: [
+        { id: "clears", label: "Clears", current: stats.totalClears, target: 5, format: "count" },
+        { id: "accuracy", label: "Best accuracy", current: stats.bestAccuracy, target: 90, format: "percent" },
+      ],
+    };
+  }
+  if (next.id === "rhythm-master") {
+    return {
+      rank: next,
+      rule: "all",
+      requirements: [
+        { id: "full-combos", label: "Arcade Full Combos", current: stats.fcCount, target: 3, format: "count" },
+        {
+          id: "accuracy",
+          label: "Recent Arcade accuracy",
+          current: stats.recentArcadeAccuracy,
+          target: 92,
+          format: "percent",
+        },
+      ],
+    };
+  }
+  return {
+    rank: next,
+    rule: "all",
+    requirements: [
+      { id: "all-perfect", label: "Arcade All Perfect", current: stats.apCount, target: 1, format: "count" },
+      { id: "hard-clears", label: "Hard Arcade clears", current: stats.hardClears, target: 3, format: "count" },
+      {
+        id: "accuracy",
+        label: "Recent Arcade accuracy",
+        current: stats.recentArcadeAccuracy,
+        target: 95,
+        format: "percent",
+      },
+    ],
+  };
 }
 
 export function achievementsFor(stats: PlayStats): AchievementId[] {
@@ -170,10 +351,20 @@ export function achievementsFor(stats: PlayStats): AchievementId[] {
   return unlocked;
 }
 
+export const STREAK_UPDATE_KEY = "bs_streak_update";
+
+export type StreakUpdate = {
+  kind: "started" | "extended";
+  activeDays: number;
+  newBest: boolean;
+};
+
 export type RecordRunOutcome = {
   newAchievements: AchievementId[];
   rank: RankId;
   rankUp: boolean;
+  /** Present only for the first lifetime-progress run recorded on this local day. */
+  streakUpdate: StreakUpdate | null;
 };
 
 /** Append a finished run, then evaluate achievements + rank. Call once per finished run. */
@@ -185,6 +376,12 @@ export function recordRun(
   durationMs: number,
   now = new Date(),
 ): RecordRunOutcome {
+  // Section slices are deliberately excluded from lifetime stats. Their score,
+  // accuracy and duration are not comparable with a full chart, and counting
+  // them would let a 20-second retry inflate runs, rank and streak progress.
+  if (result.seekedFrom !== undefined) {
+    return { newAchievements: [], rank: loadRank(), rankUp: false, streakUpdate: null };
+  }
   const run: RunRecord = {
     track_id: track.track_id,
     district: track.district,
@@ -193,17 +390,26 @@ export function recordRun(
     score: result.score,
     accuracy: result.accuracy,
     maxCombo: result.maxCombo,
-    fc: result.fullCombo,
-    ap: result.allPerfect,
+    // Re-derive achievement facts at the persistence boundary so a stale or
+    // foreign PlayResult cannot award an impossible badge.
+    fc: isFullCombo(result.judgments, result.totalNotes),
+    ap: isAllPerfect(result.judgments, result.totalNotes),
     failed: result.failed,
     durationMs,
     endedAt: now.toISOString(),
     dateKey: todayKey(now),
+    ...(result.timing && isTimingSummary(result.timing) ? { timing: result.timing } : {}),
   };
-  const runs = [...loadRuns(), run];
+  const previousRuns = loadRuns();
+  const previousStats = computeStats(previousRuns, run.dateKey);
+  const isFirstProgressRunToday = runCountsForProgress(run)
+    && !previousRuns.some((previousRun) => (
+      previousRun.dateKey === run.dateKey && runCountsForProgress(previousRun)
+    ));
+  const runs = [...previousRuns, run];
   saveRuns(runs);
 
-  const stats = computeStats(runs);
+  const stats = computeStats(runs, run.dateKey);
   const unlocked = achievementsFor(stats);
 
   const prevAchievements = loadUnlockedAchievements();
@@ -217,5 +423,13 @@ export function recordRun(
   const rankUp = RANKS.findIndex((r) => r.id === rank) > RANKS.findIndex((r) => r.id === prevRank);
   if (rankUp) writeItem(RANK_KEY, rank);
 
-  return { newAchievements, rank, rankUp };
+  const streakUpdate: StreakUpdate | null = isFirstProgressRunToday && stats.activeStreakDays > 0
+    ? {
+        kind: previousStats.streakStatus === "ready-today" ? "extended" : "started",
+        activeDays: stats.activeStreakDays,
+        newBest: stats.bestStreakDays > previousStats.bestStreakDays,
+      }
+    : null;
+
+  return { newAchievements, rank, rankUp, streakUpdate };
 }

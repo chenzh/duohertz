@@ -15,6 +15,11 @@ export type AnalyticsEvent =
   | "share_copy"
   | "share_poster"
   | "share_poster_copy"
+  | "share_poster_share"
+  | "results_next_track"
+  | "pwa_install_prompt"
+  | "note_speed_ready_change"
+  | "practice_tempo_change"
   /** 首页/曲库的人工精选被点开。 */
   | "curated_play"
   /** 结算页"继续下一关"按钮。 */

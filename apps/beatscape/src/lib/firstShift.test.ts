@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { FIRST_SHIFT } from "../data/firstShift";
 import type { LastRun } from "../types/chart";
-import { advanceShift, canCarrySignal, crewResponse, parseShiftProgress, shiftReceiptFor, type ShiftProgress } from "./firstShift";
+import { advanceShift, canCarrySignal, crewResponse, parseShiftProgress, shiftInputSurface, shiftLaneAction, shiftReceiptFor, type ShiftProgress } from "./firstShift";
 
 function run(index = 0, overrides: Partial<LastRun> = {}): LastRun {
   const step = FIRST_SHIFT[index]!;
@@ -15,6 +15,16 @@ const empty = (): ShiftProgress => ({ v: 1, completed: [] });
 afterEach(() => vi.unstubAllGlobals());
 
 describe("First shift progress", () => {
+  it("keeps opening and recovery cues aligned with the available input surface", () => {
+    expect(shiftInputSurface(false, false, false)).toBe("keys");
+    expect(shiftInputSurface(true, false, false)).toBe("touch");
+    expect(shiftInputSurface(true, true, false)).toBe("keys");
+    expect(shiftInputSurface(true, true, true)).toBe("gamepad");
+    expect(shiftLaneAction("touch")).toBe("tap a lane");
+    expect(shiftLaneAction("keys")).toBe("press a lane key");
+    expect(shiftLaneAction("gamepad")).toBe("press a lane button");
+  });
+
   it("carries all three connections in order, including a low-grade zero-score GOOD hit", () => {
     let state = empty();
     for (let index = 0; index < 3; index++) {
@@ -59,7 +69,10 @@ describe("First shift progress", () => {
   it("answers failed and idle runs without claiming a successful broadcast", () => {
     expect(crewResponse(run(0, { failed: true, fc: true })).text).toContain("Rough take");
     expect(crewResponse(run(0, { mode: "practice" })).text).toContain("rehearsal");
-    expect(crewResponse(run(0, { counts: { perfect: 0, great: 0, good: 0, miss: 10 } })).text).toContain("Just listening");
+    const idle = run(0, { counts: { perfect: 0, great: 0, good: 0, miss: 10 } });
+    expect(crewResponse(idle, undefined, "touch").text).toContain("tap a lane");
+    expect(crewResponse(idle, undefined, "keys").text).toContain("press a lane key");
+    expect(crewResponse(idle, undefined, "gamepad").text).toContain("press a lane button");
     expect(crewResponse(run(0, { shiftStep: undefined }), "Chrome Yard").speaker).toBe("TORQUE");
   });
 });

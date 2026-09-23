@@ -5,6 +5,16 @@ import { readItem, writeJSON } from "../storage/safeStorage";
 export const SHIFT_STORAGE_KEY = "bs_first_shift_v1";
 export interface ShiftReceipt { id: ShiftStepId; runId: string }
 export interface ShiftProgress { v: 1; completed: ShiftReceipt[] }
+export type ShiftInputSurface = "touch" | "keys" | "gamepad";
+export function shiftInputSurface(touchUi: boolean, keyboardSeen: boolean, gamepadConnected: boolean): ShiftInputSurface {
+  if (gamepadConnected) return "gamepad";
+  return touchUi && !keyboardSeen ? "touch" : "keys";
+}
+
+export function shiftLaneAction(inputSurface: ShiftInputSurface): string {
+  return inputSurface === "touch" ? "tap a lane"
+    : inputSurface === "gamepad" ? "press a lane button" : "press a lane key";
+}
 const empty = (): ShiftProgress => ({ v: 1, completed: [] });
 // Keep the current visit playable when browser storage is unavailable.
 let visitProgress: ShiftProgress | null = null;
@@ -78,13 +88,18 @@ export function shiftReceiptFor(run: LastRun, progress = loadShiftProgress()): S
 }
 
 /** Honest feedback for free play as well as story runs, including failed attempts. */
-export function crewResponse(run: LastRun, district?: string): CrewLine {
+export function crewResponse(
+  run: LastRun,
+  district?: string,
+  inputSurface: ShiftInputSurface = "keys",
+): CrewLine {
   const owner = shiftStep(run.shiftStep)?.speaker ??
     (district === "Chrome Yard" ? "TORQUE" : district === "Skyline Hook" ? "ATLAS" : "JUNO");
   if (run.failed) return { speaker: "TORQUE", text: "Rough take. No one's packing up. Try it slower, or pick another song — I'm still here." };
   if (run.mode === "practice") return { speaker: "ATLAS", text: "That's what rehearsal is for. When you're ready, we'll try a full set." };
   if (run.counts.perfect + run.counts.great + run.counts.good === 0) {
-    return { speaker: "TORQUE", text: "Just listening? That's fine too. When you want to join in, tap a lane as the notes reach the line." };
+    const action = shiftLaneAction(inputSurface);
+    return { speaker: "TORQUE", text: `Just listening? That's fine too. When you want to join in, ${action} as the notes reach the line.` };
   }
   if (run.fc) return { speaker: owner, text: owner === "ATLAS" ? "Not a single gap. I checked. Twice." : owner === "TORQUE" ? "Didn't drop a beat. All right, now you're showing off." : "A whole take, start to finish. I'm keeping that one." };
   return { speaker: owner, text: owner === "ATLAS" ? "I heard the rough spots. I heard you come back in, too. Keep that part." : owner === "TORQUE" ? "You stayed with it. That's someone I can play a set with." : "Heard you on the line. Thanks for sticking around for the whole song." };

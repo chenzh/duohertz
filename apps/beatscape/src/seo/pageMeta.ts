@@ -1,6 +1,9 @@
 import { useEffect } from "react";
+import { canonicalPathname, normalizeAppBase } from "../lib/appBase";
 import type { ChartTier, PlayMode } from "../types/chart";
 import type { CatalogTrack } from "../types/catalog";
+
+const APP_BASE = normalizeAppBase(import.meta.env.BASE_URL);
 
 export const DEFAULT_PAGE_META = {
   title: "BeatScape — Feel the Beat, Own the Scape",
@@ -36,7 +39,7 @@ export const CALIBRATION_PAGE_META: PageMeta = {
 export const SETTINGS_PAGE_META: PageMeta = {
   title: "Settings — BeatScape",
   description:
-    "Adjust global offset, hitsound, lane keys, and casual speed. Scores and preferences stay on this device. Feel the Beat, Own the Scape.",
+    "Adjust global offset, hitsound, lane keys, and note speed. Scores and preferences stay on this device. Feel the Beat, Own the Scape.",
 };
 
 export const PRIVACY_PAGE_META: PageMeta = {
@@ -67,6 +70,24 @@ export const RADIO_PAGE_META: PageMeta = {
   title: "The Late Static — BeatScape",
   description:
     "Read The Late Static's weekly broadcasts: late-night calls, borrowed gear, and the arguments that keep NIGHTSHIFT together. Start with the playable First shift.",
+};
+
+export const LEADERBOARD_PAGE_META: PageMeta = {
+  title: "Local Leaderboard — BeatScape",
+  description:
+    "Compare your best BeatScape scores and today's challenge runs on this device. No account or global upload required.",
+};
+
+export const DAILY_LEADERBOARD_PAGE_META: PageMeta = {
+  title: "Daily Challenge Board — BeatScape",
+  description:
+    "Replay today's BeatScape challenge and compare your best runs on this device. No account or global upload required.",
+};
+
+export const RESULTS_PAGE_META: PageMeta = {
+  title: "Run Results — BeatScape",
+  description:
+    "Review your score, timing, misses, and next practice move, then share a playable BeatScape challenge.",
 };
 
 /**
@@ -107,7 +128,7 @@ export function setPageMeta(meta: PageMeta): void {
       link.setAttribute("rel", "canonical");
       document.head.appendChild(link);
     }
-    const url = `${window.location.origin}${window.location.pathname}`;
+    const url = `${window.location.origin}${canonicalPathname(window.location.pathname, APP_BASE)}`;
     link.setAttribute("href", url);
     // T1b: keep og:/twitter: in step with the route instead of always advertising Home.
     for (const tag of socialMetaTags(meta, url)) {
@@ -133,6 +154,31 @@ export function buildPlayPageMeta(
   return {
     title: `Play ${track.title} — BeatScape`,
     description: `${track.title} · ${tier} · ${mode}. ${seoDesc} Feel the Beat, Own the Scape.`,
+  };
+}
+
+export function buildTrackPageMeta(track: CatalogTrack): PageMeta {
+  return {
+    title: track.seo?.title ?? `${track.title} by ${track.artist} — BeatScape`,
+    description:
+      `${track.seo?.description ?? `${track.bpm} BPM ${track.genre} AI original.`} ` +
+      "Choose a chart and play solo or Duo in your browser.",
+  };
+}
+
+export function buildResultsPageMeta(run: {
+  title: string;
+  artist: string;
+  grade: string;
+  score: number;
+  accuracy: number;
+  maxCombo: number;
+}): PageMeta {
+  return {
+    title: `${run.grade} on ${run.title} — BeatScape`,
+    description:
+      `${run.score.toLocaleString("en-US")} points · ${run.accuracy}% accuracy · ` +
+      `${run.maxCombo} max combo on ${run.title} by ${run.artist}. Play the challenge in your browser.`,
   };
 }
 

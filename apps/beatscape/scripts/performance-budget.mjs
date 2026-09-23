@@ -295,6 +295,7 @@ export function evaluatePerformanceBudget(reports, { artifactSha256, actualTrack
         'Every supplied observation is checked; peak-track data cannot replace the default stress-track matrix.',
         '59.9 FPS and 50.1 ms are experimental 60 Hz cadence guard values, including timestamp tolerance.',
         'canvasDraw measures CPU/wall time to submit Canvas2D commands, not GPU completion or browser composition.',
+        'Mobile game rows dispatch synthetic touch PointerEvents through the play canvas; this exercises game input handlers but not native pointer capture, OS touch sampling, physical ergonomics or haptics.',
         'All post-GC exits enforce the PCM cap; final interrupted-load heap/listeners are compared with the last song exits. These bounded regressions are not proof of indefinitely leak-free playback.',
         'Automated browser profiles only; BS-D001 physical-device acceptance remains cancelled and is not reported as passed.',
       ] },

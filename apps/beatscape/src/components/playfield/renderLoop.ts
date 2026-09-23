@@ -10,7 +10,7 @@
 // lifecycle while this module owns drawing and frame updates.
 
 import type { RefObject } from "react";
-import type { ChartJSON, PlayMode, PlayResult } from "../../types/chart";
+import type { ChartJSON, PlayResult } from "../../types/chart";
 import type { Conductor } from "../../audio/playback";
 import type { GameSession, JudgeFx } from "../../engine/playState";
 import type { ScoreStreak, SurgeMeter, SurgeTier } from "../../engine/surge";
@@ -20,16 +20,22 @@ import {
   playHit,
   playSurgeTier,
 } from "../../audio/hitsounds";
-import { vibrate } from "../../lib/haptics";
-import { accuracyPercent, comboMultiplier, judgmentScore } from "../../engine/judge";
+import type { HapticCue } from "../../lib/haptics";
+import { accuracyPercent } from "../../engine/judge";
 import {
   HOLD_BODY_RATIO,
   HOLD_STROKE_RATIO,
+  HOLD_TAIL_SCALE,
   NOTE_PROXIMITY_GROWTH,
   SLIDE_TAIL_SCALE,
   makeNoteSprite,
   noteWidthForLane,
 } from "../../engine/noteSprite";
+import {
+  judgmentLabelCenterX,
+  judgmentTimingCenterX,
+  judgmentTimingLabel,
+} from "./judgmentFeedback";
 import {
   noteProximityFactor,
   noteScreenY,
@@ -44,7 +50,9 @@ import {
   JUDGE_COLORS,
   LANE_COLORS,
   LANE_RGB,
+  COMBO_COPY,
   SURGE_COPY,
+  characterArtWebp,
   districtColor,
 } from "../../constants/scape";
 import {
@@ -59,8 +67,16 @@ import {
 import { visibleNoteEnd } from "./visibleNoteEnd";
 import { MILESTONE_MAX_SCALE, MilestoneTextSprites } from "./milestoneTextSprites";
 import { KeyHintSprites } from "./keyHintSprites";
+import { COMBO_MILESTONES, crossedComboMilestone } from "./comboFeedback";
 
-type Fx = { lane: number; judgment: JudgeFx["judgment"]; born: number; deltaMs: number };
+type Fx = {
+  lane: number;
+  judgment: JudgeFx["judgment"];
+  born: number;
+  deltaMs: number;
+  accent?: JudgeFx["accent"];
+  chordFeedback?: JudgeFx["chordFeedback"];
+};
 type ScorePop = { x: number; y: number; text: string; born: number; color: string };
 
 export type { Fx, ScorePop };
@@ -81,6 +97,9 @@ declare global {
 }
 
 const LANE_FLASH_MS = 180;
+const KEY_HINT_FADE_MS = 650;
+const LATE_KEYBOARD_HINT_MS = 2500;
+const COMBO_BREAK_MS = 520;
 const JUDGE_LABEL: Record<string, string> = {
   perfect: "PERFECT",
   great: "GREAT",
@@ -88,13 +107,13 @@ const JUDGE_LABEL: Record<string, string> = {
   miss: "MISS",
 };
 const JUDGE_COLOR: Record<string, string> = { ...JUDGE_COLORS };
-const COMBO_MILESTONES = [10, 25, 50, 100, 150, 200, 300];
 const MILESTONE_MESSAGES = [...COMBO_MILESTONES.map(combo => `${combo} COMBO!`), SURGE_COPY.t3];
 
 export interface PlayfieldRenderContext {
   // refs (read + mutated by the loop)
   canvasRef: RefObject<HTMLCanvasElement | null>;
   wrapRef: RefObject<HTMLDivElement | null>;
+  failureRef: RefObject<HTMLDivElement | null>;
   conductorRef: RefObject<Conductor | null>;
   sessionRef: RefObject<GameSession | null>;
   pressedRef: RefObject<Set<number>>;
@@ -113,7 +132,7 @@ export interface PlayfieldRenderContext {
   scorePopsRef: RefObject<ScorePop[]>;
   comboBreakRef: RefObject<number>;
   prevComboRef: RefObject<number>;
-  lastComboRef: RefObject<number>;
+  seenComboBreaksRef: RefObject<number>;
   surgeRef: RefObject<SurgeMeter>;
   streakRef: RefObject<ScoreStreak>;
   prevNeonRef: RefObject<number>;
@@ -129,31 +148,40 @@ export interface PlayfieldRenderContext {
   needsStartRef: RefObject<boolean>;
   pausedRef: RefObject<boolean>;
   mutedRef: RefObject<boolean>;
+  muteMusicRef: RefObject<boolean>;
   hitsoundRef: RefObject<boolean>;
+  backgroundDimRef: RefObject<number>;
   fancyFxRef: RefObject<boolean>;
+  reduceMotionRef: RefObject<boolean>;
   offsetMsRef: RefObject<number>;
   approachRef: RefObject<number>;
   lastNoteMsRef: RefObject<number>;
   lastCountInt: RefObject<number>;
   finishedRef: RefObject<boolean>;
+  /** Live input modality; flipping it must not recreate the audio/game loop. */
+  showKeyHintsRef: RefObject<boolean>;
   // non-ref values captured at effect creation
   chart: ChartJSON;
-  mode: PlayMode;
+  sectionPractice: boolean;
   variant: "full" | "hero";
-  touchUi: boolean;
   district: string | undefined;
   demoSurge: number;
   demoStreak: number;
   keyHint: string[];
+  /** Keep lane keycaps visible beyond GO for onboarding, Practice, Hero, and Duo. */
+  persistentKeyHints: boolean;
+  /** Sample frame-polled input before automatic misses advance the session. */
+  beforeSessionAdvance: (frameTimeMs: number) => void;
   // component-bound closures the loop cannot own
   spawnHitFx: (lane: number, judgment: JudgeFx["judgment"]) => void;
+  emitHaptic: (cue: HapticCue) => void;
   onFinish: (result: PlayResult) => void;
   /**
    * B-1 · When true, the comic-panel DOM HUD (PlayHud) is overlaid on top of
    * the canvas. The renderer's built-in score / accuracy / SIGNAL-gauge panels
    * are skipped to avoid drawing the same element twice (the old built-ins
-   * used to overlap the DOM HUD). Combo center, HP bar, key hints, and
-   * in-frame feedback still draw as before.
+   * used to overlap the DOM HUD). Combo center, key hints, and in-frame
+   * feedback still draw as before; Arcade HP lives in the same DOM card.
    */
   useComicHud: boolean;
 }
@@ -166,6 +194,7 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
   const {
     canvasRef,
     wrapRef,
+    failureRef,
     conductorRef,
     sessionRef,
     pressedRef,
@@ -182,7 +211,7 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
     scorePopsRef,
     comboBreakRef,
     prevComboRef,
-    lastComboRef,
+    seenComboBreaksRef,
     surgeRef,
     streakRef,
     prevNeonRef,
@@ -198,22 +227,28 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
     needsStartRef,
     pausedRef,
     mutedRef,
+    muteMusicRef,
     hitsoundRef,
+    backgroundDimRef,
     fancyFxRef,
+    reduceMotionRef,
     offsetMsRef,
     approachRef,
     lastNoteMsRef,
     lastCountInt,
     finishedRef,
+    showKeyHintsRef,
     chart,
-    mode,
+    sectionPractice,
     variant,
-    touchUi,
     district,
     demoSurge,
     demoStreak,
     keyHint,
+    persistentKeyHints,
+    beforeSessionAdvance,
     spawnHitFx,
+    emitHaptic,
     onFinish,
     useComicHud,
   } = ctx;
@@ -226,9 +261,23 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
   const ctx2d = canvas.getContext("2d", { alpha: false }) ?? canvas.getContext("2d")!;
   let raf = 0;
   let disposed = false;
+  let failureFinishAt = 0;
+  let failureResultSent = false;
   let spriteDpr = 0;
   const milestoneSprites = new MilestoneTextSprites();
-  const keyHintSprites = touchUi ? null : new KeyHintSprites(keyHint);
+  const judgmentLabelWidths = new Map<string, number>();
+  const keyHintSprites = new KeyHintSprites(keyHint);
+  let keyHintSpritesReady = false;
+  const prepareKeyHintSprites = () => {
+    // A touch device may acquire an external keyboard on the first note.
+    // Prepare these eight small images before gameplay so that first input
+    // never pays their raster cost inside a timed canvas frame.
+    keyHintSprites.prepare(spriteDpr);
+    if (!keyHintSpritesReady) {
+      keyHintSpritesReady = true;
+      if (document.fonts) keyHintSprites.observeFonts(document.fonts);
+    }
+  };
   const prepareMilestones = () => {
     // Full/compact fields retain the base alphabetic baseline: the legacy HUD
     // resets it after accuracy, and its rotated gauge uses save/restore.
@@ -247,6 +296,31 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
   const [dr, dg, db] = hexToRgb(districtColor(district ?? "Pulse Core"));
   halftonePatRef.current = makeHalftonePattern(ctx2d, [dr, dg, db]);
   ringSpriteRef.current = makeDiamondRingSprite();
+
+  // Character art belongs to the environmental layer, not the DOM overlay.
+  // Keeping it inside this canvas means lane rails, notes, judgments and HUD
+  // are always painted later and can never be obscured by the portrait.
+  const characterImagePath = district ? characterArtWebp(district, 512) : null;
+  const characterImage = characterImagePath ? new Image() : null;
+  let characterImageReady = false;
+  if (characterImage) {
+    characterImage.decoding = "async";
+    characterImage.onload = () => {
+      if (!disposed) characterImageReady = true;
+    };
+    characterImage.src = `${import.meta.env.BASE_URL}${characterImagePath}`;
+    characterImageReady = characterImage.complete && characterImage.naturalWidth > 0;
+  }
+  const duoField = wrap.classList.contains("play-wrap-duo");
+  const portraitOpacityByTier = duoField
+    ? [0.06, 0.09, 0.12, 0.16]
+    : [0.16, 0.22, 0.32, 0.46];
+  let portraitOpacity = portraitOpacityByTier[0]!;
+  let portraitOpacityAt = performance.now();
+  let keyHintsWereInLeadIn = false;
+  let keyHintFadeStartedAt = 0;
+  let keyHintsVisibleLastFrame = showKeyHintsRef.current;
+  let lateKeyboardHintUntil = 0;
 
   const drawNote = (lane: number, x: number, y: number, size: number, alpha: number, receptorY: number) => {
     const sp = spritesRef.current[lane];
@@ -297,7 +371,7 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
     ctx2d.setTransform(dpr, 0, 0, dpr, 0, 0);
     dimRef.current = { w, h };
     if (changedDpr) prepareMilestones();
-    keyHintSprites?.prepare(dpr);
+    prepareKeyHintSprites();
     // Concentration rays are size-dependent — rebuild with the field.
     raysRef.current = makeRaysSprite(w, h);
     edgesOne = [[0, 5, w, 0]];
@@ -309,7 +383,6 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
     ];
   };
   resize();
-  if (document.fonts) keyHintSprites?.observeFonts(document.fonts);
   const ro = new ResizeObserver(resize);
   ro.observe(wrap);
   let milestoneFontVersion = 0;
@@ -317,6 +390,7 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
     if (disposed) return;
     milestoneFontVersion++;
     milestoneSprites.clear();
+    judgmentLabelWidths.clear();
     prepareMilestones();
   };
   const isMilestoneFont = (font: FontFace) => ["anton", "sora"].includes(font.family.replace(/["']/g, "").trim().toLowerCase());
@@ -334,8 +408,10 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
   }
 
   // 循环里的特效开关一律读 ref（见组件顶部 mutedRef 的注释）。
-  // prefersReducedMotion() 现在是缓存布尔值，每次调用只是属性读取。
-  const fancyOn = (): boolean => fancyFxRef.current && !prefersReducedMotion();
+  // The component ref owns the in-app switch; the cached media query stays
+  // live when the OS preference changes while a run is already open.
+  const reduceMotionOn = (): boolean => reduceMotionRef.current || prefersReducedMotion();
+  const fancyOn = (): boolean => fancyFxRef.current && !reduceMotionOn();
 
   // HUD — skewed ink panels rather than bare floating text. 定义在 draw() 外面，
   // 免得每帧重建一个闭包。
@@ -360,7 +436,7 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
     return cachedScoreText;
   };
 
-  const draw = (effMs: number, st: number) => {
+  const draw = (effMs: number, st: number, countdownRemainingMs: number) => {
     const measureDraw = window.__bsMeasureDraw;
     const drawStartedAtMs = measureDraw ? performance.now() : 0;
     let noteObjects = 0;
@@ -411,6 +487,59 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
         ctx2d.drawImage(raysRef.current, 0, 0, w, h);
         ctx2d.restore();
       }
+    }
+
+    if (characterImageReady && characterImage) {
+      const compact = window.innerWidth <= 600;
+      const portraitW = compact
+        ? Math.min(140, Math.max(84, w * 0.3))
+        : Math.min(220, Math.max(108, w * 0.26));
+      const portraitH = portraitW * (characterImage.naturalHeight / characterImage.naturalWidth);
+      const inset = compact ? 10 : 18;
+      const portraitX = w - inset - portraitW;
+      const portraitY = h - inset - portraitH;
+      const targetOpacity = portraitOpacityByTier[surgeTier] ?? portraitOpacityByTier[0]!;
+      const opacityDelta = Math.abs(targetOpacity - portraitOpacity);
+      if (reduceMotionOn() || opacityDelta < 0.001) {
+        portraitOpacity = targetOpacity;
+      } else {
+        const elapsed = Math.min(100, Math.max(0, nowPerf - portraitOpacityAt));
+        portraitOpacity += (targetOpacity - portraitOpacity) * (1 - Math.exp(-elapsed / 180));
+      }
+      portraitOpacityAt = nowPerf;
+
+      const radius = Math.min(12, portraitW / 2, portraitH / 2);
+      ctx2d.save();
+      ctx2d.globalAlpha = portraitOpacity;
+      ctx2d.globalCompositeOperation = "screen";
+      ctx2d.beginPath();
+      ctx2d.moveTo(portraitX + radius, portraitY);
+      ctx2d.lineTo(portraitX + portraitW - radius, portraitY);
+      ctx2d.quadraticCurveTo(portraitX + portraitW, portraitY, portraitX + portraitW, portraitY + radius);
+      ctx2d.lineTo(portraitX + portraitW, portraitY + portraitH - radius);
+      ctx2d.quadraticCurveTo(
+        portraitX + portraitW,
+        portraitY + portraitH,
+        portraitX + portraitW - radius,
+        portraitY + portraitH,
+      );
+      ctx2d.lineTo(portraitX + radius, portraitY + portraitH);
+      ctx2d.quadraticCurveTo(portraitX, portraitY + portraitH, portraitX, portraitY + portraitH - radius);
+      ctx2d.lineTo(portraitX, portraitY + radius);
+      ctx2d.quadraticCurveTo(portraitX, portraitY, portraitX + radius, portraitY);
+      ctx2d.closePath();
+      ctx2d.clip();
+      ctx2d.drawImage(characterImage, portraitX, portraitY, portraitW, portraitH);
+      ctx2d.restore();
+    }
+
+    // Player-controlled focus layer. It sits after all environmental art and
+    // before every gameplay primitive, so 100% removes visual noise without
+    // weakening lanes, notes, judgments, or the score HUD.
+    const backgroundDim = Math.max(0, Math.min(1, backgroundDimRef.current));
+    if (backgroundDim > 0) {
+      ctx2d.fillStyle = `rgba(0,0,0,${backgroundDim})`;
+      ctx2d.fillRect(0, 0, w, h);
     }
 
     // screen shake: decaying random offset applied to the gameplay layer
@@ -477,6 +606,47 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
       ctx2d.fillRect(0, receptorY + 5, w, 3);
     }
 
+    // Combo is persistent context, while notes are the action the player must
+    // read next. Paint the number first so a centered two/three-digit streak
+    // can never cover incoming middle-lane diamonds on a narrow field.
+    if (session.combo >= 2) {
+      const tiers = session.combo >= 100 ? 3 : session.combo >= 50 ? 2 : session.combo >= 10 ? 1 : 0;
+      const sizes = [34, 44, 56, 68];
+      const cols = ["#F5EFE6", "#F2E4C9", "#FFB020", "#E23D3D"];
+      const pulse = 1 + Math.min(0.18, (nowPerf % 600) / 600 / 6);
+      ctx2d.save();
+      ctx2d.textAlign = "center";
+      ctx2d.translate(w / 2, receptorY * 0.42);
+      ctx2d.scale(pulse, pulse);
+      ctx2d.font = `400 ${sizes[tiers]}px Anton, 'Sora', sans-serif`;
+      ctx2d.lineWidth = Math.max(4, sizes[tiers] * 0.13);
+      inkedText(ctx2d, `${session.combo}`, 0, 0, cols[tiers]);
+      ctx2d.restore();
+      ctx2d.textAlign = "center";
+      ctx2d.font = "600 12px 'IBM Plex Sans', sans-serif";
+      ctx2d.lineWidth = 3;
+      inkedText(ctx2d, COMBO_COPY.combo.toUpperCase(), w / 2, receptorY * 0.42 + 24, "#A8928B");
+    }
+
+    // Countdown keeps the Western pop-art emphasis, but remains contextual
+    // guidance. Paint it before pre-rolled notes so chart targets retain the
+    // top visual layer whenever their bounds overlap the center count-in.
+    if (countdownRemainingMs > 0) {
+      const cd = countdownRemainingMs;
+      const text = cd > 250 ? String(Math.ceil(cd / 1000)) : "GO";
+      ctx2d.save();
+      ctx2d.textAlign = "center";
+      ctx2d.textBaseline = "middle";
+      ctx2d.font = "400 96px Anton, 'Sora', sans-serif";
+      ctx2d.lineJoin = "round";
+      ctx2d.lineWidth = 9;
+      ctx2d.strokeStyle = "#000000";
+      ctx2d.strokeText(text, w / 2, h / 2);
+      ctx2d.fillStyle = "#E23D3D";
+      ctx2d.fillText(text, w / 2, h / 2);
+      ctx2d.restore();
+    }
+
     // noteScreenY clamps future heads to y=0, so pixel clipping alone would
     // draw the rest of the chart on the top edge. Cull by the same approach
     // window first, retaining unfinished hold/slide tails via session.cursor.
@@ -511,20 +681,65 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
         }
         const headAlpha = n.head ? 0.35 : 1;
         drawNote(d.lane, (d.lane + 0.5) * laneW, yHead, noteW, headAlpha, receptorY);
+        // The body used to stop without a visual release target. Keep the end
+        // quieter before the head lands, then promote it while actively held.
+        const tailAlpha = n.head !== null && n.tail === null ? 1 : 0.82;
+        drawNote(
+          d.lane,
+          (d.lane + 0.5) * laneW,
+          yTail,
+          noteW * HOLD_TAIL_SCALE,
+          tailAlpha,
+          receptorY,
+        );
       } else if (d.type === "chord") {
+        // A Chord must read as one simultaneous object, not as unrelated Taps
+        // that happen to share a timestamp. The neutral two-stroke bridge sits
+        // behind every lane diamond and remains visible while a partial Chord
+        // is still waiting for its other inputs.
+        let chordMinLane = 3;
+        let chordMaxLane = 0;
+        let chordPending = 0;
+        for (const lane of d.lanes) {
+          chordMinLane = Math.min(chordMinLane, lane);
+          chordMaxLane = Math.max(chordMaxLane, lane);
+          if (n.chord[lane] == null) chordPending++;
+        }
+        const chordFromX = (chordMinLane + 0.5) * laneW;
+        const chordToX = (chordMaxLane + 0.5) * laneW;
+        const pendingRatio = chordPending / d.lanes.length;
+        ctx2d.save();
+        ctx2d.globalAlpha = 0.42 + pendingRatio * 0.38;
+        ctx2d.lineCap = "square";
+        ctx2d.beginPath();
+        ctx2d.moveTo(chordFromX, yHead);
+        ctx2d.lineTo(chordToX, yHead);
+        ctx2d.strokeStyle = "#000000";
+        ctx2d.lineWidth = Math.max(7, noteW * 0.16);
+        ctx2d.stroke();
+        ctx2d.strokeStyle = "#F5EFE6";
+        ctx2d.lineWidth = Math.max(2.5, noteW * 0.055);
+        ctx2d.stroke();
+        ctx2d.restore();
         for (const l of d.lanes) {
           const a = n.chord[l] != null ? 0.35 : 1;
           drawNote(l, (l + 0.5) * laneW, yHead, noteW, a, receptorY);
         }
       } else if (d.type === "slide") {
         const headDone = n.head !== null;
+        const targetHeld = n.tailHeld;
         drawNote(d.lane, (d.lane + 0.5) * laneW, yHead, noteW, headDone ? 0.35 : 1, receptorY);
         const yTail = noteScreenY(n.endMs / 1000, songSec, receptorY, approach);
-        const slideAlpha = headDone ? 0.95 : 0.55;
+        // A player who arrives before the endpoint needs an unambiguous
+        // confirmation that the continuous gesture is safely owned. Promote
+        // the armed dotted trail to a heavier solid rail while the target lane
+        // is physically held; this is state feedback only and never changes
+        // timing or scoring.
+        const slideAlpha = targetHeld ? 1 : headDone ? 0.95 : 0.55;
         ctx2d.strokeStyle = LANE_COLORS[d.to];
         ctx2d.globalAlpha = slideAlpha;
-        ctx2d.lineWidth = headDone ? 3 : 2;
-        ctx2d.setLineDash([6, 6]);
+        ctx2d.lineWidth = targetHeld ? 5 : headDone ? 3 : 2;
+        ctx2d.setLineDash(targetHeld ? [] : [6, 6]);
         ctx2d.beginPath();
         ctx2d.moveTo((d.lane + 0.5) * laneW, yHead);
         ctx2d.lineTo((d.to + 0.5) * laneW, yTail);
@@ -532,7 +747,24 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
         ctx2d.setLineDash([]);
         ctx2d.globalAlpha = 1;
         if (headDone && n.tail === null) {
-          drawNote(d.to, (d.to + 0.5) * laneW, yTail, noteW * SLIDE_TAIL_SCALE, 1, receptorY);
+          if (targetHeld) {
+            drawNote(
+              d.to,
+              (d.to + 0.5) * laneW,
+              yTail,
+              noteW * SLIDE_TAIL_SCALE * 1.2,
+              0.34,
+              receptorY,
+            );
+          }
+          drawNote(
+            d.to,
+            (d.to + 0.5) * laneW,
+            yTail,
+            noteW * SLIDE_TAIL_SCALE * (targetHeld ? 1.06 : 1),
+            1,
+            receptorY,
+          );
         }
       }
     }
@@ -646,7 +878,7 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
 
       // Comic starburst instead of an expanding ring.
       const spikes = f.judgment === "miss" ? 7 : f.judgment === "perfect" ? 12 : 9;
-      const rad = (10 + age * 34) * (f.judgment === "perfect" ? 1.3 : 1);
+      const rad = (reduceMotionOn() ? 22 : 10 + age * 34) * (f.judgment === "perfect" ? 1.3 : 1);
       const inner = rad * 0.58;
       ctx2d.beginPath();
       for (let s = 0; s < spikes * 2; s++) {
@@ -665,24 +897,67 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
       ctx2d.lineWidth = 1;
 
       // Judgment label — Anton slab wrapped in a hard ink outline.
-      const label = JUDGE_LABEL[f.judgment];
+      const chordSummary = f.chordFeedback?.summary;
+      const feedback = chordSummary ?? f;
+      const label = f.chordFeedback && !chordSummary
+        ? undefined
+        : JUDGE_LABEL[feedback.judgment];
       if (label) {
-        const pop = age < 0.18 ? 0.5 + (age / 0.18) * 0.7 : 1.2 - (age - 0.18) * 0.24;
-        const isP = f.judgment === "perfect";
-        const skewX = Math.max(-18, Math.min(18, f.deltaMs * 0.35));
+        const pop = reduceMotionOn()
+          ? 1
+          : age < 0.18 ? 0.5 + (age / 0.18) * 0.7 : 1.2 - (age - 0.18) * 0.24;
+        const isP = feedback.judgment === "perfect";
+        // Chord assist is a banked lane with no physical input timestamp. Keep
+        // its judgment centered instead of visually leaning "late" from the
+        // timeout frame that committed the assist.
+        const skewX = feedback.accent === "chord-assist"
+          ? 0
+          : Math.max(-18, Math.min(18, feedback.deltaMs * 0.35));
+        const groupCenterX = chordSummary
+          ? f.chordFeedback!.lanes.reduce<number>(
+              (sum, lane) => sum + (lane + 0.5) * laneW,
+              0,
+            )
+            / f.chordFeedback!.lanes.length
+          : cx;
+        const feedbackX = groupCenterX + (reduceMotionOn() ? 0 : skewX);
         ctx2d.save();
-        ctx2d.globalAlpha = Math.max(0, 1 - age * age);
-        ctx2d.translate(cx + skewX, receptorY - 46 - age * 22);
-        ctx2d.scale(pop, pop);
-        ctx2d.textAlign = "center";
         const fs = isP ? 23 : 17;
         ctx2d.font = `400 ${fs}px Anton, 'Sora', sans-serif`;
         ctx2d.lineWidth = Math.max(3, fs * 0.2);
-        inkedText(ctx2d, label, 0, 0, JUDGE_COLOR[f.judgment] || "#F5EFE6");
-        if (f.judgment !== "miss" && Math.abs(f.deltaMs) >= 8) {
+        let labelWidth = judgmentLabelWidths.get(label);
+        if (labelWidth === undefined) {
+          labelWidth = ctx2d.measureText(label).width;
+          judgmentLabelWidths.set(label, labelWidth);
+        }
+        // The gameplay layer already carries the current shake transform.
+        // Clamp in screen coordinates, then convert back to its local space.
+        const labelScreenX = judgmentLabelCenterX(
+          feedbackX + shx,
+          w,
+          labelWidth,
+          pop,
+          ctx2d.lineWidth,
+        );
+        ctx2d.globalAlpha = Math.max(0, 1 - age * age);
+        ctx2d.translate(
+          labelScreenX - shx,
+          receptorY - 46 - (reduceMotionOn() ? 0 : age * 22),
+        );
+        ctx2d.scale(pop, pop);
+        ctx2d.textAlign = "center";
+        inkedText(ctx2d, label, 0, 0, JUDGE_COLOR[feedback.judgment] || "#F5EFE6");
+        const timingLabel = judgmentTimingLabel(feedback);
+        if (timingLabel) {
           ctx2d.font = "600 10px 'IBM Plex Sans', sans-serif";
           ctx2d.lineWidth = 3;
-          inkedText(ctx2d, f.deltaMs < 0 ? "EARLY" : "LATE", 0, 15, "#F5EFE6");
+          // Keep ASSIST attached to the lane the game actually banked, even
+          // though the main Chord verdict is centered over the whole group.
+          const timingAnchorX = feedback.accent === "chord-assist"
+            ? (feedback.lane + 0.5) * laneW + shx
+            : labelScreenX;
+          const timingCenterX = judgmentTimingCenterX(timingAnchorX, w, timingLabel);
+          inkedText(ctx2d, timingLabel, (timingCenterX - labelScreenX) / pop, 15, "#F5EFE6");
         }
         ctx2d.restore();
       }
@@ -692,9 +967,23 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
 
     // combo-break vignette (HUD layer, stable)
     if (nowPerf < comboBreakRef.current) {
-      const t = (comboBreakRef.current - nowPerf) / 320;
+      const t = (comboBreakRef.current - nowPerf) / COMBO_BREAK_MS;
       ctx2d.fillStyle = `rgba(226,61,61,${0.3 * t})`;
       ctx2d.fillRect(0, 0, w, h);
+      ctx2d.save();
+      ctx2d.globalAlpha = Math.min(1, t * 1.6);
+      ctx2d.textAlign = "center";
+      ctx2d.textBaseline = "middle";
+      ctx2d.font = `400 ${Math.min(22, Math.max(17, w * 0.055))}px Anton, 'Sora', sans-serif`;
+      ctx2d.lineWidth = 4;
+      inkedText(
+        ctx2d,
+        COMBO_COPY.break.toUpperCase(),
+        w / 2,
+        receptorY * 0.42,
+        "#E23D3D",
+      );
+      ctx2d.restore();
     }
 
     // ON AIR: misprint frame — black rule + district band at the screen edge.
@@ -787,7 +1076,7 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
       ctx2d.fillStyle = p.color;
       ctx2d.font = "700 14px 'IBM Plex Sans', sans-serif";
       ctx2d.textAlign = "center";
-      ctx2d.fillText(p.text, p.x, p.y - age * 36);
+      ctx2d.fillText(p.text, p.x, p.y - (reduceMotionOn() ? 0 : age * 36));
       ctx2d.restore();
     }
 
@@ -798,8 +1087,9 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
     // B-1 · When useComicHud is on, the comic-panel PlayHud (DOM overlay) draws
     // the score / accuracy / SIGNAL tier chips itself. Drawing them again here
     // would double-stack on the canvas and visually fight the DOM HUD, so skip
-    // the block entirely. Combo center number, HP bar, key hints, milestone
-    // flash, and floating score pops stay — they are not duplicated by PlayHud.
+    // the block entirely. Combo center number, key hints, milestone flash, and
+    // floating score pops stay. Combo intentionally lives only here,
+    // close to the receptor; the compact DOM HUD owns score/accuracy/progress.
     if (!useComicHud) {
       const scoreText = scoreTextFor(session.score);
       ctx2d.font = "600 18px 'IBM Plex Sans', sans-serif";
@@ -867,44 +1157,6 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
       ctx2d.restore();
     }
 
-    if (mode === "arcade") {
-      const bx = 14;
-      const by = 46;
-      const bw = w - 28;
-      const bh = 12;
-      panel(bx, by, bw, bh, "#12100F", 6);
-      const innerW = ((bw - 6) * Math.max(0, session.hp)) / 100;
-      if (innerW > 0) {
-        ctx2d.save();
-        ctx2d.beginPath();
-        ctx2d.rect(bx + 3, by + 3, innerW, bh - 6);
-        ctx2d.clip();
-        ctx2d.fillStyle = session.hp <= 30 ? "#E23D3D" : "#FFB020";
-        ctx2d.fillRect(bx + 3, by + 3, bw, bh - 6);
-        ctx2d.restore();
-      }
-    }
-
-    if (session.combo >= 2) {
-      // Combo escalates in size and heat as it climbs, always ink-outlined.
-      const tiers = session.combo >= 100 ? 3 : session.combo >= 50 ? 2 : session.combo >= 10 ? 1 : 0;
-      const sizes = [34, 44, 56, 68];
-      const cols = ["#F5EFE6", "#F2E4C9", "#FFB020", "#E23D3D"];
-      const pulse = 1 + Math.min(0.18, (nowPerf % 600) / 600 / 6);
-      ctx2d.save();
-      ctx2d.textAlign = "center";
-      ctx2d.translate(w / 2, receptorY * 0.42);
-      ctx2d.scale(pulse, pulse);
-      ctx2d.font = `400 ${sizes[tiers]}px Anton, 'Sora', sans-serif`;
-      ctx2d.lineWidth = Math.max(4, sizes[tiers] * 0.13);
-      inkedText(ctx2d, `${session.combo}`, 0, 0, cols[tiers]);
-      ctx2d.restore();
-      ctx2d.textAlign = "center";
-      ctx2d.font = "600 12px 'IBM Plex Sans', sans-serif";
-      ctx2d.lineWidth = 3;
-      inkedText(ctx2d, "STREAK", w / 2, receptorY * 0.42 + 24, "#A8928B");
-    }
-
     // combo milestone flash (center, big, quick)
     if (fancyOn() && milestoneRef.current) {
       const age = (nowPerf - milestoneRef.current.born) / 700;
@@ -927,13 +1179,44 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
       }
     }
 
-    // Key hints sit under the receptor, tinted per lane. Drawn from the bound
-    // key's *label*, so arrow keys read as ← ↓ ↑ → instead of "ArrowLeft".
-    // Skipped on touch: there is no keyboard there, and the overlay already
-    // tells the player to use their thumbs.
-    if (keyHintSprites) {
+    // Key hints sit under the receptor, tinted per lane. New players keep them
+    // for their first three runs; experienced solo players get a clean field
+    // after the opening count-in. Practice and Duo keep them permanently, and
+    // every resume/restart count-in restores them before fading again.
+    const keyHintsVisible = showKeyHintsRef.current;
+    const inLeadIn = needsStartRef.current || countdownRemainingMs > 0;
+    if (keyHintsVisible && !keyHintsVisibleLastFrame && !inLeadIn && !persistentKeyHints) {
+      lateKeyboardHintUntil = nowPerf + LATE_KEYBOARD_HINT_MS;
+    }
+    keyHintsVisibleLastFrame = keyHintsVisible;
+    let keyHintOpacity = persistentKeyHints ? 1 : 0;
+    if (!persistentKeyHints) {
+      if (inLeadIn) {
+        keyHintsWereInLeadIn = true;
+        keyHintFadeStartedAt = 0;
+        lateKeyboardHintUntil = 0;
+        keyHintOpacity = 1;
+      } else if (keyHintsWereInLeadIn) {
+        keyHintsWereInLeadIn = false;
+        keyHintFadeStartedAt = nowPerf;
+        keyHintOpacity = reduceMotionOn() ? 0 : 1;
+      } else if (lateKeyboardHintUntil > 0) {
+        keyHintOpacity = nowPerf < lateKeyboardHintUntil
+          ? 1
+          : reduceMotionOn()
+            ? 0
+            : Math.max(0, 1 - (nowPerf - lateKeyboardHintUntil) / KEY_HINT_FADE_MS);
+      } else if (keyHintFadeStartedAt > 0 && !reduceMotionOn()) {
+        keyHintOpacity = Math.max(0, 1 - (nowPerf - keyHintFadeStartedAt) / KEY_HINT_FADE_MS);
+      }
+    }
+
+    // An external keyboard can arrive after a touch-first run has begun.
+    if (keyHintsVisible && keyHintOpacity > 0.01) {
+      if (!keyHintSpritesReady) prepareKeyHintSprites();
       ctx2d.save();
-      const hintAlpha = ctx2d.globalAlpha;
+      const hintAlpha = ctx2d.globalAlpha * keyHintOpacity;
+      ctx2d.globalAlpha = hintAlpha;
       const hintY = Math.min(receptorY + 26, h - 14);
       for (let i = 0; i < 4; i++) {
         const flash = Math.max(
@@ -960,25 +1243,6 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
       ctx2d.restore();
     }
 
-    // Countdown as comic emphasis type: heavy red slab behind a hard black
-    // outline. PRD §7.4 still bans Japanese-style onomatopoeia — this is the
-    // Western pop-art treatment instead.
-    if (st < 0) {
-      const cd = -st;
-      const text = cd > 250 ? String(Math.ceil(cd / 1000)) : "GO";
-      ctx2d.save();
-      ctx2d.textAlign = "center";
-      ctx2d.textBaseline = "middle";
-      ctx2d.font = "400 96px Anton, 'Sora', sans-serif";
-      ctx2d.lineJoin = "round";
-      ctx2d.lineWidth = 9;
-      ctx2d.strokeStyle = "#000000";
-      ctx2d.strokeText(text, w / 2, h / 2);
-      ctx2d.fillStyle = "#E23D3D";
-      ctx2d.fillText(text, w / 2, h / 2);
-      ctx2d.restore();
-    }
-
     if (measureDraw) {
       const durationMs = performance.now() - drawStartedAtMs;
       try {
@@ -989,7 +1253,13 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
     }
   };
 
-  const loop = () => {
+  const loop = (frameTimeMs: number) => {
+    try {
+      beforeSessionAdvance(frameTimeMs);
+    } catch {
+      // A browser input adapter must never terminate the authoritative render
+      // and audio-clock loop. Keyboard and touch remain available fallbacks.
+    }
     const conductor = conductorRef.current;
     const session = sessionRef.current;
     if (!conductor || !session) {
@@ -997,15 +1267,21 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
       return;
     }
     const st = conductor.songTimeMs();
+    const eff = st - offsetMsRef.current;
+    // Initial and resume lead-ins both come from the Conductor's audio-clock
+    // schedule. Resume keeps song time frozen while this value counts down,
+    // so rendering, judgment and the source all cross GO on the same frame.
+    const countdownRemainingMs = conductor.countdownRemainingMs;
 
-    if (!needsStartRef.current && !pausedRef.current) {
-      const eff = st - offsetMsRef.current;
+    if (!needsStartRef.current && !pausedRef.current && !finishedRef.current) {
       const misses = session.tick(eff);
       for (const m of misses) {
-        addFx(m.lane, m.judgment, m.deltaMs);
+        addFx(m);
         if (hitsoundRef.current) playHit(m.judgment);
       }
-      if (session.consumeSlowTrigger()) conductor.setRate(0.5, 5000);
+      if (session.consumeSlowTrigger() && conductor.basePlaybackRate > 0.5) {
+        conductor.setRate(0.5, 5000);
+      }
 
       // SIGNAL atmosphere meter: decay on the song clock (pause-safe), then
       // flip the tier + wrapper data attribute when it crosses a threshold.
@@ -1033,9 +1309,9 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
           shakeRef.current = { mag: 8, until: performance.now() + 220 };
           ringsRef.current.push(performance.now());
         }
-        // FEEL PACK: tier-entry haptic double-pulse + "the drop" — the song
-        // ducks low then opens its gate. The music literally opens up.
-        if (surgeTier > prevTier && hitsoundRef.current) vibrate([12, 60, 24], 0);
+        // FEEL PACK: tier-entry haptic cue + "the drop" — the touch surface
+        // keeps its double-pulse while compatible controllers use a shaped rumble.
+        if (surgeTier > prevTier) emitHaptic("surge");
         if (enteredTop && !mutedRef.current) conductor.sweepOpen(380);
         // Tier-entry cue: the station goes live (gated by the hitsound setting).
         if (surgeTier > prevTier && hitsoundRef.current && (surgeTier === 2 || surgeTier === 3)) {
@@ -1069,29 +1345,45 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
       }
       lightComboPrevRef.current = lightStreak;
 
-      // combo-break sound + combo milestone celebration
-      if (session.combo === 0 && lastComboRef.current > 0) {
+      // Consume the engine's monotonic break event rather than inferring from
+      // the final Combo. A Good/Miss and a later hit can both land between two
+      // rAF frames, leaving Combo > 0 even though the prior streak did break.
+      const comboBroke = session.comboBreaks > seenComboBreaksRef.current;
+      if (comboBroke) {
         if (hitsoundRef.current) playBreak();
-        comboBreakRef.current = performance.now() + 320;
+        comboBreakRef.current = performance.now() + COMBO_BREAK_MS;
+        // A still-fading combo milestone cannot remain celebratory after the
+        // streak has already broken.
+        milestoneRef.current = null;
       }
-      if (session.combo > prevComboRef.current && COMBO_MILESTONES.includes(session.combo)) {
+      // A chord can move Combo 9 -> 11 inside one frame. Detect the crossed
+      // interval rather than requiring the frame's final value to equal 10.
+      // A real break still wins this frame so failure and celebration cannot
+      // be shown together.
+      const comboMilestone = comboBroke
+        ? null
+        : crossedComboMilestone(prevComboRef.current, session.combo);
+      if (comboMilestone !== null) {
         if (fancyOn()) {
-          milestoneRef.current = { text: `${session.combo} COMBO!`, born: performance.now() };
+          milestoneRef.current = { text: `${comboMilestone} COMBO!`, born: performance.now() };
           shakeRef.current = { mag: 9, until: performance.now() + 240 };
           // LIVE/ON AIR milestones broadcast a resonance-diamond ring (PRD §7.6-5).
           if (surgeTierRef.current >= 2) ringsRef.current.push(performance.now());
         }
-        if (hitsoundRef.current) vibrate([18], 120);
+        emitHaptic("milestone");
       }
       prevComboRef.current = session.combo;
-      lastComboRef.current = session.combo;
+      seenComboBreaksRef.current = session.comboBreaks;
 
       // countdown ticks
-      if (st < 0) {
-        const ci = Math.ceil(-st / 1000);
+      if (countdownRemainingMs > 0) {
+        const ci = Math.ceil(countdownRemainingMs / 1000);
         if (ci !== lastCountInt.current) {
           lastCountInt.current = ci;
-          if (hitsoundRef.current) playCountdownTick(ci);
+          // Duo fields share one song clock. The music-owning field also owns
+          // global count-in cues so 3/2/1 stays crisp instead of playing once
+          // per board; player-specific judgment SFX remain independent.
+          if (hitsoundRef.current && !muteMusicRef.current) playCountdownTick(ci);
         }
       }
 
@@ -1099,9 +1391,15 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
       if (!finishedRef.current) {
         if (session.failed) {
           finishedRef.current = true;
+          pressedRef.current.clear();
           conductor.stop();
-          finishRun();
-        } else if (session.isComplete && st >= lastNoteMsRef.current) {
+          const failure = failureRef.current;
+          if (failure) {
+            failure.dataset.show = "1";
+            failure.setAttribute("aria-hidden", "false");
+          }
+          failureFinishAt = performance.now() + 300;
+        } else if (session.isComplete && eff >= lastNoteMsRef.current) {
           finishedRef.current = true;
           conductor.stop();
           finishRun();
@@ -1113,7 +1411,12 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
       }
     }
 
-    draw(st < 0 ? st : st - offsetMsRef.current, st);
+    const drawTimeMs = sectionPractice ? eff : st < 0 ? st : eff;
+    draw(drawTimeMs, st, countdownRemainingMs);
+    if (failureFinishAt > 0 && !failureResultSent && performance.now() >= failureFinishAt) {
+      failureResultSent = true;
+      finishRun();
+    }
     raf = requestAnimationFrame(loop);
   };
 
@@ -1125,25 +1428,28 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
     onFinish({ ...session.getResult(), surgeMaxTier: surgeRef.current.maxTier });
   };
 
-  const addFx = (lane: number, judgment: JudgeFx["judgment"], deltaMs = 0) => {
-    fxRef.current.push({ lane, judgment, born: performance.now(), deltaMs });
-    surgeRef.current.apply(judgment);
-    streakRef.current.apply(judgment);
-    spawnHitFx(lane, judgment);
-    const session = sessionRef.current;
+  const addFx = (fx: JudgeFx) => {
+    fxRef.current.push({
+      lane: fx.lane,
+      judgment: fx.judgment,
+      born: performance.now(),
+      deltaMs: fx.deltaMs,
+      ...(fx.accent ? { accent: fx.accent } : {}),
+      ...(fx.chordFeedback ? { chordFeedback: fx.chordFeedback } : {}),
+    });
+    surgeRef.current.apply(fx.judgment);
+    streakRef.current.apply(fx.judgment);
+    spawnHitFx(fx.lane, fx.judgment);
     const { w } = dimRef.current;
-    if (session && w && judgment !== "miss" && judgment !== "good") {
-      const gain = judgmentScore(judgment) * comboMultiplier(session.combo);
-      if (gain > 0) {
-        const receptorY = receptorYFromGeometry(dimRef.current.h, Math.min(w, dimRef.current.h));
-        scorePopsRef.current.push({
-          x: (lane + 0.5) * (w / 4),
-          y: receptorY - 78,
-          text: `+${gain}`,
-          born: performance.now(),
-          color: JUDGE_COLOR[judgment] ?? "#FFFFFF",
-        });
-      }
+    if (w && fx.scoreGain > 0) {
+      const receptorY = receptorYFromGeometry(dimRef.current.h, Math.min(w, dimRef.current.h));
+      scorePopsRef.current.push({
+        x: (fx.lane + 0.5) * (w / 4),
+        y: receptorY - 78,
+        text: `+${fx.scoreGain}`,
+        born: performance.now(),
+        color: JUDGE_COLOR[fx.judgment] ?? "#FFFFFF",
+      });
     }
   };
 
@@ -1152,8 +1458,14 @@ export function createPlayfieldRenderer(ctx: PlayfieldRenderContext): () => void
     disposed = true;
     cancelAnimationFrame(raf);
     ro.disconnect();
+    const failure = failureRef.current;
+    if (failure) {
+      failure.dataset.show = "0";
+      failure.setAttribute("aria-hidden", "true");
+    }
     document.fonts?.removeEventListener("loadingdone", onMilestoneFontsLoaded);
+    if (characterImage) characterImage.onload = null;
     milestoneSprites.clear();
-    keyHintSprites?.dispose();
+    keyHintSprites.dispose();
   };
 }

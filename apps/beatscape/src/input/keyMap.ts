@@ -2,8 +2,8 @@
 //
 // Keys are stored as **physical key codes** (`KeyboardEvent.code`), not `key`.
 // That matters for BeatScape because we ship to an international audience: on a
-// French AZERTY or German QWERTZ board the letter printed on a physical key is
-// not the letter `KeyboardEvent.key` reports, but the *position* is identical.
+// French AZERTY or German QWERTZ board the letter inferred from a physical code
+// is not necessarily the glyph printed on that key, but the *position* is identical.
 // Binding to `code` keeps the four lanes under the same four fingers everywhere,
 // and it is also the only way to bind the arrow keys at all (`key` would be
 // "ArrowLeft", which never fits the old single-character key fields).
@@ -92,18 +92,78 @@ export function keyLabels(keys: string[]): string[] {
   return keys.map(keyLabel);
 }
 
+export type KeyboardLayoutMapLike = {
+  get(code: string): string | undefined;
+};
+
+export type KeyLabelLayout = "auto" | "qwerty" | "azerty" | "qwertz";
+
+// Manual choices cover the common letter-position swaps. They are a fallback
+// for browsers without Keyboard Map; Auto remains the accurate choice for
+// custom layouts and punctuation keys when the browser exposes the full map.
+const MANUAL_KEY_LABELS: Record<Exclude<KeyLabelLayout, "auto">, KeyboardLayoutMapLike | null> = {
+  qwerty: null,
+  azerty: new Map([
+    ["KeyA", "Q"], ["KeyQ", "A"], ["KeyW", "Z"], ["KeyZ", "W"],
+  ]),
+  qwertz: new Map([["KeyY", "Z"], ["KeyZ", "Y"]]),
+};
+
+/** Browser/OS command modifiers must never be consumed as gameplay input. */
+export function hasBrowserShortcutModifier(
+  event: Pick<KeyboardEvent, "altKey" | "ctrlKey" | "metaKey">,
+): boolean {
+  return Boolean(event.altKey || event.ctrlKey || event.metaKey);
+}
+
+function readableLayoutLabel(code: string, mapped: string | undefined): string {
+  const fallback = keyLabel(code);
+  const label = mapped?.trim() ?? "";
+  if (!label || label === "Dead" || /[\u0000-\u001f\u007f]/.test(label) || label.length > 8) {
+    return fallback;
+  }
+  return /^[a-z]$/.test(label) ? label.toUpperCase() : label;
+}
+
+/**
+ * Display physical bindings using the glyphs printed by the active layout.
+ * Input still resolves by `KeyboardEvent.code`; this only fixes the legend a
+ * QWERTY/AZERTY/QWERTZ/Dvorak player sees on screen.
+ */
+export function keyLabelsForLayout(
+  keys: readonly string[],
+  layout: KeyboardLayoutMapLike | null,
+): string[] {
+  return keys.map((code) => readableLayoutLabel(code, layout?.get(code)));
+}
+
+/** Display-only preference; stored physical bindings and lane judgment stay unchanged. */
+export function keyLabelsForDisplayLayout(
+  keys: readonly string[],
+  preference: KeyLabelLayout,
+  detectedLayout: KeyboardLayoutMapLike | null = null,
+): string[] {
+  return keyLabelsForLayout(keys, preference === "auto" ? detectedLayout : MANUAL_KEY_LABELS[preference]);
+}
+
 /**
  * Lane index for a keyboard event, or -1 when the key is not bound.
  * Physical `code` wins; `key` is the fallback for legacy and symbolic bindings.
  */
 export function laneFromKeyEvent(e: KeyboardEvent, keys: string[]): number {
+  if (hasBrowserShortcutModifier(e)) return -1;
   const code = e.code ?? "";
   const key = (e.key ?? "").toLowerCase();
   if (!code && !key) return -1;
+  // Search every physical binding first. On AZERTY a KeyA press reports
+  // `key: "q"`; an earlier legacy "q" binding must not steal a later KeyA.
+  if (code) {
+    const physicalLane = keys.indexOf(code);
+    if (physicalLane >= 0) return physicalLane;
+  }
   for (let i = 0; i < keys.length; i++) {
     const k = keys[i];
     if (!k) continue;
-    if (k === code) return i;
     if (k.toLowerCase() === key) return i;
   }
   return -1;
@@ -169,11 +229,13 @@ export function partnerKeysFor(p1: string[]): string[] {
 
 /**
  * Read a code out of a raw keydown while the user is rebinding a lane.
- * Modifier-only presses (Shift, Ctrl, …) are rejected so they can't be bound.
+ * Browser-command chords and standalone modifiers are rejected; Shift may
+ * still accompany an ordinary bindable physical key.
  */
 const IGNORED_CODES = new Set(["ShiftLeft", "ShiftRight", "ControlLeft", "ControlRight", "AltLeft", "AltRight", "MetaLeft", "MetaRight", "CapsLock", "Tab"]);
 
 export function captureKeyCode(e: KeyboardEvent): string | null {
+  if (hasBrowserShortcutModifier(e)) return null;
   if (IGNORED_CODES.has(e.code)) return null;
   if (e.code) return e.code;
   const key = e.key ?? "";

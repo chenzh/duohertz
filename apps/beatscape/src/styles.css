@@ -1,3 +1,138 @@
+/* Production typography is bundled with the application so the visual system
+   survives CDN filtering, intermittent networks and installed-PWA offline use.
+   Latin-ext covers the Western European audience targeted by BeatScape. */
+@font-face {
+  font-family: "Anton";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("./assets/fonts/anton-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+    U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB,
+    U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Anton";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("./assets/fonts/anton-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Sora";
+  font-style: normal;
+  font-weight: 600 800;
+  font-display: swap;
+  src: url("./assets/fonts/sora-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+    U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB,
+    U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Sora";
+  font-style: normal;
+  font-weight: 600 800;
+  font-display: swap;
+  src: url("./assets/fonts/sora-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("./assets/fonts/ibm-plex-sans-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+    U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB,
+    U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("./assets/fonts/ibm-plex-sans-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("./assets/fonts/ibm-plex-sans-italic-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+    U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB,
+    U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("./assets/fonts/ibm-plex-sans-italic-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("./assets/fonts/ibm-plex-mono-600-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+    U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB,
+    U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("./assets/fonts/ibm-plex-mono-600-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("./assets/fonts/ibm-plex-mono-700-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+    U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB,
+    U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("./assets/fonts/ibm-plex-mono-700-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+}
+
 :root {
   /* PRD §7.5 v2.0 · RESONANCE tokens */
   --scape-bg-0: #12100f;
@@ -64,8 +199,35 @@ select:focus-visible {
   outline-offset: 2px;
 }
 
-/* 程序化聚焦的路由宿主不画 ring：React 会给 <main> 标 tabindex="-1" 并聚焦
-   （焦点管理），Tab 永远不会停在它身上——不排除的话就是一圈包住全页的红框。 */
+/* Keyboard entry point stays off-canvas until it receives focus. It clears
+   both the desktop header and mobile safe area, and remains a 44px target. */
+.skip-link {
+  position: fixed;
+  top: calc(8px + env(safe-area-inset-top));
+  left: -10000px;
+  z-index: 1000;
+  min-height: 44px;
+  max-width: calc(100vw - 16px - env(safe-area-inset-left) - env(safe-area-inset-right));
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 14px;
+  border: 2px solid var(--ink);
+  background: var(--scape-accent-2);
+  box-shadow: 4px 4px 0 var(--ink);
+  color: #12100f;
+  font: 800 13px/1.2 "IBM Plex Sans", system-ui, sans-serif;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  left: calc(8px + env(safe-area-inset-left));
+}
+
+/* Programmatic route focus on <main> must not draw a ring around the page.
+   tabindex=-1 keeps it out of sequential keyboard and gamepad navigation. */
 main:focus-visible,
 [tabindex="-1"]:focus-visible {
   outline: none;
@@ -116,6 +278,36 @@ h2,
   border-bottom: 1px solid var(--border);
 }
 
+.network-status-notice {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0 0;
+  padding: 9px 12px;
+  border: 2px solid var(--ink);
+  border-left: 5px solid var(--scape-warn);
+  background: #241d16;
+  box-shadow: 3px 3px 0 var(--ink);
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.network-status-notice strong {
+  flex: 0 0 auto;
+  color: var(--scape-warn);
+  font-size: 11px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 600px) {
+  .network-status-notice {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 3px;
+  }
+}
+
 /* RESONANCE backdrop: ink black + halftone dot grid + radiating speed lines.
    Both are public-domain comic techniques, and the whole layer is static —
    no drifting glow, per the flat/hard-edged rule. */
@@ -161,6 +353,7 @@ h2,
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  min-height: 44px;
 }
 
 .logo-mark {
@@ -198,14 +391,23 @@ h2,
 }
 
 .header-avatar {
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   display: grid;
   place-items: center;
   flex-shrink: 0;
   margin-left: 8px;
   padding: 0;
   border: none;
+  background: transparent;
+  text-decoration: none;
+}
+
+.header-avatar-visual {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
   background: var(--accent-deep);
   color: var(--scape-accent-2);
   font-family: Anton, "Sora", sans-serif;
@@ -213,19 +415,50 @@ h2,
   font-weight: 400;
   letter-spacing: 0.04em;
   line-height: 1;
-  text-decoration: none;
   /* Hard parallelogram — matches key-chip geometry, not a soft circle */
   clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
   filter: drop-shadow(3px 3px 0 var(--ink));
 }
 
-a.header-avatar:hover {
+a.header-avatar:hover .header-avatar-visual {
   background: var(--scape-accent-2);
   color: #12100f;
 }
 
 .mobile-tabbar {
   display: none;
+}
+
+.gamepad-site-hint {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 60;
+  max-width: min(520px, calc(100vw - 32px));
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px 11px;
+  padding: 8px 12px;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--lime) 14%, rgba(18, 16, 15, 0.96));
+  box-shadow: 3px 3px 0 var(--ink);
+  color: var(--lime);
+  font: 750 9px/1.25 "IBM Plex Mono", monospace;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.gamepad-site-hint span {
+  color: var(--muted);
+}
+
+body.gamepad-ui-active :is(a, button, input, select, textarea, summary, [tabindex]):focus {
+  outline: 3px solid var(--lime) !important;
+  outline-offset: 3px !important;
 }
 
 .site-footer {
@@ -279,6 +512,34 @@ a.header-avatar:hover {
   max-width: 28rem;
   line-height: 1.55;
   margin: 0 0 20px;
+}
+
+/* The opening line is product UI, not a browser-default blockquote. Keep the
+   speaker and quote visually connected while leaving enough vertical room for
+   every opening action above the phone tab bar. */
+.hero-quote {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  max-width: 28rem;
+  margin: 0 0 18px;
+  padding-left: 14px;
+  border-left: 3px solid var(--accent);
+}
+
+.hero-quote-speaker {
+  flex: 0 0 auto;
+  color: var(--accent-text);
+  font: 700 11px/1.5 "IBM Plex Mono", monospace;
+  letter-spacing: 0.08em;
+}
+
+.hero-quote p {
+  margin: 0;
+  color: var(--text);
+  font-size: 15px;
+  font-style: italic;
+  line-height: 1.45;
 }
 
 .key-chips {
@@ -410,6 +671,65 @@ a.header-avatar:hover {
   }
 }
 
+/* 320px-class phones leave only 296px after page gutters. The desktop
+   `minmax(300px, 1fr)` column and two intrinsic-width CTAs used to push Home
+   and Library wider than the viewport. Keep the visual hierarchy, but let the
+   card truly shrink and let its actions share the available width. */
+@media (max-width: 360px) {
+  .hero-copy .tagline {
+    margin-bottom: 12px;
+  }
+
+  .hero-quote {
+    gap: 8px;
+    margin-bottom: 12px;
+    padding-left: 10px;
+  }
+
+  .hero-quote p {
+    line-height: 1.4;
+  }
+
+  .hero-entry-meta {
+    margin: 6px 0 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.35;
+  }
+
+  .curated-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .curated-card {
+    min-width: 0;
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .curated-cover {
+    width: 64px;
+    height: 64px;
+  }
+
+  .curated-actions {
+    gap: 8px;
+  }
+
+  .curated-actions .btn {
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 44px;
+    padding-inline: 8px;
+    white-space: normal;
+  }
+
+  .library-more-filters > summary small {
+    display: none;
+  }
+}
+
 .trending-section {
   margin-bottom: 32px;
 }
@@ -430,21 +750,24 @@ a.header-avatar:hover {
 }
 
 .section-link {
+  display: inline-flex;
+  align-items: center;
+  min-width: 44px;
+  min-height: 44px;
   color: var(--accent-text);
   text-decoration: none;
   font-size: 14px;
   font-weight: 600;
-  /* 热区 ≥38px：padding 撑高、负 margin 抵消，版式不动。 */
-  padding: 10px 0;
-  margin: -10px 0;
+  padding: 0 4px;
 }
 
 .back-link {
   display: inline-flex;
   align-items: center;
+  min-height: 44px;
   gap: 6px;
   margin: 0 0 20px;
-  padding: 8px 0;
+  padding: 0 4px;
   color: var(--muted);
   text-decoration: none;
   font-size: 14px;
@@ -475,7 +798,10 @@ a.header-avatar:hover {
 }
 
 .trend-card {
-  /* width 由 .trend-card-wrap（display:flex; flex-direction:column）撑开。 */
+  /* Keep the discovery rail genuinely horizontal. These links are direct
+     flex children; allowing the default flex-shrink collapses 18 cards into
+     four-pixel slivers instead of producing an intentional scroll surface. */
+  flex: 0 0 200px;
   display: flex;
   flex-direction: column;
   scroll-snap-align: start;
@@ -615,6 +941,11 @@ a.header-avatar:hover {
   margin-bottom: 4px;
 }
 
+.stream-cta-body {
+  min-width: 0;
+  flex: 1 1 0;
+}
+
 .stream-cta-body p {
   margin: 0;
   font-size: 13px;
@@ -625,6 +956,20 @@ a.header-avatar:hover {
 .stream-cta-btn {
   flex-shrink: 0;
   white-space: nowrap;
+}
+
+@media (max-width: 360px) {
+  .stream-cta {
+    flex-wrap: wrap;
+    gap: 10px 12px;
+    padding: 14px;
+  }
+
+  .stream-cta-btn {
+    flex-basis: 100%;
+    width: 100%;
+    min-height: 44px;
+  }
 }
 
 .stream-cta-soon {
@@ -706,20 +1051,81 @@ a.header-avatar:hover {
 .track-grid {
   display: grid;
   gap: 12px;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
 }
 
 .track-card {
+  position: relative;
   display: flex;
-  gap: 14px;
-  padding: 14px;
+  flex-direction: column;
+  padding: 0;
   background: var(--bg-elevated);
   border: var(--stroke-w) solid var(--ink);
   border-radius: var(--radius-md);
-  text-decoration: none;
   color: inherit;
   box-shadow: 4px 4px 0 var(--ink);
   transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.track-card-link {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+  gap: 14px;
+  padding: 14px 62px 14px 14px;
+  border-radius: calc(var(--radius-md) - var(--stroke-w));
+  color: inherit;
+  text-decoration: none;
+}
+
+.track-card-link:focus-visible {
+  outline: 3px solid var(--accent-text);
+  outline-offset: -5px;
+}
+
+.track-card-copy {
+  min-width: 0;
+}
+
+.track-card-favorite {
+  position: absolute;
+  z-index: 3;
+  top: 12px;
+  right: 12px;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  place-items: center;
+  border: 1px solid rgba(242, 228, 201, 0.24);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  background: rgba(18, 16, 15, 0.92);
+  box-shadow: 2px 2px 0 var(--ink);
+  cursor: pointer;
+  font: 700 23px/1 "IBM Plex Sans", sans-serif;
+}
+
+.track-card-favorite:hover {
+  color: var(--accent-text);
+  border-color: var(--accent-text);
+}
+
+.track-card-favorite[aria-pressed="true"] {
+  color: var(--ink);
+  border-color: var(--accent-text);
+  background: var(--accent-text);
+}
+
+.track-card-favorite:focus-visible {
+  outline: 3px solid var(--text);
+  outline-offset: 3px;
+}
+
+.track-card .track-card-favorite > span {
+  color: inherit;
+  font-size: inherit;
+  line-height: 1;
 }
 
 .track-card:hover {
@@ -760,6 +1166,10 @@ a.header-avatar:hover {
   grid-template-columns: 200px 1fr;
 }
 
+.track-detail > .back-link {
+  align-self: start;
+}
+
 .artist {
   color: var(--muted);
 }
@@ -797,7 +1207,7 @@ a.header-avatar:hover {
   align-items: center;
   gap: 8px;
   width: 100%;
-  padding: 5px 8px;
+  padding: 0 8px;
   background: #1c1717;
   border: 1.5px solid #000;
   border-radius: 6px;
@@ -805,32 +1215,78 @@ a.header-avatar:hover {
 }
 .audiobar-toggle {
   flex: 0 0 auto;
-  width: 26px;
-  height: 24px;
+  width: 44px;
+  height: 44px;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+}
+.audiobar-toggle::before {
+  content: "";
+  position: absolute;
+  width: 26px;
+  height: 24px;
   border: 1.5px solid #000;
   background: #e23d3d;
   border-radius: 4px;
-  cursor: pointer;
-  padding: 0;
   transform: skewX(-6deg);
-  /* 视觉保持小图标；命中区用伪元素扩到 ~44px 触控标准。 */
-}
-.audiobar-toggle::after {
-  content: "";
-  position: absolute;
-  inset: -9px;
 }
 .audiobar-toggle:disabled {
   opacity: 0.45;
   cursor: default;
 }
+.audiobar-compact {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.audiobar-compact .audiobar-toggle {
+  width: 100%;
+  min-height: 44px;
+  height: 44px;
+  gap: 10px;
+  padding: 0 14px;
+  color: var(--text);
+  font: 750 12px/1 "IBM Plex Sans", sans-serif;
+  letter-spacing: 0.025em;
+}
+.audiobar-compact .audiobar-toggle::before {
+  inset: 0;
+  width: auto;
+  height: auto;
+  border: 1px solid rgba(242, 228, 201, 0.22);
+  border-radius: var(--radius-sm);
+  background: rgba(226, 61, 61, 0.1);
+  transform: none;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+.audiobar-compact .audiobar-toggle:hover::before,
+.audiobar-compact .audiobar-toggle:focus-visible::before {
+  border-color: var(--accent-text);
+  background: rgba(226, 61, 61, 0.2);
+}
+.audiobar-compact .audiobar-toggle:focus-visible {
+  outline: 3px solid var(--accent-text);
+  outline-offset: 3px;
+}
+.audiobar-compact[data-playing="true"] .audiobar-toggle::before {
+  border-color: var(--accent-text);
+  background: var(--accent-deep);
+}
+.audiobar-compact-label {
+  position: relative;
+  z-index: 1;
+}
 .audiobar-ic {
+  position: relative;
+  z-index: 1;
   display: block;
-  transform: skewX(6deg); /* un-skew the icon inside the skew button */
 }
 .audiobar-ic-play {
   width: 0;
@@ -856,14 +1312,14 @@ a.header-avatar:hover {
   cursor: pointer;
   touch-action: none;
 }
-/* 8px is a tiny target on touch — extend the hit area to ~22px. */
+/* Keep the rail visually light while its pseudo-element owns a 44px touch target. */
 .audiobar-track::after {
   content: "";
   position: absolute;
   left: 0;
   right: 0;
-  top: -7px;
-  bottom: -7px;
+  top: -18px;
+  bottom: -18px;
 }
 .audiobar-track:focus-visible {
   outline: 2px solid #ffb020;
@@ -926,6 +1382,46 @@ a.header-avatar:hover {
   font-variant-numeric: tabular-nums;
 }
 
+.track-card-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(102px, auto);
+  gap: 8px;
+  margin: 0 14px 14px;
+}
+
+.track-card-preview.audiobar {
+  width: 100%;
+  margin: 0;
+}
+
+.track-card-actions .audiobar-toggle,
+.track-card-play {
+  min-height: 48px;
+}
+
+.track-card-play {
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+  margin: 0;
+  padding: 5px 10px;
+  font-size: 14px;
+  line-height: 1.05;
+  white-space: nowrap;
+}
+
+.track-card-play > span {
+  color: inherit;
+  font-size: inherit;
+}
+
+.track-card-play > small {
+  color: inherit;
+  font: 700 9px/1.2 "IBM Plex Mono", monospace;
+  letter-spacing: 0.02em;
+  opacity: 0.78;
+}
+
 .district-badge {
   display: inline-flex;
   align-items: center;
@@ -958,10 +1454,14 @@ a.header-avatar:hover {
 }
 
 .chip-link {
+  display: inline-flex;
+  align-items: center;
+  min-width: 44px;
+  min-height: 44px;
   text-decoration: none;
-  color: var(--accent);
+  color: var(--accent-text);
   border: 1px solid rgba(226, 61, 61, 0.35);
-  padding: 4px 10px;
+  padding: 0 10px;
   border-radius: 999px;
   font-size: 12px;
 }
@@ -977,6 +1477,15 @@ a.header-avatar:hover {
   color: var(--muted);
   border: 1px dashed var(--border);
   border-radius: var(--radius-md);
+}
+
+.library-empty p {
+  margin: 0;
+}
+
+.library-empty .btn {
+  min-height: 44px;
+  margin-top: 14px;
 }
 
 .track-card .district-badge {
@@ -1014,6 +1523,18 @@ body.play-immersive .site-footer {
   display: none;
 }
 
+/* The live chart owns edge gestures. Put this on the root as well as body:
+   overscroll behavior only reaches the viewport from the document root in
+   Chromium, while ordinary routes remain scrollable and zoomable. */
+html.play-immersive,
+body.play-immersive {
+  overscroll-behavior: none;
+}
+
+body.play-running .network-status-notice {
+  display: none;
+}
+
 body.play-immersive .app-shell {
   max-width: none;
   padding-left: max(8px, env(safe-area-inset-left));
@@ -1045,27 +1566,60 @@ body.play-immersive .play-page {
   z-index: 31;
 }
 
+.play-meta-heading {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
 .play-meta-tier {
   color: var(--muted);
 }
 
+.play-meta-tier-compact {
+  display: none;
+}
+
 .btn.compact {
+  min-height: 44px;
   padding: 6px 10px;
   font-size: 12px;
   margin-left: auto;
 }
 
+.play-fullscreen-icon {
+  display: none;
+}
+
 /* 退出游戏的 X —— 常驻 .play-meta 最左，也就是屏幕真正的左上角。
-   全屏下它是唯一够得着的关闭方式（手机没有 Esc，右上角那个 Fullscreen
-   又只在大屏触屏出现）。误触由游戏内退出面板兜底。 */
+   手机没有 Esc；右侧 Fullscreen 只退出沉浸显示并暂停，真正离开对局仍走这里。
+   误触由游戏内退出面板兜底。 */
 .play-exit {
   display: inline-flex;
   flex: 0 0 auto;
   align-items: center;
   justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.play-exit-visual {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 34px;
   height: 34px;
-  padding: 0;
   border-radius: var(--radius-sm);
   border: 2px solid var(--ink);
   background: var(--bg-elevated);
@@ -1073,31 +1627,38 @@ body.play-immersive .play-page {
   font-size: 15px;
   font-weight: 800;
   line-height: 1;
-  cursor: pointer;
   box-shadow: 3px 3px 0 var(--ink);
-  transition: background 120ms ease, color 120ms ease, transform 120ms ease;
+  transition: background 120ms ease, color 120ms ease, transform 120ms ease,
+    box-shadow 120ms ease;
 }
 
-.play-exit:hover,
-.play-exit:focus-visible {
+.play-exit-visual svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: square;
+}
+
+.play-exit:hover .play-exit-visual,
+.play-exit:focus-visible .play-exit-visual {
   background: var(--accent);
   color: #12100f;
 }
 
-.play-exit:active {
+.play-exit:active .play-exit-visual {
   transform: translate(3px, 3px);
   box-shadow: 0 0 0 var(--ink);
 }
 
 .play-wrap {
-  touch-action: none;
   user-select: none;
 }
 
 /* The playfield reads as a comic panel: heavy ink frame, flat ground, hard drop. */
 .play-wrap {
   position: relative;
-  touch-action: none;
   -webkit-user-select: none;
   user-select: none;
   height: calc(100dvh - 88px);
@@ -1126,22 +1687,133 @@ body.play-immersive .play-page {
   display: block;
   width: 100%;
   height: 100%;
+  touch-action: none;
+  -webkit-touch-callout: none;
 }
 
-/* B-1 · 暂停键之前在 top:10px left:50%（transform 居中），跟 .hud-signal
-   （top:14px left:50% skewX(-6deg)）几乎完全重叠——SIGNAL pill 中段被压住。
-   挪到右上：.hud-signal 独占顶中显示档位。combo 数（.hud-combo，默认
-   opacity:0，combo>0 才显）也占 right:14px，pause-btn z-index:12 在
-   .play-hud(z:6) 之上，combo 显时会盖在 pause-btn 上——暂停与 combo 同时刻
-   极窄，权衡后选了空间清晰：暂停键永远可点。 */
+.play-failure {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background:
+    linear-gradient(rgba(18, 16, 15, 0.84), rgba(84, 10, 22, 0.9)),
+    var(--halftone);
+  background-size: auto, 10px 10px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 80ms linear;
+}
+
+.play-failure[data-show="1"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.play-failure-card {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  width: min(360px, 88%);
+  padding: 22px 28px 24px;
+  border: 4px solid var(--ink);
+  background: var(--accent);
+  color: #12100f;
+  box-shadow: 8px 8px 0 var(--ink);
+  transform: skewX(-4deg);
+  text-align: center;
+}
+
+.play-failure-card strong {
+  font: 400 clamp(2.2rem, 9vw, 4.4rem)/0.95 Anton, "Sora", sans-serif;
+  letter-spacing: 0.035em;
+}
+
+.play-failure-card span {
+  font: 800 0.72rem/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.18em;
+}
+
+/* A multi-rep drill reuses the normal 3-second count-in instead of inserting
+   another results screen. This compact hand-off makes the reset legible and
+   gives the player one actionable comparison without covering the receptor. */
+.drill-recap {
+  position: absolute;
+  top: 72px;
+  left: 50%;
+  z-index: 9;
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  width: min(250px, calc(100% - 32px));
+  padding: 8px 12px 9px;
+  border: 2px solid var(--ink);
+  border-left: 5px solid var(--scape-gold);
+  background: rgba(18, 16, 15, 0.94);
+  box-shadow: 4px 4px 0 var(--ink);
+  color: var(--text);
+  pointer-events: none;
+  transform: translateX(-50%) skewX(-3deg);
+  text-align: center;
+}
+
+.drill-recap > * {
+  transform: skewX(3deg);
+}
+
+.drill-recap span,
+.drill-recap small {
+  font: 800 9px/1.15 "IBM Plex Mono", monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.drill-recap span {
+  color: var(--scape-gold);
+}
+
+.drill-recap strong {
+  font: 750 14px/1.2 "Sora", "IBM Plex Sans", sans-serif;
+}
+
+.drill-recap small {
+  color: var(--muted);
+}
+
+@media (orientation: portrait) and (max-width: 520px) {
+  .drill-recap {
+    top: 66px;
+    width: min(218px, calc(100% - 24px));
+    padding: 7px 9px 8px;
+  }
+}
+
+/* SIGNAL 独占顶中；暂停键固定右上。连击只在 Canvas 视线中心显示，避免
+   旧 DOM combo 长期被暂停键遮住，也避免同一连击出现两份。 */
 .pause-btn {
   position: absolute;
-  top: 14px;
-  right: 14px;
+  top: 11px;
+  right: 11px;
   z-index: 12;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.pause-btn-visual {
+  display: grid;
+  place-items: center;
   width: 38px;
   height: 38px;
-  padding: 0;
   border-radius: var(--radius-sm);
   border: 2px solid var(--ink);
   background: var(--scape-accent-2);
@@ -1149,11 +1821,18 @@ body.play-immersive .play-page {
   font-size: 16px;
   font-weight: 800;
   line-height: 1;
-  cursor: pointer;
   box-shadow: 3px 3px 0 var(--ink);
+  transition: background 120ms ease, color 120ms ease, box-shadow 120ms ease;
 }
 
-.pause-btn:hover {
+.pause-btn-visual svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.pause-btn:hover .pause-btn-visual,
+.pause-btn:focus-visible .pause-btn-visual {
   background: var(--accent);
   color: var(--scape-accent-2);
   box-shadow: 4px 4px 0 var(--ink);
@@ -1197,7 +1876,7 @@ body.play-immersive .play-page {
   letter-spacing: 0.06em;
   text-transform: uppercase;
   padding: 14px 28px;
-  background: var(--accent);
+  background: var(--accent-deep);
   color: var(--scape-accent-2);
   border: 3px solid var(--ink);
   border-radius: var(--radius-sm);
@@ -1215,6 +1894,32 @@ body.play-immersive .play-page {
 .overlay .btn.primary.unlock-btn:active {
   transform: translate(2px, 2px);
   box-shadow: 2px 2px 0 var(--ink);
+}
+
+.overlay .unlock-btn:disabled,
+.overlay .btn.primary.unlock-btn:disabled,
+.overlay .unlock-btn:disabled:hover,
+.overlay .btn.primary.unlock-btn:disabled:hover {
+  cursor: wait;
+  opacity: 0.72;
+  transform: none;
+  box-shadow: 5px 5px 0 var(--ink);
+}
+
+.overlay .unlock-btn[data-loading="true"],
+.overlay .btn.primary.unlock-btn[data-loading="true"] {
+  background: #29221f;
+  color: var(--scape-accent-2);
+  border-color: var(--accent);
+  opacity: 1;
+  cursor: progress;
+}
+
+.start-run-error {
+  max-width: 32rem;
+  margin: 0;
+  color: var(--accent2);
+  font: 700 12px/1.45 "IBM Plex Mono", monospace;
 }
 
 .overlay-kicker {
@@ -1244,6 +1949,14 @@ body.play-immersive .play-page {
   color: var(--scape-warn);
 }
 
+.load-error-detail {
+  max-width: min(30rem, 100%);
+  overflow-wrap: anywhere;
+  color: var(--muted);
+  font: 600 11px/1.4 "IBM Plex Mono", monospace;
+  text-align: center;
+}
+
 /* ===== B-1 · 分镜式 HUD（叠加在 play-canvas 上，pointer-events:none） ===== */
 /* 容器只读，不拦截指针；唯一可交互的暂停键由 PlayField 自带（z-index 12）。 */
 .play-hud {
@@ -1254,16 +1967,16 @@ body.play-immersive .play-page {
   font-family: "Sora", "IBM Plex Sans", sans-serif;
 }
 
-/* 左上曲目胶囊：硬边色块 + 轻微 skew，漫画分镜画框语汇。 */
+/* 左上表现卡：顶部栏已经显示曲名 / 难度，这里只留对读谱有用的实时数据。 */
 .hud-chip {
   position: absolute;
   top: 14px;
   left: 14px;
   display: flex;
   flex-direction: column;
-  gap: 3px;
-  max-width: 58%;
-  padding: 8px 12px;
+  gap: 4px;
+  width: clamp(132px, 34%, 158px);
+  padding: 7px 11px;
   background: var(--scape-accent-2);
   color: #12100f;
   border: 3px solid var(--ink);
@@ -1273,39 +1986,159 @@ body.play-immersive .play-page {
 .hud-chip > * {
   transform: skewX(3deg); /* 内容反向 skew，保持文字端正 */
 }
-.hud-track-title {
-  font-family: Anton, "Sora", sans-serif;
-  font-size: 1rem;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  /* Anton 的 cap height 高于 1em：line-height:1 + overflow:hidden 会把大写字母
-     上下各切掉约 2px。 */
-  line-height: 1.4;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.hud-track-tier {
-  font: 700 10px/1 "IBM Plex Mono", monospace;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  opacity: 0.78;
-}
-.hud-track-score {
+
+.hud-performance-head,
+.hud-performance-meta {
   display: flex;
-  align-items: baseline;
-  gap: 6px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.hud-performance-head {
+  min-height: 13px;
+}
+
+.hud-track-score {
+  display: block;
   font-variant-numeric: tabular-nums;
 }
 .hud-track-score-label {
   font: 700 9px/1 "IBM Plex Mono", monospace;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   opacity: 0.7;
+}
+
+.hud-score-target {
+  min-width: 0;
+  margin-left: auto;
+  overflow: hidden;
+  color: rgba(18, 16, 15, 0.76);
+  font: 900 8px/1 "IBM Plex Mono", monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hud-score-target[data-state="tied"] {
+  color: #67460c;
+}
+
+.hud-score-target[data-state="ahead"] {
+  color: #155332;
 }
 .hud-track-score > span:last-child {
   font-family: Anton, "Sora", sans-serif;
-  font-size: 1.05rem;
+  font-size: 1.4rem;
+  line-height: 1;
   letter-spacing: 0.02em;
+}
+
+.hud-performance-meta {
+  font: 700 8px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.05em;
+  font-variant-numeric: tabular-nums;
+}
+
+.hud-track-accuracy b {
+  margin-right: 3px;
+  font-size: 7px;
+  letter-spacing: 0.1em;
+  opacity: 0.62;
+}
+
+.hud-progress-count {
+  opacity: 0.7;
+}
+
+.hud-progress-rail {
+  position: relative;
+  display: block;
+  height: 4px;
+  overflow: hidden;
+  border: 1px solid rgba(18, 16, 15, 0.62);
+  background: rgba(18, 16, 15, 0.18);
+}
+
+.hud-progress-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  display: block;
+  width: 0;
+  background: var(--accent);
+}
+
+/* Arcade survival belongs beside the other live run data. The former Canvas
+   rail crossed underneath SIGNAL and Pause; this compact row has one clear
+   label, a glanceable reserve, and a precise value without covering lanes. */
+.hud-hp {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(30px, 1fr) 3ch;
+  align-items: center;
+  gap: 5px;
+  min-height: 8px;
+  font: 800 7px/1 "IBM Plex Mono", monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+}
+
+.hud-hp-label {
+  opacity: 0.7;
+}
+
+.hud-hp-rail {
+  position: relative;
+  display: block;
+  height: 6px;
+  overflow: hidden;
+  border: 1px solid rgba(18, 16, 15, 0.72);
+  background: rgba(18, 16, 15, 0.2);
+}
+
+.hud-hp-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  display: block;
+  width: 100%;
+  background: var(--scape-gold);
+}
+
+.hud-hp-value {
+  text-align: right;
+}
+
+/* A short, local damage receipt explains an Arcade HP drop without adding
+   another persistent HUD value or covering the receptor line. Multiple misses
+   sampled together intentionally appear as one exact aggregate loss. */
+.hud-hp-damage {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: -1px;
+  padding: 2px 4px;
+  border: 1px solid #12100f;
+  background: var(--accent);
+  color: #12100f;
+  font: 900 8px/1 "IBM Plex Mono", monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+  opacity: 0;
+  transform: translateY(-2px);
+  transition: opacity 80ms linear, transform 80ms ease-out;
+}
+
+.hud-hp-damage[data-show="1"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hud-hp[data-critical="1"] {
+  color: #9f1515;
+}
+
+.hud-hp[data-critical="1"] .hud-hp-fill {
+  background: var(--accent);
 }
 
 /* 顶部 SIGNAL 档位 pill：跟随 surgeTier 换色，硬边 + skew。 */
@@ -1322,6 +2155,7 @@ body.play-immersive .play-page {
   background: var(--muted);
   border: 3px solid var(--ink);
   box-shadow: 4px 4px 0 var(--ink);
+  transition: opacity 100ms linear, visibility 100ms linear;
 }
 .hud-signal > * {
   transform: skewX(6deg);
@@ -1333,84 +2167,229 @@ body.play-immersive .play-page {
   color: #12100f;
 }
 
-/* 右上 combo 大数字：combo>0 才显（data-show 控制），硬描边漫画字。 */
-.hud-combo {
-  position: absolute;
-  top: 12px;
-  right: 14px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  transform: skewX(-4deg);
+.hud-signal[data-assist="1"] {
   opacity: 0;
-  transition: opacity 0.16s ease;
-}
-.hud-combo[data-show="1"] { opacity: 1; }
-.hud-combo > * {
-  transform: skewX(4deg);
-}
-.hud-combo-num {
-  font-family: Anton, "Sora", sans-serif;
-  font-size: 3.2rem;
-  line-height: 0.86;
-  color: var(--scape-accent-2);
-  -webkit-text-stroke: 2px var(--ink);
-  paint-order: stroke fill;
-  font-variant-numeric: tabular-nums;
-}
-.hud-combo-label {
-  font: 800 11px/1 "IBM Plex Mono", monospace;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--accent-text);
+  visibility: hidden;
 }
 
-/* 底部判定计数条：四色硬边小面板，顶部色条对应判定色。 */
-.hud-judges {
-  position: absolute;
-  left: 14px;
-  right: 14px;
-  bottom: 14px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
+/* Portrait phones need the note highway more than they need desktop-scale
+   chrome. Keep the score card close to one lane wide and tighten its vertical
+   rhythm so notes in lane two become readable earlier, while preserving every
+   live value and the independent 44px pause target. */
+@media (orientation: portrait) and (max-width: 520px) {
+  .play-wrap:not(.play-wrap-duo) .hud-chip {
+    top: 10px;
+    left: 10px;
+    width: min(118px, 30%);
+    gap: 2px;
+    padding: 5px 8px;
+    box-shadow: 3px 3px 0 var(--ink);
+  }
+
+  .play-wrap:not(.play-wrap-duo) .hud-performance-head {
+    gap: 3px;
+    min-height: 11px;
+  }
+
+  .play-wrap:not(.play-wrap-duo) .hud-track-score-label {
+    font-size: 8px;
+    letter-spacing: 0.08em;
+  }
+
+  .play-wrap:not(.play-wrap-duo) .hud-score-target {
+    font-size: 7px;
+    letter-spacing: 0;
+  }
+
+  .play-wrap:not(.play-wrap-duo) .hud-track-score > span:last-child {
+    font-size: 1.15rem;
+  }
+
+  .play-wrap:not(.play-wrap-duo) .hud-performance-meta {
+    gap: 5px;
+    font-size: 7px;
+  }
+
+  .play-wrap:not(.play-wrap-duo) .hud-track-accuracy b {
+    font-size: 6px;
+  }
+
+  .play-wrap:not(.play-wrap-duo) .hud-signal {
+    top: 10px;
+    padding: 5px 10px;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    box-shadow: 3px 3px 0 var(--ink);
+  }
+
+  .play-wrap:not(.play-wrap-duo) .pause-btn {
+    top: 5px;
+    right: 5px;
+  }
 }
-.hud-judge {
+
+/* Practice intentionally changes the song to 0.5× after three misses. Make
+   that assist explicit so a deliberate training feature never reads as lag. */
+.hud-practice-assist,
+.hud-opening-coach {
+  position: absolute;
+  top: 102px;
+  left: 50%;
+  z-index: 7;
+  max-width: calc(100% - 28px);
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 3px;
-  padding: 6px 4px 7px;
-  background: rgba(18, 16, 15, 0.84);
+  gap: 8px;
+  padding: 7px 10px;
+  color: #12100f;
+  background: var(--scape-gold);
   border: 2px solid var(--ink);
   box-shadow: 3px 3px 0 var(--ink);
+  transform: translate(-50%, -5px) skewX(-4deg);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 120ms ease, transform 120ms ease, visibility 120ms;
+  white-space: nowrap;
 }
-.hud-judge-label {
-  font: 700 9px/1 "IBM Plex Mono", monospace;
+
+.hud-practice-assist[data-show="1"],
+.hud-opening-coach[data-show="1"] {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0) skewX(-4deg);
+}
+
+.hud-practice-assist > *,
+.hud-opening-coach > * {
+  transform: skewX(4deg);
+}
+
+.hud-practice-assist strong,
+.hud-opening-coach strong {
+  font: 800 9px/1 "IBM Plex Mono", monospace;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--muted);
 }
-.hud-judge-count {
-  font-family: Anton, "Sora", sans-serif;
-  font-size: 1.4rem;
-  line-height: 1;
-  color: var(--scape-accent-2);
+
+.hud-practice-assist span {
+  font: 800 11px/1 "IBM Plex Mono", monospace;
   font-variant-numeric: tabular-nums;
 }
-.hud-judge-perfect { border-top: 3px solid var(--lane1); } /* Perfect · 米 */
-.hud-judge-great { border-top: 3px solid var(--lane2); }   /* Great · 琥珀 */
-.hud-judge-good { border-top: 3px solid var(--lane3); }    /* Good · 蓝 */
-.hud-judge-miss { border-top: 3px solid var(--lane0); }    /* Miss · 红 */
 
-@media (max-width: 420px) {
-  .hud-combo-num { font-size: 2.6rem; }
-  .hud-judge-count { font-size: 1.15rem; }
-  .hud-chip { max-width: 54%; }
+/* A slowdown should reveal notes, not cover them. Practice state borrows the
+   decorative SIGNAL slot and returns it when the assist/tempo ends. */
+.hud-practice-assist {
+  top: 14px;
+  min-width: 104px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  padding: 4px 9px;
+  text-align: center;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .hud-combo { transition: none; }
+.hud-practice-assist strong {
+  font-size: 8px;
+  letter-spacing: 0.08em;
+}
+
+.hud-practice-assist span {
+  font-size: 9px;
+}
+
+.hud-practice-assist::before {
+  display: none;
+}
+
+.hud-opening-coach {
+  /* Replace the zero-score card in place. A rescue message that creates a
+     second opaque island in the lane highway makes the next note harder to
+     read—the opposite of what this state is for. */
+  top: 14px;
+  left: 14px;
+  width: clamp(132px, 34%, 158px);
+  min-height: 80px;
+  max-width: calc(100% - 28px);
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  background: var(--lane3);
+  text-align: center;
+  transform: translateY(-5px) skewX(-3deg);
+  white-space: normal;
+}
+
+.hud-opening-coach[data-show="1"] {
+  transform: skewX(-3deg);
+}
+
+.hud-opening-coach > * {
+  transform: skewX(3deg);
+}
+
+.hud-opening-coach strong {
+  font-size: 10px;
+}
+
+.hud-opening-coach span {
+  font: 750 12px/1.25 "IBM Plex Sans", sans-serif;
+  letter-spacing: 0.02em;
+}
+
+.hud-opening-progress {
+  color: rgba(18, 16, 15, 0.72);
+  font: 800 9px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 420px) {
+  .hud-chip { width: 128px; }
+  .hud-opening-coach { width: 128px; }
+}
+
+@media (orientation: portrait) and (max-width: 520px) {
+  /* The rescue coach replaces the compact score card at the same anchor. It
+     may grow a few pixels on the narrowest phones so its instruction remains
+     legible, but no longer restores the old 128px HUD footprint. */
+  .play-wrap:not(.play-wrap-duo) .hud-opening-coach {
+    top: 10px;
+    left: 10px;
+    width: min(118px, 30%);
+    min-height: 68px;
+    padding: 5px 7px;
+  }
+
+  .play-wrap:not(.play-wrap-duo) .hud-practice-assist {
+    top: 10px;
+    min-width: 88px;
+    padding: 4px 7px;
+    box-shadow: 3px 3px 0 var(--ink);
+  }
+}
+
+@media (orientation: portrait) and (max-width: 360px) {
+  /* Keep the rescue title on one line at 320px; the instruction stays 12px. */
+  .play-wrap:not(.play-wrap-duo) .hud-opening-coach {
+    width: min(118px, 36%);
+  }
+
+  .play-wrap:not(.play-wrap-duo) .hud-opening-coach strong {
+    font-size: 9px;
+  }
+
+  .play-wrap:not(.play-wrap-duo) .hud-practice-assist strong {
+    display: none;
+  }
+
+  .play-wrap:not(.play-wrap-duo) .hud-practice-assist::before {
+    display: block;
+    content: attr(data-short-label);
+    font: 800 8px/1 "IBM Plex Mono", monospace;
+    letter-spacing: 0.08em;
+    transform: skewX(4deg);
+  }
 }
 
 .unlock-hint {
@@ -1426,6 +2405,367 @@ body.play-immersive .play-page {
   opacity: 0.88;
 }
 
+.challenge-target,
+.personal-best-target,
+.daily-run-context {
+  width: min(390px, calc(100vw - 104px));
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 3px 14px;
+  padding: 10px 12px;
+  border: 2px solid var(--scape-gold);
+  background: rgba(255, 176, 32, 0.1);
+  box-shadow: 3px 3px 0 var(--ink);
+  text-align: left;
+}
+
+.challenge-target span,
+.challenge-target strong,
+.personal-best-target span,
+.personal-best-target strong,
+.daily-run-context span,
+.daily-run-context strong {
+  grid-column: 1;
+}
+
+.challenge-target span,
+.personal-best-target span,
+.daily-run-context span {
+  color: var(--scape-gold);
+  font: 800 9px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.challenge-target strong,
+.personal-best-target strong,
+.daily-run-context strong {
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.2;
+}
+
+.challenge-target small,
+.personal-best-target small,
+.daily-run-context small {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.35;
+  text-align: right;
+}
+
+.daily-run-context {
+  border-color: var(--ok);
+  background: color-mix(in srgb, var(--ok) 10%, transparent);
+}
+
+.daily-run-context span {
+  color: var(--ok);
+}
+
+.personal-best-target {
+  border-color: var(--lime);
+  background: color-mix(in srgb, var(--lime) 9%, transparent);
+}
+
+.personal-best-target span {
+  color: var(--lime);
+}
+
+.unlock-note-speed {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 7px;
+  margin: -2px 0 0;
+  color: var(--muted);
+  font: 700 10px/1.2 "IBM Plex Mono", monospace;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.unlock-note-speed strong {
+  color: var(--lime);
+  font-size: 12px;
+}
+
+.unlock-note-speed span::before {
+  content: "· ";
+}
+
+.unlock-note-speed-control {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 44px;
+  width: min(250px, 100%);
+  min-height: 52px;
+  margin: -5px 0 0;
+  overflow: hidden;
+  border: 2px solid color-mix(in srgb, var(--muted) 52%, transparent);
+  background: color-mix(in srgb, var(--bg) 90%, transparent);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.unlock-note-speed-control button {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: var(--bg-elevated);
+  color: var(--text);
+  cursor: pointer;
+  font: 900 22px/1 "IBM Plex Mono", monospace;
+}
+
+.unlock-note-speed-control button:first-child {
+  border-right: 2px solid var(--ink);
+}
+
+.unlock-note-speed-control button:last-child {
+  border-left: 2px solid var(--ink);
+}
+
+.unlock-note-speed-control button:hover:not(:disabled) {
+  background: var(--accent-deep);
+  color: var(--lime);
+}
+
+.unlock-note-speed-control button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.unlock-note-speed-control button:focus-visible {
+  position: relative;
+  z-index: 1;
+}
+
+.unlock-note-speed-control button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.unlock-note-speed-control output {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  padding: 3px 8px;
+  text-align: center;
+  font-family: "IBM Plex Mono", monospace;
+  text-transform: uppercase;
+}
+
+.unlock-note-speed-control output span {
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.unlock-note-speed-control output strong {
+  color: var(--lime);
+  font-size: 13px;
+}
+
+.unlock-note-speed-control output small {
+  color: var(--muted);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.unlock-practice-tempo {
+  display: grid;
+  gap: 5px;
+  width: min(280px, calc(100vw - 104px));
+  margin: -7px 0 0;
+  padding: 0;
+  border: 0;
+}
+
+.unlock-practice-tempo legend {
+  margin: 0 auto;
+  padding: 0;
+  color: var(--scape-gold);
+  font: 850 10px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.unlock-practice-tempo > p {
+  margin: 0;
+  color: var(--muted);
+  font: 650 8px/1.1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+}
+
+.unlock-practice-tempo .practice-tempo-options {
+  gap: 5px;
+}
+
+.unlock-practice-tempo .practice-tempo-options label {
+  min-height: 44px;
+}
+
+.unlock-mechanics {
+  width: min(390px, calc(100vw - 104px));
+  padding: 9px;
+  border: 2px solid var(--ink);
+  background: rgba(242, 228, 201, 0.06);
+  box-shadow: 3px 3px 0 var(--ink);
+  text-align: left;
+}
+
+.unlock-mechanics-label {
+  display: block;
+  margin: 0 3px 7px;
+  color: var(--accent-text);
+  font: 800 9px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.unlock-mechanics-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 6px;
+}
+
+.unlock-mechanic {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  padding: 7px 8px 7px 10px;
+  border-left: 4px solid var(--lane1);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.unlock-mechanic-chord { border-left-color: var(--lane0); }
+.unlock-mechanic-slide { border-left-color: var(--lane3); }
+
+.unlock-mechanic-copy {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+/* Miniature notation previews bridge the ready-card instruction to the exact
+   connected diamonds a first-time player is about to read on the highway. */
+.unlock-mechanic-preview {
+  position: relative;
+  display: block;
+  width: 42px;
+  height: 34px;
+}
+
+.unlock-mechanic-note,
+.unlock-mechanic-path {
+  position: absolute;
+  display: block;
+}
+
+.unlock-mechanic-note {
+  z-index: 2;
+  width: 13px;
+  height: 13px;
+  border: 2px solid var(--ink);
+  background: var(--scape-accent-2);
+  box-shadow: 1px 1px 0 var(--ink);
+  transform: rotate(45deg);
+}
+
+.unlock-mechanic-hold .unlock-mechanic-note {
+  left: 14px;
+}
+
+.unlock-mechanic-hold .unlock-mechanic-note-start {
+  top: 1px;
+}
+
+.unlock-mechanic-hold .unlock-mechanic-note-end {
+  bottom: 1px;
+}
+
+.unlock-mechanic-hold .unlock-mechanic-path {
+  z-index: 1;
+  top: 7px;
+  bottom: 7px;
+  left: 15px;
+  width: 11px;
+  border-inline: 2px solid var(--ink);
+  background: color-mix(in srgb, var(--lane1) 72%, transparent);
+}
+
+.unlock-mechanic-chord .unlock-mechanic-note {
+  top: 10px;
+}
+
+.unlock-mechanic-chord .unlock-mechanic-note-start {
+  left: 2px;
+  background: var(--lane0);
+}
+
+.unlock-mechanic-chord .unlock-mechanic-note-end {
+  right: 2px;
+  background: var(--lane3);
+}
+
+.unlock-mechanic-chord .unlock-mechanic-path {
+  z-index: 1;
+  top: 14px;
+  right: 7px;
+  left: 7px;
+  height: 6px;
+  border-block: 2px solid var(--ink);
+  background: var(--scape-accent-2);
+}
+
+.unlock-mechanic-slide .unlock-mechanic-note-start {
+  bottom: 2px;
+  left: 2px;
+  background: var(--lane1);
+}
+
+.unlock-mechanic-slide .unlock-mechanic-note-end {
+  top: 2px;
+  right: 2px;
+  background: var(--lane2);
+}
+
+.unlock-mechanic-slide .unlock-mechanic-path {
+  z-index: 1;
+  top: 16px;
+  left: 7px;
+  width: 29px;
+  border-top: 4px dashed var(--scape-accent-2);
+  filter: drop-shadow(0 2px 0 var(--ink));
+  transform: rotate(-31deg);
+  transform-origin: center;
+}
+
+.unlock-mechanic b {
+  color: var(--scape-accent-2);
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.unlock-mechanic small {
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.35;
+}
+
 .unlock-keys {
   display: flex;
   gap: 6px;
@@ -1437,6 +2777,149 @@ body.play-immersive .play-page {
   min-width: 36px;
   padding: 6px 10px;
   font-size: 13px;
+}
+
+.unlock-gamepad {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 42px;
+  margin: 1px 0 3px;
+  padding: 6px 10px;
+  border: 2px solid var(--ink);
+  background: color-mix(in srgb, var(--lime) 13%, rgba(18, 16, 15, 0.9));
+  box-shadow: 3px 3px 0 var(--ink);
+  text-align: left;
+}
+
+.unlock-gamepad-buttons {
+  color: var(--lime);
+  font: 900 12px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.unlock-gamepad > span:last-child {
+  display: grid;
+  gap: 2px;
+}
+
+.unlock-gamepad strong,
+.unlock-gamepad small {
+  font-family: "IBM Plex Mono", monospace;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.unlock-gamepad strong {
+  color: var(--text);
+  font-size: 10px;
+  letter-spacing: 0.09em;
+}
+
+.unlock-gamepad small {
+  color: var(--muted);
+  font-size: 8px;
+  letter-spacing: 0.06em;
+}
+
+.unlock-gamepad-start {
+  margin: -1px 0 1px;
+  color: var(--muted);
+  font: 750 9px/1.25 "IBM Plex Mono", monospace;
+  letter-spacing: 0.055em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.unlock-gamepad-start[data-ready="true"] {
+  color: var(--lime);
+}
+
+.unlock-touch-lanes {
+  display: flex;
+  gap: 7px;
+  margin: 2px 0 4px;
+  filter: drop-shadow(2px 2px 0 var(--ink));
+}
+
+.unlock-touch-lanes span {
+  position: relative;
+  width: 34px;
+  height: 30px;
+  border: 2px solid var(--ink);
+  background: var(--accent);
+  clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+}
+
+.unlock-touch-lanes span::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  background: var(--scape-accent-2);
+  transform: translate(-50%, -50%);
+}
+
+.unlock-touch-lanes span:nth-child(2) {
+  background: var(--scape-accent-2);
+}
+
+.unlock-touch-lanes span:nth-child(2)::after {
+  background: var(--accent);
+}
+
+.unlock-touch-lanes span:nth-child(3) {
+  background: var(--scape-warn);
+}
+
+.unlock-touch-lanes span:nth-child(4) {
+  background: var(--lane3);
+}
+
+/* Desktop players can pause/retry without leaving the note highway. Keep the
+   hint secondary to Start and omit it entirely from touch/Duo ready cards. */
+.unlock-shortcuts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px 14px;
+  margin: -3px 0 -5px;
+  color: var(--muted);
+  font: 750 9px/1.2 "IBM Plex Mono", monospace;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+.unlock-shortcuts > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.unlock-shortcuts kbd {
+  min-width: 22px;
+  padding: 3px 5px;
+  border: 1px solid color-mix(in srgb, var(--muted) 68%, var(--ink));
+  background: rgba(242, 228, 201, 0.06);
+  box-shadow: 1px 1px 0 var(--ink);
+  color: var(--scape-accent-2);
+  font: 800 9px/1 "IBM Plex Mono", monospace;
+}
+
+.unlock-shortcuts i {
+  margin: 0 -2px;
+  font-style: normal;
+}
+
+.unlock-shortcuts b {
+  color: var(--muted);
+  font: inherit;
 }
 
 /* 打歌前的声音 / 时序入口。
@@ -1458,9 +2941,17 @@ body.play-immersive .play-page {
   box-shadow: 2px 2px 0 var(--ink);
 }
 
+.unlock-sound-error {
+  margin-top: 8px;
+  text-align: center;
+}
+
 .unlock-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   color: var(--scape-accent-2);
-  padding: 12px 0;
+  padding: 0;
   font-family: "Sora", "IBM Plex Sans", sans-serif;
   font-size: 0.76rem;
   font-weight: 700;
@@ -1470,14 +2961,11 @@ body.play-immersive .play-page {
   text-underline-offset: 3px;
 }
 
-/* "No sound?" 段内行内链接（Settings）热区扩到 ~32px 高，不影响行文。 */
+/* "No sound?" 段内 Settings 链接也必须是完整的 44px 目标。 */
 .unlock-nosound a {
-  position: relative;
-}
-.unlock-nosound a::after {
-  content: "";
-  position: absolute;
-  inset: -9px -5px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
 }
 
 .unlock-nosound {
@@ -1489,6 +2977,8 @@ body.play-immersive .play-page {
 }
 
 .unlock-nosound > summary {
+  min-height: 44px;
+  line-height: 44px;
   cursor: pointer;
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -1504,6 +2994,17 @@ body.play-immersive .play-page {
   color: var(--accent2);
 }
 
+/* Ownership remains available on the ready card without leading the player's
+   first gameplay decision. Mode / mission context owns the primary kicker. */
+.unlock-rights {
+  margin: -8px 0 0;
+  color: var(--muted);
+  font: 650 9px/1.2 "IBM Plex Mono", monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
 .error {
   color: var(--accent2);
   margin: 24px 0;
@@ -1512,6 +3013,59 @@ body.play-immersive .play-page {
 .results {
   text-align: center;
   padding: 24px 0 40px;
+}
+
+.results-empty {
+  padding-top: clamp(32px, 8vh, 72px);
+}
+
+.results-empty-card {
+  width: min(100%, 560px);
+  margin: 0 auto;
+  padding: clamp(22px, 5vw, 36px);
+  overflow: hidden;
+  border: 2px solid var(--ink);
+  border-top: 6px solid var(--accent);
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
+  box-shadow: 6px 6px 0 var(--ink);
+  text-align: left;
+}
+
+.results-empty-card .eyebrow {
+  margin: 0 0 8px;
+}
+
+.results-empty-card h1 {
+  margin: 0;
+  font-size: clamp(2.2rem, 8vw, 3.2rem);
+  line-height: 1;
+}
+
+.results-empty-card .tagline {
+  max-width: 42ch;
+  margin: 16px 0 0;
+  line-height: 1.55;
+}
+
+.results-empty-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.results-empty-actions .btn {
+  min-width: 0;
+  min-height: 46px;
+  padding: 10px 14px;
+  text-align: center;
+}
+
+@media (max-width: 380px) {
+  .results-empty-actions {
+    grid-template-columns: 1fr;
+  }
 }
 
 .results-meta {
@@ -1585,6 +3139,70 @@ body.play-immersive .play-page {
   }
 }
 
+/* Results diagnostics stay glanceable on phones and expanded on wider screens. */
+.result-diagnostics {
+  max-width: 460px;
+  margin: 20px auto 4px;
+  overflow: hidden;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
+  box-shadow: 4px 4px 0 var(--ink);
+  text-align: left;
+}
+
+.result-diagnostics > summary {
+  min-height: 48px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto 18px;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.result-diagnostics > summary::-webkit-details-marker {
+  display: none;
+}
+
+.result-diagnostics > summary::after {
+  content: "+";
+  color: var(--accent-text);
+  font: 800 18px/1 "IBM Plex Mono", monospace;
+  text-align: center;
+}
+
+.result-diagnostics[open] > summary {
+  border-bottom: 2px solid var(--ink);
+}
+
+.result-diagnostics[open] > summary::after {
+  content: "−";
+}
+
+.result-diagnostics > summary > span {
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.result-diagnostics > summary > small {
+  color: var(--muted);
+  font: 700 10px/1.2 "IBM Plex Mono", monospace;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.result-diagnostics > summary:focus-visible {
+  outline: 3px solid var(--accent2);
+  outline-offset: -5px;
+}
+
+.result-diagnostics-body {
+  padding: 14px 16px 16px;
+}
+
 /* Judgment distribution bars */
 .judge-bars {
   max-width: 420px;
@@ -1644,6 +3262,14 @@ body.play-immersive .play-page {
   max-width: 420px;
   margin: 18px auto 4px;
   animation: barIn 0.5s ease both;
+}
+
+.result-diagnostics .judge-bars {
+  margin: 0 auto;
+}
+
+.result-diagnostics .timing-bar {
+  margin-bottom: 0;
 }
 .timing-head {
   display: flex;
@@ -1706,6 +3332,658 @@ body.play-immersive .play-page {
   }
 }
 
+/* Results should end with one concrete improvement, not a wall of telemetry. */
+.result-coach {
+  --coach-color: var(--accent);
+  max-width: 520px;
+  margin: 22px auto 18px;
+  overflow: hidden;
+  border: 2px solid var(--ink);
+  border-left: 6px solid var(--coach-color);
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
+  box-shadow: 5px 5px 0 var(--ink);
+  text-align: left;
+}
+
+.challenge-result {
+  --challenge-color: var(--accent);
+  max-width: 520px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 5px 16px;
+  margin: 0 auto 18px;
+  padding: 13px 15px;
+  border: 2px solid var(--ink);
+  border-left: 6px solid var(--challenge-color);
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
+  box-shadow: 4px 4px 0 var(--ink);
+  text-align: left;
+}
+
+.challenge-result[data-outcome="cleared"] { --challenge-color: var(--ok); }
+.challenge-result[data-outcome="tied"] { --challenge-color: var(--scape-gold); }
+
+.challenge-result > div {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.challenge-result > div span {
+  color: var(--challenge-color);
+  font: 800 9px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.challenge-result > div strong {
+  color: var(--text);
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.challenge-result-delta {
+  color: var(--challenge-color);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.challenge-result > small {
+  grid-column: 1;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.challenge-result-retry.btn {
+  grid-column: 2;
+  grid-row: 2;
+  justify-self: end;
+  min-height: 44px;
+  margin: 0;
+  padding: 7px 12px;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.daily-result {
+  max-width: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin: 0 auto 18px;
+  padding: 13px 15px;
+  border: 2px solid var(--ink);
+  border-left: 6px solid var(--ok);
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
+  box-shadow: 4px 4px 0 var(--ink);
+  text-align: left;
+}
+
+.daily-result[data-state="failed"] {
+  border-left-color: var(--accent);
+}
+
+.daily-result-copy {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.daily-result-copy > span {
+  color: var(--ok);
+  font: 800 9px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.daily-result[data-state="failed"] .daily-result-copy > span {
+  color: var(--accent);
+}
+
+.daily-result-copy > strong {
+  color: var(--text);
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.daily-result-copy > small {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.daily-result-actions {
+  flex: 0 0 auto;
+  display: grid;
+  gap: 7px;
+}
+
+.daily-result-actions .btn {
+  min-height: 44px;
+  margin: 0;
+  padding: 7px 12px;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.results-streak-update {
+  max-width: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin: 0 auto 18px;
+  padding: 13px 15px;
+  border: 2px solid var(--ink);
+  border-left: 6px solid var(--scape-gold);
+  border-radius: var(--radius-md);
+  background: linear-gradient(105deg, rgba(255, 176, 32, 0.12), var(--bg-elevated) 62%);
+  box-shadow: 4px 4px 0 var(--ink);
+  text-align: left;
+}
+
+.results-streak-update[data-kind="extended"] {
+  border-left-color: var(--scape-accent-2);
+  background: linear-gradient(105deg, rgba(92, 184, 148, 0.14), var(--bg-elevated) 62%);
+}
+
+.results-streak-copy {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.results-streak-copy > span {
+  color: var(--scape-gold);
+  font: 800 9px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.results-streak-update[data-kind="extended"] .results-streak-copy > span {
+  color: var(--scape-accent-2);
+}
+
+.results-streak-copy > strong {
+  color: var(--text);
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.results-streak-copy > small {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.results-streak-actions {
+  flex: 0 0 auto;
+  display: grid;
+  justify-items: stretch;
+  gap: 6px;
+}
+
+.results-streak-actions > b {
+  color: var(--scape-gold);
+  font: 800 9px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.12em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.results-streak-actions .btn {
+  min-height: 44px;
+  margin: 0;
+  padding: 7px 12px;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+@media (max-width: 380px) {
+  .challenge-target,
+  .personal-best-target,
+  .daily-run-context {
+    grid-template-columns: 1fr;
+  }
+
+  .challenge-target small,
+  .personal-best-target small,
+  .daily-run-context small {
+    grid-column: 1;
+    grid-row: auto;
+    text-align: left;
+  }
+
+  .challenge-result {
+    grid-template-columns: 1fr;
+  }
+
+  .challenge-result-delta,
+  .challenge-result > small,
+  .challenge-result-retry.btn {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .challenge-result-retry.btn {
+    justify-self: stretch;
+    width: 100%;
+  }
+
+  .daily-result {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .daily-result-actions {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .daily-result-actions .btn {
+    min-width: 0;
+    white-space: normal;
+  }
+
+  .results-streak-update {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .results-streak-actions {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+  }
+}
+
+/* A challenge adds one more decision block to the ready card. On compact
+   portrait phones, align oversized content from the safe top edge and let the
+   overlay own scrolling so the rights label and every setup control remain
+   reachable instead of being clipped by vertical centering. */
+@media (max-width: 420px) {
+  .play-wrap .overlay-tap {
+    justify-content: flex-start;
+    overflow-y: auto;
+    padding: 8px 10px;
+  }
+}
+
+/* On 320px phones the desktop-sized letter spacing used to wrap the primary
+   action into a 98px two-line block. Keep the formal run CTA decisive and
+   recover that vertical space for lane, mechanic and sound guidance. */
+@media (max-width: 360px) and (orientation: portrait) {
+  .play-wrap:not(.play-wrap-hero) .overlay-tap .unlock-btn {
+    min-height: 52px;
+    padding: 10px 18px;
+    font-size: 1.2rem;
+    line-height: 1.1;
+    white-space: nowrap;
+  }
+}
+
+.result-coach.practice { --coach-color: var(--scape-gold); }
+.result-coach.timing { --coach-color: var(--lane3); }
+.result-coach.advance { --coach-color: var(--ok); }
+.result-coach.replay { --coach-color: var(--scape-accent-2); }
+
+.result-coach-header {
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 14px;
+  border-bottom: 2px solid var(--ink);
+  background: rgba(0, 0, 0, 0.16);
+}
+
+.result-coach-header span,
+.result-coach-header strong {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.result-coach-header span {
+  color: var(--coach-color);
+}
+
+.result-coach-header strong {
+  color: var(--muted);
+}
+
+.result-coach-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 16px;
+}
+
+.result-coach-body > div {
+  min-width: 0;
+}
+
+.result-coach h2,
+.result-coach p {
+  margin: 0;
+}
+
+.result-coach h2 {
+  color: var(--text);
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.result-coach p {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.result-coach .btn {
+  min-width: 168px;
+  min-height: 48px;
+  flex: 0 0 auto;
+  padding-inline: 16px;
+}
+
+.result-coach-actions {
+  flex: 0 0 168px;
+  display: grid;
+  gap: 8px;
+}
+
+.result-coach-actions .btn {
+  width: 100%;
+}
+
+.miss-replay summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+.results-actions {
+  max-width: 560px;
+  margin: 28px auto 0;
+  overflow: hidden;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
+  box-shadow: 5px 5px 0 var(--ink);
+  text-align: left;
+}
+
+.results-actions-header {
+  padding: 14px 16px 12px;
+  border-bottom: 2px solid var(--ink);
+}
+
+.results-actions-header span {
+  color: var(--accent-text);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.results-actions-header h2 {
+  margin: 3px 0 0;
+  color: var(--text);
+  font-size: 18px;
+}
+
+.results-play-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  padding: 14px 16px;
+}
+
+.results-play-actions .btn,
+.results-share-actions .btn {
+  min-height: 46px;
+  padding: 10px 14px;
+}
+
+.results-next-track {
+  width: min(100%, 520px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin: 0 auto 20px;
+  padding: 12px;
+  border: 2px solid var(--ink);
+  border-left: 5px solid var(--scape-accent-2);
+  border-radius: var(--radius-sm);
+  background: rgba(92, 184, 148, 0.08);
+}
+
+.results-next-track > div {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.results-next-track span {
+  color: var(--scape-accent-2);
+  font: 800 9px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.results-next-track strong {
+  overflow: hidden;
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.results-next-track small {
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.results-next-track .btn {
+  min-width: 112px;
+  min-height: 46px;
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 9px 12px;
+}
+
+.results-share-panel {
+  max-width: 520px;
+  margin: 18px auto 20px;
+  padding: 14px;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-sm);
+  background: rgba(0, 0, 0, 0.16);
+}
+
+.results-share-copy strong,
+.results-share-copy span {
+  display: block;
+}
+
+.results-share-copy strong {
+  color: var(--text);
+  font-size: 14px;
+}
+
+.results-share-copy span {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.results-share-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.results-share-actions .btn {
+  min-width: 0;
+  font-size: 12px;
+}
+
+.results-share-panel .error {
+  margin: 12px 0 0;
+  font-size: 12px;
+}
+
+.pwa-install-card {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  max-width: 520px;
+  margin: 0 auto 20px;
+  padding: 14px;
+  border: 2px solid color-mix(in srgb, var(--accent) 72%, var(--ink));
+  border-radius: var(--radius-sm);
+  background:
+    linear-gradient(110deg, color-mix(in srgb, var(--accent) 14%, transparent), transparent 64%),
+    var(--bg-elevated);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+
+.pwa-install-icon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border: 2px solid var(--accent);
+  color: var(--accent-text);
+  background: color-mix(in srgb, var(--accent) 12%, var(--bg));
+}
+
+.pwa-install-icon svg {
+  width: 26px;
+  height: 26px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+  stroke-width: 2;
+}
+
+.pwa-install-copy span,
+.pwa-install-copy strong,
+.pwa-install-copy small {
+  display: block;
+}
+
+.pwa-install-copy span {
+  color: var(--accent-text);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.pwa-install-copy strong {
+  margin-top: 3px;
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.3;
+}
+
+.pwa-install-copy small {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.pwa-install-action {
+  min-height: 46px;
+  white-space: nowrap;
+}
+
+.results-exit-links {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 16px 16px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.results-exit-links a {
+  color: var(--muted);
+  font-weight: 700;
+  text-underline-offset: 3px;
+}
+
+.results-exit-links a:hover {
+  color: var(--text);
+}
+
+@media (max-width: 520px) {
+  .result-coach-body {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .result-coach .btn {
+    width: 100%;
+  }
+
+  .result-coach-actions {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+
+  .results-play-actions,
+  .results-share-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .results-play-actions > :last-child:nth-child(odd),
+  .results-share-actions > :last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+
+  .pwa-install-card {
+    grid-template-columns: 44px minmax(0, 1fr);
+    gap: 10px 12px;
+  }
+
+  .pwa-install-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .pwa-install-action {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  .results-next-track {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .results-next-track .btn {
+    width: 100%;
+  }
+}
+
 .badge {
   display: inline-block;
   margin: 4px;
@@ -1720,6 +3998,24 @@ body.play-immersive .play-page {
 .badge.ap {
   border-color: #fde047;
   color: #fde047;
+}
+
+.badge.failed {
+  border-color: var(--accent);
+  color: #fff;
+  background: var(--accent);
+}
+
+.badge.daily {
+  border-color: var(--ok);
+  color: var(--ok);
+  background: color-mix(in srgb, var(--ok) 10%, transparent);
+}
+
+.badge.daily.failed {
+  border-color: var(--accent);
+  color: #fff;
+  background: var(--accent);
 }
 
 .badge.beginner {
@@ -1891,27 +4187,6 @@ body[data-reduce-motion="1"] .neon-layer { display: none; }
   margin-bottom: 6px;
 }
 
-.calib-lanes {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
-  max-width: 400px;
-  margin: 24px 0;
-}
-
-.calib-lane {
-  padding: 24px;
-  text-align: center;
-  background: var(--bg2);
-  border-radius: 8px;
-  border: 1px solid #2a3a4f;
-}
-
-.calib-lane.flash {
-  border-color: var(--accent);
-  box-shadow: var(--glow-accent);
-}
-
 table {
   width: 100%;
   border-collapse: collapse;
@@ -1976,6 +4251,136 @@ td {
     gap: 4px;
   }
 
+  .gamepad-site-hint {
+    right: 10px;
+    bottom: calc(80px + env(safe-area-inset-bottom));
+    max-width: calc(100vw - 20px);
+    gap: 3px 8px;
+    padding: 7px 10px;
+  }
+
+  .mobile-tabbar.mobile-tabbar-track {
+    display: none;
+  }
+
+  /* Results owns the fixed challenge retry on phones; avoid a duplicate CTA
+     lower in the scrolling document while keeping the desktop card actionable. */
+  .challenge-result-retry.btn {
+    display: none;
+  }
+
+  /* The center tab is the persistent Daily retry/improve action on phones;
+     leave the card's board link visible without duplicating its primary CTA. */
+  .daily-result-actions .btn.primary {
+    display: none;
+  }
+
+  .daily-result-actions {
+    grid-template-columns: 1fr;
+  }
+
+  /* The fixed center tab is the exact failed-run retry on phones; the recovery
+     card keeps the lower-pressure Casual alternative without duplicating it. */
+  .result-coach-retry {
+    display: none;
+  }
+
+  .track-detail .track-mobile-action {
+    position: fixed;
+    z-index: 52;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 10px;
+    min-height: 64px;
+    padding: 8px max(12px, env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+    background: rgba(11, 11, 15, 0.96);
+    border-top: 1px solid var(--border);
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(16px);
+  }
+
+  .track-mobile-action-copy {
+    min-width: 0;
+    min-height: 48px;
+    display: grid;
+    align-content: center;
+    gap: 2px;
+    padding: 3px 4px;
+    appearance: none;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+    text-align: left;
+  }
+
+  .track-mobile-action-copy:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .track-mobile-action-copy:focus-visible {
+    outline: 3px solid var(--accent-text);
+    outline-offset: 1px;
+  }
+
+  .track-mobile-action-title {
+    min-width: 0;
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+
+  .track-mobile-action-title strong,
+  .track-mobile-action-copy small {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .track-mobile-action-title strong {
+    flex: 1 1 auto;
+    color: var(--text);
+    font-size: 14px;
+  }
+
+  .track-mobile-action-edit {
+    flex: 0 0 auto;
+    color: var(--accent-text);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .track-mobile-action-copy small {
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .track-mobile-action-copy small b {
+    color: var(--lime);
+    font-weight: 900;
+  }
+
+  .track-mobile-action .btn {
+    min-width: 128px;
+    min-height: 48px;
+    padding-inline: 18px;
+  }
+
+  .track-primary-actions.cta-row .track-play-btn {
+    display: none;
+  }
+
   .tab-item {
     flex: 1;
     display: flex;
@@ -1991,14 +4396,31 @@ td {
     transition: color 0.15s ease, background 0.15s ease;
   }
 
+  .mobile-tabbar button.tab-item {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    font: inherit;
+    cursor: pointer;
+  }
+
   .tab-item.active {
     color: var(--text);
     background: rgba(255, 255, 255, 0.06);
   }
 
   .tab-icon {
-    font-size: 18px;
-    line-height: 1;
+    width: 22px;
+    height: 22px;
+    display: grid;
+    place-items: center;
+    line-height: 0;
+  }
+
+  .tab-icon-svg {
+    display: block;
+    width: 100%;
+    height: 100%;
   }
 
   .tab-play .tab-icon-play {
@@ -2009,9 +4431,13 @@ td {
     border-radius: 50%;
     background: var(--gradient-cta);
     color: #fff;
-    font-size: 14px;
     margin-top: -18px;
     box-shadow: 0 8px 20px rgba(226, 61, 61, 0.35);
+  }
+
+  .tab-play .tab-icon-svg {
+    width: 18px;
+    height: 18px;
   }
 
   body.play-immersive .mobile-tabbar {
@@ -2024,7 +4450,7 @@ td {
   }
 
   .track-detail {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .track-grid {
@@ -2038,6 +4464,24 @@ td {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+  }
+
+  /* Library already owns a persistent labeled tab on phones. Removing its
+     duplicate hero link keeps Duo and timing calibration above that fixed bar
+     on 320px-class screens instead of wrapping a third action underneath it. */
+  .home .hero-copy .home-browse-link {
+    display: none;
+  }
+
+  /* The global footer carries the same ownership statement. Hiding this
+     duplicate keeps a clipped line of legal copy from peeking behind the
+     fixed phone navigation at the bottom of the first Home viewport. */
+  .home .hero-rights {
+    display: none;
+  }
+
+  .home .hero-copy > .key-chips {
+    display: none;
   }
 
   .play-wrap {
@@ -2056,15 +4500,10 @@ td {
 
   .play-wrap {
     min-height: min(100dvh, 720px);
-    touch-action: none;
   }
 
   .play-canvas {
     min-height: 58dvh;
-  }
-
-  .overlay-tap {
-    cursor: pointer;
   }
 
   .hero-gameplay-preview {
@@ -2177,10 +4616,18 @@ td {
   gap: 14px;
   padding: 20px 16px;
   text-align: center;
-  /* See demo through — hard ink wash, not solid black */
-  background: rgba(18, 16, 15, 0.55);
-  background-image: linear-gradient(rgba(18, 16, 15, 0.45), rgba(18, 16, 15, 0.62)), var(--halftone);
-  background-size: auto, 10px 10px;
+  /* Keep the real four-lane preview visible above and below the action group.
+     Darken only the copy/button band so the artwork explains the game without
+     sacrificing readable controls. */
+  background: linear-gradient(
+    180deg,
+    rgba(18, 16, 15, 0.07) 0%,
+    rgba(18, 16, 15, 0.18) 25%,
+    rgba(18, 16, 15, 0.78) 39%,
+    rgba(18, 16, 15, 0.84) 67%,
+    rgba(18, 16, 15, 0.18) 85%,
+    rgba(18, 16, 15, 0.05) 100%
+  );
 }
 
 .home-hero-demo-mask::before {
@@ -2200,6 +4647,81 @@ td {
   display: inline-flex !important;
   align-items: center;
   gap: 10px;
+}
+
+.home-hero-demo-error {
+  max-width: 24rem;
+  text-align: center;
+}
+
+.home-hero-demo-result {
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    linear-gradient(145deg, rgba(226, 61, 61, 0.18), rgba(18, 16, 15, 0.88) 58%),
+    var(--halftone),
+    var(--bg);
+  background-size: auto, 10px 10px, auto;
+  text-align: center;
+}
+
+.home-hero-demo-result-card {
+  width: min(100%, 290px);
+  display: grid;
+  justify-items: center;
+  gap: 13px;
+}
+
+.home-hero-demo-result-summary {
+  display: grid;
+  justify-items: center;
+  gap: 13px;
+}
+
+.home-hero-demo-result-score {
+  color: var(--scape-accent-2);
+  font-family: Anton, "Sora", sans-serif;
+  font-size: clamp(1.65rem, 7vw, 2.4rem);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.home-hero-demo-result-note {
+  margin: 0;
+  color: var(--muted);
+  font: 700 11px/1.3 "IBM Plex Mono", monospace;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.home-hero-demo-result-actions {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.home-hero-demo-result-actions .btn {
+  min-width: 0;
+  min-height: 44px;
+  flex: 1 1 0;
+  padding: 8px 10px;
+  font-size: 12px;
+  line-height: 1.15;
+}
+
+.home-hero-demo-result-gamepad {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 3px 10px;
+  color: var(--muted);
+  font: 750 9px/1.2 "IBM Plex Mono", monospace;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
 }
 
 .play-wrap-hero {
@@ -2226,6 +4748,13 @@ td {
     max-width: 100%;
   }
 
+  /* The demo can enter the viewport while the fixed tab bar still covers the
+     bottom edge. Bias its action group upward so the no-save disclosure is
+     already readable before a visitor can tap the visible demo button. */
+  .home-hero-demo-mask {
+    padding-bottom: 34px;
+  }
+
   /* 键位提示只对键盘玩家有意义：移动端藏掉，把主按钮完整留在首屏内。 */
   .key-chips {
     display: none;
@@ -2236,6 +4765,15 @@ td {
   .play-wrap-hero {
     height: min(32dvh, 260px);
     min-height: 180px;
+  }
+
+  .home-hero-demo-result {
+    padding: 10px;
+  }
+
+  .home-hero-demo-result-card,
+  .home-hero-demo-result-summary {
+    gap: 6px;
   }
 }
 
@@ -2255,6 +4793,65 @@ td {
 .daily-challenge-banner h2 {
   margin: 6px 0 0;
   font-size: 1.25rem;
+}
+
+.daily-challenge-banner[data-cleared="true"] {
+  border-color: color-mix(in srgb, var(--ok) 55%, transparent);
+}
+
+.daily-challenge-banner[data-cleared="true"] .eyebrow {
+  color: var(--ok);
+}
+
+.daily-challenge-status {
+  margin: 8px 0 0;
+  color: var(--text);
+  font: 700 12px/1.45 "IBM Plex Mono", monospace;
+}
+
+.daily-streak-status {
+  margin: 7px 0 0;
+  color: var(--muted);
+  font: 650 11px/1.45 "IBM Plex Sans", sans-serif;
+}
+
+.daily-streak-status > span {
+  margin-right: 3px;
+  color: var(--scape-gold);
+}
+
+.daily-streak-status[data-state="played-today"] {
+  color: var(--scape-accent-2);
+}
+
+.daily-challenge-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.daily-challenge-actions .btn {
+  min-height: 44px;
+}
+
+@media (max-width: 520px) {
+  .daily-challenge-banner,
+  .daily-challenge-actions {
+    align-items: stretch;
+  }
+
+  .daily-challenge-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .daily-challenge-actions .btn {
+    min-width: 0;
+    padding-inline: 10px;
+    font-size: 12px;
+  }
 }
 
 .trend-card-wrap {
@@ -2277,12 +4874,17 @@ td {
   margin: 16px 0;
 }
 
-.results-hero-card {
-  padding: 8px 0 20px;
+.board-tabs [role="tab"] {
+  min-height: 44px;
 }
 
-.overlay-tap {
-  cursor: pointer;
+.board-panel:focus-visible {
+  outline: 3px solid var(--accent2);
+  outline-offset: 6px;
+}
+
+.results-hero-card {
+  padding: 8px 0 20px;
 }
 
 .miss-replay {
@@ -2296,6 +4898,9 @@ td {
 }
 
 .miss-replay summary {
+  box-sizing: border-box;
+  min-height: 44px;
+  padding: 12px 0;
   cursor: pointer;
   font-weight: 600;
 }
@@ -2354,8 +4959,7 @@ td {
 }
 
 .miss-section-stats {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
   gap: 8px;
   margin: 12px 0;
 }
@@ -2366,6 +4970,62 @@ td {
   border-radius: 999px;
   background: rgba(226, 61, 61, 0.12);
   color: var(--scape-warn);
+}
+
+.miss-section-retry {
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 10px 8px 12px;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-sm);
+  background: rgba(226, 61, 61, 0.1);
+  color: var(--text);
+  text-decoration: none;
+  box-shadow: 2px 2px 0 var(--ink);
+  transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.15s ease;
+}
+
+.miss-section-retry:hover {
+  background: rgba(226, 61, 61, 0.18);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+.miss-section-retry:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+
+.miss-section-retry:focus-visible {
+  outline: 3px solid var(--scape-gold);
+  outline-offset: 3px;
+}
+
+.miss-section-retry strong,
+.miss-section-retry small {
+  display: block;
+}
+
+.miss-section-retry strong {
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+
+.miss-section-retry small {
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.miss-section-retry-action {
+  flex-shrink: 0;
+  color: var(--scape-warn);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .miss-timeline {
@@ -2391,6 +5051,175 @@ td {
 
 .miss-lane {
   color: var(--accent);
+}
+
+.badge.practice {
+  border-color: var(--scape-gold);
+  color: var(--scape-gold);
+  background: rgba(255, 176, 32, 0.08);
+}
+
+.practice-run-note {
+  max-width: 480px;
+  margin: 0 auto 18px;
+  padding: 12px 16px;
+  display: grid;
+  gap: 4px;
+  text-align: left;
+  border: 2px solid var(--ink);
+  border-left: 6px solid var(--scape-gold);
+  border-radius: var(--radius-sm);
+  background: rgba(255, 176, 32, 0.08);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.failed-run-note {
+  max-width: 480px;
+  margin: 0 auto 18px;
+  padding: 12px 16px;
+  display: grid;
+  gap: 4px;
+  text-align: left;
+  border: 2px solid var(--ink);
+  border-left: 6px solid var(--accent);
+  border-radius: var(--radius-sm);
+  background: rgba(226, 61, 61, 0.12);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.failed-run-note strong {
+  color: var(--accent);
+  font-size: 14px;
+}
+
+.failed-run-note span {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.practice-run-note strong {
+  color: var(--scape-gold);
+  font-size: 14px;
+}
+
+.practice-run-note span {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.drill-progress {
+  max-width: 520px;
+  margin: -2px auto 22px;
+  padding: 14px;
+  border: 2px solid var(--ink);
+  border-top: 5px solid var(--scape-gold);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--scape-gold) 7%, var(--bg-elevated));
+  box-shadow: 4px 4px 0 var(--ink);
+  text-align: left;
+}
+
+.drill-progress-header {
+  display: grid;
+  gap: 3px;
+  margin-bottom: 12px;
+}
+
+.drill-progress-header > span {
+  color: var(--scape-gold);
+  font: 800 9px/1.2 "IBM Plex Mono", monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.drill-progress-header h2 {
+  margin: 0;
+  font: 400 1.35rem/1 Anton, "Sora", sans-serif;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+}
+
+.drill-progress-header p {
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.drill-progress-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(82px, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.drill-progress-attempt {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 3px;
+  min-width: 0;
+  min-height: 82px;
+  padding: 9px 8px 8px;
+  border: 2px solid var(--ink);
+  background: var(--bg2);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+.drill-progress-attempt[data-best="true"] {
+  border-color: var(--scape-gold);
+  background: color-mix(in srgb, var(--scape-gold) 12%, var(--bg2));
+}
+
+.drill-progress-attempt > span,
+.drill-progress-attempt em {
+  font: 800 8px/1.2 "IBM Plex Mono", monospace;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.drill-progress-attempt > span {
+  color: var(--muted);
+}
+
+.drill-progress-attempt em {
+  position: absolute;
+  top: 7px;
+  right: 6px;
+  color: var(--scape-gold);
+  font-style: normal;
+}
+
+.drill-progress-attempt strong {
+  margin-top: 4px;
+  color: var(--text);
+  font: 400 1.4rem/1 Anton, "Sora", sans-serif;
+}
+
+.drill-progress-attempt small {
+  overflow-wrap: anywhere;
+  color: var(--muted);
+  font-size: 9px;
+  line-height: 1.3;
+}
+
+@media (max-width: 360px) {
+  .drill-progress {
+    padding: 11px;
+  }
+
+  .drill-progress-list {
+    gap: 6px;
+  }
+
+  .drill-progress-attempt {
+    min-height: 78px;
+    padding-inline: 6px;
+  }
 }
 
 .miss-section {
@@ -2464,6 +5293,7 @@ td {
 .field input[type="number"],
 .field select {
   width: 100%;
+  min-height: 44px;
   background: var(--bg);
   border: 1px solid var(--border);
   color: var(--text);
@@ -2471,6 +5301,61 @@ td {
   border-radius: var(--radius-sm);
   font: inherit;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* iOS WebKit can ignore min-height on a native select's compact appearance. */
+.settings .key-label-layout-select {
+  height: 44px;
+  font-size: 16px;
+}
+
+.offset-input-wrap {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.offset-input-wrap input {
+  padding-right: 46px;
+  font-variant-numeric: tabular-nums;
+}
+
+.offset-input-unit {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  color: var(--muted);
+  font: 800 10px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.1em;
+  pointer-events: none;
+  text-transform: uppercase;
+  transform: translateY(-50%);
+}
+
+.offset-quick-adjust {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: -2px 0 0;
+}
+
+.offset-quick-adjust .btn {
+  min-width: 0;
+  min-height: 44px;
+  margin: 0;
+  padding-inline: 8px;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.offset-quick-adjust .btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+  transform: none;
+}
+
+.offset-hint {
+  margin-top: 8px;
 }
 
 .field input:focus-visible,
@@ -2482,27 +5367,241 @@ td {
   box-shadow: 0 0 0 3px rgba(226, 61, 61, 0.15);
 }
 
-.field input[type="range"] {
+.settings .field input[type="range"] {
+  --range-progress: 0%;
+  appearance: none;
+  min-height: 44px;
   width: 100%;
-  accent-color: var(--accent);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.settings .field input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8px;
+  border: 2px solid var(--ink);
+  border-radius: 0;
+  background: linear-gradient(
+    to right,
+    var(--accent) 0 var(--range-progress),
+    var(--scape-line) var(--range-progress) 100%
+  );
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+.settings .field input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  margin-top: -10px;
+  border: 2px solid var(--ink);
+  border-radius: 3px;
+  background: var(--scape-accent-2);
+  box-shadow: 2px 2px 0 var(--ink);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.settings .field input[type="range"]::-moz-range-track {
+  width: 100%;
+  height: 4px;
+  border: 2px solid var(--ink);
+  border-radius: 0;
+  background: var(--scape-line);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+.settings .field input[type="range"]::-moz-range-progress {
+  height: 4px;
+  background: var(--accent);
+}
+
+.settings .field input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--ink);
+  border-radius: 3px;
+  background: var(--scape-accent-2);
+  box-shadow: 2px 2px 0 var(--ink);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.settings .field input[type="range"]:hover::-webkit-slider-thumb {
+  background: #fff7e8;
+  transform: scale(1.08);
+}
+
+.settings .field input[type="range"]:hover::-moz-range-thumb {
+  background: #fff7e8;
+  transform: scale(1.08);
+}
+
+.settings .field input[type="range"]:focus-visible {
+  outline: none;
+  border: 0;
+  box-shadow: none;
+}
+
+.settings .field input[type="range"]:focus-visible::-webkit-slider-thumb {
+  outline: 3px solid color-mix(in srgb, var(--accent) 58%, transparent);
+  outline-offset: 3px;
+}
+
+.settings .field input[type="range"]:focus-visible::-moz-range-thumb {
+  outline: 3px solid color-mix(in srgb, var(--accent) 58%, transparent);
+  outline-offset: 3px;
+}
+
+.field input[aria-invalid="true"] {
+  border-color: var(--accent-text);
+  box-shadow: 0 0 0 2px rgba(235, 78, 78, 0.2);
 }
 
 .toggle-field {
+  min-height: 48px;
+  padding: 2px 0;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
+  cursor: pointer;
 }
 
-.toggle-field input[type="checkbox"] {
+.toggle-label {
+  min-width: 0;
+  color: var(--text);
+  font-weight: 650;
+  line-height: 1.35;
+}
+
+.toggle-control {
+  position: relative;
+  flex: 0 0 auto;
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 8px;
+}
+
+.toggle-state {
+  min-width: 2.4em;
+  color: var(--muted);
+  font: 800 10px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.12em;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.toggle-control.is-on .toggle-state {
+  color: var(--scape-accent-2);
+}
+
+.toggle-input {
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  top: 50%;
+  width: 48px;
+  height: 44px;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+
+.toggle-switch {
+  position: relative;
+  display: block;
+  width: 48px;
+  height: 28px;
+  overflow: hidden;
+  border: 2px solid var(--border);
+  border-radius: 4px;
+  background: var(--bg);
+  box-shadow: 2px 2px 0 var(--ink);
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.toggle-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
   width: 18px;
   height: 18px;
-  accent-color: var(--accent);
+  border: 2px solid var(--ink);
+  border-radius: 2px;
+  background: var(--muted);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.toggle-input:checked + .toggle-switch {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 72%, var(--bg));
+}
+
+.toggle-input:checked + .toggle-switch .toggle-thumb {
+  background: var(--scape-accent-2);
+  transform: translateX(20px);
+}
+
+.toggle-input:focus-visible + .toggle-switch {
+  outline: 3px solid color-mix(in srgb, var(--accent) 58%, transparent);
+  outline-offset: 3px;
+}
+
+.toggle-field:hover .toggle-switch {
+  border-color: color-mix(in srgb, var(--accent) 70%, var(--border));
 }
 
 .settings-grid {
   display: grid;
   gap: 16px;
+  width: 100%;
   max-width: 520px;
+}
+
+.settings-column {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+  min-width: 0;
+}
+
+@media (min-width: 900px) {
+  .settings-grid {
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    max-width: 1120px;
+    gap: 20px;
+  }
+}
+
+.settings .page-header {
+  margin-bottom: 12px;
+}
+
+.settings-save-status {
+  width: fit-content;
+  max-width: 520px;
+  margin: 0 0 18px;
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.025);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.settings-save-status.is-saved {
+  border-color: rgba(242, 228, 201, 0.32);
+  color: var(--scape-accent-2);
+}
+
+.settings-save-status.is-error {
+  border-color: rgba(235, 78, 78, 0.42);
+  color: var(--accent-text);
 }
 
 .keys-grid {
@@ -2555,6 +5654,10 @@ td {
   color: var(--accent);
 }
 
+.keys-grid[aria-invalid="true"] .keycap {
+  border-color: var(--accent-text);
+}
+
 .preset-row {
   display: flex;
   flex-wrap: wrap;
@@ -2563,12 +5666,25 @@ td {
 
 /* Preset chips sit flush left; `.btn.compact` otherwise pushes to the right. */
 .preset-row .btn.compact {
+  flex-direction: column;
+  gap: 2px;
   margin-left: 0;
+}
+
+.preset-layout-label {
+  color: var(--muted);
+  font: 700 10px/1.2 "IBM Plex Mono", monospace;
+  letter-spacing: 0.08em;
 }
 
 .preset-row .btn.compact.is-active {
   border-color: var(--accent);
-  color: var(--accent);
+  background: var(--scape-accent-2);
+  color: #12100f;
+}
+
+.preset-row .btn.compact.is-active .preset-layout-label {
+  color: #12100f;
 }
 
 .field-hint {
@@ -2583,8 +5699,70 @@ td {
 }
 
 .settings .error {
-  margin: 10px 0 0;
+  margin: 10px 0 16px;
   font-size: 12px;
+  line-height: 1.45;
+}
+
+.settings-calibrate {
+  width: 100%;
+  min-height: 44px;
+  justify-content: center;
+}
+
+.settings-keymap-summary {
+  display: none;
+}
+
+.settings-keymap.is-collapsible {
+  padding: 0;
+}
+
+.settings-keymap.is-collapsible .settings-keymap-summary {
+  min-height: 52px;
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  list-style: none;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.settings-keymap.is-collapsible .settings-keymap-summary::-webkit-details-marker {
+  display: none;
+}
+
+.settings-keymap.is-collapsible .settings-keymap-summary:focus-visible {
+  outline: 3px solid rgba(226, 61, 61, 0.45);
+  outline-offset: -3px;
+}
+
+.settings-keymap.is-collapsible .settings-keymap-summary small {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.settings-keymap.is-collapsible .settings-keymap-summary::after {
+  content: "+";
+  flex: 0 0 auto;
+  color: var(--accent-text);
+  font-size: 20px;
+  line-height: 1;
+}
+
+.settings-keymap.is-collapsible[open] .settings-keymap-summary::after {
+  content: "−";
+}
+
+.settings-keymap.is-collapsible .settings-keymap-body {
+  padding: 4px 18px 18px;
+}
+
+.settings-keymap.is-collapsible .settings-keymap-body h2 {
+  display: none;
 }
 
 /* ===== B-2 · 调频式加载（"搜台"意象，贴 The Late Static 世界观） ===== */
@@ -2595,6 +5773,21 @@ td {
   gap: 16px;
   padding: 44px 22px;
   color: var(--muted);
+}
+
+/* Lazy route changes keep the surrounding header/tab bar mounted. Reserve the
+   rest of the viewport for the destination so the footer does not jump into
+   the middle of the screen while a chunk is in flight. Component-local
+   loading states intentionally keep their compact intrinsic height. */
+.route-loading-state {
+  justify-content: center;
+  min-height: calc(100dvh - 180px);
+}
+
+@media (max-width: 640px) {
+  .route-loading-state {
+    min-height: calc(100dvh - 152px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  }
 }
 
 /* B-2 回归回补：commit fa10253 把 .loading-spinner 当「仅 Play 页使用」删掉了
@@ -2686,6 +5879,428 @@ td {
   max-width: 88%;
 }
 
+/* Single-player pause parity: keyboard and touch players get the same complete
+   run controls. Keep the primary pair compact, then span leave across the row;
+   narrow phones stack all three instead of shrinking taps. */
+.pause-copy {
+  max-width: 31rem;
+  margin: 0;
+  color: var(--muted);
+  font: 650 13px/1.5 "IBM Plex Sans", sans-serif;
+}
+
+.gamepad-interruption {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: min(400px, 100%);
+  margin: -4px 0 0;
+  padding: 9px 11px;
+  border: 2px solid color-mix(in srgb, var(--scape-warn) 72%, var(--ink));
+  background: color-mix(in srgb, var(--scape-warn) 12%, var(--bg-elevated));
+  color: #fff2cc;
+  font: 750 12px/1.35 "IBM Plex Sans", sans-serif;
+  text-align: left;
+}
+
+.gamepad-interruption > span {
+  flex: 0 0 auto;
+  color: var(--scape-warn);
+  font: 900 20px/1 "IBM Plex Mono", monospace;
+}
+
+.gamepad-dialog-hint {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px 10px;
+  width: min(420px, 100%);
+  margin: 0;
+  padding: 8px 11px;
+  border: 1px solid color-mix(in srgb, var(--lime) 42%, transparent);
+  background: color-mix(in srgb, var(--lime) 8%, transparent);
+  color: var(--lime);
+  font: 750 9px/1.3 "IBM Plex Mono", monospace;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
+
+.gamepad-dialog-hint span {
+  color: var(--muted);
+}
+
+/* In-run audio, visual and feedback controls are recovery controls, not a
+   second settings page. Keep them dense, touch-safe, and shared by single + Duo. */
+.pause-dialog .overlay-card,
+.duo-pause .overlay-card {
+  width: min(500px, 92%);
+  max-height: calc(100dvh - 24px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.pause-control-stack {
+  display: grid;
+  gap: 8px;
+  width: min(400px, 100%);
+}
+
+.pause-control-stack > .pause-quick-mix,
+.pause-control-stack > .pause-mix-disclosure {
+  width: 100%;
+}
+
+.pause-practice-tempo {
+  display: grid;
+  gap: 7px;
+  width: 100%;
+  margin: 0;
+  padding: 9px 11px 11px;
+  border: 2px solid color-mix(in srgb, var(--scape-gold) 54%, transparent);
+  background: color-mix(in srgb, var(--scape-gold) 7%, transparent);
+}
+
+.pause-practice-tempo legend {
+  padding: 0 7px;
+  color: var(--scape-gold);
+  font: 850 12px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.pause-practice-tempo > p {
+  margin: 0;
+  color: var(--muted);
+  font: 650 10px/1.2 "IBM Plex Mono", monospace;
+  letter-spacing: 0.035em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.practice-tempo-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.practice-tempo-options label {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 44px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.18);
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.practice-tempo-options label[data-active="true"] {
+  border-color: var(--scape-gold);
+  background: var(--scape-gold);
+  color: var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.practice-tempo-options label:has(input:focus-visible) {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.practice-tempo-options input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.practice-tempo-options span {
+  pointer-events: none;
+  font: 900 13px/1 "IBM Plex Mono", monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.pause-quick-mix {
+  display: grid;
+  gap: 2px;
+  width: min(400px, 100%);
+  margin: 0;
+  padding: 10px 14px 12px;
+  border: 2px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.pause-mix-disclosure {
+  width: min(400px, 100%);
+}
+
+.pause-mix-disclosure-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 13px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.045);
+  color: var(--text);
+  font: 850 12px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.12em;
+  text-align: left;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.pause-mix-disclosure-toggle small {
+  color: var(--scape-accent-2);
+  font: inherit;
+  letter-spacing: 0.06em;
+}
+
+.pause-mix-disclosure-toggle:hover,
+.pause-mix-disclosure-toggle:focus-visible,
+.pause-mix-disclosure-toggle[aria-expanded="true"] {
+  border-color: var(--scape-accent-2);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.pause-mix-disclosure > div:not([hidden]) .pause-quick-mix {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.pause-quick-mix legend {
+  padding: 0 7px;
+  color: var(--scape-accent-2);
+  font: 850 12px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.pause-mix-caption {
+  margin: 0 0 2px;
+  color: var(--muted);
+  font: 650 10px/1.3 "IBM Plex Mono", monospace;
+  letter-spacing: 0.04em;
+  text-align: left;
+}
+
+.pause-mix-controls {
+  display: grid;
+  gap: 2px;
+}
+
+.pause-mix-row {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) 38px;
+  gap: 10px;
+  align-items: center;
+  min-height: 44px;
+  color: var(--text);
+  font: 750 12px/1 "IBM Plex Mono", monospace;
+  text-align: left;
+}
+
+.pause-mix-row input[type="range"] {
+  width: 100%;
+  height: 44px;
+  margin: 0;
+  accent-color: var(--scape-accent-2);
+  cursor: pointer;
+}
+
+.pause-mix-row output {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.pause-mix-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 44px;
+  color: var(--text);
+  font: 750 12px/1.1 "IBM Plex Mono", monospace;
+  text-align: left;
+  cursor: pointer;
+}
+
+.pause-mix-toggle span {
+  display: grid;
+  gap: 3px;
+}
+
+.pause-mix-toggle small {
+  color: var(--muted);
+  font: 600 10px/1.1 "IBM Plex Sans", sans-serif;
+}
+
+.pause-mix-toggle input {
+  width: 24px;
+  height: 24px;
+  margin: 0 10px;
+  accent-color: var(--scape-accent-2);
+}
+
+.pause-mix-error {
+  margin: 4px 0 0;
+  color: var(--accent2);
+  font: 700 11px/1.35 "IBM Plex Mono", monospace;
+}
+
+.pause-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  width: min(360px, 100%);
+}
+
+.pause-actions .btn {
+  min-height: 48px;
+  padding: 12px 18px;
+  white-space: nowrap;
+}
+
+.pause-actions .pause-exit {
+  grid-column: 1 / -1;
+  color: var(--muted);
+  background: transparent;
+  box-shadow: none;
+}
+
+.pause-actions .pause-exit:hover,
+.pause-actions .pause-exit:focus-visible {
+  color: var(--text);
+  background: var(--bg-elevated);
+}
+
+/* Roomy desktop and tablet surfaces can keep the three feedback toggles on a
+   single row. This preserves every 44px target while keeping all pause actions
+   above the fold at the baseline 1280x720 gameplay viewport. */
+@media (min-width: 700px) and (min-height: 521px) {
+  .pause-dialog .overlay-card,
+  .duo-pause .overlay-card {
+    width: min(620px, 92%);
+  }
+
+  .pause-control-stack,
+  .pause-quick-mix,
+  .pause-mix-disclosure {
+    width: min(540px, 100%);
+  }
+
+  .pause-mix-controls {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 8px;
+  }
+
+  .pause-mix-row {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 380px) {
+  .pause-dialog .overlay-card,
+  .duo-pause .overlay-card {
+    width: calc(100% - 16px);
+    max-width: none;
+    padding-inline: 14px;
+  }
+
+  .pause-quick-mix {
+    padding-inline: 10px;
+  }
+
+  .pause-practice-tempo {
+    padding: 7px 8px 8px;
+  }
+
+  .pause-practice-tempo > p {
+    font-size: 8px;
+    text-align: center;
+  }
+
+  .pause-mix-row {
+    grid-template-columns: 44px minmax(0, 1fr) 34px;
+    gap: 7px;
+  }
+
+  .pause-actions {
+    grid-template-columns: 1fr;
+    width: min(240px, 100%);
+  }
+
+  .pause-actions .pause-exit {
+    grid-column: auto;
+  }
+}
+
+/* A short portrait phone leaves too little room below the live meta bar for a
+   complete pause menu. Pausing already freezes play, so let the recovery layer
+   own the viewport just like Duo does and keep its controller legend visible
+   without requiring a blind first scroll. */
+@media (orientation: portrait) and (max-width: 640px) and (max-height: 700px) {
+  .play-wrap .pause-dialog {
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    width: 100vw;
+    height: 100dvh;
+    padding: 8px;
+  }
+
+  .pause-dialog .overlay-card,
+  .duo-pause .overlay-card {
+    width: min(100%, 420px);
+    max-height: 100%;
+    gap: 7px;
+    padding: 12px 14px;
+  }
+
+  .pause-dialog .overlay-title,
+  .duo-pause .overlay-title {
+    font-size: clamp(1.85rem, 10vw, 2.3rem);
+  }
+
+  .pause-copy,
+  .duo-pause-copy {
+    font-size: 11px;
+    line-height: 1.3;
+  }
+
+  .pause-mix-disclosure-toggle,
+  .pause-actions .btn,
+  .duo-pause-actions .btn {
+    min-height: 44px;
+  }
+
+  .pause-actions,
+  .duo-pause-actions {
+    gap: 7px;
+  }
+
+  .gamepad-dialog-hint {
+    gap: 3px 8px;
+    padding: 6px 8px;
+    font-size: 8px;
+  }
+
+  .gamepad-dialog-hint span {
+    display: none;
+  }
+
+  .gamepad-dialog-hint strong {
+    white-space: nowrap;
+  }
+}
+
 .overlay-title {
   transform: skewX(-5deg);
 }
@@ -2693,13 +6308,18 @@ td {
 /* Track detail hero */
 .track-hero {
   display: grid;
-  grid-template-columns: minmax(160px, 220px) 1fr;
+  grid-template-columns: minmax(160px, 220px) minmax(0, 1fr);
   gap: clamp(20px, 4vw, 32px);
   align-items: start;
 }
 
+.track-hero-body {
+  min-width: 0;
+}
+
 .track-hero-cover {
   position: relative;
+  aspect-ratio: 1;
   border-radius: var(--radius-lg);
   overflow: hidden;
   /* Was `var(--shadow-card), var(--shadow-glow)` — --shadow-glow is the literal
@@ -2712,7 +6332,7 @@ td {
 .track-hero-cover img {
   display: block;
   width: 100%;
-  aspect-ratio: 1;
+  height: 100%;
   object-fit: cover;
 }
 
@@ -2727,34 +6347,560 @@ td {
   margin: 0;
 }
 
-.track-pickers {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin: 18px 0;
+.run-configurator {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 20px 0 14px;
 }
 
-.picker-pill {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+.run-control {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.run-control legend {
+  margin-bottom: 7px;
+  padding: 0;
   color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
-.picker-pill select {
-  min-width: 120px;
-  padding: 8px 12px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
+.run-note-speed {
+  grid-column: 1 / -1;
+}
+
+.run-speed-stepper {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) 48px;
+  min-height: 52px;
+  overflow: hidden;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.run-speed-stepper button {
+  min-width: 48px;
+  min-height: 48px;
+  border: 0;
+  background: var(--bg-elevated);
+  color: var(--text);
+  cursor: pointer;
+  font: 900 24px/1 "IBM Plex Mono", monospace;
+}
+
+.run-speed-stepper button:first-child {
+  border-right: 2px solid var(--ink);
+}
+
+.run-speed-stepper button:last-child {
+  border-left: 2px solid var(--ink);
+}
+
+.run-speed-stepper button:hover:not(:disabled) {
+  background: var(--accent-deep);
+  color: var(--lime);
+}
+
+.run-speed-stepper button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.run-speed-stepper output {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 7px 12px;
+  text-align: center;
+}
+
+.run-speed-stepper output strong {
+  color: var(--lime);
+  font-size: 16px;
+}
+
+.run-speed-stepper output span {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.run-segments {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4px;
+  padding: 4px;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.run-segments button {
+  min-width: 0;
+  min-height: 44px;
+  padding: 8px 5px;
+  border: 0;
+  border-radius: 3px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  transition: background 0.12s ease, color 0.12s ease, transform 0.08s ease;
+}
+
+.run-segments button:hover {
+  color: var(--text);
+  background: rgba(242, 228, 201, 0.06);
+}
+
+.run-segments button:active {
+  transform: translateY(1px);
+}
+
+.run-segments button[aria-checked="true"] {
+  background: var(--accent-deep);
+  color: var(--lime);
+  box-shadow: inset 0 0 0 2px var(--ink);
+}
+
+.practice-section-control,
+.practice-section-status {
+  grid-column: 1 / -1;
+}
+
+.practice-section-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.practice-section-options button {
+  min-width: 0;
+  min-height: 58px;
+  display: grid;
+  align-content: center;
+  gap: 3px;
+  padding: 7px 9px;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-sm);
   background: var(--bg);
   color: var(--text);
+  cursor: pointer;
   font: inherit;
-  font-weight: 600;
+  text-align: left;
+  box-shadow: 3px 3px 0 var(--ink);
+  transition: background 0.12s ease, border-color 0.12s ease, color 0.12s ease, transform 0.08s ease;
+}
+
+.practice-section-options button:hover {
+  border-color: var(--accent-text);
+  background: rgba(242, 228, 201, 0.06);
+}
+
+.practice-section-options button:active {
+  transform: translateY(1px);
+}
+
+.practice-section-options button:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.practice-section-options button[aria-checked="true"] {
+  border-color: var(--lime);
+  background: var(--accent-deep);
+  color: var(--lime);
+}
+
+.practice-section-options strong,
+.practice-section-options small {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.practice-section-options strong {
+  font-size: 13px;
+  line-height: 1.1;
+}
+
+.practice-section-options small {
+  color: var(--muted);
+  font: 700 10px/1.1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.02em;
+}
+
+.practice-section-options button[aria-checked="true"] small {
+  color: color-mix(in srgb, var(--lime) 72%, var(--text));
+}
+
+.practice-section-note {
+  margin: 9px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.practice-section-status {
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0;
+  padding: 10px 12px;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.practice-section-status-error {
+  color: var(--accent-text);
+}
+
+@media (max-width: 520px) {
+  .practice-section-options {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 900px) {
+  .run-configurator {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .run-note-speed {
+    grid-column: auto;
+  }
+
+  .run-speed-stepper output span,
+  .practice-section-note {
+    display: none;
+  }
+
+  .practice-section-options {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+.run-setup {
+  overflow: hidden;
+  margin-bottom: 18px;
+  border: var(--stroke-w) solid var(--ink);
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+
+.run-setup-header {
+  min-height: 45px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 5px 4px 12px;
+  border-bottom: 2px solid var(--ink);
+  background: var(--accent-deep);
+  color: var(--lime);
+}
+
+.run-setup-header span {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.run-setup-header strong {
+  overflow: hidden;
   font-size: 14px;
+  letter-spacing: 0.02em;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.run-setup-toggle {
+  min-width: 66px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 0 8px;
+  border: 1px solid rgba(213, 255, 63, 0.48);
+  border-radius: var(--radius-sm);
+  color: var(--lime);
+  background: rgba(0, 0, 0, 0.24);
+  cursor: pointer;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.run-setup-toggle::after {
+  content: "+";
+  font: 900 16px/1 "IBM Plex Mono", monospace;
+}
+
+.run-setup-toggle[aria-expanded="true"]::after {
+  content: "−";
+}
+
+.run-setup-toggle:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: -3px;
+}
+
+.run-setup[data-details-open="false"] .run-personal-best {
+  border-bottom: 0;
+}
+
+.run-guidance[hidden],
+.run-chart-profile[hidden] {
+  display: none;
+}
+
+.run-guidance {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-bottom: 2px solid var(--ink);
+}
+
+.run-guidance > div {
+  position: relative;
+  min-width: 0;
+  min-height: 126px;
+  padding: 15px 46px 15px 15px;
+}
+
+.run-guidance > div + div {
+  border-left: 2px solid var(--ink);
+}
+
+.run-guidance-index {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  color: rgba(242, 228, 201, 0.22);
+  font-size: 27px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.run-guidance p,
+.run-guidance strong,
+.run-guidance small {
+  display: block;
+  margin: 0;
+}
+
+.run-guidance p {
+  margin-bottom: 5px;
+  color: var(--accent-text);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.run-guidance strong {
+  margin-bottom: 5px;
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.25;
+}
+
+.run-guidance small {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.run-personal-best {
+  min-height: 72px;
+  display: grid;
+  grid-template-columns: minmax(150px, 0.7fr) minmax(220px, 1.3fr);
+  align-items: center;
+  gap: 18px;
+  padding: 11px 14px;
+  border-bottom: 2px solid var(--ink);
+  background:
+    linear-gradient(105deg, rgba(213, 255, 63, 0.08), transparent 48%),
+    rgba(0, 0, 0, 0.08);
+}
+
+.run-personal-best-lede,
+.run-personal-best span,
+.run-personal-best strong,
+.run-personal-best small {
+  min-width: 0;
+}
+
+.run-personal-best-lede {
+  display: grid;
+  gap: 2px;
+}
+
+.run-personal-best span,
+.run-personal-best strong,
+.run-personal-best small {
+  display: block;
+}
+
+.run-personal-best span {
+  color: var(--accent-text);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.run-personal-best strong {
+  overflow: hidden;
+  color: var(--text);
+  font-size: 18px;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+}
+
+.run-personal-best[data-state="ranked"] strong {
+  color: var(--lime);
+}
+
+.run-personal-best small {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.run-chart-profile {
+  min-height: 68px;
+  display: grid;
+  align-items: stretch;
+  background: rgba(0, 0, 0, 0.13);
+}
+
+.run-chart-profile dl {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(78px, 0.75fr)) minmax(140px, 1.5fr);
+  margin: 0;
+}
+
+.run-chart-profile dl > div {
+  min-width: 0;
+  display: grid;
+  align-content: center;
+  gap: 2px;
+  padding: 10px 12px;
+}
+
+.run-chart-profile dl > div + div {
+  border-left: 1px solid rgba(242, 228, 201, 0.13);
+}
+
+.run-chart-profile dt {
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.run-chart-profile dd {
+  overflow: hidden;
+  margin: 0;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+}
+
+.run-chart-patterns dd {
+  white-space: normal;
+}
+
+.run-chart-message {
+  min-height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 10px 14px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.run-chart-message strong {
+  color: var(--text);
+}
+
+.run-chart-loading {
+  justify-content: flex-start;
+}
+
+.run-chart-pulse {
+  width: 10px;
+  height: 10px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: run-chart-pulse 0.9s ease-in-out infinite alternate;
+}
+
+@keyframes run-chart-pulse {
+  to { opacity: 0.3; transform: scale(0.75); }
+}
+
+.track-primary-actions,
+.track-secondary-actions {
+  align-items: stretch;
+}
+
+.track-primary-actions .btn,
+.track-secondary-actions .btn {
+  min-height: 48px;
+}
+
+.track-play-btn {
+  min-width: min(240px, 100%);
+}
+
+.track-mobile-action {
+  display: none;
+}
+
+.track-primary-actions .btn:disabled {
+  opacity: 0.46;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.track-primary-actions .btn:disabled:hover {
+  box-shadow: none;
 }
 
 /* Results */
@@ -2762,6 +6908,7 @@ td {
   max-width: 480px;
   margin: 0 auto 8px;
   padding: 28px 24px 24px;
+  overflow: hidden;
   border-radius: var(--radius-lg);
   border: 1px solid var(--border);
   background: linear-gradient(180deg, rgba(28, 23, 23, 0.9), rgba(18, 16, 15, 0.95));
@@ -2774,12 +6921,111 @@ td {
   font-weight: 700;
 }
 
+/* Short portrait phones need the result and its next decision on the same
+   screen. Keep the grade, record badge, title and artist, but use width rather
+   than a poster-height stack above the action. */
+@media (max-width: 520px) and (max-height: 700px) and (orientation: portrait) {
+  .results { padding-top: 12px; }
+
+  .results-hero-card {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr);
+    grid-template-areas:
+      "grade badges"
+      "grade title"
+      "grade artist";
+    align-items: center;
+    gap: 2px 12px;
+    padding: 10px 14px;
+    text-align: left;
+  }
+
+  .results-hero-card .grade-big {
+    grid-area: grade;
+    font-size: 4rem;
+    text-align: center;
+  }
+
+  .results-hero-card .badges { grid-area: badges; }
+  .results-hero-card h1 { grid-area: title; margin: 0; font-size: 1.15rem; line-height: 1.15; }
+  .results-hero-card .tagline { grid-area: artist; margin: 0; font-size: .8rem; line-height: 1.2; }
+  .results .results-stats { margin-bottom: 8px; }
+
+  .result-coach { margin-top: 10px; }
+  .result-coach-body { gap: 10px; padding: 10px 12px; }
+  .result-coach p { line-height: 1.35; }
+}
+
+/* A 720px-tall desktop should expose both the result and the next meaningful
+   action. Use the available width instead of spending the first half-screen on
+   a vertically stacked grade card; mobile keeps the centered poster layout. */
+@media (min-width: 761px) {
+  .results-hero-card {
+    max-width: 640px;
+    display: grid;
+    grid-template-columns: 120px minmax(0, 1fr);
+    grid-template-areas:
+      "grade badges"
+      "grade title"
+      "grade artist";
+    column-gap: 28px;
+    align-items: center;
+    padding: 18px 28px;
+    text-align: left;
+  }
+
+  .results-hero-card .grade-big {
+    grid-area: grade;
+    text-align: center;
+  }
+
+  .results-hero-card .badges { grid-area: badges; }
+  .results-hero-card h1 { grid-area: title; margin: 0 0 4px; }
+  .results-hero-card .tagline { grid-area: artist; margin: 0; }
+}
+
 .results-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
   max-width: 420px;
   margin: 0 auto 20px;
+}
+
+.results-gamepad-shortcut {
+  width: fit-content;
+  max-width: min(100%, 520px);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 3px 9px;
+  margin: -8px auto 18px;
+  padding: 7px 11px;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--lime) 13%, rgba(18, 16, 15, 0.94));
+  box-shadow: 3px 3px 0 var(--ink);
+  font: 750 9px/1.25 "IBM Plex Mono", monospace;
+  letter-spacing: 0.055em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.results-gamepad-shortcut span {
+  color: var(--muted);
+}
+
+.results-gamepad-shortcut strong {
+  color: var(--lime);
+  font: inherit;
+}
+
+.results-gamepad-shortcut small {
+  flex-basis: 100%;
+  color: #f8f1e5;
+  font: 700 9px/1.25 "IBM Plex Mono", monospace;
+  letter-spacing: 0.035em;
 }
 
 .stat-pill {
@@ -2825,11 +7071,13 @@ td {
   flex-direction: column;
   gap: 8px;
   margin-top: 8px;
+  padding: 0;
+  list-style: none;
 }
 
 .board-row {
   display: grid;
-  grid-template-columns: 40px 1fr auto auto;
+  grid-template-columns: 40px minmax(0, 1fr) auto;
   gap: 12px;
   align-items: center;
   padding: 14px 16px;
@@ -2837,6 +7085,9 @@ td {
   background: var(--bg-elevated);
   border: 2px solid var(--ink);
   box-shadow: 4px 4px 0 var(--ink);
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
   transition: border-color 0.15s ease, transform 0.12s ease, box-shadow 0.12s ease;
 }
 
@@ -2844,6 +7095,11 @@ td {
   border-color: var(--accent);
   transform: translateX(2px);
   box-shadow: 6px 6px 0 var(--ink);
+}
+
+.board-row:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
 }
 
 .board-row.rank-1 {
@@ -2881,9 +7137,34 @@ td {
   text-overflow: ellipsis;
 }
 
-.board-track span {
+.board-track > span,
+.board-track-meta > span {
   font-size: 12px;
   color: var(--muted);
+}
+
+.board-track-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.board-track-meta > span:first-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.board-track-meta .board-row-action {
+  flex: none;
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .board-score {
@@ -2898,6 +7179,21 @@ td {
   text-align: right;
 }
 
+.board-metrics {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: baseline;
+  gap: 12px;
+  white-space: nowrap;
+}
+
+.board-metrics small {
+  font-size: 0.58em;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
 .board-empty {
   padding: 40px 20px;
   text-align: center;
@@ -2906,53 +7202,779 @@ td {
   border-radius: var(--radius-md);
 }
 
+.board-empty p {
+  max-width: 36ch;
+  margin: 0 auto 18px;
+}
+
+.board-empty .btn {
+  min-height: 44px;
+}
+
 /* Calibration */
 .calibrate-panel {
-  max-width: 440px;
+  width: min(100%, 560px);
+  margin-inline: auto;
+  padding-bottom: 32px;
+}
+
+.calibrate-header {
+  margin-bottom: 20px;
+}
+
+.calibrate-header .tagline {
+  max-width: 40ch;
+}
+
+.calib-intro {
+  padding: clamp(20px, 5vw, 30px);
+}
+
+.calib-intro > p {
+  max-width: 48ch;
+  margin: 18px 0 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.calib-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.calib-facts span {
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  background: rgba(242, 228, 201, 0.06);
+  color: var(--scape-accent-2);
+  font: 700 11px/1.2 "IBM Plex Mono", monospace;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.calib-main-action {
+  min-height: 50px;
+  margin-top: 18px;
+}
+
+.calib-gamepad {
+  margin: 14px 0 0;
+}
+
+.calib-gamepad + .calib-main-action {
+  margin-top: 12px;
+}
+
+.calib-gamepad-live {
+  margin: 14px 0 -6px;
+}
+
+.calib-run {
+  position: relative;
+  padding: clamp(18px, 4vw, 26px);
+  border: 2px solid var(--ink);
+  background: rgba(28, 23, 23, 0.92);
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+.calib-status-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.calib-status-row strong {
+  color: var(--scape-accent-2);
+  font-family: Sora, sans-serif;
+  font-size: 1rem;
+}
+
+.calib-status-row span {
+  color: var(--muted);
+  font: 700 11px/1.2 "IBM Plex Mono", monospace;
+  text-transform: uppercase;
+}
+
+.calib-cancel-run {
+  display: block;
+  min-height: 44px;
+  margin: 6px 0 0 auto;
+  padding-inline: 10px;
+  color: var(--muted);
+}
+
+.calib-progress-track {
+  height: 7px;
+  margin-top: 10px;
+  overflow: hidden;
+  border: 1px solid var(--ink);
+  background: #0f0c0c;
+}
+
+.calib-progress-track span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transition: width 120ms linear;
 }
 
 .calib-lanes {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  margin: 24px 0;
+  gap: 8px;
+  margin: 22px 0 14px;
 }
 
 .calib-lane {
-  padding: 28px 8px;
+  min-width: 0;
+  min-height: 104px;
+  padding: 15px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  appearance: none;
   text-align: center;
-  font-weight: 800;
-  font-size: 1.1rem;
-  font-family: Sora, sans-serif;
+  color: var(--text);
   background: rgba(28, 23, 23, 0.8);
   border-radius: var(--radius-md);
-  border: 1px solid var(--border);
-  border-bottom: 3px solid var(--lane-color, var(--accent));
-  transition: transform 0.1s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  border: 2px solid var(--ink);
+  border-bottom: 5px solid var(--lane-color, var(--accent));
+  box-shadow: 3px 3px 0 var(--ink);
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: transform 80ms ease, box-shadow 80ms ease, background 80ms ease;
+}
+
+.calib-lane > span {
+  color: var(--muted);
+  font: 800 11px/1 "IBM Plex Mono", monospace;
+}
+
+.calib-lane kbd {
+  min-width: 34px;
+  padding: 6px 7px;
+  color: var(--scape-accent-2);
+  background: #100d0d;
+  border: 1px solid rgba(242, 228, 201, 0.4);
+  border-radius: 4px;
+  font: 800 16px/1 Sora, sans-serif;
+}
+
+.calib-lane:focus-visible {
+  outline: 3px solid var(--scape-accent-2);
+  outline-offset: 3px;
 }
 
 .calib-lane.flash {
-  transform: scale(1.04);
+  transform: translateY(-4px);
+  background: color-mix(in srgb, var(--lane-color, var(--accent)) 24%, #1c1717);
   border-color: var(--lane-color, var(--accent));
-  box-shadow: 5px 5px 0 var(--ink), inset 0 0 0 3px var(--lane-color, var(--accent));
+  box-shadow: 5px 7px 0 var(--ink), inset 0 0 0 2px var(--lane-color, var(--accent));
 }
 
 .calib-progress {
+  min-height: 22px;
+  margin: 0;
   text-align: center;
   font-size: 14px;
   color: var(--muted);
-  margin-top: 8px;
 }
 
 .calib-done {
-  padding: 20px;
+  padding: clamp(22px, 5vw, 30px);
   border-radius: var(--radius-md);
-  border: 1px solid rgba(242, 228, 201, 0.3);
+  border: 2px solid rgba(242, 228, 201, 0.32);
   background: rgba(242, 228, 201, 0.08);
-  margin-bottom: 16px;
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+.calib-done:focus-visible {
+  outline: 3px solid var(--scape-accent-2);
+  outline-offset: 4px;
+}
+
+.calib-done-variable {
+  border-color: rgba(255, 176, 32, 0.7);
+}
+
+.calib-done-not-enough {
+  border-color: rgba(226, 61, 61, 0.7);
+}
+
+.calib-done h2 {
+  margin: 4px 0 10px;
+  color: var(--scape-accent-2);
+  font-size: clamp(1.45rem, 5vw, 2rem);
+}
+
+.calib-done > p:not(.eyebrow, .field-hint) {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.calib-result-controller {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 4px 12px;
+  margin-top: 16px;
+  padding: 9px 11px;
+  border: 2px solid var(--ink);
+  background: color-mix(in srgb, var(--lime) 11%, rgba(18, 16, 15, 0.9));
+  box-shadow: 3px 3px 0 var(--ink);
+  font: 750 9px/1.25 "IBM Plex Mono", monospace;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
+
+.calib-result-controller span {
+  grid-row: 1 / 3;
+  align-self: center;
+  color: var(--lime);
+}
+
+.calib-result-controller strong {
+  min-width: 0;
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+
+.calib-offset {
+  display: block;
+  margin: 6px 0 8px;
+  color: var(--scape-accent-2);
+  font: 400 clamp(3.2rem, 14vw, 5.3rem)/0.95 Anton, Sora, sans-serif;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+  -webkit-text-stroke: 2px var(--ink);
+  paint-order: stroke fill;
+}
+
+.calib-done > .calib-direction {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px 9px;
+  margin: 0 0 10px;
+  color: var(--text);
+  font: 750 11px/1.35 "IBM Plex Mono", monospace;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+}
+
+.calib-direction strong {
+  color: var(--lime);
+}
+
+.calib-direction span {
+  color: var(--muted);
+}
+
+.calib-result-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.calib-result-actions .btn {
+  min-height: 48px;
+}
+
+.calib-keep {
+  display: block;
+  min-height: 44px;
+  margin: 16px auto 0;
+  color: var(--muted);
+}
+
+@media (max-width: 520px) {
+  .calibrate-panel {
+    padding-bottom: calc(86px + env(safe-area-inset-bottom));
+  }
+
+  .calib-intro,
+  .calib-run,
+  .calib-done {
+    border-radius: 0;
+  }
+
+  .calib-facts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .calib-facts span:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .calib-main-action {
+    width: 100%;
+  }
+
+  .calib-gamepad:not(.calib-gamepad-live) {
+    min-height: 34px;
+    margin-top: 10px;
+    padding-block: 4px;
+  }
+
+  .calib-gamepad:not(.calib-gamepad-live) + .calib-main-action {
+    margin-top: 8px;
+  }
+
+  .calib-status-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .calib-lanes {
+    gap: 5px;
+    margin-inline: -7px;
+  }
+
+  .calib-lane {
+    min-height: 98px;
+    padding-inline: 2px;
+    border-bottom-width: 5px;
+    box-shadow: 2px 3px 0 var(--ink);
+  }
+
+  .calib-lane.flash {
+    box-shadow: 3px 6px 0 var(--ink), inset 0 0 0 2px var(--lane-color, var(--accent));
+  }
+
+  .calib-result-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .calib-result-actions .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 520px) and (max-height: 700px) {
+  body.calibration-running .app-shell,
+  body.calibration-complete .app-shell {
+    max-width: none;
+    padding: 0;
+  }
+
+  body.calibration-running .site-header,
+  body.calibration-complete .site-header,
+  body.calibration-running .site-footer,
+  body.calibration-complete .site-footer,
+  body.calibration-running .mobile-tabbar,
+  body.calibration-complete .mobile-tabbar,
+  body.calibration-running .calibrate-panel > .back-link,
+  body.calibration-complete .calibrate-panel > .back-link,
+  body.calibration-running .calibrate-header,
+  body.calibration-complete .calibrate-header {
+    display: none;
+  }
+
+  body.calibration-running .site-main,
+  body.calibration-complete .site-main {
+    min-height: 100dvh;
+    padding: 8px;
+  }
+
+  body.calibration-running .calibrate-panel,
+  body.calibration-complete .calibrate-panel {
+    width: 100%;
+    padding: 0;
+  }
+
+  body.calibration-running .calib-run {
+    height: calc(100dvh - 16px);
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  body.calibration-running .calib-status-row {
+    display: block;
+    padding-right: 82px;
+  }
+
+  body.calibration-running .calib-status-row span {
+    display: block;
+    margin-top: 4px;
+  }
+
+  body.calibration-running .calib-cancel-run {
+    position: absolute;
+    z-index: 1;
+    top: 6px;
+    right: 8px;
+    margin: 0;
+  }
+
+  body.calibration-running .calib-gamepad-live {
+    min-height: 42px;
+    margin: 10px 0 8px;
+    padding-block: 4px;
+  }
+
+  body.calibration-running .calib-lanes {
+    flex: 1 1 auto;
+    min-height: 120px;
+    margin: 8px 0;
+  }
+
+  body.calibration-running .calib-lane {
+    min-height: 0;
+    height: 100%;
+  }
+
+  body.calibration-complete .calib-done {
+    padding: 18px;
+  }
+
+  body.calibration-complete .calib-keep {
+    width: 100%;
+    margin-top: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hud-practice-assist,
+  .hud-opening-coach {
+    transition: none;
+  }
+
+  .hud-practice-assist[data-show="1"],
+  .hud-opening-coach[data-show="1"] {
+    transform: translate(-50%, 0) skewX(-4deg);
+  }
+
+  .hud-opening-coach[data-show="1"] {
+    transform: skewX(-3deg);
+  }
+
+  .calib-lane,
+  .calib-progress-track span {
+    transition: none;
+  }
+
+  .calib-lane.flash {
+    transform: none;
+  }
 }
 
 /* Library filters bar */
+.library-discovery {
+  margin-bottom: 24px;
+  padding: 16px;
+  border: 2px solid var(--ink);
+  border-left-color: var(--accent);
+  border-radius: var(--radius-md);
+  background: rgba(28, 23, 23, 0.86);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+.library-discovery-head,
+.library-results-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.library-discovery-head {
+  margin-bottom: 14px;
+}
+
+.library-discovery-head .eyebrow {
+  display: block;
+  margin: 0 0 4px;
+}
+
+.library-discovery-head h2,
+.library-results-head h2 {
+  margin: 0;
+  font-family: Anton, "Sora", sans-serif;
+  font-size: 1.35rem;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+.library-clear {
+  flex: 0 0 auto;
+  min-height: 44px;
+  white-space: nowrap;
+}
+
+.library-results-head {
+  margin: 24px 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.library-results-head h2 {
+  scroll-margin-top: 12px;
+}
+
+.library-results-head [role="status"] {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.library-load-more {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  margin: 28px 0 8px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+.library-load-more > span {
+  color: var(--muted);
+  font: 700 11px/1.3 "IBM Plex Mono", monospace;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.library-load-more .btn {
+  min-width: min(100%, 260px);
+  min-height: 48px;
+  margin: 0;
+}
+
+.library-more-filters > summary {
+  display: none;
+}
+
+.library-more-filters > summary > b {
+  display: inline-grid;
+  min-width: 20px;
+  height: 20px;
+  place-items: center;
+  margin-left: auto;
+  padding: 0 5px;
+  border: 1px solid color-mix(in srgb, var(--accent) 42%, transparent);
+  border-radius: 999px;
+  color: var(--accent-text);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  font: 700 10px/1 "IBM Plex Mono", monospace;
+}
+
+.library-view-results {
+  display: none;
+}
+
+.library-recent {
+  display: grid;
+  grid-template-columns: 104px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 18px;
+  min-width: 0;
+  margin: 0 0 28px;
+  padding: 16px;
+  overflow: hidden;
+  border: 2px solid var(--ink);
+  border-left: 5px solid var(--recent-district-color, var(--accent));
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
+  background:
+    linear-gradient(105deg, color-mix(in srgb, var(--recent-district-color, var(--accent)) 12%, transparent), transparent 52%),
+    var(--bg-elevated);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+
+.library-recent-cover {
+  width: 104px;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.library-recent-cover img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.library-recent-copy {
+  min-width: 0;
+}
+
+.library-recent-copy .eyebrow {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--recent-district-color, var(--accent-text));
+}
+
+.library-recent-copy h2 {
+  margin: 0;
+  overflow: hidden;
+  color: var(--text);
+  font-family: Anton, "Sora", sans-serif;
+  font-size: clamp(1.45rem, 3vw, 2.15rem);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1.05;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.library-recent-stats {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 12px;
+  margin-top: 10px;
+  color: var(--muted);
+  font: 700 11px/1.4 "IBM Plex Mono", monospace;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.library-recent-stats strong {
+  color: var(--text);
+  font-size: 13px;
+}
+
+.library-recent-stats span:last-child {
+  padding: 3px 7px;
+  border: 1px solid rgba(242, 228, 201, 0.2);
+  border-radius: 4px;
+}
+
+.library-recent-stats .is-failed {
+  color: #f2a3a3;
+  border-color: rgba(226, 61, 61, 0.5);
+}
+
+.library-recent-actions {
+  display: grid;
+  grid-template-columns: minmax(124px, 1fr);
+  gap: 8px;
+}
+
+.library-recent-actions .btn {
+  min-height: 44px;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.library-saved-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 12px;
+}
+
+.library-filter-primary {
+  display: flex;
+  align-items: end;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.library-genre-control {
+  display: grid;
+  flex: 1 1 360px;
+  gap: 6px;
+  min-width: 0;
+}
+
+.library-genre-control > span {
+  color: var(--muted);
+  font: 700 11px/1.4 "IBM Plex Mono", monospace;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.library-genre-control select {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  /* iOS WebKit ignores min-height on native selects with appearance:auto. */
+  height: 44px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  background: var(--bg);
+  font: inherit;
+}
+
+.library-filter-primary .library-saved-row {
+  flex: 0 1 auto;
+  margin: 0;
+}
+
+.library-saved-row > small {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.library-saved-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+}
+
+.library-saved-toggle > span {
+  color: var(--accent-text);
+  font-size: 18px;
+  line-height: 1;
+}
+
+.library-saved-toggle > b {
+  min-width: 20px;
+  padding: 2px 6px;
+  border-radius: 999px;
+  color: var(--text);
+  background: rgba(242, 228, 201, 0.12);
+  font: 700 10px/1.4 "IBM Plex Mono", monospace;
+}
+
+.library-sort-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 12px;
+}
+
+.library-sort-control > span {
+  flex: 0 0 auto;
+  color: var(--muted);
+  font: 700 11px/1.4 "IBM Plex Mono", monospace;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.library-sort-control select {
+  width: min(100%, 252px);
+  min-width: 0;
+  min-height: 44px;
+  height: 44px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  background: var(--bg);
+  font: inherit;
+}
+
 .filter-chips {
   display: flex;
   flex-wrap: wrap;
@@ -2978,6 +8000,8 @@ td {
   font: inherit;
   font-size: 12px;
   font-weight: 600;
+  min-width: 44px;
+  min-height: 44px;
   padding: 6px 12px;
   border-radius: 999px;
   border: 1px solid var(--border);
@@ -3074,10 +8098,19 @@ td {
   border: 1px solid var(--border);
 }
 
+.library-discovery .filters-bar {
+  margin-bottom: 12px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
 .filters-bar input,
 .filters-bar select {
   flex: 1 1 140px;
   min-width: 0;
+  min-height: 44px;
   padding: 10px 12px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border);
@@ -3087,8 +8120,289 @@ td {
 }
 
 @media (max-width: 640px) {
+  .library:not(.library-filtering) .page-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .library:not(.library-filtering) .page-header h1 {
+    margin: 0;
+    font-size: 1.65rem;
+  }
+
+  .library:not(.library-filtering) .page-header .tagline {
+    display: none;
+  }
+
+  .library:not(.library-filtering) .page-header .page-count {
+    margin-top: 0;
+  }
+
+  .library-recent {
+    grid-template-columns: 76px minmax(0, 1fr);
+    gap: 12px;
+    margin-bottom: 22px;
+    padding: 12px;
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+
+  .library-recent-cover {
+    width: 76px;
+  }
+
+  .library-recent-copy h2 {
+    font-size: 1.35rem;
+  }
+
+  .library-recent-stats {
+    gap: 4px 8px;
+    margin-top: 7px;
+    font-size: 10px;
+  }
+
+  .library-recent-stats span:last-child:not(.is-failed) {
+    display: none;
+  }
+
+  .library-recent-actions {
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  .library-recent-actions .btn {
+    width: 100%;
+    min-width: 0;
+    padding-right: 8px;
+    padding-left: 8px;
+  }
+
+  .library-discovery {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 104px;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding: 12px;
+  }
+
+  .library:not(.library-filtering) .library-discovery-head {
+    margin-bottom: 0;
+  }
+
+  .library:not(.library-filtering) .library-discovery-head .eyebrow {
+    display: none;
+  }
+
+  .library:not(.library-filtering) .library-discovery-head h2 {
+    font-size: 1.05rem;
+    line-height: 1.2;
+  }
+
+  .library-discovery-head {
+    grid-column: 1 / -1;
+  }
+
+  .library-discovery > .filters-bar {
+    grid-column: 1;
+    margin-bottom: 0;
+  }
+
+  .library-more-filters {
+    grid-column: 2;
+    min-width: 0;
+  }
+
+  .library-more-filters[open] {
+    grid-column: 1 / -1;
+  }
+
+  .library-filtering .page-header {
+    margin-bottom: 6px;
+  }
+
+  .library-filtering .page-header h1 {
+    margin-bottom: 0;
+    font-size: 1.5rem;
+  }
+
+  .library-filtering .page-header .tagline,
+  .library-filtering .page-header .page-count,
+  .library-filtering .library-discovery-head .eyebrow {
+    display: none;
+  }
+
+  .library-filtering .library-discovery-head {
+    justify-content: flex-end;
+    margin-bottom: 4px;
+  }
+
+  .library-filtering .library-discovery-head > div {
+    display: none;
+  }
+
+  .library-filtering .library-results-head {
+    margin: 8px 0 4px;
+  }
+
+  .library-more-filters > summary {
+    display: flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    padding: 0 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.04);
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 700;
+    list-style: none;
+  }
+
+  .library-more-filters > summary > span {
+    white-space: nowrap;
+  }
+
+  .library-more-filters > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .library-more-filters > summary::after {
+    content: "+";
+    flex: 0 0 auto;
+    color: var(--accent-text);
+    font: 700 20px/1 "IBM Plex Mono", monospace;
+  }
+
+  .library-more-filters[open] > summary::after {
+    content: "−";
+  }
+
+  .library-more-filters > summary small {
+    display: none;
+  }
+
+  .library-more-filters:not([open]) > .library-filter-options {
+    display: none;
+  }
+
+  .library-filter-options {
+    padding-top: 12px;
+  }
+
+  .library-view-results {
+    display: inline-flex;
+    width: 100%;
+    min-height: 48px;
+    margin: 0;
+  }
+
+  .library-filter-primary {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .library-filter-primary .library-saved-row {
+    display: flex;
+    align-items: center;
+  }
+
+  .library-filter-primary .library-saved-row > small {
+    display: block;
+  }
+
+  .library-sort-control select {
+    flex: 1 1 auto;
+    width: auto;
+  }
+
+  .library-discovery .filter-chips {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    scroll-snap-type: x proximity;
+  }
+
+  .library-discovery .filter-chips::-webkit-scrollbar {
+    display: none;
+  }
+
+  .library-discovery .filter-chip,
+  .library-discovery .filter-chips-label {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+
+  .library .curated-subtitle {
+    display: none;
+  }
+
   .track-hero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .run-configurator,
+  .run-guidance {
     grid-template-columns: 1fr;
+  }
+
+  .run-guidance > div {
+    min-height: 108px;
+  }
+
+  .run-guidance > div + div {
+    border-top: 2px solid var(--ink);
+    border-left: 0;
+  }
+
+  .run-personal-best {
+    min-height: 76px;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 5px;
+    padding: 11px 12px;
+  }
+
+  .run-personal-best-lede {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: baseline;
+    gap: 10px;
+  }
+
+  .run-personal-best strong {
+    font-size: 16px;
+    text-align: right;
+  }
+
+  .run-chart-profile dl {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .run-chart-profile dl > div {
+    min-height: 58px;
+    padding: 9px;
+  }
+
+  .run-chart-profile .run-chart-patterns {
+    grid-column: 1 / -1;
+    border-top: 1px solid rgba(242, 228, 201, 0.13);
+    border-left: 0;
+  }
+
+  .track-primary-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .track-secondary-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   /* One control per row — three across is unreadable at phone width. */
@@ -3103,7 +8417,22 @@ td {
   }
 
   .results-stats {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .stat-pill {
+    min-width: 0;
+    padding: 10px 4px;
+  }
+
+  .stat-pill span {
+    font-size: 9px;
+    letter-spacing: 0.04em;
+  }
+
+  .stat-pill strong {
+    font-size: 1rem;
   }
 
   .board-row {
@@ -3111,14 +8440,43 @@ td {
     grid-template-rows: auto auto;
   }
 
-  .board-score,
-  .board-acc {
+  .board-metrics {
     grid-column: 2;
-    text-align: left;
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
   }
 
   .board-score {
     font-size: 14px;
+  }
+
+  .board-score,
+  .board-acc {
+    grid-column: auto;
+    text-align: left;
+  }
+}
+
+@media (max-width: 380px) {
+  .run-segments button {
+    padding-inline: 3px;
+    font-size: 11px;
+  }
+
+  .run-chart-message {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .run-chart-message .btn {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .run-chart-pulse {
+    animation: none;
   }
 }
 
@@ -3356,56 +8714,118 @@ td {
   color: var(--district-color, #e23d3d);
 }
 
-/* PlayField — district character tint (L1 immersion, zero gameplay impact) */
+/* PlayField — district character tint is painted inside the canvas background. */
 .play-wrap {
   position: relative;
 }
-.play-char-watermark {
-  position: absolute;
-  right: 18px;
-  bottom: 18px;
-  width: clamp(108px, 26%, 220px);
-  height: auto;
-  opacity: 0.16;
-  pointer-events: none;
-  z-index: 3;
-  mix-blend-mode: screen;
-  border-radius: 12px;
-  user-select: none;
-}
-@media (max-width: 600px) {
-  .play-char-watermark {
-    width: clamp(84px, 30%, 140px);
-    right: 10px;
-    bottom: 10px;
-  }
-}
-
-/* ===== SIGNAL atmosphere layer (docs/BEATSCAPE-SURGE-FX.md) =====
-   The district character "wakes" as the run heats up. Driven by the
-   data-surge attribute set from the canvas loop — zero React re-renders. */
-.play-char-watermark {
-  transition: opacity 420ms ease, filter 420ms ease;
-}
-.play-wrap[data-surge="1"] .play-char-watermark {
-  opacity: 0.22;
-  filter: saturate(1.2);
-}
-.play-wrap[data-surge="2"] .play-char-watermark {
-  opacity: 0.32;
-  filter: saturate(1.45);
-}
-.play-wrap[data-surge="3"] .play-char-watermark {
-  opacity: 0.46;
-  filter: saturate(1.6) contrast(1.08);
-}
 
 /* ===== Profile / honor ladder / achievements (PRD §17, gap 3-1) ===== */
+.profile-rank-overview {
+  display: grid;
+  grid-template-columns: minmax(210px, 0.72fr) minmax(0, 1.28fr);
+  gap: 14px;
+  margin: 20px 0 16px;
+}
+.profile-current-rank,
+.profile-next-rank {
+  min-width: 0;
+  padding: 18px 20px;
+  border: 2px solid var(--ink);
+  background: #1c1717;
+  box-shadow: 5px 5px 0 var(--ink);
+}
+.profile-current-rank {
+  border-color: var(--accent);
+  background: linear-gradient(135deg, rgba(226, 61, 61, 0.22), #1c1717 68%);
+}
+.profile-current-rank h2,
+.profile-next-rank h2 {
+  margin: 2px 0 5px;
+  font: 400 clamp(26px, 4vw, 40px)/1 "Anton", "Sora", sans-serif;
+  letter-spacing: 0.025em;
+}
+.profile-current-rank h2 {
+  color: var(--accent);
+}
+.profile-current-rank > p:last-child,
+.profile-max-rank > p:last-child {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+.profile-next-rank-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.rank-progress-rule {
+  flex: 0 0 auto;
+  margin-top: 2px;
+  padding: 5px 8px;
+  border: 1px solid rgba(245, 239, 230, 0.26);
+  color: var(--muted);
+  font: 700 10px/1.2 "IBM Plex Sans", sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.rank-progress-list {
+  display: grid;
+  gap: 11px;
+  margin-top: 12px;
+}
+.rank-progress-copy {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 5px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.rank-progress-copy strong {
+  color: var(--text);
+  text-align: right;
+}
+.rank-progress-row.complete .rank-progress-copy strong {
+  color: var(--scape-accent-2);
+}
+.rank-progress-row progress {
+  display: block;
+  width: 100%;
+  height: 9px;
+  appearance: none;
+  border: 1px solid #000;
+  border-radius: 0;
+  overflow: hidden;
+  background: #0e0c0c;
+}
+.rank-progress-row progress::-webkit-progress-bar {
+  background: #0e0c0c;
+}
+.rank-progress-row progress::-webkit-progress-value {
+  background: var(--accent);
+}
+.rank-progress-row progress::-moz-progress-bar {
+  background: var(--accent);
+}
+.rank-progress-row.complete progress::-webkit-progress-value {
+  background: var(--scape-accent-2);
+}
+.rank-progress-row.complete progress::-moz-progress-bar {
+  background: var(--scape-accent-2);
+}
 .rank-ladder {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 12px;
   margin: 20px 0;
+}
+.rank-ladder[hidden] {
+  display: none;
+}
+.profile-rank-ladder-head {
+  display: none;
 }
 .rank-card {
   background: #1c1717;
@@ -3434,7 +8854,7 @@ td {
   background: #241a1a;
 }
 .rank-card.rank-current strong {
-  color: #e23d3d;
+  color: var(--accent-text);
 }
 .rank-step {
   font: 600 11px "IBM Plex Sans", sans-serif;
@@ -3445,6 +8865,57 @@ td {
   font-size: 12px;
   color: #a8928b;
 }
+.profile-streak-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin: 18px 0;
+  padding: 17px 20px;
+  border: 2px solid rgba(255, 176, 32, 0.5);
+  background: linear-gradient(115deg, rgba(255, 176, 32, 0.13), #1c1717 58%);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+.profile-streak-card[data-state="played-today"] {
+  border-color: color-mix(in srgb, var(--scape-accent-2) 62%, var(--ink));
+  background: linear-gradient(115deg, rgba(92, 184, 148, 0.15), #1c1717 58%);
+}
+.profile-streak-card h2 {
+  margin: 3px 0 4px;
+  font: 400 clamp(24px, 4vw, 34px)/1 "Anton", "Sora", sans-serif;
+  letter-spacing: 0.025em;
+}
+.profile-streak-card > div > p:last-child {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+.profile-streak-card .btn {
+  flex: 0 0 auto;
+  min-height: 44px;
+}
+.profile-streak-action {
+  display: grid;
+  flex: 0 1 280px;
+  gap: 7px;
+}
+.profile-next-run-meta {
+  color: var(--muted);
+  font: 650 10px/1.4 "IBM Plex Mono", monospace;
+  letter-spacing: 0.03em;
+}
+.profile-streak-complete {
+  flex: 0 0 auto;
+  padding: 8px 10px;
+  border: 1px solid color-mix(in srgb, var(--scape-accent-2) 62%, transparent);
+  color: var(--scape-accent-2);
+  font: 700 11px/1.2 "IBM Plex Sans", sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.profile-streak-complete > span {
+  margin-right: 4px;
+}
 .profile-stats {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
@@ -3452,9 +8923,22 @@ td {
   margin: 18px 0;
 }
 .profile-subhead {
-  margin: 26px 0 12px;
+  margin: 0;
   font-family: "Anton", "Sora", sans-serif;
   letter-spacing: 0.03em;
+}
+.profile-achievement-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 26px 0 12px;
+}
+.profile-achievement-head > span {
+  color: var(--muted);
+  font: 700 11px "IBM Plex Sans", sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 .achievement-grid {
   display: grid;
@@ -3468,7 +8952,6 @@ td {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  opacity: 0.5;
   filter: grayscale(0.85);
   box-shadow: 4px 4px 0 var(--ink);
   transform: skewX(-2deg);
@@ -3486,6 +8969,19 @@ td {
 .achievement-mark {
   color: #e23d3d;
   font-size: 18px;
+}
+.achievement-status {
+  width: fit-content;
+  padding: 3px 7px;
+  border: 1px solid rgba(168, 146, 139, 0.45);
+  color: #a8928b;
+  font: 700 9px/1 "IBM Plex Sans", sans-serif;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.achievement-card.unlocked .achievement-status {
+  border-color: var(--accent);
+  color: var(--scape-accent-2);
 }
 .achievement-card.unlocked .achievement-mark {
   animation: honor-pop 0.6s ease-out;
@@ -3520,6 +9016,9 @@ td {
   color: #12100f;
 }
 .honor-link {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
   font: 600 13px "IBM Plex Sans", sans-serif;
   color: #a8928b;
   text-decoration: underline;
@@ -3539,6 +9038,69 @@ td {
   .achievement-card.unlocked .achievement-mark,
   .honor-chip {
     animation: none;
+  }
+}
+@media (max-width: 640px) {
+  .profile-rank-overview {
+    grid-template-columns: 1fr;
+  }
+  .profile-current-rank,
+  .profile-next-rank {
+    padding: 16px;
+  }
+  .profile-next-rank-head,
+  .rank-progress-copy {
+    align-items: flex-start;
+  }
+  .profile-next-rank-head {
+    flex-direction: column;
+  }
+  .rank-progress-rule {
+    margin-top: 0;
+  }
+  .profile-streak-card {
+    align-items: stretch;
+    flex-direction: column;
+    padding: 16px;
+  }
+  .profile-streak-card .btn,
+  .profile-streak-complete {
+    width: 100%;
+    text-align: center;
+  }
+  .profile-streak-action {
+    flex-basis: auto;
+    width: 100%;
+  }
+  .profile-rank-ladder-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 18px 0 0;
+    padding: 14px 0 0;
+    border-top: 1px solid rgba(245, 239, 230, 0.18);
+  }
+  .profile-rank-ladder-head .eyebrow {
+    margin-bottom: 3px;
+  }
+  .profile-rank-ladder-toggle {
+    flex: 0 0 auto;
+    min-height: 44px;
+  }
+  .profile-rank-ladder-head + .rank-ladder {
+    margin-top: 12px;
+  }
+  .achievement-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .achievement-card {
+    min-height: 116px;
+    padding: 12px 10px;
+  }
+  .achievement-condition {
+    font-size: 11px;
   }
 }
 
@@ -3751,7 +9313,7 @@ td {
   font: 700 13px/1.1 "Sora", sans-serif;
 }
 .radio-channel.active .radio-channel-num {
-  color: #12100f;
+  color: #000;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -3797,7 +9359,7 @@ td {
   background: color-mix(in srgb, var(--accent2) 10%, var(--bg-elevated));
 }
 .radio-episode.upcoming {
-  opacity: 0.62;
+  border-style: dashed;
 }
 .radio-onair {
   margin: 10px 0 0;
@@ -3829,6 +9391,8 @@ td {
 }
 /* 季标题即折叠开关（<details><summary>）：正在播的季默认展开，旧季收起。 */
 .radio-season-title {
+  box-sizing: border-box;
+  min-height: 44px;
   margin: 0 0 12px;
   font-size: 0.95rem;
   font-weight: 700;
@@ -3856,10 +9420,12 @@ td {
   content: "–";
 }
 .radio-season-count {
+  flex: 0 0 auto;
   font-size: 0.72rem;
   letter-spacing: 0.08em;
   color: var(--muted);
   opacity: 0.8;
+  white-space: nowrap;
 }
 .radio-episode-head h3 {
   flex: 1;
@@ -3879,12 +9445,86 @@ td {
 .catalog-error {
   margin: 0 0 18px;
   padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
   border: var(--stroke-w) solid var(--accent);
   border-radius: var(--radius-md);
   background: rgba(226, 61, 61, 0.08);
   color: var(--text);
   font-size: 14px;
   line-height: 1.4;
+}
+
+.catalog-error-copy {
+  display: grid;
+  gap: 2px;
+}
+
+.catalog-error-copy strong {
+  color: var(--accent-text);
+  font-size: 14px;
+}
+
+.catalog-error-copy span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.catalog-error .btn {
+  flex: 0 0 auto;
+  min-height: 44px;
+  padding: 9px 16px;
+}
+
+@media (max-width: 540px) {
+  .catalog-error {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .catalog-error .btn {
+    width: 100%;
+  }
+}
+
+/* Track-route failures are terminal for this page but still recoverable. Keep
+   the copy and actions centered, with enough bottom room for the mobile tabbar. */
+.track-load-fallback {
+  min-height: min(68vh, 620px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 48px 20px 96px;
+  text-align: center;
+}
+
+.track-load-fallback h1,
+.track-load-fallback .tagline,
+.track-load-fallback .eyebrow {
+  margin: 0;
+}
+
+.track-load-fallback .tagline {
+  max-width: 480px;
+}
+
+.track-load-mark {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  margin-bottom: 4px;
+  border: 3px solid var(--accent);
+  background: var(--bg-elevated);
+  color: var(--accent-text);
+  font-size: 34px;
+  font-weight: 800;
+  box-shadow: 6px 6px 0 var(--ink);
+  transform: rotate(-4deg);
 }
 
 /* ── Fatal render error (ErrorBoundary) ───────────────────────────── */
@@ -3911,23 +9551,6 @@ td {
   margin: 0;
   max-width: 460px;
   color: var(--muted);
-}
-
-/* 把原始报错 message 包进 pre，方便复制提交 issue，但限高避免撑爆屏。 */
-.error-detail {
-  max-width: 600px;
-  max-height: 160px;
-  overflow: auto;
-  margin: 0;
-  padding: 10px 14px;
-  border: var(--stroke-w) solid var(--scape-line);
-  border-radius: var(--radius-sm);
-  background: var(--bg2);
-  color: var(--muted);
-  font-size: 12px;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  white-space: pre-wrap;
-  text-align: left;
 }
 
 /* ===== A 档视觉改造 · 滚动揭示 / 封面交互层 / Hero 漫画画框 =====
@@ -4082,6 +9705,14 @@ td {
   }
 }
 
+@media (max-width: 860px) {
+  /* The compact demo puts its title in the same band as this decorative slab,
+     including on 390px phones. Give the playable title and action priority. */
+  .home-hero-onair {
+    display: none;
+  }
+}
+
 /* ==========================================================================
    D 档 · 骨架屏
    盒模型复刻 .track-card（padding/边框/硬投影/圆角一致），保证真实卡片替换
@@ -4089,14 +9720,17 @@ td {
    按该选择器扫描，骨架命中就会被 arm 一次、和自身淡入打架。
    ========================================================================== */
 .skeleton-card {
-  display: flex;
-  gap: 14px;
   padding: 14px;
   background: var(--bg-elevated);
   border: var(--stroke-w) solid var(--ink);
   border-radius: var(--radius-md);
   box-shadow: 4px 4px 0 var(--ink);
   animation: skeleton-in 0.32s ease-out both;
+}
+
+.skeleton-card-main {
+  display: flex;
+  gap: 14px;
 }
 
 .skeleton-lines {
@@ -4142,6 +9776,12 @@ td {
 .skeleton-line-sm {
   width: 46%;
   height: 22px; /* 对应 .track-card-badges 那一行的高度 */
+}
+
+.skeleton-action {
+  width: 100%;
+  height: 44px;
+  margin-top: 14px;
 }
 
 @keyframes skeleton-sweep {
@@ -4243,26 +9883,54 @@ td {
   .duo-stage {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
-    height: calc(100dvh - 132px);
+    height: calc(
+      100dvh - 84px - env(safe-area-inset-top) - env(safe-area-inset-bottom)
+    );
+    min-height: 0;
+  }
+
+  /* In the stacked grid, `height: 100%` resolves each field against the whole
+     stage in Chromium instead of its individual row. The second judgment line
+     then falls below a 320x568 viewport. Let grid stretch each field to its own
+     track so both players keep the complete canvas without page scrolling. */
+  .play-wrap-duo {
+    height: auto;
+  }
+
+  /* The generic mobile canvas reserves 58dvh for single-player lane travel.
+     Applying that minimum to both stacked fields makes their pixels overflow
+     correctly sized grid rows. Duo owns two shorter but complete canvases. */
+  .play-wrap-duo .play-canvas {
+    min-height: 0;
+  }
+
+  /* In compact Duo fields the centered badge clips the score card's corner.
+     Bias the decorative SIGNAL into the gap before the independent Pause hit. */
+  .play-wrap-duo .hud-signal {
+    left: 56%;
   }
 }
 
 /* --- HUD 缩一档（半宽画布） --- */
 .play-wrap-duo .hud-chip {
-  max-width: 74%;
-  padding: 6px 9px;
+  width: 118px;
+  padding: 6px 8px 7px;
   gap: 2px;
 }
-.play-wrap-duo .hud-track-title {
-  font-size: 0.78rem;
-}
-.play-wrap-duo .hud-track-tier,
 .play-wrap-duo .hud-track-score-label {
-  font-size: 8px;
+  font-size: 7px;
   letter-spacing: 0.1em;
 }
 .play-wrap-duo .hud-track-score > span:last-child {
-  font-size: 0.92rem;
+  font-size: 1.05rem;
+}
+.play-wrap-duo .hud-performance-meta {
+  font-size: 7px;
+}
+.play-wrap-duo .hud-hp {
+  grid-template-columns: auto minmax(24px, 1fr) 3ch;
+  gap: 3px;
+  font-size: 6px;
 }
 .play-wrap-duo .hud-signal {
   top: 12px;
@@ -4271,44 +9939,39 @@ td {
   letter-spacing: 0.14em;
   box-shadow: 3px 3px 0 var(--ink);
 }
-.play-wrap-duo .hud-combo {
-  top: 10px;
-  right: 10px;
-}
-.play-wrap-duo .hud-combo-num {
-  font-size: 2rem;
-  -webkit-text-stroke-width: 1.5px;
-}
-.play-wrap-duo .hud-combo-label {
-  font-size: 9px;
-  letter-spacing: 0.16em;
-}
-.play-wrap-duo .hud-judges {
-  left: 10px;
-  right: 10px;
-  bottom: 10px;
-  gap: 5px;
-}
-.play-wrap-duo .hud-judge {
-  padding: 4px 2px 5px;
-}
-.play-wrap-duo .hud-judge-label {
-  font-size: 8px;
-  letter-spacing: 0.05em;
-}
-.play-wrap-duo .hud-judge-count {
-  font-size: 1.05rem;
-}
 .play-wrap-duo .pause-btn {
-  top: 12px;
-  right: 10px;
+  top: 5px;
+  right: 5px;
+}
+.play-wrap-duo .pause-btn-visual {
   width: 30px;
   height: 30px;
   font-size: 13px;
   box-shadow: 2px 2px 0 var(--ink);
 }
-.play-wrap-duo .play-char-watermark {
-  opacity: 0.06;
+.play-wrap-duo .play-failure {
+  padding: 10px;
+}
+
+.play-wrap-duo .play-failure-card {
+  width: min(280px, 90%);
+  gap: 4px;
+  padding: 15px 12px 17px;
+  box-shadow: 5px 5px 0 var(--ink);
+}
+
+.play-wrap-duo .play-failure-card strong {
+  font-size: clamp(1.45rem, 5vw, 2.7rem);
+}
+
+.play-wrap-duo .play-failure-card span {
+  font-size: 0.58rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .play-failure {
+    transition: none;
+  }
 }
 
 /* --- P1 / P2 徽标（仅 duo 渲染，单人时这个节点根本不存在） --- */
@@ -4341,7 +10004,16 @@ td {
   margin: 0 2px;
 }
 
-/* --- 起跑卡：两边都解码完才出现。一次点击 = 解锁 AudioContext（用户手势）
+/* The ready card teaches seat ownership and each playfield keeps its own lane
+   legend. Repeating both mappings in a phone-width header crowds out the track
+   and mode, especially when controllers are connected. */
+@media (max-width: 700px) {
+  .duo-keyhint {
+    display: none;
+  }
+}
+
+/* --- 起跑卡：两边都解码完才出现。Start 按钮 = 解锁 AudioContext（用户手势）
    + 打开 startGate（两个 conductor 同一帧 begin）。 --- */
 .duo-start {
   position: fixed;
@@ -4354,11 +10026,206 @@ td {
   background: rgba(18, 16, 15, 0.92);
   background-image: var(--halftone);
   background-size: 10px 10px;
-  cursor: pointer;
 }
 
 .duo-start .overlay-card {
   text-align: center;
+}
+
+.duo-start .unlock-btn {
+  width: 260px;
+  max-width: 100%;
+  min-height: 52px;
+}
+
+.duo-start .unlock-btn:disabled {
+  cursor: wait;
+  opacity: 0.72;
+  transform: none;
+}
+
+.duo-start .unlock-btn[data-loading="true"] {
+  background: #29221f;
+  color: var(--scape-accent-2);
+  border-color: var(--accent);
+  opacity: 1;
+  cursor: progress;
+}
+
+.duo-loading-copy {
+  margin: 0;
+  color: var(--muted);
+  font: 650 13px/1.45 "IBM Plex Sans", sans-serif;
+}
+
+.duo-loading-back {
+  min-height: 44px;
+}
+
+.audio-load-progress {
+  width: min(320px, 100%);
+  display: grid;
+  gap: 6px;
+}
+
+.audio-load-progress-track {
+  height: 6px;
+  overflow: hidden;
+  border: 1px solid var(--muted);
+  background: var(--ink);
+}
+
+.audio-load-progress-track > span {
+  display: block;
+  height: 100%;
+  background: var(--scape-accent-2);
+}
+
+.audio-load-progress-indeterminate > span {
+  width: 35%;
+  animation: audio-load-scan 1.4s ease-in-out infinite alternate;
+}
+
+.audio-load-progress-label {
+  margin: 0;
+  color: var(--muted);
+  font: 700 11px/1.3 "IBM Plex Mono", monospace;
+  text-align: center;
+}
+
+@keyframes audio-load-scan {
+  from { transform: translateX(0); }
+  to { transform: translateX(185%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .audio-load-progress-indeterminate > span { animation: none; }
+}
+
+.duo-gamepad-start {
+  margin: -3px 0;
+}
+
+.duo-pause {
+  z-index: 32;
+}
+
+.duo-pause-copy {
+  max-width: 31rem;
+  margin: 0;
+  color: var(--muted);
+  font: 650 13px/1.5 "IBM Plex Sans", sans-serif;
+}
+
+.duo-pause-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  width: min(360px, 100%);
+}
+
+.duo-pause-actions .btn {
+  min-height: 48px;
+  margin: 0;
+  padding: 12px 16px;
+  white-space: nowrap;
+}
+
+.duo-pause-actions .duo-pause-exit {
+  grid-column: 1 / -1;
+  color: var(--muted);
+  background: transparent;
+  box-shadow: none;
+}
+
+.duo-pause-actions .duo-pause-exit:hover,
+.duo-pause-actions .duo-pause-exit:focus-visible {
+  color: var(--text);
+  background: var(--bg-elevated);
+}
+
+@media (max-width: 380px) {
+  .duo-pause-actions {
+    grid-template-columns: 1fr;
+    width: min(240px, 100%);
+  }
+
+  .duo-pause-actions .duo-pause-exit {
+    grid-column: auto;
+  }
+}
+
+.duo-start-error {
+  max-width: 32rem;
+  margin: 0;
+  color: var(--accent2);
+  font: 700 12px/1.45 "IBM Plex Mono", monospace;
+}
+
+.duo-load-copy {
+  max-width: 30rem;
+  margin: 0;
+  color: var(--scape-warn);
+  font: 600 14px/1.45 "IBM Plex Sans", sans-serif;
+  text-align: center;
+}
+
+.audio-load-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  width: min(390px, 100%);
+}
+
+.audio-load-actions .btn {
+  min-height: 48px;
+  padding: 11px 14px;
+}
+
+@media (max-width: 430px) {
+  .audio-load-actions {
+    grid-template-columns: 1fr;
+    width: min(260px, 100%);
+  }
+}
+
+.duo-seat-hint {
+  display: grid;
+  gap: 4px;
+  max-width: 100%;
+  text-align: left;
+}
+
+.duo-seat-hint b {
+  display: inline-block;
+  width: 4.4em;
+  color: #fff7e8;
+}
+
+.duo-seat-axis-stacked {
+  display: none;
+}
+
+.duo-seat-hint-touch b {
+  width: 5.4em;
+}
+
+.duo-seat-hint-gamepad {
+  letter-spacing: 0.035em;
+}
+
+.duo-seat-hint-gamepad b {
+  width: 5em;
+}
+
+@media (max-width: 760px) {
+  .duo-seat-axis-wide {
+    display: none;
+  }
+
+  .duo-seat-axis-stacked {
+    display: inline;
+  }
 }
 
 /* --- 结算浮层：两边都打完才出现 --- */
@@ -4377,17 +10244,29 @@ td {
 
 .duo-result-card {
   padding: 24px 26px 22px;
-  min-width: min(420px, 92vw);
+  width: min(560px, 100%);
+  max-width: 100%;
+  min-width: 0;
+}
+
+.duo-result-rule {
+  margin: -5px 0 0;
+  color: var(--scape-warn);
+  font: 800 10px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.16em;
 }
 
 .duo-scoreline {
   display: flex;
+  width: 100%;
   gap: 12px;
   margin: 4px 0 18px;
 }
 
 .duo-scorecol {
+  position: relative;
   flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -4409,6 +10288,24 @@ td {
 .duo-scorecol.is-winner .duo-scorecol-who {
   color: var(--accent);
 }
+
+.duo-scorecol-status {
+  min-height: 20px;
+  padding: 4px 7px;
+  border: 1px solid var(--ink);
+  font: 800 8px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.1em;
+}
+
+.duo-scorecol-status.failed {
+  background: var(--accent);
+  color: #fff;
+}
+
+.duo-scorecol-status.cleared {
+  background: var(--ok);
+  color: #12100f;
+}
 .duo-scorecol-grade {
   font-family: Anton, "Sora", sans-serif;
   font-size: 2.6rem;
@@ -4418,16 +10315,60 @@ td {
   paint-order: stroke fill;
 }
 .duo-scorecol-score {
+  display: grid;
+  gap: 2px;
   font-family: Anton, "Sora", sans-serif;
   font-size: 1.3rem;
   letter-spacing: 0.02em;
   color: var(--scape-accent-2);
   font-variant-numeric: tabular-nums;
 }
+
+.duo-scorecol-score small {
+  color: var(--muted);
+  font: 800 7px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.12em;
+}
 .duo-scorecol-meta {
+  width: 100%;
+  min-width: 0;
   font: 700 10px/1.5 "IBM Plex Mono", monospace;
   letter-spacing: 0.06em;
   color: var(--muted);
+}
+
+.duo-scorecol-meta strong {
+  color: var(--scape-accent-2);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+}
+
+.duo-scorecol-stats {
+  display: grid;
+  gap: 2px;
+}
+
+.duo-scorecol-stats > span {
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.duo-scorecol-judgments {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+}
+
+.duo-scorecol-judgments > span,
+.duo-scorecol-judgments > strong {
+  white-space: nowrap;
+}
+
+.duo-scorecol-judgments abbr {
+  text-decoration: none;
 }
 
 .duo-result-actions {
@@ -4436,11 +10377,446 @@ td {
   justify-content: center;
 }
 
+.duo-result .gamepad-dialog-hint {
+  margin-top: 2px;
+}
+
 @media (max-width: 420px) {
+  .duo-scorecol {
+    padding-inline: 5px;
+  }
+  .duo-scorecol-meta {
+    font-size: 9px;
+    letter-spacing: 0;
+  }
   .duo-scorecol-grade {
     font-size: 2rem;
   }
   .duo-scorecol-score {
     font-size: 1.05rem;
+  }
+}
+
+/* Short landscape phones and split windows need the judgment line more than
+   they need a desktop-sized minimum field. Make the route a real viewport
+   column: the compact meta bar takes its natural height and the playfield gets
+   every remaining pixel. This also overrides the narrow-window Duo stack — in
+   landscape, two side-by-side lanes preserve substantially more note travel. */
+@media (orientation: landscape) and (max-height: 520px) {
+  body.play-immersive {
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  body.play-immersive .app-shell {
+    height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  body.play-immersive .site-main.route-plain,
+  body.play-immersive .play-page {
+    height: 100%;
+    min-height: 0;
+  }
+
+  body.play-immersive .play-page {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .play-meta {
+    flex: 0 0 auto;
+    flex-wrap: nowrap;
+    gap: 6px;
+    min-width: 0;
+    min-height: 44px;
+    margin-bottom: 4px;
+    padding: 0 6px;
+    font-size: 12px;
+  }
+
+  .play-meta > strong {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .duo-meta > strong {
+    min-width: 6.5em;
+  }
+
+  .play-meta-tier,
+  .duo-keyhint {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  .play-meta-tier {
+    font-size: 11px;
+  }
+
+  .duo-keyhint {
+    font-size: 9px;
+  }
+
+  .play-wrap,
+  .duo-stage {
+    flex: 1 1 auto;
+    height: auto;
+    min-height: 0;
+  }
+
+  .duo-seat-axis-wide {
+    display: inline;
+  }
+
+  .duo-seat-axis-stacked {
+    display: none;
+  }
+
+  .play-wrap {
+    width: 100%;
+    max-width: min(96vw, 600px);
+    border-radius: 8px;
+  }
+
+  .play-canvas {
+    min-height: 0;
+  }
+
+  .duo-stage {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+    gap: 6px;
+    width: 100%;
+    padding: 0 4px;
+  }
+
+  .play-wrap-duo {
+    width: auto;
+    max-width: none;
+  }
+
+  /* Keep every pre-run and paused action reachable without making the whole
+     gameplay route scroll. The card itself owns overflow when copy is tall. */
+  .play-wrap .overlay,
+  .duo-start,
+  .duo-result {
+    overflow-y: auto;
+    justify-content: safe center;
+    padding: 8px 10px;
+  }
+
+  .play-wrap .overlay::before {
+    inset: 5px;
+  }
+
+  .play-wrap .overlay-card,
+  .duo-start .overlay-card,
+  .duo-result .overlay-card {
+    gap: 7px;
+    max-width: min(96%, 720px);
+    max-height: 100%;
+    padding: 10px 14px;
+    overflow-y: auto;
+  }
+
+  .pause-dialog .overlay-card,
+  .duo-pause .overlay-card {
+    width: min(620px, 96%);
+  }
+
+  .pause-control-stack {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    width: min(590px, 100%);
+  }
+
+  .pause-control-stack[data-practice="1"] {
+    grid-template-columns: 164px minmax(0, 1fr);
+  }
+
+  .pause-practice-tempo {
+    align-content: start;
+    height: 100%;
+    padding: 5px 7px 7px;
+  }
+
+  .pause-practice-tempo > p {
+    display: none;
+  }
+
+  .practice-tempo-options {
+    gap: 4px;
+  }
+
+  .practice-tempo-options label {
+    min-height: 44px;
+  }
+
+  .pause-copy,
+  .duo-pause-copy {
+    font-size: 11px;
+    line-height: 1.25;
+  }
+
+  .pause-quick-mix {
+    width: min(590px, 100%);
+    padding: 4px 9px 5px;
+  }
+
+  .pause-mix-caption {
+    display: none;
+  }
+
+  .pause-mix-controls {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    align-items: center;
+  }
+
+  .pause-control-stack[data-practice="1"] .pause-mix-controls {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2px 8px;
+  }
+
+  .pause-mix-row {
+    grid-template-columns: 38px minmax(0, 1fr) 31px;
+    gap: 5px;
+    min-width: 0;
+    min-height: 44px;
+    font-size: 10px;
+  }
+
+  .pause-mix-row input[type="range"] {
+    min-width: 44px;
+  }
+
+  .pause-mix-toggle {
+    gap: 5px;
+    min-width: 0;
+    font-size: 10px;
+  }
+
+  .pause-mix-toggle small {
+    display: none;
+  }
+
+  .pause-mix-toggle input {
+    flex: 0 0 auto;
+    margin: 0 4px;
+  }
+
+  .pause-actions,
+  .duo-pause-actions {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    width: min(590px, 100%);
+  }
+
+  .pause-actions .pause-exit,
+  .duo-pause-actions .duo-pause-exit {
+    grid-column: auto;
+  }
+
+  .overlay .unlock-btn,
+  .overlay .btn.primary.unlock-btn {
+    min-height: 48px;
+    padding: 8px 20px;
+    font-size: 1.2rem;
+  }
+
+  .unlock-extras {
+    gap: 2px 12px;
+    margin-top: 2px;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 520px) and (max-width: 700px) {
+  /* The ready card already names both keyboard layouts. On the narrowest
+     landscape phones, preserve the track and run mode in the live header. */
+  .duo-keyhint {
+    display: none;
+  }
+}
+
+/* Phone-width run headers need the track and mode more than a repeated text
+   label. Keep the manual fullscreen fallback discoverable through its standard
+   icon and accessible name, while releasing horizontal space on Play + Duo. */
+@media (max-width: 520px) {
+  .play-meta {
+    min-width: 0;
+    flex-wrap: nowrap;
+    gap: 6px;
+    padding: 6px;
+  }
+
+  .play-meta > strong {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .play-meta-tier {
+    flex: 0 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Keep the complete run identity available to assistive technology while
+     showing a scan-friendly status that cannot erase the song title. */
+  .play-meta-tier-full {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .play-meta-tier-compact {
+    display: inline;
+  }
+
+  .play-fullscreen {
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    margin-left: 0;
+  }
+
+  .play-fullscreen-label {
+    display: none;
+  }
+
+  .play-fullscreen-icon {
+    display: grid;
+    place-items: center;
+  }
+
+  .play-fullscreen-icon svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: square;
+    stroke-linejoin: miter;
+    stroke-width: 2.5;
+  }
+}
+
+/* A 320px portrait field has only ~288 CSS pixels after the immersive frame.
+   Keep all three top controls rather than dropping SIGNAL: tighten the badge
+   and bias it into the clear space between the score card and 44px pause tap. */
+@media (max-width: 340px) and (orientation: portrait) {
+  .play-meta {
+    min-width: 0;
+    flex-wrap: nowrap;
+    gap: 6px;
+    padding: 6px;
+  }
+
+  .play-meta > strong,
+  .play-meta-tier {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .play-meta > strong {
+    flex: 1 1 auto;
+  }
+
+  .play-meta-tier {
+    flex: 0 1 auto;
+    font-size: 12px;
+  }
+
+  .play-fullscreen {
+    margin-left: 0;
+  }
+
+  .play-wrap .hud-signal {
+    left: 64%;
+    padding: 5px 7px;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    box-shadow: 3px 3px 0 var(--ink);
+  }
+}
+
+/* The phone playfield must use the space left after its header and safe areas.
+   The generic mobile min-height used a full viewport *below* the header,
+   pushing the judgment line and touch targets off-screen on portrait phones. */
+@media (orientation: portrait) and (max-width: 720px) {
+  body.play-immersive {
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  body.play-immersive .site-main.route-plain,
+  body.play-immersive .play-page {
+    height: 100%;
+    min-height: 0;
+  }
+
+  body.play-immersive .app-shell {
+    height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    min-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  body.play-immersive .play-page {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  body.play-immersive .play-meta {
+    flex: 0 0 auto;
+  }
+
+  body.play-immersive .play-wrap,
+  body.play-immersive .duo-stage {
+    flex: 1 1 auto;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+  }
+
+  body.play-immersive .play-canvas {
+    min-height: 0;
+  }
+
+  /* Setup, pause and Duo end cards scroll inside the stage, never underneath
+     the viewport edge while the active chart remains fixed in place. */
+  body.play-immersive .play-wrap .overlay,
+  body.play-immersive .duo-start,
+  body.play-immersive .duo-result {
+    justify-content: safe center;
+    overflow-y: auto;
+  }
+
+  body.play-immersive .play-wrap .overlay-card,
+  body.play-immersive .duo-start .overlay-card,
+  body.play-immersive .duo-result .overlay-card {
+    max-height: 100%;
+    overflow-y: auto;
   }
 }

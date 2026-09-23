@@ -63,6 +63,21 @@ export type TimingSummary = {
   meanMs: number;
 };
 
+/** Friendly score target carried in a share URL; never treated as an authenticated leaderboard entry. */
+export type ChallengeTarget = {
+  score: number;
+  accuracy: number;
+  grade: "S" | "A" | "B" | "C" | "D";
+};
+
+/** Compact, non-competitive feedback for one pass through a bounded drill. */
+export type PracticeAttemptSummary = {
+  accuracy: number;
+  misses: number;
+  score: number;
+  grade: "S" | "A" | "B" | "C" | "D";
+};
+
 export type PlayResult = {
   score: number;
   accuracy: number;
@@ -78,10 +93,20 @@ export type PlayResult = {
   timing?: TimingSummary;
   /** Highest SIGNAL atmosphere tier reached this run (docs/BEATSCAPE-SURGE-FX.md). Presentation-only. */
   surgeMaxTier?: 0 | 1 | 2 | 3;
+  /** Section-practice start in seconds. Presence means this score is practice-only. */
+  seekedFrom?: number;
+  /** Exclusive section-practice end in seconds; absent for legacy "from here" slices. */
+  seekedUntil?: number;
+  /** Total bounded-section repetitions; only the final repetition is represented by these stats. */
+  practiceRepetitions?: number;
+  /** Every bounded-drill pass, used only for local training progress. */
+  practiceAttempts?: PracticeAttemptSummary[];
 };
 
 export type LastRun = {
   v: 1;
+  /** Scoring rules used for this run; required when migrating affected Slide charts. */
+  scoringVersion?: number;
   track_id: string;
   title: string;
   artist: string;
@@ -108,4 +133,16 @@ export type LastRun = {
   prevBestScore?: number;
   /** Highest SIGNAL tier reached (LIVE/ON AIR earn the Results badge + poster tag). */
   surgeMaxTier?: 0 | 1 | 2 | 3;
+  /** Section-practice start in seconds. Presence marks a practice-only result. */
+  seekedFrom?: number;
+  /** Exclusive section-practice end in seconds. Optional for older practice saves. */
+  seekedUntil?: number;
+  /** Total bounded-section repetitions; stats describe the final repetition only. */
+  practiceRepetitions?: number;
+  /** Sanitized per-pass drill trend; never used for competitive progress. */
+  practiceAttempts?: PracticeAttemptSummary[];
+  /** Optional sender score parsed from a cross-device challenge URL. */
+  challenge?: ChallengeTarget;
+  /** UTC identity of a validated Daily challenge attempt. */
+  dailyDateKey?: string;
 };

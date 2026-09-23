@@ -3,6 +3,8 @@ import type { ChartJSON, ChartTier } from "../types/chart";
 
 let cache: CatalogJSON | null = null;
 let pendingCatalog: Promise<CatalogJSON> | null = null;
+const chartCache = new Map<string, ChartJSON>();
+const pendingCharts = new Map<string, Promise<ChartJSON>>();
 
 export async function loadCatalog(): Promise<CatalogJSON> {
   if (cache) return cache;
@@ -36,9 +38,22 @@ export async function getTrack(trackId: string): Promise<CatalogTrack | undefine
 export async function loadChart(track: CatalogTrack, tier: ChartTier): Promise<ChartJSON> {
   const base = import.meta.env.BASE_URL;
   const path = track.charts[tier].replace(/^\//, "");
-  const res = await fetch(`${base}${path}`);
-  if (!res.ok) throw new Error(`Chart ${tier} missing for ${track.track_id}`);
-  return (await res.json()) as ChartJSON;
+  const url = `${base}${path}`;
+  const cached = chartCache.get(url);
+  if (cached) return cached;
+
+  let pending = pendingCharts.get(url);
+  if (!pending) {
+    pending = (async () => {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`Chart ${tier} missing for ${track.track_id}`);
+      const chart = (await res.json()) as ChartJSON;
+      chartCache.set(url, chart);
+      return chart;
+    })().finally(() => { pendingCharts.delete(url); });
+    pendingCharts.set(url, pending);
+  }
+  return pending;
 }
 
 export function assetUrl(path: string): string {

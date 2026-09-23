@@ -39,9 +39,10 @@ export function CuratedPickCard({ track, pick }: { track: CatalogTrack; pick: Cu
           <Link
             className="btn primary"
             to={playHref(track.track_id, pick.tier, pick.mode)}
+            aria-label={`Play ${track.title}`}
             onClick={() => trackEvent("curated_play", { track: track.track_id })}
           >
-            Play {track.title}
+            Play now
           </Link>
           <Link className="btn ghost" to={`/track/${track.track_id}`}>
             Details
@@ -66,12 +67,14 @@ export function CuratedRow({
   picks,
   tracks,
   className,
+  showAllLink = true,
 }: {
   title: string;
   subtitle: string;
   picks: readonly CuratedPick[];
   tracks: CatalogTrack[];
   className?: string;
+  showAllLink?: boolean;
 }) {
   const found = picks
     .map((pick) => ({ pick, track: tracks.find((t) => t.track_id === pick.trackId) }))
@@ -81,9 +84,11 @@ export function CuratedRow({
     <section className={`curated-section${className ? ` ${className}` : ""}`} aria-label={title}>
       <div className="section-head">
         <h2>{title}</h2>
-        <Link to="/library" className="section-link">
-          All tracks
-        </Link>
+        {showAllLink && (
+          <Link to="/library" className="section-link">
+            All tracks
+          </Link>
+        )}
       </div>
       <p className="curated-subtitle">{subtitle}</p>
       <div className="curated-grid">

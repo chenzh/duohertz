@@ -76,6 +76,13 @@ def grid_affinity(t_sec: float, beat: float, offset_sec: float) -> float:
 CHORD_SHAPES = [(0, 3), (1, 2), (0, 2), (1, 3)]
 CHORD_SHAPES_HARD = [(0, 3), (1, 2), (0, 3), (0, 1, 2), (1, 2, 3)]
 
+# A single press can resolve only one judgment object. Keep same-lane press
+# windows from overlapping (Arcade Good is ±50ms), including generated Slide
+# tails that otherwise can land almost exactly on the next Tap/Chord head.
+MIN_SAME_LANE_PRESS_GAP_SEC = 0.100
+MIN_SLIDE_DURATION_SEC = 0.250
+MAX_SLIDE_DURATION_SEC = 0.550
+
 
 def track_allows_slide(track: dict) -> bool:
     if track.get("allows_slide"):
@@ -89,6 +96,40 @@ def make_slide(rng: random.Random, t: float, lane: int, beat: float) -> dict | N
     to_lane = rng.choice([c for c in candidates if 0 <= c <= 3])
     end_t = round(t + min(0.55, max(0.35, beat * 0.5)), 3)
     return {"id": "slide", "t": round(t, 3), "type": "slide", "lane": lane, "to": to_lane, "end": end_t}
+
+
+def resolve_slide_tail_conflicts(notes: list[dict]) -> None:
+    """Retimes Slide tails minimally so every same-lane press stays unambiguous."""
+    occupied: list[list[float]] = [[], [], [], []]
+    for note in notes:
+        lanes = note["lanes"] if note["type"] == "chord" else [note["lane"]]
+        for lane in lanes:
+            occupied[lane].append(float(note["t"]))
+
+    for slide in sorted((n for n in notes if n["type"] == "slide"), key=lambda n: n["t"]):
+        original = float(slide["end"])
+        chosen: float | None = None
+        # Charts use millisecond precision. Search nearest-first and prefer a
+        # slightly shorter gesture when both directions are equally safe.
+        for distance_ms in range(0, 301):
+            signs = (0,) if distance_ms == 0 else (-1, 1)
+            for sign in signs:
+                candidate = round(original + sign * distance_ms / 1000.0, 3)
+                duration = candidate - float(slide["t"])
+                if duration + 1e-9 < MIN_SLIDE_DURATION_SEC or duration - 1e-9 > MAX_SLIDE_DURATION_SEC:
+                    continue
+                if all(
+                    abs(candidate - event_t) + 1e-9 >= MIN_SAME_LANE_PRESS_GAP_SEC
+                    for event_t in occupied[int(slide["to"])]
+                ):
+                    chosen = candidate
+                    break
+            if chosen is not None:
+                break
+        if chosen is None:
+            raise RuntimeError(f"No playable Slide tail slot for {slide.get('id', 'unknown')}")
+        slide["end"] = chosen
+        occupied[int(slide["to"])].append(chosen)
 
 
 def enforce_peak_nps(
@@ -299,6 +340,7 @@ def build_chart_from_onsets(
         i += 1
 
     notes = enforce_peak_nps(notes, spec["peak"], beat, (analysis.audio_offset_ms or 0) / 1000.0)
+    resolve_slide_tail_conflicts(notes)
     notes.sort(key=lambda n: n["t"])
     for j, n in enumerate(notes):
         n["id"] = f"n{j}"

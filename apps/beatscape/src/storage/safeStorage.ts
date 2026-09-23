@@ -37,7 +37,9 @@ export function readItem(key: string, kind: Store = "local"): string | null {
 /** 写入；返回是否成功。失败时静默 —— 调用方不需要因此中断流程。 */
 export function writeItem(key: string, value: string, kind: Store = "local"): boolean {
   try {
-    store(kind)?.setItem(key, value);
+    const target = store(kind);
+    if (!target) return false;
+    target.setItem(key, value);
     return true;
   } catch {
     return false;

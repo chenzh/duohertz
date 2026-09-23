@@ -32,8 +32,109 @@
 .shift-play-card h3 { margin: 5px 0; font-size: 1.3rem; }
 .shift-play-card .btn { flex-shrink: 0; }
 .shift-play-card p { margin: 5px 0; }
+.shift-signal-path {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr);
+  align-items: stretch;
+  gap: 8px;
+  width: min(680px, 100%);
+  margin: 12px 0 0 !important;
+  color: #f5efe1;
+  line-height: 1.2 !important;
+}
+.shift-link-from,
+.shift-link-to {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  min-width: 0;
+  min-height: 44px;
+  padding: 7px 10px;
+  border: 1px solid #50545b;
+  background: #171a20;
+  overflow-wrap: anywhere;
+}
+.shift-link-from small,
+.shift-link-to small {
+  color: #b7b5ad;
+  font: 750 .62rem/1 "IBM Plex Mono", monospace;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.shift-link-from strong,
+.shift-link-to strong {
+  font: 750 .78rem/1.25 "IBM Plex Sans", sans-serif;
+}
+.shift-link-from {
+  border-left: 3px solid var(--accent);
+  background: color-mix(in srgb, var(--accent) 7%, #171a20);
+}
+.shift-link-to {
+  border-left: 3px solid #74cba3;
+  background: #152a25;
+  color: #b4f3d1;
+}
+.shift-link-arrow {
+  display: grid;
+  place-items: center;
+  min-width: 28px;
+  color: #efbc65;
+  font: 900 1.15rem/1 "IBM Plex Mono", monospace;
+}
+.shift-link-change { margin-bottom: 14px !important; }
+.shift-result .shift-signal-path {
+  gap: 6px;
+  margin: 4px 0 3px !important;
+}
+.shift-result .shift-link-from,
+.shift-result .shift-link-to {
+  min-height: 28px;
+  padding: 2px 8px;
+}
+.shift-result .shift-link-from small,
+.shift-result .shift-link-to small {
+  display: none;
+}
+.shift-result .shift-link-from strong,
+.shift-result .shift-link-to strong {
+  min-width: 0;
+  font-size: clamp(.55rem, 2.4vw, .6rem);
+  white-space: nowrap;
+}
 .shift-storage-note { font-size: .8rem; color: #b7b5ad; line-height: 1.5; }
 .shift-change { border-left: 3px solid #74cba3; padding: 8px 16px; color: #b4f3d1; background: #16302a; }
+.shift-next {
+  margin: 18px 0;
+  padding: 12px 16px 16px;
+  border: 2px solid #efbc65;
+  background: #201a14;
+  box-shadow: 4px 4px 0 #08090b;
+}
+.shift-next .eyebrow { margin: 0 0 8px; }
+.shift-next .shift-dialogue { margin: 8px 0 14px; }
+.shift-next .shift-line { grid-template-columns: 64px minmax(0, 1fr); gap: 12px; }
+.shift-next .btn { min-height: 48px; }
+.shift-next-complete > p:not(.eyebrow) { margin: 8px 0 14px; }
+.shift-result-details {
+  margin: 18px 0 8px;
+  border: 1px solid #50545b;
+  background: #111317;
+}
+.shift-result-details > summary {
+  min-height: 48px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  cursor: pointer;
+  font-weight: 700;
+}
+.shift-result-details > summary small { color: #b7b5ad; font-weight: 400; text-align: right; }
+.shift-result-details[open] > summary { border-bottom: 1px solid #50545b; }
+.shift-result-details > .shift-dialogue,
+.shift-result-details > .shift-circuit { margin-left: 14px; margin-right: 14px; }
 .shift-journal { margin: 40px 0; }
 .shift-journal details { border: 1px solid #50545b; padding: 18px; margin: 12px 0; background: #171a20; }
 .shift-journal summary { cursor: pointer; font-weight: 700; line-height: 1.6; }
@@ -43,6 +144,11 @@
 .first-shift-page .tagline { max-width: 70ch; }
 .shift-story-link { margin-top: 14px; }
 @media (max-width: 760px) {
+  /* Keep the next First Shift run above the persistent navigation without
+     shrinking its 48px action or removing the one-line connection outcome. */
+  .results.shift-results .results-stats { margin-bottom: 8px; }
+  .results.shift-results > .shift-result { margin-top: 8px; }
+  .results.shift-results .shift-next { margin-top: 10px; padding-top: 10px; }
   .shift-home-card { grid-template-columns: 1fr; gap: 20px; }
   .shift-circuit { grid-template-columns: 1fr; gap: 8px; }
   .shift-circuit li { padding: 10px 12px; }
@@ -50,5 +156,7 @@
   .shift-line { grid-template-columns: 1fr; gap: 3px; }
   .shift-play-card { flex-direction: column; align-items: stretch; gap: 14px; }
   .shift-result .cta-row .btn { white-space: normal; text-align: center; }
+  .shift-result-details > summary { align-items: flex-start; flex-direction: column; gap: 3px; }
+  .shift-result-details > summary small { text-align: left; }
   .shift-journal summary span { display: block; margin-left: 0; }
 }

@@ -80,7 +80,31 @@ export function installPerformanceProbe({ metricsOnly = false } = {}) {
     return result.sort((a, b) => a.timeMs - b.timeMs || (a.type === b.type ? 0 : a.type === "keyup" ? -1 : 1));
   }
 
-  if (metricsOnly) return { percentile, summarizeFrames, summarizeDurations, buildAutoplayEvents };
+  function buildTouchAutoplayEvents(chart, offsetMs = 0) {
+    const result = [];
+    const offset = (Number(chart.audio_offset_ms) || 0) + offsetMs;
+    let contactId = 0;
+    const add = (timeMs, lane, type, contact) => result.push({ timeMs: timeMs + offset, lane, type, contact });
+    for (const note of chart.notes) {
+      const timeMs = note.t * 1000;
+      const lanes = note.type === "chord" ? note.lanes : [note.lane];
+      for (const lane of lanes) {
+        const contact = ++contactId;
+        add(timeMs, lane, "pointerdown", contact);
+        if (note.type === "slide") {
+          // A real touch slide keeps one finger down while it crosses lanes.
+          add(note.end * 1000, note.to, "pointermove", contact);
+          add(note.end * 1000 + 8, note.to, "pointerup", contact);
+        } else {
+          add(note.type === "hold" ? note.end * 1000 : timeMs + 8, lane, "pointerup", contact);
+        }
+      }
+    }
+    const priority = { pointerup: 0, pointermove: 1, pointerdown: 2 };
+    return result.sort((a, b) => a.timeMs - b.timeMs || priority[a.type] - priority[b.type]);
+  }
+
+  if (metricsOnly) return { percentile, summarizeFrames, summarizeDurations, buildAutoplayEvents, buildTouchAutoplayEvents };
   if (window.__bsPerf) return;
 
   const nativeRaf = window.requestAnimationFrame.bind(window);
@@ -265,6 +289,35 @@ export function installPerformanceProbe({ metricsOnly = false } = {}) {
   }
 
   function dispatch(player, event) {
+    if (auto.inputSurface === "touch") {
+      const pointerId = player.pointerBase + event.contact;
+      const rect = player.canvas.getBoundingClientRect();
+      const active = event.type !== "pointerup";
+      if (event.type === "pointerdown") {
+        player.pressed.set(event.contact, event.lane);
+        player.activePointerIds.add(pointerId);
+      } else if (!player.pressed.has(event.contact)) {
+        throw new Error(`Touch contact ${event.contact} moved or ended without a pointerdown`);
+      }
+      player.canvas.dispatchEvent(new PointerEvent(event.type, {
+        bubbles: true,
+        cancelable: true,
+        pointerId,
+        pointerType: "touch",
+        isPrimary: player.pressed.size === 1,
+        button: 0,
+        buttons: active ? 1 : 0,
+        clientX: rect.left + rect.width * (event.lane + 0.5) / 4,
+        clientY: rect.top + rect.height * 0.82,
+      }));
+      auto.pointerEventsDispatched++;
+      if (event.type === "pointermove") player.pressed.set(event.contact, event.lane);
+      if (event.type === "pointerup") {
+        player.pressed.delete(event.contact);
+        player.activePointerIds.delete(pointerId);
+      }
+      return;
+    }
     const code = player.keys[event.lane];
     if (!code) return;
     window.dispatchEvent(new KeyboardEvent(event.type, {
@@ -274,12 +327,17 @@ export function installPerformanceProbe({ metricsOnly = false } = {}) {
       cancelable: true,
       repeat: false,
     }));
-    if (event.type === "keydown") player.pressed.add(event.lane);
+    auto.keyboardEventsDispatched++;
+    if (event.type === "keydown") player.pressed.set(event.lane, event.lane);
     else player.pressed.delete(event.lane);
   }
 
   function releasePlayer(player) {
-    for (const lane of [...player.pressed]) dispatch(player, { type: "keyup", lane });
+    for (const [contact, lane] of [...player.pressed]) {
+      dispatch(player, auto.inputSurface === "touch"
+        ? { type: "pointerup", lane, contact }
+        : { type: "keyup", lane });
+    }
   }
 
   function stopAutoplay() {
@@ -287,24 +345,50 @@ export function installPerformanceProbe({ metricsOnly = false } = {}) {
     autoTimer = null;
     if (auto) {
       for (const player of auto.players) releasePlayer(player);
+      for (const player of auto.players) {
+        if (!player.canvas) continue;
+        if (player.captureDescriptor) Object.defineProperty(player.canvas, "setPointerCapture", player.captureDescriptor);
+        else delete player.canvas.setPointerCapture;
+      }
       auto.running = false;
     }
   }
 
-  function autoplay(chart, { duo = false, offsetMs = 0 } = {}) {
+  function autoplay(chart, { duo = false, offsetMs = 0, inputSurface = "keyboard" } = {}) {
     stopAutoplay();
-    const events = buildAutoplayEvents(chart, offsetMs);
+    if (inputSurface !== "keyboard" && inputSurface !== "touch") throw new Error(`Unknown input surface: ${inputSurface}`);
+    const events = inputSurface === "touch" ? buildTouchAutoplayEvents(chart, offsetMs) : buildAutoplayEvents(chart, offsetMs);
     const keySets = [["ArrowLeft", "ArrowDown", "ArrowUp", "ArrowRight"], ["KeyA", "KeyS", "KeyW", "KeyD"]];
+    const canvases = inputSurface === "touch" ? [...document.querySelectorAll("canvas.play-canvas")] : [];
+    if (inputSurface === "touch" && canvases.length !== (duo ? 2 : 1)) {
+      throw new Error(`Touch autoplay expected ${duo ? 2 : 1} play canvas(es), found ${canvases.length}`);
+    }
     auto = {
       running: true,
       chartId: chart.track_id,
       duo,
+      inputSurface,
       eventsPerPlayer: events.length,
       dispatchedEvents: 0,
+      keyboardEventsDispatched: 0,
+      pointerEventsDispatched: 0,
       maximumDispatchLatenessMs: 0,
       dispatchLateness: [],
-      players: keySets.slice(0, duo ? 2 : 1).map((keys) => ({ keys, sourceId: null, cursor: 0, pressed: new Set() })),
+      players: keySets.slice(0, duo ? 2 : 1).map((keys, index) => ({ keys, sourceId: null, cursor: 0,
+        pressed: new Map(), canvas: canvases[index], pointerBase: index * 1_000_000,
+        activePointerIds: new Set(), captureDescriptor: null })),
     };
+    for (const player of auto.players) {
+      if (!player.canvas) continue;
+      player.captureDescriptor = Object.getOwnPropertyDescriptor(player.canvas, "setPointerCapture");
+      const capture = player.canvas.setPointerCapture;
+      // Synthetic PointerEvents cannot acquire native browser capture. Scope
+      // the no-op to probe-owned IDs on this canvas; real input still delegates.
+      Object.defineProperty(player.canvas, "setPointerCapture", { configurable: true, value(pointerId) {
+        if (player.activePointerIds.has(pointerId)) return;
+        return capture.call(this, pointerId);
+      } });
+    }
     autoTimer = setInterval(() => {
       if (!auto?.running) return;
       const currentSources = activeSources().slice(-auto.players.length);
@@ -399,11 +483,14 @@ export function installPerformanceProbe({ metricsOnly = false } = {}) {
         running: auto.running,
         chartId: auto.chartId,
         duo: auto.duo,
+        inputSurface: auto.inputSurface,
         eventsPerPlayer: auto.eventsPerPlayer,
         dispatchedEvents: auto.dispatchedEvents,
+        keyboardEventsDispatched: auto.keyboardEventsDispatched,
+        pointerEventsDispatched: auto.pointerEventsDispatched,
         maximumDispatchLatenessMs: auto.maximumDispatchLatenessMs,
         dispatchLateness: summarizeDurations(auto.dispatchLateness),
-        players: auto.players.map((player) => ({ sourceId: player.sourceId, cursor: player.cursor, pressed: [...player.pressed] })),
+        players: auto.players.map((player) => ({ sourceId: player.sourceId, cursor: player.cursor, pressed: [...player.pressed.keys()] })),
       } : null,
       measurementNotes: {
         frames: "Native rAF intervals: cadence evidence, not render CPU or GPU completion time.",
@@ -429,3 +516,4 @@ export function installPerformanceProbe({ metricsOnly = false } = {}) {
 export const percentile = (values, fraction) => installPerformanceProbe({ metricsOnly: true }).percentile(values, fraction);
 export const summarizeFrames = (values, targetFps) => installPerformanceProbe({ metricsOnly: true }).summarizeFrames(values, targetFps);
 export const buildAutoplayEvents = (chart, offsetMs) => installPerformanceProbe({ metricsOnly: true }).buildAutoplayEvents(chart, offsetMs);
+export const buildTouchAutoplayEvents = (chart, offsetMs) => installPerformanceProbe({ metricsOnly: true }).buildTouchAutoplayEvents(chart, offsetMs);

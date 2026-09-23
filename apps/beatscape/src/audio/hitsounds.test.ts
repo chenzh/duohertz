@@ -76,8 +76,8 @@ afterEach(() => {
 describe("hitsounds P2-4 pre-render", () => {
   it("pre-renders every voice into the cache", async () => {
     await ensureRendered();
-    // 18 distinct voices: perfect/great/good × tiers + miss/break/countdown×3/key/stamp/surge×2
-    expect(__voiceCacheSize()).toBe(18);
+    // 20 voices: judgment tiers + miss/break/countdown/key/stamp/surge + gesture completions.
+    expect(__voiceCacheSize()).toBe(20);
   });
 
   it("cached playback spawns only a buffer source (~2 nodes), not the full graph", async () => {
@@ -90,6 +90,27 @@ describe("hitsounds P2-4 pre-render", () => {
     expect(live.counts.total).toBeLessThanOrEqual(2);
     expect(live.counts.oscillator).toBe(0);
     expect(live.counts.biquad).toBe(0);
+  });
+
+  it("layers one cached completion accent on successful gestures only", async () => {
+    await ensureRendered();
+    playHit("perfect", 0); // Build the shared live bus before measuring sources.
+    live.counts.bufferSource = 0;
+    live.counts.oscillator = 0;
+    live.counts.biquad = 0;
+
+    playHit("perfect", 0, "slide-complete");
+    expect(live.counts.bufferSource).toBe(2);
+    expect(live.counts.oscillator).toBe(0);
+    expect(live.counts.biquad).toBe(0);
+
+    live.counts.bufferSource = 0;
+    playHit("great", 0, "hold-release");
+    expect(live.counts.bufferSource).toBe(2);
+
+    live.counts.bufferSource = 0;
+    playHit("miss", 0, "hold-release");
+    expect(live.counts.bufferSource).toBe(1);
   });
 
   it("voiceKeyFor collapses surge tiers to changed layering only", () => {

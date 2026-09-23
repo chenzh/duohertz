@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import vm from "node:vm";
-import { percentile, summarizeFrames, buildAutoplayEvents, installPerformanceProbe } from "./performance-probe.mjs";
+import { percentile, summarizeFrames, buildAutoplayEvents, buildTouchAutoplayEvents, installPerformanceProbe } from "./performance-probe.mjs";
 
 test("percentiles interpolate sorted finite observations and preserve missing data", () => {
   assert.equal(percentile([], 0.95), null);
@@ -71,12 +71,26 @@ test("a hold tail releases before a simultaneous new head on the same lane", () 
   assert.deepEqual(events.filter((event) => event.timeMs === 2000).map((event) => event.type), ["keyup", "keydown"]);
 });
 
+test("touch autoplay uses independent fingers for chords and one drag contact for slides", () => {
+  const events = buildTouchAutoplayEvents({ audio_offset_ms: 10, notes: [
+    { type: "chord", t: 1, lanes: [0, 3] },
+    { type: "hold", t: 2, end: 3, lane: 1 },
+    { type: "slide", t: 4, end: 5, lane: 0, to: 2 },
+  ] }, -10);
+  assert.deepEqual(events.map(({ timeMs, lane, type, contact }) => [timeMs, lane, type, contact]), [
+    [1000, 0, "pointerdown", 1], [1000, 3, "pointerdown", 2],
+    [1008, 0, "pointerup", 1], [1008, 3, "pointerup", 2],
+    [2000, 1, "pointerdown", 3], [3000, 1, "pointerup", 3],
+    [4000, 0, "pointerdown", 4], [5000, 2, "pointermove", 4], [5008, 2, "pointerup", 4],
+  ]);
+});
+
 test("the init function can serialize without module closure dependencies", () => {
   const serialized = new Function(`return (${installPerformanceProbe.toString()})({metricsOnly:true});`)();
   assert.equal(serialized.summarizeFrames([16, 16]).samples, 2);
 });
 
-function browserHarness(previousDrawObserver) {
+function browserHarness(previousDrawObserver, canvases = []) {
   let now = 0;
   let sequence = 0;
   const rafs = new Map();
@@ -115,11 +129,12 @@ function browserHarness(previousDrawObserver) {
   };
   const context = {
     window: surface,
-    document: { body: { dataset: {} }, querySelectorAll: () => [] },
+    document: { body: { dataset: {} }, querySelectorAll: (selector) => selector === "canvas.play-canvas" ? canvases : [] },
     performance: { now: () => now },
     PerformanceObserver: FakeObserver,
     MutationObserver: FakeObserver,
     KeyboardEvent: class { constructor(type, fields) { Object.assign(this, { type }, fields); } },
+    PointerEvent: class { constructor(type, fields) { Object.assign(this, { type }, fields); } },
     WeakRef,
     setInterval(callback) { const id = ++sequence; intervals.set(id, callback); return id; },
     clearInterval(id) { intervals.delete(id); },
@@ -278,4 +293,54 @@ test("autoplay follows production source clock for both players and survives res
   assert.equal(harness.probe.snapshot().resources.activeLongSources, 0);
   assert.equal(harness.probe.musicTimeMs(), null);
   harness.probe.stop();
+});
+
+test("touch autoplay dispatches multi-pointer input to each canvas and restores native capture", () => {
+  const pointer = [];
+  const nativeCaptures = [];
+  const canvases = [0, 1].map((player) => ({
+    getBoundingClientRect: () => ({ left: player * 400, top: 10, width: 400, height: 600 }),
+    setPointerCapture(pointerId) { nativeCaptures.push([player, pointerId]); },
+    dispatchEvent(event) {
+      pointer.push([player, event]);
+      if (event.type === "pointerdown") this.setPointerCapture(event.pointerId);
+    },
+  }));
+  const captures = canvases.map((canvas) => canvas.setPointerCapture);
+  const harness = browserHarness(undefined, canvases);
+  const ctx = new harness.FakeAudioContext();
+  const chart = { track_id: "touch-duo", notes: [
+    { type: "chord", t: 0.1, lanes: [0, 3] },
+    { type: "slide", t: 0.2, end: 0.3, lane: 1, to: 2 },
+  ] };
+  harness.probe.autoplay(chart, { duo: true, inputSurface: "touch" });
+  const sources = [0, 1].map(() => new harness.FakeSource(ctx, { duration: 120 }));
+  for (const source of sources) source.start(0, 0);
+  ctx.currentTime = 0.105;
+  harness.pollAutoplay();
+  assert.equal(pointer.filter(([, event]) => event.type === "pointerdown").length, 4);
+  assert.equal(new Set(pointer.filter(([player, event]) => player === 0 && event.type === "pointerdown")
+    .map(([, event]) => event.pointerId)).size, 2);
+  assert.equal(harness.keyboard.length, 0);
+  assert.deepEqual(nativeCaptures, []);
+  ctx.currentTime = 0.21;
+  harness.pollAutoplay();
+  ctx.currentTime = 0.305;
+  harness.pollAutoplay();
+  ctx.currentTime = 0.32;
+  harness.pollAutoplay();
+  const slideEvents = pointer.filter(([player, event]) => player === 0 && event.pointerId === 3).map(([, event]) => event);
+  assert.deepEqual(slideEvents.map((event) => event.type), ["pointerdown", "pointermove", "pointerup"]);
+  assert.equal(slideEvents[1].clientX, 250);
+  const evidence = harness.probe.snapshot().autoplay;
+  assert.equal(evidence.inputSurface, "touch");
+  assert.equal(evidence.dispatchedEvents, 14);
+  assert.equal(evidence.pointerEventsDispatched, 14);
+  assert.equal(evidence.keyboardEventsDispatched, 0);
+  assert.equal(evidence.players[0].cursor, 7);
+  assert.equal(evidence.players[1].cursor, 7);
+  harness.probe.stop();
+  assert.deepEqual(canvases.map((canvas) => canvas.setPointerCapture), captures);
+  canvases[0].setPointerCapture(123);
+  assert.deepEqual(nativeCaptures, [[0, 123]]);
 });

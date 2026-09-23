@@ -1,4 +1,4 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import { Layout } from "./components/Layout";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { HomePage } from "./pages/Home";
@@ -6,6 +6,7 @@ import { LibraryPage } from "./pages/Library";
 import { PlayPage } from "./pages/Play";
 import { ResultsPage } from "./pages/Results";
 import { Router } from "./router";
+import { lazyRouteLoaders } from "./routePreload";
 
 /**
  * 路由级代码分割。
@@ -17,24 +18,54 @@ import { Router } from "./router";
  * 是瞬时的，尤其结算页 —— 打完一局还要等一个 chunk 下载，体验上是不可接受的。
  * 其余页面按需加载，首屏 JS 因此少掉大半。
  */
-const DuoPage = lazy(() => import("./pages/Duo").then((m) => ({ default: m.DuoPage })));
-const CharactersPage = lazy(() => import("./pages/Characters").then((m) => ({ default: m.CharactersPage })));
-const RadioPage = lazy(() => import("./pages/Radio").then((m) => ({ default: m.RadioPage })));
-const FirstShiftPage = lazy(() => import("./pages/FirstShift").then((m) => ({ default: m.FirstShiftPage })));
-const TrackPage = lazy(() => import("./pages/Track").then((m) => ({ default: m.TrackPage })));
-const CalibrationPage = lazy(() => import("./pages/Calibration").then((m) => ({ default: m.CalibrationPage })));
-const SettingsPage = lazy(() => import("./pages/Settings").then((m) => ({ default: m.SettingsPage })));
-const LeaderboardPage = lazy(() => import("./pages/Leaderboard").then((m) => ({ default: m.LeaderboardPage })));
-const ProfilePage = lazy(() => import("./pages/Profile").then((m) => ({ default: m.ProfilePage })));
-const LegalPage = lazy(() => import("./pages/Legal").then((m) => ({ default: m.LegalPage })));
-const NotFoundPage = lazy(() => import("./pages/NotFound").then((m) => ({ default: m.NotFoundPage })));
+const DuoPage = lazy(lazyRouteLoaders.duo);
+const CharactersPage = lazy(lazyRouteLoaders.characters);
+const RadioPage = lazy(lazyRouteLoaders.radio);
+const FirstShiftPage = lazy(lazyRouteLoaders.shift);
+const TrackPage = lazy(lazyRouteLoaders.track);
+const CalibrationPage = lazy(lazyRouteLoaders.calibrate);
+const SettingsPage = lazy(lazyRouteLoaders.settings);
+const LeaderboardPage = lazy(lazyRouteLoaders.leaderboard);
+const ProfilePage = lazy(lazyRouteLoaders.profile);
+const LegalPage = lazy(lazyRouteLoaders.legal);
+const NotFoundPage = lazy(lazyRouteLoaders.notFound);
 
-/** Suspense fallback — 与 Play 页的加载态保持同一套视觉语言。 */
+const SLOW_ROUTE_NOTICE_MS = 3_000;
+
+/** Suspense fallback — 快速加载保持安静；慢连接提供可退出但不打断的恢复路径。 */
 function RouteFallback() {
+  const [slow, setSlow] = useState(false);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setSlow(true), SLOW_ROUTE_NOTICE_MS);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  if (slow) {
+    return (
+      <section className="error-screen route-wait-screen" role="status" aria-live="polite" aria-busy="true">
+        <span className="track-load-mark" aria-hidden>◇</span>
+        <p className="eyebrow">The Late Static</p>
+        <h1>Still connecting</h1>
+        <p className="tagline">
+          This screen is taking longer than expected. BeatScape is still trying to connect.
+        </p>
+        <div className="cta-row">
+          <button type="button" className="btn primary" onClick={() => window.location.reload()}>
+            Reload page
+          </button>
+          <a className="btn" href={import.meta.env.BASE_URL}>
+            Back to home
+          </a>
+        </div>
+      </section>
+    );
+  }
+
   return (
-    <div className="loading-state">
+    <div className="loading-state route-loading-state" role="status" aria-live="polite" aria-busy="true">
       <div className="loading-spinner" aria-hidden />
-      <p>Loading…</p>
+      <p>Loading screen…</p>
     </div>
   );
 }
@@ -42,29 +73,31 @@ function RouteFallback() {
 export default function App() {
   return (
     <ErrorBoundary>
-      <Suspense fallback={<RouteFallback />}>
-        <Router
-          layout={(child) => <Layout>{child}</Layout>}
-          fallback={<NotFoundPage />}
-          routes={[
-            { path: "/", element: <HomePage /> },
-            { path: "/library", element: <LibraryPage /> },
-            { path: "/characters", element: <CharactersPage /> },
-            { path: "/radio", element: <RadioPage /> },
-            { path: "/shift", element: <FirstShiftPage /> },
-            { path: "/track/:id", element: <TrackPage /> },
-            { path: "/play/:id", element: <PlayPage /> },
-            { path: "/duo/:id", element: <DuoPage /> },
-            { path: "/results", element: <ResultsPage /> },
-            { path: "/calibrate", element: <CalibrationPage /> },
-            { path: "/settings", element: <SettingsPage /> },
-            { path: "/leaderboard", element: <LeaderboardPage /> },
-            { path: "/profile", element: <ProfilePage /> },
-            { path: "/privacy", element: <LegalPage kind="privacy" /> },
-            { path: "/terms", element: <LegalPage kind="terms" /> },
-          ]}
-        />
-      </Suspense>
+      <Router
+        layout={(child) => (
+          <Layout>
+            <Suspense fallback={<RouteFallback />}>{child}</Suspense>
+          </Layout>
+        )}
+        fallback={<NotFoundPage />}
+        routes={[
+          { path: "/", element: <HomePage /> },
+          { path: "/library", element: <LibraryPage /> },
+          { path: "/characters", element: <CharactersPage /> },
+          { path: "/radio", element: <RadioPage /> },
+          { path: "/shift", element: <FirstShiftPage /> },
+          { path: "/track/:id", element: <TrackPage /> },
+          { path: "/play/:id", element: <PlayPage /> },
+          { path: "/duo/:id", element: <DuoPage /> },
+          { path: "/results", element: <ResultsPage /> },
+          { path: "/calibrate", element: <CalibrationPage /> },
+          { path: "/settings", element: <SettingsPage /> },
+          { path: "/leaderboard", element: <LeaderboardPage /> },
+          { path: "/profile", element: <ProfilePage /> },
+          { path: "/privacy", element: <LegalPage kind="privacy" /> },
+          { path: "/terms", element: <LegalPage kind="terms" /> },
+        ]}
+      />
     </ErrorBoundary>
   );
 }

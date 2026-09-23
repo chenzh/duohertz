@@ -27,6 +27,12 @@ const noRuntimeErrors = (row) => {
   assert.equal(array(row.failedRequests, 'failedRequests').length, 0, 'Failed requests invalidate coverage');
 };
 
+/** Parse the numeric suffix from `JUDGE P/G/G/M · 611/0/0/0`. */
+export function parseDuoJudgmentCounts(value) {
+  const match = String(value ?? '').match(/(\d+)\s*\/\s*(\d+)\s*\/\s*(\d+)\s*\/\s*(\d+)\s*$/);
+  return match ? match.slice(1).map(Number) : [];
+}
+
 export function assertGameCoverage(row, { duration, hardNotes } = {}) {
   assert.equal(row.kind, 'game', 'Expected a game evidence row');
   finite(duration, 'Expected song duration', 2);
@@ -62,6 +68,8 @@ export function assertGameCoverage(row, { duration, hardNotes } = {}) {
   const autoplay = probe.autoplay;
   assert(autoplay && typeof autoplay === 'object', 'Missing real-input autoplay evidence');
   assert.equal(autoplay.duo, duo, 'Autoplay mode does not match the scenario');
+  const expectedSurface = row.profile === 'mobile-emulated' ? 'touch' : 'keyboard';
+  assert.equal(autoplay.inputSurface, expectedSurface, `Autoplay input surface must be ${expectedSurface} for ${row.profile}`);
   const events = integer(autoplay.eventsPerPlayer, 'Scheduled input events per player', 1);
   const players = array(autoplay.players, 'Autoplay players');
   assert.equal(players.length, playerCount, 'Unexpected autoplay player count');
@@ -69,6 +77,12 @@ export function assertGameCoverage(row, { duration, hardNotes } = {}) {
     assert.equal(player.cursor, events, `Autoplay player ${index + 1} did not dispatch the full input queue`);
   }
   assert.equal(autoplay.dispatchedEvents, events * playerCount, 'Dispatched input count does not match the full chart queues');
+  const keyboardEvents = integer(autoplay.keyboardEventsDispatched, 'Dispatched keyboard events');
+  const pointerEvents = integer(autoplay.pointerEventsDispatched, 'Dispatched pointer events');
+  assert.equal(expectedSurface === 'touch' ? keyboardEvents : pointerEvents, 0,
+    'An unexpected input device was used during autoplay');
+  assert((expectedSurface === 'touch' ? pointerEvents : keyboardEvents) >= autoplay.dispatchedEvents,
+    `Scheduled ${expectedSurface} events were not actually dispatched`);
 
   if (row.scenario !== 'hard-fx-off') {
     const effects = probe.effects;
@@ -93,6 +107,7 @@ export function assertGameCoverage(row, { duration, hardNotes } = {}) {
     kind: 'game',
     scenario: row.scenario,
     players: playerCount,
+    inputSurface: expectedSurface,
     judgmentObjectsPerPlayer: hardNotes,
     sampledSeconds: probe.frames.totalMs / 1000,
     performanceBudgetEvaluated: false,

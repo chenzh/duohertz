@@ -297,6 +297,53 @@ const VOICES: Record<string, Builder> = {
   "key": (v) => {
     strike(v, { dur: 0.018, peak: 0.07, hp: 1800, lp: 6000 });
   },
+  // Hold release: a brief downward settle confirms that the tail was judged,
+  // while the normal judgment voice still communicates timing quality.
+  "hold-release": (v) => {
+    bell(v, {
+      base: 987.77,
+      toFreq: 659.25,
+      dur: 0.14,
+      peak: 0.085,
+      type: "sine",
+      partials: [1, 2],
+      pgains: [1, 0.2],
+      lp: 3600,
+    });
+    strike(v, {
+      at: 0.025,
+      dur: 0.035,
+      peak: 0.08,
+      hp: 700,
+      bp: 1400,
+      q: 0.8,
+      lp: 3200,
+    });
+  },
+  // Slide completion: a restrained upward lock-on chirp layered beneath the
+  // normal timing judgment, so the gesture reads without masking the track.
+  "slide": (v) => {
+    bell(v, {
+      base: 659.25,
+      toFreq: 987.77,
+      dur: 0.16,
+      peak: 0.11,
+      type: "sine",
+      partials: [1, 2],
+      pgains: [1, 0.25],
+      lp: 4200,
+    });
+    bell(v, {
+      at: 0.055,
+      base: 1318.51,
+      dur: 0.085,
+      peak: 0.055,
+      type: "triangle",
+      partials: [1, 2.4],
+      pgains: [1, 0.2],
+      lp: 5600,
+    });
+  },
   "stamp": (v) => {
     strike(v, { dur: 0.05, peak: 0.34, hp: 700, bp: 1500, q: 0.8, lp: 3600 });
     thump(v, 0.3, 0.11);
@@ -379,10 +426,23 @@ function playVoice(key: string) {
   void ensureRendered();
 }
 
-// ---- Public API (signatures unchanged) ----
+// ---- Backward-compatible public API ----
 
-export function playHit(judgment: Judgment, surgeTier: SurgeTier = 0) {
+export function playHit(
+  judgment: Judgment,
+  surgeTier: SurgeTier = 0,
+  accent?:
+    | "hold-release"
+    | "hold-release-miss"
+    | "slide-complete"
+    | "slide-target-miss"
+    | "slide-hold-miss"
+    | "chord-assist",
+) {
   playVoice(voiceKeyFor(judgment, surgeTier));
+  if (judgment === "miss") return;
+  if (accent === "hold-release") playVoice("hold-release");
+  else if (accent === "slide-complete") playVoice("slide");
 }
 
 export function playMiss() {

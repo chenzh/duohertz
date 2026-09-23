@@ -1,5 +1,10 @@
 import { test, expect, type Page } from '@playwright/test';
 
+// These cases replace production charts with deterministic fixtures. A service
+// worker can satisfy later navigations from Cache Storage before Playwright's
+// route sees them, silently turning a 4s fixture back into a 60s real chart.
+test.use({ serviceWorkers: 'block' });
+
 const scenes = [
   { song: 'Voltage Drop', node: 'Studio return', next: 'One borrowed speaker', nextTrack: 'bs-s1-06' },
   { song: 'Chrome Riff', node: 'Yard speaker', next: 'Room on the roof', nextTrack: 'bs-s2-02' },
@@ -19,6 +24,25 @@ test('story entry, character identities, readable dialogue and narrow layouts', 
   await page.locator('.shift-home-card').getByRole('link', { name: 'Take the call', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Your first shift', exact: true })).toBeVisible();
   await expect(page.getByText('You hold the rhythm', { exact: false })).toBeVisible();
+  const signalPath = page.getByRole('img', {
+    name: 'Signal path: Studio return · no signal becomes Studio return · live',
+  });
+  await expect(signalPath).toBeVisible();
+  const [pathBox, fromBox, arrowBox, toBox] = await Promise.all([
+    signalPath.boundingBox(),
+    signalPath.locator('.shift-link-from').boundingBox(),
+    signalPath.locator('.shift-link-arrow').boundingBox(),
+    signalPath.locator('.shift-link-to').boundingBox(),
+  ]);
+  expect(pathBox).not.toBeNull();
+  expect(fromBox).not.toBeNull();
+  expect(arrowBox).not.toBeNull();
+  expect(toBox).not.toBeNull();
+  expect(fromBox!.height).toBeGreaterThanOrEqual(44);
+  expect(toBox!.height).toBeGreaterThanOrEqual(44);
+  expect(fromBox!.x + fromBox!.width).toBeLessThanOrEqual(arrowBox!.x + 1);
+  expect(arrowBox!.x + arrowBox!.width).toBeLessThanOrEqual(toBox!.x + 1);
+  expect(toBox!.x + toBox!.width).toBeLessThanOrEqual(pathBox!.x + pathBox!.width + 1);
   await expect.poll(() => page.evaluate(() => [...document.fonts].some((font) => font.family.replace(/["']/g, '') === 'Anton' && font.status === 'loaded')), { timeout: 20000 }).toBe(true);
   await page.screenshot({ path: info.outputPath('first-shift.png'), fullPage: true, animations: 'disabled' });
   for (const route of ['/shift', '/characters', '/radio']) {
@@ -26,13 +50,47 @@ test('story entry, character identities, readable dialogue and narrow layouts', 
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `overflow ${route}`).toBe(true);
   }
   await page.goto('/characters');
-  for (const name of ['JUNO', 'ATLAS', 'TORQUE']) await expect(page.getByRole('heading', { name, exact: true })).toBeVisible();
   await expect(page.locator('.crew-card')).toHaveCount(3);
+  if (info.project.name === 'mobile') {
+    await expect(page.locator('.crew-card:visible')).toHaveCount(1);
+    await expect(page.getByRole('heading', { name: 'JUNO', exact: true })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'ATLAS', exact: true })).toBeHidden();
+  } else {
+    for (const name of ['JUNO', 'ATLAS', 'TORQUE']) {
+      await expect(page.getByRole('heading', { name, exact: true })).toBeVisible();
+    }
+  }
   await expect(page.locator('main')).not.toContainText('Visual identity');
   await expect(page.locator('main')).not.toContainText('Motif');
   await page.screenshot({ path: info.outputPath('characters.png'), fullPage: true, animations: 'disabled' });
   await page.goto('/radio');
   await expect(page.getByRole('link', { name: /first shift/i })).toBeVisible();
+  await page.screenshot({ path: info.outputPath('radio.png'), fullPage: true, animations: 'disabled' });
+});
+
+test('First Shift opening cue follows touch and an attached physical keyboard', async ({ page }, info) => {
+  await page.goto('/shift');
+  const instruction = page.locator('.shift-play-card h3 + p');
+  await expect(instruction).toContainText(info.project.name === 'mobile'
+    ? 'Tap a lane as notes reach the line'
+    : 'Press a lane key as notes reach the line');
+  if (info.project.name === 'mobile') {
+    await page.keyboard.press('a');
+    await expect(instruction).toContainText('Press a lane key as notes reach the line');
+  }
+});
+
+test('First Shift opening cue names a connected standard controller', async ({ page }) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, 'getGamepads', { configurable: true, value: () => [{
+      id: 'BeatScape QA Controller', index: 0, connected: true, mapping: 'standard',
+      axes: [0, 0, 0, 0], buttons: Array.from({ length: 17 }, () => ({ pressed: false, touched: false, value: 0 })),
+      timestamp: performance.now(),
+    }] });
+  });
+  await page.goto('/shift');
+  await expect(page.locator('.shift-play-card h3 + p'))
+    .toContainText('Press a lane button as notes reach the line');
 });
 
 test('all three real songs carry the opening story through results, reload, next scene and the finale', async ({ page }, info) => {
@@ -55,7 +113,17 @@ test('all three real songs carry the opening story through results, reload, next
     }, { timeout: 20000, intervals: [20] }).toBeGreaterThan(0);
     await expect(page).toHaveURL(/\/results$/, { timeout: 115000 });
     await expect(page.getByRole('heading', { name: `${scene.node} restored`, exact: true })).toBeVisible();
-    expect(await page.locator('.results-hero-card').evaluate((hero) => hero.nextElementSibling?.classList.contains('shift-result'))).toBe(true);
+    const resultOrder = await page.evaluate(() => {
+      const hero = document.querySelector('.results-hero-card');
+      const stats = document.querySelector('.results-stats');
+      const story = document.querySelector('.shift-result');
+      return Boolean(
+        hero && stats && story &&
+        (hero.compareDocumentPosition(stats) & Node.DOCUMENT_POSITION_FOLLOWING) &&
+        (stats.compareDocumentPosition(story) & Node.DOCUMENT_POSITION_FOLLOWING)
+      );
+    });
+    expect(resultOrder).toBe(true);
     await expect(page.locator('.shift-result .shift-circuit li.restored')).toHaveCount(index + 1);
     const completed = await page.evaluate(() => JSON.parse(localStorage.getItem('bs_first_shift_v1')!).completed);
     expect(completed).toHaveLength(index + 1);
@@ -87,12 +155,13 @@ test('a new visitor starts the first track straight from the home page, without 
   await page.goto('/');
   // 首页主入口就是第一首确定的歌，不要求先理解 First Shift 或进剧情页。
   const cta = page.locator('.hero-play');
-  await expect(cta).toHaveText('Play first track');
+  await expect(cta).toHaveText('Start first run');
   await expect(page.locator('.hero-entry-meta')).toContainText('Voltage Drop');
   await expect(page.locator('.shift-home-card')).toBeVisible();
   await cta.click();
   await expect(page).toHaveURL(/\/play\/bs-s1-05/);
   await expect(page.getByRole('button', { name: 'Start playing', exact: true })).toBeVisible();
+  await expect(page.locator('.overlay-tap .overlay-kicker')).toHaveText('First Shift · Studio return');
   // 开始之前能确认操作方式与声音状态，校准仍可跳过。
   await expect(page.getByRole('button', { name: 'Sound check', exact: true })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Adjust timing', exact: true })).toBeVisible();
@@ -109,7 +178,8 @@ test('leaving a set and visiting results cannot restore a connection; bad saves 
   await page.goto('/shift');
   await expect(page.locator('.shift-circuit li.restored')).toHaveCount(0);
   await page.goto('/results');
-  await expect(page.getByText('No recent run on this device.')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'No result yet', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Choose a track', exact: true })).toHaveAttribute('href', '/library');
   await page.evaluate(() => localStorage.setItem('bs_first_shift_v1', '{"v":1,"completed":[null]}'));
   await page.goto('/shift');
   await expect(page.getByRole('heading', { name: 'A voice on the line', exact: true })).toBeVisible();
@@ -133,6 +203,10 @@ test('failed, listening-only and practice sets get honest replies without story 
     await page.locator('.overlay-tap .unlock-btn').click();
     await expect(page).toHaveURL(/\/results$/, { timeout: 16000 });
     await expect(page.locator('.shift-result')).toContainText(reply!);
+    await expect(page.locator('.result-coach')).toHaveCount(0);
+    await expect(page.locator('.shift-result .btn.primary')).toHaveCount(1);
+    await expect(page.locator('.results-share-panel')).toHaveCount(0);
+    await expect(page.locator('.results-actions')).toHaveCount(0);
     await expect(page.locator('.shift-result')).not.toContainText('Studio return restored');
     expect(await page.evaluate(() => localStorage.getItem('bs_first_shift_v1'))).toBeNull();
   }

@@ -1,6 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { assertGameCoverage, assertLoadCoverage, assertMemoryCoverage } from './performance-coverage.mjs';
+import {
+  assertGameCoverage,
+  assertLoadCoverage,
+  assertMemoryCoverage,
+  parseDuoJudgmentCounts,
+} from './performance-coverage.mjs';
 
 const expected = { duration: 120, hardNotes: 929 };
 const game = (scenario = 'hard-fx-max', profile = 'desktop') => {
@@ -12,12 +17,23 @@ const game = (scenario = 'hard-fx-max', profile = 'desktop') => {
       frames: { samples: 7000, totalMs: 118_900, p95Ms: 200 },
       appFrameCpu: { samples: 7000, p95Ms: 75 },
       effects: { maxSimultaneousSurge3Fields: duo ? 2 : 1, surge3Frames: 5000, surge3Ms: 85_000, surge3FieldMs: duo ? 165_000 : 85_000, neon3Frames: 4000, neon3Ms: 75_000 },
-      autoplay: { duo, eventsPerPlayer: 1858, dispatchedEvents: 1858 * (duo ? 2 : 1), players: Array.from({ length: duo ? 2 : 1 }, () => ({ cursor: 1858 })) },
+      autoplay: { duo, inputSurface: profile === 'mobile-emulated' ? 'touch' : 'keyboard',
+        eventsPerPlayer: 1858, dispatchedEvents: 1858 * (duo ? 2 : 1),
+        keyboardEventsDispatched: profile === 'mobile-emulated' ? 0 : 1858 * (duo ? 2 : 1),
+        pointerEventsDispatched: profile === 'mobile-emulated' ? 1858 * (duo ? 2 : 1) : 0,
+        players: Array.from({ length: duo ? 2 : 1 }, () => ({ cursor: 1858 })) },
     },
     outcomes: duo ? { duoPlayers: [{ player: 'P2', counts: [900, 29, 0, 0] }, { player: 'P1', counts: [910, 19, 0, 0] }] }
       : { lastRun: { totalNotes: 929, counts: { perfect: 900, great: 29, good: 0, miss: 0 } } },
   };
 };
+
+test('Duo judgment text extracts only the four numeric UI counts', () => {
+  assert.deepEqual(parseDuoJudgmentCounts('JUDGE P/G/G/M · 611/0/0/0'), [611, 0, 0, 0]);
+  assert.deepEqual(parseDuoJudgmentCounts('JUDGE P/G/G/M611/0/0/0'), [611, 0, 0, 0]);
+  assert.deepEqual(parseDuoJudgmentCounts('JUDGE P/G/G/M · 1 / 2 / 3 / 4'), [1, 2, 3, 4]);
+  assert.deepEqual(parseDuoJudgmentCounts('JUDGE unavailable'), []);
+});
 
 test('complete real-input single and Duo coverage is independent of performance budgets', () => {
   for (const scenario of ['hard-fx-off', 'hard-fx-max', 'duo-fx-max']) {
@@ -77,6 +93,9 @@ test('maximum effects must persist and light both Duo fields', () => {
   noNeon.probe.effects.neon3Ms = 0;
   assert.throws(() => assertGameCoverage(noNeon, expected), /Desktop NEON/);
   noNeon.profile = 'mobile-emulated';
+  noNeon.probe.autoplay.inputSurface = 'touch';
+  noNeon.probe.autoplay.keyboardEventsDispatched = 0;
+  noNeon.probe.autoplay.pointerEventsDispatched = noNeon.probe.autoplay.dispatchedEvents;
   assert.equal(assertGameCoverage(noNeon, expected).covered, true);
   const off = game('hard-fx-off');
   delete off.probe.effects;
@@ -93,6 +112,20 @@ test('each real-input player queue and total dispatched events must finish', () 
   const missingPlayer = game('duo-fx-max');
   missingPlayer.probe.autoplay.players.pop();
   assert.throws(() => assertGameCoverage(missingPlayer, expected), /player count/);
+});
+
+test('mobile coverage rejects keyboard-only evidence and requires dispatched touch events', () => {
+  const keyboardOnly = game('hard-fx-max', 'mobile-emulated');
+  keyboardOnly.probe.autoplay.inputSurface = 'keyboard';
+  keyboardOnly.probe.autoplay.keyboardEventsDispatched = keyboardOnly.probe.autoplay.dispatchedEvents;
+  keyboardOnly.probe.autoplay.pointerEventsDispatched = 0;
+  assert.throws(() => assertGameCoverage(keyboardOnly, expected), /Autoplay input surface must be touch/);
+  const labelledOnly = game('hard-fx-max', 'mobile-emulated');
+  labelledOnly.probe.autoplay.pointerEventsDispatched = 0;
+  assert.throws(() => assertGameCoverage(labelledOnly, expected), /not actually dispatched/);
+  const mixed = game('hard-fx-max', 'mobile-emulated');
+  mixed.probe.autoplay.keyboardEventsDispatched = 1;
+  assert.throws(() => assertGameCoverage(mixed, expected), /unexpected input device/);
 });
 
 test('errors and failed requests remain coverage failures even with complete counts', () => {

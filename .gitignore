@@ -58,8 +58,8 @@ dist-deploy/
 # 对照构建的输出目录（用来比哈希判断线上产物是否落后于源码）
 dist-check/
 **/public/catalog/**/stream.m4a
-**/public/catalog/**/og.png
 apps/beatscape/test-results/
+apps/beatscape/test-results-*/
 apps/beatscape/playwright-report/
 apps/demo/dist-portal/
 apps/demo/test-results/

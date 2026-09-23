@@ -10,6 +10,19 @@ export function isCoarsePointer(): boolean {
 }
 
 /**
+ * True when any real touch input is available, including hybrid laptops whose
+ * primary pointer is a fine trackpad or mouse. This is intentionally broader
+ * than `isCoarsePointer`: capability controls belong in Settings without
+ * forcing those devices into the compact phone layout.
+ */
+export function hasTouchInput(): boolean {
+  if (typeof window === "undefined" || typeof navigator === "undefined") return false;
+  return navigator.maxTouchPoints > 0
+    || window.matchMedia("(any-pointer: coarse)").matches
+    || isCoarsePointer();
+}
+
+/**
  * Which thumb owns a lane under the standard two-thumb grip:
  * lanes 0–1 to the left thumb, 2–3 to the right.
  *
@@ -43,44 +56,144 @@ export function laneFromX(x: number, width: number, laneCount = 4): number {
   return Math.max(0, Math.min(laneCount - 1, lane));
 }
 
-/**
- * Map a pointer `clientX` to a lane. A 5% edge guard on each side is rejected
- * (returns null) so accidental thumb-rim touches don't trigger notes.
- */
+/** Map a viewport `clientX` into the visible canvas lanes, excluding its 5% rim. */
 export function laneFromClientX(clientX: number, rect: DOMRect, laneCount = 4): number | null {
   const w = rect.width;
   const edge = w * 0.05;
-  if (clientX <= edge || clientX >= w - edge) return null;
-  return laneFromX(clientX, w, laneCount);
+  const localX = clientX - rect.left;
+  if (localX <= edge || localX >= w - edge) return null;
+  return laneFromX(localX, w, laneCount);
 }
 
-/**
- * Tracks active touch pointers and debounces same-lane repeats.
- * - `press` returns `0` when the press is accepted, `null` when it is ignored
- *   (either a same-lane debounce within LANE_DEBOUNCE_MS, or an out-of-bounds tap).
- * - `release` returns the lane the pointer was holding.
- * - `activeLanes` reports the set of lanes currently held.
- */
-export class TouchLaneTracker {
-  private lastPressMs = new Map<number, number>();
-  private active = new Map<number, number>();
+/** A thumb must travel this far beyond a lane boundary before a drag changes lanes. */
+export const TOUCH_DRAG_HYSTERESIS_PX = 8;
 
-  press(pointerId: number, lane: number, timeMs: number): 0 | null {
-    const last = this.lastPressMs.get(lane);
-    if (last !== undefined && timeMs - last < LANE_DEBOUNCE_MS) return null;
-    this.lastPressMs.set(lane, timeMs);
-    this.active.set(pointerId, lane);
-    return 0;
+/**
+ * Prevent tiny boundary wobbles from ending a touch-owned Hold. A deliberate
+ * swipe still switches lanes once the thumb is visibly inside the next lane.
+ * Initial taps, mouse drags, and the outer edge guard remain precise.
+ */
+export function laneFromTouchDrag(
+  clientX: number,
+  rect: DOMRect,
+  currentLane: number | null,
+  laneCount = 4,
+): number | null {
+  const nextLane = laneFromClientX(clientX, rect, laneCount);
+  if (nextLane === null || currentLane === null || nextLane === currentLane) return nextLane;
+  const laneWidth = rect.width / laneCount;
+  const margin = Math.min(TOUCH_DRAG_HYSTERESIS_PX, laneWidth * 0.15);
+  const localX = clientX - rect.left;
+  if (nextLane > currentLane && localX < (currentLane + 1) * laneWidth + margin) return currentLane;
+  if (nextLane < currentLane && localX > currentLane * laneWidth - margin) return currentLane;
+  return nextLane;
+}
+
+export type LaneInputSource = number | string;
+
+export type LaneInputTransition = {
+  press: number | null;
+  release: number | null;
+};
+
+const NO_LANE_TRANSITION = (): LaneInputTransition => ({ press: null, release: null });
+
+/**
+ * Owns physical input sources across touch and keyboard.
+ *
+ * A lane is pressed when its first source arrives and released only after its
+ * final source leaves. This matters on touch: lifting one of two fingers from
+ * the same lane must not cut a Hold that the other finger still owns. A valid
+ * outer-lane touch also stays owned while a captured thumb briefly drifts into
+ * the bezel guard; pointerup/cancel/lost-capture still ends it, and entering a
+ * different lane performs the normal release + press transition.
+ */
+export class LaneInputTracker {
+  private lastPressMs = new Map<number, number>();
+  private sourceLanes = new Map<LaneInputSource, number | null>();
+  private laneOwners = new Map<number, Set<LaneInputSource>>();
+
+  begin(source: LaneInputSource, lane: number, timeMs: number): LaneInputTransition {
+    if (this.sourceLanes.has(source)) return NO_LANE_TRANSITION();
+    this.sourceLanes.set(source, null);
+    return this.move(source, lane, timeMs);
   }
 
-  release(pointerId: number): number | null {
-    const lane = this.active.get(pointerId);
-    if (lane === undefined) return null;
-    this.active.delete(pointerId);
-    return lane;
+  move(source: LaneInputSource, lane: number | null, timeMs: number): LaneInputTransition {
+    if (!this.sourceLanes.has(source)) return NO_LANE_TRANSITION();
+    const previous = this.sourceLanes.get(source) ?? null;
+    if (previous === lane) return NO_LANE_TRANSITION();
+
+    // The edge guard rejects a new touch before begin(), but once a thumb owns
+    // an outer lane, a few pixels of bezel drift must not cut a Hold. Pointer
+    // end/cancel/lost-capture still calls end(), so this cannot leave a stuck
+    // lane; re-entering a real lane below transitions from `previous` as usual.
+    if (lane === null) return NO_LANE_TRANSITION();
+
+    const release = previous === null ? null : this.removeOwner(source, previous);
+    this.sourceLanes.set(source, lane);
+    const press = lane === null ? null : this.addOwner(source, lane, timeMs);
+    return { press, release };
+  }
+
+  end(source: LaneInputSource): LaneInputTransition {
+    if (!this.sourceLanes.has(source)) return NO_LANE_TRANSITION();
+    const lane = this.sourceLanes.get(source) ?? null;
+    this.sourceLanes.delete(source);
+    return {
+      press: null,
+      release: lane === null ? null : this.removeOwner(source, lane),
+    };
+  }
+
+  clear(): void {
+    this.lastPressMs.clear();
+    this.sourceLanes.clear();
+    this.laneOwners.clear();
   }
 
   activeLanes(): Set<number> {
-    return new Set(this.active.values());
+    return new Set(this.laneOwners.keys());
+  }
+
+  activeSourceCount(): number {
+    return this.sourceLanes.size;
+  }
+
+  hasSource(source: LaneInputSource): boolean {
+    return this.sourceLanes.has(source);
+  }
+
+  laneForSource(source: LaneInputSource): number | null {
+    return this.sourceLanes.get(source) ?? null;
+  }
+
+  private addOwner(
+    source: LaneInputSource,
+    lane: number,
+    timeMs: number,
+  ): number | null {
+    let owners = this.laneOwners.get(lane);
+    if (!owners) {
+      owners = new Set();
+      this.laneOwners.set(lane, owners);
+    }
+    const firstOwner = owners.size === 0;
+    owners.add(source);
+    if (!firstOwner) return null;
+
+    const last = this.lastPressMs.get(lane);
+    if (last !== undefined && timeMs - last < LANE_DEBOUNCE_MS) return null;
+    this.lastPressMs.set(lane, timeMs);
+    return lane;
+  }
+
+  private removeOwner(source: LaneInputSource, lane: number): number | null {
+    const owners = this.laneOwners.get(lane);
+    if (!owners) return null;
+    owners.delete(source);
+    if (owners.size > 0) return null;
+    this.laneOwners.delete(lane);
+    return lane;
   }
 }
