@@ -2,8 +2,8 @@
 
 | 字段 | 值 |
 |------|-----|
-| **phase** | 曲库 **105/105**（s1 6 · s2 4 · s3 15 · s4 15 · s5 10 · s6 35 · p3 10 · p4 10）· 315 张谱已按「拍网格亲和力」全量重出 · 线上体验 <https://beatscape.pages.dev> · 待人工耳检 |
-| **updated** | 2026-09-13 |
+| **phase** | BeatScape 旧版曲库 **105/105**、315 张四轨谱；duohertz v2.0 产品转型 PRD 已立项，**新品牌／一至双键／三名新角色／105 首新电音均未实现**。线上仍为旧版 <https://beatscape.pages.dev>。 |
+| **updated** | 2026-09-23 |
 | **slug** | musicsaas |
 
 ## 已取消（不自动恢复）
@@ -13,6 +13,8 @@
 ## next（P0）
 
 > 验收入口：本页 · `pnpm catalog:beatscape` · `pnpm audit:beatscape` · `pnpm earcheck:beatscape`
+
+- [ ] **duohertz 转型（2026-09-23 起）**：按 [v2.0 目标 PRD](apps/beatscape/PRD.md) 将旧版四轨游戏整体改为一键／双键电音游戏；替换玩家可见品牌、三名角色及 105 首曲目与 315 张谱。每阶段以新目标真实实现和验收为准，不把旧版内容、自动测试或已取消的专项真机执行记为 duohertz 完成。当前只完成 PRD 与改造前备份分支 `codex/backup-main-before-duohertz-20260923`。
 
 - [x] **Arcade HP 归零原子截止（2026-09-13，未提交/未部署）**：PRD 已规定 HP 归零首帧立即停止音乐、判定与输入，但 `tick()` 旧实现只在进入本帧时检查 `failed`。引擎红测先用 14 个 Miss 将 HP 降到 2，再让 6 个 Tap 同时过窗；触发失败的第 15 个 Miss 后仍返回其余 5 个 FX，把应为 15/20 的中途 Results 错记为 20/20。真实 desktop production 红测稳定复现同一错误。现每个自动判定写入 FX 后立即检查 `failed`，保留触发失败的对象并终止当前批次；整条未起按 Hold 继续遵守头/尾双判、−12 HP 的既定原子语义。
   最终 Vitest **44 文件 / 325 用例**、release scripts **16/16**、性能规则 **51/51**；同帧失败专项 desktop/mobile **2/2**，Arcade 单人/Duo / 批量得分 / Reduce motion / Settings / 输入 / HUD / Hold / Slide / release production **75 passed / 1 个 touch-only desktop skip**。CF artifact `b1f290070d27`（105 tracks / 315 charts / 906 files / 497.0 MiB），总纲 v1.9.73。未改谱、未触发 BS-D002；未 commit/deploy，BS-D001 保持取消。

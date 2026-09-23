@@ -1,4 +1,69 @@
-# BeatScape PRD — 实现真值版（As-Built）
+# duohertz（真我赫兹）PRD · v2.0 目标版
+
+> **2026-09-23 产品转型决定**：将现有 BeatScape 改造成 duohertz，英文名固定为小写 **duohertz**。本节是未来产品目标，**尚未实现、未发布、未通过验收**。下方“BeatScape 旧版实现快照”仅用于迁移对照；旧版四轨、NIGHTSHIFT 人物、Scape City 叙事和曲目不能充当 duohertz 的已完成内容。
+>
+> 当前代码目录仍为 `apps/beatscape/`，包名、线上站点和旧存档在迁移期保持原样。正式改名、资产替换与上线须以本节验收条件和实际发布证据为准。旧版发布门禁及 [BS-D001](../../docs/BEATSCAPE-DECISIONS.md#bs-d001) 继续有效；已取消的专项真机验收不自动恢复，也不写作通过。
+
+## 0. 产品定位与品牌文案
+
+| 项目 | duohertz 目标 |
+|---|---|
+| 中文名 | **真我赫兹** |
+| 英文名 | **duohertz**；产品、Logo、商店和站点统一小写，不使用 BeatScape 作为玩家可见主品牌 |
+| 中文 Slogan | **音你、真我赫兹** |
+| Logo 下英文短句 | **Music for you. Be your true hertz.**（采用品牌稿首选；正式商用前进行英语母语者可读性复核） |
+| 商店长句 | Music made for you. Every tap sends out a wave of light and sound — feel the beat, find your frequency, and become your true hertz. |
+| 类型与受众 | 全年龄电子音乐节奏游戏；优先服务儿童、家庭、节奏游戏新手与轻度玩家 |
+| 核心承诺 | 一键入门、双键进阶；每次敲击都以声音、频率波纹和光粒给出清楚反馈 |
+| 视觉语法 | 电波、同心频率波纹、音符光粒和明亮的电音舞台；重要判定信息不只靠颜色或闪烁传达 |
+
+商店短介绍以“1–2 键操作、声波特效、全年龄电音”为核心；不能在游戏仍为四轨时使用 `One or two keys` 宣传。原句草案：*duohertz is a rhythm game for everyone. Press just one or two keys in time with the music, and watch glowing sound waves ripple across the screen. No complicated combos, no steep learning curve — just pure beats and your own frequency rising with every tap.* 商店标签候选：Rhythm、Music、Casual、Family Friendly、One-Button、Electronic；标签和年龄分级以最终平台审核为准。
+
+## 1. 核心玩法：一键与双键
+
+- **Solo · One Key**：一处清晰的击打目标，一个输入键／触控区。入门曲谱只含单点 Tap 与可选 Hold，不要求同时按键；按键的波纹和声音反馈与谱面时间点对应。
+- **Solo · Two Keys**：左右两个目标、两个输入键／触控区。节奏可做左右呼应；双键同时按仅在明确教学后的进阶谱出现，不能用旧四轨谱面折叠冒充重新设计的双键谱。
+- **Duo**：两名玩家各持一个输入键／触控区，整局共两个玩法键；两人结果独立呈现。旧版“每人四轨”的 Duo 规则、文案和成绩不可沿用。
+- 键盘默认建议为一键 Space、双键 F/J；触屏显示一或两块足够大的目标，标准手柄使用一或两个面键。最终键位允许重映射，输入来源的时序和防重复仍由统一状态机负责。
+- 默认体验不以断连、掉血或排行榜压力惩罚新手。分数、连击和高难挑战可保留为可选择的进阶层；儿童与轻度玩家无需完成教程墙就能开始并读懂结果。
+- 目标谱面按新音频重制：Easy 为一键，Standard／Hard 为双键。Tap、Hold 和双键同拍的视觉与判定对象重新定义；旧 Slide、四道色、四轨键位及相关教程退出新品牌默认路径。
+- 判定仍以 Web Audio 歌曲时钟为唯一时间真值。旧 BeatScape 的 15/30/50 ms 和旧分数上限只描述旧版实现；duohertz 的窗口、校准、计分与节奏密度必须作为新版本单独测量和锁定，不能在无新谱、新手测试的情况下默认为通过。
+- 减少动态效果、音量、闪光强度和触觉反馈应可由玩家控制；声波表现不得遮挡目标或依赖高频闪烁。离线、暂停、恢复和音画同步沿用可复用的工程能力，但要在一／双键布局重新验收。
+
+## 2. 新世界观与三名角色（创作候选，待名称检索和美术定稿）
+
+世界以 **The Soundfield** 为暂定舞台：大家把自己的节拍送入公共声场，让看不见的频率成为可见的色彩。冲突是创作方式与合作节奏的分歧，不使用旧版 Scape City、NIGHTSHIFT、The Late Static、JUNO、ATLAS 或 TORQUE 的身份、台词、肖像和曲目故事。角色是引导和叙事伙伴，**不提供改变判定窗、分数或付费能力的英雄属性**。参考英雄卡的信息层级，不复制《王者荣耀》的英雄名称、称号、造型、台词、技能或故事。
+
+| Hero English Name | Title | Role Class（内部） | Height | Region | Core Identity | Character Traits | Representative Quote |
+|---|---|---|---|---|---|---|---|
+| **AERI**（暂名） | The First Pulse | Attacker／节拍领奏 | 165 cm | Pulse Dock | 把第一下敲击变成大家都能跟上的低频脉冲 | 好奇、果断、热情、偶尔抢拍 | “Start with one beat. We can build the rest together.” |
+| **NILO**（暂名） | Keeper of Echoes | Support／呼应引导 | 169 cm | Echo Commons | 倾听别人的节拍，再给它一个温暖的回应 | 耐心、善听、幽默、坚定 | “I heard your rhythm. Try mine beside it.” |
+| **VELA**（暂名） | Weaver of Waves | Buffer／频率编织 | 172 cm | Prism Yard | 将两条节奏织成可见波纹而不盖过任何一方 | 沉稳、细致、爱实验、体贴 | “Two notes can leave room for every voice.” |
+
+三名角色最终卡片均需 120–180 词英文背景故事、上表字段、正侧面设计与原创性证据；以下是**故事方向而非已签核成稿**：AERI 从独自追求最快的节拍学会先给别人一个容易加入的起点；NILO 用回声帮助害羞的新玩家找到自己的回应；VELA 将不同速度的声波调成可以一起闪耀的图案。三人的剧情按“一键发声 → 双键回应 → 两人合奏”随实际游玩逐步出现。对外使用暂名之前须完成角色名、称号、相似外观和目标市场商标检索；检索未完成时不宣称名称已获独占权。
+
+## 3. 电音曲库与谱面整体替换
+
+- 现有 105 首 `theme: beatscape` 曲目、315 张四轨谱、旧封面与 105 条故事文案均是**旧版资产**。duohertz 公开曲库不得仅更换标签、曲名或封面；需重新生成／制作音乐并逐首重制谱面与视觉素材。旧曲可留在历史归档，不得混入新品牌的可浏览或可播放目录。
+- 目标规模为 **105 首全新电子音乐、每首 Easy／Standard／Hard 三谱，共 315 张新谱**。Easy 一键，Standard／Hard 双键；允许先做内部小批量验收，但不足全量时不得将旧 105 首计入 duohertz 完成数或正式全库发布。
+- 五个声学方向各 21 首作为制作配额：Melodic House、Synthwave、Future Bass、Drum & Bass、Trance。整体要有清楚的鼓点、可辨识主旋律和明亮能量；避免成人露骨主题、惊吓音效与过量失真。子风格不是简单贴标，每首需由听感和制作记录佐证。
+- 每首交付游戏音频、完整版、预览、封面、社交卡、三张独立谱及元数据。曲目 ID、艺人、BPM、时长、音频哈希、授权来源、`theme: duohertz`、子风格和三谱键数要能由自动审计对齐；流媒体站也要使用同一新曲库真相源。
+- 自动校验负责文件存在、时长、谱面结构、密度、键数、音频／谱面对齐及版权字段；人工耳检负责音乐品质、儿童可听性、接缝、响度与节奏手感。自动 PASS 不替代耳检和内容签审。生成或重生成谱面继续遵守 [BS-D002](../../docs/BEATSCAPE-DECISIONS.md#bs-d002) 的入库门禁，直到新谱面门禁完成等价覆盖。
+
+## 4. 迁移与上线验收
+
+1. **品牌**：首页、导航、PWA、SEO、OG、分享、Legal、安装提示、错误页、商店文案与音乐站入口统一为 duohertz；Logo 及中英文 slogan 在实际版面核对，所有玩家可见 BeatScape／Scape City／NIGHTSHIFT 旧文案清零。内部目录可暂留旧名，但不能作为产品完成证据。
+2. **玩法**：一键、双键和两人各一键在键盘、触屏及支持的手柄上可完成整曲；每条实际谱面声明 1 或 2 个输入键，旧四轨谱不通过新发布器。按键、Hold、同时输入、暂停／恢复、校准、离线和结算均有行为验收。
+3. **角色**：新三人拥有完整原创角色卡、立绘及与玩法对应的剧情；旧三人不再出现在玩家可见入口。角色名称和外观完成相似性审查后才定稿。
+4. **曲库**：105 首新电音及 315 张新谱的目录、音频、预览、封面、OG 与流媒体站一致；每首实际可播、有权利记录，人工耳检和内容签审记录绑定准确的产物哈希。
+5. **存档与链接**：旧 `bs_*` 成绩与新规则不可比较，不得静默迁入 duohertz 排行／成就；可审慎迁移纯设备设置。旧分享／曲目链接须给出清楚的过渡页面或可验证的精确映射，不能跳到不相关新曲。
+6. **发布**：先在隔离环境完成新内容、全路径浏览器验证、性能预算及发布器校验，再绑定品牌域名和发布候选。现有 `launch:check` 的人工证据与签审门禁不因本 PRD 改写而通过；没有对应证据不得把当前 BeatScape 线上站点称为 duohertz 已上线。
+
+---
+
+# BeatScape 旧版 PRD — 实现快照（仅供迁移参考）
+
+> 以下为原游戏的 as-built 记录。与上方 duohertz 目标冲突时，上方决定未来方向；以下内容仍准确描述尚未改造的现有代码，不是新产品验收标准。
 
 > **2026-09-06 执行决策**：专项真机验收已由用户取消，不自动恢复 TODO。取消执行与发布门禁的区别见 [BS-D001](../../docs/BEATSCAPE-DECISIONS.md#bs-d001)。
 

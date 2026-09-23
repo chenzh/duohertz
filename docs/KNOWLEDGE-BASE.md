@@ -37,23 +37,24 @@
 6. [docs/INFERENCE.md](./INFERENCE.md) — Mac 双 Worker 部署
 7. [docs/ACCEPTANCE.md](./ACCEPTANCE.md) — 验收用例
 
-### BeatScape（Stage1）
+### duohertz 目标 / BeatScape 旧版
 
 **上线准备当前入口（2026-09-05）**：[BEATSCAPE-RELEASE-READINESS.md](./BEATSCAPE-RELEASE-READINESS.md) — 105 首候选包、技术证据、内容阻塞、人工验收工作包与发布/回退流程。
 
 **自动性能记录（2026-09-06）**：[BEATSCAPE-PERFORMANCE.md](./BEATSCAPE-PERFORMANCE.md) — 同条件冷加载、完整 Hard / 最高特效 / 双人、连续重开及切歌的基线与优化证据；取消项先核对 [项目决策](BEATSCAPE-DECISIONS.md)。
 
-1. [docs/PRD-BEATSCAPE.md](./PRD-BEATSCAPE.md) — 主产品 PRD
-2. [docs/PRD-WEB-RHYTHM-GAME.md](./PRD-WEB-RHYTHM-GAME.md) — NeonBeat 参考
-3. [docs/BEATSCAPE-STAGE1-DUAL-ASSET.md](./BEATSCAPE-STAGE1-DUAL-ASSET.md) — Stage1 双资产改造清单
-4. [docs/BEATSCAPE-CATALOG-ROADMAP.md](./BEATSCAPE-CATALOG-ROADMAP.md) — 正式版 50 首路线图与缺口
-5. [docs/BEATSCAPE-SONIC-DIRECTION.md](./BEATSCAPE-SONIC-DIRECTION.md) — **全曲库声波真值**（车载 + 都市爵士战斗感 · 侵权规避）
-6. [docs/BEATSCAPE-STAGE6-EXPANSION-MUSIC.md](./BEATSCAPE-STAGE6-EXPANSION-MUSIC.md) — **当前波次**：扩容 50 首（35 → 85）
-7. [docs/BEATSCAPE-STAGE4-RESONANCE-MUSIC.md](./BEATSCAPE-STAGE4-RESONANCE-MUSIC.md) — Stage4 第一波 10 首补曲（已上架）
-7. [docs/BEATSCAPE-RESONANCE-PRESETS.md](./BEATSCAPE-RESONANCE-PRESETS.md) — RESONANCE 风格包附录（待合入 PRD）
-8. [docs/BEATSCAPE-STAGE2-DELIVERY.md](./BEATSCAPE-STAGE2-DELIVERY.md) — Stage2 #07–#10 交付清单
-9. [docs/BEATSCAPE-TODO-ACCEPTANCE.md](./BEATSCAPE-TODO-ACCEPTANCE.md) — **历史冲刺归档**：Stage1–3 验收规格（2026-08-25），27 条未勾选项属过期冲刺，**不是当前待办**；当前入口为仓库根 `TODO.md`
-10. 内容流水线见 PRD-BEATSCAPE §6.0 · `catalog.json` · `catalog-roadmap.json` · `scripts/beatscape-*`
+1. [apps/beatscape/PRD.md](../apps/beatscape/PRD.md) — duohertz v2.0 目标 PRD；下半部保留 BeatScape 旧版实现快照
+2. [docs/PRD-BEATSCAPE.md](./PRD-BEATSCAPE.md) — BeatScape v1.9 历史产品总纲
+3. [docs/PRD-WEB-RHYTHM-GAME.md](./PRD-WEB-RHYTHM-GAME.md) — NeonBeat 参考
+4. [docs/BEATSCAPE-STAGE1-DUAL-ASSET.md](./BEATSCAPE-STAGE1-DUAL-ASSET.md) — BeatScape Stage1 双资产历史清单
+5. [docs/BEATSCAPE-CATALOG-ROADMAP.md](./BEATSCAPE-CATALOG-ROADMAP.md) — BeatScape 旧版 50 首路线图
+6. [docs/BEATSCAPE-SONIC-DIRECTION.md](./BEATSCAPE-SONIC-DIRECTION.md) — BeatScape 旧版声学方向（车载 + 都市爵士战斗感）
+7. [docs/BEATSCAPE-STAGE6-EXPANSION-MUSIC.md](./BEATSCAPE-STAGE6-EXPANSION-MUSIC.md) — BeatScape 旧版扩容记录
+8. [docs/BEATSCAPE-STAGE4-RESONANCE-MUSIC.md](./BEATSCAPE-STAGE4-RESONANCE-MUSIC.md) — BeatScape 旧版补曲记录
+9. [docs/BEATSCAPE-RESONANCE-PRESETS.md](./BEATSCAPE-RESONANCE-PRESETS.md) — 旧版风格包附录
+10. [docs/BEATSCAPE-STAGE2-DELIVERY.md](./BEATSCAPE-STAGE2-DELIVERY.md) — BeatScape Stage2 历史交付
+11. [docs/BEATSCAPE-TODO-ACCEPTANCE.md](./BEATSCAPE-TODO-ACCEPTANCE.md) — **历史冲刺归档**：Stage1–3 验收规格（2026-08-25），27 条未勾选项属过期冲刺，**不是当前待办**；当前入口为仓库根 `TODO.md`
+12. 旧版内容流水线见 PRD-BEATSCAPE §6.0 · `catalog.json` · `catalog-roadmap.json` · `scripts/beatscape-*`
 
 ### BeatScape 世界观 / IP / 商业化（2026-08 新增线）
 
