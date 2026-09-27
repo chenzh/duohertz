@@ -12,7 +12,7 @@ MusicSaas/
 ├── apps/
 │   ├── gateway/          # M1–M3 REST API + Job 队列 + Demo BFF
 │   ├── demo/             # M8 Vite React 演示页
-│   ├── beatscape/        # BeatScape Stage1 节奏游戏（主产品前端）
+│   ├── beatscape/        # duohertz 主线节奏游戏（迁移期目录名不变；旧版 BeatScape 代码同目录）
 │   └── neonbeat/         # 参考节奏游戏（判定窗 22/45/50，勿混用）
 ├── workers/
 │   ├── ace-step/         # M4 ACE MLX FastAPI Worker
@@ -62,7 +62,17 @@ MusicSaas/
 
 ---
 
-## 4. apps/beatscape（Stage1）
+## 4. apps/beatscape（duohertz 主线）
+
+### duohertz 入口速查
+
+- **代码**：新前端在 `apps/beatscape/src/duohertz/`；目录名沿用 BeatScape（迁移期约定，见 `apps/beatscape/PRD.md` 开篇）。
+- **dev 路由**（DEV-only，`src/App.tsx:32-64/154-174`）：`/beatscape/lab/duohertz/home`（开发 hub）、`/beatscape/lab/duohertz/library|characters|radio`、`/beatscape/lab/duohertz/v2/home|library|play/:id|radio|characters`（v2 目标版，独立 `V2Shell`）。
+- **三种构建模式**：dev（`import.meta.env.DEV` 启用 lab 路由）· 独立审查包 `build:duohertz:preview`（`VITE_DUOHERTZ_PREVIEW=1` → `dist-duohertz/`）· 新品牌源码包 `build:duohertz:source`（`VITE_DUOHERTZ_RELEASE_SOURCE=1` → `dist-duohertz-source/`，noindex，不含旧 `public/`）。
+- **本机命令**：`pnpm --filter @musicsaas/beatscape test`（Vitest）· `test:lab`（Playwright `lab-e2e/`，端口 4188）· `test:duohertz:preview` · `test:duohertz:source`。
+- **候选暂存**：`apps/beatscape/candidates/duohertz/`（本机未入库，751MB、315 个 `.m4a`）。
+- **易踩事实**：`public/catalog/dh-*/` 当前**只有 `cover-thumb.webp`**（105 个，已入库）；真实音频／谱面在本机 `candidates/duohertz/`（gitignore 未入库）→ 直接请求 `public/catalog/dh-*/audio.m4a` 会命中 SPA 回落而非音频。
+- **谱面门禁**：生成／重生成须过 `scripts/beatscape-chart-gate.py`（BS-D002）；候选整体流程见 `docs/DUOHERTZ-CATALOG-PROMOTION.md`。
 
 **duohertz 转型（隔离开发中）**：目标见 `apps/beatscape/PRD.md` 开篇；`src/duohertz/` 放新 `format: 2` 一／双键谱面解析、判定原型、开发首页／曲库预览、试玩页、Solo／Duo 结算卡、电台开发页及角色卡，`src/duohertz/candidate.ts` 从隔离候选 manifest 自动构建仅开发页使用的试听列表，`src/duohertz/catalog.ts` 独立解析未来 v2 目录并读取新谱（未接入正式入口）；`src/duohertz/trackCards.ts` 区分候选与公开 v2 卡片数据，`src/duohertz/TrackGrid.tsx` 共用卡片版式。`src/duohertz/Game.tsx` 是脱离候选导入的一／双键玩法组件，`TimingCalibration.tsx` 与 `timing.ts` 提供独立于旧站存档的本地时序校准，并复用 `src/input/eventTiming.ts` 对可信输入时间戳做有界补偿；`Lab.tsx` 只负责开发候选；`Radio.tsx` 是不导入候选清单的共享电台播放器，支持曲名／艺人搜索与曲风筛选，`RadioLab.tsx` 只装配开发长版母带；`ApprovedHome.tsx`、`ApprovedLibrary.tsx`、`ApprovedPlay.tsx`、`ApprovedRadio.tsx`、`ApprovedCharacters.tsx` 与 `approvedTrack.ts` 为 v2 审查路径，`characterCatalog.ts` 单独校验三人已批准清单及正／侧面图哈希字段格式；获批曲卡与电台以 `?track=<dh-id>` 互通，`V2Shell.tsx` 提供不挂载旧版曲库的独立品牌导航；`vite.config.ts` 在开发 v2 路由去掉旧目录 HTML 预载。`src/duohertz/DuohertzApp.tsx`、`main.tsx`、`base.css` 与 `duohertz-index.html` 构成独立 `build:duohertz:preview` 静态审查包，`LegacyTrackTransition.tsx` 为旧曲分享／对局链接提供无曲目映射的过渡页；构建后回归在 `preview-e2e/`，该包不含旧 `public/` 或 PWA，尚无真实批准目录及正式发布地址。这些页面拒绝未获站点批准的目录，按需读取目标谱面或长版音频，真实正式玩家入口仍待完成。`candidates/duohertz/` 放未签审音频、谱面、视觉与本地审稿工作表。`scripts/duohertz-candidate-gate.py` 可对单曲或以 `--all-staged` 对全部暂存曲目运行 BS-D002 音频对齐，`scripts/duohertz-catalog-structure.py` 核对 105 首／315 张新谱及五类配额，`scripts/duohertz-review-worksheet.py` 生成哈希绑定的人工观察入口，`scripts/duohertz-review-audit.py` 核对导出记录是否与当前素材一致；`scripts/duohertz-art-prompts/` 留存改版封面提示词、来源及旧版哈希，`scripts/duohertz-generate-sa3.py` 留存本地 Gateway 任务回执，`scripts/duohertz-chartgen.py` 从新音频实际起音生成一／双键技术草谱，`scripts/duohertz-stage-sa3.py` 用 `scripts/duohertz-recipes/` 的配方、SA3 WAV、匹配回执和原创图像组装隔离候选并先运行单曲门禁；`scripts/duohertz-build-catalog.py` 在内容、完整版和签审条件齐全后仅生成隔离的 v2 曲库，`scripts/duohertz-build-characters.py` 在角色文案／图片和四类人工签审齐全后仅生成隔离的三人角色包，`scripts/duohertz-check-staged-content.py` 只读复核两类暂存产物的数量、路径和内部哈希，规则见 `docs/DUOHERTZ-CATALOG-PROMOTION.md`。这些工具都不授予网站部署批准。旧 `public/catalog.json` 仍是 BeatScape 正式目录。
 

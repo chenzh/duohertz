@@ -27,8 +27,15 @@ function redirectRootToBeatscape(): Plugin {
           res.end();
           return;
         }
-        if (url === "/beatscape" || url.startsWith("/beatscape?")) {
-          const qs = url.includes("?") ? url.slice(url.indexOf("?")) : "";
+        // dev 默认入口：duohertz 是主线（精确匹配，避免重定向环）。
+        // 旧版首页仍可从 /beatscape/home 进入；preview / production 不受影响。
+        if (url === "/beatscape" || url === "/beatscape/") {
+          res.writeHead(302, { Location: "/beatscape/lab/duohertz/home" });
+          res.end();
+          return;
+        }
+        if (url.startsWith("/beatscape?")) {
+          const qs = url.slice(url.indexOf("?"));
           res.writeHead(302, { Location: `/beatscape/${qs}` });
           res.end();
           return;
@@ -90,7 +97,7 @@ export default defineConfig(({ isPreview }) => {
       port: 5175,
       host: true,
       strictPort: true,
-      open: duohertzStandalone ? "/" : "/beatscape/",
+      open: duohertzStandalone ? "/" : "/beatscape/lab/duohertz/home",
     },
     test: {
       environment: "node",
