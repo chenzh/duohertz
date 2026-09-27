@@ -32,9 +32,12 @@ function toUrl(to: string): string {
   return appHref(to, APP_BASE);
 }
 
-function readLocation(): { path: string; search: string } {
-  discardStaleEarlyAudio();
-  return { path: routePath(window.location.pathname, APP_BASE), search: window.location.search };
+function readLocation(hashRoute?: (hash: string) => string | null): { path: string; search: string } {
+  if (import.meta.env.VITE_DUOHERTZ_PREVIEW !== "1"
+      && import.meta.env.VITE_DUOHERTZ_RELEASE_SOURCE !== "1") discardStaleEarlyAudio();
+  const path = routePath(window.location.pathname, APP_BASE);
+  return { path: path === "/" ? hashRoute?.(window.location.hash) ?? path : path,
+    search: window.location.search };
 }
 
 function matchPath(pattern: string, path: string): Record<string, string> | null {
@@ -55,12 +58,14 @@ export function Router({
   routes,
   layout,
   fallback = null,
+  hashRoute,
 }: {
   routes: RouteDef[];
-  layout?: (child: ReactNode) => ReactNode;
+  layout?: (child: ReactNode, path: string) => ReactNode;
   fallback?: ReactNode;
+  hashRoute?: (hash: string) => string | null;
 }) {
-  const [loc, setLoc] = useState(readLocation);
+  const [loc, setLoc] = useState(() => readLocation(hashRoute));
   const previousPathRef = useRef(loc.path);
   const backBlockerRef = useRef<(() => void) | null>(null);
   const restoringBlockedPopRef = useRef(false);
@@ -84,7 +89,7 @@ export function Router({
     const onPop = () => {
       if (restoringBlockedPopRef.current) {
         restoringBlockedPopRef.current = false;
-        setLoc(readLocation());
+        setLoc(readLocation(hashRoute));
         if (proceedAfterRestoreRef.current) {
           proceedAfterRestoreRef.current = false;
           allowNextPopRef.current = true;
@@ -94,7 +99,7 @@ export function Router({
       }
       if (allowNextPopRef.current) {
         allowNextPopRef.current = false;
-        setLoc(readLocation());
+        setLoc(readLocation(hashRoute));
         return;
       }
       const blocker = backBlockerRef.current;
@@ -108,11 +113,15 @@ export function Router({
         window.history.forward();
         return;
       }
-      setLoc(readLocation());
+      setLoc(readLocation(hashRoute));
     };
     window.addEventListener("popstate", onPop);
-    return () => window.removeEventListener("popstate", onPop);
-  }, []);
+    if (hashRoute) window.addEventListener("hashchange", onPop);
+    return () => {
+      window.removeEventListener("popstate", onPop);
+      if (hashRoute) window.removeEventListener("hashchange", onPop);
+    };
+  }, [hashRoute]);
 
   // Client-side route changes return to the top and announce the new main
   // region through focus. Do not steal focus on the initial document load:
@@ -129,15 +138,15 @@ export function Router({
     const href = toUrl(to);
     if (opts?.replace) window.history.replaceState({}, "", href);
     else window.history.pushState({}, "", href);
-    setLoc(readLocation());
-  }, []);
+    setLoc(readLocation(hashRoute));
+  }, [hashRoute]);
 
   const setSearch = useCallback((q: URLSearchParams) => {
     const base = window.location.pathname;
     const qs = q.toString();
     window.history.replaceState({}, "", qs ? `${base}?${qs}` : base);
-    setLoc(readLocation());
-  }, []);
+    setLoc(readLocation(hashRoute));
+  }, [hashRoute]);
 
   for (const r of routes) {
     const params = matchPath(r.path, loc.path);
@@ -151,7 +160,7 @@ export function Router({
         registerBackBlocker,
         proceedBlockedBack,
       };
-      const body = layout ? layout(r.element) : r.element;
+      const body = layout ? layout(r.element, loc.path) : r.element;
       return <LocationCtx.Provider value={value}>{body}</LocationCtx.Provider>;
     }
   }
@@ -165,7 +174,7 @@ export function Router({
     registerBackBlocker,
     proceedBlockedBack,
   };
-  const body = fallback ? (layout ? layout(fallback) : fallback) : null;
+  const body = fallback ? (layout ? layout(fallback, loc.path) : fallback) : null;
   return <LocationCtx.Provider value={ctx}>{body}</LocationCtx.Provider>;
 }
 
@@ -227,13 +236,14 @@ type LinkProps = {
   children: ReactNode;
 } & Pick<
   ComponentPropsWithoutRef<"a">,
-  "className" | "onClick" | "title" | "aria-label" | "aria-current" | "target" | "rel" | "download"
+  "className" | "style" | "onClick" | "title" | "aria-label" | "aria-current" | "target" | "rel" | "download"
 >;
 
 export function Link({
   to,
   children,
   className,
+  style,
   onClick,
   title,
   "aria-label": ariaLabel,
@@ -248,6 +258,7 @@ export function Link({
     <a
       href={toUrl(to)}
       className={className}
+      style={style}
       title={title}
       aria-label={ariaLabel}
       aria-current={ariaCurrent}

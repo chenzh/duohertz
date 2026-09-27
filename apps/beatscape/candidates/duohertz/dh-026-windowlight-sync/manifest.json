@@ -1,0 +1,49 @@
+{
+  "track_id": "dh-026-windowlight-sync",
+  "title": "Windowlight Sync",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Melodic House",
+  "bpm": 126.0,
+  "target_bpm": 126,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -3 dB gain before AAC encoding. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-026-windowlight-sync.json",
+  "source_recipe_sha256": "1922c92c75393027c03a0eac65c8faab56d4f2deaac8cefc5fda1d20190b081b",
+  "source_master_sha256": "93170803ae77f9bf9d3fc5db0db4d7573327731feaccd3473afd48d7295d6e6d",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.15877,
+    "clipping_ratio": 2e-05,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "785d13e0-4fdc-4085-bc16-204530a3593b",
+  "source_generation_receipt_sha256": "07b901704f1a2cf43452081079b9165fa5a03b4539ebe58e17570081547ae63c",
+  "generation_prompt": "Original all-ages melodic-house instrumental for a one-or-two-key electronic rhythm game at a STRICT constant 126 BPM in 4/4. Start immediately with an audible quantized four-on-the-floor kick on every beat, a crisp short clap on beats two and four, clean eighth-note hats and a short melodic attack in every two-bar phrase; keep this countable pulse throughout the entire 128 seconds, including any quieter middle section. No free-time intro, half-time breakdown, tempo drift, percussion-free passage or long smeared pad-only section. Distinctive main hook: four syncopated rounded Rhodes-key notes move upward then pause for a clipped mallet-synth reply descending in two notes. Support with warm sub bass, airy major-seventh chord stabs, and tiny offbeat shaker accents, leaving clear space around each attack. At the midpoint change the bass counterline and chord inversion while the same kick/clap/hat grid continues; in the final section trade the Rhodes and mallet hooks across the stereo field with a brighter harmonic answer. One evolving 128-second stereo composition, not a duplicated half. No vocals, speech, sampled recordings, known melodies or harsh distortion.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a brand-new SQUARE 1:1 original album cover for duohertz track Windowlight Sync, an all-ages melodic-house rhythm-game song. Bold high-contrast editorial comic collage in near-black ink, warm ivory paper, coral red and electric cyan, with a few warm-yellow accents, crisp cut-paper edges and tactile halftone print grain. Main visual: TWO offset tall rectangular apertures carved into deep black, each sending out a different short staircase of rectangular light beats; the coral and cyan beat staircases meet in the central gap, alternate, then pass each other. Give the apertures a strong silhouette and generous breathing room so the image reads at tiny thumbnail size. This is abstract sound-light geometry, not a literal window, building, landscape, city, sky or room. Distinct from rings, folded fans, long rail tracks, circles and ordinary waveform strips. No people, text, letters, numbers, logo, watermark or imitation of an existing game.",
+    "og_prompt": "Edit the supplied original Windowlight Sync square artwork into a HORIZONTAL social card for duohertz. Preserve the TWO offset tall dark apertures and their alternating coral/cyan staircase light-beats, near-black and warm-ivory cut-paper collage and tactile halftone texture. Place the graphic motif on the RIGHT two-thirds, with calm near-black space on the LEFT. Add exactly two crisp fully legible English lines on the left: 'duohertz' all lowercase and 'Windowlight Sync'. No other words, letters, numbers, people, circles, literal buildings, logos, watermarks or existing IP. Original all-ages electronic music poster.",
+    "cover_source_sha256": "40033b1c7734e6c6f26361c55d0996bf43fb1fc252e0d56caf3b8ce83f55f34c",
+    "og_source_sha256": "26f7059c0b362edff383bbcd0fc6c64baba739e218e74e6dd19e5bcd43d2438f",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "2fb05b5568ba9393d66233c7852a87a7cb99c25b6cbd393e7c4ca72da97f254e",
+    "cover-art.png": "ba17fc9c6050e5a5f3d6b1f0c81c0d901c193d343f3f9435c22394509a03d98e",
+    "cover.svg": "f74d3e3155bfbc98fb08e3f8e30c11ec61dc33145d52b8fbcbe682231e2dbb49",
+    "easy.json": "572290c64d0077d7d787d2020e12d01e0deacb987496c2567f093ac53781d09a",
+    "hard.json": "52e56418fd7436ef61aded3dbae01d9c735e5a5222ec361cb4dbc271c04c5b5d",
+    "og.png": "dbe8dfeb6697bd5c9cc9ee8ecd87494c6b6c8b60772913a7b0ba5ffcb5224440",
+    "preview_48s.m4a": "8f64a7f090d6dfddbf5d45b3728f1a0a16745499542a358ab405d57915bab118",
+    "standard.json": "0adca741cb417f9dcbf62eadd26d80364020c94cc84ccacea8a09593b3731725",
+    "stream.m4a": "4b16e89d7146455a703a9eca80b7d00ed0626fe18f52f03d339d087de4600868"
+  }
+}

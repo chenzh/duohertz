@@ -1,0 +1,29 @@
+{
+  "status": "visual_study_unreviewed",
+  "date": "2026-09-24",
+  "purpose": "Match the RHYVORI editorial style study while preserving NIVAREO's distinct identity. Not an audience preference test or art approval.",
+  "front": {
+    "file": "front.png",
+    "sha256": "6ea1b73f9db47065f046bd129fe1f4cdff7aed366a054c848e5c84f6f7fab606",
+    "source_file": "../../characters/nivareo-concept.png",
+    "source_sha256": "e78e64822e81b6cad3429cf4cb7dc1aa035411b8ab0ba9518ce184e8a1c505ad",
+    "style_reference_file": "../rhyvori-editorial/front.png",
+    "style_reference_sha256": "aa787258a3b0167035218ab088711892dbdf5a4c65aa0d9d0731bbdda57aea73",
+    "prompt": "Edit the FIRST image's NIVAREO into a premium original high-contrast editorial comic screen-print character study for the all-ages electronic rhythm game duohertz. The SECOND image is a style reference only: match its thick crisp dark ink outlines, angular paper-cut shadows, warm ivory highlights, sparse halftone grain, strong thumbnail silhouette and vivid but limited accents; do NOT copy its person, face, clothes, palette or pose. Preserve the SAME NIVAREO from the FIRST image: adult warm medium-brown skin, close-cropped curly hair, calm gently humorous expression, soft lavender oversized streetwear overshirt with mustard collar/cuffs and cream panels, white shirt, crossbody strap and small pendant, dark relaxed trousers, practical white-and-lavender sneakers. Preserve a small open glass tuning ring held near the ear with two subtle violet echo arcs, no weapon shape. Full body head-to-toe three-quarter front, same recognizable identity and relaxed listening pose, complete shoes and generous margins. No text, logo, scenery, floor, black rectangle, other people, sexualization or direct imitation of any existing game/franchise. TRUE transparent alpha background with all four corners 0 alpha and opaque character center. Portrait 2:3."
+  },
+  "side": {
+    "file": "side.png",
+    "sha256": "9691bd5783cce9dbb0a73c17ad255cd4866f88af20c9a9eb06cf35c810973436",
+    "source_front_file": "front.png",
+    "source_front_sha256": "6ea1b73f9db47065f046bd129fe1f4cdff7aed366a054c848e5c84f6f7fab606",
+    "source_side_file": "../../characters/nivareo-side-concept.png",
+    "source_side_sha256": "04a6392a566b5fe7b87421e19d0c61f111ff9f38a6201d1adbf11971128c9459",
+    "prompt": "Create a matching, original high-contrast editorial comic screen-print SIDE PROFILE concept of NIVAREO. FIRST reference is the new front style and exact person to match; SECOND reference is the old side pose and clothing construction. Adult person with warm medium-brown skin, close-cropped curly dark hair, calm gentle expression, lavender oversized overshirt with mustard collar/cuffs and ivory panels, white shirt, crossbody strap and pendant, dark loose trousers, white/lavender practical sneakers. Small open tuning ring held near the ear with restrained violet echo arcs. A single full-body strict 90-degree LEFT-FACING side view, both shoes and head complete with generous margin. Same crisp heavy dark ink lines, angular paper-cut shadows, sparse halftone texture and limited palette as the FIRST image, no soft painterly shading. Keep identity, proportions, wardrobe and ring consistent with the front. No text, logo, scenery, floor, glow cloud, second person, weapon, sexualization, or resemblance to any existing character. TRUE transparent alpha background, all four corners fully transparent, center of character opaque. Portrait 2:3."
+  },
+  "review": {
+    "visual_consistency": "pending",
+    "character_similarity": "pending",
+    "audience_feedback": "pending",
+    "production_art": false
+  }
+}

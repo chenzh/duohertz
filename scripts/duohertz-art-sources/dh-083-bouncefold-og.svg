@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs><pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="2" fill="#f7efdf" opacity=".12"/></pattern></defs>
+  <rect width="1200" height="630" fill="#111521"/>
+  <path d="M0 0h180L0 172z" fill="#f7efdf"/>
+  <path d="M1200 0v199L1026 0z" fill="#ff675d"/>
+  <path d="M1200 464v166h-172z" fill="#6de9e1"/>
+  <path d="M643 54h506l-46 518H627z" fill="#1d2632" stroke="#f7efdf" stroke-width="10"/>
+  <path d="M643 54h506l-46 518H627z" fill="url(#dots)"/>
+  <path d="M714 437h360v67H714z" fill="#ff675d" stroke="#111521" stroke-width="11"/>
+  <path d="M715 436l67-61 56 34 65-90 54 45 73-115" fill="none" stroke="#111521" stroke-width="78" stroke-linecap="square" stroke-linejoin="miter"/>
+  <path d="M715 436l67-61 56 34 65-90 54 45 73-115" fill="none" stroke="#f7efdf" stroke-width="56" stroke-linecap="square" stroke-linejoin="miter"/>
+  <path d="M759 406l23-31 56 34 65-90 54 45 42-68" fill="none" stroke="#6de9e1" stroke-width="8"/>
+  <path d="M1080 210c42 8 59 29 68 64M1070 240c27 7 39 19 46 40M1060 270c13 3 19 9 24 18" fill="none" stroke="#6de9e1" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="1039" cy="214" r="14" fill="#ffdc69"/>
+  <path d="M88 103h434" stroke="#6de9e1" stroke-width="10"/>
+  <text x="88" y="181" fill="#6de9e1" font-family="Helvetica Neue, Arial, sans-serif" font-size="66" font-weight="900">duohertz</text>
+  <path d="M88 227h438" stroke="#ff675d" stroke-width="18"/>
+  <text x="86" y="355" fill="#f7efdf" font-family="Helvetica Neue, Arial, sans-serif" font-size="67" font-weight="900">Bouncefold</text>
+  <path d="M88 413h438" stroke="#f7efdf" stroke-width="7"/>
+  <path d="M88 444h214" stroke="#6de9e1" stroke-width="17"/>
+  <path d="M0 601h1200" stroke="#f7efdf" stroke-width="7"/>
+</svg>

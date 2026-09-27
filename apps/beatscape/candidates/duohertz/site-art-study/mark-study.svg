@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="duohertz two-point frequency mark">
+  <rect width="512" height="512" fill="#111421"/>
+  <path d="M0 0h181L0 181z" fill="#f34d65"/>
+  <path d="M512 512H332l180-180z" fill="#67eee0"/>
+  <circle cx="256" cy="256" r="178" fill="none" stroke="#fff9ef" stroke-width="18"/>
+  <path d="M69 261h102l52-109 66 213 52-109h102" fill="none" stroke="#111421" stroke-width="53" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M69 261h102l52-109 66 213 52-109h102" fill="none" stroke="#67eee0" stroke-width="31" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="101" cy="261" r="20" fill="#f34d65" stroke="#111421" stroke-width="7"/>
+  <circle cx="411" cy="256" r="20" fill="#ffda75" stroke="#111421" stroke-width="7"/>
+</svg>

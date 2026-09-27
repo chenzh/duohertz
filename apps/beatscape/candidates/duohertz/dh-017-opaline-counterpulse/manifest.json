@@ -1,0 +1,46 @@
+{
+  "track_id": "dh-017-opaline-counterpulse",
+  "title": "Opaline Counterpulse",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Future Bass",
+  "bpm": 132,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 MLX small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -3 dB gain before AAC encoding. Model output and musical quality remain subject to human review. Re-encoded from the same source WAV: stream gain -4 dB, stream limiter 0.7 amplitude without makeup gain.",
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-017-opaline-counterpulse.json",
+  "source_recipe_sha256": "0913bdc08b662c611807be01105c7cb1c8751f5f8f906bc58b728a2f8ef1a6fd",
+  "source_master_sha256": "67ca49c5c89a6e8a28b9fc0e1684a7a2f50bd32d3f23e6688bcc911a0c671c1f",
+  "generation_prompt": "Original upbeat future bass instrumental for an all-ages one-or-two-key rhythm game, around 132 BPM with a clear countable 4/4 pulse. Start with a bright four-note opaline synth-pluck hook, elastic syncopated bass, crisp kick and snare, airy wide chords and playful chopped synthesizer answers. After about one minute, shift into a related second movement with a different descending melody, thinner drums and sparkling glass-key echoes, then resolve the hook. Strong audible transients for rhythm play, clean spacious stereo mix, no vocals, no samples, no known melody, no harsh distortion.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a brand-new original SQUARE 1:1 album-cover illustration for an internal duohertz electronic rhythm-game track called Opaline Counterpulse. High-contrast editorial comic collage, near-black ink and warm ivory paper with coral red and electric cyan, small warm yellow accents. The central motif is TWO offset translucent opal-crystal sound waves answering each other across a diagonal, one wave made of crisp angular shards and the other of concentric frequency arcs; clear rhythm pulses and tiny musical light particles, lively playful electronic energy. Bold geometric cut-paper layers, subtle halftone print texture, striking silhouette readable at thumbnail size, all-ages friendly. No person, no city skyline, no text, no letters, no numbers, no logo, no copyrighted character, no imitation of a specific game screen. Square composition with visual energy but ample clean contrast.",
+    "og_prompt": "Edit the supplied original square artwork into a HORIZONTAL 1200x630-style social sharing card for the duohertz rhythm-game track Opaline Counterpulse. Preserve the distinctive coral opal-shard counterwave, cyan concentric answering wave, halftone ink/paper texture and high-contrast comic collage, recomposed wide with the visual waves on the RIGHT two-thirds and uncluttered near-black/warm-ivory space on the LEFT. Add exactly two crisp, highly legible English text lines on the left, spelled exactly: line 1 'duohertz' (all lowercase), line 2 'Opaline Counterpulse'. Use bold modern display typography with clear separation from the artwork. No other words, letters, numbers, logos or characters. Family-friendly original electronic music visual, no existing game IP.",
+    "cover_source_sha256": "63860364eac8bc1fd60a49cc04666e1b864e6d6b8b1d9014e9eabbc37032562e",
+    "og_source_sha256": "22ea0579bcaafc61a2050f5e1a1ae14aa8feab09006c6a1604ee1e4baf4bee5d",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "c0beb263239657015a43f558b17cfeacbc00fa32d6b23ab9928cfdbfe08b368b",
+    "cover-art.png": "e1755e8bd36ed91907fbf685c1211c2afcec2f3eb661bc6df1f0ccc0aacd309e",
+    "cover.svg": "29c5a8161fd1a1158102df8362b567d40e679ea8f1448e59fb5f2cd49eeafcf8",
+    "easy.json": "c16f123956070d1f8b1820862e5d592bda92b587edb2d72fee58e972b4c49d20",
+    "hard.json": "29bddc1587dfb9215efa8eab6a36ffe4efad68c1895e03dbe479a9b3d9f3d5d7",
+    "og.png": "9afd68c848fd17bbea883760630403750ddf46e28b2777fd31f410326646dc12",
+    "preview_48s.m4a": "6ed294148b540581a2f2bc4cb4ffa2ac5ca474f52e48dbfd3121d0851d0e2b7b",
+    "standard.json": "78c8116de0a12b2d8ecaa34025a65c32ada2363e5f4b2cfaacd12aff4848f426",
+    "stream.m4a": "594cd43936b431a118354a4431fe7449018e0c3e35e02b089bad374b6dc8bb77"
+  },
+  "audio_rework": {
+    "source_master_sha256": "67ca49c5c89a6e8a28b9fc0e1684a7a2f50bd32d3f23e6688bcc911a0c671c1f",
+    "stream_gain_db": -4.0,
+    "stream_limiter": 0.7,
+    "game_gain_db": null,
+    "source_script": "scripts/duohertz-reencode-sa3.py",
+    "reason": "Decoded AAC true-peak screen"
+  }
+}

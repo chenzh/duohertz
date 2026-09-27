@@ -1,0 +1,18 @@
+{
+  "track_id": "dh-098-patchwork-pop",
+  "title": "Patchwork Pop",
+  "artist": "duohertz studio",
+  "subgenre": "Future Bass",
+  "bpm": 142,
+  "game_duration_sec": 64,
+  "stream_duration_sec": 128,
+  "generation_duration_sec": 180,
+  "stream_start_sec": 32,
+  "model_variant": "small",
+  "generation_prompt": "Create one original 180-second stereo future bass instrumental at strict 142 BPM in 4/4 for an all-ages one-or-two-key rhythm game. By 24 seconds a complete colorful chorus is in motion: syncopated kick, crisp snare on two and four, ticking hats, rounded sub bass, wide clean sidechained chords and a short pitched synth chop on every quarter beat. Signature hook: two low bouncing notes followed by four small high staccato tones, with a different answer and chord sequence after 96 seconds. The 32-to-160-second span should have consistent full groove and loudness, without removing kick, snare, bass or melody. Playful and melodic but not abrasive. No intro, breakdown, sparse bridge, fade, silence, vocals, speech, samples, tempo drift or copying inside the selected span.",
+  "art_tool": "local-authored SVG",
+  "cover_source_svg": "scripts/duohertz-art-sources/dh-098-patchwork-pop-cover.svg",
+  "og_source_svg": "scripts/duohertz-art-sources/dh-098-patchwork-pop-og.svg",
+  "cover_prompt": "Original comic-print cover: interlocking trapezoid fabric-like frequency patches joined by a coral zigzag seam, cyan and ivory panels; no clothing, characters, text or instruments.",
+  "og_prompt": "Horizontal duohertz editorial card with abstract patchwork frequency panels on right and Patchwork Pop title left."
+}

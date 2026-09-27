@@ -1,0 +1,58 @@
+{
+  "track_id": "dh-004-kitewire-sprint",
+  "title": "Kitewire Sprint",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Drum & Bass",
+  "bpm": 160,
+  "duration_sec": 60,
+  "stream_duration_sec": 120,
+  "creation_method": "Independent deterministic G–E minor–C–D Drum & Bass game movement and new E minor–C–G–D displaced-break answer movement for a 120-second stream master; generated oscillators and seeded noise only, no sampled source audio or repeated first-minute loop; -2 dB linear gain before AAC encoding",
+  "audio_gain_db": -2.0,
+  "source_script": "scripts/duohertz-compose-kitewire-sprint.py",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "status": "visual_candidate_unreviewed",
+    "revision_reason": "Unify the early blue-sky fantasy cover with the high-contrast duohertz frequency-print direction while preserving the two racing ribbon motif",
+    "cover_prompt": "Edit Image 1 into a NEW original SQUARE 1:1 cover-art candidate for duohertz track Kitewire Sprint. Image 1 is the content reference: preserve ONLY its memorable concept of TWO separate ribbon-like frequency lines racing diagonally upward like kite strings, crossing once, with a few small sound-buoy marks. Replace its blue sky, clouds, mountains, glossy fantasy rendering and scattered tiny particles completely. Image 2 is STYLE REFERENCE ONLY for duohertz's near-black ink, warm-ivory cut paper, bold coral and electric-cyan accent discipline, large halftone print texture and dynamic angular composition; DO NOT copy Image 2's interlocking circular rings, waveform centerpiece or radial layout. Compose a single electric-cyan broad paper ribbon and a single coral broad paper ribbon starting apart at the lower left, crossing ONCE near center, then sprinting toward upper right; place exactly three large warm-ivory diamond buoy marks beside the paths, and a few angled warm-ivory speed slashes behind them. Strong distinct silhouette legible at 100px, restrained print grain, quiet near-black lower fifth for a later local title overlay. All ages, energetic but no strobe. No realistic sky, mountain, water, ring, platform, character, text, letters, numbers, logo, watermark or copied game art.",
+    "og_prompt": "Edit this newly redrawn original Kitewire Sprint square cover into a NEW HORIZONTAL roughly 1.9:1 duohertz social card. Keep the two separate broad racing cut-paper frequency ribbons, one electric cyan and one coral, crossing once, the three small warm-ivory diamond sound-buoy marks, angled ivory speed slashes, near-black ink and bold halftone. Recompose this distinctive ribbon action on the RIGHT two-thirds, with a quiet near-black panel on the LEFT. Add EXACTLY TWO crisp, fully readable English text lines on the left: 'duohertz' all lowercase in electric cyan, and 'Kitewire Sprint' in larger warm ivory. Spell both EXACTLY, do not truncate. Make a designed wide composition rather than stretching the square. No other words, letters, numbers, realistic sky, mountains, water, circles, characters, logos, watermark or copied game art.",
+    "cover_source": "data/duohertz-preview/art-sources/dh-004-kitewire-sprint-comic/cover.png",
+    "og_source": "data/duohertz-preview/art-sources/dh-004-kitewire-sprint-comic/og.png",
+    "cover_source_sha256": "25c2e3471319aff29b28425bc83972b1f617a7d4a5796dc95f5f740f5b7a1f62",
+    "og_source_sha256": "5d7b6a3d2d73c0fc303962e0381b1fd67986e187b86568ec8ba2e2414d0f527d",
+    "content_reference": "data/duohertz-preview/art-archive/dh-004-kitewire-sprint/cover-art.png",
+    "content_reference_sha256": "bbe6aff73d2cdcdea3164c7fbbfad8de5b5e76b9517f412fd5b80d28e264a6ff",
+    "style_reference": "apps/beatscape/candidates/duohertz/dh-001-first-frequency/cover-art.png",
+    "style_reference_sha256": "e3c55396eb2d4529ed065965460c2c8455939ea1a5169b58aaf1040d23633f33",
+    "cover_resize": "sips resize to 1024x1024 PNG",
+    "og_resize": "sips resize to 1200x630 PNG",
+    "cover_svg": "Local SVG brand/title overlay around cover-art.png; bitmap source has no text",
+    "previous_art_provenance": {
+      "tool": "built-in imagegen",
+      "cover_prompt": "Use case: stylized-concept. Create one original square album-cover illustration for “Kitewire Sprint”, an all-ages Drum & Bass music candidate in the duohertz electronic rhythm game. Visual concept: two bright ribbon-like frequency lines race upward like playful kite strings through a breezy daytime sky, weaving around small translucent sound buoys and turquoise light particles. Dynamic diagonal motion suggests a fast syncopated breakbeat, but the mood stays friendly, optimistic and readable for children. Palette: cobalt blue, bright aqua, soft lime and cloud white, with deep blue negative space in the lower third for a later local title overlay. Polished contemporary editorial album art with a clear small-thumbnail silhouette. Distinct from earlier aurora stepping stones, circular rings and apricot glass horizon. Absolutely no text, letters, logos, characters, vehicles, weapons, copied game imagery, red neon city or flashing stripes. Square image.",
+      "og_base_prompt": "Use case: ads-marketing. Edit the supplied Kitewire Sprint square artwork into a companion wide, text-free social card for a family-friendly Drum & Bass track in duohertz. Preserve the cobalt sky, aqua and lime ribbon-like frequency lines, translucent sound buoys, and buoyant fast motion. Recompose for a horizontal 1200x630-style landscape image: motion and luminous ribbon crossing the right two-thirds, deep cobalt-blue calm negative space on the left third for later title typography. Polished contemporary editorial album-art style, legible at thumbnail size. No text, letters, logos, characters, vehicles, weapons, copied game art, flashing stripes or red neon city.",
+      "og_prompt": "Use case: ads-marketing. Edit the supplied wide, text-free Kitewire Sprint social card. Preserve the cobalt sky and the right-side aqua/lime racing sound ribbons. In the calm deep-blue left third, place exactly two crisp, highly legible lines of modern sans-serif type with generous margins: line 1 \"duohertz\" all lowercase in pale aqua, smaller; line 2 \"Kitewire Sprint\" in white, larger. Spell both lines exactly. No other text, letters, icons, logos or marks. Keep the wide landscape composition suitable for a 1200x630 social card.",
+      "og_resize": "Built-in imagegen supplied a wide card; sips resized it to exactly 1200x630 without changing the composition",
+      "cover_svg": "Local SVG title overlay around the generated cover-art.png; bitmap source is unchanged"
+    },
+    "previous_assets_sha256": {
+      "cover-art.png": "bbe6aff73d2cdcdea3164c7fbbfad8de5b5e76b9517f412fd5b80d28e264a6ff",
+      "og.png": "b7987404fb18fed7327cb04d9948711bfaa68c6ddadf326ed2457f23d2a884e9",
+      "cover.svg": "f80644754c51eeede8c05d9200db43e9af71dbe5651d12dbf69bbddedeb7ab54"
+    },
+    "previous_art_archive": "data/duohertz-preview/art-archive/dh-004-kitewire-sprint"
+  },
+  "files_sha256": {
+    "audio.m4a": "ea15c820eede048e4fc6ad7d94c4c2b0cb5832dfb842ebd04bceb9907c0cd9fd",
+    "cover-art.png": "71d4c763e6fff7b55cc2b3a8982988f12988d2a2a717caa4b1168e59de1668dd",
+    "cover.svg": "f80644754c51eeede8c05d9200db43e9af71dbe5651d12dbf69bbddedeb7ab54",
+    "easy.json": "49b81db3e00828666e02fe5eb63918a094e55917fa24ed9246870e6c36e98538",
+    "hard.json": "2c6e5f3b1bad6ed6e781705e1f67740e07e6d1e8720446e78664cbfc415476b9",
+    "og.png": "5e8cf7e776cbd4989d007ea03e9cce9fd8b94d36d0c7e978e6647dd44cc73ce0",
+    "preview_48s.m4a": "0b771cff1b56681243708c4e518f39006dba014587b55346a0b0fb128b81b807",
+    "standard.json": "15bcf6129637dc5e6f73993bf9306ce15f067b89a1f9ae711dcfaf9d401eef02",
+    "stream.m4a": "4ed6673350cef7ce6fd13dfb095e3336cb325f1775c009b3be5bafeedac0f204"
+  }
+}

@@ -40,6 +40,7 @@ function supportsSiteNavigation(path: string): boolean {
   return path !== "/"
     && path !== "/results"
     && path !== "/calibrate"
+    && !path.startsWith("/lab/duohertz")
     && !path.startsWith("/play/")
     && !path.startsWith("/duo/");
 }

@@ -1,0 +1,34 @@
+{
+  "tool": "built-in imagegen",
+  "status": "visual_candidate_unreviewed",
+  "track_id": "dh-079-cutline-chase",
+  "title": "Cutline Chase",
+  "revision_reason": "Remove blurry light effects, then shorten both cut-paper strokes so their ends remain visible at 320px.",
+  "source_recipe": "scripts/duohertz-recipes/dh-079-cutline-chase.json",
+  "cover_edit": "Edit the original square cover so the full named motif remains clear in the center mobile-safe crop; retain flat near-black comic-print styling.",
+  "og_edit": "Edit the revised cover into a horizontal sharing card with exact lowercase duohertz and track title at left, full motif at right.",
+  "assets": {
+    "initial_cover": {
+      "path": "data/duohertz-preview/art-sources/dh-079-cutline-chase/cover-initial.png",
+      "sha256": "9e68b5cfbc4fc195d90b1c5ed836108d7ab3433865791eb343ed2153bc601c5e"
+    },
+    "intermediate_cover": {
+      "path": "data/duohertz-preview/art-sources/dh-079-cutline-chase/cover-second.png",
+      "sha256": "fe102438418d1d68cd4acbc4b0dafdecd26aac934cd4117105adf1a856b2d4ec"
+    },
+    "intermediate_og": {
+      "path": "data/duohertz-preview/art-sources/dh-079-cutline-chase/og-second.png",
+      "sha256": "3650b4c7024b6989d0c9c0d868c73fd164031a62e31613610573cbc7bf28e381"
+    },
+    "revised_cover": {
+      "path": "data/duohertz-preview/art-sources/dh-079-cutline-chase/cover.png",
+      "sha256": "16a87124b7d44548218f930d6ff3f676cb84b1efb84432b58437ce859a357b05"
+    },
+    "wide_og": {
+      "path": "data/duohertz-preview/art-sources/dh-079-cutline-chase/og.png",
+      "sha256": "534f64392221dff54d2eb703c086c8061a848859c3189f0ea272ac9fcf909ed3"
+    }
+  },
+  "mobile_card_screenshot": "data/duohertz-preview/rebuild-20260924/dh-079-cutline-chase-320-card-centered.png",
+  "review_boundary": "Composition verified on the 320px development card; no human art, originality, rights or market approval."
+}

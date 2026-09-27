@@ -1,0 +1,33 @@
+{
+  "track_id": "dh-016-kinetic-sundial",
+  "title": "Kinetic Sundial",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Melodic House",
+  "bpm": 122,
+  "duration_sec": 64,
+  "stream_duration_sec": 128,
+  "creation_method": "Independent 122 BPM G-major warm-key offbeat house game movement and A-minor descending glass reply with retuned kick, half-time opening and displaced hats; deterministic oscillator and seeded-noise synthesis only, no samples or duplicated first-minute loop",
+  "source_script": "scripts/duohertz-compose-kinetic-sundial.py",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Use case: stylized-concept. Create an original square, text-free album cover for an INTERNAL all-ages duohertz Melodic House rhythm-game track candidate titled Kinetic Sundial. Depict a kinetic sundial made from a bold off-center ivory semicircle and one long coral frequency-hand casting three stepped cyan sound-wave shadows across a dark ink ground. Suggest one-key beats becoming two-key counter-rhythms, not literal time numerals or a real clock face. Strong original editorial comic collage: cut-paper planes, sparse halftone dots, precise angular shadows, one memorable silhouette at thumbnail scale, warm optimistic energy. Palette near-black #111421, warm ivory, vivid coral #f34d65, electric cyan #67eee0, restrained golden highlights. Square 1:1 composition, keep the lower fifth quiet enough for a separate local title overlay. No words, letters, numbers, logos, watermarks, people, faces, characters, masks, weapons, copied game motifs, flashing stripes, planets, orbital rails, faceted prisms, zigzag staircases or jetstream ribbons. High resolution PNG.",
+    "og_prompt": "Use case: ads-marketing. Edit the supplied square Kinetic Sundial cover into an ORIGINAL wide 1200:630 social sharing card for the internal duohertz Melodic House track. Preserve the recognizable warm ivory cut-paper semicircle, long coral frequency-hand, three cyan wave shadows and sparse halftone on dark ink; recompose them toward the right half instead of stretching or cropping. Reserve a calm near-black left third for typography. Text verbatim, exactly two crisp highly legible sans-serif lines with wide safe margins: smaller lowercase 'duohertz'; below it larger title-case 'Kinetic Sundial'. Spell both exactly. All-ages original editorial comic collage. Palette near-black, warm ivory, coral, electric cyan, restrained gold. No other text, numerals, people, logos, watermarks, copied game motifs, clocks with tick numbers, orbital rails, prisms, zigzag stairs, or flashing stripes.",
+    "og_reference": "cover-art.png supplied to built-in imagegen as the reference image",
+    "og_resize": "Built-in imagegen wide card resized with sips to exactly 1200x630",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png; bitmap source is unchanged"
+  },
+  "files_sha256": {
+    "audio.m4a": "6125cd2ebb5d8099dc7c6b07c8e2201efaa4a95057ec606e59cf753a4a2ca8f2",
+    "cover-art.png": "962c2e3b83fcbdeed264848c22f5a7e2b4b28bc8916ce63610db3c8b224b2700",
+    "cover.svg": "c760f763f1d74cd9fce1c8e02b403f385943c184e056fe8633cb0fe9c89761fe",
+    "easy.json": "e9ffd36e66a8082ebda87576a4551350bbce831d1e06490eef7e1c47d24d8a88",
+    "hard.json": "7337634f83b77fce148ad2cd2f11410bf8103f6ea982732f90a1f62bf9a9f121",
+    "og.png": "0d0caf8ba74b25e33bf6c0a9d15cecc4ee028c7486292c86d92240db17f4f1b7",
+    "preview_48s.m4a": "47787069fb473cb5db1c7fa22888922b7bc1ba903b128573a5b5ac0deda25620",
+    "standard.json": "7004d5cd1fe7825ff0c8c8549c393436e88d7defa3c5f9d6a843b0469a50671f",
+    "stream.m4a": "a344152462ae0038173040cb9ddf50d2826a4a4e89305b4fdb52f5e172938cea"
+  }
+}

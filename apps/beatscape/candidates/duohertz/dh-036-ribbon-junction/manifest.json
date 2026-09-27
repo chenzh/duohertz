@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-036-ribbon-junction",
+  "title": "Ribbon Junction",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Melodic House",
+  "bpm": 126.0,
+  "target_bpm": 126,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -6 dB gain before AAC encoding; stream-only limiter at 0.35 linear amplitude with no makeup gain. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -6.0,
+  "stream_limiter": 0.35,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-036-ribbon-junction.json",
+  "source_recipe_sha256": "929e29b10904593ae39097628f683de8494982988d3c365bea5c6fc6d9c8ab03",
+  "source_master_sha256": "9b4d2190d3766fc7d3d82547cca3b79c8d9ebf45066c663fb996a8204415b73b",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.20769,
+    "clipping_ratio": 2.7e-05,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "9a9e7aad-dd4f-4223-ac34-418429f18869",
+  "source_generation_receipt_sha256": "82301d43d6e0e683aa8c120afafeed71c6fb3bc650b898d913f2d81f4669e575",
+  "generation_prompt": "Original all-ages melodic-house instrumental for a one-or-two-key electronic rhythm game at a STRICT constant 126 BPM in 4/4. Sustain a clearly audible quantized four-on-the-floor kick, crisp short clap on beats two and four, distinct eighth-note closed hats, and short midrange keyboard attacks throughout all 128 seconds, including transitions. No tempo drift, half-time section, free-time, long percussion gap or ambient-only passage. Signature hook: a syncopated three-note descending wooden-mallet phrase with a rest after the second note, answered one bar later by a two-note upward glass-synth leap; the answer must sound separate from the call. A warm rounded bass plays on offbeats without burying kick attacks; soft major-seventh chord pulses change inversion every four bars. At the midpoint keep the SAME unbroken drum grid while exchanging the call and answer positions, then introduce a new higher register counterline in the last quarter and resolve both phrases in a fresh cadence rather than repeating the first minute. One evolving 128-second stereo instrumental, buoyant and melodic with controlled high frequencies and clear transients for beginner timing. No vocals, speech, sampled recordings, known melody or imitation of any existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a brand-new SQUARE 1:1 original album cover for duohertz track Ribbon Junction, an all-ages melodic-house rhythm-game song. Bold editorial cut-paper comic print, near-black ink and warm-ivory paper with selective halftone texture; electric cyan is the main sound color, coral is the answering beat, and a small warm-yellow accent marks the junction. Main motif: TWO very broad flat frequency ribbons enter from different lower corners, cross once through a large angular ivory junction tile near the center, then leave upward as separated cyan and coral paths. Make the crossing unmistakable with clear over-under paper layering and a few large beat ticks, not a tangled knot. Strong asymmetric silhouette readable at 100px and dark quiet lower fifth for local title overlay. Original graphic composition, joyful without glow realism. No circles, rings, pocket, window, diamond, sky, landscape, road, people, text, letters, numbers, logos, watermarks or copied game imagery.",
+    "og_prompt": "Edit the supplied original Ribbon Junction square cover into a HORIZONTAL 1.9:1 duohertz social-sharing card. Preserve its two broad cyan and coral frequency ribbons crossing once through the large angular ivory junction tile, near-black comic-print ink, sparse halftone and small yellow beat mark. Recompose the junction and paths on the RIGHT two-thirds; leave the LEFT third calm and near-black. Add exactly two fully legible English text lines in that left third: 'duohertz' in lowercase electric cyan and 'Ribbon Junction' in larger warm ivory. Spell both exactly. No other text, letters, numbers, circles, roads, landscapes, people, logos, watermarks or copied game art. The wide artwork should clearly be a companion to the supplied cover, not a stretched crop.",
+    "cover_source_sha256": "74a808d11878c3001682a4022de338fb28389b488f5aca31382f2e5226ace38e",
+    "og_source_sha256": "d3289247855d4a4fd3b788f39f198d6d1af14a02fd3063835a10c5c4ade2325c",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "0033bf8a09c37cdf3c328c704417b24f1ffe3a621d8e5118922728acd8f33723",
+    "cover-art.png": "d80e68aebda6f2b4bc4b4c104c0b9489c779dcaea3ed5adee305ab70d9f78495",
+    "cover.svg": "66b62ffb27cb401c77de0458033c47dbca576028d38873715cfeb72b93deef80",
+    "easy.json": "326b377db99e43d4f5e81ee92a240bb65cb53c411825b45062b777ebc25975af",
+    "hard.json": "59bce30aeaf3cc8f0c5c7a05c7cab03451a9432c56ee4c8c71d992db47fe8d57",
+    "og.png": "f85516032048107b67c968566b1504b2be9f2db6b9aa151998714141e89a05f2",
+    "preview_48s.m4a": "521c1179a8458d73f69104aa49b0e980d7550d11acd4e17b217abe72592e57a9",
+    "standard.json": "7cf428bc911a7af14f43a23d38836689371c0cadccabcab4b9c1adb5f7c324c5",
+    "stream.m4a": "e3e338a230989d22c55daaec7be2e2db9785555a3ef91201898a7699443a0df7"
+  }
+}

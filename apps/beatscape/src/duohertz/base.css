@@ -1,0 +1,196 @@
+/* duohertz · Visily design system foundation.
+   Neon-synthwave token set + shared chrome for the v2 app. */
+@font-face {
+  font-family: Anton;
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../assets/fonts/anton-latin.woff2") format("woff2");
+}
+@font-face {
+  font-family: Sora;
+  font-style: normal;
+  font-weight: 600 800;
+  font-display: swap;
+  src: url("../assets/fonts/sora-latin.woff2") format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("../assets/fonts/ibm-plex-sans-latin.woff2") format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 600 700;
+  font-display: swap;
+  src: url("../assets/fonts/ibm-plex-mono-700-latin.woff2") format("woff2");
+}
+
+:root {
+  color-scheme: dark;
+
+  /* Core surface + ink (kept for shared chrome) */
+  --bg: #070b1f;
+  --text: #f3f7ff;
+  --muted: #aebbe6;
+  --accent: #5de4f7;
+  --border: #3a4a85;
+
+  /* Visily neon palette */
+  --dh-ink: #070b1f;
+  --dh-bg-1: #0b1232;
+  --dh-bg-2: #131a47;
+  --dh-panel: #161f49;
+  --dh-panel-2: #1e2a60;
+  --dh-paper: #f3f7ff;
+  --dh-muted: #aebbe6;
+  --dh-aqua: #5de4f7;
+  --dh-aqua-2: #22d3ee;
+  --dh-violet: #a06bff;
+  --dh-magenta: #ff5fa2;
+  --dh-coral: #ff7eb6;
+  --dh-line: #3a4a85;
+
+  /* Neon glow utilities */
+  --dh-glow-aqua: 0 0 24px rgba(93, 228, 247, 0.45);
+  --dh-glow-violet: 0 0 30px rgba(160, 107, 255, 0.42);
+  --dh-glow-magenta: 0 0 26px rgba(255, 95, 162, 0.42);
+  --dh-shadow-card: 0 18px 44px rgba(3, 9, 34, 0.55);
+
+  /* Shape + type */
+  --dh-radius: 18px;
+  --dh-radius-sm: 10px;
+  --dh-radius-pill: 999px;
+  --dh-stroke: 1.5px;
+  --dh-font-display: Anton, "Arial Narrow", sans-serif;
+  --dh-font-ui: Sora, "Helvetica Neue", sans-serif;
+  --dh-font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --dh-font-body: "IBM Plex Sans", system-ui, sans-serif;
+
+  --dh-accent: var(--dh-aqua);
+}
+
+* { box-sizing: border-box; }
+html { min-width: 320px; }
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
+  background: var(--dh-ink);
+  color: var(--dh-paper);
+  font-family: var(--dh-font-body);
+  -webkit-font-smoothing: antialiased;
+}
+button, input { font: inherit; }
+button { cursor: pointer; }
+a { color: var(--dh-aqua); }
+a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-visible {
+  outline: 3px solid var(--dh-aqua);
+  outline-offset: 3px;
+}
+[tabindex="-1"]:focus-visible { outline: none; }
+
+.skip-link {
+  position: fixed;
+  top: calc(8px + env(safe-area-inset-top));
+  left: -10000px;
+  z-index: 1000;
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  padding: 8px 14px;
+  border: 2px solid var(--dh-ink);
+  background: var(--dh-paper);
+  color: var(--dh-ink);
+  font-weight: 700;
+  text-decoration: none;
+}
+.skip-link:focus { left: calc(8px + env(safe-area-inset-left)); }
+
+.app-shell { position: relative; max-width: 1180px; margin: 0 auto; padding: 0 20px 64px; }
+.bg-fx { position: fixed; inset: -2%; z-index: -1; overflow: hidden; pointer-events: none; background:
+    radial-gradient(1100px 720px at 82% 8%, rgba(93, 228, 247, 0.16), transparent 60%),
+    radial-gradient(960px 760px at 6% 92%, rgba(160, 107, 255, 0.20), transparent 62%),
+    radial-gradient(720px 520px at 92% 96%, rgba(255, 95, 162, 0.10), transparent 60%),
+    linear-gradient(160deg, #070b1f, #0b1232 46%, #0a1030 100%);
+  animation: dh-bg-pan 26s ease-in-out infinite alternate; }
+/* Whole backdrop drifts slowly for a living, breathing frequency field. */
+@keyframes dh-bg-pan { from { transform: translate3d(0, 0, 0) scale(1.03); } to { transform: translate3d(0, -16px, 0) scale(1.06); } }
+.bg-fx::before, .bg-fx::after { content: ""; position: absolute; inset: 0; }
+.bg-fx::before {
+  background-image:
+    linear-gradient(125deg, transparent 11%, rgba(147, 164, 255, 0.10) 11.2%, transparent 11.6% 41%, rgba(93, 228, 247, 0.12) 41.2%, transparent 41.8%),
+    linear-gradient(28deg, transparent 47%, rgba(124, 128, 225, 0.07) 47.3%, transparent 49%);
+  mask-image: linear-gradient(180deg, transparent, #000 30%, #000 70%, transparent);
+}
+.bg-fx::after {
+  background-image:
+    radial-gradient(circle at 71% 28%, transparent 0 120px, rgba(121, 218, 250, 0.18) 121px 123px, transparent 124px 168px, rgba(159, 140, 255, 0.12) 169px 171px, transparent 172px),
+    linear-gradient(153deg, transparent 0 69%, rgba(134, 117, 239, 0.14) 69% 72%, transparent 72%);
+  mask-image: radial-gradient(circle at 50% 40%, #000, transparent 80%);
+}
+
+.site-header { display: flex; align-items: center; gap: 16px; padding: 18px 0; }
+.logo { display: inline-flex; min-height: 44px; align-items: center; gap: 8px; color: var(--dh-paper); text-decoration: none; }
+.logo-mark { display: grid; width: 30px; height: 30px; place-items: center; }
+.site-nav { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+.site-header nav a { display: inline-flex; align-items: center; padding: 8px 12px; text-decoration: none; }
+
+/* Generic neon section + eyebrow helpers used across pages */
+.dh-eyebrow {
+  margin: 0;
+  color: var(--dh-aqua);
+  font: 700 12px/1.4 var(--dh-font-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.dh-title {
+  margin: 0;
+  color: var(--dh-paper);
+  font-family: var(--dh-font-display);
+  font-style: italic;
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+}
+.dh-subtitle { margin: 12px 0 0; color: var(--dh-muted); font: 500 16px/1.5 var(--dh-font-body); }
+
+.site-footer { margin-top: 56px; color: var(--dh-muted); font-size: 12px; text-align: center; }
+.mobile-tabbar { display: none; }
+.network-status-notice { display: flex; gap: 10px; margin-top: 10px; padding: 10px 12px; border-left: 5px solid #ffda75; background: #18244b; color: var(--dh-muted); }
+.network-status-notice strong { color: #ffda75; }
+
+.error-screen { display: flex; min-height: 60vh; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 48px 20px; text-align: center; }
+.error-screen h1 { margin: 0; color: var(--dh-aqua); }
+.error-screen .tagline { max-width: 460px; margin: 0; color: var(--dh-muted); }
+.error-screen .cta-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.error-screen .btn { display: inline-flex; min-height: 44px; align-items: center; padding: 8px 14px; border: 2px solid var(--dh-paper); background: #18244b; color: var(--dh-paper); text-decoration: none; }
+.error-screen .btn.primary { background: var(--dh-violet); color: var(--dh-ink); }
+
+/* Shared loading / error states used across all v2 pages */
+.dh-status { margin: 40px auto; max-width: 520px; text-align: center; color: var(--dh-muted); font: 600 15px/1.5 var(--dh-font-body); }
+.dh-error {
+  max-width: 720px; margin: 40px auto; border: 1.5px solid rgba(159, 174, 240, 0.4);
+  border-radius: var(--dh-radius); padding: 24px; background: rgba(22, 31, 73, 0.7); text-align: center;
+}
+.dh-error h1 { margin: 0 0 12px; color: var(--dh-paper); font-family: var(--dh-font-display); font-style: italic; font-size: clamp(28px, 5vw, 44px); text-transform: uppercase; }
+.dh-error p { color: var(--dh-muted); }
+.dh-error button {
+  min-height: 44px; margin-top: 8px; border: 1.5px solid var(--dh-aqua); border-radius: var(--dh-radius-sm);
+  padding: 8px 16px; background: var(--dh-aqua); color: var(--dh-ink); font-weight: 700; cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .app-shell { padding: 0 max(12px, env(safe-area-inset-left)) calc(72px + env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-right)); }
+  .site-nav, .site-footer { display: none; }
+  .mobile-tabbar { position: fixed; right: 0; bottom: 0; left: 0; z-index: 50; display: flex; justify-content: space-around; gap: 4px; padding: 6px 8px calc(8px + env(safe-area-inset-bottom)); border-top: 2px solid var(--dh-paper); background: rgba(7, 11, 31, 0.96); backdrop-filter: blur(16px); }
+  .mobile-tabbar .tab-item { display: flex; flex: 1; align-items: center; text-decoration: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bg-fx { animation: none; }
+}

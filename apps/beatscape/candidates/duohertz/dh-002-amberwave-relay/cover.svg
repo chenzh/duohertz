@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" role="img" aria-labelledby="title description">
+  <title id="title">Amberwave Relay — duohertz</title>
+  <desc id="description">An amber pulse passes through angular relay frames as a cyan waveform crosses the cover.</desc>
+  <image href="cover-art.png" xlink:href="cover-art.png" x="0" y="0" width="512" height="512" preserveAspectRatio="xMidYMid slice" />
+  <rect x="0" y="365" width="512" height="147" fill="#111421" opacity="0.92" />
+  <text x="30" y="414" fill="#67eee0" font-family="Arial, sans-serif" font-size="24" font-weight="700" letter-spacing="1">duohertz</text>
+  <text x="30" y="475" fill="#fff9ef" font-family="Arial, sans-serif" font-size="43" font-weight="700">Amberwave Relay</text>
+</svg>

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs><pattern id="dots" width="26" height="26" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="2" fill="#f7efdf" opacity=".12"/></pattern></defs>
+  <rect width="1024" height="1024" fill="#111521"/>
+  <path d="M0 0h322L0 278z" fill="#6de9e1"/>
+  <path d="M1024 0v268L790 0z" fill="#f7efdf"/>
+  <path d="M0 1024V728l271 296z" fill="#ff675d"/>
+  <path d="M1024 745v279H761z" fill="#6de9e1"/>
+  <path d="M211 165h612l-48 617H259z" fill="#1d2632" stroke="#f7efdf" stroke-width="13"/>
+  <path d="M211 165h612l-48 617H259z" fill="url(#dots)"/>
+  <path d="M330 275h361" stroke="#f7efdf" stroke-width="10"/>
+  <path d="M330 299h157" stroke="#ff675d" stroke-width="20"/>
+  <path d="M373 551a190 190 0 1 1 308-202" fill="none" stroke="#111521" stroke-width="69" stroke-linecap="square"/>
+  <path d="M373 551a190 190 0 1 1 308-202" fill="none" stroke="#f7efdf" stroke-width="48" stroke-linecap="square"/>
+  <path d="M651 582a154 154 0 1 1-273-176" fill="none" stroke="#111521" stroke-width="69" stroke-linecap="square"/>
+  <path d="M651 582a154 154 0 1 1-273-176" fill="none" stroke="#6de9e1" stroke-width="48" stroke-linecap="square"/>
+  <path d="M652 326l51 50-51 50-51-50z" fill="#ff675d" stroke="#111521" stroke-width="12"/>
+  <path d="M625 376h54" stroke="#f7efdf" stroke-width="10"/>
+  <path d="M340 392l-31-13m31 77l-34 1m79-134l-22-23m101-23l-9-32m143 29l11-32m92 84l28-21" stroke="#ffdc69" stroke-width="14" stroke-linecap="square"/>
+  <path d="M337 680h345" stroke="#6de9e1" stroke-width="12"/>
+  <path d="M337 705h185" stroke="#f7efdf" stroke-width="8"/>
+  <path d="M126 835h768" stroke="#f7efdf" stroke-width="9"/>
+  <path d="M126 858h293" stroke="#ff675d" stroke-width="20"/>
+</svg>

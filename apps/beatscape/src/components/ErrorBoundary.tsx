@@ -1,6 +1,6 @@
 import { Component, type ErrorInfo, type ReactNode } from "react";
 
-type Props = { children: ReactNode };
+type Props = { children: ReactNode; brand?: "beatscape" | "duohertz" };
 type State = { error: Error | null };
 
 /**
@@ -22,7 +22,10 @@ export class ErrorBoundary extends Component<Props, State> {
 
   componentDidCatch(error: Error, info: ErrorInfo): void {
     // 保留 componentStack：白屏类问题在真机上很难复现，这行日志通常是唯一线索。
-    console.error("[beatscape] render error:", error, info.componentStack);
+    const standalone = import.meta.env.VITE_DUOHERTZ_PREVIEW === "1"
+      || import.meta.env.VITE_DUOHERTZ_RELEASE_SOURCE === "1";
+    const brand = standalone ? "duohertz" : this.props.brand ?? "beatscape";
+    console.error(`[${brand}] render error:`, error, info.componentStack);
   }
 
   private reload = (): void => {
@@ -32,19 +35,22 @@ export class ErrorBoundary extends Component<Props, State> {
   render(): ReactNode {
     const { error } = this.state;
     if (!error) return this.props.children;
+    const duohertz = import.meta.env.VITE_DUOHERTZ_PREVIEW === "1"
+      || import.meta.env.VITE_DUOHERTZ_RELEASE_SOURCE === "1" || this.props.brand === "duohertz";
     return (
-      <section className="error-screen" role="alert">
-        <span className="track-load-mark" aria-hidden>◇</span>
-        <p className="eyebrow">The Late Static</p>
+      <section className="dh-state-screen error-screen" role="alert">
+        <div className="dh-state-orb" aria-hidden />
+        <span className="dh-eyebrow">{duohertz ? "duohertz" : "The Late Static"}</span>
         <h1>Signal lost</h1>
-        <p className="tagline">
-          BeatScape couldn’t load this screen. Reload to try the same page. Your scores are safe.
+        <p>
+          {duohertz ? "duohertz couldn't load this screen. Reload to try again." :
+            "BeatScape couldn't load this screen. Reload to try the same page. Your scores are safe."}
         </p>
-        <div className="cta-row">
-          <button type="button" className="btn primary" onClick={this.reload}>
+        <div className="dh-row-center" style={{ gap: 12, marginTop: 8 }}>
+          <button type="button" className="dh-btn dh-btn--primary" onClick={this.reload}>
             Reload page
           </button>
-          <a className="btn" href={import.meta.env.BASE_URL}>
+          <a className="dh-btn dh-btn--ghost" href={import.meta.env.BASE_URL}>
             Back to home
           </a>
         </div>

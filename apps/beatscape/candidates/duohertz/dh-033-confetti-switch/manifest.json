@@ -1,0 +1,50 @@
+{
+  "track_id": "dh-033-confetti-switch",
+  "title": "Confetti Switch",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Future Bass",
+  "bpm": 138.0,
+  "target_bpm": 138,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -8.5 dB gain before AAC encoding. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -8.5,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-033-confetti-switch.json",
+  "source_recipe_sha256": "603be7844bfdf97e3c62e62a000b587260bc0ef4dfdb3715b5e9c5a365971289",
+  "source_master_sha256": "4171a1e8491b74b288a9ea0be2b1aa74bf1a781c4175f86187486df85684ca76",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.17673,
+    "clipping_ratio": 1.2e-05,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "bb0f392c-b277-4b59-b9c4-35faf305b587",
+  "source_generation_receipt_sha256": "59bb2fae1af842cefc25ffb12658703593e693fc8a9dd49d8c5f739a1fd786de",
+  "generation_prompt": "Original all-ages future-bass instrumental for a one-or-two-key electronic rhythm game at a STRICT constant 138 BPM in 4/4. A stable quantized kick on every quarter beat, crisp snare on beats two and four and clear eighth-note hats must remain audible from the first second to the end, including the quieter middle; add clean short midrange attacks in every two-bar phrase. No tempo drift, half-time breakdown, free-time or drum-free gap. Signature hook: three short staccato brass-like synth notes followed by a playful one-beat rest, answered by a rising five-note glass-pluck phrase in the next bar. Put soft sidechained chord swells behind those clear attacks, a springy rounded bass, and tiny syncopated mallet fills without harsh drops. At the midpoint exchange the two timbres and change harmony while preserving the SAME drum grid; the last section braids both hooks into a fresh call-and-response cadence, not a duplicated half. One evolving 128-second stereo instrumental. No vocals, speech, sampled recordings, known melody or imitation of an existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a brand-new SQUARE 1:1 original album cover for duohertz track Confetti Switch, an all-ages future-bass rhythm-game song. Bold original editorial comic-print collage in near-black ink and warm ivory, with bright YELLOW as the leading accent, coral red and electric cyan as smaller rhythm accents. Main motif: TWO large interlocking angular switch plates arranged off-axis; at their meeting point a handful of oversized paper confetti shards flip from coral on one side to cyan on the other. Make the switch plates and color exchange the readable subject, not a random scatter of tiny dots. Use sharp folded edges, bold shadows, sparse halftone and generous dark negative space. No mechanical button, hands, people, circles, rings, stars, city, text, letters, numbers, logos, watermark or existing game imitation.",
+    "og_prompt": "Edit the supplied original Confetti Switch square art into a HORIZONTAL duohertz social card. Keep the two interlocking angular switch plates and a small cluster of oversized coral-to-cyan paper confetti shards at their meeting point, using near-black, warm ivory and yellow-led editorial print texture. Move the motif to the RIGHT two-thirds, leave calm dark space on the LEFT, and add exactly two fully legible English lines: 'duohertz' all lowercase and 'Confetti Switch'. No other text, letters, numbers, hands, circles, stars, city, logos, watermarks or existing IP.",
+    "cover_source_sha256": "3d0db77f1584e5ce6130ed70db8f4cdba919c2cab1727d9466ae402fe1ad77ba",
+    "og_source_sha256": "85d33ed1569d27d81594e00f8fbfe2026129969741fed57206936cbf22b34803",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "1687aaec344262dba4b45f18327c695bdf23f94b5ec2914ab295aaee71fca3f1",
+    "cover-art.png": "8008dc8f376c487fef0d6b318519447a302425b371207e640cef03563ab722bd",
+    "cover.svg": "db8d7f7dad946e0afb061c484e95596f574a8742aa4c083bbf736b96e2a8cde4",
+    "easy.json": "06b20f4bc992aa1d3372a3385dd11ae63c3fa6cf3b0085219fc402b3a919ecb7",
+    "hard.json": "ba8a74f31f9ca7a30d05df748b2b60bdcdd5dd14173d8b6ca6c7a3f83cccdfb0",
+    "og.png": "c7938ff312f8728605bdcfd88e18b8d902fe8c00efe0448f7df86384c5668788",
+    "preview_48s.m4a": "8fb3bac9360524b620ad1fbe338f3e731963423bfb37f19ad6830c3d4b20c69b",
+    "standard.json": "3cdcdaa72505af52e82641031130f61d615593be8041302b3de3c51a7bc2426b",
+    "stream.m4a": "0d78c8c8d709d1a31d9b3a23bc1f3cb600e20b0d89c1ec31edf960c1110150fa"
+  }
+}

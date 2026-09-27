@@ -1,0 +1,57 @@
+{
+  "track_id": "dh-009-tangerine-breakline",
+  "title": "Tangerine Breakline",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Drum & Bass",
+  "bpm": 164,
+  "duration_sec": 60,
+  "stream_duration_sec": 120,
+  "creation_method": "Independent deterministic C# minor–A–E–B Drum & Bass game movement and new F# minor–D–A–E half-time answer movement for a 120-second stream master; generated oscillators and seeded noise only, no sampled source audio or repeated first-minute loop",
+  "source_script": "scripts/duohertz-compose-tangerine-breakline.py",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "status": "visual_candidate_unreviewed",
+    "revision_reason": "Replace the early glossy beat-pad scene with duohertz comic print while keeping five syncopated tangerine pads",
+    "cover_prompt": "Edit Image 1 into a NEW original SQUARE 1:1 cover-art candidate for duohertz track Tangerine Breakline. Image 1 is CONTENT reference only: preserve its unmistakable syncopated chain of bright tangerine square beat pads ascending diagonally, with cyan dotted rhythm hopping across the gaps. Remove the dark teal 3D environment, shiny rounded plastic, realistic depth/glow, water-like horizon and tiny particles entirely. Image 2 is STYLE reference only for near-black ink, warm-ivory paper cutouts, coral/electric-cyan accent discipline, large halftone print texture and forceful angular editorial layout. Do not copy Image 2's circular rings or radial waveform. Build a strong paper-print silhouette with FIVE large flat tangerine/coral square beat pads at staggered heights on a broken diagonal from lower left to upper right. Each pad should have one warm-ivory concentric square target, not a circle. ONE electric-cyan dotted syncopation line visibly jumps across all five pads; at two gaps its dots break into sharp zigzag offsets to convey drum-and-bass breakbeats. Use warm-ivory paper slash marks and restrained halftone, with a quiet near-black lower fifth for later local title overlay. Distinct from paper planes and the skipline's broad continuous ribbon; readable at 100px and joyful for all ages. No realistic scenery, water, sky, photorealistic lights, planes, lanterns, rings, characters, text, letters, numbers, logos, watermark or copied game art.",
+    "og_prompt": "Edit this newly redrawn original Tangerine Breakline square cover into a NEW HORIZONTAL roughly 1.9:1 duohertz social card. Preserve FIVE bold tangerine/coral paper beat pads with warm-ivory square targets, a single electric-cyan dotted syncopation line visibly hopping across their diagonal gaps with two broken zigzag offsets, forceful warm-ivory paper slashes, near-black ink and halftone. Recompose the beat-pad action on the RIGHT two-thirds so the five-pad silhouette and dotted breakline remain distinct at social-card size; reserve a quiet near-black LEFT third. Add EXACTLY TWO crisp fully readable English text lines on the left: 'duohertz' all lowercase in electric cyan, and 'Tangerine Breakline' in larger warm ivory. Spell both EXACTLY, do not truncate. Designed horizontal composition, not stretched square. No other words, letters, numbers, realistic water or sky, planes, lanterns, rings, characters, logos, watermark or copied game art.",
+    "cover_source": "data/duohertz-preview/art-sources/dh-009-tangerine-breakline-comic/cover.png",
+    "og_source": "data/duohertz-preview/art-sources/dh-009-tangerine-breakline-comic/og.png",
+    "cover_source_sha256": "63e3aa900b3b7267083ada30ee8f94b2a70229d43cfbe6ae0063229675fc29f9",
+    "og_source_sha256": "92cdfdb55ac8b505f2871a175d65de1579f46eb3cfe0496731249fca61390ca9",
+    "content_reference": "data/duohertz-preview/art-archive/dh-009-tangerine-breakline/cover-art.png",
+    "content_reference_sha256": "fcf100f8a9d3465f1fb3858d819075566fdccdf55e6cbbab8b561803c6d15910",
+    "style_reference": "apps/beatscape/candidates/duohertz/dh-001-first-frequency/cover-art.png",
+    "style_reference_sha256": "e3c55396eb2d4529ed065965460c2c8455939ea1a5169b58aaf1040d23633f33",
+    "cover_resize": "sips resize to 1024x1024 PNG",
+    "og_resize": "sips resize to 1200x630 PNG",
+    "cover_svg": "Local SVG brand/title overlay around cover-art.png; bitmap source has no text",
+    "previous_art_provenance": {
+      "tool": "built-in imagegen",
+      "cover_prompt": "Use case: stylized-concept\nAsset type: original square, text-free album-cover background for an internal duohertz electronic rhythm-game candidate\nPrimary request: Create distinctive cover art for “Tangerine Breakline”, a joyful all-ages Drum & Bass track. Show a sequence of floating tangerine-orange percussive tiles making a syncopated zigzag path through a deep teal sound field. Small cyan wave dots and short soft gold pulses leap between the offset tiles, suggesting a playful fast breakbeat. This is abstract music geometry, not literal fruit or a vehicle.\nStyle/medium: polished contemporary editorial electronic album illustration with tactile luminous tiles, subtle depth and crisp readable forms at small thumbnail size.\nComposition/framing: square; the zigzag begins lower left and climbs toward upper right, with a calm dark teal lower band reserved for a separate local title overlay.\nColor palette: tangerine, soft coral, cyan, pale cream and deep teal.\nConstraints: no text, letters, numbers, logos, people, characters, cars, weapons, food, red neon city, flashing or strobing stripes, copied game imagery, sky racing ribbons, helixes, paper fins, copper lanterns, aurora stones, interlocking circular rings or sunset glass horizon.",
+      "og_prompt": "Use case: ads-marketing\nAsset type: wide companion sharing card for the supplied Tangerine Breakline square cover, final target 1200x630\nPrimary request: Recompose the glowing tangerine percussive tiles, cyan dotted sound waves, cream pulses and deep teal field from the reference into a new wide 1.9:1 landscape composition. Place the syncopated zigzag of offset tiles mostly in the right two-thirds, moving upward. Keep the left third calm dark teal for typography. This should be a companion composition, not a stretched or simply cropped square.\nText (verbatim): exactly two crisp, legible lines in the left third with generous margins, clean modern sans-serif: line 1 “duohertz” all lowercase, smaller, pale cyan; line 2 “Tangerine Breakline” title case, larger, warm white. Spell both exactly. No other text or logos.\nStyle/mood: friendly all-ages, upbeat fast electronic music, polished editorial album art, readable as a small social preview.\nConstraints: preserve the cover’s tangerine, cyan and deep teal palette; no fruit, people, vehicles, weapons, red neon city, flashing stripes, copied game art or new unrelated objects.",
+      "og_reference": "cover-art.png supplied to built-in imagegen as the reference image",
+      "og_resize": "Built-in imagegen supplied a wide card; sips resized it to exactly 1200x630 without changing the composition",
+      "cover_svg": "Local SVG title overlay around the generated cover-art.png; bitmap source is unchanged"
+    },
+    "previous_assets_sha256": {
+      "cover-art.png": "fcf100f8a9d3465f1fb3858d819075566fdccdf55e6cbbab8b561803c6d15910",
+      "og.png": "90f35a9d13f570dc4bb97dade4bd52be933e31fdb7ea84ba74c8e4fe64366926",
+      "cover.svg": "860c5691bdbbe0991f9c31d9618cdcfa2331911199986ba8801c9d93ff588873"
+    },
+    "previous_art_archive": "data/duohertz-preview/art-archive/dh-009-tangerine-breakline"
+  },
+  "files_sha256": {
+    "audio.m4a": "ecf70d468ef6d8e60620cf277231fc38c1e87a0497c6074bf17be7dc20fae72c",
+    "cover-art.png": "1373b9b9d5613a09e2087b664bbae6ccd6af3ace2852c61eff1260e1aa973ee8",
+    "cover.svg": "860c5691bdbbe0991f9c31d9618cdcfa2331911199986ba8801c9d93ff588873",
+    "easy.json": "b3700a20e92bd4cb80be37aa9884d643e17d7b584f55027ea14fd4d4d9e3a918",
+    "hard.json": "1459ad6e86cbf9f24e42e9f469020ad6039d51c178a09ff46b24234377d7f73f",
+    "og.png": "223107f7c430babb3775ce3f4adeef469251fc88d1e833c760a84787136b9381",
+    "preview_48s.m4a": "5cc4d77d35d175e9c223d391a40eb35fc776d7a2470b5cb2539c54edd806363d",
+    "standard.json": "680e3623487890cc278a928082446eb4fb2c5199ec8c63b14016f3e2dd981f85",
+    "stream.m4a": "d19dd1e6c9aa317818e0b077dd72dbf4b5129b3702528daa12d51e113232cf7f"
+  }
+}

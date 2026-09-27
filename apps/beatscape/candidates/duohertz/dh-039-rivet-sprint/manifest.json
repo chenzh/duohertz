@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-039-rivet-sprint",
+  "title": "Rivet Sprint",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Drum & Bass",
+  "bpm": 171.429,
+  "target_bpm": 174,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -6 dB gain before AAC encoding; stream-only limiter at 0.35 linear amplitude with no makeup gain. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -6.0,
+  "stream_limiter": 0.35,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-039-rivet-sprint.json",
+  "source_recipe_sha256": "c4257dd9f37978afaa885250ad84ef29adcc378dd414fee8f71e49638b62551d",
+  "source_master_sha256": "23eed68c8e51c2b3e8178058e1133ef23e1be20e6094ae445db2dd790cb85c01",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.23895,
+    "clipping_ratio": 0.000259,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "dfd3b622-6492-4c35-bcc3-a0381d391a2a",
+  "source_generation_receipt_sha256": "7c4fb71294ce5eba13b890356c079b1679664e693cb62b628b12a4f733e0d33a",
+  "generation_prompt": "Original all-ages liquid drum-and-bass instrumental for a one-or-two-key electronic rhythm game at a STRICT constant 174 BPM in 4/4. Maintain a dry quantized two-step drum grid from the FIRST SECOND to the final bar: short punchy kick on beats one and three, forward snare on beats two and four, clearly separated closed hats on eighth notes, and one sharp rim-click or muted-key attack between the main beats in every bar. At least eight distinct short midrange transients per two-bar phrase, including the quieter middle. No tempo drift, half-time section, beatless intro, drum dropout, free-time or smeared pad-only bridge. Signature hook: a clipped three-note low synth figure that rises in narrow steps, followed after a deliberate eighth-note gap by a brighter four-note glass-mallet response; the response starts on the next snare and travels downward. Use a rolling but controlled sub bass and brief warm chord fragments, leaving room around snare attacks. At the midpoint keep the SAME uninterrupted two-step grid, move the glass response before the low call, and switch the bass root sequence; the finale combines both motifs into a new staggered cadence rather than copying the first half. One evolving 128-second stereo instrumental, nimble and buoyant, with clean transient separation and no abrasive distortion. No vocals, speech, sampled recordings, known melody or imitation of an existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a brand-new SQUARE 1:1 original album cover for duohertz track Rivet Sprint, an all-ages drum-and-bass rhythm-game song. Original high-contrast editorial comic-print collage on a near-black ink field with warm-ivory paper, electric cyan directional accents, restrained coral timing ticks and sparse halftone. Main motif: ONE long broad ivory cut-paper zigzag strip darts from lower left to upper right in three sharp changes of direction; exactly three oversized cyan square 'rivet' markers punctuate its turns, and small coral beat marks trail behind the final turn. The strip should read as a frequency path, not a literal metal rail or road. Strong single silhouette at 100px, clear negative space in the lower fifth for a local title overlay, no tiny clutter. No lightning bolt, arrowhead pair, domino slab, stairs, track lanes, city, vehicle, person, rings, circles, text, letters, numbers, logos, watermarks or copied game art.",
+    "og_prompt": "Edit the supplied original Rivet Sprint square cover into a HORIZONTAL 1.9:1 duohertz social-sharing card. Preserve its one broad warm-ivory zigzag frequency strip with three sharp turns, exactly three oversized cyan square rivet markers and a few small coral beat ticks, all in near-black editorial comic-print texture. Recompose the motif on the RIGHT two-thirds; leave calm near-black space on the LEFT. Add exactly two crisp legible English lines there: 'duohertz' in lowercase electric cyan and 'Rivet Sprint' in larger warm ivory. Spell both exactly. No other text, letters, numbers, roads, rails, cars, people, rings, logos, watermarks or copied game imagery. Make a purpose-built wide card, not a stretched square crop.",
+    "cover_source_sha256": "62bc6d5500935c374ba7b6de96e056279b78e25f73c53f885556ab56a48335d0",
+    "og_source_sha256": "f5fa514ad187057673caefb8425d7b1f7f9955c522bb33c873bf0b6f0cf08962",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "837e3349cbddb5dbc074770792a8d8365fb1f4f0219432fc87149e69735da625",
+    "cover-art.png": "5d4f7c2d3cf76158f94577753f59706c97c77ebd4c6e305eef6d8b34a3319ee9",
+    "cover.svg": "7bb5fdce382d15484bbd85536a25d5aa370588f3c2aa5d2cb2ef8a98a4540e93",
+    "easy.json": "f52dd50ee34f9dc2f0ed57ef4dac88472221adb9cc202a995b700306a560ebdf",
+    "hard.json": "aa541a890801a0fb7c4fb823acae922cf6406a182374cb1e44f12fb0c7e926b4",
+    "og.png": "efe972e1f7948aa9b5f7b60130f44989d75995b421be0cd63af680e813c6c2f1",
+    "preview_48s.m4a": "e0da771147686bf4b2744b6e999365d66f6320f60eaedeccb99660549e7ad1dd",
+    "standard.json": "0ae37001c5de3e110bfdb0ca9a23f06fc51283c4ff331cc2a04f0b4ef37190c9",
+    "stream.m4a": "bd05ccbc100757ac59aa1ba308503225229c4826d94162190f78866724dc358c"
+  }
+}

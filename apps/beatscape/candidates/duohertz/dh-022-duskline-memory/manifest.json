@@ -1,0 +1,48 @@
+{
+  "track_id": "dh-022-duskline-memory",
+  "title": "Duskline Memory",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Synthwave",
+  "bpm": 112,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -3 dB gain before AAC encoding. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-022-duskline-memory.json",
+  "source_recipe_sha256": "72660e70fe95c6e6f19ce96b725cd05a3607437db8db0eced3ea3cd7b6be8b3d",
+  "source_master_sha256": "6bb15ad7f47b57e088198c955365800d952814590a4043f6f293a0200d2f428d",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.15196,
+    "clipping_ratio": 5e-06,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "bae47346-80af-462a-a487-e189db7ebc10",
+  "source_generation_receipt_sha256": "f7f8fec565ada5a83d2ef72d5e31e859b889a772ad361d8c051385743b7969bf",
+  "generation_prompt": "Original all-ages synthwave instrumental for a one-or-two-key electronic rhythm game, around 112 BPM with a clear four-beat pulse. Lead with a clipped three-note analog-synth ostinato, warm rounded electric bass and an unmistakable kick on each beat with crisp snare on beats two and four. Introduce a gently widening chorus-like chord bed, then a contrasting higher glassy lead that answers the ostinato in short countable phrases. Use restrained tom fills and tiny percussive accents to mark sections without harsh distortion or wall-of-sound compression. Around the midpoint let the bass and beat breathe under a new descending counter-melody, then rebuild into a brighter finale that combines changed versions of both themes instead of repeating the first half. One evolving 128-second stereo composition with clean onsets suited to rhythm charts. No vocals, speech, sampled recordings, known melody, or direct stylistic quotation of any existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Generate a brand-new SQUARE 1:1 original album cover for duohertz track Duskline Memory, a family-friendly synthwave rhythm-game song. Original high-contrast editorial comic collage using near-black ink, warm ivory paper, coral red, electric cyan and a few muted yellow marks. Main motif: THREE long folded paper light-strips, like distinct audio memories, move horizontally across a diagonal dark frame; each leaves a short offset echo trail of rectangular ticks before the strips converge into one crisp corner. Strong readable silhouette at thumbnail size, angular cut-paper edges, tactile halftone and slight screen-print misregistration. A sense of dusk without a literal sun, skyline, road, vehicle, cassette, disc, circles, or familiar retro-neon clich\u00e9. No text, letters, numbers, logos, people or imitation of any existing game.",
+    "og_prompt": "Edit the supplied original Duskline Memory square cover into a HORIZONTAL social card for duohertz. Keep its distinct three folded coral, cyan and muted-yellow paper light-strips, short offset rectangular echo ticks, diagonal dark frame and warm-ivory halftone texture. Recompose the main motif on the RIGHT two-thirds with calm near-black space on the LEFT. Add exactly two crisp fully legible English lines on the left: 'duohertz' all lowercase and 'Duskline Memory'. No other text, letters, numbers, sun, skyline, road, vehicle, cassette, discs, people, logos or existing IP. Original all-ages electronic music poster.",
+    "cover_source_sha256": "1a8e25f6afc666f5ea23236bb722a672bb04dc87063d234387b8e8b790c3c1eb",
+    "og_source_sha256": "6ea4bf3281a50c3bddf2e56381bd6fcaa8f6b59b15229adf78b6074f3d8db143",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "1f4030a44d27954d7ec7ce63380c94095230a8da644825ab4b932ba8387d5bac",
+    "cover-art.png": "957b61b04a69524ab23d5ce74b1bba3bb59ae37f0efe546df3e4bebf91be66b5",
+    "cover.svg": "a9ca586fc0214da069201f8465d4905eebd99d7aa41e8fba224bea9eda398f02",
+    "easy.json": "c76c007ce81e480b5c01d1359d89b16db163135557a378d79cb097fcad18984f",
+    "hard.json": "63f7f4b62bbad7c1aba96274621b1189505025c78c156f9d178fd87bd305d954",
+    "og.png": "2b2111b60feec1e598ceb85aa287456e95c866b2ae99c23c94f2d5d43622d7e7",
+    "preview_48s.m4a": "abb3722b4fa9ca25dcf2be129c644c8c57fa3c95e35d5969f320ca3a955f41e8",
+    "standard.json": "8a81975145bcb734375f0816657f7c61457bcc9ab919caa5fa10407ee01bdd01",
+    "stream.m4a": "f5e417ac3ad69d57766036cf2f760e893c8fb9a5604001d87b6753c4527f2aa0"
+  }
+}

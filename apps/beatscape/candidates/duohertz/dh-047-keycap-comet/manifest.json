@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-047-keycap-comet",
+  "title": "Keycap Comet",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Synthwave",
+  "bpm": 118.0,
+  "target_bpm": 118,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -6 dB gain before AAC encoding; stream-only limiter at 0.35 linear amplitude with no makeup gain. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -6.0,
+  "stream_limiter": 0.35,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-047-keycap-comet.json",
+  "source_recipe_sha256": "4120d67b148c12fda62743be3db994c11e5c2bd1b2480e8c9d119f0f76cdb63b",
+  "source_master_sha256": "06ceab4b9f99908101dc045f3e85292c574ea4fd75f5fd20a99999dc67b78d16",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.16677,
+    "clipping_ratio": 3.5e-05,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "b97f8ae1-7e5e-4177-90e5-b825a3508959",
+  "source_generation_receipt_sha256": "42c8111f5b695936ac2b51e01fb3930b89205f0e77b9f4335f185622fef348e9",
+  "generation_prompt": "Original all-ages synthwave instrumental for a beginner-friendly one-or-two-key electronic rhythm game at a STRICT constant 118 BPM in 4/4 for 128 seconds. Make a FULLY AUDIBLE quantized retro drum machine from the FIRST SECOND through the final bar: strong SHORT kick on EVERY quarter note, dry clear snare on beats two and four, closed eighth-note hats, and one distinct short midrange bell-key or muted-key attack on every beat, including the first 16 seconds and all transitions. Do not fade, filter or half-time the drums; no quiet pad-only section, beatless intro, drum dropout, tempo drift or long reverb smear. Signature hook: three clipped analog-synth notes leap upward in a bright little arc, followed after an eighth-note rest by two warm key-click tones descending in the opposite stereo side. Keep the call-and-response clear above a round pulsing bass and restrained minor-to-major chord stabs. At the midpoint retain the same drum grid, move the key-click answer forward in the phrase and shift the synth call down one register; in the final quarter combine the motifs in a new syncopated resolution instead of repeating the first half. One evolving 128-second stereo composition, colorful and playful, with controlled highs and no abrasive distortion. No vocals, speech, sampled recordings, known melody or imitation of an existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a brand-new SQUARE 1:1 original duohertz album cover for Keycap Comet, an all-ages synthwave rhythm-game track. Dynamic high-contrast editorial comic-print collage: ONE enormous blank warm-ivory beveled keycap seen in three-quarter view, tilted diagonally as if just tapped, dominates the square. Its lower edge emits a bold electric-cyan zigzag frequency trail sweeping toward the upper right, while one coral-red halftone impact burst sits behind it. Near-black ink background, sharp paper-cut shadows, tactile print grain and a few tiny warm-yellow sparks. Make the blank keycap and pulse readable at 100px, and keep the lower fifth calm and dark for a local title overlay. This is an original unbranded single button, not a computer keyboard or known controller. No lettering or symbols on the keycap, no hands, people, cassette, car, city, literal comet, planets, stars, text, letters, numbers, logos, watermark or copied game art.",
+    "og_prompt": "Edit the supplied original Keycap Comet square cover into a HORIZONTAL 1.9:1 duohertz social-sharing card. Preserve the one huge blank warm-ivory beveled keycap tilted as if tapped, its electric-cyan zigzag frequency trail and the coral halftone impact burst against near-black comic-print texture. Recompose the keycap and pulse on the RIGHT two-thirds, leaving calm near-black space on the LEFT. Add exactly two crisp fully legible English lines on the left: 'duohertz' in lowercase electric cyan and 'Keycap Comet' in larger warm ivory. Spell both exactly. Make a purpose-built wide card, not a stretched square crop. No other text, letters, numbers, hands, people, keyboards, planets, vehicles, logos, watermark or copied game art.",
+    "cover_source_sha256": "6b3e9c3e0e071030cc0778f461507f8c9c7ca958aec89624f0f070658f0bbfa4",
+    "og_source_sha256": "76f94ca22370f08b1ca41bd484e44e9c64511f787b21a7e7136423f253aa1e03",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "3d0105e972ec9ee10cd25a09e6bd0fbf2c1d5121e72a6136f6e5a68c265157bd",
+    "cover-art.png": "a8cea9afc8aee1b446337f0c8f8fe6210053550818368385c90961dfaf44310c",
+    "cover.svg": "d11539cc85dc65acced2eb22e264edafb6ff3890e9e29682cd66574aaed64529",
+    "easy.json": "0f40bb241a5c1307d97b90708a4f64c3c1c08f9d0b4c56d10ec5deab810ecce0",
+    "hard.json": "d21f8c04352c343181e6bb977109cab189e6a94e046949d9ca237fe179d91579",
+    "og.png": "457abe7cd78f8f38fe4a983fbd2226280555e1cda4af23633720ab87cf010c6c",
+    "preview_48s.m4a": "eedb5b2669db0054556d7f114eb8da324fa96428b7bff3c04833ef325d4de9a9",
+    "standard.json": "2107a0f735c415d6f0d2a6e6e1a6f4af15c0be06f6365e55c5e60d705616049b",
+    "stream.m4a": "1cea20cbf01641c62179548d2e8d4eafc3e3a3599fe77467ed85c49e03bb2119"
+  }
+}

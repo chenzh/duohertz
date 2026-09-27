@@ -303,3 +303,81 @@
 - **网络**：代理 7897 → 200（其余 000）。**中途一次假性失败**：带 `-m 25` 的批量 curl 全返 `000`（exit 5 = 无法解析代理），重试即恢复 → **遇到全 000 先单次重试再判定**，不要立刻记为「线上不可达」。线上取证与 `gh` 全部成功；push 一次成功（`rev-list` 判 0/0），push 后未 fetch。
 - **新脚本坑**：锚点自检脚本原先不处理「纯 `#anchor`」（f 为空）的链接，会把 35 条**本文件内锚点**全判 MISS。修法：`f` 为空时改用 `TODO.md` 自身的标题集比对。
 - 纪律不变：只 `git add TODO.md`（10 项改动 + **11** 项未跟踪，较上一轮多 1 项 memory 日志、非功能改动，未触碰）；未改 SESSION.md。本轮**未做顺手收尾**（补生成 preview 属产品决策，非极小动作）。
+
+## 本次执行（2026-09-18 第二十四次）— 指令仍为「整理项目 TODO」
+- **开局异常（下轮必查）**：`rev-list` 0/0，但 HEAD `231bad5`（09-12）≠ 上次记录的 `67e8686` → 有 10 个新落地 commit；**更关键的是工作区里 `TODO.md` 本身有一份未提交的「第二十三次刷新」（2026-09-17）**。即上一轮跑完了但没提交。本轮先复核其断言（全部成立）再叠加提交，commit `501d42e`，已 push（`231bad5..501d42e`，rev-list 0/0）。
+- **教训：本自动化必须在收尾确认 push 成功，否则下一轮会看到「HEAD 没变 + 工作区有自己上轮的未提交改动」的混合状态，容易误判成并行会话改动而放弃提交。**
+- **本轮新增维度：「本地数据持久化与隐私声明一致性」盘点**（前二十三轮从未盘浏览器端存储、从未把隐私文案与代码对账）。结论：BeatScape **19 个 `bs_*`** + ScapeMusic **3 个 `sm_*`**；**零 IndexedDB / 零 cookie / 零 sendBeacon**；非测试源码 `fetch` 仅 3 处**全部同源** → 「Scores stay on your device」**实测成立，不生成待办**。
+- **本轮最有价值的一条（新判读规则）：模块名会骗人，判读顺序固定为「有没有调用方 → 有没有传输通道 → 通道有没有被接线」。** `lib/analytics.ts` 名字像「在上报」，实测是**本地缓冲（cap 120）+ 死钩子**：`analytics.ts:38-39` 有 `window.plausible?.(...)`,但全仓 `grep -i plausible` 除本文件外只命中文档与构建产物 → **当前零外发**。**真正值得登记的是「惰性外发面」：`index.html` 加一行脚本，23 类行为事件即在零代码改动下开始向第三方发送**，而 `Legal.tsx:20` 只承诺不做第三方「**广告**」追踪、全文未提埋点 → 登记为 P0-3 签审确认项。**顺序反了就会凭模块名写出假的隐私待办。**
+- **纠错（重要）**：TODO 长期写的「无未关闭 PR、无未关闭 Issue」是**错的**——实测 **6 个未关闭 Issue**（#34–#39，`[TICKET-B06]`~`B11`，均 09-09 创建、`agent-safe`），PR 仍 0。**但比「有 6 个」更有价值的是对账**：6 个 Issue 要求的工作**全部已实现且有测试**（`Library.tsx:66`/`Calibration.tsx:47`/`Settings.tsx:94`/`NotFound.tsx:5`/`Home.tsx:35` 均 `usePageMeta`；`pageMeta.test.ts:105/122/134/146/173`；`B11` 的 buildPlayPageMeta 无 seo 边界在 `59/68`）→ **僵尸条目，不是待办**。登记为 **P5-4，需用户授权才 close**（外部动作），**未自行关闭**。
+- **第十一次印证「零 ≠ 该补」的镜像形态：「有条目 ≠ 有活」。** 盘点未决项/GitHub 清单时**必须回代码对账**，否则会把已完成工作当积压，同时漏掉真正没做的事（与第十一次「全未勾 ≠ 一项没做」同源）。
+- **CI run 号连续十五轮「写入即过期」的规律本轮首次不生效**：`34675948677` 仍对应 HEAD `231bad5`（09-12 后无新 commit）→ **该规律的前提是「两轮之间有新 commit」**，无新 commit 时自然不失效。下轮判断时先看有没有新 commit。
+- 数字纠错：上一轮「`any` 共 4 处」漏算了 `Duo.tsx:271` 注释假阳性 → 实测 **5 命中**（3 测试桩 `hitsounds.test.ts:6/69/73` + `routePreload.ts:7` 非测试新命中 + 1 注释假阳性）。
+- 其余断言复核全部仍成立：105 首 / 各季分布 / 315 谱面 / `stream_app_url` 0-105 / `stream_audio` 105-105 / `preview` 本地 105-105、线上仍 25 / 线上 catalog 105 首 315 谱面 ID 集合与本地一致 / 线上 bundle `index-CDXE9BO-.js`(325,768 B) / `release.json`·`og.png` 与缺失路径同 2146 B / 放行七字段全 null / 零 TODO-FIXME-XXX-HACK / 零 `@ts-ignore` / `socialMetaTags` 已有测试、`copyImageBlob` 仍零单测 / **26 条文件链接 + 47 个锚点 MISS 0** / 部署 9 failure + 1 cancelled、最后成功 `33895713222`、无新增 run / `gh workflow list` 仍漏报只返 6 条 / `.git` 1.9 GiB / 0 tag 0 release。
+- **工作区本轮有 351 项并行会话改动**（字体自托管、PWA manifest/apple-touch-icon、`early-route` 预加载、大量新 e2e spec、`routePreload.ts` 等），**全程未触碰**；只 `git add TODO.md`，绝不 `-A`；未改 SESSION.md。本轮**未做顺手收尾**（无符合「极小动作」的候选：close issue 需授权、改隐私文案属产品决策）。
+- **网络**：代理 7897 → 200（其余端口 000），线上取证与 `gh` 全部成功；push 一次成功，用 `rev-list` 判 0/0 确认，**push 后未 fetch**。
+
+## 本次执行（2026-09-19 第二十五次）— 指令仍为「整理项目 TODO」
+- 开局 `rev-list` = 0/0、HEAD `501d42e` 即上次刷新 → **无新落地项**。校验型刷新 + 新增维度，commit `e8a0cd8`，**但 push 失败（网络不可达），`rev-list` 现为 `0 1` → 该 commit 只在本地**。
+- **⚠️ 下轮开工第一步：先 `git -c http.proxy=http://127.0.0.1:7897 -c https.proxy=http://127.0.0.1:7897 push origin main` 把 `e8a0cd8` 推掉**，再判有无新落地项。否则会看到「HEAD 指向本地 commit、origin 落后一个」的混合态，容易误判成并行会话改动（与第二十四次的教训同源）。
+- **本轮网络故障形态与历史不同，判据要分清（重要）**：不是 SSL 握手失败，而是 **`curl -x http://127.0.0.1:7897` 立即返回 `Couldn't connect to 127.0.0.1 port 7897 after 0 ms`（连接被拒 = 代理进程根本没起）**，7890/1087/8888/1080 与直连同为 000。→ **「0 ms 拒绝连接」= 代理没运行，重试无意义；历史上 `SSL_ERROR_SYSCALL` = 代理在但链路断，等约 1 分钟可恢复。两种形态别混用处理办法。**
+- **本轮新增维度：「命令与脚本入口盘点」**（前二十四轮只盘过 `scripts/` 里的孤儿**文件**，从未盘 `package.json` 里声明的**命令**）。手法：枚举 6 个 package.json 的 **56 个脚本** → 在 `git ls-files` 全部受控文本里双向对账（正向查「引用了但解析不到」、反向查「已声明但零提及」）→ **再单独查同名命令是否跨层异义**。
+  - **唯一真正值钱的发现来自最后一步**：根 `pnpm test` / `pnpm test:e2e` 都走 `scripts/harness.sh`；`harness.sh:110-118` 的 `run_e2e()` 实测只 `start_gateway` + `start_demo` + `acceptance-demo-web.py`（:112 log 原文 `tier: e2e (gateway + demo acceptance)`、:160 帮助文本 `e2e  Gateway + demo web acceptance`）→ **根 `pnpm test:e2e` 完全不含 BeatScape**。这直接补强第十三次「BeatScape e2e 自 09-06 未在 GitHub 跑过」：**想手动补跑时最直觉的那条命令跑不到它**，必须 `pnpm --filter @musicsaas/beatscape test:e2e`。已写进「验收命令」段。
+  - **判读纪律（与「孤儿 ≠ 该删」「未勾 ≠ 没做」同源，但更精准）**：**「一个命令没人提」通常是正常形态、不值钱；真正值钱的是「两个同名命令指的不是同一件事」** —— 只有后者会在最直觉的操作下静默跑错目标且不报错。本轮 15 个「零提及」脚本里唯一像遗漏的 `test:prd`，实测已被 `apps/beatscape/vite.config.ts:56` 的 `test.include = ["src/**/*.test.ts"]` 覆盖，`test:prd` 只是没人用的别名 → **拒绝生成「清理 15 个命令」待办**（第十次印证）。
+  - 另登记（不认领）：`docs/BEATSCAPE-NARRATIVE-UPDATE.md:28/31`、`docs/BEATSCAPE-RELEASE-READINESS.md:62`、`docs/BEATSCAPE-COMMERCIALIZATION-GAP.md:90` 共 **4 处裸 `npm run <script>` 缺 `cd apps/beatscape` 前提**（三文件 grep 0 命中），从根跑会 `ERR_PNPM_NO_SCRIPT`；而 `BEATSCAPE-PERFORMANCE.md:204` 有该前提（正确）。与第六次记录的「根 `pnpm launch:check` 不存在」是同一类，本轮从个案扩成一类。
+- **新坑：解析根 package.json 时路径要规范化** —— `os.walk('.')` 给出 `./package.json`，拿 `'package.json'` 当 key 会 `KeyError`（本轮第一次跑就炸）。
+- **CI run 号本轮出现新成因**：`ci.yml` 的 `on.push` **只有 `branches: [main]`、无 `paths` 过滤** → 09-18 推送的 `501d42e` **必然触发过新 run**，故 `34675948677`（对应 `231bad5`）**逻辑上已过期**；但无网络取不到新编号 → **本轮刻意不改写数值，只标注「下轮恢复网络后必查」**。与前十几次「能查而没查」要区分开。
+- 其余断言复核全部仍成立：105 首 / 各季分布 / 315 谱面 / `stream_app_url` 0-105 / `stream_audio` 105-105 / `preview` 105-105 / 放行七字段全 null / 零 TODO-FIXME-XXX-HACK / 零 `@ts-ignore` / `any` 仍 5 命中（3 测试桩 + `routePreload.ts:7` + `Duo.tsx:271` 注释假阳性）/ `socialMetaTags` 已有测试、`copyImageBlob` 仍零单测（行号漂移到 `Results.tsx:114/577/587`）/ **16 个文件链接 + 51 个锚点 MISS 0**（连续第八轮）。部署 9 failure + 1 cancelled、`gh workflow list` 漏报、线上 bundle / catalog / og.png 等**均沿用 09-18 结论、本轮未重新取证**。
+- **网络不可达时债务数字仍可本地实测**：部署债务 48 → 49（触及 `apps/beatscape/**` 仍 11 个，增量是刷新 commit 自己）。
+- 纪律不变：只 `git add TODO.md`（352 项并行会话改动全程未触碰）；未改 SESSION.md。本轮**未做顺手收尾**（补文档 cd 前提属文档改动，非极小动作）。
+
+## 本次执行（2026-09-20 第二十六次）— 指令仍为「整理项目 TODO」
+- **开局先补推上一轮欠下的 commit（新增为固定第一步）**：`rev-list` = `0 1`，HEAD `e8a0cd8` 是上轮刷新但上轮网络不可达没推成。**先 push 再判有无新落地**——否则会看到「HEAD 是自己的旧 commit + 工作区一堆并行改动」的混合态，容易误判。代理 7897 一次成功（`501d42e..e8a0cd8`）。推完 `rev-list` 0/0 且 HEAD 即上次刷新 → **本轮无新落地项**，校验型刷新。commit `760ac23`，已 push（`e8a0cd8..760ac23`，`rev-list` 0/0 已确认，**本轮未重蹈上轮「以为推了其实没推」**）。
+- **网络恢复，上轮「沿用旧值」的线上断言全部重新取证，逐条与 09-18 一致**：bundle 仍 `index-CDXE9BO-.js`（`scapemusic.pages.dev` 0 / `No account, no ads` 0 / `App link coming soon` 1 / `Signal lost` 1）、线上 catalog 105 首 315 谱面 `stream_app_url` 0-105 **`preview` 仍 25/105** 且 ID 集合与本地一致、`release.json` 与 `og.png` 均 2146 B 回落、`robots.txt` 133 B、`sitemap.xml` 911 B。
+- **CI run 号按上轮标注「必查」核实并更正**：`34675948677`/`231bad5` → **`35251553547`**（success，09-17，`headSha`=`501d42e`）；另有 `35458816086`（in_progress，headSha=`e8a0cd8`）由本轮补推触发。**第十六轮**命中「写入即过期」。
+- **新增维度：「仓库治理与安全配置」盘点**（前二十五轮只盘工作流本身，从未盘仓库侧护栏）。四个「零/关闭」里**只登记一条**：GitHub **无分支保护**（私有+Free，API 403 `Upgrade to GitHub Pro`，**是套餐限制不是权限问题，重试无用**）、Dependabot 关闭、`security_and_analysis` null、`deploy-beatscape-cloudflare.yml` **无 `environment:`/无审批**（全仓仅 `deploy-neonbeat.yml:51` 有）、本地 `.github/` 无 CODEOWNERS / `dependabot.yml` / PR 模板。
+- **本轮最有价值的一条（第十二次印证「零 ≠ 该补」，且价值来自交叉而非任何单个「零」）**：**`launch:check` 是当前唯一一道生产护栏** × **P1-6 正在决定它的去留** → **方案 2 的真实代价不是「解锁部署」，而是「解锁部署 + 移除唯一卡点」**：放宽后 main 上任何触及 `apps/beatscape/**` 的 push 将零审批自动发布到生产。已写进 P1-6 供用户拍板。
+- **判读纪律（本轮固化）**：① **「缺什么」本身往往不值钱，要再问「它和哪个待决事项是同一件事」**；② **不可执行的待办是噪音**——「无分支保护」在当前套餐下根本配不了，不生成待办；③ **403 要分清新因**：`admin:repo_hook` scope 缺失（可 refresh）vs `Upgrade to GitHub Pro`（套餐限制）。
+- **数字**：部署债务 49 → **50**（触及 beatscape 仍 11 个、名单不变）；`a136592` 之后 33 → **35**。行号漂移更正 `Duo.tsx` 注释假阳性 271 → **307**。`any` 仍 5 命中。链接自检 **16 条文件 + 54 个锚点 MISS 0**。
+- **新坑**：锚点自检脚本用 `^#{2,4}` 会漏掉**一级标题**（`# xxx`）建的锚点 → 本轮先假报 2 个 MISS，改用 `^#{1,6}` 后归零。**每轮复现的「已知假阳性」先怀疑脚本本身。**
+- 纪律不变：只 `git add TODO.md`（**384 项**并行会话改动全程未触碰）；未改 SESSION.md。本轮**未做顺手收尾**（无符合「极小动作」的候选）。
+
+## 本次执行（2026-09-21 第二十七次）— 指令仍为「整理项目 TODO」
+- 开局 `rev-list` = 0/0、HEAD `760ac23` 即上次刷新 → **连续第二十七轮无新落地项**。校验型刷新 + 新维度，commit `3cc2770`，已 push（`760ac23..3cc2770`，`rev-list` 0/0 已确认）。
+- **本轮新增维度：「未入库资产（git index 覆盖）盘点」**（前二十六轮只*数过*未跟踪条目、从未*枚举*内容）。**1190 个未跟踪文件**（`git ls-files --others --exclude-standard`），三类：105 张单曲 `og.png` / 907 个 Playwright 产物 / 81 个未入库源码。
+- **最有价值发现：`catalog.json` 声明的 105 张单曲 `og.png` 从未入库**。完整证据链：磁盘 105/105 存在且 `git check-ignore` 确认**未被忽略**、`git ls-files` **0 命中**、生成脚本 `scripts/beatscape-generate-og.py`（`generate:og`）在 `.github/workflows/` 与 `scripts/*.sh` 中**零命中**且不在 `build`/`build:cf`/`release:check`/`release:beatscape` 里 → **即使 P0-6 部署门禁解锁，CI 从 git checkout 构建仍不会带上**。线上实测 `catalog/bs-p3-01/og.png` = 2146 B 回落页，而同目录 `cover.svg` = 8148 B 正常。**关键：线上缺失有两个独立成因（部署卡死 + 未入库），只有后者在部署修复后依然成立，不能并入 P0-6。** 但**当前影响面为 0**——受控源码 `track.og` 零消费方（`socialMetaTags` 不输出 `og:image`），故**登记为候选、不认领、不阻塞**（补入库 vs 撤字段是产品判断）。
+- **第二条：907 个 Playwright 产物绕过 gitignore** —— `.gitignore:61` 只忽略**精确名** `apps/beatscape/test-results/`，并行会话用 `--output` 生成了 12 个 `test-results-*` 变体目录全部不匹配。**风险不是占空间，而是放大 `git add -A` 误操作面**（本自动化的核心纪律正是「绝不 `-A`」）。修复极简（`test-results*/`），但本轮不动手（只提交 TODO.md）。
+- **纠正一条连续多轮的错误计数**：此前每轮写的「10 项未跟踪」是 `git status --short` 的**目录级**折叠计数，实际文件数 **1190**，差两个数量级。
+- **新坑（本轮踩到，下轮必避）**：**`git ls-files 'apps/*/src'` 静默返回 0**（git pathspec 的 `*` 不匹配 `/`）→ 第一次跑直接把「零 TODO / 零 `@ts-ignore`」判成**假阴性**（只扫到 293 个文件且不含 src）。正确写法：`git ls-files | grep -E '^apps/[^/]+/(src|e2e|scripts)/'`（本轮 252 个文件）。**规则：任何基于 `git ls-files <glob>` 的「零命中」，先验证扫描文件数非零再采信。**
+- **判「某类资产会不会随部署上线」的固定三问**：① 在不在 git index；② 有没有被 gitignore 排除；③ 生成脚本在不在 `build`/`release:check`/workflow 里。三者都过才会上线（本轮靠它把「磁盘有文件」和「能上线」区分开）。
+- 第十三次印证「零 ≠ 该补」：三个缺口里只登记两个（og.png 未入库、测试产物放大误操作面），**81 个未入库源码不登记**（并行会话在制品，落单是正常形态）。判据仍是「会不会在没人注意的情况下改变某个可观察结果」。
+- **数字**：CI run 号 `35251553547` → **`35459105488`**（success，09-19T17:46:14Z，`headSha`=`760ac23`=HEAD），**连续第十七轮**写入即过期；部署债务 **50 → 51**（触及 `apps/beatscape/**` 仍 11 个）；`a136592` 之后 35 → **36**；行号漂移 `Duo.tsx` 307 → **310**。`any` 改为**分口径**：受控源码 4 处（3 测试桩 + 1 注释假阳性）+ 工作区未入库 `routePreload.ts:7` —— **不再把并行会话的未提交文件算进仓库断言**。链接自检 **80 条（文件 + 锚点）MISS 0**。
+- 其余断言复核全部仍成立：105 首 / 各季分布 / 315 谱面 / `stream_app_url` 0-105 / `stream_audio` 105-105 / `preview` 本地 105-105、线上仍 25-105 / 线上 catalog 105 首 315 谱面且 **ID 集合与本地一致**（only-online 0 · only-local 0）/ 线上 bundle `index-CDXE9BO-.js`(325,768 B；`scapemusic.pages.dev` 0 · `No account, no ads` 0 · `App link coming soon` 1 · `Signal lost` 1) / `release.json`·`og.png` 与缺失路径同 2146 B / `robots.txt` 133 B / `sitemap.xml` 911 B / p4 谱面 200（19,241 B）/ 放行七字段全 null / 零 TODO-FIXME-XXX-HACK / 零 `@ts-ignore` / 部署 9 failure + 1 cancelled、最后成功 `33895713222`、**09-12 后无新增 run** / `gh workflow list` 仍漏报只返 6 条（连续第十四轮）/ 6 个未关闭 Issue（#34–#39）· 0 PR。
+- **新增因果解释（可直接复用）**：「债务在涨但无新增 run」不矛盾 —— 实测 `231bad5..HEAD` 仅 3 个 commit 且触及 `apps/beatscape/**` 的为 **0**，而部署 workflow 的 `on.push.paths` 会过滤掉纯文档 commit → 属**未触发**而非**漏触发**。
+- **网络**：代理 7897 → 200（其余 000），线上取证与 `gh` 全部成功；push 一次成功（`rev-list` 判 0/0），push 后未 fetch。
+- 纪律不变：只 `git add TODO.md`（**418 项**并行会话改动全程未触碰，含 `.gitignore`）；未改 SESSION.md。本轮**未做顺手收尾**（`.gitignore` 属并行会话高频文件，且超出「只提交 TODO.md」纪律）。
+
+## 本次执行（2026-09-22 第二十八次）— 指令仍为「整理项目 TODO」
+- 开局 `rev-list` = 0/0、HEAD `3cc2770` 即上次刷新 → **连续第二十八轮无新落地项**。校验型刷新 + 新维度，commit `57ac5dc8`，已 push（`3cc2770..57ac5dc8`，`rev-list` 0/0 已确认）。
+- **新增维度：「曲库元数据与实测资产一致性」盘点**（前二十七轮只做过「声明→磁盘」的**存在性**对账，从未把**声明值**与**音频实测值**对账）。手法：`afinfo` 实测 105×3 个音频 + 逐张解析 315 份谱面。七项**全干净、据此不生成待办**：`duration_sec`/`stream_duration_sec` 与实测**零偏差**、105 个 `preview` **全 48.0s**、catalog `bpm` 与谱面 `bpm`·`detected_bpm` **最大偏差 0.5（中位 0.00）**、**末音符超出音频 0 张**（覆盖率 93.2%–99.2%）、50 个 `slide` **全在 5 首 `allows_slide: true` 曲目内**、`total_notes` **315/315 一致**。
+- **本轮差点造出假阻塞，已靠「先找计量规则」拦下（下轮必守，本轮最有价值的一条）**：`total_notes` 按「`notes` 数组长度」比对会得到「315 张里 **314 张**对不上」（如 `bs-p3-01/hard.json` 声明 811、数组 575 项）。**实际口径是 PRD §4.4 判定对象数**（hold=2 / chord=len(lanes) / slide=1 / tap=1），该规则在代码里写了两遍：`scripts/beatscape-audit.py:378-390` 的 `note_count()` docstring 与 `apps/beatscape/scripts/release.mjs:238` 的 `assert`。按正确口径 **315/315 全对**。
+  - **由此澄清本文件沿用多轮的数字**：**112,511** = `notes` **数组条目数**；**143,066** = **判定对象数（准确率分母）**。两者都对但含义不同。
+  - **通用化（新增判读规则，与「零 ≠ 该补」并列）：看到「声明值 ≠ 实测值」，第一件事是找双方各自的计量规则，而不是记缺陷。** 副作用验证：`release.mjs` 用正确口径跑本来就是绿的——否则部署管道会红在第 8 步而不是只红第 9 步 `launch:check`，这本身就是一条廉价的反证。
+- **新坑（链接自检脚本）**：本轮第一版脚本把**外部文件的锚点**拿去和 `TODO.md` 自己的标题集比对 → 假报 `#bs-d001` MISS。正确做法：`f` 为空时用 TODO.md 标题集，`f` 非空时**加载目标文件**的标题集比对。修正后 **16 条文件链接 + 59 个锚点 MISS 0**。**教训与既有规律一致：每轮复现的「已知假阳性」先怀疑脚本本身。**
+- 数字纠错（老问题）：① CI run 号 `35459105488` → **`35528074175`**（success，09-20T18:08:06Z，headSha `3cc2770` = HEAD），**连续第十八轮**写入即过期；② 部署债务 **51 → 52**（触及 `apps/beatscape/**` 仍 **11 个**、名单不变）；③ `a136592` 之后 36 → **37**；④ 行号漂移 `copyImageBlob` → `Results.tsx:114/608/618`。改前用 `grep -n` 找了全部出现位置，速览/正文未分叉。
+- 其余断言复核全部仍成立：105 首 / 各季分布 / 315 谱面 / `stream_app_url` 0-105 / `stream_audio`·`preview`·`audio`·`cover`·`og` 各 105-105 / 线上 catalog 105 首 315 谱面 `stream_app_url` 0 `preview` 仍 **25** 且 ID 集合与本地一致 / 线上 bundle `index-CDXE9BO-.js`(325,768 B；`scapemusic.pages.dev` 0 · `No account, no ads` 0 · `App link coming soon` 1 · `Signal lost` 1) / `release.json`·`og.png` 与缺失路径同 2146 B / `robots.txt` 133 B / `sitemap.xml` 911 B / p4 谱面 200 / 放行七字段全 null / 252 个受控源码文件零 TODO-FIXME-XXX-HACK、零 `@ts-ignore` / `any` 受控 4 处（3 测试桩 + `Duo.tsx:310` 注释假阳性）/ `socialMetaTags` 有测试、`copyImageBlob` 仍零测试 / 部署 9 failure + 1 cancelled、09-12 后无新增 run / `gh workflow list` 仍漏报只返 6 条（连续第十五轮）/ 6 个 Issue #34–#39 · 0 PR / 未跟踪 1190 个、105 张 `og.png` 仍未入库。
+- **网络**：代理 7897 → 200（其余 000），线上取证与 `gh` 全部成功；push 一次成功（`rev-list` 判 0/0），push 后未 fetch。
+- 纪律不变：只 `git add TODO.md`（**417 项**并行会话改动全程未触碰）；未改 SESSION.md。本轮**未做顺手收尾**（无符合「极小动作」的候选）。
+
+## 本次执行（2026-09-23 第二十九次）— 指令仍为「整理项目 TODO」
+- 开局 `rev-list` = 0/0、HEAD `57ac5dc` 即上次刷新 → **连续第二十九轮无新落地项**。校验型刷新 + 新维度，commit `cb201636`，已 push（`57ac5dc8..cb201636`，`rev-list` 0/0 已确认）。push 后未 fetch。
+- **新增维度：「页面路由 · SEO 元数据 · sitemap · e2e 四方对账」**（前二十八轮分头盘过测试盲区与 SEO，从未放进同一张表）。手法：路由表取自 `git show HEAD:apps/beatscape/src/App.tsx` 的 `<Router routes={[...]}>`（**自研 `router.tsx`，不是 react-router**）。结论：15 路由 ↔ 15 组件**零孤儿**；HEAD 里 3 个页面（Track/Results/Leaderboard）零 `usePageMeta`，但工作区已补 → 不认领。
+- **本轮最有价值的一条（新增通用判读规则，下轮优先复查）**：**TODO 里若干「已收口」断言只在 HEAD 之外成立**。「字体自托管收口（09-13）」的 **12 个 woff2 全未入库**（`apps/beatscape/src/assets/fonts/`，`git ls-files` 0、`git check-ignore` 未忽略），HEAD `index.html` 仍有 2 处 Google Fonts 引用 → 继 og.png（27 次）之后同类第二例，合计 **117 个文件**；线上 `index.html` 实测仍 Google Fonts、woff2 引用 0 → **即使 P0-6 解锁也不会随部署生效**。规则：**看到「已收口」先问「收口在哪一侧」——工作区 / HEAD / 线上是三个不同的真值。**
+- 次级发现：`catalog.json` 为 **105/105** 首曲目定义 `seo.title`/`seo.description`，HEAD 里 `track.seo` **只有 1 个调用点**（`pageMeta.ts:132` 的 `buildPlayPageMeta`，只喂 `/play/:id`）→ `/track/:id` 从未用上；工作区 `buildTrackPageMeta`(:160) 已修未入库。**记为「已修未入库」，不是待办。**
+- 更正第十三条过期结论：e2e 缺口是 **5 个页面 / 6 条路由**（Track/Calibration/Leaderboard/Profile/Legal），不是「4 个」—— `FirstShift`（`/shift`）与 `NotFound`（`/not-a-real-page`）现已被 e2e 覆盖。
+- **口径告警（必守）**：`any` 必须用「类型位置」正则 `(:\s*any\b|as\s+any\b|<any[,>]|\bany\[\]|\bany\s*\||\bany>)`；裸 `\bany\b` 在受控 ts/tsx 有 **28 处**命中（几乎全是英文注释 / UI 文案），用错口径会凭空多出 24 条假缺陷。正确口径命中恰好 **4 处**（3 测试桩 + `Duo.tsx:310`）。
+- **盘点纪律**：判断「某页面有没有接线某能力」必须 `git show HEAD:<path>`，不能 grep 工作区 —— `pages/` 下 **13 个文件** + `seo/pageMeta.ts` + `pageMeta.test.ts` 全在并行会话改动列表里（`copyImageBlob` HEAD `Results.tsx:72/242` vs 工作区 `114/608/618`，差一整版）。
+- **新坑（链接自检）**：锚点 slug 的 `\s+ → -` 会把**多个空格合并成一个 `-`**，不是每个空格一个 `-`。第一版写成 `--` 导致 5 处 MISS，改回单 `-` 后 **16 文件链接 + 64 锚点 MISS 0**。
+- **网络**：代理 7897 与直连均 200，线上取证与 `gh` 全部成功。但 `-x 7897` 取 `assets/*` 时返回 **exit 5（Couldn't resolve proxy）**，同样请求直连正常 → **取证失败先换直连再判「不可达」**，不要沿用旧值。
+- 数字（均实测）：CI run `35528074175` → **`35638587163`**（success，09-21T18:28:20Z，`headSha` = `57ac5dc` = HEAD，**连续第十九轮**写入即过期）；部署债务 52 → **53**（触及 `apps/beatscape/**` 仍 11 个、名单不变）；`a136592` 后 37 → **38**；未跟踪 1190 → **1191**；`gh workflow list` 仍漏报 6 条（**连续第十六轮**）；6 个 Issue #34–#39 · 0 PR；线上断言全部与上一轮一致（bundle `index-CDXE9BO-.js` 325,768 B / `release.json`·`og.png` 2146 B 回落 / `robots.txt` 133 B / `sitemap.xml` 911 B 仍缺 `/shift` / p4 谱面 200 / 线上 catalog 105 首 315 谱面 `preview` 仍 25 且 ID 集合一致 / 放行七字段全 null）。
+- 纪律不变：只 `git add TODO.md`（**121 项**并行会话改动全程未触碰，含 `.gitignore`）；未改 SESSION.md。本轮**未做顺手收尾**（sitemap 补 `/settings` `/profile` 属产品判断，不是收尾动作）。

@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-057-togglebeam",
+  "title": "Togglebeam",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Synthwave",
+  "bpm": 125.0,
+  "target_bpm": 125,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -3.5 dB gain before AAC encoding. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -3.5,
+  "stream_limiter": null,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-057-togglebeam.json",
+  "source_recipe_sha256": "79b8bd7a3a670f8dc03684a6d40bae71c2a8b6434e03a9e29dab0d42ae4365ce",
+  "source_master_sha256": "4c3c39f11e33923fda48e6930ab850b834486da1240da0e22e4cd54bfffc0d8d",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.09964,
+    "clipping_ratio": 2.1e-05,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "e978487b-8f27-4899-bbdf-bba26457fdf3",
+  "source_generation_receipt_sha256": "5313ec2910dca4922241618fb7ad815f7c9d6dba915605a9c333e17f529cf796",
+  "generation_prompt": "Produce one ORIGINAL 128-second stereo SYNTHWAVE GROOVE for an all-ages one-or-two-key rhythm game at STRICT 125 BPM in 4/4. AT TIME ZERO the complete groove is already playing loudly: dry kick every quarter note, snare on beats two and four, crisp eighth-note hi-hats, and a short bright midrange woodblock or bell on every beat. Keep these four layers at the SAME full audible level during EVERY SECOND of the entire 128 seconds, including 0-16, 48-96 and 112-128 seconds. Absolutely no intro, fade, ramp, quiet passage, breakdown, pad-only section, half-time, silent gap, tempo drift or reverb masking the beat. Above the continuous drum loop, alternate two clipped analog-synth stabs left and right, then answer with three higher glass-key notes rising in pitch. Use a round pulsing bass and restrained warm minor-to-major chords below the short attacks. Change the melody register, bass roots and chord sequence halfway through while the same drums and short key attacks never stop; end on a new cadence with drums still audible until the end. Bright, clean, playful and controlled highs. No vocals, speech, sampled recordings, known melody or imitation of any existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a brand-new SQUARE 1:1 original duohertz album cover for Togglebeam, an all-ages synthwave rhythm-game track. High-contrast original editorial comic-print collage on near-black ink, warm-ivory cut paper, coral red and electric cyan. Main motif: ONE giant unbranded warm-ivory TOGGLE LEVER with a broad angular handle pointing diagonally between two separate flat paper color fields, coral on the left and electric cyan on the right; a single straight cyan beam extends from the lever tip to the upper right. The lever should be a bold simple abstract shape, not a keycap, control dial, record player or real device. Crisp tactile edges, sparse halftone, strong readable silhouette at 100px and quiet dark lower fifth for a local title overlay. No numbers, ticks, screen, cassette, car, city, person, text, letters, logos, watermark or copied game art.",
+    "og_prompt": "Edit the supplied original Togglebeam square cover into a HORIZONTAL 1.9:1 duohertz social-sharing card. Preserve ONE oversized blank warm-ivory angular toggle lever pointing diagonally between separate coral-left and electric-cyan-right paper fields, with one straight cyan beam extending from its tip; near-black comic-print ink and sparse halftone. Recompose the lever and beam on the RIGHT two-thirds; leave calm dark space on the LEFT. Add exactly two crisp fully legible English lines there: 'duohertz' in lowercase electric cyan and 'Togglebeam' in larger warm ivory. Spell both exactly. Purpose-build the wide layout, do not stretch the square. No other text, letters, numbers, keycaps, dials, record players, cars, people, logos, watermark or copied game art.",
+    "cover_source_sha256": "4468bcf908f6cc5e3d06e2fc66e03f0a505c487e46d69174c3cad1fa179e6184",
+    "og_source_sha256": "f4a56d140842412c6109fefa070c4ad1b39b32b55a19c6a1a427c46834b4e0fa",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "862e5446172e2625f13323d4d83ee3cdc6d6b10af121e8688cae9ab1ca376cb5",
+    "cover-art.png": "a7b170fe4bf5774f992bf052649ffaaa55ac934ea683c888031e3d7bc9bcbe93",
+    "cover.svg": "ccdb691c44cd23ef016a437a525f05288db60e0c95450418fbe8ceb909dfc363",
+    "easy.json": "97e573711688f921d41bccdef69c165014bede0667345f07c91b38b0a73b0bd1",
+    "hard.json": "4aec69a4b4134fa97a54a5c63c5367099a4eebddf5ec226876d16d6a1c9410c6",
+    "og.png": "5fa21e80ebdc156a4e6738db139da5fc3feead098856445f19526b03c3880203",
+    "preview_48s.m4a": "2cc6a4c3fa64ff9de92ea394fe79d5806cb9d3a157326e99c1ceb6b3bdcd2608",
+    "standard.json": "cc25f8610c9cf30b005c8140672a21a8a5223dee76a3420d49d98bb716ea45a2",
+    "stream.m4a": "f566a2943a3c545deac05add175a3a4f8fce29471dfaf998df3ce099d2579b01"
+  }
+}

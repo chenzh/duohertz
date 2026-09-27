@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-060-overtone-vault",
+  "title": "Overtone Vault",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Trance",
+  "bpm": 143.0,
+  "target_bpm": 143,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -4.75 dB gain before AAC encoding. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -4.75,
+  "stream_limiter": null,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-060-overtone-vault.json",
+  "source_recipe_sha256": "bf03976b7886aa05807826d2cc7008bc71a0993344b03bd6578562c9c7c96ef2",
+  "source_master_sha256": "fd5c56baafc1bec2a4f4c1400338570ec851517de891e1e907dacdb1881eb3b5",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.14116,
+    "clipping_ratio": 2e-05,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "472002f0-d091-4423-b650-911ff217307f",
+  "source_generation_receipt_sha256": "d03ff21b759116ce2274a07caec1bb9fd203f4539e593431ffd8801d8fd8a7dc",
+  "generation_prompt": "Original all-ages uplifting trance instrumental for a one-or-two-key rhythm game at STRICT constant 143 BPM in 4/4 for one continuous 128-second performance. Begin at the FIRST AUDIO SAMPLE with a FULL-VOLUME four-on-the-floor drum machine already playing: strong short kick on EVERY quarter beat, dry clear clap on beats two and four, crisp closed eighth-note hats, and a separate short bright midrange pluck on EVERY beat. Maintain this same foreground drum-and-pluck groove at the same audible level for all 128 seconds, especially the first 16 seconds, the 64-second game boundary, the whole 64-128-second station extension and the ending. There is NO intro, fade, ramp, breakdown, quiet pad section, drum dropout, half-time change, tempo drift, reverberant wash or silent gap. Above the uninterrupted beat, play a compact four-note ascending glass-key phrase, then one higher bell note answers it on the next beat. Use a steady rounded offbeat bass and restrained sustained suspended chords behind the short notes. After the midpoint, keep every kick, clap, hat and pluck in place while the high bell leads, the four-note phrase descends instead, and the bass and chord roots change; finish with a new upward cadence while all drums remain present. Clear, rhythmic, warm, hopeful and controlled highs. No vocals, speech, samples, known melody or imitation of an existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a brand-new SQUARE 1:1 original duohertz album cover for Overtone Vault, an all-ages uplifting-trance rhythm-game track. High-contrast original editorial comic-print collage in near-black ink, warm-ivory paper, coral red and electric cyan. Main motif: ONE monumental warm-ivory CUT-PAPER ARCH or vault silhouette seen straight on, with an empty black center. From the lower center inside the arch, exactly FIVE thin electric-cyan straight sound rays FAN UPWARD toward different points on the arch ceiling, ending in five tiny cyan dashes; ONE small coral diamond keystone sits at the very top of the arch. The rays suggest ascending musical overtones, not architecture or a laser show. Bold centered silhouette distinct at 100px, sparse halftone and crisp paper edges, quiet dark lower fifth for local title overlay. No columns, buildings, cathedral, tunnel photo, people, landscape, planets, text, numbers, letters, logo, watermark or copied game art.",
+    "og_prompt": "Edit the supplied original Overtone Vault square cover into a HORIZONTAL 1.9:1 duohertz social-sharing card. Preserve ONE monumental warm-ivory cut-paper arch with empty near-black center, exactly FIVE thin cyan straight sound rays fanning upward from the lower center and ending in tiny dashes, and ONE small coral diamond keystone at the top. Recompose this arch motif on the RIGHT two-thirds against near-black editorial comic-print ink with sparse halftone; leave calm dark space on the LEFT. Add exactly two crisp fully legible English lines on the left: 'duohertz' in lowercase electric cyan and 'Overtone Vault' in larger warm ivory. Spell both exactly. Purpose-build the wide layout; do not stretch the square. No other text, letters, numbers, columns, buildings, cathedral, tunnel photo, people, landscape, logo, watermark or copied game art.",
+    "cover_source_sha256": "0580d5e7937331078e18e38e984426f999bc6f139072115c640f64a8b0abfbde",
+    "og_source_sha256": "d8e09dc3dee68d789dfb15c40f16e4f3a733cb0ca0b96153f9f73f402a666575",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "51a2c87b154024472be215e29e2e66585ddd43a58dbe2d4a3bc7a79c1cff0bd1",
+    "cover-art.png": "fd73d6adf7e4d6cb7fb11f98723e275e4c1f651673a7a88e7bfeb2e039bfe8df",
+    "cover.svg": "a193808926d224db8a18bb90aa3a63d06d75dfb897d7f8f00471f781c1725e2f",
+    "easy.json": "13f94a876199a17fc1a61a4ddca56fddf0dea14cbdbb5df0e25061ab4fbc3e12",
+    "hard.json": "c6b6eec49dfcefc0c26b5b752b6c04a005939b4ee08fb26f137f4de334b87d54",
+    "og.png": "a141cd95ce382afaba46eae8d4621265499ae8aa7c278268ebe70e48a01565c7",
+    "preview_48s.m4a": "2497a5f371bdbdda7e55abd061ad9f4a969efe8fe0aad1e934a10b7fb2d2ecaf",
+    "standard.json": "5f8edeea3d002f1481f53ee441f5346cb27cecc58c51ecb240025bf6a53f3aa4",
+    "stream.m4a": "8b3a74eb67f60a5fdd7e83b4c9402977d8f7d159eff28c7a8e9c599f8342ec65"
+  }
+}

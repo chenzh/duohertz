@@ -1,0 +1,16 @@
+{
+  "track_id": "dh-089-quickmark",
+  "title": "Quickmark",
+  "artist": "duohertz studio",
+  "subgenre": "Drum & Bass",
+  "bpm": 174,
+  "game_duration_sec": 64,
+  "stream_duration_sec": 128,
+  "model_variant": "small",
+  "generation_prompt": "Original 128-second stereo melodic drum and bass instrumental at a fixed 174 BPM in 4/4. Start immediately with a loud, fully arranged chorus: punchy two-step breakbeat, kick, snare, hats, rounded bass, bright synth chords and a clipped four-note lead hook. Keep all parts active from the first beat to the final beat. Clear per-beat melodic attacks and steady dancefloor loudness in every 8-second section. Vary the lead and chords after one minute but never remove the drums, bass or melody. Energetic playful rhythm-game music for all ages. No intro, breakdown, quiet bridge, build, outro, fade, silence, vocals, speech, samples, copying or tempo drift.",
+  "art_tool": "local-authored SVG",
+  "cover_source_svg": "scripts/duohertz-art-sources/dh-089-quickmark-cover.svg",
+  "og_source_svg": "scripts/duohertz-art-sources/dh-089-quickmark-og.svg",
+  "cover_prompt": "Original high-contrast comic-print cover: four sharply cut check marks leap across a staggered rhythm grid, cyan and ivory with one coral marker. No check box, score UI, text or character.",
+  "og_prompt": "Horizontal duohertz title card with staggered rhythm grid and quick marks on right, title Quickmark on left, sparse halftone and dark print styling."
+}

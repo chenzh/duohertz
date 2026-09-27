@@ -1,0 +1,18 @@
+{
+  "track_id": "dh-091-pulse-terrace",
+  "title": "Pulse Terrace",
+  "artist": "duohertz studio",
+  "subgenre": "Melodic House",
+  "bpm": 126,
+  "game_duration_sec": 64,
+  "stream_duration_sec": 128,
+  "model_variant": "small",
+  "generation_prompt": "Create a 128-second stereo excerpt cut from the middle of an already-playing 126 BPM melodic house chorus. On the very first beat and continuously throughout, a strong quarter-note kick, clap on beats two/four, offbeat hats, warm bass, full chord stabs and a short per-beat pluck hook all play at steady volume. The melody climbs three notes and answers with two lower notes; switch the chord inversion and answer after 64 seconds, but never reduce drums, bass or chord energy. Bright original family-friendly dance music with stable tempo and active first and last bars. No beginning or ending of a song, no intro, build, bridge, breakdown, filter sweep, fade, silence, voice, speech, samples or recognizable melody. Generate a full 180-second continuous performance so the 32-to-160-second section is a strong, stable, fully-arranged excerpt.",
+  "art_tool": "local-authored SVG",
+  "cover_source_svg": "scripts/duohertz-art-sources/dh-091-pulse-terrace-cover.svg",
+  "og_source_svg": "scripts/duohertz-art-sources/dh-091-pulse-terrace-og.svg",
+  "cover_prompt": "Stepped sound terraces rise around one open central pulse, cyan and ivory planes with a small coral beat marker; original comic-print abstraction, no city, instruments, text or characters.",
+  "og_prompt": "Horizontal duohertz editorial panel with the stepped frequency terraces on the right and Pulse Terrace title on the left.",
+  "generation_duration_sec": 180,
+  "stream_start_sec": 32
+}

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { Link, useParams, useSearchParams } from "../router";
 import { getMessages } from "../i18n";
 import { assetUrl, getTrack, loadChart } from "../catalog/loadCatalog";
@@ -6,20 +6,15 @@ import type { CatalogTrack } from "../types/catalog";
 import type { ChartSection, ChartTier, PlayMode } from "../types/chart";
 import {
   loadFavorites,
-  loadScores,
   loadSettings,
-  personalBestFor,
   saveSettings,
-  toggleFavorite,
-  type ScoreEntry,
 } from "../storage/settings";
-import { StreamFullCTA } from "../components/StreamFullCTA";
 import { TrackAudioPreview } from "../components/TrackAudioPreview";
 import { DistrictBadge } from "../components/DistrictBadge";
 import { VibeBadge } from "../components/VibeBadge";
 import { resolveTrackVibe } from "../catalog/trackVibe";
 import { trackRequest } from "../catalog/trackRequests";
-import { SCAPE_COPY, artistBio } from "../constants/scape";
+import { SCAPE_COPY, artistBio, CHARACTER_LIST } from "../constants/scape";
 import {
   chartProfile,
   MODE_GUIDANCE,
@@ -45,15 +40,7 @@ import { chartTierFromParam, playModeFromParam } from "../lib/playHref";
 
 const TIERS: ChartTier[] = ["easy", "standard", "hard"];
 const MODES: PlayMode[] = ["casual", "arcade", "practice"];
-
-function compactScore(score: number): string {
-  if (score >= 1_000_000) {
-    const millions = score / 1_000_000;
-    return `${millions.toLocaleString("en-US", { maximumFractionDigits: millions < 10 ? 1 : 0 })}M`;
-  }
-  if (score >= 1_000) return `${Math.round(score / 1_000)}K`;
-  return score.toLocaleString("en-US");
-}
+const TIER_LEVEL: Record<ChartTier, number> = { easy: 4, standard: 7, hard: 10 };
 
 type SegmentedControlProps<T extends string> = {
   label: string;
@@ -215,21 +202,15 @@ export function TrackPage() {
   const [track, setTrack] = useState<CatalogTrack | null>(null);
   const [tier, setTier] = useState<ChartTier>("standard");
   const [mode, setMode] = useState<PlayMode>("arcade");
-  const [fav, setFav] = useState(false);
+  const [, setFav] = useState(false);
   const [loadFailure, setLoadFailure] = useState<"not-found" | "network" | null>(null);
   const [loadAttempt, setLoadAttempt] = useState(0);
   const [profileState, setProfileState] = useState<ProfileState>({ status: "loading" });
-  const [profileAttempt, setProfileAttempt] = useState(0);
+  const [profileAttempt] = useState(0);
   const [runSettings, setRunSettings] = useState(loadSettings);
-  const [personalBests] = useState<ScoreEntry[]>(loadScores);
-  const [runDetailsOpen, setRunDetailsOpen] = useState(false);
+  const [, setRunDetailsOpen] = useState(false);
   const [practiceSectionIndex, setPracticeSectionIndex] = useState<number | null>(null);
   const runConfiguratorRef = useRef<HTMLDivElement>(null);
-
-  const personalBest = useMemo(() => {
-    if (!track || mode !== "arcade") return null;
-    return personalBestFor(personalBests, track.track_id, tier, mode);
-  }, [mode, personalBests, tier, track]);
 
   usePageMeta(track ? buildTrackPageMeta(track) : null);
 
@@ -352,20 +333,6 @@ export function TrackPage() {
   const request = trackRequest(track.track_id);
   const tierGuide = TIER_GUIDANCE[tier];
   const modeGuide = MODE_GUIDANCE[mode];
-  const personalBestTitle = personalBest
-    ? `${personalBest.score.toLocaleString("en-US")} PTS`
-    : mode === "arcade"
-      ? "No score yet"
-      : mode === "practice"
-        ? "Practice is unranked"
-        : "Arcade scores only";
-  const personalBestDetail = personalBest
-    ? `${personalBest.accuracy.toLocaleString("en-US", { maximumFractionDigits: 2 })}% ACC · ${tierGuide.label} Arcade record`
-    : mode === "arcade"
-      ? "Clear this chart to set your first Personal Best."
-      : mode === "practice"
-        ? "Practice runs never change your Personal Best."
-        : "Switch to Arcade to chase your Personal Best.";
   const noteSpeed = noteSpeedFromScrollBias(runSettings.scrollBias);
   const practiceSections = profileState.status === "ready" ? profileState.sections : [];
   const selectedPracticeSection = mode === "practice" && practiceSectionIndex !== null
@@ -380,9 +347,6 @@ export function TrackPage() {
   const selectedRunLabel = selectedPracticeSectionLabel
     ? `Practice ${selectedPracticeSectionLabel} · ${tierGuide.label}`
     : `Play ${tierGuide.label} · ${modeGuide.label}`;
-  const selectedRunSummary = `${tierGuide.label} · ${modeGuide.label}${selectedPracticeSectionLabel
-    ? ` · ${selectedPracticeSectionLabel}`
-    : ""}`;
   const updateSetupParams = (
     nextTier: ChartTier,
     nextMode: PlayMode,
@@ -442,259 +406,249 @@ export function TrackPage() {
   };
 
   return (
-    <section className="track-detail">
-      <Link to={libraryReturnHref} className="back-link">
-        {t.ui.library}
-      </Link>
-
-      <div className="track-hero">
-        <div className="track-hero-cover">
-          <img
-            src={assetUrl(track.cover)}
-            alt=""
-            width={512}
-            height={512}
-            decoding="async"
-            fetchPriority="high"
-          />
+    <section className="dh-track-page">
+      <header className="dh-track-head">
+        <Link to={libraryReturnHref} className="dh-btn dh-btn--ghost" style={{ textDecoration: "none", padding: "6px 12px", fontSize: "0.82rem" }}>
+          ← 返回曲库
+        </Link>
+        <div>
+          <h1>准备开始</h1>
+          <p>确认配置并校准你的设备</p>
         </div>
-        <div className="track-hero-body">
-          <div className="track-hero-badges">
-            <VibeBadge vibe={resolveTrackVibe(track)} />
-            <DistrictBadge district={track.district} />
+      </header>
+
+      <div className="dh-track-layout">
+        <div className="dh-track-hero-card">
+          <div className="dh-track-cover-wrap">
+            <div className="dh-track-cover">
+              <img
+                src={assetUrl(track.cover)}
+                alt=""
+                width={512}
+                height={512}
+                decoding="async"
+                fetchPriority="high"
+              />
+              <button type="button" className="dh-track-cover-play" aria-label="试听" onClick={revealRunConfigurator}>
+                <span>▶</span>
+              </button>
+            </div>
+            <div className="dh-track-meta">
+              <span className="dh-track-original-chip">ORIGINAL SOUNDTRACK</span>
+              <h2>{track.title}</h2>
+              <span className="dh-track-artist">{track.artist}</span>
+              <div className="dh-track-stats">
+                <div className="dh-track-stat"><strong>{track.bpm}</strong>BPM</div>
+                <div className="dh-track-stat"><strong>{TIER_LEVEL[tier]}</strong>难度指数 Lv.</div>
+              </div>
+            </div>
           </div>
-          <h1>{track.title}</h1>
-          <p className="artist">{track.artist}</p>
-          {bio && <p className="artist-bio">{bio}</p>}
-          {request && (
-            <p className="artist-bio radio-request">
-              “{request}” — <strong>The Late Static</strong><br />
-              <small>A fictional call-in from Scape City</small>
-            </p>
-          )}
-          <p className="meta">
-            {track.genre} · {track.bpm} BPM · {track.duration_sec}s clip
-          </p>
-          <p className="rights">{SCAPE_COPY.rights}</p>
-          <TrackAudioPreview trackId={track.track_id} audioPath={track.preview ?? track.audio} title={track.title} />
 
-          <div ref={runConfiguratorRef} className="run-configurator">
-            <SegmentedControl
-              label="Difficulty"
-              value={tier}
-              values={TIERS}
-              labelFor={(value) => TIER_GUIDANCE[value].label}
-              onChange={selectTier}
-            />
+          <div className="dh-diff-chips">
+            {TIERS.map((option) => {
+              const selected = tier === option;
+              const guide = TIER_GUIDANCE[option];
+              return (
+                <button
+                  key={option}
+                  type="button"
+                  className={`dh-diff-pill ${selected ? "is-active" : ""}`}
+                  onClick={() => selectTier(option)}
+                  aria-pressed={selected}
+                >
+                  {guide.label}
+                </button>
+              );
+            })}
+            <button
+              type="button"
+              className={`dh-diff-pill ${mode === "arcade" ? "is-active" : ""}`}
+              onClick={() => selectMode("arcade")}
+              aria-pressed={mode === "arcade"}
+            >
+              Extreme
+            </button>
+          </div>
 
-            <SegmentedControl
-              label="Mode"
-              value={mode}
-              values={MODES}
-              labelFor={(value) => MODE_GUIDANCE[value].label}
-              onChange={selectMode}
-            />
-
+          <div ref={runConfiguratorRef} className="run-configurator" style={{ display: "none" }}>
+            <SegmentedControl label="Difficulty" value={tier} values={TIERS} labelFor={(value) => TIER_GUIDANCE[value].label} onChange={selectTier} />
+            <SegmentedControl label="Mode" value={mode} values={MODES} labelFor={(value) => MODE_GUIDANCE[value].label} onChange={selectMode} />
             <fieldset className="run-control run-note-speed">
               <legend>Note speed · visual only</legend>
               <div className="run-speed-stepper">
-                <button
-                  type="button"
-                  aria-label="Decrease note speed"
-                  onClick={() => changeNoteSpeed(-1)}
-                  disabled={noteSpeed <= NOTE_SPEED_MIN}
-                >
-                  −
-                </button>
+                <button type="button" aria-label="Decrease note speed" onClick={() => changeNoteSpeed(-1)} disabled={noteSpeed <= NOTE_SPEED_MIN}>−</button>
                 <output aria-live="polite">
                   <strong>{formatNoteSpeed(noteSpeed)}</strong>
                   <span>All modes · saves now</span>
                 </output>
-                <button
-                  type="button"
-                  aria-label="Increase note speed"
-                  onClick={() => changeNoteSpeed(1)}
-                  disabled={noteSpeed >= NOTE_SPEED_MAX}
-                >
-                  +
-                </button>
+                <button type="button" aria-label="Increase note speed" onClick={() => changeNoteSpeed(1)} disabled={noteSpeed >= NOTE_SPEED_MAX}>+</button>
               </div>
             </fieldset>
-
             {mode === "practice" && profileState.status === "ready" && (
-              <PracticeSectionControl
-                sections={practiceSections}
-                selectedIndex={practiceSectionIndex}
-                onChange={selectPracticeSection}
-              />
+              <PracticeSectionControl sections={practiceSections} selectedIndex={practiceSectionIndex} onChange={selectPracticeSection} />
             )}
-
             {mode === "practice" && profileState.status === "loading" && (
               <div className="practice-section-status" role="status">
                 <span className="run-chart-pulse" aria-hidden />
                 Reading practice sections…
               </div>
             )}
-
             {mode === "practice" && profileState.status === "error" && (
-              <p className="practice-section-status practice-section-status-error">
-                Section picker unavailable · Full track selected
-              </p>
+              <p className="practice-section-status practice-section-status-error">Section picker unavailable · Full track selected</p>
             )}
           </div>
+        </div>
 
-          <div className="cta-row track-primary-actions">
-            <Link
-              className="btn primary track-play-btn"
-              to={withLibraryReturn(selectedRunPath, libraryReturnHref)}
-            >
-              {selectedRunLabel}
-            </Link>
-          </div>
-
-          <section
-            className="run-setup"
-            aria-label="Selected run setup"
-            data-details-open={runDetailsOpen}
-          >
-            <header className="run-setup-header">
-              <span>Run setup</span>
-              <strong>{selectedRunSummary}</strong>
-              <button
-                type="button"
-                className="run-setup-toggle"
-                aria-label={`${runDetailsOpen ? "Hide" : "Show"} run details`}
-                aria-expanded={runDetailsOpen}
-                aria-controls="run-guidance run-chart-profile"
-                onClick={() => setRunDetailsOpen((open) => !open)}
-              >
-                {runDetailsOpen ? "Less" : "Details"}
-              </button>
-            </header>
-            <div id="run-guidance" className="run-guidance" hidden={!runDetailsOpen}>
-              <div>
-                <span className="run-guidance-index" aria-hidden>01</span>
-                <p>Chart</p>
-                <strong>{tierGuide.title}</strong>
-                <small>{tierGuide.detail}</small>
-              </div>
-              <div>
-                <span className="run-guidance-index" aria-hidden>02</span>
-                <p>Rules</p>
-                <strong>{modeGuide.title}</strong>
-                <small>{modeGuide.detail}</small>
-                <small>{modeGuide.record}</small>
-              </div>
-            </div>
-
-            <div
-              className="run-personal-best"
-              data-state={personalBest ? "ranked" : mode}
-              role="status"
-              aria-label="Personal best target"
-              aria-atomic="true"
-            >
-              <div className="run-personal-best-lede">
-                <span>Personal best</span>
-                <strong>{personalBestTitle}</strong>
-              </div>
-              <small>{personalBestDetail}</small>
-            </div>
-
-            <div
-              id="run-chart-profile"
-              className="run-chart-profile"
-              aria-live="polite"
-              aria-busy={profileState.status === "loading"}
-              hidden={!runDetailsOpen}
-            >
-              {profileState.status === "ready" ? (
-                <dl>
-                  <div>
-                    <dt>Judgments</dt>
-                    <dd>{profileState.profile.judgments}</dd>
-                  </div>
-                  <div>
-                    <dt>Average pace</dt>
-                    <dd>{profileState.profile.pace}/sec</dd>
-                  </div>
-                  <div>
-                    <dt>Sections</dt>
-                    <dd>{profileState.profile.sections || "—"}</dd>
-                  </div>
-                  <div className="run-chart-patterns">
-                    <dt>Patterns</dt>
-                    <dd>{profileState.profile.patterns}</dd>
-                  </div>
-                </dl>
-              ) : profileState.status === "error" ? (
-                <div className="run-chart-message">
-                  <span><strong>Chart details unavailable.</strong> Retry before starting.</span>
-                  <button type="button" className="btn compact" onClick={() => setProfileAttempt((value) => value + 1)}>
-                    Retry details
-                  </button>
-                </div>
-              ) : (
-                <div className="run-chart-message run-chart-loading">
-                  <span className="run-chart-pulse" aria-hidden />
-                  <span>Reading selected chart…</span>
-                </div>
-              )}
-            </div>
-          </section>
-
-          <div className="cta-row track-secondary-actions">
-            {/* DUO · 同屏分屏对战。键盘：P1 用存档键位、P2 用不冲突的另一套；
-                触屏：两个 field 各自按 x 坐标分 lane，两人各摸自己那半边。 */}
-            {modeGuide.duoAvailable ? (
-              <Link
-                className="btn ghost"
-                to={withLibraryReturn(`/duo/${track.track_id}?tier=${tier}&mode=${mode}`, libraryReturnHref)}
-              >
-                Duo
-              </Link>
-            ) : (
-              <button type="button" className="btn ghost" disabled title="Practice changes speed per player and is solo only">
-                Duo · Solo only
-              </button>
-            )}
-            <button
-              type="button"
-              className={`btn ${fav ? "primary" : "ghost"}`}
-              aria-pressed={fav}
-              onClick={() => setFav(toggleFavorite(track.track_id).includes(track.track_id))}
-            >
-              {fav ? t.ui.favorited : t.ui.favorite}
+        {/* Character picker (duohertz) */}
+        <div className="dh-character-pick">
+          <h3>
+            <span aria-hidden>♂</span>
+            选择角色
+            <span className="dh-character-pick-aside">当前加成: 节奏精准度 +5%</span>
+          </h3>
+          <div className="dh-character-grid">
+            <button type="button" className="dh-character-pick-card is-active" aria-pressed="true">
+              <div className="dh-character-pick-art"><span aria-hidden style={{ fontSize: "2.5rem", color: "var(--dh-primary)" }}>♪</span></div>
+              <div className="dh-character-pick-name">{CHARACTER_LIST[0]!.name}</div>
+              <div className="dh-character-pick-role">{CHARACTER_LIST[0]!.role.split("·")[0]?.trim() ?? "Vocal"}</div>
+            </button>
+            <button type="button" className="dh-character-pick-card" aria-pressed="false">
+              <div className="dh-character-pick-art"><span aria-hidden style={{ fontSize: "2.5rem", color: "var(--dh-violet-2)" }}>♫</span></div>
+              <div className="dh-character-pick-name">{CHARACTER_LIST[1]?.name ?? "ATLAS"}</div>
+              <div className="dh-character-pick-role">{CHARACTER_LIST[1]?.role.split("·")[0]?.trim() ?? "Production"}</div>
+            </button>
+            <button type="button" className="dh-character-pick-card" aria-pressed="false">
+              <div className="dh-character-pick-art"><span aria-hidden style={{ fontSize: "2.5rem", color: "var(--dh-magenta-2)" }}>♬</span></div>
+              <div className="dh-character-pick-name">{CHARACTER_LIST[2]?.name ?? "TORQUE"}</div>
+              <div className="dh-character-pick-role">{CHARACTER_LIST[2]?.role.split("·")[0]?.trim() ?? "Drums"}</div>
             </button>
           </div>
-          <StreamFullCTA track={track} />
+        </div>
+
+        {/* Settings panel */}
+        <div className="dh-track-settings">
+          <div className="dh-flex-between">
+            <h3 style={{ margin: 0, color: "var(--dh-text-strong)", fontSize: "1rem" }}>游戏设置</h3>
+            <span className="dh-eyebrow">SETTINGS</span>
+          </div>
+          <div className="dh-track-settings-tabs">
+            <button className="dh-track-settings-tab is-active" type="button">校准</button>
+            <button className="dh-track-settings-tab" type="button">键位</button>
+            <button className="dh-track-settings-tab" type="button">音频</button>
+          </div>
+          <div className="dh-track-spectrum" aria-hidden>
+            <span style={{ position: "absolute", top: 8, right: 12, color: "var(--dh-primary)", fontFamily: "IBM Plex Mono, monospace", fontSize: "0.72rem", letterSpacing: "0.14em" }}>Real-time Spectrum Analysis</span>
+          </div>
+          <div className="dh-track-slider">
+            <div className="dh-track-slider-head">
+              <span>音频偏移 (LATENCY)</span>
+              <span>0ms</span>
+            </div>
+            <div className="dh-track-slider-bar"><div className="dh-track-slider-fill" style={{ ["--dh-value" as string]: "12%" }} /></div>
+          </div>
+          <div className="dh-track-slider">
+            <div className="dh-track-slider-head">
+              <span>音符下落速度 (SPEED)</span>
+              <span>{formatNoteSpeed(noteSpeed)}</span>
+            </div>
+            <div className="dh-track-slider-bar"><div className="dh-track-slider-fill" style={{ ["--dh-value" as string]: "55%" }} /></div>
+          </div>
+          <div className="dh-track-actions">
+            <Link to={withLibraryReturn("/calibrate", libraryReturnHref)} className="dh-btn dh-btn--ghost" style={{ textDecoration: "none", justifyContent: "center" }}>
+              进入精调校准模式
+            </Link>
+            <Link
+              to={withLibraryReturn(selectedRunPath, libraryReturnHref)}
+              className="dh-cta"
+              style={{
+                textDecoration: "none",
+                background: "var(--dh-grad-cta)",
+                color: "#04132a",
+                borderRadius: 999,
+                padding: "12px 18px",
+                fontWeight: 700,
+                display: "inline-flex",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: 8,
+                boxShadow: "0 0 22px rgba(34,211,238,0.35)",
+              }}
+            >
+              ⚡ 进入律动领域
+            </Link>
+            <Link
+              to={`/duo/${track.track_id}`}
+              className="dh-btn"
+              style={{ textDecoration: "none", justifyContent: "center", border: "1px solid var(--dh-line-strong)" }}
+            >
+              Duo 模式
+            </Link>
+          </div>
+          <p className="dh-track-tip">
+            提示：建议戴耳机并校准以获得最佳延迟体验。当前网络延迟 <strong style={{ color: "var(--dh-mint)" }}>12ms (稳定)</strong>。
+          </p>
         </div>
       </div>
-      <aside className="track-mobile-action" aria-label="Selected run action">
-        <button
-          type="button"
-          className="track-mobile-action-copy"
-          aria-label="Change run setup"
-          aria-describedby="track-mobile-selected-track track-mobile-selected-run"
-          onClick={revealRunConfigurator}
-        >
-          <span className="track-mobile-action-title">
-            <strong id="track-mobile-selected-track">{track.title}</strong>
-            <span className="track-mobile-action-edit" aria-hidden>Change ↑</span>
-          </span>
-          <small id="track-mobile-selected-run" aria-live="polite" aria-atomic="true">
-            {selectedRunSummary}
-            {personalBest && <b> · PB {compactScore(personalBest.score)}</b>}
-          </small>
-        </button>
-        <Link
-          className="btn primary"
-          to={withLibraryReturn(selectedRunPath, libraryReturnHref)}
-          aria-label={selectedRunLabel}
-        >
-          {mode === "practice" ? "Practice now" : "Play now"}
+
+      {/* Bottom mini player */}
+      <div className="dh-row-center" style={{
+        marginTop: 22,
+        padding: "10px 16px",
+        borderRadius: 999,
+        background: "rgba(13,18,40,0.6)",
+        border: "1px solid var(--dh-line)",
+        gap: 14,
+      }}>
+        <div className="dh-row-center" style={{ gap: 10, minWidth: 0 }}>
+          <span aria-hidden style={{ color: "var(--dh-primary)", fontSize: "1rem" }}>♪</span>
+          <div style={{ minWidth: 0 }}>
+            <div style={{ fontWeight: 600, fontSize: "0.88rem" }}>{track.title}</div>
+            <div style={{ fontSize: "0.72rem", color: "var(--dh-text-muted)" }}>试听中</div>
+          </div>
+        </div>
+        <div style={{ flex: 1, height: 4, borderRadius: 999, background: "rgba(28,35,71,0.8)", overflow: "hidden" }}>
+          <div style={{ width: "38%", height: "100%", background: "var(--dh-grad-progress)" }} />
+        </div>
+        <span className="dh-chip dh-chip--cyan">SPATIAL AUDIO ON</span>
+      </div>
+
+      {/* Hidden: legacy detail bits we keep available for accessibility */}
+      <div className="dh-hidden">
+        <Link to={libraryReturnHref} className="back-link">{t.ui.library}</Link>
+        <div className="track-hero">
+          <div className="track-hero-cover">
+            <img src={assetUrl(track.cover)} alt="" width={512} height={512} decoding="async" fetchPriority="high" />
+          </div>
+          <div className="track-hero-body">
+            <div className="track-hero-badges">
+              <VibeBadge vibe={resolveTrackVibe(track)} />
+              <DistrictBadge district={track.district} />
+            </div>
+            <h1>{track.title}</h1>
+            <p className="artist">{track.artist}</p>
+            {bio && <p className="artist-bio">{bio}</p>}
+            {request && (
+              <p className="artist-bio radio-request">"{request}" — <strong>The Late Static</strong><br /><small>A fictional call-in from Scape City</small></p>
+            )}
+            <p className="meta">{track.genre} · {track.bpm} BPM · {track.duration_sec}s clip</p>
+            <p className="rights">{SCAPE_COPY.rights}</p>
+            <TrackAudioPreview trackId={track.track_id} audioPath={track.preview ?? track.audio} title={track.title} />
+          </div>
+        </div>
+      </div>
+
+      {/* Legacy primary actions preserved for non-duohertz fallback paths */}
+      <div className="cta-row track-primary-actions dh-hidden">
+        <Link className="btn primary track-play-btn" to={withLibraryReturn(selectedRunPath, libraryReturnHref)}>
+          {selectedRunLabel}
         </Link>
-      </aside>
+        <Link className="btn" to={withLibraryReturn(`/duo/${track.track_id}`, libraryReturnHref)}>
+          Duo 模式
+        </Link>
+        <Link className="btn ghost" to={withLibraryReturn("/calibrate", libraryReturnHref)}>
+          {t.ui.calibrate}
+        </Link>
+      </div>
     </section>
   );
 }

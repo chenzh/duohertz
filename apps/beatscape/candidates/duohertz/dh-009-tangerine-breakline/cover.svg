@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <image href="cover-art.png" width="1024" height="1024" preserveAspectRatio="xMidYMid slice" />
+  <rect y="766" width="1024" height="258" fill="#063c43" opacity="0.78" />
+  <text x="80" y="857" fill="#a2fff4" font-family="sans-serif" font-size="35" font-weight="700" letter-spacing="3">duohertz</text>
+  <text x="80" y="934" fill="white" font-family="sans-serif" font-size="59" font-weight="700">Tangerine Breakline</text>
+</svg>

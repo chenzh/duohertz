@@ -1,0 +1,16 @@
+{
+  "track_id": "dh-081-braided-pulse",
+  "title": "Braided Pulse",
+  "artist": "duohertz studio",
+  "subgenre": "Melodic House",
+  "bpm": 126,
+  "game_duration_sec": 64,
+  "stream_duration_sec": 128,
+  "model_variant": "small",
+  "generation_prompt": "This is a continuous excerpt from the MIDDLE of an already-playing full-volume song, not an intro. The first and last beats both have clear drums, bass, chords and melody at a stable level. Create one ORIGINAL 128-second stereo MELODIC HOUSE instrumental for an all-ages one-or-two-key rhythm game at STRICT constant 126 BPM in 4/4. A steady four-on-the-floor kick lands on every quarter beat, crisp clap on beats two and four, light eighth-note hats, a short pitched pluck on each quarter beat, rounded bass and warm chord stabs stay individually audible for the full duration. Signature hook: a low two-note glass-marimba call rises into a four-note bright synth reply; the two voices cross in alternating bars like braided sound waves, with a distinct rest before each reply. At 64 seconds maintain the same groove and energy, change the bass roots, reverse the four-note contour and let the lower voice answer a beat earlier. Keep every 8-second span musically active with clear attacks and a natural evolving arrangement, not an exact duplicated half. No quiet intro, long build, half-time break, filter fade, silent tail, tempo drift, harsh distortion, vocals, speech, samples, known melody or imitation of another song.",
+  "art_tool": "local-authored SVG",
+  "cover_source_svg": "scripts/duohertz-art-sources/dh-081-braided-pulse-cover.svg",
+  "og_source_svg": "scripts/duohertz-art-sources/dh-081-braided-pulse-og.svg",
+  "cover_prompt": "Original editorial comic-print cover: two interwoven sound ribbons, one electric cyan and one warm ivory, crossing around a single coral pulse node. Dark ink paper, sparse halftone, compact central motif readable at narrow card width, no characters or copied game symbols.",
+  "og_prompt": "Original horizontal editorial card with the same interwoven two-ribbon motif on the right and crisp duohertz and Braided Pulse lettering on the left. Purpose-composed wide layout, not a stretched square."
+}

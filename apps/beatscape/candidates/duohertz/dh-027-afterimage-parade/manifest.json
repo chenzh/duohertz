@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-027-afterimage-parade",
+  "title": "Afterimage Parade",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Synthwave",
+  "bpm": 103.448,
+  "target_bpm": 104,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -3 dB gain before AAC encoding; stream-only limiter at 0.7 linear amplitude with no makeup gain. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -3.0,
+  "stream_limiter": 0.7,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-027-afterimage-parade.json",
+  "source_recipe_sha256": "8ae422d3120757d4975a804c425851efc4f5e6ea3998cd9338adb05c13740438",
+  "source_master_sha256": "9fcae0f1ba1b14696ac1699729c001b53fc00e7d903e0e063fe568b15b163acd",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.09297,
+    "clipping_ratio": 0.0,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "04a0b9ed-b539-40f7-9fc9-43de7e17709c",
+  "source_generation_receipt_sha256": "7f9fd734d3c4858c7370fae7b1c786a264a53a2ecd6fa876b78bf9b727e84112",
+  "generation_prompt": "Original all-ages synthwave instrumental for a one-or-two-key electronic rhythm game at a STRICT constant 104 BPM in 4/4. Start with a countable, quantized kick on each quarter beat, a crisp dry snare on beats two and four, clear eighth-note hats, and distinct short midrange synth attacks in every two-bar phrase; keep the core drum pulse audible from the opening through the final bar, even in quieter sections. No tempo drift, half-time breakdown, long percussion-free intro, free-time passage or smeared ambient-only middle. The signature hook is a six-note clipped analog-synth figure that repeats as an offset afterimage: the answer uses the same rhythm but a new descending contour and a warmer register. Support it with a gently pulsing rounded bass, bright offbeat chords, tiny syncopated bell sparks and spacious stereo delays without obscuring the attacks. At the midpoint change the harmony and introduce a brief two-note counter-melody over the same unbroken drum grid; in the finale layer the hook and its answer into a clear new cadence instead of duplicating the first half. One evolving 128-second stereo composition, upbeat and non-harsh. No vocals, speech, sampled recordings, known melody or imitation of an existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Generate a brand-new SQUARE 1:1 original album cover for duohertz track Afterimage Parade, an all-ages synthwave rhythm-game song. Bold high-contrast editorial comic collage in near-black ink, warm ivory paper, coral red and electric cyan, with a few warm-yellow sparks, sharp cut-paper geometry and tactile halftone grain. Main motif: ONE distinctive asymmetrical trapezoid-shaped sound frame repeated as THREE offset afterimages marching diagonally from bottom left to top right; each frame has one missing corner, crisp hard edges, and progressively different coral/cyan/ivory print layers. Small scattered square beat marks create motion without becoming a generic pixel mosaic. Strong silhouette and clear negative space at thumbnail size. No city, road, sunset, sky, rings, discs, tiled footpath, characters, text, letters, numbers, logo, watermark or imitation of an existing game.",
+    "og_prompt": "Edit the supplied original Afterimage Parade square cover into a HORIZONTAL social card for duohertz. Keep the same three offset asymmetrical trapezoid sound frames with one missing corner each, marching diagonally through near-black and warm-ivory halftone collage in coral and cyan. Move the afterimage motif to the RIGHT two-thirds with calm near-black space on the LEFT. Add exactly two crisp fully legible English lines on the left: 'duohertz' all lowercase and 'Afterimage Parade'. No other text, letters, numbers, city, sky, people, rings, logos, watermarks or existing IP. Original all-ages electronic music poster.",
+    "cover_source_sha256": "74316318a0219614956e4abb0637875b46cee34f6b46278ec27af53998245a5b",
+    "og_source_sha256": "63f576b08443f57c5e49b37b2d3463dcc9e9511e83a40492bbc99ae54ba05d0b",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "cfa6421f9904eb067ca5d578dd003c479efb314694eba07537a3c4f2ace970e6",
+    "cover-art.png": "4575bdcb17f2fe5fc0d32bf1ffb8ee63e0e7f032242d5f5004cee6a9398f2113",
+    "cover.svg": "da0edda1b3bc970033128f04cf1b4218c47ab4890312763492724118188e315a",
+    "easy.json": "d7626fb7a56dac9fbf27e0a85119efd009679513869e3713770afe5abaf6438b",
+    "hard.json": "ed23baa9c14bbe0df7ace6fe8a10cd54a00f97bddea6750d0dcb770d777ad407",
+    "og.png": "8594d9f39378376395ec6467fe03612ed24a56214e23395cbb3d91d02fa85409",
+    "preview_48s.m4a": "ee3270d6635ea25ab3024220be7a3b48be8476c0d56b3b50fe3f4551bf65dac6",
+    "standard.json": "e49353d677ac7642917a7701a42c2f6d6ba666419536c51d3336476b81407d99",
+    "stream.m4a": "9ebe2e9b5be01472b459c52d4835b2656c1e0ad2c83448265d4f66dabfca12db"
+  }
+}

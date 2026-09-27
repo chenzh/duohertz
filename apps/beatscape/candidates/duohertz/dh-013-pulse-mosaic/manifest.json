@@ -1,0 +1,34 @@
+{
+  "track_id": "dh-013-pulse-mosaic",
+  "title": "Pulse Mosaic",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Future Bass",
+  "bpm": 100,
+  "duration_sec": 60,
+  "stream_duration_sec": 120,
+  "creation_method": "Original deterministic Cmaj9\u2013Am7\u2013Fmaj7\u2013G6 half-time game movement with an independent Dm9\u2013Bbmaj7\u2013Fadd9\u2013C offbeat answer for the 120-second stream; generated oscillators and seeded noise, no sampled source or repeated game movement",
+  "source_script": "scripts/duohertz-compose-pulse-mosaic.py",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Use case: stylized-concept. Asset type: square album-cover artwork for an internal, all-ages Future Bass track candidate named Pulse Mosaic in the original duohertz electronic rhythm game. Make one distinctive musical subject: a rising mosaic of floating geometric sound tiles, with each tile acting like a small illuminated frequency pulse; the tiles assemble into one broad upward syncopated wave. Original high-contrast editorial comic-collage illustration with near-black ink background, warm-white torn-paper planes, coral-red diagonal rhythm accents, electric-cyan and lavender glowing tiles, subtle halftone texture. Dynamic asymmetry, readable focal shape at small thumbnail, energetic yet friendly for children and adults. No people, character, mask, thief motif, existing game symbol, city skyline, flashing/strobing lines, text, letters, numerals, logos, or watermark. Exactly square 1:1 composition.",
+    "og_prompt": "Use case: ads-marketing. Edit the supplied Pulse Mosaic square cover (edit target) into a wide social card for the same internal all-ages duohertz Future Bass track. Preserve the recognizable cyan-lavender rising frequency-tile mosaic, warm-white torn paper, coral diagonal rhythm slashes, near-black ink and halftone collage style. Recompose naturally to a wide 1200:630 landscape card: mosaic sweeps up through the right two-thirds, leaving the left third a quiet near-black ink panel. On that left panel add exactly two crisp, high-contrast sans-serif text lines with broad safe margins: small lowercase 'duohertz' (spell d-u-o-h-e-r-t-z); below it larger title-case 'Pulse Mosaic' (spell P-u-l-s-e space M-o-s-a-i-c). No other text, letters, numerals, logos, watermark, characters, masks or copied game symbols. Retain all-ages energy, thumbnail readability, no strobing pattern.",
+    "cover_reference": "New cover-art.png supplied to built-in imagegen as the OG edit target",
+    "cover_resize": "Built-in imagegen supplied a 1254px square PNG; sips resized it to 1024px square",
+    "og_resize": "Built-in imagegen supplied a 1733x907 wide card; sips resized it to 1200x630",
+    "cover_svg": "Local SVG title overlay around generated cover-art.png; bitmap source is unchanged"
+  },
+  "files_sha256": {
+    "audio.m4a": "3b59f13cdb7f8223fd53019896c6ac5944e24883a6ebe846b1ec62d2c73742ea",
+    "cover-art.png": "4081f11f2af646d85908a8c38ed8d6de60968af2e4d21c33fab6ce0212d004de",
+    "cover.svg": "5b1b6ecfa604b9771767b885f2ac316f1b72b34e8b4be4407601485bcec24f25",
+    "easy.json": "2eedb1811bffc9a4f90d29421d33362542fd94890a13fa56a9c9e36a6bcd208d",
+    "hard.json": "ad01abcedbcd77a570ac1b2d1509a752f9e247693d8e33efa52d8d4fd0e9c0e1",
+    "og.png": "224d567b9afdcf51a193844ee3a49b0852d5a7b0f4548afafa760ac998950310",
+    "preview_48s.m4a": "36cb67299ca7394595a23cab96184e4128e6553abd283812bfb953fb8844ad27",
+    "standard.json": "6e49a8bfe976abe910488c492ba6cf7379364759783aaa8b8f9a4654c2fe309f",
+    "stream.m4a": "db9882f8e7d1d858f20e8b979e2f3cc7de969ab7e12e12dc049eb237a68eb39a"
+  }
+}

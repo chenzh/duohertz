@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-050-second-key",
+  "title": "Second Key",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Trance",
+  "bpm": 146.0,
+  "target_bpm": 146,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -1 dB gain before AAC encoding; stream-only limiter at 0.35 linear amplitude with no makeup gain. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -1.0,
+  "stream_limiter": 0.35,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-050-second-key.json",
+  "source_recipe_sha256": "b7aea55c06e1fd5b95dafd1ad93feb9c1180bb6e209ac1cf0b85e30e79ee79d6",
+  "source_master_sha256": "9477db5f1025d6e69a8e6c607f74eea8dea2c3c353996603e552d9791964238e",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.10162,
+    "clipping_ratio": 0.0,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "e8b9f2d7-e261-4d30-8161-1ab293d3d56d",
+  "source_generation_receipt_sha256": "6476f4b4e620865aa4037f5ef5a019c7f3c35a9dad9ec77d708ac6cbcc4e2ce6",
+  "generation_prompt": "Original uplifting all-ages trance instrumental for a one-or-two-key electronic rhythm game at a STRICT constant 146 BPM in 4/4. Keep a fully audible quantized four-on-the-floor kick on EVERY quarter beat from the FIRST SECOND through the final bar, dry short clap on beats two and four, separated closed eighth-note hats, and at least one crisp bright midrange pluck attack in every bar including the quieter middle. No tempo drift, half-time break, beatless intro, drum dropout, free-time passage, pad-only bridge or smeared reverb that hides short attacks. Signature hook: a first voice plays a compact three-note ascending glass-synth call, then after exactly one eighth-note of silence a SECOND voice answers with three clipped descending warm-key notes in the opposite stereo side. The two voices should sound like two simple keys sharing one melody above rounded offbeat bass and soft suspended chord pulses. At the midpoint keep the SAME drum grid, reverse which voice leads and shift the harmony without losing the six clear motif attacks; the final quarter lets both voices alternate into a new upward resolution rather than copying the opening. One evolving 128-second stereo instrumental, bright, gentle and spacious with controlled highs. No vocals, speech, sampled recordings, known melody or imitation of an existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a brand-new SQUARE 1:1 original duohertz album cover for Second Key, an all-ages uplifting-trance rhythm-game track. Dynamic high-contrast editorial comic-print collage, distinct from any earlier single giant tilted keycap cover. Show EXACTLY TWO separate blank flat warm-ivory cut-paper key tiles seen almost from above: one at upper left, one at lower right, each a different size and angle. A single broad electric-cyan frequency wave travels across the near-black negative space BETWEEN the keys, changing to a restrained coral pulse only at the second key. Use sharp diagonal composition, tactile paper edges, sparse halftone and a tiny warm-yellow timing spark. The two-key exchange must read at 100px, with calm dark space along the lower fifth for a local title overlay. These are abstract unbranded rhythm buttons, not a computer keyboard or known controller. No lettering or symbols on the keys, no hands, people, rings, windows, road, text, letters, numbers, logos, watermark or copied game art.",
+    "og_prompt": "Edit the supplied original Second Key square cover into a HORIZONTAL 1.9:1 duohertz social-sharing card. Preserve exactly two separate blank flat warm-ivory cut-paper key tiles, one upper left and one lower right at different angles, with one electric-cyan frequency wave between them turning coral at the second tile, near-black comic-print texture and tiny yellow spark. Recompose the keys and wave on the RIGHT two-thirds; leave calm near-black space on the LEFT. Add exactly two crisp fully legible English lines on the left: 'duohertz' in lowercase electric cyan and 'Second Key' in larger warm ivory. Spell both exactly. Make a purpose-built wide composition, not a stretched square crop. No other text, letters, numbers, hands, people, keyboards, controllers, logos, watermark or copied game art.",
+    "cover_source_sha256": "a447d71329b2aa9cbc5685424869da1d101799f74f83c58c335ae1def64a9330",
+    "og_source_sha256": "5e418a9814ca8562f7b3e00cf9796581c6d8654fbb1c1751f4f7a7cd35fa3ef5",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "ab44b627c835e4c8bb22bcbb0738b778994950a9dae681d734883d1f53457c2a",
+    "cover-art.png": "edef60ba55d3211e03ac805258bfdaa74add68c6061d3e83144247ceb9919cd9",
+    "cover.svg": "8a05d4196934a8079eee470553ae6e41199fd132a024fd6f36188a5b4db2c0ff",
+    "easy.json": "dcd93ab99a0aa1cc2521b1a4ac575a9a0dda2d51a2aee124cf2c34be12a73d0c",
+    "hard.json": "4f6eb78e4f8f09b02ba76cdc9e83bc163f88825f62051d79bc9f8b6f4d18fcbc",
+    "og.png": "6ee5acb23f93ca38e93658642190fea9b145d9310b2700a85792225d0678f0b4",
+    "preview_48s.m4a": "aab17eefca1eeb50595008669701fa6830eb4a2740db34e9de02233426850318",
+    "standard.json": "b6a79b8ea9022e5ef59ccedc98c223ae2fd40a5a45355e78a88185a1518c94d7",
+    "stream.m4a": "c9dbae43e1764a6de80f15f3947e4e981f2289988cbae98778c4433b8a8fd38d"
+  }
+}

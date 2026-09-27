@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+<defs><pattern id="dots" width="26" height="26" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="2" fill="#f7efdf" opacity=".12"/></pattern></defs>
+<rect width="1024" height="1024" fill="#111521"/><path d="M0 0h251L0 207z" fill="#6de9e1"/><path d="M1024 0v208L835 0z" fill="#ff675d"/><path d="M0 1024V829l183 195z" fill="#f7efdf"/><path d="M1024 825v199H831z" fill="#6de9e1"/>
+<path d="M167 166h690l-37 689H204z" fill="#1d2632" stroke="#f7efdf" stroke-width="13"/><path d="M167 166h690l-37 689H204z" fill="url(#dots)"/>
+<path d="M225 631l201-320 106 93-151 253z" fill="#f7efdf" stroke="#111521" stroke-width="23"/><path d="M796 631L594 311l-106 93 152 253z" fill="#6de9e1" stroke="#111521" stroke-width="23"/><circle cx="510" cy="508" r="62" fill="#6de9e1" stroke="#111521" stroke-width="21"/><path d="M323 293l109-63 99 50 126-39 97 76m-343 290l-80 92m216-154l146 115" fill="none" stroke="#ff675d" stroke-width="18" stroke-linejoin="miter"/><path d="M322 275l110-62m223 14l112 82" stroke="#ffdc69" stroke-width="10"/><path d="M249 755h545" stroke="#f7efdf" stroke-width="13"/>
+<path d="M105 891h814" stroke="#f7efdf" stroke-width="9"/><path d="M105 915h260" stroke="#ff675d" stroke-width="18"/>
+</svg>

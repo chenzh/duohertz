@@ -1,0 +1,16 @@
+{
+  "track_id": "dh-094-railflash",
+  "title": "Railflash",
+  "artist": "duohertz studio",
+  "subgenre": "Drum & Bass",
+  "bpm": 172,
+  "game_duration_sec": 64,
+  "stream_duration_sec": 128,
+  "model_variant": "small",
+  "generation_prompt": "Original 128-second stereo drum and bass instrumental at fixed 172 BPM in 4/4. Loud complete groove begins on beat one: punchy two-step kick and snare, clean shuffled hats, deep but rounded rolling bass, bright chord accents and a clipped pitched synth attack on each quarter beat. Signature melody: four fast rising steps followed by a two-note low answer, with a new answering phrase in the second minute. Keep drums, bass and lead continuous and stable in every 8-second interval without a sparse bridge. Energetic, playful, family-friendly production rather than dark aggression. No intro, breakdown, fade, silence, tempo drift, clipping, vocals, speech, samples or imitation.",
+  "art_tool": "local-authored SVG",
+  "cover_source_svg": "scripts/duohertz-art-sources/dh-094-railflash-cover.svg",
+  "og_source_svg": "scripts/duohertz-art-sources/dh-094-railflash-og.svg",
+  "cover_prompt": "Two sharply angled parallel rails crossed by one coral flash, with small beat ticks; distinct from train, lightning bolt icon, keyboard or character. Original dark comic-print composition.",
+  "og_prompt": "Horizontal duohertz card with crossed rails on right, Railflash title on left, dark editorial print and sparse halftone."
+}

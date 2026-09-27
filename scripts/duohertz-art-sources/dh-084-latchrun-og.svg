@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs><pattern id="dots" width="27" height="27" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="2" fill="#f7efdf" opacity=".12"/></pattern></defs>
+  <rect width="1200" height="630" fill="#111521"/>
+  <path d="M0 0h229L0 217z" fill="#ff675d"/>
+  <path d="M1200 0v205L1022 0z" fill="#6de9e1"/>
+  <path d="M1200 474v156h-169z" fill="#ff675d"/>
+  <path d="M658 55h493l-38 519H632z" fill="#1d2632" stroke="#f7efdf" stroke-width="10"/>
+  <path d="M658 55h493l-38 519H632z" fill="url(#dots)"/>
+  <path d="M729 176h90v-36h82M729 176v253h90v-36h67" fill="none" stroke="#f7efdf" stroke-width="28" stroke-linecap="square"/>
+  <path d="M1081 170h-88v36h-72M1081 170v253h-88v-36h-72" fill="none" stroke="#6de9e1" stroke-width="28" stroke-linecap="square"/>
+  <path d="M791 316h69l35-61 36 99 43-83h59" fill="none" stroke="#111521" stroke-width="35" stroke-linecap="square" stroke-linejoin="miter"/>
+  <path d="M791 316h69l35-61 36 99 43-83h59" fill="none" stroke="#6de9e1" stroke-width="16" stroke-linecap="square" stroke-linejoin="miter"/>
+  <path d="M898 257l31 53-31 51-31-51z" fill="#ff675d" stroke="#111521" stroke-width="8"/>
+  <path d="M752 487h33m26 0h33m26 0h33" stroke="#f7efdf" stroke-width="14"/>
+  <circle cx="1049" cy="488" r="12" fill="#ffdc69"/>
+  <path d="M89 103h438" stroke="#6de9e1" stroke-width="10"/>
+  <text x="89" y="181" fill="#6de9e1" font-family="Helvetica Neue, Arial, sans-serif" font-size="66" font-weight="900">duohertz</text>
+  <path d="M89 226h438" stroke="#ff675d" stroke-width="18"/>
+  <text x="87" y="352" fill="#f7efdf" font-family="Helvetica Neue, Arial, sans-serif" font-size="77" font-weight="900">Latchrun</text>
+  <path d="M89 411h438" stroke="#f7efdf" stroke-width="7"/>
+  <path d="M89 443h225" stroke="#6de9e1" stroke-width="17"/>
+  <path d="M0 601h1200" stroke="#f7efdf" stroke-width="7"/>
+</svg>

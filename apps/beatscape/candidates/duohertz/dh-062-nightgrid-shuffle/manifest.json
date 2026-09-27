@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-062-nightgrid-shuffle",
+  "title": "Nightgrid Shuffle",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Synthwave",
+  "bpm": 111.0,
+  "target_bpm": 111,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -5 dB gain before AAC encoding. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -5.0,
+  "stream_limiter": null,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-062-nightgrid-shuffle.json",
+  "source_recipe_sha256": "f010720922f27851178eff73a967f124651a1edd9e210edca393d4667bf170aa",
+  "source_master_sha256": "be6c294448b292fd12107f8e8bce475d490cea4486bd8983265ac8d4e87b6cdf",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.15619,
+    "clipping_ratio": 2.7e-05,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "0632d25e-c252-45ba-bf27-0b6b88b47a47",
+  "source_generation_receipt_sha256": "0175178db7aeb0d36f7900c0f1398037a59129d94f9ba9aeb5356b807cfffd36",
+  "generation_prompt": "Produce one ORIGINAL 128-second stereo SYNTHWAVE instrumental for an all-ages one-or-two-key rhythm game at STRICT constant 111 BPM in 4/4. The complete audible groove begins at time zero: short clean kick on EVERY quarter beat, dry snare on beats two and four, crisp eighth-note hats with a tiny shuffle accent, and a separate short bright analog-synth key attack on EVERY quarter beat. Keep all of those layers at the SAME clear audible level through every bar, especially 0-16, 48-96 and 112-128 seconds. No fade, ambient intro, drumless break, half-time switch, quiet passage, tempo drift, filtered outro, long tail masking the beat or silent final bars. Signature hook: three descending analog-key notes, a brief warm chord stab, then one higher ping that answers. Use a rounded moving bass and restrained minor-seventh chords behind the short attacks. At 64 seconds keep the exact uninterrupted drum groove, change the bass roots and chord voicings, and turn the high ping into a two-note answer; play new short variations until the final beat, with all percussion still present. Warm, playful and crisp rather than dark or harsh; controlled highs, no vocals, speech, samples, known melody or imitation of an existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a brand-new SQUARE 1:1 original duohertz album cover for Nightgrid Shuffle, an all-ages synthwave rhythm-game track. Use the brand's original high-contrast editorial comic-print collage: near-black ink, warm-ivory cut paper, coral red and electric cyan with sparse large halftone. Main motif: exactly NINE large warm-ivory square beat tiles forming a compact 3-by-3 GRID centered in the square canvas, but the MIDDLE ROW is visibly shifted one half-tile to the right like a shuffle; leave bold dark gutters between tiles. One continuous electric-cyan stepped frequency line enters from the left, snakes through the central tile, and exits at the upper right. Two tiles have simple coral corner cuts, and one small warm-yellow beat diamond marks the center gap. Keep the entire grid in the central 60% of the square so it reads inside a narrow 100px-wide mobile crop; quiet near-black lower fifth for a separate local title overlay. Distinct from piano keys, dominoes, city windows, circuits and paper planes. Flat graphic silhouette, all ages, no strobe. No realistic city, buildings, sky, people, character, rings, text, letters, numbers, logo, watermark or copied game art.",
+    "og_prompt": "Edit the supplied original Nightgrid Shuffle square cover into a HORIZONTAL roughly 1.9:1 duohertz social-sharing card. Preserve exactly NINE compact warm-ivory square beat tiles in a 3-by-3 grid with the middle row shifted a half-tile to the right, bold dark gutters, ONE electric-cyan stepped frequency line crossing the center, two coral corner cuts and one tiny warm-yellow beat diamond. Recompose this distinct grid on the RIGHT two-thirds against near-black editorial comic-print ink with sparse halftone; leave calm dark space on the LEFT. Add exactly two crisp fully legible English lines on the left: 'duohertz' all lowercase in electric cyan and 'Nightgrid Shuffle' larger in warm ivory. Spell both exactly and do not truncate. Purpose-build the wide card; do not stretch the square. No other text, letters, numbers, city windows, buildings, people, logo, watermark or copied game art.",
+    "cover_source_sha256": "6a1727684277069082bb7b27b66fd2cbdf2a9a563e705b4fb56c608ae29c4c6e",
+    "og_source_sha256": "fae3e658b84e50e409e81e6d46bd38f55e02163516bba498267036891ad0765d",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "1aa8e764e414e887a970fb7ee09cfdcf8e14355783ff1c6962262262fdb72f95",
+    "cover-art.png": "c1793376b9fe7d72f81c90a116428dedd459a21192d64440696dc09f9cbd91c9",
+    "cover.svg": "5d53e119fb79f9d6a2a2bbb601267195983dee071a79aa5c76dc94beca5775e3",
+    "easy.json": "236e8b276085ecbc874c6e72f795155827e1305860f144da02aca61bf530c62c",
+    "hard.json": "b436901eeacf96c1013c4bacd6f8cdbb647d8528e6b931b0ca56af38ad23b3fd",
+    "og.png": "6a69a883f0b1c463dd30a3332e106450c8049c854b764aa354092e6ccb890bdf",
+    "preview_48s.m4a": "48a7282216070fe5be0812a61ae3350501c719aa6d76d7402e07fb73ef8ad824",
+    "standard.json": "0d36ebca0ffa5c48426a6c803923105f9993bf880455b1fca83374ace5b6916d",
+    "stream.m4a": "66bf38f523cff1a6483387b1b4bdc8983a6c82cbc52dbfebbc70211150412392"
+  }
+}

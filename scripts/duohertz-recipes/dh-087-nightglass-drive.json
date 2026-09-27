@@ -1,0 +1,16 @@
+{
+  "track_id": "dh-087-nightglass-drive",
+  "title": "Nightglass Drive",
+  "artist": "duohertz studio",
+  "subgenre": "Synthwave",
+  "bpm": 112,
+  "game_duration_sec": 64,
+  "stream_duration_sec": 128,
+  "model_variant": "small",
+  "generation_prompt": "This is a continuous excerpt from the MIDDLE of an already-playing full-volume song, not an intro. Complete drums, bass, chords and lead are audible from the first beat and remain present through the last beat. Create one ORIGINAL 128-second stereo SYNTHWAVE instrumental for an all-ages one-or-two-key rhythm game at STRICT constant 112 BPM in 4/4. Steady punchy electronic kick on each quarter beat, crisp backbeat snare, bright eighth hats, driving octave analog bass and shimmering vintage synth chords. Signature hook: a pointed three-note rising saw lead answered by two glassy bell plucks, with a short repeated attack on each quarter beat for readable rhythm. At 64 seconds change the bass roots and lead answer while preserving drums and overall energy. Warm neon-era timbre without quoting any existing track. No quiet intro, breakdown, fade, silent tail, tempo drift, abrasive distortion, vocals, speech, samples or familiar melody.",
+  "art_tool": "local-authored SVG",
+  "cover_source_svg": "scripts/duohertz-art-sources/dh-087-nightglass-drive-cover.svg",
+  "og_source_svg": "scripts/duohertz-art-sources/dh-087-nightglass-drive-og.svg",
+  "cover_prompt": "Original comic-print cover: one faceted glass road cut diagonally through a dark city-free field, narrow cyan and coral guide lines, broken ivory reflections. No car, cassette, sun, skyline, character or text.",
+  "og_prompt": "Horizontal duohertz title panel with diagonal faceted glass road motif on the right and Nightglass Drive on the left; sparse high-contrast ink-and-print design."
+}

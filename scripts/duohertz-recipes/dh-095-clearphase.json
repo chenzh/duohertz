@@ -1,0 +1,16 @@
+{
+  "track_id": "dh-095-clearphase",
+  "title": "Clearphase",
+  "artist": "duohertz studio",
+  "subgenre": "Trance",
+  "bpm": 144,
+  "game_duration_sec": 64,
+  "stream_duration_sec": 128,
+  "model_variant": "small",
+  "generation_prompt": "Original 128-second stereo melodic trance instrumental at fixed 144 BPM in 4/4. Begin with a full energetic chorus: strong four-on-the-floor kick, clap on two and four, clean hats, rolling bass, warm suspended chords and a distinct short plucked arpeggio attack on every quarter beat. Signature melody is a six-note ascending contour with a two-note descending reply; invert the reply and change chord roots after 64 seconds while maintaining the same drum and bass level. Continuous clear beat and hook through every 8-second interval to the final beat. Luminous uplifting family-friendly electronic music. No intro, build, breakdown, fade, silent tail, tempo drift, abrasive distortion, vocals, speech, samples, known melody or imitation.",
+  "art_tool": "local-authored SVG",
+  "cover_source_svg": "scripts/duohertz-art-sources/dh-095-clearphase-cover.svg",
+  "og_source_svg": "scripts/duohertz-art-sources/dh-095-clearphase-og.svg",
+  "cover_prompt": "Two translucent offset phase planes intersect around one tiny coral node; cyan and ivory geometry with high-contrast ink outlines, no planet, sun, eye, character or text.",
+  "og_prompt": "Wide duohertz editorial title card with intersecting transparent frequency planes on right, Clearphase on left."
+}

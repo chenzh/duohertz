@@ -1,0 +1,54 @@
+.dh-result { max-width: 760px; margin: 34px auto 60px; border: 4px solid #f3f7ff; background: #f3f7ff; color: #0b1232; box-shadow: 11px 11px 0 #8675ef; }
+.dh-result__top { display: grid; grid-template-columns: minmax(0, 1fr) 190px; gap: 20px; align-items: stretch; padding: 24px; }
+.dh-result__copy { min-width: 0; }
+.dh-result__eyebrow { margin: 0 0 10px; color: #3d3988; font: 700 11px/1.3 "IBM Plex Mono", monospace; letter-spacing: .1em; text-transform: uppercase; }
+.dh-result h2 { margin: 0; color: #0b1232; font: italic clamp(38px, 6vw, 66px)/.95 Anton, Sora, sans-serif; }
+.dh-result h2:focus { outline: none; }
+.dh-result h2:focus-visible { outline: 3px solid #0b1232; outline-offset: 5px; }
+.dh-result__copy > p:not(.dh-result__eyebrow) { margin: 14px 0; font-size: 16px; line-height: 1.4; }
+.dh-result__track { display: inline-block; padding: 6px 9px; background: #8675ef; font: 700 12px/1.3 "IBM Plex Mono", monospace; text-transform: uppercase; }
+.dh-result__art { display: grid; place-items: center; min-width: 0; overflow: hidden; background: #0b1232; color: #69dff5; }
+.dh-result__art img { width: 100%; height: 100%; object-fit: cover; }
+.dh-result__art span { font-size: 110px; }
+.dh-result__solo { padding: 10px 24px 24px; }
+.dh-result__score { display: flex; align-items: center; gap: 18px; }
+.dh-result__score > strong { color: #3d3988; font: 98px/.8 Anton, Sora, sans-serif; }
+.dh-result__score > strong span { font-size: .55em; }
+.dh-result__score > div { display: grid; gap: 4px; font: 700 13px/1.2 "IBM Plex Mono", monospace; text-transform: uppercase; }
+.dh-result__score small { color: #4c4c57; }
+.dh-result__judgments { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 7px; margin: 22px 0 0; }
+.dh-result__judgments > div { min-width: 0; border: 2px solid #0b1232; padding: 8px; }
+.dh-result__judgments dt { font: 700 11px/1.2 "IBM Plex Mono", monospace; text-transform: uppercase; }
+.dh-result__judgments dd { margin: 5px 0 0; font: 36px/1 Anton, Sora, sans-serif; }
+.dh-result__players { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; padding: 0 24px 24px; }
+.dh-result__players > section { min-width: 0; border: 3px solid #0b1232; padding: 14px; }
+.dh-result__players > section:nth-child(2) { background: #d7fbf6; }
+.dh-result__players h3 { margin: 0 0 14px; font: italic 30px/1 Anton, Sora, sans-serif; text-transform: uppercase; }
+.dh-result__players .dh-result__score > strong { font-size: 64px; }
+.dh-result__players .dh-result__judgments { gap: 4px; }
+.dh-result__players .dh-result__judgments > div { border-width: 1px; padding: 5px; }
+.dh-result__players .dh-result__judgments dt { font-size: 9px; }
+.dh-result__players .dh-result__judgments dd { font-size: 26px; }
+.dh-result__actions { display: flex; flex-wrap: wrap; gap: 9px; padding: 18px 24px; border-top: 4px solid #0b1232; background: #0b1232; }
+.dh-result__actions :is(button, a) { display: inline-flex; min-height: 48px; align-items: center; justify-content: space-between; gap: 14px; border: 2px solid #f3f7ff; padding: 9px 12px; background: #18244b; color: #f3f7ff; cursor: pointer; font: 700 12px/1.2 "IBM Plex Mono", monospace; text-decoration: none; text-transform: uppercase; }
+.dh-result__actions button { background: #8675ef; color: #0b1232; }
+.dh-result__actions :is(button, a):focus-visible { outline: 3px solid #69dff5; outline-offset: 3px; }
+.dh-result__disclaimer { display: block; padding: 12px 24px; color: #4c4c57; line-height: 1.4; }
+@media (max-width: 600px) {
+  .dh-result { margin: 28px 6px 48px; box-shadow: 5px 5px 0 #8675ef; }
+  .dh-result__top { grid-template-columns: minmax(0, 1fr) 78px; gap: 10px; padding: 14px; }
+  .dh-result__art { min-height: 100px; }
+  .dh-result__copy > p:not(.dh-result__eyebrow) { font-size: 13px; }
+  .dh-result__track { font-size: 10px; }
+  .dh-result__solo { padding: 12px 14px 18px; }
+  .dh-result__score > strong { font-size: 72px; }
+  .dh-result__judgments { gap: 4px; margin-top: 16px; }
+  .dh-result__judgments > div { padding: 5px; }
+  .dh-result__judgments dt { font-size: 9px; }
+  .dh-result__judgments dd { font-size: 28px; }
+  .dh-result__players { grid-template-columns: 1fr; gap: 8px; padding: 0 14px 18px; }
+  .dh-result__actions { padding: 14px; }
+  .dh-result__actions :is(button, a) { width: 100%; }
+  .dh-result__disclaimer { padding: 12px 14px; }
+}
+@media (prefers-reduced-motion: reduce) { .dh-result { box-shadow: none; } }

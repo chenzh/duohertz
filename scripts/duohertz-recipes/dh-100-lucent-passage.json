@@ -1,0 +1,18 @@
+{
+  "track_id": "dh-100-lucent-passage",
+  "title": "Lucent Passage",
+  "artist": "duohertz studio",
+  "subgenre": "Trance",
+  "bpm": 146,
+  "game_duration_sec": 64,
+  "stream_duration_sec": 128,
+  "generation_duration_sec": 180,
+  "stream_start_sec": 32,
+  "model_variant": "small",
+  "generation_prompt": "Create one original 180-second stereo melodic trance instrumental at strict 146 BPM in 4/4 for an all-ages one-or-two-key rhythm game. By 24 seconds a complete uplifting dance chorus plays: four-on-the-floor kick on every beat, clap on two and four, bright eighth hats, rolling bass, warm suspended chords and a distinct short arpeggio pluck attack on each quarter beat. Signature melody: five ascending notes answer a two-note downward curve, then invert the final answer after 96 seconds while chord roots evolve. Keep 32-to-160 seconds fully arranged and near-uniform in loudness, no low-energy bridge. Luminous, clear and melodic, not a repeated identical half. No vocals, speech, samples, tempo drift, abrasive distortion, copied melody, fade or silence in the selected section.",
+  "art_tool": "local-authored SVG",
+  "cover_source_svg": "scripts/duohertz-art-sources/dh-100-lucent-passage-cover.svg",
+  "og_source_svg": "scripts/duohertz-art-sources/dh-100-lucent-passage-og.svg",
+  "cover_prompt": "Original comic-print cover: two illuminated parallel frequency corridors bend through an open angular passage, one coral arrival pulse; no door, sun, moon, landscape, person or text.",
+  "og_prompt": "Wide duohertz title card with angular frequency passage on right and Lucent Passage on left."
+}

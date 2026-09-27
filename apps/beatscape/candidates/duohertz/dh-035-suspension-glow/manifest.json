@@ -1,0 +1,50 @@
+{
+  "track_id": "dh-035-suspension-glow",
+  "title": "Suspension Glow",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Trance",
+  "bpm": 146.341,
+  "target_bpm": 146,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -3 dB gain before AAC encoding. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-035-suspension-glow.json",
+  "source_recipe_sha256": "d6b6f2f79868c5c54700c45dc360c991e41530243e61dc55981d09cee19432b5",
+  "source_master_sha256": "35a4886bad42a52e869a3ebb62064d91ae123b3dcbe352c71a4f8e74bdbc25a8",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.14407,
+    "clipping_ratio": 0.0,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "d7e53119-d281-44d4-9f81-dcadffde54fe",
+  "source_generation_receipt_sha256": "41d097705470a13d959cfb62948457b26cc81d6a7d3a80ca142d6f67bf85aecc",
+  "generation_prompt": "Original all-ages uplifting-trance instrumental for a one-or-two-key electronic rhythm game at a STRICT constant 146 BPM in 4/4. Maintain a quantized four-on-the-floor kick on every quarter beat, crisp short clap on beats two and four, distinct eighth-note closed hats and clean short midrange pluck attacks throughout all 128 seconds, even in quieter passages. No tempo drift, half-time breakdown, free-time, long drum-free gap or ambient-only middle. Signature hook: a five-note ascending glass-organ figure that pauses on a suspended tone, answered by two lower warm synth notes resolving gently after one beat; keep both melodic lines distinct from previous tracks. Support with rolling soft bass, luminous offbeat chord stabs and small sixteenth-note glints without masking attacks. At the midpoint introduce a new chord inversion and make the suspended note descend over the SAME continuous drum grid; the finale places the answer before the question to form a new cadence instead of repeating a full section. One evolving 128-second stereo instrumental, optimistic and non-harsh. No vocals, speech, sampled recordings, known melody or imitation of an existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a brand-new SQUARE 1:1 original album cover for duohertz track Suspension Glow, an all-ages uplifting-trance rhythm-game song. Original high-contrast editorial screen-print collage with near-black ink and warm ivory paper; electric cyan and ivory dominate, coral red is only a small answering mark, with tiny yellow highlights. Main motif: TWO very large unequal diamond-shaped translucent paper panels suspended at different heights, linked by ONE thin zigzag cyan frequency filament; the lower panel carries a small coral notch and the upper panel glows with a bold ivory center. Keep generous near-black negative space, sharp cut-paper edges, selective halftone and a clear tiny-thumbnail silhouette. This is graphic sound energy, not jewelry, crystals, sky or landscape. No circles, rings, fans, wave crests, text, letters, numbers, people, logos, watermark or imitation of any existing game.",
+    "og_prompt": "Edit the supplied original Suspension Glow square art into a HORIZONTAL duohertz social card. Preserve the two unequal suspended diamond-shaped cyan/ivory paper panels and the single thin zigzag frequency filament, with the lower panel's small coral notch and near-black editorial print texture. Recompose them on the RIGHT two-thirds with calm dark space on the LEFT. Add exactly two crisp fully legible English lines: 'duohertz' all lowercase and 'Suspension Glow'. No other text, letters, numbers, people, jewelry, crystals, sky, circles, logos, watermarks or existing IP.",
+    "cover_source_sha256": "23872fa7678a6d4f9e3eb886407fd0b7f8d8ec455bf435fbe214e6f4bcec20a5",
+    "og_source_sha256": "08a974fd8f60d362b241a6fec6b6a6ce1aa8604343073e5cc95ae1293965566f",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png",
+    "cover_revision_prompt": "Revise the generated square cover into a flat editorial screen print: preserve the two unequal suspended diamond panels, cyan zigzag filament, ivory center and coral notch; remove smoky glow, lens bloom, fuzzy shadows and photorealistic crystal appearance; use hard cut-paper edges, near-black negative space and selective halftone."
+  },
+  "files_sha256": {
+    "audio.m4a": "595398877dc304b0370aa9e5efbf94b7297fc2a0a5436ce383ef6d22cfd61c81",
+    "cover-art.png": "fd0c8e8142863cee0041a6b7131f4edebd252fe0f0dadd56ab233a919e712163",
+    "cover.svg": "85110a2781ceb949a4824d2f113eeffc06ed48387cdc1488d09fd18f4bbcbace",
+    "easy.json": "246fc60ef1ed3e43d76eaf89594e3e8ed548b9246735231e1d521185cda419b3",
+    "hard.json": "9fa729093daf6ec392bdc123205db15aa44ac62cdccc122d9c75cf3559be58ec",
+    "og.png": "7009ce1b5a245fc885402a9bf59b0567b9de3988ba6226460d434d291fa257e3",
+    "preview_48s.m4a": "1adaa4ecc1c0c30e6d8d8290c5624bccd84d28bd917b15e142365ca68f1cfd2e",
+    "standard.json": "4119c52fe7319a098a581b38b061fd3d1cf68ea3340cd24cd36dec386512dcfe",
+    "stream.m4a": "a819e72ae97aa0ac38f4083ac3b609122db09c12a0ac603f92f5a5dc801c806c"
+  }
+}

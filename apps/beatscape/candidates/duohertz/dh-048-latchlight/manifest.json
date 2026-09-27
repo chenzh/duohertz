@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-048-latchlight",
+  "title": "Latchlight",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Future Bass",
+  "bpm": 140.0,
+  "target_bpm": 140,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -6 dB gain before AAC encoding; stream-only limiter at 0.35 linear amplitude with no makeup gain. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -6.0,
+  "stream_limiter": 0.35,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-048-latchlight.json",
+  "source_recipe_sha256": "0a14f855904582002daeca39aa6734e244c5b6a12cb735ab755a2db041456ba6",
+  "source_master_sha256": "d8475ecb3cd5ddf13f4b5eee4d083475ce177726afafc75f636d167510b15356",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.19866,
+    "clipping_ratio": 0.00034,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "a3470723-4578-42cc-ba14-6a2283bc22cc",
+  "source_generation_receipt_sha256": "d3c957fd99629557cf1da6bea4b577086a65f629718b528ff6de2f2bf454d60d",
+  "generation_prompt": "Original all-ages future-bass instrumental for a beginner-friendly one-or-two-key electronic rhythm game at a STRICT constant 140 BPM in 4/4 for 128 seconds. Keep a FULLY AUDIBLE quantized drum machine from the first second through the last bar: short strong kick on EVERY quarter beat, dry snare on beats two and four, distinct closed eighth-note hats and at least one exposed short bright midrange pluck or woodblock attack in EVERY bar, including the first 16 seconds and transitions. No fade-in, beatless intro, drum dropout, half-time breakdown, tempo drift, ambient-only bridge or long smeared reverb tail. Signature hook: two punchy low rubber-synth stabs separated by an eighth-note gap, answered by four quick bright chord-pluck notes rising one step at a time, with the fourth abruptly cut short. The low and high timbres must remain distinct. Use round offbeat bass and wide warm sidechained chord swells behind the short attacks, leaving beat markers clear. At the midpoint maintain the SAME unbroken drum grid, let the four-note answer lead and move the low call up a register with different bass roots; the final quarter interlocks both motifs in a new syncopated cadence rather than repeating the opening. One evolving 128-second stereo instrumental, buoyant, colorful and gentle on the ears, with no abrasive distortion. No vocals, speech, sampled recordings, known melody or imitation of an existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a brand-new SQUARE 1:1 original duohertz album cover for Latchlight, an all-ages future-bass rhythm-game track. High-contrast editorial comic-print collage on near-black ink: TWO oversized coral-red angular paper clamps enter from the left and right but stop short of meeting, leaving a dramatic central gap. A single electric-cyan frequency pulse springs upward through that gap as four distinct thick rising segments, with one tiny warm-yellow release spark above it. Warm-ivory cut-paper shadow under the clamps, sparse halftone, bold asymmetric silhouette readable at 100px, and a calm dark lower fifth for a local title overlay. It should feel like rhythm releasing light, not a literal mechanical lock or door. No circles, rings, windows, rails, buildings, hands, people, text, letters, numbers, logos, watermark or copied game art.",
+    "og_prompt": "Edit the supplied original Latchlight square cover into a HORIZONTAL 1.9:1 duohertz social-sharing card. Preserve the two large separate coral-red angular paper clamps with one dark gap, the electric-cyan frequency pulse rising through it in four thick segments, one tiny warm-yellow spark, warm-ivory paper shadow and near-black comic-print texture. Recompose the motif on the RIGHT two-thirds and leave calm near-black space on the LEFT. Add exactly two crisp fully legible English lines there: 'duohertz' in lowercase electric cyan and 'Latchlight' in larger warm ivory. Spell both exactly. Make a purpose-built wide card, not a stretched square crop. No other text, letters, numbers, literal locks, doors, hands, people, logos, watermark or copied game art.",
+    "cover_source_sha256": "e8ce5d1ba2eae14f42079b4c03eb532a40f9afe9c277ebee06719ad9f7dddf93",
+    "og_source_sha256": "c05d1929d65c0ed701ecbf29a309ae2954663e411bfca487da4a5aa4de8cca05",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "0492b501bef4d941e6da449b3200377e4e3cf524eeeca65537e1968239aa9083",
+    "cover-art.png": "9804b2c54d7e985e893e64d267ae439aac90f2d97f9475bb430969aa53ee8d7c",
+    "cover.svg": "0a47ba215c188d2c613c950f0b0624ae05c87d57ec4556379dba270fe94bcd2b",
+    "easy.json": "63f41758cf24961cd184db7ab52ac7ca5889faa60fd6bf33cc5c86b18026a948",
+    "hard.json": "e91a7404873702d33a39efe691e1c7147954bcab068655045e58100d9ff7fbb5",
+    "og.png": "9d5813a8bf49985f201456dc39cb4449e52836d7a845057d6bbf62407cb7e9ac",
+    "preview_48s.m4a": "07f0a36ac0c16967231978e5154677f8cb65ee65abba1d995174c25fe15313d7",
+    "standard.json": "290708f8002f02e3990f998da5e69130e267124c7afa4dbc268f893ce28505c5",
+    "stream.m4a": "938e8bc8a82bbed31d66ffc5f5d25f66cf6b598149286009c1c272f436ee4755"
+  }
+}

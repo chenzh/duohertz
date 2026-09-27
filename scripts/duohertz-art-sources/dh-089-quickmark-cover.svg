@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+<defs><pattern id="dots" width="25" height="25" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="2" fill="#f7efdf" opacity=".13"/></pattern></defs>
+<rect width="1024" height="1024" fill="#111521"/><path d="M0 0h250L0 205z" fill="#6de9e1"/><path d="M1024 0v210L834 0z" fill="#ff675d"/><path d="M0 1024V826l180 198z" fill="#f7efdf"/><path d="M1024 825v199H830z" fill="#6de9e1"/>
+<path d="M167 166h690l-37 689H204z" fill="#1d2632" stroke="#f7efdf" stroke-width="13"/><path d="M167 166h690l-37 689H204z" fill="url(#dots)"/>
+<path d="M239 298h546M239 411h546M239 524h546M239 637h546" stroke="#f7efdf" stroke-width="10" opacity=".45"/><path d="M259 279l43 46 81-90m-72 150l43 46 81-90m-24 157l43 46 81-90m-19 158l43 46 81-90" fill="none" stroke="#111521" stroke-width="54" stroke-linecap="square" stroke-linejoin="miter"/><path d="M259 279l43 46 81-90m-72 150l43 46 81-90m-24 157l43 46 81-90m-19 158l43 46 81-90" fill="none" stroke="#6de9e1" stroke-width="31" stroke-linecap="square" stroke-linejoin="miter"/><path d="M676 288l95 0m-82 113h86m-73 113h91m-65 113h73" stroke="#ff675d" stroke-width="18"/><path d="M255 753h540" stroke="#f7efdf" stroke-width="11"/>
+<path d="M105 890h814" stroke="#f7efdf" stroke-width="9"/><path d="M105 914h260" stroke="#ff675d" stroke-width="18"/>
+</svg>

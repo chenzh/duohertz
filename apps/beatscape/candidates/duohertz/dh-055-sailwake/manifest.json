@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-055-sailwake",
+  "title": "Sailwake",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Trance",
+  "bpm": 148.0,
+  "target_bpm": 148,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -2.5 dB gain before AAC encoding. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -2.5,
+  "stream_limiter": null,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-055-sailwake.json",
+  "source_recipe_sha256": "0376c27dfdbab857d9ff7fe0dd3e9cfcc2b81efaa556a1c4952121d6d9a1d502",
+  "source_master_sha256": "76eedf3648846087ad170f9020f446865a435cabc86c087a8fd3212a5f05c17f",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.08286,
+    "clipping_ratio": 7e-06,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "423d21c9-89a5-4f83-84fc-0f22ea512df9",
+  "source_generation_receipt_sha256": "442e88eadcd45bba22534370a039bbe57c0f1b497f70d03880eab4ef1d67706c",
+  "generation_prompt": "Original all-ages uplifting trance instrumental for a beginner-friendly one-or-two-key electronic rhythm game at a STRICT constant 148 BPM in 4/4 for 128 seconds. Begin with a FULLY AUDIBLE four-on-the-floor drum machine at FINAL level from the FIRST SECOND: a short clear kick on EVERY quarter beat, dry prominent clap or snare on two and four, crisp closed eighth-note hats, and one separate midrange pluck attack on EVERY beat through all transitions. No fade-in, pad-only intro, beatless breakdown, half-time passage, tempo drift, silent middle, free-time section or long reverb that hides onsets. Signature hook: a bright three-note arpeggio rises in small steps like one paper sail catching wind, then a second warmer three-note arpeggio answers in a lower register and crosses the first melody on its last note. Keep both arpeggios individually audible over round bass and restrained wide chord support, with one tiny bell accent marking the crossing. At the midpoint keep the exact uninterrupted kick/snare/hat grid, put the lower answer first, move the upper line to new chord tones and add a short counter-rhythm; the ending unites both lines in a fresh upward cadence rather than repeating the opening. One evolving 128-second stereo instrumental, clear and optimistic with controlled highs, no abrasive distortion. No vocals, speech, sampled recordings, known melody or imitation of an existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a brand-new SQUARE 1:1 original duohertz album cover for Sailwake, an all-ages uplifting-trance rhythm-game track. Original high-contrast editorial comic-print collage on near-black ink with warm-ivory paper, electric cyan and coral red. Main motif: exactly TWO broad, unequal triangular FOLDED PAPER SAIL shapes pointing diagonally upward, separated at their bases but crossing only at their tips; the larger sail is warm ivory with one cyan cut edge, the smaller is coral with one warm-ivory cut edge. Beneath them, exactly ONE short electric-cyan zigzag wake made of three thick straight segments marks the beat, not literal water. Strong clean silhouettes at 100px, tactile torn-paper edge, sparse halftone, calm dark lower fifth for local title overlay. No boat, sea, skyline, buildings, flag, kite, compass, circles, rings, stars, people, text, letters, numbers, logos, watermark or copied game art.",
+    "og_prompt": "Edit the supplied original Sailwake square cover into a HORIZONTAL 1.9:1 duohertz social-sharing card. Preserve exactly TWO unequal upward diagonal folded-paper sails whose tips cross once, a larger warm-ivory sail with cyan cut edge and a smaller coral sail with ivory cut edge, plus the single short three-segment electric-cyan zigzag wake; near-black comic-print ink and sparse halftone. Recompose the sails on the RIGHT two-thirds, leaving calm dark space on the LEFT. Add exactly two crisp fully legible English lines on the left: 'duohertz' in lowercase electric cyan and 'Sailwake' in larger warm ivory. Spell both exactly. Purpose-build a wide card, not a stretched square crop. No other text, letters, numbers, boat, sea, skyline, flag, kite, compass, rings, stars, people, logos, watermark or copied game art.",
+    "cover_source_sha256": "e457bd155e48f498bdd214dd8bb95408e8d8673613f05e2df6fc5db6387667d4",
+    "og_source_sha256": "5716e342e72d59228c25d58b5993a66506a6c2b7c4fea4b37c153880cf32e338",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "fa7a820c8be012c9c80179c1f71818401b07db82aeb9f2367c0d230e21fb3a08",
+    "cover-art.png": "f8340372389ac3d2779664f516b9e91ed0441c65bac66e42cce6775eba35bb88",
+    "cover.svg": "1bc1b87f8aa6d543cab16fa00e355154a5f0410e3b1e5f0848cccd1027ca317f",
+    "easy.json": "71b94da53454e6d6bdf37c69ba23a37ef3c11abfc37a4ceadae47e45ce140120",
+    "hard.json": "b7ff64130c60ac724bda49852628413a71167c14a016f6f088329e2201f1bb30",
+    "og.png": "5201963fca51e9410f099d3c230f4ab049e93243dc7f13226a048a714b143870",
+    "preview_48s.m4a": "5941961c26e742886a75af45c99efcbc84973a53177e2e2e73e827c337bc2d93",
+    "standard.json": "a9f3631ab8ca52d28ce6ae00b8f47962d99eac511819db3e4ba949c360fbf902",
+    "stream.m4a": "e89570bbe786c61febf5ee2988a5386dad1b6971a95a05862eef890026e5a8f9"
+  }
+}

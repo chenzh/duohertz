@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-054-staple-hop",
+  "title": "Staple Hop",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Drum & Bass",
+  "bpm": 168.0,
+  "target_bpm": 168,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -6 dB gain before AAC encoding; stream-only limiter at 0.35 linear amplitude with no makeup gain. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -6.0,
+  "stream_limiter": 0.35,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-054-staple-hop.json",
+  "source_recipe_sha256": "32c3ace32bab8bfcc03aeeb7a9abf1d086a5493a01665a3c39af49115db5193e",
+  "source_master_sha256": "08349a61fe0538d5a673e838f8009d79b61704fc5125674f637886909ffcb975",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.17927,
+    "clipping_ratio": 0.000195,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "7371fa52-b1ec-4a34-8aed-9fd7ffcf5d77",
+  "source_generation_receipt_sha256": "05cb10ac1957f946beb7c3a07d4d655834a2f7037054b1ac50cc43d6d217b0a7",
+  "generation_prompt": "Original all-ages liquid drum-and-bass instrumental for a beginner-friendly one-or-two-key electronic rhythm game at a STRICT constant 168 BPM in 4/4 for 128 seconds. START AT FULL GROOVE at t=0 with no intro: the very first bar must have a loud, dry kick and snare at the SAME final-mix level as the middle of the track, plus distinct midrange key attacks. Never use an eight-second quiet buildup, ramp, filtered beat or near-silent opening. From the FIRST SECOND to the last bar keep an audible quantized two-step grid: short punchy kick on beats one and three, dry strong snare on beats two and four, crisp closed eighth-note hats with occasional quiet sixteenth-note skips, and at least eight separate short midrange pitched or muted-key attacks in every two-bar phrase including the first 16 seconds and the quieter middle. Never fade or filter away the beat; no ambient intro, drum dropout, half-time breakdown, free-time passage, tempo drift or long smeared reverb hiding attacks. Signature hook: two warm clipped synth tones hop up by a fifth, a third bright glass-key note lands one eighth-note early, then a lower rounded bass-key answer drops after the snare. Keep the pitched hook above a nimble sub bass and small warm chord fragments, with ghost snares adding movement without overpowering the main backbeat. At the midpoint preserve the SAME uninterrupted two-step grid, start the phrase with the low answer, change the order of the two rising synth tones and give the glass-key anticipator a higher register; the final quarter adds a short syncopated counterline and a fresh cadence instead of repeating the opening. One evolving 128-second stereo instrumental, fast but welcoming, with clean attacks, controlled highs and no harsh distortion. No vocals, speech, sampled recordings, known melody or imitation of an existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a brand-new SQUARE 1:1 original duohertz album cover for Staple Hop, an all-ages drum-and-bass rhythm-game track. Original high-contrast editorial comic-print collage on near-black ink. Main motif: exactly TWO huge warm-ivory U-shaped BENT PAPER STAPLES, tilted at different angles and clearly separated, one higher and one lower, with a small electric-cyan square hopping through the air between their open ends. Add a short coral paper shadow behind the lower staple to suggest a syncopated landing. Broad simple silhouettes, tactile cut edges, sparse halftone and quiet dark space in the lower fifth for a local title overlay. The staples are abstract folded paper marks, not a metal office product or a doorway. Readable at 100px. No rail, road, ladder, window, door, building, circles, rings, lightning bolt, people, text, letters, numbers, logos, watermark or copied game art.",
+    "og_prompt": "Edit the supplied original Staple Hop square cover into a HORIZONTAL 1.9:1 duohertz social-sharing card. Preserve exactly TWO separate oversized warm-ivory U-shaped bent paper staples at unequal heights, the one electric-cyan square hopping between their open ends, and the short coral landing shadow in a near-black comic-print field with sparse halftone. Recompose the motif on the RIGHT two-thirds and leave the LEFT third calm dark ink. Add exactly two crisp fully legible English lines on the left: 'duohertz' in lowercase electric cyan and 'Staple Hop' in larger warm ivory. Spell both exactly. Purpose-build the horizontal composition rather than stretching the square. No other text, letters, numbers, office product, doorway, building, rail, road, rings, people, logos, watermark or copied game art.",
+    "cover_source_sha256": "a846511b280c1d6864cf458cd68e28f71cfa9fc710e42f5467448367c197ce51",
+    "og_source_sha256": "4ccb425c134da7e3ba14dcbb87dcacaf7fbf1a2cfdb72c02a9bac072250ef971",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "d2c7f79d54e87c094867768ae2e10a49f4fee51e688cdb7e26cffcd74c8dd780",
+    "cover-art.png": "ef8cb2216e6c35b1966b39bbbb9ecd9fe99a17f18c2cb498e6b9e21093e3c2ce",
+    "cover.svg": "4b6556bb639603b87f88bc335cce4ace722c23198913f1e87ceea8c998fa99eb",
+    "easy.json": "8e525850d8cde7ce4090d2e5a00e3e76f17bc6366bc92eb36b9060fdad5201fb",
+    "hard.json": "87d286b43f9b4190b1742fc860f7dc1d797d34935e7f3d6bc6ca6fe73a9f8636",
+    "og.png": "49cb6fc760887ff37c586be5bf33b5429012a1372be1c0230f5ff0d55710166b",
+    "preview_48s.m4a": "29ce3889de4b142759038fed236db42f83f45c1639f27eaa207d4262fe823f71",
+    "standard.json": "4eb7819f9c7a91dd9870e2a8261cc7809169ce1715198c8034de4d6167f26dbc",
+    "stream.m4a": "c165545e663c7e31be445e22144c7a8f25e7cea59abc7bbb02d1f63af2595fa7"
+  }
+}

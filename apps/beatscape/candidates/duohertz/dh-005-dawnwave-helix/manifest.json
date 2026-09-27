@@ -1,0 +1,58 @@
+{
+  "track_id": "dh-005-dawnwave-helix",
+  "title": "Dawnwave Helix",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Trance",
+  "bpm": 135,
+  "duration_sec": 64,
+  "stream_duration_sec": 128,
+  "creation_method": "Independent deterministic A–E–F# minor–D uplifting Trance game movement and new B minor–G–D–A answer movement for a 128-second stream master; generated oscillators and seeded noise only, no sampled source audio or repeated first-minute loop; stream-only 0.7 amplitude limiter without makeup gain before AAC",
+  "stream_limiter": 0.7,
+  "source_script": "scripts/duohertz-compose-dawnwave-helix.py",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "status": "visual_candidate_unreviewed",
+    "revision_reason": "Unify the early pastel dawn landscape with duohertz comic print while preserving the two helix trails and dawn origin",
+    "cover_prompt": "Edit Image 1 into a NEW original SQUARE 1:1 cover-art candidate for duohertz track Dawnwave Helix. Image 1 is the content reference: preserve ONLY the idea of TWO separate upward spiraling dawn-frequency trails born from a single low point and rising into a spacious upper sky, with a sunrise glow at their base. Replace the pastel skyline, fantasy towers, atmospheric landscape, translucent 3D glow, photographic clouds and tiny particles completely. Image 2 is STYLE REFERENCE ONLY for near-black ink, warm-ivory cut paper, bold coral and electric-cyan accent discipline, large halftone print texture and angular dynamic graphic design; DO NOT copy its interlocking circular rings, waveform centerpiece or radial layout. Make a striking silhouette: one coral broad paper helix and one electric-cyan broad paper helix twist upward around each other without merging, above a single warm-yellow dawn semicircle on a near-black background. A few warm-ivory diagonal halftone wedges suggest the first light, not a landscape. Distinct composition legible at 100px, restrained print grain, quiet near-black lower fifth for a later local title overlay. All ages, energetic but no strobe. No realistic sky, horizon, building, water, crystal, orb, ring, platform, character, text, letters, numbers, logo, watermark or copied game art.",
+    "og_prompt": "Edit this newly redrawn original Dawnwave Helix square cover into a NEW HORIZONTAL roughly 1.9:1 duohertz social card. Preserve its distinctive two separate coral and electric-cyan broad paper helix trails twisting upward from one warm-yellow dawn semicircle, with near-black ink, warm-ivory halftone rays and restrained print grain. Recompose the helix action on the RIGHT two-thirds with its curves readable at social-card size; leave a quiet near-black panel on the LEFT. Add EXACTLY TWO crisp, fully readable English text lines on the left: 'duohertz' all lowercase in electric cyan, and 'Dawnwave Helix' in larger warm ivory. Spell both EXACTLY, do not truncate. Make a designed wide composition rather than stretching the square. No other words, letters, numbers, skyline, buildings, landscape, water, rings, characters, logo, watermark or copied game art.",
+    "cover_source": "data/duohertz-preview/art-sources/dh-005-dawnwave-helix-comic/cover.png",
+    "og_source": "data/duohertz-preview/art-sources/dh-005-dawnwave-helix-comic/og.png",
+    "cover_source_sha256": "3008ca753d7e0d880b570978ce4fed6e04dcf75a5456b317c52a81a91b7f3b2f",
+    "og_source_sha256": "0b518260c12f5b07fe9d405fb779ad326ca77ad7b3134309b145d9340ae2c50e",
+    "content_reference": "data/duohertz-preview/art-archive/dh-005-dawnwave-helix/cover-art.png",
+    "content_reference_sha256": "4a47da6c8f081b8d2f278c57af09fa3c5cfba01a822413e659fa10b65d5ace43",
+    "style_reference": "apps/beatscape/candidates/duohertz/dh-001-first-frequency/cover-art.png",
+    "style_reference_sha256": "e3c55396eb2d4529ed065965460c2c8455939ea1a5169b58aaf1040d23633f33",
+    "cover_resize": "sips resize to 1024x1024 PNG",
+    "og_resize": "sips resize to 1200x630 PNG",
+    "cover_svg": "Local SVG brand/title overlay around cover-art.png; bitmap source has no text",
+    "previous_art_provenance": {
+      "tool": "built-in imagegen",
+      "cover_prompt": "Use case: stylized-concept. Create one original square album-cover illustration for “Dawnwave Helix”, an all-ages uplifting Trance music candidate in the electronic rhythm game duohertz. Visual concept: two delicate rose-gold and lavender sound-wave ribbons spiral upward together from a single calm frequency point, forming an open luminous helix above a field of low translucent geometric light pillars at dawn. Small musical particles mark the pulse, with an airy sense of sustained build and release. Contemporary editorial electronic album art, clear elegant silhouette and legible at thumbnail size, optimistic for children and adults. Palette: warm rose, pale gold, lavender, pearly teal and deep plum shadow; leave unobtrusive dark space in the lower third for a local title overlay. Distinct from the blue-sky racing ribbons, stepping-stone aurora, circular rings and indigo-glass sunset covers already made. Absolutely no text, letters, logos, characters, vehicles, weapons, copied game imagery, strobing stripes or red neon city. Square image.",
+      "og_base_prompt": "Use case: ads-marketing. Edit the supplied Dawnwave Helix square cover into a companion wide, text-free social card for the family-friendly duohertz Trance track. Preserve the two distinct rose-gold and lavender sound-wave ribbons forming an open luminous helix, small musical particles, the low translucent light pillars and warm dawn atmosphere. Recompose naturally for a horizontal 1200x630-style landscape: put the glowing helix mostly in the right two-thirds and give the left third calm deep-plum negative space for later title typography. Polished contemporary electronic album art, legible at thumbnail size. No text, letters, logos, characters, vehicles, weapons, copied game art, flashing stripes or red neon city.",
+      "og_prompt": "Use case: ads-marketing. Edit the supplied wide, text-free Dawnwave Helix social card. Keep the rose-gold/lavender helix and warm dawn scene on the right. In the quiet deep-plum left third add exactly two lines of crisp, legible modern sans-serif type with generous margins: line 1 \"duohertz\" all lowercase in pale lavender, smaller; line 2 \"Dawnwave Helix\" in white, larger. Spell both lines exactly, with no other words, letters, icons, logos or marks. Preserve the wide landscape composition suitable for a 1200x630 social card.",
+      "og_resize": "Built-in imagegen supplied a wide card; sips resized it to exactly 1200x630 without changing the composition",
+      "cover_svg": "Local SVG title overlay around the generated cover-art.png; bitmap source is unchanged"
+    },
+    "previous_assets_sha256": {
+      "cover-art.png": "4a47da6c8f081b8d2f278c57af09fa3c5cfba01a822413e659fa10b65d5ace43",
+      "og.png": "a4fe84b7983666f4058c9c82abc5953aa0590a7300db497ade260a93edd1dda8",
+      "cover.svg": "b83d1726c5df84067e13397a45301a584b7e912e533b6c6a46305133100f03fd"
+    },
+    "previous_art_archive": "data/duohertz-preview/art-archive/dh-005-dawnwave-helix"
+  },
+  "files_sha256": {
+    "audio.m4a": "00f2b43cae94b47aee8932b13e6e64776cd3837c9e91823b6c39aeec5ca1cd8a",
+    "cover-art.png": "e5e19c1ab3a445ca20d8af203bc2005cb758344981ff41cd4808c5e0b0f7bb2d",
+    "cover.svg": "b83d1726c5df84067e13397a45301a584b7e912e533b6c6a46305133100f03fd",
+    "easy.json": "17eac903017d66086e06e9f9a083920983914c572210474a1aa55bce7fe11fd2",
+    "hard.json": "bc5a49e4f4c161f6339944e748467df8ae1f9f2c2d0545c033493cb71669db67",
+    "og.png": "d93b693907721956551760bcd57bffb95358527ad4d5e9c9ada508c1c80b0c27",
+    "preview_48s.m4a": "61b5861aeb4231a3edbaeb91374e5d2c1b3c67bfffcff90effed426d87050673",
+    "standard.json": "2085fd9ed3b002e3122d59295deca1644bde2a473d6eb1930b5137a88d374981",
+    "stream.m4a": "468e5c8bb2d7dada0b1290882709203cf340714046659ffa51d737c353e09d0e"
+  }
+}

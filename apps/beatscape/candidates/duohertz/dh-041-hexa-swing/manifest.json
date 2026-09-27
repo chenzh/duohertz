@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-041-hexa-swing",
+  "title": "Hexa Swing",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Melodic House",
+  "bpm": 128.0,
+  "target_bpm": 128,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -6 dB gain before AAC encoding; stream-only limiter at 0.35 linear amplitude with no makeup gain. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -6.0,
+  "stream_limiter": 0.35,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-041-hexa-swing.json",
+  "source_recipe_sha256": "18e71df4e345cc7a298194114928f095511d1326d2d5eebccbd29d0d7ad15969",
+  "source_master_sha256": "b351c09b97ac456ca6a6d459ef90a08855d0f60ee5f5fc9d1e4eabcfda2e45de",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.16024,
+    "clipping_ratio": 8e-06,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "3bceea4c-c93b-471e-a0dd-37fffb52d388",
+  "source_generation_receipt_sha256": "cef1c2ed4f5a8425eca026eed5ba617561b003299ceecba9e852e4626bdbeb88",
+  "generation_prompt": "Original all-ages melodic-house instrumental for a one-or-two-key electronic rhythm game at a STRICT constant 128 BPM in 4/4. Keep a clearly audible quantized four-on-the-floor kick on every beat, a short dry clap on beats two and four, distinct eighth-note hats, and a crisp midrange pluck or muted-key transient between beats throughout the full 128 seconds, including transitions. No tempo drift, half-time break, beatless intro, drum dropout, free-time section, ambient-only bridge or long reverb smear. Signature hook: two warm kalimba-like notes rise a small interval with a deliberate dotted-eighth rest, then a separate bright four-note bell-synth answer descends in even steps; leave enough space to hear the exact call and response. Rounded syncopated bass supports the groove without masking kick or clap, while clean major-seventh chord stabs shift voicing every four bars. At the midpoint keep the SAME unbroken drum grid, trade the call and response between low and high registers, change the bass root sequence, then combine them with a new syncopated ending cadence instead of repeating the opening. One evolving 128-second stereo instrumental, playful but controlled, with clear note attacks suitable for beginner timing and no abrasive distortion. No vocals, speech, samples, known melody or imitation of an existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a brand-new SQUARE 1:1 original album cover for the duohertz melodic-house track Hexa Swing. Bold high-contrast editorial comic-print collage on near-black ink and warm-ivory paper, with electric cyan as the main frequency color, coral as the answering beat, and one tiny warm-yellow accent. Main motif: exactly SIX oversized flat hexagonal paper tiles arranged in two staggered rows, each tile an independent beat cell; alternating cyan and ivory edges make a syncopated left-right visual rhythm. A single broad coral zigzag seam crosses the negative space BETWEEN the tiles without turning into a road, ribbon, lightning bolt or game lane. Make the six-cell silhouette unmistakable at 100px, with quiet dark space in the lower fifth for a local title overlay. Restrained halftone, sharp paper cut edges, original playful composition. No honeycomb wallpaper, bees, circles, rings, windows, stairs, sky, landscape, characters, text, letters, numbers, logos, watermarks or copied game art.",
+    "og_prompt": "Edit the supplied original Hexa Swing square cover into a HORIZONTAL 1.9:1 duohertz social-sharing card. Preserve the exact six staggered cyan-and-ivory hexagonal beat cells, one broad coral zigzag seam crossing only the gaps, near-black comic-print field, restrained halftone and tiny yellow accent. Recompose the six-cell motif on the RIGHT two-thirds and leave the LEFT third calm and near-black. Add exactly two large, crisp, fully legible English text lines in the left third: 'duohertz' in lowercase electric cyan and 'Hexa Swing' in warm ivory. Spell both exactly. No other text, letters, numbers, bees, circles, road, lane, people, logos, watermark or copied game art. Make a purpose-built wide card rather than stretching the square cover.",
+    "cover_source_sha256": "cb9ccb5bd0e49b4a8647934de2b9e6e814c5c66755bac61e02e2c0ac6fdb1b37",
+    "og_source_sha256": "f6904813d02484cf72a662029f4e09650f9f474f1bc566a1e32b099fc3841f76",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "a92ef4cac47dd68f28f65fa5f3a57cce599f0830aae1bbb86bf1ab91d508d3e0",
+    "cover-art.png": "1160d407549d47169db25b264fbb1400b8173bf95b9f5ea12449b0b83c258907",
+    "cover.svg": "b89642d8cd9a1797fafd78765c386077f7eb797c21944101508fa4d6843bcd0d",
+    "easy.json": "5af7c906da33e697fcdce774093178d92895af4216f12a1f92b9f7599d2febdc",
+    "hard.json": "eb37692a4031a3bab30d90b287c6783d382daa5c4218e1d0de61bf91604b24b0",
+    "og.png": "dc844b10b1fb4ee8a04ae65a7df7fa36f34fd07217a3cbddc04ba8b8349d05ab",
+    "preview_48s.m4a": "ef191d5145d91bdb2042166b86c17c67c438796e5a14312aa785f64d08d3dcfa",
+    "standard.json": "1dcfa06b2f6bec7273571d4da2ce9026912c793a252383b04054b07d9a863031",
+    "stream.m4a": "52a6d58526ccdb51dbcd6887374cb0956360df48eeb4cd05cafc2348f41b9569"
+  }
+}

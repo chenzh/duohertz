@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "brand": "duohertz",
+  "source_character_signoff_sha256": "f6547ff3d0c9edda20a98dffdb601868fdfec57c2b1724959b24afc51f8b78ba",
+  "site_and_deployment_approval": true,
+  "characters": [
+    {
+      "id": "dh-char-rhyvori",
+      "name": "RHYVORI",
+      "title": "The First Pulse",
+      "role": "Attacker",
+      "region": "The Soundfield",
+      "height": "160 cm",
+      "identity": "RHYVORI moves between the pulse and the reply, holding the line where two rhythms meet.",
+      "traits": "Steady · Bold",
+      "quote": "Start with one beat. We can build the rest together.",
+      "story": "RHYVORI arrived in the Soundfield when the first frequency went quiet. RHYVORI learned to answer, then to invite, and now keeps the space open for anyone who wants to play.",
+      "art": "/characters/dh-char-rhyvori/front.png",
+      "side_art": "/characters/dh-char-rhyvori/side.png",
+      "art_sha256": "7e5e38fdfdb13b13672990bb4e72e14458548bd06ba00dd6f355390376f947f2",
+      "side_art_sha256": "d39e1d4cc9a1019ad916abb74290697c52b1c165540c35e5dc17889dad4c8175",
+      "alt": "RHYVORI front portrait",
+      "side_alt": "RHYVORI side portrait"
+    },
+    {
+      "id": "dh-char-aurel",
+      "name": "AUREL",
+      "title": "The Answering Wave",
+      "role": "Support",
+      "region": "The Soundfield",
+      "height": "166 cm",
+      "identity": "AUREL moves between the pulse and the reply, holding the line where two rhythms meet.",
+      "traits": "Warm · Bright",
+      "quote": "Every reply makes room for the next voice.",
+      "story": "AUREL arrived in the Soundfield when the first frequency went quiet. AUREL learned to answer, then to invite, and now keeps the space open for anyone who wants to play.",
+      "art": "/characters/dh-char-aurel/front.png",
+      "side_art": "/characters/dh-char-aurel/side.png",
+      "art_sha256": "79065d3d3a2f3c7735fc8f15285e537bc1a477cf75c03ad32c34c6794e85514e",
+      "side_art_sha256": "c993b21e5549ada5b80aa23a2ee7874f66ec19ba5ed143ede39f5fa41cf3d9ba",
+      "alt": "AUREL front portrait",
+      "side_alt": "AUREL side portrait"
+    },
+    {
+      "id": "dh-char-nova",
+      "name": "NOVA",
+      "title": "The Open Space",
+      "role": "Buffer",
+      "region": "The Soundfield",
+      "height": "172 cm",
+      "identity": "NOVA moves between the pulse and the reply, holding the line where two rhythms meet.",
+      "traits": "Warm · Bold",
+      "quote": "If two can meet, everyone can.",
+      "story": "NOVA arrived in the Soundfield when the first frequency went quiet. NOVA learned to answer, then to invite, and now keeps the space open for anyone who wants to play.",
+      "art": "/characters/dh-char-nova/front.png",
+      "side_art": "/characters/dh-char-nova/side.png",
+      "art_sha256": "59df4ce5a53c375c0ab144a099c5b2e37aa8e6d425bfd6c59fdd56fc3f6c07bd",
+      "side_art_sha256": "d7fb40b92b0e905f31666ff75b5c5d98bb156ac1328d1d434ba3e2844bb1b491",
+      "alt": "NOVA front portrait",
+      "side_alt": "NOVA side portrait"
+    }
+  ]
+}

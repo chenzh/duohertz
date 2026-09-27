@@ -1,0 +1,33 @@
+{
+  "track_id": "dh-015-orbit-lattice",
+  "title": "Orbit Lattice",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Trance",
+  "bpm": 136,
+  "duration_sec": 60,
+  "stream_duration_sec": 120,
+  "creation_method": "Independent deterministic D minor modal 3-3-2 orbital pluck game movement and new Bb\u2013F\u2013C\u2013G minor shifted-answer radio movement with a half-time opening, retuned kick and displaced hats; oscillator, bell synthesis and seeded noise only, no sampled audio or repeated first-minute loop",
+  "source_script": "scripts/duohertz-compose-orbit-lattice.py",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Use case: stylized-concept\nAsset type: original square album-cover illustration for an INTERNAL duohertz electronic rhythm-game Trance track candidate titled Orbit Lattice\nPrimary request: depict a single off-center orbital pathway made of thin intersecting circular frequency rails, with small luminous note-pulses moving through the intersections; one bright crossing forms the focal point. The rails should suggest musical 3-3-2 rhythmic cycles and a calm sense of forward motion, without showing a literal planet or solar system.\nStyle/medium: polished contemporary editorial comic-collage illustration, bold silhouette and crisp layered cut-paper geometry, subtle halftone texture, clean at a tiny music-card thumbnail. Distinct from existing duohertz prism, helix, ring-pair, jetstream, mosaic and lantern covers.\nComposition/framing: square 1:1; primary crossing in upper center, several open dark areas around it, no busy fine-line maze. Dark lower third can support a separate local title overlay.\nColor palette: near-black ink, warm ivory, coral red strokes, electric cyan pulses, restrained amber glints.\nConstraints: all-ages; no people, faces, masks, characters, text, letters, numbers, logos, watermarks, flashing/strobing stripes, copied game imagery, literal planets, sci-fi spacecraft, gem prisms, helices or split jetstream ribbons. High-resolution PNG.",
+    "og_prompt": "Use case: ads-marketing\nAsset type: original 1200:630 social sharing card for the INTERNAL duohertz Trance candidate Orbit Lattice\nInput image: supplied Orbit Lattice square cover is the visual reference; preserve its original orbital frequency rails, luminous crossings, halftone and palette.\nPrimary request: recompose the same musical orbital rail subject into a wide landscape layout. Keep the rail crossing and pulse details mainly in the right two-thirds and leave a calm near-black panel at left for title typography; do not simply stretch or crop the square.\nText (verbatim): exactly two crisp sans-serif lines in the left third with safe margins: smaller lowercase 'duohertz'; below it larger title-case 'Orbit Lattice'. Spell both exactly.\nColor palette: near-black, warm ivory, coral red, electric cyan, restrained amber.\nConstraints: readable at social thumbnail size, all-ages, no other text, logos, characters, faces, planets, spacecraft, prisms, strobing stripes or copied game imagery.",
+    "og_reference": "cover-art.png supplied to built-in imagegen as the reference image",
+    "og_resize": "Built-in imagegen supplied a wide card; sips resized it to exactly 1200x630 without changing the composition",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png; bitmap source is unchanged"
+  },
+  "files_sha256": {
+    "audio.m4a": "601822bf35a4d8107a6b0c90c73ba98467757c6bfc09331cf70d628718ead2fb",
+    "cover-art.png": "f9e2d6d0ddc5da836f31a2d64b4028ba8983fe572d576798c3abde899c2a9e5e",
+    "cover.svg": "769451bedf777c0ec1f21198c455362f265a735f26ea0cdd756bef6db44daa83",
+    "easy.json": "104436e3021c930363850109dd2641670006b26ea5e19c902a57ecd946151922",
+    "hard.json": "2c517b9dcdb5f6d724042f96c3e50c693cad75677a225a0d8ae1e9c956f6533c",
+    "og.png": "46614f7f070f7cac40e4d2d9a7990b71793e7975c0e6cea8733f602cf330330f",
+    "preview_48s.m4a": "1327d8f4e04535fe58b7c5ada8a3b50eb20bdb77da46d0bdeee3f5c1877fe40e",
+    "standard.json": "b12a367c29ed9995f8ee83a898aa194de7eb69f4ccd7de9c3abdb048bb9dcafa",
+    "stream.m4a": "353873a82fd2020408294b9323d3dafcc107dc485f9d6f7d146c1ef1c7ffb82d"
+  }
+}

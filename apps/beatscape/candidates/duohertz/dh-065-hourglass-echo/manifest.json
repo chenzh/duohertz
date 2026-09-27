@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-065-hourglass-echo",
+  "title": "Hourglass Echo",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Trance",
+  "bpm": 136.0,
+  "target_bpm": 136,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -6 dB gain before AAC encoding. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -6.0,
+  "stream_limiter": null,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-065-hourglass-echo.json",
+  "source_recipe_sha256": "9d0a8abd6f2c35b840b9d483e93c70b227724bd475e6a8384ced19dcbee38986",
+  "source_master_sha256": "8e53d577651f7eb44cf0acf1a46338f2e68cdfe92493ef7a3dd23d0075ad04d4",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.16431,
+    "clipping_ratio": 8e-06,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "9d90df04-61cb-4a94-8a8a-d9c4cee31aa0",
+  "source_generation_receipt_sha256": "8c4306560a6bd95359cf9acf2ccf0d86077588286e03d4bb7571de10708f237b",
+  "generation_prompt": "Generate one ORIGINAL 128-second stereo MELODIC TRANCE CHORUS LOOP for an all-ages one-or-two-key rhythm game at STRICT constant 136 BPM in 4/4. Timestamp zero is the FIRST BEAT OF AN ALREADY-FULL CHORUS, never an intro: a strong kick on every quarter beat, crisp claps on beats two and four, eighth-note hats, full-volume plucked arpeggio hook, warm chord pad and rounded bass ALL START TOGETHER at the first instant. These layers remain at essentially the SAME audible level in 0-16 seconds, 16-32 seconds and the rest of the track; do not gradually introduce them. No quiet intro, slow build, drumless bridge, ambient-only break, half-time change, fade, silent tail or tempo drift. Signature hook: five short notes ascend in a gentle staircase, pause for one eighth-note rest, then a high two-note echo answers; make the pitched attacks distinct enough for rhythm-game charting. Underneath, use a warm wide pad with restrained highs and a smooth pulsing bass without masking the kick or arpeggio. At 64 seconds keep the same strong drum groove, change chord roots, reverse the five-note contour and let the two-note echo move one octave lower; vary the answer every phrase through the end. Hopeful, flowing, bright but not shrill, clearly different from a generic festival drop. No vocals, speech, samples, recognizable melody or imitation of another song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a brand-new SQUARE 1:1 original duohertz album cover for Hourglass Echo, an uplifting all-ages trance rhythm-game track. Use the original high-contrast editorial comic-print style: near-black ink, warm-ivory cut paper, coral red and electric cyan, restrained halftone. Central motif: ONE large upright HOURGLASS formed from four sharp warm-ivory trapezoid cut-paper panels, unmistakably wider at top and bottom and narrow at the waist. A single electric-cyan sound line rises UP through the narrow waist instead of sand falling down; it forms five small distinct step marks in the upper chamber and two echo marks in the lower chamber. One small coral pulse diamond is at the waist, one tiny warm-yellow beat dot nearby. Keep the complete hourglass and marks inside the middle 55% of the square to read in a narrow 100px mobile card. Quiet dark lower fifth for local title overlay. Graphic print texture, bold simple silhouette, no realistic glass or sand, no clock hands, no scenery, people, words, letters, numbers, logo, watermark, strobe or copied game art.",
+    "og_prompt": "Edit the supplied original Hourglass Echo square cover into a HORIZONTAL roughly 1.9:1 duohertz social-sharing card. Preserve ONE large upright warm-ivory cut-paper hourglass with four trapezoid panels and narrow waist, the electric-cyan sound line rising through it, five short upper step marks, two lower echo marks, one coral pulse diamond at the waist and one tiny warm-yellow beat dot. Recompose the entire distinct hourglass on the RIGHT half against near-black editorial comic-print ink and restrained halftone; leave calm dark space on the LEFT. Add exactly two fully legible English text lines at left: 'duohertz' lowercase in electric cyan and 'Hourglass Echo' larger in warm ivory. Spell both exactly without truncation. Purpose-build the wide card, never stretch the square. No other text, numbers, realistic glass, sand, scenery, people, logo, watermark or copied game art.",
+    "cover_source_sha256": "473c62ffbae3f1602c7e1ecfd8a5181ecc0d76a92bc517517c1163b94bda8e27",
+    "og_source_sha256": "da487ad340620f0c7f37ac728b82a5a6cdf6695dcf83ea3e39dce21157559843",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "e0ec609052374134f0a3101b2c6094da63862f5dbea6bdccdc7959f756aecf89",
+    "cover-art.png": "3fca919013fad4d2bcb9da2e837cb3654975aa24e79b67b7b1d4d3083a763350",
+    "cover.svg": "e833c6cc63f2b8ddcc80d931b7dddc08c2e090c7f20cc0ed2af355aacbb1b951",
+    "easy.json": "4eb6175ec9d3f33c6a9b65f272404ccd61748c9ae8d7fb2efbdab9dd2ed1c115",
+    "hard.json": "a7750cf8d61f773b12de60b544c975965e8e5785c8ebed2e4ec256aec6dbb307",
+    "og.png": "175ac125adedf39b53923e23f8471765ff0a0cad8b040ab1a480631299250fa7",
+    "preview_48s.m4a": "2b2d060d94067b3fa878fcdf0ec0e3cad22c6ce0dc2731aa979ef09cf64e487e",
+    "standard.json": "ce575774cca41f65f746823c49d453420f054b6534fd66fdeca55c4193f8e9ad",
+    "stream.m4a": "798f2fa4977077a9be08cb709e207899d220f269896dfa93f2dc5a614bf738d3"
+  }
+}

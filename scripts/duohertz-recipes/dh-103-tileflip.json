@@ -1,0 +1,18 @@
+{
+  "track_id": "dh-103-tileflip",
+  "title": "Tileflip",
+  "artist": "duohertz studio",
+  "subgenre": "Future Bass",
+  "bpm": 140,
+  "game_duration_sec": 64,
+  "stream_duration_sec": 128,
+  "generation_duration_sec": 180,
+  "stream_start_sec": 32,
+  "model_variant": "small",
+  "generation_prompt": "Create an original 180-second stereo future bass instrumental at steady 140 BPM in 4/4 for an all-ages one-or-two-key rhythm game. By 24 seconds a full colorful chorus plays: springy syncopated kick, crisp snare on two and four, ticking hats, rounded sub bass, bright chopped synth chords and a short per-beat melodic pluck. Signature hook: three high clipped tones answer two bouncing low tones, then change the reply and chord progression after 96 seconds. Keep the 32-to-160-second segment fully arranged with near-even energy and clear attacks in every bar. Playful, melodic and clean rather than abrasive. No vocals, speech, samples, tempo drift, copied tune, sparse breakdown, fade or silent stretch in the selected passage.",
+  "art_tool": "local-authored SVG",
+  "cover_source_svg": "scripts/duohertz-art-sources/dh-103-tileflip-cover.svg",
+  "og_source_svg": "scripts/duohertz-art-sources/dh-103-tileflip-og.svg",
+  "cover_prompt": "Original comic-print cover: three offset square frequency tiles flip across a diagonal coral hinge with cyan underside, crisp angular motion; no board game, character, text or controller.",
+  "og_prompt": "Wide duohertz title card with flipping frequency tiles on right and Tileflip on left."
+}

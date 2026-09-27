@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-043-glowstack",
+  "title": "Glowstack",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Future Bass",
+  "bpm": 144.0,
+  "target_bpm": 144,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -6 dB gain before AAC encoding; stream-only limiter at 0.35 linear amplitude with no makeup gain. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -6.0,
+  "stream_limiter": 0.35,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-043-glowstack.json",
+  "source_recipe_sha256": "73a367bf2855cea739f223757a5d7518e03376ef9550a6c1f0907fd9d3ff2efd",
+  "source_master_sha256": "101e9b7b950651b0536c84990961e1384ba167b31842d81a03641fa925880613",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.12837,
+    "clipping_ratio": 3e-06,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "59f3d2a7-d314-410f-8ca3-08a137f65b52",
+  "source_generation_receipt_sha256": "b12a7e07c7b0ed5190295b5e4eff69cdb6b5b42ca1e742b4c2f709b92d4bc8db",
+  "generation_prompt": "Original all-ages future-bass instrumental for a beginner-friendly one-or-two-key electronic rhythm game at a STRICT constant 144 BPM in 4/4 for 128 seconds. Begin with a FULLY AUDIBLE quantized drum machine from the first second: a strong short kick on EVERY quarter beat through the final bar, dry snare on EVERY beat two and four, distinct crisp eighth-note closed hats, and at least one short bright midrange woodblock or pluck attack in EVERY bar including the first 16 seconds and all transitions. Keep these beat markers exposed at final-mix level; never mute, filter, swing, delay or half-time the kick, and never replace the groove with soft pads. No fade-in, beatless intro, sparse ambient breakdown, tempo drift, free-time section or long smeared reverb tails. Signature hook: THREE separate bright chord-pluck stabs rise in stacked thirds, stop for one full beat, then a lower rubbery two-note synth answer lands just after the next downbeat; the reply must have a clearly different timbre and contour. Support with round offbeat bass and broad but restrained sidechained chord swells BEHIND the short attacks, leaving space for young players to hear each beat. At the midpoint retain the exact unbroken kick/snare/hat grid, put the lower reply first, invert the three chord stabs and change the bass root sequence; the last quarter adds a new high counterline and resolves both motifs in a fresh cadence instead of repeating the first minute. One evolving 128-second stereo instrumental, warm, buoyant and energetic with controlled highs and no harsh distortion. No vocals, speech, sampled recordings, known melody or imitation of an existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a brand-new SQUARE 1:1 original album cover for duohertz future-bass track Glowstack. High-contrast original editorial comic screen-print collage on near-black ink with warm-ivory paper, electric cyan, coral red and one small warm-yellow accent. Main motif: THREE huge unequal thick rectangular paper sound slabs FLOAT diagonally one above another, offset enough that their edges never merge into a staircase or shutter. Each slab reveals one bright cyan pulse notch on its underside, so the notches form a rising three-hit chord; a short isolated coral answer block hovers lower right after a clear gap. Make the three-plus-one rhythm unmistakable at 100px, with broad flat shapes, crisp cut edges, sparse halftone and a quiet dark lower fifth for a local title overlay. Energetic and playful without glow realism. No window, door, stairway, railway, building, dominoes, confetti, circles, rings, lightning bolts, people, text, letters, numbers, logos, watermarks or copied game art.",
+    "og_prompt": "Edit the supplied original Glowstack square cover into a HORIZONTAL 1.9:1 duohertz social-sharing card. Preserve exactly three unequal floating rectangular sound slabs with separate cyan pulse notches rising as a three-hit chord, and one isolated coral answer block after a visible gap, in near-black comic-print ink with warm-ivory paper and sparse halftone. Recompose all motifs on the RIGHT two-thirds; leave the LEFT third calm and near-black. Add exactly two large crisp fully legible English text lines on the left: 'duohertz' in lowercase electric cyan and 'Glowstack' in warm ivory. Spell both exactly. No other text, letters, numbers, windows, stairs, dominoes, confetti, people, rings, logos, watermarks or copied game art. Make a purpose-built wide card, not a stretched crop.",
+    "cover_source_sha256": "489ac0214f1ebada39fbcf070173af4cd7ea2115fd595b27b1736e3c54c0a55a",
+    "og_source_sha256": "56ef9da829c05c1b9f51d2d4499b2d8b1b9e86ca579be69462961c7caf16236f",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "48c0da24033c18364f414600648539c20ee5fd8d3fddf0d7f03556e76d3f45c5",
+    "cover-art.png": "c18cb28abb9baaacbeec5b6a980100222ea5e2c0a6a73c62b3e9f8aec1eb0309",
+    "cover.svg": "de2897024b29c45b0f48edd117a71839520481af41b0a41ed356055b65df4cf3",
+    "easy.json": "39a6475e45272df3a81cf503440caade49bcdacaac9e58ccf91408e326c28795",
+    "hard.json": "bc3992f955c25593e75583063fcc4aa3bca42c66a9e69bd41798a17fb5f8b97b",
+    "og.png": "34ff4810ec600c7e7fdf3742dca60bc1c14dd721992aaab533f65d92bd097765",
+    "preview_48s.m4a": "0abc968b82b6bde3caf58355d3d0a1fbece00fe9f77d1648bb5d5eedfeba599b",
+    "standard.json": "289d0d6dfa9bfff6ccb036f82a91dee982b7464ea52f6be2dc007612efcb2bef",
+    "stream.m4a": "d2b81256299d25024b7a5a6aff1aaf3a4e5a67eae15024e0b4ab8f955c7a4b58"
+  }
+}

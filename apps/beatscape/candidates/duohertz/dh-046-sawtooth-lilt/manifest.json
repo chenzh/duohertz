@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-046-sawtooth-lilt",
+  "title": "Sawtooth Lilt",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Melodic House",
+  "bpm": 125.0,
+  "target_bpm": 124,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -6 dB gain before AAC encoding; stream-only limiter at 0.35 linear amplitude with no makeup gain. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -6.0,
+  "stream_limiter": 0.35,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-046-sawtooth-lilt.json",
+  "source_recipe_sha256": "83f98dc8ff094a5d41db2dc679164b7ad783f6aaa8b320561fe82816a4e79ab9",
+  "source_master_sha256": "8b7707a9d96d1671ad6768c53a38b1f002e898ca0163ad7840bb06401c5e7ed7",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.20923,
+    "clipping_ratio": 5.5e-05,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "01ac9703-c1d8-41b4-9011-5047f3d3466c",
+  "source_generation_receipt_sha256": "7bb60209948b63c6aea9a9e4a61db23d0d7649b2472a66f5243b06b368643119",
+  "generation_prompt": "Original upbeat all-ages melodic-house instrumental for a one-or-two-key electronic rhythm game at a STRICT constant 124 BPM in 4/4. Start with a clearly audible short four-on-the-floor kick on EVERY quarter beat, dry clap on beats two and four, precise closed eighth-note hats and one separate pitched midrange attack between the main beats in every bar, continuing for the full 128 seconds. Keep at least eight distinct short midrange transients per two-bar phrase, even in the middle; no silent intro, drum dropout, half-time break, tempo drift, free-time passage or ambient-only bridge. Signature hook: four clipped, warm sawtooth-synth notes rise in little uneven steps, pause for exactly one eighth-note, then two rounded bell-key notes answer downward from the opposite stereo side. Make the call and response easy to recognize; pair it with a soft syncopated bass and short bright chord stabs that leave space around the kick and clap. At the midpoint keep the SAME drum grid, swap the two motif registers and change the chord root pattern. End with both motifs in a new gentle syncopated cadence instead of repeating the opening. One evolving 128-second stereo instrumental, buoyant and friendly, with clean attacks and controlled upper frequencies. No vocals, speech, sampled recordings, known melody or imitation of an existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a brand-new SQUARE 1:1 original duohertz album cover for Sawtooth Lilt, an all-ages melodic-house rhythm-game song. Bold high-contrast editorial comic-print collage: one BIG warm-ivory cut-paper sheet enters diagonally from the lower left, with EXACTLY FOUR broad sawtooth cutouts on its upper edge. Four separate short electric-cyan pulse tabs hover above those four teeth, and ONE small coral tab sits offbeat after a visible gap. The sawtooth edge is an abstract audio waveform, not mountains, a roofline, a road or a creature's mouth. Near-black ink background, tactile paper shadows, sparse halftone, strong single silhouette readable at 100px, and quiet dark space in the lower fifth for a local title overlay. No circles, rings, stairs, rail, skyline, lightning bolt, character, landscape, text, letters, numbers, logos, watermark or copied game art.",
+    "og_prompt": "Edit the supplied original Sawtooth Lilt square cover into a HORIZONTAL 1.9:1 duohertz social-sharing card. Preserve one large diagonally entering warm-ivory sheet with exactly four broad sawtooth cutouts, four separate electric-cyan pulse tabs over its teeth, and one small coral offbeat tab after a gap, all on near-black comic-print texture. Recompose the motif on the RIGHT two-thirds and leave calm near-black space on the LEFT. Add exactly two crisp fully legible English lines on the left: 'duohertz' in lowercase electric cyan and 'Sawtooth Lilt' in larger warm ivory. Spell both exactly. Make a purpose-built wide composition rather than a stretched square crop. No other text, letters, numbers, mountains, roads, buildings, characters, logos, watermark or copied game art.",
+    "cover_source_sha256": "40a76e37cc754553753dd36ecdb7ce7ea13113fcfea515d53819e5c8aad0d90f",
+    "og_source_sha256": "b14beb40be23613286fd7b7751fc86051f096b1869c2b25e159dbf48a250967b",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "9a5c0bc7ff9238cd4ae9a40d24bd3499ff3e5e7d0592fb081647464b7eaf904e",
+    "cover-art.png": "1c5f2a40835163a3e7870bb83e4444600f7ee45a55e1c69b8d015bbb44246e67",
+    "cover.svg": "20e5c31e20dea6135c800ee82ad53749ff651d29fe90161ced6f328999314a97",
+    "easy.json": "492f2b81000a33bcc7dd276b7ea617acc9f91b554c1bfe36c00639581151ea34",
+    "hard.json": "13e1c84800b3d426883d2a354436eda6697039c43896327a43d4d8fccbcd3c49",
+    "og.png": "032a9c2ec024659edca719f6cbc700e9ee3f3d1537e04daf66d63b28679c28ee",
+    "preview_48s.m4a": "db448df623e353d455b69c7670899843e7c8f8bfeb974bdcdb88bf7450ebb055",
+    "standard.json": "d52d7c5235351c243ed8dd8735691178c2d5e9fae55cdd0022d95914785e5e9b",
+    "stream.m4a": "051a6d728831c36458cb15e634bbd7ab1f28aec39ca3a51999f0aff68d7e09f7"
+  }
+}

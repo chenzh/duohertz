@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-066-twinleaf-tempo",
+  "title": "Twinleaf Tempo",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Melodic House",
+  "bpm": 123.0,
+  "target_bpm": 123,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -4.5 dB gain before AAC encoding. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -4.5,
+  "stream_limiter": null,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-066-twinleaf-tempo.json",
+  "source_recipe_sha256": "bb8602d07bd2aad2bda7835911fb1483ea5015c2229af0c94177263f9c72986c",
+  "source_master_sha256": "d5efe3625b84207f066b8ad3534f7cc0c72388a3f08e1dded45b8ff0ca417f1f",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.11782,
+    "clipping_ratio": 1.9e-05,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "83d10822-31d2-4d68-a329-d732ed88a08e",
+  "source_generation_receipt_sha256": "94a280f0083932b2b269efe456a3ee727cab83de329e6eca5c6d09d92e1ed11e",
+  "generation_prompt": "Produce one ORIGINAL 128-second stereo MELODIC HOUSE instrumental for an all-ages one-or-two-key rhythm game at STRICT constant 123 BPM in 4/4. The COMPLETE audible groove begins at time zero: short clean kick on EVERY quarter beat, dry snare on beats two and four, crisp eighth-note hats, a separate short bright plucked-synth key attack on EVERY quarter beat, rounded moving bass and warm major-seventh chord pulses. Keep all these layers at the SAME clear audible level through every bar, especially 0-16, 48-96 and 112-128 seconds. No fade, ambient intro, drumless break, half-time switch, quiet passage, tempo drift, filtered outro, long tail or silent final bars. Signature hook: three rising notes like one leaf opening, answered by three higher descending notes like a second leaf. Short precise note releases leave space between attacks. At 64 seconds keep the exact uninterrupted drum groove, change bass roots and chord voicings, swap which three-note hook leads, and add one small syncopated reply; continue new variations until the final beat, with full percussion still present. Warm, playful, airy, controlled highs, no vocals, speech, samples, known melody or imitation of an existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create one original SQUARE 1:1 duohertz cover for Twinleaf Tempo, an all-ages melodic-house rhythm-game track. High-contrast editorial comic-print cut-paper style in near-black ink, warm ivory, coral red and electric cyan with sparse large halftone. Main motif: exactly TWO large asymmetric warm-ivory LEAF shapes growing outward from one shared central stem, left leaf lower and broad, right leaf higher and narrow. ONE electric-cyan stepped soundline runs up the stem and splits visibly into each leaf vein; exactly three small coral beat marks sit along the split. Keep the full paired silhouette in the central 55% of the square so it reads in a narrow 100px mobile crop, with calm dark lower fifth for local title overlay. Bold flat graphics, fresh and rhythmic, clearly distinct from flowers, wings, paper planes or landscape trees. No people, scenery, photorealism, text, letters, numbers, logo, watermark, strobe or copied game art.",
+    "og_prompt": "Edit the supplied Twinleaf Tempo square cover into a HORIZONTAL roughly 1.9:1 original duohertz social card. Preserve exactly TWO asymmetric ivory cut-paper leaves growing from one stem, one cyan stepped line splitting into their veins and exactly three coral beat marks. Recompose the complete motif on the RIGHT half over near-black comic-print ink and sparse halftone, leaving calm dark space on the LEFT. Add exactly two crisp, fully legible English text lines on the left: 'duohertz' lowercase in electric cyan and 'Twinleaf Tempo' larger in warm ivory. Spell exactly, no truncation. Purpose-build wide composition; do not stretch square art. No other text, people, scenery, logo, watermark or copied game art.",
+    "cover_source_sha256": "6798e81c9dace82c4219c17e72af8677ea5898dbeb500d5bd7ef63e99200b422",
+    "og_source_sha256": "423726951358f7e55cfcf801aeb338644fdcd8e8e19d3d54b0ec19b554247156",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "f91410db86f4080a5f05935ef8435545cbd75bafe790b6bf3b7e094fb9404090",
+    "cover-art.png": "37ac9778bd50ec5aaf07fc60132ce319ea0ed8af5dd7a7657ce1585f8150aaec",
+    "cover.svg": "8a0371cc460bfa32951246893a13ac5d93e951a461ceece917849c8e8f97f822",
+    "easy.json": "c4032ff08004f17f1696c253e465223d07413f831b608f17e90c0c394871354e",
+    "hard.json": "d373444581cea357625112fd1818c9c6242cd7058d2d4a91164fb56f04b2529c",
+    "og.png": "9efde6c54d859ab0747d4d1c4f72b2d62b328126a4802d1edc91392d9079e87d",
+    "preview_48s.m4a": "0ea6259bfa47e4d6475e7abf6518573d0be207d423c2222d9936d168fbf1772a",
+    "standard.json": "c8da7fe5217c2f6a8e81a8d6233e5bb7f369253ce08d475c71d760690d5dfda8",
+    "stream.m4a": "9ddafe6d6357eef9e9af29c29b9cc1264add921d023f8a219c015728bd4189d1"
+  }
+}

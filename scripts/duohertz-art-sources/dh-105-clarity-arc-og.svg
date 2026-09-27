@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<defs><pattern id="dots" width="26" height="26" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="2" fill="#f7efdf" opacity=".12"/></pattern></defs>
+<rect width="1200" height="630" fill="#111521"/><path d="M0 0h220L0 178z" fill="#6de9e1"/><path d="M1200 0v178l-161-178z" fill="#ff675d"/>
+<path d="M643 55h500l-32 520H665z" fill="#1d2632" stroke="#f7efdf" stroke-width="11"/><path d="M643 55h500l-32 520H665z" fill="url(#dots)"/>
+<g transform="translate(625 45) scale(.52)"><path d="M220 711q136-494 551-465" fill="none" stroke="#111521" stroke-width="99" stroke-linecap="square"/><path d="M220 711q136-494 551-465" fill="none" stroke="#6de9e1" stroke-width="72" stroke-linecap="square"/><path d="M259 587h510m-478-124h480" stroke="#f7efdf" stroke-width="16"/><path d="M729 207h91v91h-91z" fill="#ff675d" stroke="#111521" stroke-width="16"/><path d="M274 756l484-14" stroke="#ffdc69" stroke-width="12"/><path d="M345 338l21-52m66-41l35-41m72-27l42-30" stroke="#f7efdf" stroke-width="11"/></g>
+<path d="M77 103h472" stroke="#6de9e1" stroke-width="10"/><text x="77" y="185" fill="#6de9e1" font-family="Helvetica Neue, Arial, sans-serif" font-size="65" font-weight="900">duohertz</text><path d="M77 228h472" stroke="#ff675d" stroke-width="18"/>
+<text x="77" y="345" fill="#f7efdf" font-family="Helvetica Neue, Arial, sans-serif" font-size="67" font-weight="900">Clarity</text><text x="77" y="429" fill="#f7efdf" font-family="Helvetica Neue, Arial, sans-serif" font-size="67" font-weight="900">Arc</text><path d="M77 490h472" stroke="#f7efdf" stroke-width="7"/><path d="M77 520h240" stroke="#6de9e1" stroke-width="17"/><path d="M0 601h1200" stroke="#f7efdf" stroke-width="7"/>
+</svg>

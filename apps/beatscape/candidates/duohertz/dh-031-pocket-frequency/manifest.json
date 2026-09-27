@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-031-pocket-frequency",
+  "title": "Pocket Frequency",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Melodic House",
+  "bpm": 125.0,
+  "target_bpm": 124,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -3 dB gain before AAC encoding; stream-only limiter at 0.5 linear amplitude with no makeup gain. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -3.0,
+  "stream_limiter": 0.5,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-031-pocket-frequency.json",
+  "source_recipe_sha256": "187bac15723b20a1ad621b66d9fe7dab77492e787b7a089e0583d8c0ba4a233f",
+  "source_master_sha256": "df0482d01e3b867e13b6aea6230a3d2ed3164a8a6b7bc37b652e6671f0400814",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.12832,
+    "clipping_ratio": 1e-06,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "9f49b6d9-e25d-401c-9257-f265f8ab3801",
+  "source_generation_receipt_sha256": "5eb1bb74d796f364c412a675fa14a90bfaba3c122c8c20a670b7c062c19e9442",
+  "generation_prompt": "Original all-ages melodic-house instrumental for a one-or-two-key electronic rhythm game at a STRICT constant 124 BPM in 4/4. Keep an audible quantized kick on every quarter beat, short clap on beats two and four, distinct eighth-note hats and clean short midrange pluck attacks across the full 128 seconds, including quieter sections. No tempo drift, half-time breakdown, free-time or percussion-free gap. Signature hook: a warm four-note thumb-piano phrase with a clipped last note, answered in the following bar by two bright glassy synth notes an octave higher; let a rounded bass mirror only the first half of each phrase. Support with spacious major-seventh chords and small offbeat percussive taps, preserving clear transient separation and room for one-key beginner input. At the midpoint place the high answer before the low call over the SAME steady drum grid and introduce a new chord inversion; end by interleaving both phrases in a fresh cadence rather than repeating the first half. One evolving 128-second stereo composition, bright and gentle without harsh distortion. No vocals, speech, sampled recordings, known melody or imitation of an existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a brand-new SQUARE 1:1 original album cover for duohertz track Pocket Frequency, an all-ages melodic-house rhythm-game song. High-contrast original editorial cut-paper and halftone print design: near-black ink, warm ivory paper, electric cyan as the dominant accent, a restrained coral counterbeat, tiny yellow sparks. Main motif: ONE oversized angular ivory paper pocket seen from above, with a short cyan folded frequency strip entering on the left and a different coral folded strip emerging upward on the right; the opening makes a clear asymmetric V-shaped negative space. Keep the pocket and strips graphic and bold at tiny thumbnail size, with generous dark breathing room. No literal clothing, person, hands, city, circles, rings, window, staircase, text, letters, numbers, logo, watermark or existing game style copied.",
+    "og_prompt": "Edit the supplied original Pocket Frequency square artwork into a HORIZONTAL duohertz social card. Keep the oversized angular ivory paper pocket and the cyan frequency strip entering it, with a separate coral strip emerging; preserve near-black editorial halftone texture and the asymmetrical V-shaped opening. Put the pocket motif on the RIGHT two-thirds and calm dark space on the LEFT. Add exactly two fully legible English lines on the left: 'duohertz' all lowercase and 'Pocket Frequency'. No other text, letters, numbers, people, hands, clothing, circles, logos, watermarks or existing IP.",
+    "cover_source_sha256": "619bc5bcf25269a95eddcd43ad9e7f865a2612b7a5c7352d82248b3fcbdca409",
+    "og_source_sha256": "d65842cdb3dba2b06e674028ea9b6e0b69a57afaa08251ce57032fb37d5f5b31",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "ebd797f088477e48b667afcaeaf9e381c60e51f47733d607326fa2959eed95c9",
+    "cover-art.png": "9f4473d17dcf8b84396ded307f9d776556a146086c1ff3765ef9dc89d84ec9b3",
+    "cover.svg": "501d90d382ebf68fd70eba60bc37dc551a0dc173af2b899d95b9b12741cc3632",
+    "easy.json": "6c850e94c837dcbb897941bf7e34d536ebed8c3f05324a88db2bfdbb1949a948",
+    "hard.json": "03d603abceab9b0798ae7179b4b787d9e64d861c63112a25ec7d838a7a941ad0",
+    "og.png": "1668de02c165f7c638525431f08803f9ef4367130bcb69825d7288d8e1a664df",
+    "preview_48s.m4a": "93fa5e69065ec62b46246931b19abfb39538f4d9f54c1daec078ebbcda20d023",
+    "standard.json": "6d51b6272173553f9b9357e12575b384e455e24ff6668dba9a45345cabb0fb44",
+    "stream.m4a": "b8e01c05c1f6c19e623764aaa85d2a12a9b99adb1b666746c4b946f9f5a3b35a"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "track_id": "dh-025-chromatic-fanout",
+  "title": "Chromatic Fanout",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Trance",
+  "bpm": 142.857,
+  "target_bpm": 142,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -3 dB gain before AAC encoding. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-025-chromatic-fanout.json",
+  "source_recipe_sha256": "3197fe533f1b6abdff0714672f01a9c786f1dbdfa7323e6ac7360e116ad46469",
+  "source_master_sha256": "817c846745e3a7ba9d666194376a281c3c1190d8cef1f3149b961ce4fdd613a1",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.20773,
+    "clipping_ratio": 2.6e-05,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "2b0a1317-4901-4a0c-a771-567005d37e55",
+  "source_generation_receipt_sha256": "ab099349a1bb2d390673c42b75b2c96f2e48e794b920d58dfed4e78b2db480f7",
+  "generation_prompt": "Original all-ages uplifting trance instrumental for a one-or-two-key electronic rhythm game at a STRICT constant 142 BPM in 4/4. Keep a steady audible quantized four-on-the-floor kick on every quarter beat, crisp short clap on beats two and four, sharp eighth-note closed hats, and distinct short midrange pluck attacks in every two-bar phrase from the first second to the end, even in quieter sections. No tempo drift, half-time or free-time breakdown, smeared percussion, or long drum-free gaps. Distinctive main hook: five clipped glass-organ notes descend in a stepped rhythm, answered by a gently rising warm synth phrase in the opposite stereo side. Beneath them use a rolling but soft bass, bright offbeat chord stabs and small sparkling sixteenth-note accents with space around each attack. At the midpoint change the chord inversion and introduce a new two-note suspended answer while the same kick, clap and hats remain countable; the finale interleaves both melodic responses without repeating the entire first half. One evolving 128-second stereo composition with clean rhythm transients and an upbeat, non-harsh mix. No vocals, speech, sampled recordings, known melody or imitation of an existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Generate a brand-new SQUARE 1:1 original album cover for duohertz track Chromatic Fanout, an all-ages uplifting-trance rhythm-game song. High-contrast editorial comic collage in near-black ink, warm ivory paper, coral red and electric cyan, with a few warm-yellow sparks and tactile halftone print grain. Main motif: TWO overlapping angular fans made of bold folded triangular frequency blades open from different off-center hinges, one coral and one cyan; the blades alternate like a call and answer and leave a crisp ivory negative-space diamond where they meet. Dynamic but readable at a tiny music-library thumbnail. Distinct from circles, rings, rail tracks, square hinges, wave blocks, stars, human figures and sky landscapes. No text, letters, numbers, logos, people, watermarks or imitation of any existing game.",
+    "og_prompt": "Edit the supplied original Chromatic Fanout square artwork into a HORIZONTAL social card for duohertz. Keep its distinctive two overlapping coral and cyan folded triangular frequency fans and the ivory negative-space diamond, near-black editorial comic collage and tactile halftone texture. Recompose the fans across the RIGHT two-thirds and leave calm near-black space on the LEFT. Add exactly two crisp, fully legible English text lines on the left: 'duohertz' entirely lowercase, then 'Chromatic Fanout'. No other words, letters, numbers, circles, rings, people, logos, sky scenes, watermarks or existing IP. Original all-ages electronic music poster.",
+    "cover_source_sha256": "aa99e66c20e6dfee4fea8c8d183862c5630bac71f2f56c905c80190d14ce1254",
+    "og_source_sha256": "1142e7cbe3356aecd7d347afb212c3fec3390ebbb995cd32552a9c9a81029ff4",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "313105e88915dccdd92028e73c136e81ce8b8054be1ad6338e023d38ee29eccf",
+    "cover-art.png": "34d0c0bfdb773ff7550d8295b1e33b1eda6ca941eaba1c2d6926b06e6c0c0858",
+    "cover.svg": "a1b1daf0b1f774971926bcf0d13c316612aba02b20bc20eb3436959cd15e1fb8",
+    "easy.json": "b9c43101450c5aa3ca37faaf4dee4ae238ea888d83ad96a7fd5ef16b5d46bebf",
+    "hard.json": "8d6fb2107b5161241632e650ce14f2d37f7e5c357992c4d55f4633b3e1851838",
+    "og.png": "d535d6798d0296be4a364163b570428f3b0be565b447ae116d7f176682bad461",
+    "preview_48s.m4a": "622363d893894bedfd4cc3a7c888dd29d3344f7ca839e2dde1f7299b469a589e",
+    "standard.json": "1c9e5fc6a5d72fc9cabf3c884afcf318e7781b8adf89035ce9ddfbeb5235dc53",
+    "stream.m4a": "b44477d30f54b8c34d23559412bffcbef76b7770a5b66dd8684415e7588da29c"
+  }
+}

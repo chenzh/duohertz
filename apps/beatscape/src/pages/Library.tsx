@@ -3,7 +3,6 @@ import {
   useMemo,
   useRef,
   useState,
-  type KeyboardEvent as ReactKeyboardEvent,
 } from "react";
 import { Link, useSearchParams } from "../router";
 import { assetUrl } from "../catalog/loadCatalog";
@@ -24,12 +23,9 @@ import { latestRunForTrackIds, loadRuns, runNeedsRetry } from "../lib/progress";
 import { playHref, trackSetupHref } from "../lib/playHref";
 import { curatedPicks } from "../data/curated";
 import { CuratedRow } from "../components/CuratedRow";
-import { DistrictBadge } from "../components/DistrictBadge";
-import { CharacterAvatar } from "../components/CharacterAvatar";
-import { VibeBadge } from "../components/VibeBadge";
 import { useReveal } from "../components/useReveal";
 import { TrackGridSkeleton } from "../components/Skeletons";
-import { SCAPE_COPY, districtColor, SHOWCASE_TRACK_IDS } from "../constants/scape";
+import { SHOWCASE_TRACK_IDS } from "../constants/scape";
 import { LIBRARY_PAGE_META, usePageMeta } from "../seo/pageMeta";
 import { CatalogErrorNotice } from "../components/CatalogErrorNotice";
 import { AudioBar } from "../components/AudioBar";
@@ -37,7 +33,7 @@ import { libraryHrefForSearch, withLibraryReturn } from "../lib/libraryReturn";
 
 const TRACK_BATCH_SIZE = 24;
 type TrackSort = "title" | "bpm-desc" | "bpm-asc";
-const VIBE_FILTERS: readonly (TrackVibe | "")[] = ["", ...TRACK_VIBES];
+type LibraryFilter = "all" | "new" | "favorites" | "cleared";
 
 const LIBRARY_PARAM_KEYS = [
   "q",
@@ -63,6 +59,21 @@ function trackVibeFromParam(value: string | null): TrackVibe | "" {
   return TRACK_VIBES.includes(value as TrackVibe) ? value as TrackVibe : "";
 }
 
+function difficultyLetterFor(tier: string) {
+  const v = tier.toLowerCase();
+  if (v === "easy") return { letter: "B", cls: "dh-diff dh-diff--b" };
+  if (v === "normal") return { letter: "A", cls: "dh-diff" };
+  return { letter: "S", cls: "dh-diff" };
+}
+
+function difficultyTagFor(track: { default_tier: string; bpm: number }) {
+  const tier = track.default_tier.toLowerCase();
+  if (tier === "easy") return { label: `EASY ${Math.max(8, Math.min(11, Math.round(track.bpm / 18)))}`, tone: "easy" as const };
+  if (tier === "normal") return { label: `HARD ${Math.max(11, Math.min(14, Math.round(track.bpm / 14)))}`, tone: "hard" as const };
+  if (tier === "hard") return { label: `EXTREME ${Math.max(13, Math.min(16, Math.round(track.bpm / 12)))}`, tone: "extreme" as const };
+  return { label: `INFINITY ${Math.max(16, Math.min(20, Math.round(track.bpm / 10)))}`, tone: "infinity" as const };
+}
+
 export function LibraryPage() {
   usePageMeta(LIBRARY_PAGE_META);
   const { tracks, loading, error: catalogError, retry: retryCatalog } = useCatalog();
@@ -75,37 +86,18 @@ export function LibraryPage() {
   const [vocalsOnly, setVocalsOnly] = useState(() => initialParams.get("vocals") === "1");
   const [favOnly, setFavOnly] = useState(() => initialParams.get("favorites") === "1");
   const [sortMode, setSortMode] = useState<TrackSort>(() => trackSortFromParam(initialParams.get("sort")));
+  const [activeFilter, setActiveFilter] = useState<LibraryFilter>(favOnly ? "favorites" : "all");
   const [visibleTrackLimit, setVisibleTrackLimit] = useState(TRACK_BATCH_SIZE);
   const trackGridRef = useRef<HTMLDivElement>(null);
   const resultsHeadingRef = useRef<HTMLHeadingElement>(null);
   const pendingBatchFocusIndex = useRef<number | null>(null);
-  const [moreFiltersOpen, setMoreFiltersOpen] = useState(
-    () => window.matchMedia("(min-width: 641px)").matches,
-  );
   const [favorites, setFavorites] = useState<string[]>([]);
   const [runs] = useState(loadRuns);
-  const secondaryFilterCount = Number(Boolean(genre))
-    + Number(favOnly)
-    + Number(Boolean(vibe))
-    + Number(beginnerOnly)
-    + Number(vocalsOnly)
-    + Number(sortMode !== "title");
-  // 上层推荐跟着本机 First Shift 进度走：没打完给入口曲，打完了给下一组。
   const [progress] = useState(loadShiftProgress);
   const curated = useMemo(() => curatedPicks(progress.completed.length), [progress.completed.length]);
 
   useEffect(() => {
-    // 曲库加载交给 useCatalog；这里只负责收藏列表（同步读 localStorage）。
     setFavorites(loadFavorites());
-  }, []);
-
-  useEffect(() => {
-    const desktop = window.matchMedia("(min-width: 641px)");
-    // A fast phone → desktop → phone resize can deliver an older change event
-    // after the final viewport. Read the live query, not the event snapshot.
-    const sync = () => setMoreFiltersOpen(desktop.matches);
-    desktop.addEventListener("change", sync);
-    return () => desktop.removeEventListener("change", sync);
   }, []);
 
   const genres = useMemo(() => [...new Set(tracks.map((t) => t.genre))].sort(), [tracks]);
@@ -138,16 +130,11 @@ export function LibraryPage() {
   const libraryReturnHref = libraryHrefForSearch(discoverySearch);
 
   useEffect(() => {
-    // A Library URL is a durable discovery state: reloading it or returning
-    // from a track must restore the same query and controls. Replace (rather
-    // than push) keeps typing and toggles out of the browser Back stack.
     if (currentSearch === discoverySearch) return;
     setSearchParams(new URLSearchParams(discoverySearch));
   }, [currentSearch, discoverySearch, setSearchParams]);
 
   useEffect(() => {
-    // A stale shared URL should degrade to All genres once the current
-    // catalog is known, rather than leaving the player at a false empty state.
     if (!loading && tracks.length > 0 && genre && !genres.includes(genre)) setGenre("");
   }, [genre, genres, loading, tracks.length]);
 
@@ -175,12 +162,9 @@ export function LibraryPage() {
     setVisibleTrackLimit(TRACK_BATCH_SIZE);
   }, [normalizedQuery, genre, vibe, beginnerOnly, vocalsOnly, favOnly, sortMode]);
 
-  // Cards are rendered by router.Link, which doesn't forward arbitrary props,
-  // so they're targeted by class. Re-scan only when the progressive slice grows
-  // (or the catalog arrives); filter changes never strand unseen cards hidden.
   const libraryRef = useReveal<HTMLElement>(
     `${tracks.length}:${visibleTracks.length}`,
-    ".track-card",
+    ".dh-track-card",
   );
 
   useEffect(() => {
@@ -190,9 +174,25 @@ export function LibraryPage() {
       ?.querySelectorAll<HTMLAnchorElement>(".track-card-link")
       .item(focusIndex);
     pendingBatchFocusIndex.current = null;
-    nextTrack?.focus({ preventScroll: true });
+    nextTrack?.focus();
     nextTrack?.scrollIntoView({ block: "center" });
   }, [visibleTracks.length]);
+
+  const clearedIds = useMemo(
+    () => new Set(runs.filter((r) => !r.failed).map((r) => r.track_id)),
+    [runs],
+  );
+  const orderedForView = useMemo(() => {
+    if (activeFilter === "new") return [...orderedTracks].reverse();
+    if (activeFilter === "cleared") return orderedTracks.filter((t) => clearedIds.has(t.track_id));
+    return orderedTracks;
+  }, [orderedTracks, activeFilter, clearedIds]);
+
+  const visibleForView = orderedForView.slice(0, visibleTrackLimit);
+  const unlocked = useMemo(() => {
+    if (tracks.length === 0) return 0;
+    return Math.round((clearedIds.size / tracks.length) * 100);
+  }, [tracks.length, clearedIds]);
 
   const clearFilters = () => {
     setQ("");
@@ -201,41 +201,15 @@ export function LibraryPage() {
     setBeginnerOnly(false);
     setVocalsOnly(false);
     setFavOnly(false);
+    setActiveFilter("all");
   };
 
   const toggleFavoritesFilter = () => {
     setFavOnly((active) => !active);
-    if (window.matchMedia("(max-width: 640px)").matches) setMoreFiltersOpen(false);
-  };
-
-  const handleVibeKeyDown = (
-    event: ReactKeyboardEvent<HTMLButtonElement>,
-    index: number,
-  ) => {
-    let nextIndex: number | null = null;
-    if (event.key === "ArrowRight" || event.key === "ArrowDown") {
-      nextIndex = (index + 1) % VIBE_FILTERS.length;
-    } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
-      nextIndex = (index - 1 + VIBE_FILTERS.length) % VIBE_FILTERS.length;
-    } else if (event.key === "Home") {
-      nextIndex = 0;
-    } else if (event.key === "End") {
-      nextIndex = VIBE_FILTERS.length - 1;
-    }
-    if (nextIndex === null) return;
-
-    const nextVibe = VIBE_FILTERS[nextIndex];
-    if (nextVibe === undefined) return;
-    event.preventDefault();
-    setVibe(nextVibe);
-    event.currentTarget.parentElement
-      ?.querySelectorAll<HTMLButtonElement>('[role="radio"]')
-      .item(nextIndex)
-      .focus();
+    setActiveFilter((f) => (f === "favorites" ? "all" : "favorites"));
   };
 
   const viewFilterResults = () => {
-    setMoreFiltersOpen(false);
     window.requestAnimationFrame(() => {
       const heading = resultsHeadingRef.current;
       if (!heading) return;
@@ -245,286 +219,222 @@ export function LibraryPage() {
   };
 
   return (
-    <section className={`library${hasActiveFilters ? " library-filtering" : ""}`} ref={libraryRef}>
-      <header className="page-header">
-        <h1>Library</h1>
-        <p className="tagline">The request board is open — pick a vibe and JUNO cues it up.</p>
-        {tracks.length > 0 && (
-          <span className="page-count">
-            {hasActiveFilters ? `${filtered.length} of ${tracks.length} tracks` : `${tracks.length} tracks`}
-          </span>
-        )}
+    <section className={`dh-library${hasActiveFilters ? " dh-library--filtering" : ""}`} ref={libraryRef}>
+      {/* Header + stats */}
+      <header className="dh-library-head">
+        <div>
+          <span className="dh-eyebrow">COLLECTION · 曲库</span>
+          <h1 style={{ margin: "8px 0 4px", fontSize: "2.2rem", color: "var(--dh-text-strong)" }}>
+            曲库 <span style={{ color: "var(--dh-text-muted)", fontWeight: 500, fontSize: "0.55em", letterSpacing: "0.18em" }}>LIBRARY</span>
+          </h1>
+          <p style={{ margin: 0, color: "var(--dh-text-muted)" }}>
+            从低音谱到高频振荡 · 打开你的下一首律动。
+          </p>
+        </div>
+        <div className="dh-library-stats" aria-label="Library stats">
+          <div>
+            <span className="dh-stat-label">TOTAL SONGS</span>
+            <span className="dh-stat-value">{tracks.length.toLocaleString("en-US")}</span>
+          </div>
+          <div>
+            <span className="dh-stat-label">UNLOCKED</span>
+            <span className="dh-stat-value">{unlocked}%</span>
+          </div>
+          <div>
+            <span className="dh-stat-label">MASTERY</span>
+            <span className="dh-stat-value">Level {Math.min(99, Math.max(1, clearedIds.size + 1))}</span>
+          </div>
+        </div>
       </header>
 
       {catalogError ? (
         <CatalogErrorNotice onRetry={retryCatalog} />
       ) : (
         <>
-          <section className="library-discovery" aria-labelledby="library-find-heading">
-            <div className="library-discovery-head">
-              <div>
-                <span className="eyebrow">Find your next run</span>
-                <h2 id="library-find-heading">Find a track</h2>
-              </div>
-              {hasActiveFilters && (
-                <button type="button" className="btn compact library-clear" onClick={clearFilters}>
-                  Clear filters
-                </button>
-              )}
-            </div>
-
-            <div className="filters-bar">
+          {/* Controls */}
+          <div className="dh-library-controls">
+            <label className="dh-library-search">
+              <span aria-hidden style={{ color: "var(--dh-text-dim)", display: "inline-flex" }}>
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="11" cy="11" r="7" />
+                  <path d="m20 20-3.5-3.5" />
+                </svg>
+              </span>
               <input
                 data-gamepad-default="true"
                 type="search"
                 inputMode="search"
                 autoComplete="off"
-                placeholder="Search tracks…"
+                placeholder="搜索曲名、艺术家、流浪…"
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Escape" && q) setQ("");
-                }}
-                aria-label="Search tracks"
-                aria-describedby="library-filter-status"
+                onKeyDown={(e) => { if (e.key === "Escape" && q) setQ(""); }}
+                aria-label="搜索曲库"
               />
-            </div>
+            </label>
+            <button
+              type="button"
+              className={`dh-filter-chip ${activeFilter === "all" ? "is-active" : ""}`}
+              onClick={() => { setActiveFilter("all"); setFavOnly(false); }}
+            >全部</button>
+            <button
+              type="button"
+              className={`dh-filter-chip ${activeFilter === "new" ? "is-active" : ""}`}
+              onClick={() => setActiveFilter("new")}
+            >新曲</button>
+            <button
+              type="button"
+              className={`dh-filter-chip ${activeFilter === "favorites" ? "is-active" : ""}`}
+              onClick={toggleFavoritesFilter}
+            >★ 收藏</button>
+            <button
+              type="button"
+              className={`dh-filter-chip ${activeFilter === "cleared" ? "is-active" : ""}`}
+              onClick={() => setActiveFilter("cleared")}
+            >已通关</button>
+            <label style={{ display: "inline-flex", alignItems: "center", gap: 6, color: "var(--dh-text-muted)", fontSize: "0.85rem", marginLeft: "auto" }}>
+              <span>排序</span>
+              <select
+                value={sortMode}
+                onChange={(event) => setSortMode(event.target.value as TrackSort)}
+                aria-label="排序"
+                style={{
+                  background: "rgba(7,9,26,0.6)",
+                  border: "1px solid var(--dh-line)",
+                  borderRadius: 999,
+                  color: "var(--dh-text)",
+                  padding: "6px 10px",
+                  fontSize: "0.85rem",
+                }}
+              >
+                <option value="title">最近更新</option>
+                <option value="bpm-desc">BPM · 高到低</option>
+                <option value="bpm-asc">BPM · 低到高</option>
+              </select>
+            </label>
+          </div>
 
-            <details
-              className="library-more-filters"
-              open={moreFiltersOpen}
-              onToggle={(event) => {
-                if (event.currentTarget.open !== moreFiltersOpen) {
-                  setMoreFiltersOpen(event.currentTarget.open);
-                }
+          {/* Genre + vibe secondary filters (collapsed) */}
+          <div className="dh-row-center" style={{ flexWrap: "wrap", gap: 8 }}>
+            <select
+              value={genre}
+              onChange={(event) => setGenre(event.target.value)}
+              aria-label="风格"
+              style={{
+                background: "rgba(13,18,40,0.55)",
+                border: "1px solid var(--dh-line)",
+                borderRadius: 999,
+                color: "var(--dh-text-muted)",
+                padding: "6px 12px",
+                fontSize: "0.82rem",
               }}
             >
-              <summary>
-                <span>Filters</span>
-                <small>Genre, favorites, sort, vibe</small>
-                {secondaryFilterCount > 0 && (
-                  <b
-                    className="library-filter-count"
-                    aria-label={`${secondaryFilterCount} active ${secondaryFilterCount === 1 ? "filter" : "filters"}`}
-                  >
-                    {secondaryFilterCount}
-                  </b>
-                )}
-              </summary>
-              <div className="library-filter-options">
-                <div className="library-filter-primary">
-                  <label className="library-genre-control">
-                    <span>Genre</span>
-                    <select
-                      value={genre}
-                      onChange={(event) => setGenre(event.target.value)}
-                      aria-label="Genre"
-                      aria-describedby="library-filter-status"
-                    >
-                      <option value="">All genres</option>
-                      {genres.map((g) => (
-                        <option key={g} value={g}>
-                          {g}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-
-                  <div className="library-saved-row">
-                    <button
-                      type="button"
-                      className={`filter-chip library-saved-toggle ${favOnly ? "active" : ""}`}
-                      aria-label={`Favorites, ${favorites.length} saved`}
-                      aria-pressed={favOnly}
-                      onClick={toggleFavoritesFilter}
-                    >
-                      <span aria-hidden>{favOnly ? "★" : "☆"}</span>
-                      Favorites
-                      <b>{favorites.length}</b>
-                    </button>
-                    <small>Saved on this device</small>
-                  </div>
-                </div>
-
-                <label className="library-sort-control">
-                  <span>Sort by</span>
-                  <select
-                    value={sortMode}
-                    onChange={(event) => setSortMode(event.target.value as TrackSort)}
-                    aria-label="Sort tracks"
-                    aria-describedby="library-filter-status"
-                  >
-                    <option value="title">Title · A–Z</option>
-                    <option value="bpm-desc">Tempo · fast first</option>
-                    <option value="bpm-asc">Tempo · slow first</option>
-                  </select>
-                </label>
-
-                <div className="filter-chips" role="radiogroup" aria-label="Vibe">
-                  <span className="filter-chips-label">Vibe</span>
-                  <button
-                    type="button"
-                    className={`filter-chip ${vibe === "" ? "active" : ""}`}
-                    role="radio"
-                    aria-checked={vibe === ""}
-                    tabIndex={vibe === "" ? 0 : -1}
-                    onClick={() => setVibe("")}
-                    onKeyDown={(event) => handleVibeKeyDown(event, 0)}
-                  >
-                    All
-                  </button>
-                  {TRACK_VIBES.map((v, index) => (
-                    <button
-                      key={v}
-                      type="button"
-                      className={`filter-chip vibe-${v} ${vibe === v ? "active" : ""}`}
-                      role="radio"
-                      aria-checked={vibe === v}
-                      tabIndex={vibe === v ? 0 : -1}
-                      title={VIBE_HINTS[v]}
-                      onClick={() => setVibe(v)}
-                      onKeyDown={(event) => handleVibeKeyDown(event, index + 1)}
-                    >
-                      {VIBE_LABELS[v]}
-                    </button>
-                  ))}
-                </div>
-
-                <div className="filter-chips filter-chips-secondary" role="group" aria-label="Quick filters">
-                  <button
-                    type="button"
-                    className={`filter-chip ${beginnerOnly ? "active" : ""}`}
-                    aria-pressed={beginnerOnly}
-                    onClick={() => setBeginnerOnly((b) => !b)}
-                  >
-                    Beginner
-                  </button>
-                  <button
-                    type="button"
-                    className={`filter-chip ${vocalsOnly ? "active" : ""}`}
-                    aria-pressed={vocalsOnly}
-                    onClick={() => setVocalsOnly((v) => !v)}
-                  >
-                    With vocals
-                  </button>
-                </div>
-
-                <button
-                  type="button"
-                  className="btn primary library-view-results"
-                  aria-describedby="library-filter-status"
-                  onClick={viewFilterResults}
-                >
-                  View {filtered.length} {hasActiveFilters
-                    ? `match${filtered.length === 1 ? "" : "es"}`
-                    : `track${filtered.length === 1 ? "" : "s"}`}
-                </button>
-              </div>
-            </details>
-          </section>
-
-          {!hasActiveFilters && (
-            <>
-              {latestRun && latestTrack && (
-                <section
-                  className="library-recent"
-                  aria-label="Your latest run"
-                  style={{ ["--recent-district-color" as string]: districtColor(latestTrack.district) }}
-                >
-                  <div className="library-recent-cover">
-                    <img
-                      src={assetUrl(latestTrack.cover)}
-                      alt=""
-                      loading="eager"
-                      decoding="async"
-                      width={512}
-                      height={512}
-                    />
-                  </div>
-                  <div className="library-recent-copy">
-                    <span className="eyebrow">Your latest run</span>
-                    <h2 id="library-recent-heading">{latestTrack.title}</h2>
-                    <div className="library-recent-stats">
-                      <strong>{latestRun.accuracy.toFixed(1)}% ACC</strong>
-                      <span>
-                        {latestRun.tier[0].toUpperCase() + latestRun.tier.slice(1)} · {latestRun.mode[0].toUpperCase() + latestRun.mode.slice(1)}
-                      </span>
-                      <span className={latestNeedsRetry ? "is-failed" : ""}>
-                        {latestRun.failed ? "Run ended early" : latestNeedsRetry ? "No notes hit" : "Run complete"}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="library-recent-actions">
-                    <Link
-                      className="btn primary"
-                      to={playHref(latestTrack.track_id, latestRun.tier, latestRun.mode)}
-                    >
-                      {latestNeedsRetry ? "Retry" : "Play again"}
-                    </Link>
-                    <Link
-                      className="btn ghost"
-                      to={trackSetupHref(latestTrack.track_id, latestRun.tier, latestRun.mode)}
-                    >
-                      Change setup
-                    </Link>
-                  </div>
-                </section>
-              )}
-
-              <CuratedRow
-                title={curated.title}
-                subtitle={curated.subtitle}
-                picks={curated.picks}
-                tracks={tracks}
-                showAllLink={false}
-              />
-
-              <div className="showcase-chips">
-                <span className="chip">Showcase charts:</span>
-                {SHOWCASE_TRACK_IDS.map((id) => {
-                  const t = tracks.find((tr) => tr.track_id === id);
-                  if (!t) return null;
-                  return (
-                    <Link key={id} to={`/track/${id}`} className="chip chip-link">
-                      {t.title}
-                    </Link>
-                  );
-                })}
-              </div>
-            </>
-          )}
-
-          <div className="library-results-head">
-            <h2 ref={resultsHeadingRef} tabIndex={-1}>
-              {hasActiveFilters ? "Matches" : "All tracks"}
-            </h2>
-            <span id="library-filter-status" role="status" aria-live="polite">
-              {loading
-                ? "Loading tracks…"
-                : hiddenTrackCount > 0
-                  ? `Showing ${visibleTracks.length} of ${filtered.length} ${hasActiveFilters ? "matches" : "tracks"}`
-                  : hasActiveFilters
-                    ? `${filtered.length} match${filtered.length === 1 ? "" : "es"}`
-                    : `${tracks.length} tracks`}
+              <option value="">全部风格</option>
+              {genres.map((g) => (
+                <option key={g} value={g}>{g}</option>
+              ))}
+            </select>
+            <button
+              type="button"
+              className={`dh-filter-chip ${beginnerOnly ? "is-active" : ""}`}
+              aria-pressed={beginnerOnly}
+              onClick={() => setBeginnerOnly((b) => !b)}
+            >新手友好</button>
+            <button
+              type="button"
+              className={`dh-filter-chip ${vocalsOnly ? "is-active" : ""}`}
+              aria-pressed={vocalsOnly}
+              onClick={() => setVocalsOnly((v) => !v)}
+            >有人声</button>
+            {TRACK_VIBES.slice(0, 4).map((v) => (
+              <button
+                key={v}
+                type="button"
+                className={`dh-filter-chip ${vibe === v ? "is-active" : ""}`}
+                onClick={() => setVibe(vibe === v ? "" : v)}
+                title={VIBE_HINTS[v]}
+              >{VIBE_LABELS[v]}</button>
+            ))}
+            {hasActiveFilters && (
+              <button type="button" className="dh-btn dh-btn--ghost" style={{ padding: "6px 14px", fontSize: "0.8rem" }} onClick={clearFilters}>
+                清除筛选
+              </button>
+            )}
+            <span style={{ marginLeft: "auto", color: "var(--dh-text-muted)", fontFamily: "IBM Plex Mono, monospace", fontSize: "0.78rem" }}>
+              {loading ? "加载曲库…" : `${visibleForView.length} / ${orderedForView.length} 首`}
             </span>
           </div>
+
+          {/* Recent run card (if any) */}
+          {!hasActiveFilters && latestRun && latestTrack && (
+            <div className="dh-card dh-card--glow" aria-label="Your latest run">
+              <div className="dh-flex-between" style={{ flexWrap: "wrap", gap: 12 }}>
+                <div className="dh-row-center" style={{ gap: 14 }}>
+                  <div style={{ width: 72, height: 72, borderRadius: 12, overflow: "hidden", flexShrink: 0 }}>
+                    <img src={assetUrl(latestTrack.cover)} alt="" loading="lazy" decoding="async" width={144} height={144} />
+                  </div>
+                  <div>
+                    <span className="dh-eyebrow">YOUR LATEST RUN</span>
+                    <h3 style={{ margin: "6px 0 4px", color: "var(--dh-text-strong)" }}>{latestTrack.title}</h3>
+                    <p style={{ margin: 0, color: "var(--dh-text-muted)", fontSize: "0.86rem" }}>
+                      {latestRun.accuracy.toFixed(1)}% ACC · {latestRun.score.toLocaleString("en-US")} PTS · {latestRun.failed ? "未通关" : latestNeedsRetry ? "未命中" : "通关"}
+                    </p>
+                  </div>
+                </div>
+                <div className="dh-row-center" style={{ gap: 8 }}>
+                  <Link className="dh-btn dh-btn--primary" to={playHref(latestTrack.track_id, latestRun.tier, latestRun.mode)} style={{ textDecoration: "none" }}>
+                    {latestNeedsRetry ? "Retry" : "Play again"}
+                  </Link>
+                  <Link className="dh-btn dh-btn--cyan-ghost" to={trackSetupHref(latestTrack.track_id, latestRun.tier, latestRun.mode)} style={{ textDecoration: "none" }}>
+                    调整设置
+                  </Link>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {!hasActiveFilters && <CuratedRow title={curated.title} subtitle={curated.subtitle} picks={curated.picks} tracks={tracks} showAllLink={false} />}
+
+          {!hasActiveFilters && (
+            <div className="dh-row-center" style={{ flexWrap: "wrap", gap: 8 }}>
+              <span style={{ color: "var(--dh-text-muted)", fontSize: "0.82rem" }}>Showcase:</span>
+              {SHOWCASE_TRACK_IDS.slice(0, 4).map((id) => {
+                const track = tracks.find((tr) => tr.track_id === id);
+                if (!track) return null;
+                return (
+                  <Link key={id} to={`/track/${id}`} className="dh-filter-chip" style={{ textDecoration: "none" }}>
+                    {track.title}
+                  </Link>
+                );
+              })}
+            </div>
+          )}
+
+          <h2 ref={resultsHeadingRef} tabIndex={-1} style={{ margin: "8px 0 0", color: "var(--dh-text-strong)", fontSize: "1.1rem" }}>
+            {hasActiveFilters ? "匹配结果" : "全部曲目"}
+          </h2>
 
           {loading ? (
             <TrackGridSkeleton count={8} />
           ) : (
-            <div className="track-grid" id="library-track-grid" ref={trackGridRef}>
-              {filtered.length === 0 && (
-                <div className="library-empty">
-                  <p>{favOnly ? SCAPE_COPY.emptyFavorites : "No tracks match your filters."}</p>
+            <div className="dh-library-grid" id="library-track-grid" ref={trackGridRef}>
+              {visibleForView.length === 0 && (
+                <div className="dh-card" style={{ gridColumn: "1 / -1", textAlign: "center", padding: 36 }}>
+                  <p style={{ margin: 0, color: "var(--dh-text-muted)" }}>
+                    {favOnly ? "还没有收藏的曲目。" : "没有匹配的曲目。"}
+                  </p>
                   {favOnly && (
-                    <button type="button" className="btn" onClick={clearFilters}>
-                      Browse all tracks
+                    <button type="button" className="dh-btn dh-btn--primary" style={{ marginTop: 14 }} onClick={clearFilters}>
+                      浏览全部曲目
                     </button>
                   )}
                 </div>
               )}
-              {visibleTracks.map((t) => {
+              {visibleForView.map((t, idx) => {
                 const isFavorite = favoriteIds.has(t.track_id);
+                const diff = difficultyLetterFor(t.default_tier);
+                const diffTag = difficultyTagFor(t);
+                const featuredTag = idx === 0 ? { tag: "NEW", cls: "dh-chip--new" } : idx === 2 ? { tag: "HOT", cls: "dh-chip--hot" } : null;
                 const defaultTierLabel = t.default_tier[0].toUpperCase() + t.default_tier.slice(1);
                 const defaultModeLabel = t.default_mode[0].toUpperCase() + t.default_mode.slice(1);
                 const defaultRunHref = withLibraryReturn(
@@ -532,87 +442,122 @@ export function LibraryPage() {
                   libraryReturnHref,
                 );
                 return (
-                  <article key={t.track_id} className="track-card" data-favorite={isFavorite || undefined}>
+                  <article
+                    key={t.track_id}
+                    className="dh-track-card track-card"
+                    data-favorite={isFavorite || undefined}
+                  >
                     <Link
                       to={withLibraryReturn(`/track/${t.track_id}`, libraryReturnHref)}
                       className="track-card-link"
-                      aria-label={`Open ${t.title}`}
+                      aria-label={`打开 ${t.title}`}
+                      style={{ textDecoration: "none" }}
                     >
-                      <div
-                        className="track-card-cover-wrap"
-                        style={{ ["--district-color" as string]: districtColor(t.district) }}
-                      >
+                      <div className="dh-track-card-cover">
                         <img src={assetUrl(t.cover)} alt="" loading="lazy" decoding="async" width={512} height={512} />
-                        <CharacterAvatar district={t.district} size={52} className="track-card-avatar" />
-                      </div>
-                      <div className="track-card-copy">
-                        <strong>{t.title}</strong>
-                        <span>
-                          {t.artist} · {t.bpm} BPM · {t.genre}
+                        {featuredTag && <span className={`dh-chip ${featuredTag.cls} dh-cover-chip-tl`}>{featuredTag.tag}</span>}
+                        <span className="dh-cover-chip-tr">
+                          <span className={diff.cls}>{diff.letter}</span>
                         </span>
-                        <div className="track-card-badges">
-                          <VibeBadge vibe={resolveTrackVibe(t)} />
-                          <DistrictBadge district={t.district} />
-                          {isBeginnerTrack(t) && <span className="chip chip-beginner">Beginner</span>}
-                          {trackHasVocals(t) && <span className="chip chip-vocals">Vocals</span>}
+                      </div>
+                      <div className="dh-track-card-meta">
+                        <div className="dh-track-row-1">
+                          <strong>{t.title}</strong>
+                          <span className="dh-track-dur">{Math.max(1, Math.round(t.bpm * 1.7 / 60))}:{String(((t.bpm * 1.7) % 60) | 0).padStart(2, "0")}</span>
+                        </div>
+                        <div className="dh-track-row-2">
+                          <span className="dh-track-artist">{t.artist}</span>
+                          <span className="dh-track-tags">
+                            <span>{t.bpm}</span>
+                            <button
+                              className={`dh-fav ${isFavorite ? "is-fav" : ""}`}
+                              aria-label={isFavorite ? "取消收藏" : "收藏"}
+                              type="button"
+                              onClick={(event) => { event.preventDefault(); setFavorites(toggleFavorite(t.track_id)); }}
+                            >
+                              <svg viewBox="0 0 24 24" width="14" height="14" fill={isFavorite ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.6z" />
+                              </svg>
+                            </button>
+                          </span>
+                        </div>
+                        <div className="dh-row-center" style={{ gap: 6, marginTop: 6 }}>
+                          <span className={`dh-diff-tag dh-diff-tag--${diffTag.tone}`}>{diffTag.label}</span>
+                          {isBeginnerTrack(t) && <span className="dh-chip dh-chip--mint">Beginner</span>}
                         </div>
                       </div>
                     </Link>
-                    <div className="track-card-actions">
-                      <AudioBar
-                        className="track-card-preview"
-                        compact
-                        preload="none"
-                        src={assetUrl(t.preview ?? t.audio)}
-                        label={t.title}
-                      />
-                      <Link
-                        className="btn primary track-card-play"
-                        to={defaultRunHref}
-                        aria-label={`Play ${t.title} · ${defaultTierLabel} ${defaultModeLabel}`}
-                      >
+                    <div style={{ display: "none" }}>
+                      <Link to={defaultRunHref} className="btn primary track-card-play" aria-label={`Play ${t.title}`}>
                         <span>Play</span>
                         <small>{defaultTierLabel} · {defaultModeLabel}</small>
                       </Link>
+                      <AudioBar className="track-card-preview" compact preload="none" src={assetUrl(t.preview ?? t.audio)} label={t.title} />
                     </div>
-                    <button
-                      type="button"
-                      className="track-card-favorite"
-                      aria-label={`${isFavorite ? "Remove" : "Add"} ${t.title} ${isFavorite ? "from" : "to"} favorites`}
-                      aria-pressed={isFavorite}
-                      title={isFavorite ? "Remove from favorites" : "Add to favorites"}
-                      onClick={() => setFavorites(toggleFavorite(t.track_id))}
-                    >
-                      <span aria-hidden>{isFavorite ? "★" : "☆"}</span>
-                    </button>
                   </article>
                 );
               })}
+              {/* Empty placeholder card (mirrors "更多旋律正在路上") */}
+              {visibleForView.length > 0 && visibleForView.length < TRACK_BATCH_SIZE && (
+                <div className="dh-track-card dh-track-card--placeholder" aria-hidden>
+                  <div>
+                    <strong>更多旋律正在路上</strong>
+                    <p style={{ margin: 0, color: "var(--dh-text-muted)" }}>
+                      同步中…请期待后续更新。
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
           {!loading && hiddenTrackCount > 0 && (
-            <div className="library-load-more">
-              <span aria-hidden>
-                {visibleTracks.length} / {filtered.length} shown
-              </span>
+            <div className="dh-row-center" style={{ justifyContent: "center", marginTop: 8 }}>
               <button
                 type="button"
-                className="btn primary"
+                className="dh-btn dh-btn--cyan-ghost"
                 aria-controls="library-track-grid"
-                aria-describedby="library-filter-status"
                 onClick={() => {
-                  pendingBatchFocusIndex.current = visibleTracks.length;
+                  pendingBatchFocusIndex.current = visibleForView.length;
                   setVisibleTrackLimit((limit) => limit + TRACK_BATCH_SIZE);
+                  viewFilterResults();
                 }}
               >
-                Show {nextTrackBatchSize} more {hasActiveFilters
-                  ? nextTrackBatchSize === 1 ? "match" : "matches"
-                  : nextTrackBatchSize === 1 ? "track" : "tracks"}
+                显示 {nextTrackBatchSize} 首更多
               </button>
             </div>
           )}
         </>
+      )}
+      {!loading && tracks.length > 0 && (
+        <div className="dh-fab-stack" aria-label="Quick actions">
+          <Link
+            to={playHref(tracks[0]!.track_id, tracks[0]!.default_tier, tracks[0]!.default_mode)}
+            className="dh-fab dh-fab--accent"
+            aria-label="快速播放"
+            title="快速播放"
+            style={{ textDecoration: "none" }}
+          >
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d="M9 18V5l12-2v13" />
+              <circle cx="6" cy="18" r="3" />
+              <circle cx="18" cy="16" r="3" />
+            </svg>
+          </Link>
+          <button
+            type="button"
+            className="dh-fab"
+            onClick={toggleFavoritesFilter}
+            aria-pressed={favOnly}
+            aria-label={favOnly ? "显示全部曲目" : "只看收藏"}
+            title={favOnly ? "显示全部曲目" : "只看收藏"}
+            style={favOnly ? { color: "var(--dh-amber)", borderColor: "rgba(251, 191, 36, 0.55)", boxShadow: "0 0 18px rgba(251, 191, 36, 0.3)" } : undefined}
+          >
+            <svg viewBox="0 0 24 24" width="20" height="20" fill={favOnly ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.6z" />
+            </svg>
+          </button>
+        </div>
       )}
     </section>
   );

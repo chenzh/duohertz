@@ -1,0 +1,26 @@
+{
+  "tool": "built-in imagegen",
+  "status": "visual_candidate_unreviewed",
+  "track_id": "dh-072-sideband-story",
+  "title": "Sideband Story",
+  "revision_reason": "Compact all three stepped sound bands into the center crop, retaining their yellow crossing.",
+  "source_recipe": "scripts/duohertz-recipes/dh-072-sideband-story.json",
+  "cover_edit": "Recompose the named motif into the center mobile-safe area while preserving the square print style and dark lower title space.",
+  "og_edit": "Edit the revised cover into a horizontal sharing card with exact lowercase duohertz and track title at left, full motif at right.",
+  "assets": {
+    "initial_cover": {
+      "path": "data/duohertz-preview/art-sources/dh-072-sideband-story/cover-initial.png",
+      "sha256": "8357c822aacfa0fb94f427ac3bb32567535db3648bcccd95b26757d6a5dc4c87"
+    },
+    "revised_cover": {
+      "path": "data/duohertz-preview/art-sources/dh-072-sideband-story/cover.png",
+      "sha256": "f946cd742a5812421bae84f281842613da447d65a65be0c8dc6e07a9c2eb05b7"
+    },
+    "wide_og": {
+      "path": "data/duohertz-preview/art-sources/dh-072-sideband-story/og.png",
+      "sha256": "266fcd431108d0c667b6aebe0d997a0b66682e46357ee5b7e01434f0ee8b02f8"
+    }
+  },
+  "mobile_card_screenshot": "data/duohertz-preview/rebuild-20260924/dh-072-sideband-story-320-card-centered.png",
+  "review_boundary": "Composition verified on the 320px development card; no human art, originality, rights or market approval."
+}

@@ -1,0 +1,13 @@
+{
+  "track_id": "dh-019-parallax-daybreak",
+  "title": "Parallax Daybreak",
+  "artist": "duohertz studio",
+  "subgenre": "Synthwave",
+  "bpm": 114,
+  "game_duration_sec": 64,
+  "stream_duration_sec": 128,
+  "model_variant": "small",
+  "generation_prompt": "Original bright synthwave instrumental for a family-friendly one-or-two-key rhythm game, around 114 BPM in clear 4/4. Begin with a compact rising five-note analog-style synth hook over a steady dry kick, crisp claps, warm pulsing bass and airy offbeat keys. Use a second contrasting glass-bell answer after the first phrase, restrained gated tom fills and playful syncopation; around the midpoint open into a thinner new harmonic movement with descending bell figures, then bring the hook back in a fuller final section. One evolving 128-second composition, clear transients for rhythm play, wide clean stereo, optimistic and fresh rather than dark retro horror. No vocals, speech, sampled recordings or known melody.",
+  "cover_prompt": "Generate a brand-new SQUARE 1:1 original album cover for duohertz track Parallax Daybreak, an all-ages synthwave rhythm-game song. Graphic editorial comic collage, near-black ink and warm ivory paper, coral red and electric cyan, tiny lemon-yellow highlights. Main abstract motif: two offset circular frequency discs sliding past one another like parallax layers, each disc cut into rhythmic wedges, with a rising five-step cyan pulse crossing them; energetic diagonal halftone rays and rough print texture. Make it a sharp geometric sound poster, high contrast and legible at thumbnail size, distinct from ring covers and landscape sunrise imagery. No person, no scenery, no city, no text, no letters, no numbers, no logo, no existing game IP.",
+  "og_prompt": "Edit the supplied original square Parallax Daybreak cover into a HORIZONTAL social card for duohertz. Preserve its distinctive two offset cut-paper frequency discs, rising five-step cyan pulse, coral/ivory/near-black palette, lemon accents and halftone comic print texture. Recompose the abstract discs on the RIGHT two-thirds; make clean near-black negative space on the LEFT. Add exactly two highly readable English text lines on the left: 'duohertz' (lowercase) and 'Parallax Daybreak'. No other text, letters, numbers, people, scenery, logos or existing game imagery. Family-friendly bold modern music poster."
+}

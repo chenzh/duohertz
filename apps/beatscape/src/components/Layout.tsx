@@ -1,6 +1,5 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { Link, useRouter } from "../router";
-import { SCAPE_COPY } from "../constants/scape";
 import { homeEntry, homeMobileAction } from "../lib/homeEntry";
 import { challengeReplayHref } from "../lib/challenge";
 import { dailyReplayHref } from "../lib/dailyChallenge";
@@ -92,6 +91,7 @@ function NavLink({
   className = "",
   ariaLabel,
   activeOn = [],
+  exact = false,
 }: {
   to: string;
   children: ReactNode;
@@ -99,12 +99,13 @@ function NavLink({
   ariaLabel?: string;
   /** Related subflows that should preserve this primary navigation location. */
   activeOn?: string[];
+  exact?: boolean;
 }) {
   const { path } = useRouter();
   const matchesPath = (candidate: string) => (
     candidate === "/" ? path === "/" : path === candidate || path.startsWith(`${candidate}/`)
   );
-  const active = matchesPath(to) || activeOn.some(matchesPath);
+  const active = (exact ? path === to : matchesPath(to)) || activeOn.some(matchesPath);
   return (
     <Link
       to={to}
@@ -244,6 +245,10 @@ export function Layout({ children }: { children: ReactNode }) {
         ? "replay"
         : "play";
   const routeTrack = path === "/track" || path.startsWith("/track/");
+  const duohertzLab = import.meta.env.DEV && path.startsWith("/lab/duohertz");
+  useEffect(() => {
+    if (duohertzLab) document.title = "duohertz — Music for you. Be your true hertz.";
+  }, [duohertzLab, path]);
   // 路由切换时重挂载 <main>，重放 .site-main 的进场动画（D 档）。
   // 对局页跳过：canvas 游戏要的是即时，0.26s 淡入会被读成卡顿。
   // DUO（/duo/:id）同样是对局页，一并跳过。
@@ -253,32 +258,58 @@ export function Layout({ children }: { children: ReactNode }) {
     path === "/duo" ||
     path.startsWith("/duo/");
   return (
-    <div className="app-shell">
+    <div className={duohertzLab ? "app-shell dh-app-shell" : "app-shell"}>
       <a className="skip-link" href="#main-content" data-gamepad-ignore>
         Skip to main content
       </a>
       <div className="bg-fx" aria-hidden />
       <header className="site-header">
-        <Link to="/" className="logo">
+        <Link to={duohertzLab ? "/lab/duohertz/home" : "/"} className="logo">
           <span className="logo-mark" aria-hidden>
-            {/* Resonance motif: concentric diamonds, outlined outer + solid core (PRD §7.6). */}
-            <svg viewBox="0 0 24 24" width="17" height="17" focusable="false">
-              <polygon
-                points="12,2 22,12 12,22 2,12"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.2"
-              />
-              <polygon points="12,8.5 15.5,12 12,15.5 8.5,12" fill="currentColor" />
+            <svg viewBox="0 0 24 24" width="18" height="18" focusable="false">
+              {/* duohertz — concentric Hz / resonance glyph */}
+              <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="1.6" />
+              <path d="M3 12h4l2-4 4 8 2-4h6" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </span>
-          BeatScape
+          duohertz <span className="dh-logo-zh" lang="zh-CN">真我赫兹</span>
         </Link>
+        <div className="header-search" role="search">
+          <span aria-hidden style={{ color: "var(--dh-text-dim)", display: "inline-flex" }}>
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="11" cy="11" r="7" />
+              <path d="m20 20-3.5-3.5" />
+            </svg>
+          </span>
+          <input
+            type="search"
+            placeholder="搜索音乐、角色…"
+            aria-label="搜索音乐、角色"
+            onKeyDown={(event) => {
+              if (event.key === "Enter") {
+                const value = (event.currentTarget.value || "").trim();
+                const target = `/library${value ? `?q=${encodeURIComponent(value)}` : ""}`;
+                window.history.pushState({}, "", target);
+                window.dispatchEvent(new PopStateEvent("popstate"));
+                event.currentTarget.blur();
+              }
+            }}
+            style={{
+              flex: 1,
+              background: "transparent",
+              border: 0,
+              outline: 0,
+              color: "var(--dh-text)",
+              fontSize: "0.88rem",
+              font: "inherit",
+            }}
+          />
+        </div>
         <nav className="site-nav" aria-label="Primary">
           <NavLink to="/library" activeOn={["/track"]}>Library</NavLink>
           <NavLink to="/characters">Characters</NavLink>
           <NavLink to="/radio">Radio</NavLink>
-          <NavLink to="/leaderboard">Local Board</NavLink>
+          <NavLink to="/leaderboard">Board</NavLink>
           <NavLink to="/profile">Profile</NavLink>
           <NavLink to="/settings" activeOn={["/calibrate"]}>Settings</NavLink>
         </nav>
@@ -302,10 +333,31 @@ export function Layout({ children }: { children: ReactNode }) {
         {children}
       </main>
       <footer className="site-footer">
-        BeatScape · {SCAPE_COPY.rightsShort} · v{APP_VERSION}
+        duohertz · 真我赫兹 · character and music concepts · v{APP_VERSION}
       </footer>
 
-      <nav className={`mobile-tabbar${routeTrack ? " mobile-tabbar-track" : ""}`} aria-label="Primary">
+      {duohertzLab ? <nav className="mobile-tabbar" aria-label="Primary">
+        <NavLink to="/lab/duohertz/home" className="tab-item">
+          <span className="tab-icon" aria-hidden><MobileNavIcon name="home" /></span>
+          Home
+        </NavLink>
+        <NavLink to="/lab/duohertz/library" className="tab-item">
+          <span className="tab-icon" aria-hidden><MobileNavIcon name="library" /></span>
+          Library
+        </NavLink>
+        <NavLink to="/lab/duohertz" className="tab-item tab-play" exact>
+          <span className="tab-icon" aria-hidden><MobileNavIcon name="play" /></span>
+          Play
+        </NavLink>
+        <NavLink to="/lab/duohertz/radio" className="tab-item">
+          <span className="tab-icon" aria-hidden><MobileNavIcon name="library" /></span>
+          Station
+        </NavLink>
+        <NavLink to="/lab/duohertz/characters" className="tab-item">
+          <span className="tab-icon" aria-hidden><MobileNavIcon name="home" /></span>
+          People
+        </NavLink>
+      </nav> : <nav className={`mobile-tabbar${routeTrack ? " mobile-tabbar-track" : ""}`} aria-label="Primary">
         <NavLink to="/" className="tab-item">
           <span className="tab-icon" aria-hidden>
             <MobileNavIcon name="home" />
@@ -354,7 +406,7 @@ export function Layout({ children }: { children: ReactNode }) {
           </span>
           Settings
         </NavLink>
-      </nav>
+      </nav>}
     </div>
   );
 }

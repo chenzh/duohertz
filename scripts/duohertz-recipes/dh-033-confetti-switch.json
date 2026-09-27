@@ -1,0 +1,13 @@
+{
+  "track_id": "dh-033-confetti-switch",
+  "title": "Confetti Switch",
+  "artist": "duohertz studio",
+  "subgenre": "Future Bass",
+  "bpm": 138,
+  "game_duration_sec": 64,
+  "stream_duration_sec": 128,
+  "model_variant": "small",
+  "generation_prompt": "Original all-ages future-bass instrumental for a one-or-two-key electronic rhythm game at a STRICT constant 138 BPM in 4/4. A stable quantized kick on every quarter beat, crisp snare on beats two and four and clear eighth-note hats must remain audible from the first second to the end, including the quieter middle; add clean short midrange attacks in every two-bar phrase. No tempo drift, half-time breakdown, free-time or drum-free gap. Signature hook: three short staccato brass-like synth notes followed by a playful one-beat rest, answered by a rising five-note glass-pluck phrase in the next bar. Put soft sidechained chord swells behind those clear attacks, a springy rounded bass, and tiny syncopated mallet fills without harsh drops. At the midpoint exchange the two timbres and change harmony while preserving the SAME drum grid; the last section braids both hooks into a fresh call-and-response cadence, not a duplicated half. One evolving 128-second stereo instrumental. No vocals, speech, sampled recordings, known melody or imitation of an existing song.",
+  "cover_prompt": "Create a brand-new SQUARE 1:1 original album cover for duohertz track Confetti Switch, an all-ages future-bass rhythm-game song. Bold original editorial comic-print collage in near-black ink and warm ivory, with bright YELLOW as the leading accent, coral red and electric cyan as smaller rhythm accents. Main motif: TWO large interlocking angular switch plates arranged off-axis; at their meeting point a handful of oversized paper confetti shards flip from coral on one side to cyan on the other. Make the switch plates and color exchange the readable subject, not a random scatter of tiny dots. Use sharp folded edges, bold shadows, sparse halftone and generous dark negative space. No mechanical button, hands, people, circles, rings, stars, city, text, letters, numbers, logos, watermark or existing game imitation.",
+  "og_prompt": "Edit the supplied original Confetti Switch square art into a HORIZONTAL duohertz social card. Keep the two interlocking angular switch plates and a small cluster of oversized coral-to-cyan paper confetti shards at their meeting point, using near-black, warm ivory and yellow-led editorial print texture. Move the motif to the RIGHT two-thirds, leave calm dark space on the LEFT, and add exactly two fully legible English lines: 'duohertz' all lowercase and 'Confetti Switch'. No other text, letters, numbers, hands, circles, stars, city, logos, watermarks or existing IP."
+}

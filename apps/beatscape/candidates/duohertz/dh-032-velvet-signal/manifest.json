@@ -1,0 +1,49 @@
+{
+  "track_id": "dh-032-velvet-signal",
+  "title": "Velvet Signal",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Synthwave",
+  "bpm": 108.0,
+  "target_bpm": 108,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -3 dB gain before AAC encoding. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-032-velvet-signal.json",
+  "source_recipe_sha256": "ddb36afd22d670902e4dd31e68715ef04783b7b2574f5a6083f31c9ef6f91f1a",
+  "source_master_sha256": "28a800cccee406e42407d62f2ecd7ec737c87fef5985210240ac94cb0c25abfc",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.12954,
+    "clipping_ratio": 1.4e-05,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "9ecb0767-4bf0-48db-8de3-7dd7b2651013",
+  "source_generation_receipt_sha256": "acc0f8747c2a0699a1d0be984480b0cf7c73ff2ef899647eacf70f94edab8dd6",
+  "generation_prompt": "Original all-ages synthwave instrumental for a one-or-two-key electronic rhythm game at a STRICT constant 108 BPM in 4/4. Start immediately with an audible quantized kick on each quarter beat, tight dry snare on beats two and four, closed hats in eighth notes, and separated midrange synth attacks in every two-bar phrase; keep the same drum grid through the final bar, including the quieter middle. No tempo drift, half-time breakdown, long ambient intro or percussion-free passages. Main hook: a six-note clipped analog-synth melody that rises in pairs, answered by a slower three-note muted electric-piano descent in the opposite stereo side. Use a rounded pulsing bass and small offbeat chord stabs with short releases, avoiding smeared attacks. At the midpoint change the harmonic center and let the muted piano lead a new question over the same drums; the finale combines both melodies in counterpoint rather than replaying the first half. One evolving 128-second stereo composition, retro-colored but original and non-harsh. No vocals, speech, sampled recordings, known melody or imitation of an existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a brand-new SQUARE 1:1 original album cover for duohertz track Velvet Signal, an all-ages synthwave rhythm-game song. Original high-contrast editorial screen-print collage in near-black ink and warm ivory paper, with CORAL RED as the dominant color, electric cyan as a narrow answering accent, and selective grain. Main motif: a single huge irregular coral paper SIGNAL SHUTTER made of three broad horizontal flaps hinged along one vertical seam; each flap is offset to reveal a thin cyan slit beneath, creating a graphic pulse without a city, sunset or cassette. Make the shape striking as a thumbnail, with wide near-black negative space and tactile cut edges. No circular sun, rings, road, grid horizon, window, people, text, letters, numbers, logos, watermark or imitation of an existing game.",
+    "og_prompt": "Edit the supplied original Velvet Signal square art into a HORIZONTAL duohertz social card. Preserve the one huge irregular coral paper signal shutter with three broad offset horizontal flaps and thin cyan slits, near-black negative space and screen-print texture. Recompose the shutter on the RIGHT two-thirds and reserve calm near-black space on the LEFT. Add exactly two crisp fully legible English lines on the left: 'duohertz' all lowercase and 'Velvet Signal'. No other text, letters, numbers, circular sun, city, cassette, people, logos, watermarks or existing IP.",
+    "cover_source_sha256": "a42257f36b5841c52114ea6562db252279a7d2df086ba5ef36d9e07241592d8e",
+    "og_source_sha256": "0b19d6ea06a812217bef3a56018c1b9ded92d60bff3fd013cd51e6dff9efd384",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "177f9a179bbfe2ebcfc8faa2280bf3cff46ec97753e4aea653acf04300533933",
+    "cover-art.png": "4aa74ff42abe5a3813b778fb7e4a9390c754b325d3b384148843697d5615b9d9",
+    "cover.svg": "fc1f8aaab284010de6d2aa52dfa94ce1dba0ab0f6a6fc2493ede146aad27ba71",
+    "easy.json": "375ec9e4b7f04a9c61aac04e198de5edc250e52f99da0a585ac0b8de91afd0d6",
+    "hard.json": "cde5026ecb10cd2a5293248f6a5955b4bbf49240a8ce17d8606e6648c62124a2",
+    "og.png": "d175528111949d4ad823e75d689038925fe720f6ad37b273fe4c11ac81851e1e",
+    "preview_48s.m4a": "fc9f7fe6489d9ac776e6afb1b69e26b58aff2ab1ade1b9a63cd91a1f73e3f6dd",
+    "standard.json": "4f6549793c0fedd508017cf843f5da81f1889b6d9b5cf6b2b7a5edf5f2b3f531",
+    "stream.m4a": "3625c31b925af62722e19f84592e5058595fd9988baee78b1c322e795cb51a86"
+  }
+}

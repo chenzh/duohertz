@@ -1,0 +1,29 @@
+{
+  "status": "visual_study_unreviewed",
+  "date": "2026-09-24",
+  "purpose": "Match the RHYVORI editorial style study while preserving ZORYMELA's distinct identity. Not an audience preference test or art approval.",
+  "front": {
+    "file": "front.png",
+    "sha256": "8ed39304d1be0b5afb0fabad418a3f4cac6fa5411b50c5c848cceb2193a7ba08",
+    "source_file": "../../characters/zorymela-concept.png",
+    "source_sha256": "45235a5152f5414aeaa958c99c8be009ec7b6f24d13d7e523423c5cd92d5fa6e",
+    "style_reference_file": "../rhyvori-editorial/front.png",
+    "style_reference_sha256": "aa787258a3b0167035218ab088711892dbdf5a4c65aa0d9d0731bbdda57aea73",
+    "prompt": "Edit FIRST image's ZORYMELA into a premium original high-contrast editorial comic / screen-print character study for the all-ages electronic rhythm game duohertz. SECOND image is STYLE ONLY: match its crisp thick dark ink outlines, angular paper-cut shadow blocks, controlled vivid accent color, warm ivory highlights and sparse halftone grain, but do not copy its person, features, clothes, palette or pose. Preserve the SAME ZORYMELA from FIRST image: adult thoughtful frequency designer, olive complexion, gentle confident face, thin round glasses, long dark hair in one practical thick braid, indigo cropped workwear jacket with restrained mint and lilac panels, black high-neck shirt, charcoal very wide-leg trousers, white/lavender high-top shoes. Keep small transparent handheld prism in raised palm with TWO separate thin sound-wave ribbons, cyan and lavender, meeting gently; compact enough for full-body card crop and not weapon-like. Three-quarter front standing pose, head to both shoes fully visible with margins, strong distinct silhouette. Original independent design, no direct imitation of any existing game/franchise, no text, logo, background, floor, extra person or sexualization. TRUE transparent alpha background, all four corners alpha 0, center figure opaque, portrait 2:3."
+  },
+  "side": {
+    "file": "side.png",
+    "sha256": "21c927a9b5cc2dc58012918e4e763ebddde9aa569ea70224e243c2e83bda7023",
+    "source_front_file": "front.png",
+    "source_front_sha256": "8ed39304d1be0b5afb0fabad418a3f4cac6fa5411b50c5c848cceb2193a7ba08",
+    "source_side_file": "../../characters/zorymela-side-concept.png",
+    "source_side_sha256": "672b3aa274ff4933712d73de32d46760ef9d569b66e9a8100f5fca43f7495005",
+    "prompt": "Create the matching original editorial comic SCREEN-PRINT side view of ZORYMELA. FIRST reference establishes the NEW front identity, clothing, crisp heavy dark ink outlines, angular shadow cutouts, halftone texture and limited palette. SECOND reference establishes the side pose and clothing. SAME adult person with olive skin, thin round glasses, one thick long dark braid, indigo cropped workwear jacket with mint/lilac panels, black shirt, very wide charcoal trousers, white/lavender high-top sneakers. Single strict 90-degree LEFT-FACING full-body side profile with head, braid and BOTH shoes fully inside portrait with margin. Small clear prism held near raised palm; restrained cyan and lavender sound-wave ribbons that meet around it, do not obscure the silhouette. Consistent wardrobe construction and proportions with FIRST image. Bold original indie electronic rhythm game aesthetic, no soft painterly shading and no imitation of existing characters. No text, logos, scenery, floor, other people, weapons or sexualization. TRUE transparent alpha background, all four corners 0 alpha, character center opaque; portrait 2:3."
+  },
+  "review": {
+    "visual_consistency": "pending",
+    "character_similarity": "pending",
+    "audience_feedback": "pending",
+    "production_art": false
+  }
+}

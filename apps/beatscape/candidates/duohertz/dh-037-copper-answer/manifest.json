@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-037-copper-answer",
+  "title": "Copper Answer",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Synthwave",
+  "bpm": 109.091,
+  "target_bpm": 110,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -6 dB gain before AAC encoding; stream-only limiter at 0.35 linear amplitude with no makeup gain. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -6.0,
+  "stream_limiter": 0.35,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-037-copper-answer.json",
+  "source_recipe_sha256": "f0c916641c6479a274aefd1b4b0c406b9a7e59ffe1180784e165198000bd5c50",
+  "source_master_sha256": "979db3e64f1967fc490faaaddd6fb1575821183f2de863633a4e366aa15abc5d",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.16976,
+    "clipping_ratio": 8e-06,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "23b0f0e3-470a-4d69-aa03-fbc2006afb65",
+  "source_generation_receipt_sha256": "7fb189ac07b43dd6de30b37096a3dc4672936bd132d60281af8a77430e757a31",
+  "generation_prompt": "Original all-ages synthwave instrumental for a one-or-two-key electronic rhythm game at a STRICT constant 110 BPM in 4/4. Keep an audible quantized kick on every quarter beat, a tight dry snare on beats two and four, short eighth-note closed hats, and clean midrange synth attacks throughout all 128 seconds including the transition. No tempo drift, half-time breakdown, ambient-only passage, long drum-free gap or smeared transient wash. Signature call: two short copper-colored analog-brass synth notes followed by a one-beat rest and an octave-up accent; signature answer: a separate three-note descending glass-key phrase in the next bar, panned to the opposite side. Give the hook a rounded syncopated bass and compact minor-seventh chord stabs, with enough space between attacks for beginner timing. At the midpoint keep the SAME continuous drum grid, move the glass-key answer before the brass call, and change the chord inversion and bass rhythm; the final quarter combines both phrases into a new descending cadence rather than repeating the first minute. One evolving 128-second stereo electronic composition, playful retro color without nostalgia imitation or harshness. No vocals, speech, sampled recordings, known melody or imitation of an existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a brand-new SQUARE 1:1 original album cover for duohertz track Copper Answer, an all-ages synthwave rhythm-game song. Original high-contrast editorial comic screen-print collage with near-black ink, warm-ivory paper, copper-orange/coral as the dominant accent and a narrow electric-cyan answer line. Main motif: ONE large asymmetric folded copper paper chevron enters from the upper left and stops abruptly before a narrow dark gap; THREE smaller staggered warm-ivory answer tabs on the right echo its direction, joined visually by a single thin cyan frequency trace. The gap is the beat of silence before the reply. Make the main silhouette distinct at 100px, with restrained halftone, crisp paper edges and a quiet dark lower fifth for local title overlay. Avoid lightning bolts, signal shutters, ribbons crossing, circles, rings, suns, sunsets, skylines, cars, cassettes, realistic metal, people, text, letters, numbers, logos, watermarks and copied game art.",
+    "og_prompt": "Edit the supplied original Copper Answer square cover into a HORIZONTAL 1.9:1 duohertz social-sharing card. Preserve its single large folded copper-orange chevron, the deliberate dark beat-gap, three smaller staggered warm-ivory answer tabs and one thin electric-cyan frequency trace, all in near-black comic screen-print texture. Recompose the motif on the RIGHT two-thirds; leave calm near-black space on the LEFT. Add exactly two crisp legible English lines there: 'duohertz' all lowercase in cyan and 'Copper Answer' in larger warm ivory. Spell both exactly. No other text, letters, numbers, lightning, sunsets, city, cassette, people, logos, watermarks or copied game art. Make this a purpose-built wide card rather than a stretched square crop.",
+    "cover_source_sha256": "40709a1c1bdebfd8713dea802c507cbb4144bf6fce325af5174843e205bc49bd",
+    "og_source_sha256": "0a9e1a2e08dba857ac9b36657a69bc5d4d04ef6f2918060eb9de303af5f2c55e",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "c0d91f313cbdbd3cb08a43b2954fa3b1292059d6b8e130df1d57e04212695166",
+    "cover-art.png": "70dd9746f4fd74f4132c680a21996a9c413d2f974d3eb969088ba82b11a1fb87",
+    "cover.svg": "b056affb8bd092cf94d9739c233ce7dd014794681100f8ea09dfa34dd0d6164a",
+    "easy.json": "f8c812eccad3e5aeadf7e9b188a94040d47fc71f9e472898d1ca3018aec86783",
+    "hard.json": "c96885fd1b37b65c8780415c8cacef7b8610787b8d276cb0c1fceaf5c1c189ce",
+    "og.png": "cfca261cad9be44cc02dc9e1de931207f2c1267dad37f158f4d5a20a46361a04",
+    "preview_48s.m4a": "6c7bc02005acdec7bcb4c0c963c8aee414d401af35c458c2b8dad830787b38e1",
+    "standard.json": "455932ca0f631a75bd8dec07d99127b8e281766f7296ca9942039a144ecc5b10",
+    "stream.m4a": "eca9ee8044e8f6ef950ec79b064f71b4bb3e5c3e27c5e9996200ba12058ebacd"
+  }
+}

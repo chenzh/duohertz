@@ -1,0 +1,58 @@
+{
+  "track_id": "dh-002-amberwave-relay",
+  "title": "Amberwave Relay",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Synthwave",
+  "bpm": 96,
+  "duration_sec": 60,
+  "stream_duration_sec": 120,
+  "creation_method": "Independent deterministic A minor\u2013F\u2013C\u2013G Synthwave game movement and new D minor\u2013G\u2013C\u2013A minor answer movement for a 120-second stream master; generated oscillators and seeded noise only, no sampled source audio or repeated first-minute loop; stream-only 0.7 amplitude limiter without makeup gain before AAC",
+  "stream_limiter": 0.7,
+  "source_script": "scripts/duohertz-compose-amberwave-relay.py",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "status": "visual_candidate_unreviewed",
+    "revision_reason": "Unify an early soft sunset cover with the duohertz high-contrast frequency-print system while retaining the amber relay motif",
+    "cover_prompt": "Edit Image 1 into a new square cover-art candidate for duohertz track Amberwave Relay. Preserve its distinctive concept: a warm amber sun pulse travels as one continuous waveform through staggered tall glass-panel frames, like a signal being handed across the scene. Transform the soft purple 3D sunset and realistic horizon into a bold original editorial comic-print collage for an all-ages electronic rhythm game. Image 2 is only a reference for duohertz's near-black ink and warm-ivory print texture, large silhouette, halftone restraint, and accent color discipline; DO NOT copy its two circular frequency rings or radial composition. Make a large flat amber-yellow sun disc on the left, two or three offset angular near-black and ivory relay frames across the center, and a single crisp electric-cyan waveform crossing them to the right. Add sparse coral beat markers and angled paper shadows. High contrast, energetic, legible at 100px; reserve the lower 20 percent dark for a separate local title overlay. No sky, mountains, ocean, glass realism, tiny music notes, text, letters, logos, characters, or copied game art. Square 1:1.",
+    "og_prompt": "Create a wide horizontal 1.9:1 social-sharing card for duohertz track Amberwave Relay from the supplied NEW square cover. Preserve its original high-contrast editorial comic-print style, large amber-yellow sun disc, staggered angular ivory relay frames, and one crisp electric-cyan waveform passing through them. Recompose the sun, frames, and wave mostly in the RIGHT two-thirds; leave the LEFT third calm near-black ink with generous negative space. Add exactly two lines of clear typography in that left third: 'duohertz' all lowercase in electric cyan, smaller; 'Amberwave Relay' in warm ivory, larger. Spell exactly d-u-o-h-e-r-t-z and A-m-b-e-r-w-a-v-e space R-e-l-a-y. No other letters, words, icons, logos, watermarks, sky, ocean, mountains, photorealistic glass or copied game imagery. The graphic motif must unmistakably match the supplied cover and remain legible at a small share-card size.",
+    "cover_source": "data/duohertz-preview/art-sources/dh-002-amberwave-relay/cover-source.png",
+    "og_source": "data/duohertz-preview/art-sources/dh-002-amberwave-relay/og-source.png",
+    "cover_source_sha256": "8ad0d5cbd857ab25cb13e845714af5474c4821391cdd36fa17dbbd74bea8715a",
+    "og_source_sha256": "771b1c8b896a2304703b0d4c9576433dc88d0704e97c0dec0fb5e20a2c96a9c5",
+    "style_reference": "apps/beatscape/candidates/duohertz/dh-001-first-frequency/cover-art.png",
+    "style_reference_sha256": "e3c55396eb2d4529ed065965460c2c8455939ea1a5169b58aaf1040d23633f33",
+    "cover_resize": "sips resize to 1024x1024 PNG",
+    "og_resize": "sips resize to 1200x630 PNG",
+    "cover_svg": "Local SVG brand/title overlay around cover-art.png; bitmap source has no text",
+    "previous_art_provenance": {
+      "tool": "built-in imagegen",
+      "cover_prompt": "Use case: stylized-concept. Original square cover-art illustration for Glass Horizon, an all-ages Synthwave song in the duohertz electronic rhythm game. A broad soft apricot horizon glow seen through layered translucent indigo glass panels, a single clean cyan waveform crossing the horizon, small friendly musical light particles, lavender and pale gold accents. Distinct from two interlocking circular rings on the First Frequency cover. Contemporary editorial album art, warm and optimistic, richly detailed but readable at thumbnail size. No text, letters, logo, characters, cars, weapons, red neon city, flashing stripes or copied game art.",
+      "og_base_prompt": "Use case: ads-marketing. Edit the supplied Glass Horizon cover artwork into a horizontal 1200x630 PNG social card for the family-friendly duohertz Synthwave track Glass Horizon. Preserve the distinctive apricot sunset glow, layered translucent indigo glass panels, one cyan waveform and small musical light particles, but recompose them for a wide landscape crop. Keep the luminous scene on the right two-thirds; create deep indigo negative space on the left for later local SVG typography. Do not include any text, letters, logo, characters, cars, weapons, red neon city or strobing stripes. This should clearly be a companion image to the supplied cover, not the same square crop.",
+      "prior_og_prompt": "Use case: ads-marketing. Edit the supplied horizontal Glass Horizon social card while keeping its apricot sunset, cyan waveform and translucent indigo glass scene intact. Add exactly two text lines in the empty deep-indigo left third, with excellent legibility at thumbnail size. Line 1: \"duohertz\" (all lowercase, spelled d-u-o-h-e-r-t-z). Line 2: \"Glass Horizon\" (title case, spelled G-l-a-s-s space H-o-r-i-z-o-n). Use a clean modern sans-serif font, pale cyan for the small first line and white for the larger second line. Both lines fully inside the image with generous margins. No other text, logos or marks. Preserve a horizontal 1200x630 social-card aspect ratio.",
+      "og_prompt": "Use case: ads-marketing. Edit the supplied horizontal text-free duohertz social card while preserving its apricot sunset, luminous cyan waveform, and layered indigo glass scene. In the empty dark-indigo left third, add exactly two crisp text lines with excellent legibility at small thumbnail size. Line 1: \"duohertz\" (all lowercase, spelled d-u-o-h-e-r-t-z), small pale cyan clean modern sans-serif. Line 2: \"Amberwave Relay\" (title case, spelled A-m-b-e-r-w-a-v-e space R-e-l-a-y), larger white clean modern sans-serif. Keep both lines entirely within the image with generous margins. Do not add any other text, icons, logos, or marks. Preserve the wide social-card composition and 1200x630 aspect ratio.",
+      "rename_provenance": "The text-free cover and wide base were generated for the working title Glass Horizon. That title collided with existing BeatScape catalog track bs-s1-02. The candidate was renamed Amberwave Relay, and its titled OG image was regenerated from the text-free wide base. Original prompts are retained above.",
+      "og_resize": "Built-in imagegen provided a 1731x909 companion card; sips resized it to exactly 1200x630 without changing the composition",
+      "cover_svg": "Local SVG title overlay around the generated cover-art.png; bitmap source is unchanged"
+    },
+    "previous_assets_sha256": {
+      "cover-art.png": "4d33ee76905800beeffa051cf2136fc0289dd413e9d31745c5bb9bb4cfb3341a",
+      "og.png": "67f40c17097f7bf66d5f373d52817044fef0ca3efac678942e9438b062dc0997",
+      "cover.svg": "a01fccf821790108cec3b2e46c50d82766bcffbe0de20203d0512dd0ada279cc"
+    },
+    "previous_art_archive": "data/duohertz-preview/art-archive/dh-002-amberwave-relay"
+  },
+  "files_sha256": {
+    "audio.m4a": "7b7d50af4f6a712408ac9911c96bc4b95f0527a4a01f48be5c8a2f666962674f",
+    "cover-art.png": "53b288ad480bb177f9745bcf790f308deec04f9d830b062e808e0d0c788114eb",
+    "cover.svg": "8a5a523fabc895d4c2eadcfb27d0f3c580a26129348a163e371f0ec87a77fa0a",
+    "easy.json": "4aa643131f9738488ca562a709048cfd0a534813aa32532e35c09e9ebb03c37f",
+    "hard.json": "8d7fbecb30897edd696d648300eefb774a9b3db0e282b91ccd65422d11e211a4",
+    "og.png": "0a45fb87fac16d0602137e9f4256dfac2874b88c4b75e70360a7168a636c1188",
+    "preview_48s.m4a": "047edfe9fc86faca54adb78411de80d8de13b329b92ac5af87678856f4e65889",
+    "standard.json": "2d8892a073fb1c5182a6284eec3fc1c8defa3462d37c9f75b0795af6b917d5fe",
+    "stream.m4a": "bec841a24621c0478d4bee639f213709eaa9aae9487dab40209842156fa16104"
+  }
+}

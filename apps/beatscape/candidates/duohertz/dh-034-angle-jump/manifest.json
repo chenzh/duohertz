@@ -1,0 +1,49 @@
+{
+  "track_id": "dh-034-angle-jump",
+  "title": "Angle Jump",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Drum & Bass",
+  "bpm": 171.429,
+  "target_bpm": 170,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -3 dB gain before AAC encoding. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-034-angle-jump.json",
+  "source_recipe_sha256": "e87b39310414d92c26cea10762a8192bfbf1b96e09167374ab2d24642312ece5",
+  "source_master_sha256": "48722f99aaa62cbd202eccd508b63b201005d54afd94fb8e181faaf5cf53bdbe",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.16595,
+    "clipping_ratio": 7e-06,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "172df544-e464-4b55-a6a7-bcb9e7ce2d9a",
+  "source_generation_receipt_sha256": "8915d4ca4f8fb5c9e1ad3a63206d015a5bf8f54ede9ecfb104e408f85c156b85",
+  "generation_prompt": "Original all-ages liquid drum-and-bass instrumental for a one-or-two-key electronic rhythm game at a STRICT constant 170 BPM in 4/4. From the FIRST SECOND through the last bar maintain a sharp dry quantized two-step grid: short kick on beats one and three, forward snare on beats two and four, closed hats in eighth notes, plus an audible syncopated rim or muted-piano attack between the main beats. At least eight separate clean midrange transients per two-bar phrase including the quieter bridge; no tempo drift, half-time section, percussion dropout, free-time or smeared pad-only break. Signature hook: a four-note jumping muted-electric-piano phrase that skips one expected downbeat, answered by a low three-note clipped synth figure that lands exactly on the next snare. Use a rolling but soft sub bass and brief bright chord fragments with clear releases. Midway invert the two melodies and move the bass to a new chord sequence over the SAME drum grid; finish by interlocking the jump and landing figures rather than duplicating the first half. One evolving 128-second stereo instrumental, energetic but not harsh. No vocals, speech, sampled recordings, known melody or imitation of an existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a brand-new SQUARE 1:1 original album cover for duohertz track Angle Jump, an all-ages drum-and-bass rhythm-game song. Original high-contrast editorial comic-print collage with near-black ink as the large field, warm ivory paper as the main object, coral and electric cyan as small directional beat accents. Main motif: TWO oversized opposing angular arrowhead-shaped paper planes, one low-left and one high-right, separated by a dramatic central gap; a single small cyan square appears mid-jump across the gap, and three short coral cut marks emphasize the landing. Use strong asymmetry, crisp cut-paper shadows and sparse halftone, readable at small thumbnail size. No rails, notched bars, domino slabs, stairs, character, feet, road, city, rings, circles, text, letters, numbers, logo, watermark or imitation of any existing game.",
+    "og_prompt": "Edit the supplied original Angle Jump square art into a HORIZONTAL duohertz social card. Preserve two oversized opposing angular ivory arrowhead paper planes separated by a dramatic gap, with the small cyan square mid-jump and three coral landing marks. Keep near-black editorial halftone space. Put the action on the RIGHT two-thirds and calm dark space on the LEFT. Add exactly two crisp fully legible English lines: 'duohertz' all lowercase and 'Angle Jump'. No other text, letters, numbers, rails, dominoes, feet, people, circles, city, logos, watermarks or existing IP.",
+    "cover_source_sha256": "53c05a2527dd155c3cdc6aae986bfb3375544c2840cb59df986412a97409aed1",
+    "og_source_sha256": "956aead8130170ee946fee8e33da45b4bd158010b23c3323b086ccb35d4669c5",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "aca7f34d72ca2cd5242cfed57244099f05862aa5ff5b68f67fb01c89ff3a0df5",
+    "cover-art.png": "0785712ac262e3158bc61f979b4c7a6ff790286ed298ac6daac3871617978bd9",
+    "cover.svg": "c6769c8e6fc5377649de4ba395c83432294c037305e464fd87d18face6013dca",
+    "easy.json": "0f63bffad40b71dafdc30dc3823066f280232f425144cdd29695d50981a3e0fc",
+    "hard.json": "f7ebf74511c9baf4a4aa8e75a2baf21871b2ebbb67509cf4e9ba27df5e98693b",
+    "og.png": "bd6f6010035c38ffbcf80f28ab99515a9146cb348043e01f8e82be3591f90f68",
+    "preview_48s.m4a": "d98860d17d56ccef23e3ef3ef17a0e5ea460cba829492aaac30835b38e47c505",
+    "standard.json": "9d5202e26c68aa4f3776c30d33cbcba33782c15e7ee16f20c76ca9efa9ab4371",
+    "stream.m4a": "041488556f2387160885f6aa89d641cbfd9486ff9829a73b557ec52128459571"
+  }
+}

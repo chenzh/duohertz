@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-059-switchrail",
+  "title": "Switchrail",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Drum & Bass",
+  "bpm": 170.0,
+  "target_bpm": 170,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -8 dB gain before AAC encoding. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -8.0,
+  "stream_limiter": null,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-059-switchrail.json",
+  "source_recipe_sha256": "0104a95bd8cbe974e289e76edbe0edbed2f4e5c5de100e97d0b7d92ab36c7801",
+  "source_master_sha256": "1437ac855b21b3eb8259e30f26696be84a0ab07231f83dfef5549aa1daebbc93",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.205,
+    "clipping_ratio": 0.000137,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "c1079c4c-6ad4-48a4-b6cc-b711a696e56f",
+  "source_generation_receipt_sha256": "a5a42f6f53643c7fce2a8731d474704103f3c579f6bbc2ae0b7f687c60c5889e",
+  "generation_prompt": "Produce one ORIGINAL 128-second stereo DRUM AND BASS instrumental for an all-ages one-or-two-key rhythm game at STRICT constant 170 BPM in 4/4. The complete audible two-step groove begins at time zero: short clean kick on beats one and the offbeat before beat three, clear dry snare on beats two and four, crisp eighth-note hats with occasional quieter sixteenth ghost ticks, and a separate short midrange pitched woodblock or synth-key attack on EVERY quarter beat. Keep all of those layers at the SAME audible level through every bar, including 0-16, 48-96 and 112-128 seconds. No fade, ambient intro, drumless break, half-time switch, quiet passage, tempo drift, long tail masking the beat or silent final bars. Signature hook: a low clipped brass-like synth stab on beat one, two bright metallic wooden ticks swapping left and right on later eighth notes, then a tiny rising three-note answer. Use a rounded moving sub bass and restrained minor-seventh chord fragments behind the short attacks. At 64 seconds keep the exact uninterrupted drums, swap the stereo positions of the two ticks, reverse the answer contour, change bass roots and bring in a different short chord stab; finish on a resolved cadence with full percussion. Energetic but clear and playful, nonabrasive controlled highs, no vocals, speech, samples, existing melody or imitation of an existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a brand-new SQUARE 1:1 original duohertz album cover for Switchrail, a fast all-ages drum-and-bass rhythm-game track. High-contrast original editorial comic-print collage on near-black ink, warm-ivory cut paper, coral red and electric cyan. Main motif: TWO long parallel warm-ivory paper RAIL strips running from the lower left toward upper right, separated by a clean dark gap; ONE broad electric-cyan diagonal switch bridge crosses from the left rail to the right rail near the center, with exactly three small coral rectangular beat notches alongside the bridge. The rails are abstract graphic lines, not realistic train tracks or a road. Strong readable silhouette at 100px, spare halftone grain, crisp asymmetric composition, quiet dark lower fifth for local title overlay. No trains, cars, people, landscape, signs, numbers, letters, text, logos, watermark or copied game art.",
+    "og_prompt": "Edit the supplied original Switchrail square cover into a HORIZONTAL 1.9:1 duohertz social-sharing card. Preserve TWO long parallel warm-ivory paper rail strips with their dark gap, ONE broad electric-cyan diagonal switch bridge crossing from left strip to right near the center, and exactly three separate small coral beat notches. Recompose the abstract rail motif on the RIGHT two-thirds against near-black original editorial comic-print ink and sparse halftone; leave calm dark space on the LEFT. Add exactly two crisp fully legible English lines on the left: 'duohertz' in lowercase electric cyan and 'Switchrail' in larger warm ivory. Spell both exactly. Build a real wide layout rather than stretching the square. No other text, numbers, letters, train, car, road, people, city, landscape, logo, watermark or copied game art.",
+    "cover_source_sha256": "9e6c3423d9a1fa337e2b2f17775ba5d361205d253f4b89e775ab9285d6cbebcd",
+    "og_source_sha256": "da6b36ce6ba5a9c8c28d48605a680ba975b4250bd03465c4fefd55663c049897",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "56a957abc8a8a0b25fe1344cc39dd0dd14ad85975dfb3cad8afad37ea2f32432",
+    "cover-art.png": "ee6c94b92533b8a68c8663eeeefbecc32b76bc0edebb5575e1b93bb51f076e5a",
+    "cover.svg": "b9c49cbf4e7ed3eea361f2fcd7ab50eb86e4a821adfdba4e8c45b7bfa9885284",
+    "easy.json": "62df8a22c32efc873da0bddeb46564f294e346f89600067cabb71508e4d7f3f5",
+    "hard.json": "d1c7e6c15a90816b4f177aeb43153e8ac94a6aa4c109baeb214339bc85d7b8c3",
+    "og.png": "4223ef7154a69ef6db045ce46ba926d6b9d38dcbcdb7a56e9089a0b6593d5e28",
+    "preview_48s.m4a": "0f4e6c479c30334ea02ad3310723e73edda03980701895af98d97d306b49018d",
+    "standard.json": "b3065fbdf0d030945f0bee58161ea01b412322b93273afe89901941a371a3ea6",
+    "stream.m4a": "80d9836cb2fe44976e950fe0d1bbad64dd847c4e5a2b9026d6f2118ce6beecf7"
+  }
+}

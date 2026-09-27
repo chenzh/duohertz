@@ -11,44 +11,188 @@
 | 中文名 | **真我赫兹** |
 | 英文名 | **duohertz**；产品、Logo、商店和站点统一小写，不使用 BeatScape 作为玩家可见主品牌 |
 | 中文 Slogan | **音你、真我赫兹** |
-| Logo 下英文短句 | **Music for you. Be your true hertz.**（采用品牌稿首选；正式商用前进行英语母语者可读性复核） |
+| Logo 下英文短句 | **Music for you. Be your true hertz.**（品牌稿首选候选，待用户确认；正式商用前进行英语母语者可读性复核） |
 | 商店长句 | Music made for you. Every tap sends out a wave of light and sound — feel the beat, find your frequency, and become your true hertz. |
 | 类型与受众 | 全年龄电子音乐节奏游戏；优先服务儿童、家庭、节奏游戏新手与轻度玩家 |
 | 核心承诺 | 一键入门、双键进阶；每次敲击都以声音、频率波纹和光粒给出清楚反馈 |
-| 视觉语法 | 电波、同心频率波纹、音符光粒和明亮的电音舞台；重要判定信息不只靠颜色或闪烁传达 |
+| 布局与视觉 | **沿用旧版 BeatScape 的页面结构和信息层级**；当前色彩与氛围参考用户提供的蓝紫电子角色视觉图，采用深蓝／靛紫空间、青蓝光迹、少量粉紫高光，并使用 duohertz 自有的声波／双键图形。重要判定信息不只靠颜色或闪烁传达 |
 
-商店短介绍以“1–2 键操作、声波特效、全年龄电音”为核心；不能在游戏仍为四轨时使用 `One or two keys` 宣传。原句草案：*duohertz is a rhythm game for everyone. Press just one or two keys in time with the music, and watch glowing sound waves ripple across the screen. No complicated combos, no steep learning curve — just pure beats and your own frequency rising with every tap.* 商店标签候选：Rhythm、Music、Casual、Family Friendly、One-Button、Electronic；标签和年龄分级以最终平台审核为准。
+### 0.1 视觉方向：旧站布局、蓝紫电子空间与原创频率语言
+
+用户于 2026-09-24 提过《女神异闻录》风格方向；2026-09-25 明确要求 duohertz **布局结构对齐旧版 BeatScape**，并提供蓝紫电子角色视觉图，要求色彩和风格参考该图。当前以最新要求为准：保留旧站熟悉的页面与导航层级，视觉由原珊瑚红／暖白漫画海报实验转向蓝紫色电子空间、角色动势、青蓝光迹和粉紫高光。参考图仅用于色彩、氛围与层次，不能直接嵌入第三方截图、标志、人物或 UI 素材。
+
+- **页面结构**：沿用旧站“品牌页头（曲库、角色、电台）→ 首页左右分栏（左文案／开局、右可试节拍）→ 三首起步曲 → 电台入口 → 角色横排 → 更多曲目”的顺序；曲库保留独立发现页，角色与电台各有独立页面，窄屏保留底部 Home／Library／Play 等主入口。仅将原四轨玩法与旧品牌内容替换为新的一／双键系统、新电音与新角色；排行榜、个人页等旧玩法绑定功能不得假装已迁移。
+- **构图**：在上述结构内使用清楚的大字级标题、角色图与几何声场层叠、远近景冷色光带和可读的深色面板。首页、选曲、电台、角色、赛前、对局 HUD 与结算共享配色和图形语言，不仅换首页皮肤。
+- **品牌图形**：原创的频率刻度、双键互答线、同心声波、折射几何与音符光粒承载动势；角色服装、标志、菜单形状和场景设计均围绕 The Soundfield 自主绘制。候选封面可以保留曲风差异，但正式框架和社交卡需汇入同一蓝紫电子语法。
+- **色彩与文字**：深海军蓝／靛紫作场景底色，冰白承载正文，亮青蓝表示声波／可操作状态，亮紫作主按钮与第二键强调，少量粉紫作为角色和舞台高光；避免整屏均匀霓虹而失去信息层级。当前界面原型令牌为深蓝 `#0b1232`、冰白 `#f3f7ff`、紫 `#9687f7`、亮青 `#69dff5`、面板蓝 `#18244b`；正式令牌仍待视觉审稿锁定。
+- **动效与全年龄**：打击时可有短促斜向切换、波纹和光粒，静态页面保持可阅读；减少动态效果时保留判定文字与波纹轮廓。禁止以密集闪光替代节奏提示，触控目标、Hold 尾端和同时击打目标在 320px 视口也必须清楚。
+- **验收**：至少对首页／选曲／角色／电台／赛前／对局／结算在桌面和窄屏留图审稿，核对统一视觉语言、文字可读性、点击目标与谱面无遮挡。开发页的任何视觉试验不能代替完整正式路径验收；现有角色与封面仍为概念候选，需按此方向复审。
+
+下方记录中的珊瑚红／漫画印刷稿描述的是此前阶段的候选素材与当时的测试结果，不再是最终视觉目标；105 张封面、三人角色及站点资产须按本节新的蓝紫视觉方向重新审稿，不能因 CSS 已换色而记作素材通过。
+
+对局已有按键波纹与光粒，并提供系统或游戏内减少动态效果时的淡出反馈。2026-09-25 本机[双键反馈研究截图](candidates/duohertz/style-studies/two-key-feedback-study.png)发现左右轨原本同色；现让第二轨波纹／光粒使用与 Echo 按键一致的珊瑚色，第一轨保留电青。浏览器在合成批准目录中实际按左右键核对独立反馈及减少动态效果；截图和自动用例仍不代表最终视觉、儿童可读性或目标玩家签审。
+
+英语市场的视觉适配是待验证假设，不把“欧美审美”当成单一偏好。[《Hi‑Fi RUSH》官方页面](https://hifirush.krafton.com/)和[《Rhythm Doctor》开发者官网](https://rhythmdr.com/)分别提供风格化音乐动作与单键节奏游戏的公开参照，但不能替代 duohertz 自身的目标玩家反馈。对节奏游戏受众与家庭／新手分别检查首屏能否在数秒内读懂一键／双键玩法、手机曲卡与按钮是否清楚、英文短句是否自然、角色与封面是否属于同一品牌；评审记录需绑定最终视觉稿。
+
+2026-09-24 视觉自评：三名新角色的漫画网点对照稿与较新的高对比拼贴曲封可作为风格化电音音游方向，但人物仍偏通用青春动漫立绘，部分早期柔和 3D 风景曲封与新稿并置时缺少统一品牌感。第 4–6 首《Kitewire Sprint》《Dawnwave Helix》《Signal Orchard》已分别保留双声线竞速、日出双螺旋、频率树脉冲的母题，重绘为同一漫画印刷方向，并在 320px 曲卡确认可辨；第 7–11 首《Lantern Circuit》《Paperwave Lift》《Tangerine Breakline》《Prism Current》《Mica Bloomline》也按各自的灯笼电路、纸飞机声波、切分踏板、棱镜电流与双花声线母题重绘，并在 320px 曲卡确认可辨。前十一首的方形封面和横版分享图现使用同一漫画印刷语言，仍是未审视觉候选。下一轮美术审稿应先在实际首页和手机曲卡尺寸核对角色轮廓、曲封识别和英文文案，再由目标玩家分别评价吸引力与玩法理解；此自评不构成“欧美玩家认可”或正式美术签审。
+
+手机开发首页的角色卡现裁切未审漫画稿至人物上半身，使 110px 宽缩略图里的脸和声波道具更清楚；桌面仍展示全身。320px／390px 实际页面留图检查无横向溢出，原有首页浏览器合同随裁切语义调整后 2/2 通过。这是展示层改进，目标玩家反馈与正式角色美术审查仍未完成。
+
+2026-09-25 本机 105 张[封面联系表](candidates/duohertz/cover-contact-sheet.html)按五类曲风、正常卡面与 56px 缩略图对照：第 1–80 首多用斜切、网点和强动势图形，第 81–105 首则重复较规整的深色画框，形成可见的批次风格断层。第 81 首另有保留双股声波与共用脉冲节点的[原创动势研究稿](candidates/duohertz/style-studies/dh-081-braided-pulse-motion-study.html)，仅供与当前候选在 100px 大小比较；当前封面、OG、manifest、哈希和审稿状态均未替换。是否采用、如何统一后续 24 张封面与分享图，仍需正式美术审稿和目标玩家反馈。
+
+另有本机[站点图标／分享图研究板](candidates/duohertz/site-art-study/index.html)：原创双端点声波标记在 32／64／180／192 px 对照，1200×630 分享图把深色底、暖白、珊瑚红、电青、斜切网点和双按键视觉统一；SVG 与 PNG 均本机生成，分享图标明内部研究稿，文件名亦与正式组装器所需已审生产图不同。短英文句暂用目标稿首选，尚未定稿。该图只供视觉、目标玩家可读性与原创性／权利评审；不替换旧站图标、不签发站点资产。
+
+2026-09-25 本机对局截图复核：击打场已有暖白纸面、近黑谱道、珊瑚红节拍与电青按键；新校准面板起初仍是蓝色圆角卡，现统一为硬边印刷式频率条，默认收起，展开后才进行 8 脉冲校准。开发试玩页的 105 首候选选择器改为有界滚动区并支持标题／ID 检索，避免整份曲单占据多屏、推远开局按钮。320px 浏览器布局与相关本地交互回归通过；这些是开发预览和独立审查包的候选界面，未构成全路径美术或目标玩家审稿。
+
+隔离开发预览现有一／双键判定场、音符与 Hold 身条、左右触控区、结果读数、结算卡和角色候选卡。曲卡和角色卡现共享珊瑚红／暖白／电青的斜切海报框架，使不同来源的候选图在页面上有一致的品牌边界。首曲《First Frequency》封面与分享图已保留双环频率母题并重绘为高对比漫画拼贴候选；首页相邻的《Amberwave Relay》《Aurora Skipline》也分别保留琥珀色信号接力与声波跨越踏板的独立母题，改为同一高对比漫画印刷语言。第 4–11 首亦按各自母题重绘；前十一首当前文件哈希、源图哈希和旧图备份分别记录在 `scripts/duohertz-art-prompts/dh-001-first-frequency.json` 至 `dh-011-mica-bloomline.json`；第 2–11 首已核对 320px 曲卡，但只是待审视觉候选。后续候选封面与角色、全路径界面仍需正式美术复核。三名角色各有高对比漫画网点风格的正／侧面[未审对照稿](candidates/duohertz/style-studies/index.html)。隔离开发首页现展示三人概要，正面漫画稿／早期概念／侧面比较移至独立角色页；试玩页的角色候选来源及生产素材均未替换。对照稿不等于正式美术批准或目标玩家已认可的证据。隔离开发首页现对齐旧站分栏英雄区与“起步三曲→电台→角色→更多曲目”结构，105 首候选移入独立曲库发现页。从完整获批 v2 目录读取的独立品牌审查路径也采用同一首页结构；仅以合成批准目录验证技术路径，真实访问因缺批准目录显示不可用。结算分别展示 Solo 或 Duo 各自的准确率、判定数与重玩／选曲／电台动作，不给家庭玩家虚假的胜负或公开排名。320px、390px 与桌面 Chromium 截图只用于原型几何和可读性检查。正式玩家界面和真人视觉审稿仍未完成。
+
+`pnpm --filter @musicsaas/beatscape build:duohertz:preview` 现能产出独立 `dist-duohertz/` 审查包：根首页、曲库、电台和一／双键对局走新品牌路由及轻量 CSS，不复制旧站曲库或 PWA，不含旧站玩家页面；HTML 明确 `noindex`。独立审查包与隔离开发首页的主句暂用目标文档的英文首选 “Music for you. Be your true hertz.”，中文固定名与 slogan 保留为次级品牌信息；此处展示不代表短句已获最终确认，试玩页的 “Tap the beat. See the sound.” 仍是操作体验提示。独立包没有已批准目录，真实访问仍会显示不可用；合成 105 首 fixture 浏览器用例只验证技术路径，不表示目标玩家已接受视觉或内容获签审。旧站生产 HTML、域名和线上内容仍未切换。
+
+独立审查包的本机 Playwright 回归现分别在 Chromium 与 WebKit 引擎下全套 21/21。WebKit 曾在打开页面前拒绝测试服务的 4190 端口，测试配置改用本机验证可访问的 4187；分享链接用例改为跨引擎剪贴板桩，核对生成的曲目 URL 而不依赖 Chromium 专有授权名。该 WebKit 运行仍采用测试脚本视口，不是实体 iPhone Safari、人工交互或专项真机验收；未批准的合成目录也不变为发布内容。
+
+独立审查包的页头现可见 `Internal preview · not released`，与 noindex 一起明确当前状态；手机把标记放在品牌旁，避免把一键开始按钮挤出 320×568 首屏或下推电台播放器。该标记只在 `VITE_DUOHERTZ_PREVIEW=1` 构建出现，正式发布构建仍须走独立签审与产物核验。合成目录的独立包全路径浏览器回归 15/15 通过；可见标记和测试不构成内容或网站批准。
+
+另有本机 `build:duohertz:source` 生成隔离的 `dist-duohertz-source/`：运行完整新品牌玩家路由，但默认无内部预览标记；HTML 仍为 `noindex`，不带真实目录、旧站 `public/`、PWA 或 SEO 发布文件。首次构建发现共用路由仍把该模式当成旧站并打入 BeatScape 的 Duo／Radio／Track 等 chunk；现以编译期新品牌模式隔离，产物不含旧站 chunk 或文案。本地 source 浏览器 2/2 通过，只以合成目录验证可进入首页，真实无目录时仍拒绝。该包只是未来签审后组装正式产物的源码基础，**不可直接部署**；正式文案、角色、曲库、站点元数据／PWA、性能及发布门禁仍待完成。
+
+本地 `scripts/duohertz-assemble-release.py` 现要求 105 首曲库／三人角色暂存包与四份原始人工材料重新通过来源复核，并验证独立站点签审对源码包、两份暂存 JSON、四张新品牌站点图、最终 HTTPS 地址和英文短句的哈希绑定。通过后才把内容复制进新站目录、在最终包内设置批准位和站点 SEO／PWA 元数据；任何材料缺失、旧站 chunk、签审过期或输出路径覆盖现有目录均失败且不写包。当前无真实暂存、站点图和站点签审，合成资料单测不能算正式通过；即便生成本地候选包，仍须最终浏览器／性能验收、发布门禁和单独的部署授权。协议详见 `docs/DUOHERTZ-CATALOG-PROMOTION.md`。
+
+最终包另可用 `scripts/duohertz-verify-release.py --site <目录>` 本机独立复核：目录和角色身份、105 首／315 谱素材哈希、代码资源树、站点 PNG 解码与哈希、批准位、页面 title／canonical／OG、PWA、robots、sitemap、SPA fallback 及多余文件／软链接。组装器在原子写出前也运行该核验。合成包篡改测试覆盖音频、目录、角色图、JS、图标和元数据；此核验不会重新审查人类签名或代表实际浏览器／性能通过。
+
+独立审查包和开发 v2 路由对同一 URL 的已批准目录在页面会话内复用一次读取，跨首页／曲库／对局／角色／电台导航不重复下载目录；失败或未批准的响应不缓存，“Try again”会重新读取。合成目录浏览器验证请求次数，尚无真实批准目录或公开站点流量读数。
+
+独立首页的手机首屏需让“一键开始”主操作完整位于固定底栏上方，至少留 8px 间距。2026-09-25 在 320×568 本地合成目录下，原按钮底边 507.3px、可用安全线 496px；收紧仅手机文案间距后，浏览器几何合同通过。该检查证明布局可达，不替代正式视觉和目标玩家审稿。
+
+独立曲库的 105 首目录现可按标题或 `dh-` 曲目 ID 搜索，并与曲风筛选共同作用；实时区分已展示数量和匹配总数，零结果提示换关键词或曲风。默认只展示前 15 首，可每次再展开 15 首直至浏览全部 105 首；搜索或切换曲风从首批重新开始。320px 下曲风选项排成可横滑的一行，减少选曲前的页面高度。合成批准目录的浏览器合同覆盖大小写搜索、ID 搜索、组合筛选、逐批展开与清空后恢复完整匹配集；真实曲目仍需签审，未对外发布。
+
+独立音乐站的搜索只筛选队列，不擅自切换或中断正在播放的曲目。当前曲目不在非空搜索结果中时，队列上方明确提示“正在收听的曲目不在结果里，选择结果可切换”；玩家点击结果后播放器、URL 与“用这首歌进入游戏”入口同步。合成目录的手机浏览器合同覆盖提示、手动换曲、入口指向和零音频预取；曲目本身仍未签审。
+
+开发曲库卡片现读取从 105 张原封面本地派生的 240px WebP，正式目录暂存工具也为签审后的原图派生同尺寸卡片图并记哈希；未来获批电台的 240px 主封面、64px 列表、对局赛前约 120px 封面和结算小图均使用该卡图。人工审稿保留 1024px 原图。105 张当前原图共 136.2 MB，候选卡图共 1.12 MB，避免小图位把原图体量当作缩略图下载。首曲原图 2,238,869 字节、卡图 23,882 字节；独立审查包浏览器核对电台和赛前均无原图请求。手机模拟、合成批准目录的[本地性能诊断](../../docs/DUOHERTZ-PERFORMANCE.md)显示冷开局少传 2,214,879 字节（58.8%），点击至游戏运行状态中位数从 2828 ms 降到 1833 ms；首曲无输入整局补测在桌面／手机模拟均从 3,790,125 B 降到 1,551,207 B。该点击指标不是实际可听起点，整局只有首曲 Easy 各 1 次，也不是正式发布性能通过。当前没有真实批准目录或最终包。
+
+曲库的搜索词、曲风和已展示数量会同步到本页地址。由曲卡进入对局时仅携带这三个受控参数，对局页的“返回选曲”及浏览器返回可恢复同一结果集与展开数量；无效曲风或展开数量不写入回程地址。320px 合成目录的本地浏览器合同覆盖正常选曲返回与失效曲目回程，避免在 105 首列表中重新查找。该行为仍属于隔离审查包。
+
+未来获批目录的对局页现把一键／双键难度选择和开局操作放在玩法区之前，Solo／Duo、音量与校准仍在玩法区后；默认一键 Easy 的按钮明确写作 “Start one-key beat”，切换双键或 Duo 时按钮同步说明玩法。320×568 本地审查包先测得旧开局按钮底边 782.8px、被底部导航挡在首屏外；初次前移按钮后又发现玩法触控区底边约 1030.8px，因此点击开局后把玩法区滚入视野。进一步检查发现三档按键选择底边约 1007px，新玩家首屏看不到双键选项；前移后整组位于底栏安全线上方，选择双键可直接看到对应开局按钮。从下方选择 Solo／Duo 时，开局操作在桌面与手机回到可见范围，键盘选择会把焦点送到开局按钮。浏览器合同核对手机一键／双键选择、开局、双人触控区和暂停按钮都在所需视口的底部导航安全线上方，并能实际启动音频。开发候选试玩保留原控件顺序；这仅是合成批准目录下的界面行为，仍需全路径视觉与目标玩家审稿。
+
+2026-09-25 本机正式路径截图发现：从曲库进入具体对局后，首屏大标题仍重复站点名，当前曲名只在设置区以下的封面图注和结算中出现。独立新品牌对局现以所选曲名作页面 h1，站点名留在导航和标题眉标；开发候选试玩页仍显示 duohertz。用 20 字符的《Opaline Counterpulse》模拟最长标题，在 320×568 截图和浏览器几何合同核对：标题不横溢、三档键数与开局按钮仍完整位于底部导航上方。合成目录验证不代表最终文案或玩家视觉签审。
+
+独立审查包现另有 `/characters` 新品牌角色页，桌面／手机使用同一高对比频率视觉，展示三人的身份、称号、地区、性格、台词、完整故事及正／侧面切换。页面只读取 `duohertz-v2/characters.json` 指向的独立角色素材，不把开发页的未审 RHYVORI／NIVAREO／ZORYMELA 文案或概念图编进审查包；它还要求先读取已标记站点批准的 v2 音乐目录。角色清单必须为 `brand: duohertz`、三名不同角色、Attacker／Support／Buffer 各一位、同源 `/characters/<id>/front.png` 与 `side.png`，且有签审来源哈希和明确站点批准字段。**当前没有真实角色签审清单，页面保持不可用**；浏览器测试仅用合成清单验证技术路径。客户端字段检查不验证签字或素材哈希，正式角色名称、权利、美术及网站批准仍需人工证据和独立发布工具核验。
+
+320px 合成清单的本地截图复核发现三篇 120–180 词故事同时展开时，角色页约 5900px 长，后两人难以快速看到。手机现先显示身份、肖像、性格和台词，故事可逐篇展开；桌面仍直接显示完整故事。手机浏览器合同要求第二张角色卡在文档前 1900px 内、展开后全文可见，桌面正文仍可读；这只是版面与可达性验证，角色图和目标玩家审稿仍未批准。
+
+角色资料的本地暂存器现要求与开发概念目录分开的 120–180 词三人 roster、三种身份、透明 RGBA 正／侧面图及各自素材哈希，再以独立 `name`／`rights`／`art`／`copy` 人工签审绑定 roster 与证据文件；缺任一项就拒绝输出。通过后也只生成隔离的 `characters.json` 与图片，`site_and_deployment_approval` 保持 false。真实签审尚无，不能把合成单测或暂存成功写作角色／站点批准；字段和本地命令见[角色与曲库暂存边界](../../docs/DUOHERTZ-CATALOG-PROMOTION.md)。
+
+**英文短句决策稿**（Logo 下方最多 12 词；首选尚未得到用户最终确认）：
+
+| 方案 | 文案 | 用途与状态 |
+|---|---|---|
+| 首选 | Music for you. Be your true hertz. | 保留“为你”和“真我频率”的意境；开发／审查页仅暂用，待用户确认和英语可读性复核。 |
+| A | Every note is for you — find your true hertz. | 叙事感更强，亦可用于主视觉海报；备选。 |
+| B | Sound made for you. Feel your true hertz. | 强调体验感受；备选。 |
+
+**英文商店长句**：首选为上表所列的 *Music made for you. Every tap sends out a wave of light and sound — feel the beat, find your frequency, and become your true hertz.*；另保留两条备选，供最终商店版面和英语可读性评审选择：
+
+- Press one or two keys, and the sound world answers. duohertz turns simple taps into glowing electronic waves — music that is truly yours.
+- Built for players of every age, duohertz lets you feel the beat without complexity. One key, two keys, your own frequency.
+
+**英文商店短介绍候选**（仅在一／双键玩法和全新电音曲库交付后对外发布）：
+
+> **duohertz** is a rhythm game for everyone. Press just one or two keys in time with the music, and watch glowing sound waves ripple across the screen. No complicated combos, no steep learning curve — just pure beats, bright electronic tunes, and your own frequency rising with every tap.
+>
+> Jump in as a kid, a parent, or a rhythm-game newcomer. duohertz keeps controls simple and the music big, so anyone can feel the beat.
+
+商店标签候选：Rhythm、Music、Casual、Family Friendly、Atmospheric、One-Button、Indie、Electronic；标签和年龄分级以最终平台审核为准。卖点顺序为极简操作、全年龄友好、每次按键可见的电波反馈、没有强制教程墙。
+
+| 商店卖点 | 英文候选表达 |
+|---|---|
+| 极简操作 | Only one or two keys to master — tap in time, that's it. |
+| 全年龄友好 | Easy to pick up for kids and adults alike; difficulty grows with you. |
+| 电音频率主题 | Every note becomes a visible wave of light and sound — feel the hertz. |
+| 零门槛上手 | No tutorial wall, no combo pressure. Press and play. |
+
+**名称释义（开发者备注）**：`duo` 指一对，也呼应最多双键与两人合奏；`hertz` 是频率单位，对应音乐与可视声波。`duohertz` 将简单操作与“找到自己的频率”连接起来，英文品牌名保持小写，不译成 `True Hertz`。中文“音你”同时借“因你”表达音乐为你而来；英文短句保留 “for you” 与 “true hertz” 的意境，不强求字面双关。英文母语者可读性仍需复核。
+
+固定英文名已有可核对的音频领域公开使用先例，见[品牌与角色命名初筛](../../docs/DUOHERTZ-BRAND-SCREENING.md)。此发现不自动改变 `duohertz` 的产品决定，但正式商用前需留下目标市场的品牌与相关音乐／电台服务近似性审查结论；公开网页命中或未命中均不能单独作法律判断。
 
 ## 1. 核心玩法：一键与双键
 
 - **Solo · One Key**：一处清晰的击打目标，一个输入键／触控区。入门曲谱只含单点 Tap 与可选 Hold，不要求同时按键；按键的波纹和声音反馈与谱面时间点对应。
 - **Solo · Two Keys**：左右两个目标、两个输入键／触控区。节奏可做左右呼应；双键同时按仅在明确教学后的进阶谱出现，不能用旧四轨谱面折叠冒充重新设计的双键谱。
 - **Duo**：两名玩家各持一个输入键／触控区，整局共两个玩法键；两人结果独立呈现。旧版“每人四轨”的 Duo 规则、文案和成绩不可沿用。
-- 键盘默认建议为一键 Space、双键 F/J；触屏显示一或两块足够大的目标，标准手柄使用一或两个面键。最终键位允许重映射，输入来源的时序和防重复仍由统一状态机负责。
+- 键盘默认为一键 Space、双键 F/J；触屏显示一或两块足够大的目标，标准手柄使用一或两个面键。隔离试玩和独立审查包已支持在对局设置中分别重绑一键、左键、右键，使用独立 `duohertz_keymap_v1` 本地存档；左右键不能重复，浏览器快捷键和 Tab 不被重绑控件接管，键帽按实际布局显示。对局中不可改键；正式玩家手感与可访问性仍待审查。输入来源的时序和防重复仍由统一状态机负责。
 - 默认体验不以断连、掉血或排行榜压力惩罚新手。分数、连击和高难挑战可保留为可选择的进阶层；儿童与轻度玩家无需完成教程墙就能开始并读懂结果。
 - 目标谱面按新音频重制：Easy 为一键，Standard／Hard 为双键。Tap、Hold 和双键同拍的视觉与判定对象重新定义；旧 Slide、四道色、四轨键位及相关教程退出新品牌默认路径。
+- 新谱采用独立的 `format: 2`、`theme: duohertz`、`dh-` 曲目 ID 和显式 `input_count: 1 | 2`；Easy 只能一键，Standard／Hard 必须双键，Chord 仅可在 Hard 的两个键上出现。发布器与运行时都必须拒绝旧 `format: 1` 四轨谱，禁止静默折叠转换。计分与 Hold 的最终规则仍需随新音乐、新手验收锁定；当前纯逻辑实现只是原型。
 - 判定仍以 Web Audio 歌曲时钟为唯一时间真值。旧 BeatScape 的 15/30/50 ms 和旧分数上限只描述旧版实现；duohertz 的窗口、校准、计分与节奏密度必须作为新版本单独测量和锁定，不能在无新谱、新手测试的情况下默认为通过。
+- 隔离试玩及独立审查包现将键盘、指针事件和标准手柄快照的可信原始时间戳投影回 Web Audio 歌曲时钟，再应用 duohertz 独立校准偏移；超过 250 ms、未来或无效的时间戳不补偿。浏览器延迟事件回归覆盖 Tap、Hold 松手和手柄轮询；这是主线程排队延迟的工程保护，不能替代实体设备的音画同步或正式判定窗验收。
+- 一键／双键对局已复用站内按完整 URL 与 AudioContext 采样率区分、上限 64 MiB 的解码音频缓存；同曲 Stop 后重玩可复用 PCM，不必重复下载和解码整段游戏 AAC。加载中停止会释放订阅并取消无人的请求，失败响应不保留；浏览器合同以拦截请求确认同一曲连续两局仅取一次音频。缓存不改变判定、曲目签审或正式站点的实测性能要求。
+- duohertz 隔离开发试玩及独立审查包现提供 8 次 Web Audio 预排节拍的本地校准候选：至少 3 次稳定输入才给出建议，迟到的正偏移在按下、松开与自动 Miss 截止时按同一符号补偿；结果单独存于 `duohertz_timing_offset_ms`，不读取旧版 `bs_offset_ms`。校准期间不可开局，等待声音权限时可取消，切后台会取消测量；自动浏览器验证覆盖稀疏输入拒绝、稳定样本保存、实际判定补偿、键盘焦点及 320px 排版。此流程尚未经过目标玩家手感、音频设备延迟或正式判定窗验收。
 - 减少动态效果、音量、闪光强度和触觉反馈应可由玩家控制；声波表现不得遮挡目标或依赖高频闪烁。离线、暂停、恢复和音画同步沿用可复用的工程能力，但要在一／双键布局重新验收。
+- 隔离开发试玩页已能在手动暂停、失焦或切后台时冻结 Web Audio 歌曲时钟与谱面；恢复前显示 3 秒倒计时，加载中停止不会在音频返回后自行开局。这只验证原型交互，尚不代表正式玩家路径、手柄输入或长时运行验收通过。
+- 隔离开发试玩页已将标准手柄的底部面键映射到一键节拍、右侧面键映射到双键节拍，并避免站点级手柄确认／返回抢占试玩输入；模拟标准手柄的浏览器测试覆盖左右键与双键同拍。已分配手柄中途断开时，当前局冻结 Web Audio 时钟与谱面并提示对应玩家；可接入替换手柄或改用键盘／触控，经倒计时恢复时重新分配并采集按键基线，避免恢复瞬间把已按住的键算成新击打。尚未进行实体手柄或正式玩家路径验收。
+- 隔离开发试玩页现有 Duo 模式：两人共用一张 Standard／Hard 双键谱与同一个 Web Audio 歌曲时钟，每人占一键并分别显示判定数和准确率；键盘默认 F／J（可重绑）、左右触控区可同时操作。模拟的两只标准手柄各以底部面键控制一人；只有一只手柄时可用底部／右侧面键共用。Duo 自动化覆盖双手柄分流、开局一人漏拍而另一人前两拍满准的独立结果、8 秒草图整局双方判定闭合，以及 390px 模拟触控输入与无横向溢出；这是开发原型。最新候选《Opaline Counterpulse》已在浏览器完成 64 秒 Easy（前段 Tap 和 Hold）与 Duo（两人各击一拍）整曲测试，前段输入获得非零准确率，其余判定自然收束；全曲实操手感、其他候选整曲、实体手柄与正式玩家路径仍未验收。
+- 隔离开发试玩页的草图振荡器与候选 M4A 现共用音乐音量总线，按键提示音走独立音效总线；页面可调音乐／音效音量及关闭提示音，并实时响应本站 Settings 变化。开发页已有波纹、光粒与减少动态效果处理；这些控制尚未作为正式 duohertz 玩家路径验收。
+- 对局运行期现只跟踪尚未结束的音乐／提示音源，源触发 `ended` 后即从集合移出；波纹计时器触发后也从待清理集合移出，暂停、停止、卸载仍会清理剩余项。这样不会在一局里按敲击次数持续保留已结束节点和失效计时器；本机浏览器覆盖完整 64 秒局、Duo、连续重玩、暂停与音量开关。改动后另有同页 10 局／1200 次输入的堆与 DOM 趋势、首曲持续脚本输入整局的桌面／手机模拟帧间隔诊断，见[本地性能记录](../../docs/DUOHERTZ-PERFORMANCE.md)；仍无真实批准目录、正式性能预算或最终包验收。
+- 隔离开发试玩页现按 Hold 的开始和尾拍时刻绘制持续条；按下后尾拍标记继续随歌曲时钟移向判定线，供玩家判断何时松开。8 秒草图的浏览器合同覆盖尾端可见性，手机宽度截图已目检；最终 Hold 视觉、手感和判定规则仍需随正式玩法验收锁定。
 
-## 2. 新世界观与三名角色（创作候选，待名称检索和美术定稿）
+2026-09-25 本机新增 105 首／315 张当前哈希绑定谱面的纯逻辑完整游玩合同：按每个 Tap、Hold 头尾和 Hard 双键同拍精确输入时，每张谱所有判定为 Perfect，Standard／Hard 两人各自结果完整；完全不输入时每张谱都以 Miss 闭合且不会让默认家庭玩法失败。该合同不播放真实音频，也不代表玩家实际手感、全曲浏览器实操或发布签审。
+
+## 2. 新世界观与三名角色（创作定稿候选，待名称与美术审查）
 
 世界以 **The Soundfield** 为暂定舞台：大家把自己的节拍送入公共声场，让看不见的频率成为可见的色彩。冲突是创作方式与合作节奏的分歧，不使用旧版 Scape City、NIGHTSHIFT、The Late Static、JUNO、ATLAS 或 TORQUE 的身份、台词、肖像和曲目故事。角色是引导和叙事伙伴，**不提供改变判定窗、分数或付费能力的英雄属性**。参考英雄卡的信息层级，不复制《王者荣耀》的英雄名称、称号、造型、台词、技能或故事。
 
 | Hero English Name | Title | Role Class（内部） | Height | Region | Core Identity | Character Traits | Representative Quote |
 |---|---|---|---|---|---|---|---|
-| **AERI**（暂名） | The First Pulse | Attacker／节拍领奏 | 165 cm | Pulse Dock | 把第一下敲击变成大家都能跟上的低频脉冲 | 好奇、果断、热情、偶尔抢拍 | “Start with one beat. We can build the rest together.” |
-| **NILO**（暂名） | Keeper of Echoes | Support／呼应引导 | 169 cm | Echo Commons | 倾听别人的节拍，再给它一个温暖的回应 | 耐心、善听、幽默、坚定 | “I heard your rhythm. Try mine beside it.” |
-| **VELA**（暂名） | Weaver of Waves | Buffer／频率编织 | 172 cm | Prism Yard | 将两条节奏织成可见波纹而不盖过任何一方 | 沉稳、细致、爱实验、体贴 | “Two notes can leave room for every voice.” |
+| **RHYVORI** | The First Pulse | Attacker／节拍领奏 | 165 cm | Pulse Dock | 把第一下敲击变成大家都能跟上的低频脉冲 | 好奇、果断、热情、偶尔抢拍 | “Start with one beat. We can build the rest together.” |
+| **NIVAREO** | The Reply Wave | Support／呼应引导 | 169 cm | Echo Commons | 倾听别人的节拍，再给它一个温暖的回应 | 耐心、善听、幽默、坚定 | “I heard your rhythm. Try mine beside it.” |
+| **ZORYMELA** | Weaver of Waves | Buffer／频率编织 | 172 cm | Prism Yard | 将两条节奏织成可见波纹而不盖过任何一方 | 沉稳、细致、爱实验、体贴 | “Two notes can leave room for every voice.” |
 
-三名角色最终卡片均需 120–180 词英文背景故事、上表字段、正侧面设计与原创性证据；以下是**故事方向而非已签核成稿**：AERI 从独自追求最快的节拍学会先给别人一个容易加入的起点；NILO 用回声帮助害羞的新玩家找到自己的回应；VELA 将不同速度的声波调成可以一起闪耀的图案。三人的剧情按“一键发声 → 双键回应 → 两人合奏”随实际游玩逐步出现。对外使用暂名之前须完成角色名、称号、相似外观和目标市场商标检索；检索未完成时不宣称名称已获独占权。
+**RHYVORI · Background Story**
+
+At Pulse Dock, RHYVORI grew up among speakers that could turn the smallest tap into a ring of light. They loved racing the loudest beats across the floor, but their fast patterns left new players watching from the edge. One evening, a child reached for the stage and pulled back because there seemed to be no place to join. RHYVORI stopped the music and played a single, steady pulse. The child tapped back. Soon the whole dock answered, one person at a time, until their simple rhythm filled the room. RHYVORI now opens every gathering with a beat anyone can find. When players choose one key, RHYVORI shows where that beat lives; when they are ready for two, RHYVORI leaves a space for their answer. Their gift is not speed. It is the courage to begin and the joy of making the first note easy to share.
+
+**NIVAREO · Background Story**
+
+In Echo Commons, every sound returns a little differently. NIVAREO learned to listen there by collecting tiny echoes in glass tuning rings. A visitor once told them that their own beat was too quiet to matter. Instead of asking for a louder performance, NIVAREO played the visitor's rhythm back with one gentle note beside it. The two sounds made a new pattern, and the visitor tried again. Now NIVAREO helps players hear their place in a song without telling them how they must play. In a two-key passage, one note can ask a question and the other can answer; in Duo, each player keeps their own voice while sharing the same measure. NIVAREO smiles when a mistake becomes a new attempt, because an echo is an invitation, not a verdict. They keep an empty tuning ring for every player who has yet to discover their own reply.
+
+**ZORYMELA · Background Story**
+
+ZORYMELA works in Prism Yard, where colored waves cross above the rooftops at different speeds. As a child, they tried to force every wave into one perfect line. The result looked neat but sounded thin. Later, two friends played very different rhythms nearby: one marked a slow pulse while the other added quick, bright notes. ZORYMELA watched the waves meet without erasing each other and built a small prism that made both patterns visible. That discovery changed how they design the yard's light shows. ZORYMELA gives each sound room to travel, then guides the moment when two sounds meet. In a two-key song, their ripples show the left and right beats clearly; in Duo, each player can see a separate trail and the shared shape between them. ZORYMELA believes harmony does not require everyone to sound alike. It begins when people can hear themselves and one another at the same time.
+
+三人的剧情按“一键发声 → 双键回应 → 两人合奏”随实际游玩逐步出现。**RHYVORI / NIVAREO / ZORYMELA 与称号是本轮创作候选，不是法律清权结果**：字段结构借鉴英雄卡，人物世界、能力、台词和故事为 duohertz 独立创作，不沿用《王者荣耀》的英雄职业机制、名称、造型或叙事。公开初筛发现旧名 AERI 与音乐相关游戏角色同名、NILO 已用于游戏相邻服务、旧称号 Keeper of Echoes 是现有游戏单位，VELA 则与 Konami《SOUND VOLTEX》角色同名；这些工作名／称号均已撤下，证据见[角色名称初筛](candidates/duohertz/characters/name-screening.md)。上线前仍须对现有角色名、称号和造型做目标市场的相同／近似检索及人工审查；Web 搜索未命中不能视作商标许可。三人各有透明背景正面和侧面全身概念图，原始生成提示词、对应正面来源与哈希保存在 `candidates/duohertz/characters/`；正面图无文字，改名后复用原图并保留含旧名／称号的原始提示词作为来源记录。侧面图仍是未审稿候选，并非生产立绘或完整转面设定；最终美术、近似性审查与正式原创性证据仍待完成。概念图不计为角色正式验收。
+
+进一步的近音搜索发现旧工作名 PRILUNE 与东映动画《偶像光之美少女》官方角色“プリルン”读音接近，因此已撤下；第三角色现用 ZORYMELA 工作名，证据和处理状态见[命名初筛](candidates/duohertz/characters/name-screening.md)。新名仅经公开网页初筛，**尚未正式清权或定稿**。隔离开发页供审稿，不构成对外使用决定。
+
+隔离开发页已能展示三人的正面／侧面概念、身份、性格、称号、台词和可展开的完整背景故事，供整体审稿；页眉同时展示 `duohertz`、中文名及中英文 Slogan。页面不进入正式构建，文案与角色素材尚未获得正式发布批准。
 
 ## 3. 电音曲库与谱面整体替换
 
 - 现有 105 首 `theme: beatscape` 曲目、315 张四轨谱、旧封面与 105 条故事文案均是**旧版资产**。duohertz 公开曲库不得仅更换标签、曲名或封面；需重新生成／制作音乐并逐首重制谱面与视觉素材。旧曲可留在历史归档，不得混入新品牌的可浏览或可播放目录。
 - 目标规模为 **105 首全新电子音乐、每首 Easy／Standard／Hard 三谱，共 315 张新谱**。Easy 一键，Standard／Hard 双键；允许先做内部小批量验收，但不足全量时不得将旧 105 首计入 duohertz 完成数或正式全库发布。
+- 截至 2026-09-25，隔离开发目录有一百零五首技术候选：《First Frequency》《Signal Orchard》《Mica Bloomline》《Kinetic Sundial》《Tideglass Transit》《Windowlight Sync》《Pocket Frequency》《Ribbon Junction》《Hexa Swing》《Sawtooth Lilt》《Flipbook Beat》《Postcard Wave》《Glasswing Loop》《Twinleaf Tempo》《Chime Arc》《Tessera Steps》《Braided Pulse》《Chordline》《Pulse Terrace》《Softline Harbor》《Glowline Garden》（Melodic House，均 64 秒）、《Amberwave Relay》《Lantern Circuit》《Cobalt Switchback》《Parallax Daybreak》《Duskline Memory》《Afterimage Parade》《Velvet Signal》《Copper Answer》《Mirrorlight Meter》《Keycap Comet》《Dialspin》《Togglebeam》《Nightgrid Shuffle》《Magnetic Shift》《Sideband Story》《Velour Transit》《Lumen Cassette》《Nightglass Drive》《Static Arcade》《Analog Bloom》《Spectrum Cruise》（Synthwave，60／64 秒）、《Aurora Skipline》《Paperwave Lift》《Pulse Mosaic》《Opaline Counterpulse》《Answerlight Bounce》《Springtone Reply》《Confetti Switch》《Brightfall》《Glowstack》《Latchlight》《Pinwheel Skip》《Snapbubble》《Foldline Pop》《Softstep Burst》《Marble Spark》《Pogo Pulse》《Bouncefold》《Springpad Pop》《Foamstep》《Patchwork Pop》《Tileflip》（Future Bass，60／64 秒）、《Kitewire Sprint》《Tangerine Breakline》《Jetstream Fracture》《Fractal Footwork》《Notch Runner》《Domino Relay》《Angle Jump》《Rivet Sprint》《Skipframe Circuit》《Ghostnote Dash》《Staple Hop》《Switchrail》《Forklight Break》《Crossbeat Clap》《Gearshift Rush》《Cutline Chase》《Latchrun》《Quickmark》《Railflash》《Ricochet Grid》《Beat Pinball》（Drum & Bass，60／64 秒）、《Dawnwave Helix》《Prism Current》《Orbit Lattice》《Arcwire Ascent》《Chromatic Fanout》《Crestlight Cadence》《Suspension Glow》《Phase Aperture》《Horizon Counterline》《Second Key》《Sailwake》《Overtone Vault》《Hourglass Echo》《Compass Glow》《Beacon Current》《Astra Surge》《Halation Loop》《Open Horizon》《Clearphase》《Lucent Passage》《Clarity Arc》（Trance，60／64 秒）。一百零五首各有三张 `format: 2` 新谱、封面／分享图及生成来源，自动技术门禁已通过；**人工耳检、内容／权利／美术签审均未完成，已验收数仍为 0/105**，不得进入正式目录或线上。上述一百零五首已按 §0.1 做高对比漫画拼贴视觉候选，仍待人工美术与近似性审查。
+- 一百零五首候选的本地[审稿工作表](candidates/duohertz/review-worksheet.html)可逐首听电台完整版、游戏版和 48 秒预览，并直接检查未来目录采用的自包含 `cover-art.png` 与分享图；三个音频版本及封面哈希均可展开核对。按曲名／ID 及审稿状态筛选后可导出绑定全部素材哈希的观察记录；导出的 JSON 可在相同素材下导入续审，导入替换本地浏览器草稿。六项勾完且需修改／拒绝有备注时才计入已审，与审计脚本口径一致。从仓库根目录运行 `python3 scripts/duohertz-review-worksheet.py` 可重新生成。工作表不会变更候选清单或授予发布批准，审稿结果仍须经人工核验后入档。
+- 从仓库根目录运行 `python3 scripts/duohertz-review-audit.py --report <工作表导出的 JSON>` 可复核观察记录是否与当前 manifest／全部素材哈希一致、六项是否填写完整及是否需要返工；缺项、过期素材或伪造 `releaseApproval` 会拒绝通过。无报告时运行同一脚本会列出当前全部待审候选并以非零状态退出。即使六项观察全部 Pass，输出仍明确 `release_approved: false`，权利、美术和正式发布签审另行完成；它不把候选推广进正式目录。
+- 隔离开发试玩页从候选 `manifest.json` 自动列出曲目并加载对应音频、封面和三张谱；缺少文件或谱面身份不符时拒绝加载。每次新增候选仍须运行单曲技术门禁并重生成本地审稿工作表；开发页自动发现不等于入正式曲库。
+- 开发候选曲卡与未来公开曲库共用版式，数据入口仍分开：候选卡标注未审并通向开发试玩；v2 预览首页、曲库、对局与音乐站从独立目录读取，在完整 105 首元数据且 `site_and_deployment_approval: true` 时才继续呈现主视觉及曲卡、加载目标曲三档 `format: 2` 新谱或长版音频。开发路由 `/beatscape/lab/duohertz/v2/home`、`/beatscape/lab/duohertz/v2/library`、`/beatscape/lab/duohertz/v2/play/:id`、`/beatscape/lab/duohertz/v2/radio` 使用不读取旧版曲库的独立品牌外壳，仅用于人工／自动审查；现有一百零五首候选没有该批准，真实访问按设计显示不可用。音乐站与候选电台复用播放器，但获批路径不导入候选清单，未播放时不预载长音频。开发 v2 路由跳过旧站 HTML 的 v1 曲库预载；旧版生产预载保持原状。浏览器测试用明确标记的合成完整目录验证成功路径，不构成真实签审。布尔字段只是页面侧必要条件，正式发布仍须独立核对证据与资产，不可手改 JSON 跳过门禁；生产 HTML 的旧品牌元数据／PWA 及正式 duohertz 玩家路径尚未切换。
+- 从仓库根目录运行 `python3 scripts/duohertz-catalog-structure.py` 可核对隔离候选的 ID、哈希、游戏／电台音频的跨曲逐字节重复、`format: 2` 与五类各 21 首的配额；2026-09-25 本地复核 105/105 首、315/315 张谱，五类各 21/21 首且无缺口，技术结构检查通过。逐字节检查不发现旋律近似或重新编码的重复音频；它不执行 BS-D002 音频对齐或人工签审，不能充当发布批准。
+- 从仓库根目录运行 `python3 scripts/duohertz-candidate-gate.py --all-staged` 会对全部当前 `dh-*` 候选逐首运行素材哈希、三档新谱、BS-D002 音频对齐与保守的过稀谱面异常检查；任一失败使批次失败，空目录也不能通过。暂定下限为 Easy 0.5、Standard 0.9、Hard 1.8 判定／秒，仅防止明显不稳的起音／拍点产出被误判为可用草谱，并非已由新人测试锁定的正式密度要求。2026-09-25 本地复核 105/105 首技术候选及 315/315 张谱通过；此命令只覆盖逐曲自动技术门禁，曲库数量由结构审计另行核对，仍不执行人工耳检、权利、美术或发布签审。
+- 新《Opaline Counterpulse》试用本机 MusicSaas Gateway→SA3 MLX `game_bgm` 生成的单次 128 秒双声道母带，前 64 秒供游戏，完整母带供电台，分别编码为 AAC；`scripts/duohertz-chartgen.py` 从最终游戏音频实际起音生成一／双键三档草谱，`scripts/duohertz-stage-sa3.py` 按[曲目配方](../../scripts/duohertz-recipes/dh-017-opaline-counterpulse.json)组装音频、视觉与哈希后先在临时目录运行单曲门禁，再移入隔离候选目录。Gateway 有合成占位回退路径，因此不能只凭服务返回成功认定是真实模型输出；本次同时核对 Worker MLX 健康、128 秒双声道文件和音频差异。生成提示词与源母带哈希已入 manifest；源 WAV 保存在本地忽略目录，不是可发布资产。自动起音和网格检查不判断音乐质量、版权或整曲手感。
+- 《Arcwire Ascent》经本机 Gateway→SA3 `game_bgm` 生成，`scripts/duohertz-generate-sa3.py` 保存不含密钥的任务回执与源母带哈希；暂存脚本要求回执匹配配方和源文件，并拒绝静音、严重削波、完全相同左右声道及整半段重复。138 BPM／64 秒游戏版三谱分别有 69／138／294 个判定。该技术检查与 MLX 健康记录都不替代逐任务模型证明、人工耳检、内容／权利／美术或发布签审。
+- 《Parallax Daybreak》《Fractal Footwork》分别是 114 BPM Synthwave 与 172 BPM Drum & Bass 新候选，源母带有独立 Gateway 任务回执和预检。后一首初版 Hard 谱因网格贴合 58.8% 未过原有 85% 门禁；`duohertz-chartgen.py` 已将起音选择半径限制为每拍 5%，重制后通过，不降低 BS-D002 阈值。三档分别为 57／107／219 与 77／144／305（真峰值返工后从最终 AAC 重制） 个判定。这些自动结果不替代音乐差异化盲测、耳检或人工美术审查。
+- 《Tideglass Transit》为 122 BPM Melodic House 新候选，单次 128 秒 SA3 母带截取前 64 秒制作游戏版；最终 AAC 起音生成 Easy／Standard／Hard 53／107／219 个判定，三档 BS-D002 通过，来源任务回执、母带预检与高对比双声轨封面／分享图已哈希绑定。开发页最新候选 Easy 和 Duo 64 秒整曲浏览器合同通过；听感、差异化、权利及美术未人工确认。
+- 《Duskline Memory》为 112 BPM Synthwave 新候选，独立 SA3 任务的单次 128 秒双声道母带截取前 64 秒供游戏；最终 AAC 起音生成三档 52／106／217 个判定，BS-D002 与开发页 Easy／Duo 整曲浏览器合同通过。折纸式三频率带封面及分享图、生成配方、任务回执和素材哈希均留存；自动结果不替代听感、差异化、权利或美术审查。
+- 《Answerlight Bounce》为 136 BPM Future Bass 新候选。初版自动估计约 130.4 BPM，三档只有 26／48／97 判定，虽然贴合原 BS-D002 音频／网格门禁，却未达到上述保守密度下限，已隔离归档；重做配方要求全程稳定量化鼓点，第二次 SA3 母带的最终 AAC 估计与目标均为 136 BPM，三档 67／131／270 判定通过技术门禁。高对比双声波方形节点封面和分享图、两次任务来源均保留；自动结果及游戏版均值 −23.7 dB 不替代节奏手感、响度、差异化、权利和美术审查。
+- 《Notch Runner》为 166 BPM Drum & Bass 新候选。首版最终 AAC 估计 166.7 BPM，但三档仅 28／52／108 判定，因低于保守密度下限隔离归档；重做版全程保持清晰的量化两步鼓点与中频短起音，最终 AAC 估计 166 BPM，三档 76／151／322 判定通过 BS-D002 和密度检查。双缺口节拍轨的高对比原创封面／分享图及两次配方、任务回执、母带哈希均保留。技术结果和游戏版均值 −19.9 dB、峰值 −3.4 dB 不替代听感、难度、差异化、权利和美术审查。
+- 《Chromatic Fanout》为目标 142 BPM 的 Trance 新候选，单次 SA3 128 秒母带最终 AAC 估计 142.857 BPM。初版按目标整数 BPM 制谱仅有 32／63／138 个判定，虽然勉强过技术密度下限，仍漏掉许多实际起音；初版候选已隔离归档。暂存流程现只在实测 BPM 距目标 ≤2% 时用实测值制谱，偏差更大则拒绝；manifest 留下目标和制谱 BPM。同一母带重制三档为 55／114／248 个判定，BS-D002 与密度检查通过。高对比双折扇频率叶片封面与分享图、来源回执和素材哈希均保留；自动 BPM 估计及游戏版均值 −16.2 dB、峰值 −2.8 dB 不替代耳检、曲间响度、难度、差异化、权利与美术审查。
+- 《Windowlight Sync》与《Afterimage Parade》分别是目标 126 BPM Melodic House、104 BPM Synthwave 新候选；最终游戏 AAC 估计 126／103.448 BPM，三档分别为 63／123／225 和 39／74／144 个判定并通过 BS-D002 及密度检查。两首各来自独立单次 128 秒 SA3 双声道母带，游戏版取前 64 秒。前者以留白较多的双窗口阶梯节拍、后者以三层残影框构成不同的高对比漫画拼贴封面及准确分享图；配方、任务回执、源图和文件哈希均保留。游戏 AAC 均值 −19.4／−24.3 dB、峰值 −2.6／−2.2 dB 只是技术读数，曲间响度差、音乐差异、谱面手感、权利和美术仍待人工审查。
+- 《Springtone Reply》《Domino Relay》《Crestlight Cadence》分别是目标 140 BPM Future Bass、172 BPM Drum & Bass、144 BPM Trance 新候选；最终游戏 AAC 实测 139.535／171.429／144 BPM，三档判定依次为 61／123／242、60／128／253、69／139／256，单曲与批量技术门禁通过。《Domino Relay》首次 168 BPM 配方母带因实测偏差超过 2% 被拒并留档，重做后才进入候选。三首使用不同折叠声带、连锁纸片和波峰母题的高对比封面与英文分享图；返工前游戏 AAC 样本峰值 −0.1／−3.1／−2.8 dB 和其他自动读数不替代逐首耳检、听感差异化、手感、内容／权利或美术签审。
+- 《Pocket Frequency》《Velvet Signal》《Confetti Switch》《Angle Jump》《Suspension Glow》分别是 Melodic House、Synthwave、Future Bass、Drum & Bass、Trance 的第七首技术候选。五首各有独立单次 128 秒 SA3 母带、游戏版和长版、三档新谱及哈希绑定的封面／英文分享图；目标／最终 AAC BPM 为 124／125、108／108、138／138、170／171.429、146／146.341，判定分别为 46／94／200、53／105／224、64／127／262、80／158／330、50／102／212，自动 BS-D002 和密度门禁通过。《Suspension Glow》封面初稿偏发光写实，已用 imagegen 改为平面印刷稿并记修订提示词；《Confetti Switch》返工前游戏 AAC 真峰值 +3.6 dBTP，现从原始母带降增益重编为 −1.86 dBTP；仍需人工耳检。自动结果不替代逐曲听感、差异化、谱面手感、内容／权利或美术签审。
+- 一百零五首隔离技术候选各有与游戏 `audio.m4a` 不同、时长至少为游戏版 1.8 倍的 `stream.m4a` 长版（120／128 秒）。前十六首分别编排后半段；其后 SA3 候选中《Pulse Terrace》《Foamstep》及第 96–105 首从各自单次生成的 180 秒母带截取连续 32–160 秒，游戏版取该段前 64 秒；其余 SA3 曲从单次 128 秒母带取前 64 秒。新的[曲库暂存入口](../../docs/DUOHERTZ-CATALOG-PROMOTION.md)已确认 105 首／315 谱结构完整，但缺当前素材的人工观察记录、逐曲耳检／内容／权利／美术签审及独立目录签审而明确失败。技术候选不能因结构完整进入正式目录或线上；旧版 `public/catalog.json` 保持原状。
+- 隔离的[电台开发页](src/duohertz/RadioLab.tsx)位于 `/beatscape/lab/duohertz/radio`，从候选 manifest 读取曲风、BPM 与长版音频，按曲风筛选并顺序播放；仅长版时长达到游戏版 1.8 倍且音频哈希不同的候选进入队列。播放器现由候选页与 v2 目录预览页复用，音乐音量设置同步，切后台自动暂停。候选页与 v2 目录预览页仅存在于 Vite 开发构建；独立 noindex 审查包另有从获批目录装配的电台路径。它们都**不是正式电台或发布批准**；正式音乐站仍须在全库与签审后接入玩家路径。
+- 共用音乐站播放器增加曲名／艺人搜索，搜索与曲风筛选合并后驱动可见队列；无结果显示明确提示，输入和筛选本身不请求长音频。独立审查包的移动端曲风按钮改为单行横向滑动，减少首屏高度，浅色标题板说明文字改为深色以保证可读；合成批准目录的 105 首队列浏览器合同和开发电台相邻合同通过。旧 ScapeMusic 域名及 `#/track/` 深链仍为旧站，尚未完成切换。
+- 新品牌曲库卡片另有同曲“Listen”入口，指向音乐站的 `?track=<dh-id>`；目录获批准入后，电台切歌同步选中曲目 ID，复制链接包含准确新曲 ID，“Play … in the rhythm game”也进入当前所选曲目的对局。完成该曲对局后的结算页“Music station”同样带回当前曲目 ID，不退回默认首曲。旧 `bs-*` 与不存在的新曲 ID 在电台显示明确提示，不默默选另一首；候选电台不暴露公共分享入口。该功能只在合成批准目录的隔离审查包验证，旧 ScapeMusic 域名与真实新目录尚未切换。
 - 五个声学方向各 21 首作为制作配额：Melodic House、Synthwave、Future Bass、Drum & Bass、Trance。整体要有清楚的鼓点、可辨识主旋律和明亮能量；避免成人露骨主题、惊吓音效与过量失真。子风格不是简单贴标，每首需由听感和制作记录佐证。
 - 每首交付游戏音频、完整版、预览、封面、社交卡、三张独立谱及元数据。曲目 ID、艺人、BPM、时长、音频哈希、授权来源、`theme: duohertz`、子风格和三谱键数要能由自动审计对齐；流媒体站也要使用同一新曲库真相源。
-- 自动校验负责文件存在、时长、谱面结构、密度、键数、音频／谱面对齐及版权字段；人工耳检负责音乐品质、儿童可听性、接缝、响度与节奏手感。自动 PASS 不替代耳检和内容签审。生成或重生成谱面继续遵守 [BS-D002](../../docs/BEATSCAPE-DECISIONS.md#bs-d002) 的入库门禁，直到新谱面门禁完成等价覆盖。
+- 自动校验负责文件存在、时长、谱面结构、密度、键数、音频／谱面对齐及版权字段；另以 `scripts/duohertz-audio-gate.py --all-staged` 对游戏、试听、电台三个 AAC 版本逐一筛查解码后的真峰值，暂以 ≤−1.0 dBTP 为技术安全线。人工耳检负责音乐品质、儿童可听性、接缝、曲间响度与节奏手感；峰值合格不代表响度均衡或母带定稿。2026-09-24 全量 105 个 AAC 首扫发现 12 个版本越线，已从来源重编并通过复核（105/105），但 −22.90 至 −15.33 LUFS 的候选响度跨度尚待人工调整，不能以技术 PASS 代替批准。生成或重生成谱面继续遵守 [BS-D002](../../docs/BEATSCAPE-DECISIONS.md#bs-d002) 的入库门禁，直到新谱面门禁完成等价覆盖。
+- 2026-09-25 的本地逐曲[响度对照页](candidates/duohertz/loudness-review.html)复核当前 105 首的 315 份 AAC 与素材哈希：游戏版中位数 −20.94 LUFS、范围 −22.86 至 −15.36 LUFS，并列出每首电台版与游戏版的差值和真峰值。排序帮助人工决定先听哪些曲目，不把技术响度差解释为音乐品质或发布通过。
 
 ## 4. 迁移与上线验收
 
@@ -58,6 +202,8 @@
 4. **曲库**：105 首新电音及 315 张新谱的目录、音频、预览、封面、OG 与流媒体站一致；每首实际可播、有权利记录，人工耳检和内容签审记录绑定准确的产物哈希。
 5. **存档与链接**：旧 `bs_*` 成绩与新规则不可比较，不得静默迁入 duohertz 排行／成就；可审慎迁移纯设备设置。旧分享／曲目链接须给出清楚的过渡页面或可验证的精确映射，不能跳到不相关新曲。
 6. **发布**：先在隔离环境完成新内容、全路径浏览器验证、性能预算及发布器校验，再绑定品牌域名和发布候选。现有 `launch:check` 的人工证据与签审门禁不因本 PRD 改写而通过；没有对应证据不得把当前 BeatScape 线上站点称为 duohertz 已上线。
+
+独立 duohertz 静态审查包现为旧 `/track/bs-*`、`/play/bs-*`、`/duo/bs-*` 路径及其 `/beatscape/` 前缀提供明确过渡页；根路径收到旧 ScapeMusic `/#/track/bs-*` 哈希分享链接时也走同一过渡页。页面说明旧曲没有直接新曲映射、旧成绩不继承，并提供新曲库与首页入口；打开旧链接无需请求旧目录或未批准的新目录。本地构建浏览器验证直接打开哈希链接及页内 hashchange，旧站目录恢复回归仍通过。正式域名迁移、独立 ScapeMusic 域名的跳转和既有分享链接的实际线上可达性仍待发布阶段核对。
 
 ---
 

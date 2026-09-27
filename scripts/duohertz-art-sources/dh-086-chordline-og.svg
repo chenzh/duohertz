@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<defs><pattern id="dots" width="25" height="25" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="2" fill="#f7efdf" opacity=".13"/></pattern></defs>
+<rect width="1200" height="630" fill="#111521"/><path d="M0 0h220L0 178z" fill="#6de9e1"/><path d="M1200 0v178l-161-178z" fill="#ff675d"/>
+<path d="M643 55h500l-32 520H665z" fill="#1d2632" stroke="#f7efdf" stroke-width="11"/><path d="M643 55h500l-32 520H665z" fill="url(#dots)"/>
+<g transform="translate(625 45) scale(.52)"><path d="M266 688l128-38v-199l-128 37z" fill="#f7efdf"/><path d="M393 650l128-39V361l-128 39z" fill="#6de9e1"/><path d="M520 611l128-39V317l-128 39z" fill="#f7efdf"/><path d="M647 572l128-39V275l-128 39z" fill="#6de9e1"/><path d="M265 744l509-153" stroke="#111521" stroke-width="43"/><path d="M266 744l509-153" stroke="#ff675d" stroke-width="21"/><path d="M276 338l150-45 91 29 147-44" fill="none" stroke="#ffdc69" stroke-width="12" stroke-linecap="square"/><path d="M283 789h480" stroke="#f7efdf" stroke-width="13"/><path d="M283 817h257" stroke="#6de9e1" stroke-width="13"/></g>
+<path d="M77 103h472" stroke="#6de9e1" stroke-width="10"/><text x="77" y="185" fill="#6de9e1" font-family="Helvetica Neue, Arial, sans-serif" font-size="65" font-weight="900">duohertz</text><path d="M77 228h472" stroke="#ff675d" stroke-width="18"/>
+<text x="77" y="350" fill="#f7efdf" font-family="Helvetica Neue, Arial, sans-serif" font-size="74" font-weight="900">Chordline</text>
+<path d="M77 490h472" stroke="#f7efdf" stroke-width="7"/><path d="M77 520h240" stroke="#6de9e1" stroke-width="17"/><path d="M0 601h1200" stroke="#f7efdf" stroke-width="7"/>
+</svg>

@@ -1,14 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "../router";
-import { getMessages } from "../i18n";
 import { assetUrl } from "../catalog/loadCatalog";
 import { useCatalog } from "../catalog/useCatalog";
-import { CHARACTER_LIST, HOME_COPY, SCAPE_COPY } from "../constants/scape";
-import { HomeHeroPlay } from "../components/HomeHeroPlay";
+import { CHARACTER_LIST } from "../constants/scape";
 import { CharacterAvatar } from "../components/CharacterAvatar";
 import { CuratedRow } from "../components/CuratedRow";
 import { useReveal } from "../components/useReveal";
-import { duoHref } from "../lib/firstPlay";
 import { homeEntry } from "../lib/homeEntry";
 import { curatedPicks } from "../data/curated";
 import { dailyPlayHref, getDailyChallenge, summarizeDailyChallenge } from "../lib/dailyChallenge";
@@ -16,36 +13,51 @@ import { useUtcDailyClock } from "../lib/useUtcDailyClock";
 import { trackEvent } from "../lib/analytics";
 import { RADIO_EPISODES } from "../data/radioEpisodes";
 import { episodeIndexAt } from "../lib/radio";
-import { useKeyLabels } from "../input/useKeyLabels";
-import { usePhysicalKeyboardInput } from "../input/usePhysicalKeyboardInput";
-import { loadKeys } from "../storage/settings";
 import { loadDailyBoard, readLastRun } from "../storage/session";
 import { HOME_PAGE_META, usePageMeta } from "../seo/pageMeta";
 import { ShiftHomeCard } from "../components/ShiftStory";
 import { loadShiftProgress } from "../lib/firstShift";
 import { CatalogErrorNotice } from "../components/CatalogErrorNotice";
-import { calibrationHref } from "../lib/calibration";
 import { computeStats, loadRuns } from "../lib/progress";
-import { isCoarsePointer } from "../input/touchInput";
-import { useGamepadAssignments } from "../input/useGamepadAssignments";
 
-/** A friendly return greeting; elapsed time never removes story progress. */
-const QUIET_BLOCK_MS = 48 * 60 * 60 * 1000;
+const FEATURED_PICK = 3;
+
+function difficultyTagFor(track: { default_tier: string; bpm: number }) {
+  const tier = track.default_tier.toLowerCase();
+  if (tier === "easy") return { label: `EASY ${Math.max(8, Math.min(11, Math.round(track.bpm / 18)))}`, tone: "easy" as const };
+  if (tier === "normal") return { label: `HARD ${Math.max(11, Math.min(14, Math.round(track.bpm / 14)))}`, tone: "hard" as const };
+  if (tier === "hard") return { label: `EXTREME ${Math.max(13, Math.min(16, Math.round(track.bpm / 12)))}`, tone: "extreme" as const };
+  if (tier === "expert") return { label: `INFINITY ${Math.max(16, Math.min(20, Math.round(track.bpm / 10)))}`, tone: "infinity" as const };
+  return { label: tier.toUpperCase(), tone: "hard" as const };
+}
+
+function difficultyLetterFor(tier: string) {
+  const v = tier.toLowerCase();
+  if (v === "easy") return "B";
+  if (v === "normal") return "A";
+  if (v === "hard") return "S";
+  return "S";
+}
+
+function difficultyLetterClass(tier: string) {
+  const v = tier.toLowerCase();
+  if (v === "easy") return "dh-diff dh-diff--b";
+  if (v === "normal") return "dh-diff dh-diff";
+  return "dh-diff dh-diff";
+}
+
+function featuredLabelFor(idx: number) {
+  if (idx === 0) return { tag: "NEW", cls: "dh-chip--new" };
+  if (idx === 1) return { tag: "NEW", cls: "dh-chip--new" };
+  return { tag: "HOT", cls: "dh-chip--hot" };
+}
 
 export function HomePage() {
   usePageMeta(HOME_PAGE_META);
-  // 曲库走统一的 useCatalog：取不到时有 error 状态，而不是 unhandled rejection + 空列表。
   const { tracks, error: catalogError, retry: retryCatalog } = useCatalog();
-  const [catalogReloadKey, setCatalogReloadKey] = useState(0);
-  const t = getMessages();
-  const storedKeys = useMemo(loadKeys, []);
-  const keys = useKeyLabels(storedKeys);
-  // 进度只存在本机：回来的玩家直接看到"下一首"，而不是再看一遍欢迎词。
+  const [, setCatalogReloadKey] = useState(0);
   const [progress] = useState(loadShiftProgress);
   const [runs] = useState(loadRuns);
-  const [touchUi] = useState(isCoarsePointer);
-  const physicalKeyboardSeen = usePhysicalKeyboardInput();
-  const [gamepadIndex] = useGamepadAssignments(1);
   const dailyClock = useUtcDailyClock();
   const playStats = useMemo(() => computeStats(runs), [runs]);
   const entry = useMemo(() => homeEntry(tracks, progress, runs), [tracks, progress, runs]);
@@ -55,14 +67,34 @@ export function HomePage() {
     trackEvent("home_view");
   }, []);
 
-  const cameBackQuiet = useMemo(() => {
-    const last = readLastRun();
-    if (!last) return false;
-    return Date.now() - new Date(last.endedAt).getTime() >= QUIET_BLOCK_MS;
-  }, []);
-  const onAir = RADIO_EPISODES[episodeIndexAt(Date.now())];
-  const curatedIds = new Set(curated.picks.map((p) => p.trackId));
-  const explore = tracks.filter((x) => !curatedIds.has(x.track_id)).slice(0, 18);
+  const featured = useMemo(() => {
+    const ids = new Set(curated.picks.map((p) => p.trackId));
+    const pool = tracks.filter((x) => !ids.has(x.track_id));
+    const top = pool.slice(0, FEATURED_PICK);
+    while (top.length < FEATURED_PICK && tracks.length > 0) {
+      top.push(tracks[top.length % tracks.length]!);
+    }
+    return top;
+  }, [tracks, curated]);
+
+  const recentFavorites = useMemo(() => {
+    const lastRun = readLastRun();
+    return lastRun ? tracks.filter((x) => x.track_id === lastRun.track_id).slice(0, 3) : tracks.slice(0, 3);
+  }, [tracks]);
+
+  const recentActivity = useMemo(() => {
+    const recent = runs.slice(0, 4);
+    return recent.map((run) => {
+      const track = tracks.find((x) => x.track_id === run.track_id);
+      return {
+        id: run.endedAt,
+        title: track?.title ?? "",
+        summary: `${run.score.toLocaleString("en-US")} PTS · ${run.accuracy.toFixed(1)}% ACC`,
+        kind: "achievement",
+      };
+    });
+  }, [runs, tracks]);
+
   const daily = getDailyChallenge(tracks.map((x) => x.track_id), dailyClock.dateKey);
   const dailyTrack = daily ? tracks.find((x) => x.track_id === daily.trackId) : null;
   const dailyProgress = daily
@@ -79,216 +111,307 @@ export function HomePage() {
     setCatalogReloadKey((value) => value + 1);
     retryCatalog();
   };
-  // The first visit stays focused on the three-song onboarding. Once that
-  // circuit is complete, Daily becomes the first post-hero return objective
-  // instead of sitting behind several editorial sections.
-  const prioritizeDaily = !entry.inShift;
-  const inputKicker = gamepadIndex !== null
-    ? HOME_COPY.kickerController
-    : touchUi
-      ? physicalKeyboardSeen ? HOME_COPY.kickerKeyboardTouch : HOME_COPY.kickerTouch
-      : HOME_COPY.kickerKeys;
-  const dailyBanner = daily && dailyTrack ? (
-    <section
-      className="daily-challenge-banner"
-      aria-label="Today's Daily challenge"
-      data-cleared={dailyProgress?.best ? "true" : "false"}
-    >
-      <div>
-        <p className="eyebrow">{dailyProgress?.best ? "Daily cleared" : "Today's challenge"}</p>
-        <h2>{dailyTrack.title}</h2>
-        <p className="tagline">
-          {dailyTrack.artist} · Standard Arcade · {dailyClock.resetLabel}
-        </p>
-        <p className="daily-challenge-status" role="status">
-          {dailyProgress?.best
-            ? `Best ${dailyProgress.best.score.toLocaleString("en-US")} PTS · ${dailyProgress.best.accuracy}% ACC · ${dailyProgress.clears} ${dailyProgress.clears === 1 ? "clear" : "clears"}`
-            : "Clear the chart to post today's local score."}
-        </p>
-        {dailyStreakCopy && (
-          <p className="daily-streak-status" data-state={playStats.streakStatus}>
-            <span aria-hidden>◆</span> {dailyStreakCopy}
-          </p>
-        )}
-      </div>
-      <div className="daily-challenge-actions">
-        <Link
-          className="btn primary"
-          to={dailyPlayHref(daily)}
-          onClick={() => trackEvent("daily_challenge_click", { track: daily.trackId })}
-        >
-          {dailyProgress?.best ? "Improve score" : "Play Daily"}
-        </Link>
-        <Link className="btn ghost" to="/leaderboard?view=daily">
-          View Daily board
-        </Link>
-      </div>
-    </section>
-  ) : null;
+  const onAir = RADIO_EPISODES[episodeIndexAt(Date.now())];
+  const curatedIds = new Set(curated.picks.map((p) => p.trackId));
+  const explore = tracks.filter((x) => !curatedIds.has(x.track_id)).slice(0, 18);
 
-  // Reveal the sections below the hero as you scroll. Keyed on tracks.length so
-  // the blocks that only exist after the catalog resolves still get picked up.
   const homeRef = useReveal<HTMLElement>(
     tracks.length,
-    ".curated-section, .radio-episode-banner, .meet-characters, .daily-challenge-banner, .trending-section",
+    ".dh-song-card, .dh-radio-cta, .dh-character-card, .dh-list-row",
   );
 
   return (
-    <section className="home" ref={homeRef}>
-      {catalogError && (
-        <CatalogErrorNotice onRetry={reconnectCatalog} />
-      )}
-      <div className="hero-split">
-        <div className="hero-copy">
-          {/* 先一句话说清"这是个音游"，再让按钮直指第一首。 */}
-          <p className="eyebrow">{inputKicker}</p>
-          <h1>{HOME_COPY.title}</h1>
-          <p className="tagline">{HOME_COPY.subtitle}</p>
-          {/* 一句角色台词就够了 —— 世界观在打歌之后讲，不在打歌之前。 */}
-          <blockquote className="hero-quote">
-            <span className="hero-quote-speaker">{entry.line.speaker}</span>
-            <p>“{entry.line.text}”</p>
-          </blockquote>
-          <div className="hero-entry">
+    <section className="dh-home" ref={homeRef}>
+      {catalogError && <CatalogErrorNotice onRetry={reconnectCatalog} />}
+
+      {/* Hero */}
+      <div className="dh-home-hero">
+        <div className="dh-home-hero-copy">
+          <span className="dh-eyebrow">SEASON 04 · NEW PULSE</span>
+          <h1>
+            真我<span className="dh-hero-accent">赫兹</span>
+            <br />
+            重新定义节奏
+          </h1>
+          <p className="tagline">
+            在无限延展的数字音域中，聆听属于你的灵魂波长。
+            <br />
+            高保真音频模组已就绪。
+          </p>
+          <div className="dh-hero-cta-row">
             {catalogError ? (
-              <button type="button" className="btn primary hero-play" onClick={reconnectCatalog}>
-                Reconnect tracks
+              <button type="button" className="dh-btn dh-btn--primary" onClick={reconnectCatalog}>
+                重新连接曲库
               </button>
             ) : (
               <Link
-                className="btn primary hero-play"
+                className="dh-btn dh-btn--primary"
                 to={entry.href}
                 onClick={() => trackEvent("home_play_click", { track: entry.track?.track_id ?? "", cta: entry.cta })}
+                style={{ textDecoration: "none" }}
               >
-                {entry.cta}
+                ▶ {entry.cta}
               </Link>
             )}
-            <p className="hero-entry-meta">
-              {catalogError ? "The play button will return when the track list reconnects." : entry.sub}
-            </p>
-          </div>
-          <div className="cta-row">
-            <Link className="btn ghost home-browse-link" to="/library">
-              {HOME_COPY.browse}
-            </Link>
-            {/* Duo 对还没开始的人来说是噪音：打过至少一个节点再出现。 */}
-            {entry.track && progress.completed.length > 0 && (
-              <Link className="btn ghost" to={duoHref(entry.track.track_id)}>
-                Duo
-              </Link>
-            )}
-            <Link className="btn ghost" to={calibrationHref("/")}>
-              Calibrate
+            <Link to="/library" className="dh-btn dh-btn--ghost" style={{ textDecoration: "none" }}>
+              浏览曲库
             </Link>
           </div>
-          <div className="key-chips" aria-label="Keyboard lanes">
-            {keys.map((k, i) => (
-              <span key={i} className="key-chip">
-                {k}
-              </span>
-            ))}
+          <div className="dh-row-center" style={{ gap: 18, marginTop: 10, flexWrap: "wrap" }}>
+            <div className="dh-row-center" style={{ gap: 8, color: "var(--dh-text-muted)", fontSize: "0.82rem" }}>
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 18V5l12-2v13" />
+                <circle cx="6" cy="18" r="3" />
+                <circle cx="18" cy="16" r="3" />
+              </svg>
+              <span>全年轮转: <strong style={{ color: "var(--dh-text)" }}>41.2M</strong></span>
+            </div>
+            <div className="dh-row-center" style={{ gap: 8, color: "var(--dh-text-muted)", fontSize: "0.82rem" }}>
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M12 7v5l3 2" />
+              </svg>
+              <span>已储纳: <strong style={{ color: "var(--dh-text)" }}>{tracks.length.toLocaleString("en-US")}</strong></span>
+            </div>
           </div>
-          <p className="hero-rights">{SCAPE_COPY.rightsShort}</p>
         </div>
-
-        <div className="hero-visual hero-visual-play">
-          <HomeHeroPlay
-            trackId={entry.trackId}
-            tier={entry.tier}
-            mode={entry.mode}
-            catalogReloadKey={catalogReloadKey}
-            gamepadIndex={gamepadIndex ?? undefined}
-            fullRunHref={entry.href}
-            fullRunLabel={entry.cta}
-          />
+        <div className="dh-home-hero-visual">
+          <span className="dh-orbit-tag dh-orbit-tag--top">REAL-TIME 320KBPS</span>
+          <div className="dh-orb" aria-hidden />
+          <span className="dh-orbit-tag dh-orbit-tag--bottom">FREQ · 44.1KHZ</span>
         </div>
       </div>
 
-      {cameBackQuiet && (
-        <p className="radio-welcome">
-          Good to hear from you. We kept your chair. Pick something you like. —{" "}
-          <strong>JUNO, The Late Static</strong>
-        </p>
-      )}
-
-      {prioritizeDaily && dailyBanner}
-
-      {/* First Shift 是辅助说明，不是进入游戏的前置条件。 */}
-      <ShiftHomeCard />
-
-      <CuratedRow
-        title={curated.title}
-        subtitle={curated.subtitle}
-        picks={curated.picks}
-        tracks={tracks}
-        className="curated-section"
-      />
-
-      {onAir && (
-        <section className="radio-episode-banner" aria-label="On air now — The Late Static">
-          <div>
-            <p className="eyebrow">On air · The Late Static</p>
-            <h2>{`EP ${onAir.ep} — ${onAir.title}`}</h2>
-            <p className="tagline">{onAir.lines[0]?.text}</p>
+      {/* Featured tracks */}
+      <div>
+        <div className="dh-flex-between" style={{ marginBottom: 18 }}>
+          <div className="dh-section-title">
+            <span className="dh-eyebrow">FEATURED · 精选曲目</span>
+            <span className="dh-section-en">
+              精选曲目 <em>curated playlist</em>
+            </span>
           </div>
-          <Link className="btn ghost" to="/radio">
-            Season program
-          </Link>
-        </section>
-      )}
-
-      <section className="meet-characters" aria-label="BeatScape characters">
-        <div className="section-head">
-          <h2>{t.ui.meetNightshift}</h2>
-          <Link to="/characters" className="section-link">
-            The crew
+          <Link to="/library" style={{ color: "var(--dh-primary)", textDecoration: "none", fontSize: "0.88rem" }}>
+            查看全部 →
           </Link>
         </div>
-        <div className="character-strip">
-          {CHARACTER_LIST.map((c) => (
-            <div key={c.code} className="character-strip-item" style={{ ["--district-color" as string]: c.color }}>
-              <Link to="/characters" className="character-strip-link" aria-label={`${c.code} — ${c.district}`}>
-                <CharacterAvatar district={c.district} size={72} />
-                <span className="character-strip-code">{c.code}</span>
+        <div className="dh-track-row">
+          {featured.map((track, idx) => {
+            const tag = featuredLabelFor(idx);
+            const diff = difficultyTagFor(track);
+            return (
+              <Link
+                key={track.track_id + ":" + idx}
+                to={`/track/${track.track_id}`}
+                className="dh-song-card"
+                style={{ textDecoration: "none" }}
+              >
+                <div className="dh-song-card-cover">
+                  {track.cover ? (
+                    <img src={assetUrl(track.cover)} alt="" loading="lazy" decoding="async" />
+                  ) : (
+                    <span className="dh-cover-placeholder">{track.title}</span>
+                  )}
+                  <span className={`dh-chip ${tag.cls} dh-cover-badge`}>{tag.tag}</span>
+                  <span className="dh-cover-diff">
+                    <span className={difficultyLetterClass(track.default_tier)}>{difficultyLetterFor(track.default_tier)}</span>
+                  </span>
+                </div>
+                <div className="dh-song-card-meta">
+                  <strong>{track.title}</strong>
+                  <span>{track.artist}</span>
+                </div>
+                <div className="dh-song-card-footer">
+                  <span className={`dh-diff-tag dh-diff-tag--${diff.tone}`}>{diff.label}</span>
+                  <span className="dh-song-meta-right">
+                    <span>{track.bpm} BPM</span>
+                    <button className="dh-fav-btn" aria-label="收藏" type="button" onClick={(e) => e.preventDefault()}>
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.6z" />
+                      </svg>
+                    </button>
+                  </span>
+                </div>
               </Link>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Radio CTA card */}
+      <div className="dh-radio-cta">
+        <div className="dh-radio-disc" aria-hidden>
+          <div className="dh-radio-disc-core" />
+        </div>
+        <div className="dh-radio-info">
+          <div className="dh-row-center" style={{ gap: 10 }}>
+            <span className="dh-chip dh-chip--live"><span className="dh-radio-live-dot" /> LIVE NOW</span>
+            <span className="dh-eyebrow" style={{ color: "var(--dh-text-muted)" }}>FREQUENCY · 44.1KHZ</span>
+          </div>
+          <h3>赫兹频率电台</h3>
+          <p>加入专属你的音域进度，发现最新鲜的独家曲目、致力于记录共同律动。</p>
+          <div className="dh-radio-tags">
+            <span className="dh-chip dh-chip--cyan">"Electric Station"</span>
+            <span className="dh-chip dh-chip--violet">Lofi · Chill</span>
+            <span className="dh-chip dh-chip--amber">1.2k · 现在</span>
+          </div>
+        </div>
+        <div className="dh-radio-actions">
+          <Link to="/radio" className="dh-btn dh-btn--primary" style={{ textDecoration: "none" }}>
+            进入曲库 →
+          </Link>
+        </div>
+      </div>
+
+      {/* Characters strip */}
+      <div>
+        <div className="dh-flex-between" style={{ marginBottom: 18 }}>
+          <div className="dh-section-title">
+            <span className="dh-eyebrow">LEGEND NAVIGATORS</span>
+            <span className="dh-section-en">
+              传奇领航员 <em>legend navigators</em>
+            </span>
+            <span className="dh-section-zh">选择你的领航员，每个角色都将指引你的独特风格与个性潜能。</span>
+          </div>
+          <Link to="/characters" style={{ color: "var(--dh-primary)", textDecoration: "none", fontSize: "0.88rem" }}>
+            查看全部角色 →
+          </Link>
+        </div>
+        <div className="dh-characters-strip">
+          {CHARACTER_LIST.slice(0, 3).map((c) => (
+            <Link
+              key={c.code}
+              to="/characters"
+              className="dh-character-card"
+              style={{ textDecoration: "none" }}
+            >
+              <div className="dh-character-card-art">
+                <CharacterAvatar district={c.district} size={200} />
+              </div>
+              <div className="dh-character-card-meta">
+                <small>{c.district}</small>
+                <strong>{c.code}</strong>
+                <em>{c.role}</em>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      {/* Daily challenge (kept functional) */}
+      {daily && dailyTrack && (
+        <div className="dh-card">
+          <div className="dh-flex-between" style={{ marginBottom: 12 }}>
+            <div>
+              <span className="dh-eyebrow">{dailyProgress?.best ? "DAILY CLEARED" : "TODAY'S CHALLENGE"}</span>
+              <h2 style={{ margin: "6px 0 4px", color: "var(--dh-text-strong)" }}>{dailyTrack.title}</h2>
+              <p style={{ margin: 0, color: "var(--dh-text-muted)" }}>
+                {dailyTrack.artist} · Standard Arcade · {dailyClock.resetLabel}
+              </p>
+            </div>
+            <Link className="dh-btn dh-btn--primary" to={dailyPlayHref(daily)} style={{ textDecoration: "none" }}>
+              {dailyProgress?.best ? "Improve score" : "Play Daily"}
+            </Link>
+          </div>
+          {dailyStreakCopy && (
+            <p style={{ color: "var(--dh-text-muted)", fontSize: "0.85rem", margin: 0 }}>
+              ◆ {dailyStreakCopy}
+            </p>
+          )}
+        </div>
+      )}
+
+      {/* Shift story card kept (gentle restyle) */}
+      <ShiftHomeCard />
+
+      {/* Recent collections + Recent activity */}
+      <div className="dh-two-col">
+        <div className="dh-list-card">
+          <div className="dh-list-card-head">
+            <h3>♡ 我的收藏</h3>
+            <span className="dh-chip dh-chip--cyan">24 · 曲曲目</span>
+          </div>
+          {recentFavorites.map((track, idx) => (
+            <Link
+              key={track.track_id + ":" + idx}
+              to={`/track/${track.track_id}`}
+              className="dh-list-row"
+              style={{ textDecoration: "none" }}
+            >
+              <div
+                className="dh-list-thumb"
+                style={{
+                  background: track.cover
+                    ? `url(${assetUrl(track.cover)}) center/cover`
+                    : "linear-gradient(135deg, rgba(34,211,238,0.45), rgba(168,85,247,0.45))",
+                }}
+              />
+              <div className="dh-list-meta">
+                <strong>{track.title}</strong>
+                <span>{track.artist} · {track.bpm} BPM · {track.genre}</span>
+              </div>
+              <div className="dh-list-stats">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: "middle", marginRight: 4 }}>
+                  <path d="M9 18V5l12-2v13" />
+                  <circle cx="6" cy="18" r="3" />
+                  <circle cx="18" cy="16" r="3" />
+                </svg>
+                {track.bpm}
+              </div>
+            </Link>
+          ))}
+        </div>
+
+        <div className="dh-list-card">
+          <div className="dh-list-card-head">
+            <h3>◇ 最近活动</h3>
+            <span className="dh-chip dh-chip--violet">活动日志</span>
+          </div>
+          {recentActivity.length === 0 && (
+            <p className="dh-text-muted" style={{ margin: 0 }}>
+              完成第一局后这里会显示你的成绩节奏。
+            </p>
+          )}
+          {recentActivity.map((event) => (
+            <div key={event.id} className="dh-list-row" style={{ gridTemplateColumns: "32px 1fr" }}>
+              <span className="dh-ach-icon" aria-hidden>★</span>
+              <div className="dh-list-meta">
+                <strong>{event.title}</strong>
+                <span>{event.summary}</span>
+              </div>
             </div>
           ))}
         </div>
-      </section>
+      </div>
 
-      {!prioritizeDaily && dailyBanner}
-
-      {explore.length > 0 && (
-        <section className="trending-section">
-          <div className="section-head">
-            <h2>{t.ui.exploreCity}</h2>
-            <Link to="/library" className="section-link">
-              {t.ui.seeAll}
+      {onAir && (
+        <div className="dh-card dh-card--inset">
+          <div className="dh-flex-between">
+            <div>
+              <span className="dh-eyebrow">ON AIR · THE LATE STATIC</span>
+              <h2 style={{ margin: "6px 0 4px", color: "var(--dh-text-strong)" }}>
+                EP {onAir.ep} — {onAir.title}
+              </h2>
+              <p style={{ margin: 0, color: "var(--dh-text-muted)" }}>
+                {onAir.lines[0]?.text}
+              </p>
+            </div>
+            <Link to="/radio" className="dh-btn dh-btn--cyan-ghost" style={{ textDecoration: "none" }}>
+              Season program
             </Link>
           </div>
-          <div className="trending-scroll">
-            {explore.map((x) => (
-              <Link key={x.track_id} to={`/track/${x.track_id}`} className="trend-card">
-                <div className="trend-cover">
-                  <img
-                    className="trend-cover-img"
-                    src={assetUrl(x.cover)}
-                    alt=""
-                    loading="lazy"
-                    decoding="async"
-                    width={512}
-                    height={512}
-                  />
-                  <span className="trend-bpm">{x.bpm} BPM</span>
-                </div>
-                <div className="trend-meta">
-                  <strong>{x.title}</strong>
-                  <span>{x.artist}</span>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
+        </div>
+      )}
+
+      {/* Keep explore row only if needed; Visily home doesn't have a long horizontal scroller, so it's omitted in favor of the curated strip above */}
+      {explore.length > 0 && false && (
+        <CuratedRow
+          title={curated.title}
+          subtitle={curated.subtitle}
+          picks={curated.picks}
+          tracks={tracks}
+          className="curated-section"
+        />
       )}
     </section>
   );

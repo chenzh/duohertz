@@ -1,0 +1,13 @@
+{
+  "track_id": "dh-017-opaline-counterpulse",
+  "title": "Opaline Counterpulse",
+  "artist": "duohertz studio",
+  "subgenre": "Future Bass",
+  "bpm": 132,
+  "game_duration_sec": 64,
+  "stream_duration_sec": 128,
+  "model_variant": "small",
+  "generation_prompt": "Original upbeat future bass instrumental for an all-ages one-or-two-key rhythm game, around 132 BPM with a clear countable 4/4 pulse. Start with a bright four-note opaline synth-pluck hook, elastic syncopated bass, crisp kick and snare, airy wide chords and playful chopped synthesizer answers. After about one minute, shift into a related second movement with a different descending melody, thinner drums and sparkling glass-key echoes, then resolve the hook. Strong audible transients for rhythm play, clean spacious stereo mix, no vocals, no samples, no known melody, no harsh distortion.",
+  "cover_prompt": "Create a brand-new original SQUARE 1:1 album-cover illustration for an internal duohertz electronic rhythm-game track called Opaline Counterpulse. High-contrast editorial comic collage, near-black ink and warm ivory paper with coral red and electric cyan, small warm yellow accents. The central motif is TWO offset translucent opal-crystal sound waves answering each other across a diagonal, one wave made of crisp angular shards and the other of concentric frequency arcs; clear rhythm pulses and tiny musical light particles, lively playful electronic energy. Bold geometric cut-paper layers, subtle halftone print texture, striking silhouette readable at thumbnail size, all-ages friendly. No person, no city skyline, no text, no letters, no numbers, no logo, no copyrighted character, no imitation of a specific game screen. Square composition with visual energy but ample clean contrast.",
+  "og_prompt": "Edit the supplied original square artwork into a HORIZONTAL 1200x630-style social sharing card for the duohertz rhythm-game track Opaline Counterpulse. Preserve the distinctive coral opal-shard counterwave, cyan concentric answering wave, halftone ink/paper texture and high-contrast comic collage, recomposed wide with the visual waves on the RIGHT two-thirds and uncluttered near-black/warm-ivory space on the LEFT. Add exactly two crisp, highly legible English text lines on the left, spelled exactly: line 1 'duohertz' (all lowercase), line 2 'Opaline Counterpulse'. Use bold modern display typography with clear separation from the artwork. No other words, letters, numbers, logos or characters. Family-friendly original electronic music visual, no existing game IP."
+}

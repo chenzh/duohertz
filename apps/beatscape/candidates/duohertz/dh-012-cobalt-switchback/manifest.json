@@ -1,0 +1,37 @@
+{
+  "track_id": "dh-012-cobalt-switchback",
+  "title": "Cobalt Switchback",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Synthwave",
+  "bpm": 90,
+  "duration_sec": 64,
+  "stream_duration_sec": 128,
+  "creation_method": "Original deterministic Emaj7\u2013C#m7\u2013Amaj9\u2013Bsus2 game movement with a new F#m7\u2013Dmaj9\u2013Amaj7\u2013Eadd9 answer movement; 90 BPM Synthwave built from generated oscillators and seeded noise, with no sampled audio or repeated first-minute loop",
+  "source_script": "scripts/duohertz-compose-cobalt-switchback.py",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Use case: style-transfer. Edit target: the supplied square Cobalt Switchback cover art. Preserve its unique ascending twice-bending cobalt-glass sound-wave staircase and scattered musical light particles as the main recognizable subject. Transform the soft painted dawn scene into an original high-contrast editorial comic-collage album illustration for the all-ages duohertz game: near-black ink backdrop, large warm-white cut-paper planes, bold coral-red diagonal rhythm slashes, electric-cyan accents and visible halftone texture. Keep the cobalt stair motif dimensional and easy to recognize at thumbnail size, with clear silhouette, dynamic asymmetrical composition, a few crisp frequency ticks and no strobing pattern. The result should feel energetic, playful and musical. No text, letters, numbers, logos, characters, masks, thieves, existing game symbols or watermark. Square 1:1 image.",
+    "og_prompt": "Use case: ads-marketing. Edit the supplied high-contrast Cobalt Switchback square artwork into a wide companion social card for the all-ages duohertz electronic rhythm game. Preserve the cobalt glass zigzag sound-wave staircase, warm-white torn-paper planes, near-black ink, coral-red diagonal rhythm slashes, halftone texture and electric-cyan frequency marks. Recompose the staircase toward the right half, leaving a quiet near-black or warm-white graphic panel on the left for clear typography. Add exactly two lines of text on the left, fully inside the frame with wide safe margins: small lowercase 'duohertz' (spell d-u-o-h-e-r-t-z) and larger title-case 'Cobalt Switchback' (spell C-o-b-a-l-t space S-w-i-t-c-h-b-a-c-k). Bold clean sans-serif, high contrast at thumbnail size. No other text, number, logo, character, mask, thief symbol or watermark. Wide 1200:630 social-card aspect ratio.",
+    "initial_cover_prompt": "Use case: stylized-concept. Asset type: original square album-cover artwork for an internal all-ages Synthwave song candidate called Cobalt Switchback in the duohertz electronic rhythm game. Primary visual: a playful ascending zigzag staircase made of translucent cobalt-blue glass sound-wave segments, bending twice across a soft apricot dawn sky. Tiny lime and pale cyan musical light particles collect at each bend. Friendly, optimistic, modern editorial album-art illustration with depth and tactile glass reflections; one clear focal shape, readable as a small thumbnail. Palette emphasizes cobalt, ice cyan, gentle peach and a few warm yellow accents. Entire scene is original; avoid circular rings, kites, lanterns, roads, cars, city skylines, people, characters, weapons, high-frequency flashing stripes, copied game art. No text, letters, numbers, logos or watermark. Square 1:1 composition.",
+    "initial_og_prompt": "Use case: ads-marketing. Edit the supplied square Cobalt Switchback cover art into a wide landscape social card for the same internal duohertz Synthwave candidate. Preserve the original cobalt glass zigzag sound-wave staircase, soft peach dawn clouds, small musical light particles and optimistic painterly style; recompose the staircase on the right two-thirds with dark navy/cobalt atmospheric space on the left third. In the dark left third place exactly TWO crisp text lines, both fully inside with generous margins: small pale-cyan lowercase 'duohertz' (spell d-u-o-h-e-r-t-z); below it larger white title-case 'Cobalt Switchback' (spell C-o-b-a-l-t space S-w-i-t-c-h-b-a-c-k). Clean modern sans-serif typography, excellent legibility at small thumbnail size. No additional text, icon, logo, watermark, characters, cars, cities or flashing stripes. Wide 1200:630 aspect ratio, social-card composition distinct from the square cover.",
+    "art_revision": "The first soft dawn cover and its wide card were superseded after the duohertz visual-direction update; the current cover edits the original and the current OG edits that revised cover.",
+    "cover_reference": "Initial square artwork supplied to built-in imagegen as the edit target",
+    "og_reference": "Revised cover-art.png supplied to built-in imagegen as the edit target",
+    "og_resize": "Built-in imagegen supplied a 1730x909 wide card; sips resized it to exactly 1200x630",
+    "cover_svg": "Local SVG title overlay around generated cover-art.png; bitmap source is unchanged"
+  },
+  "files_sha256": {
+    "audio.m4a": "5091dda81ed0be1550b3113cc606482df109bd7a26d431b8edbb892e9f01c8c7",
+    "cover-art.png": "f3f1d23aa132630e63b4a2f45c3e74670bd4514387fd25c49670092675cc2260",
+    "cover.svg": "45ba1a05cd613cc73ff14e9fa13ca4b54dd41e3042edef60ee545702df6372f6",
+    "easy.json": "ae856dcd4e3f821fd98f7ed64d099197e63e99d4e9fdc14dde26979894397ba9",
+    "hard.json": "a524c33d85b33117040eadc09659bf9fc48defedfdf8ae9ab58680d2a0f24e95",
+    "og.png": "910c10aef890d2fd23fe29c51ea1c6b52e532703e76d472388dcb1911fd2185b",
+    "preview_48s.m4a": "d17ae04412a68f6714f0ecbdf54bf0a4a4780ab76b58b8353db51be09e6bd5a6",
+    "standard.json": "da17c4508c5954f02c406906e53f66ae25f5bbe27904d7637d57ab0fad2ec36b",
+    "stream.m4a": "d2dc781ddbebfb33df13137e40a2927d1d51d9c84b6f68c802dd5d1a81623c5e"
+  }
+}

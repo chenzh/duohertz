@@ -1,0 +1,16 @@
+{
+  "track_id": "dh-086-chordline",
+  "title": "Chordline",
+  "artist": "duohertz studio",
+  "subgenre": "Melodic House",
+  "bpm": 124,
+  "game_duration_sec": 64,
+  "stream_duration_sec": 128,
+  "model_variant": "small",
+  "generation_prompt": "Original 128-second stereo melodic house instrumental at a fixed 124 BPM in 4/4. Start with the chorus at full level on beat one: four-on-the-floor kick, backbeat clap, offbeat hats, octave bass, bright four-note pluck hook and warm chord stabs all enter together. Never remove the drums or bass. Keep the same energy and an audible beat-by-beat pluck for every 8-second interval, including the first and last. Change chords and melody in the second minute. Cheerful electronic dance music for a family-friendly rhythm game. No intro, build, breakdown, fade, silence, vocals, speech, samples, copying or tempo changes.",
+  "art_tool": "local-authored SVG",
+  "cover_source_svg": "scripts/duohertz-art-sources/dh-086-chordline-cover.svg",
+  "og_source_svg": "scripts/duohertz-art-sources/dh-086-chordline-og.svg",
+  "cover_prompt": "Original comic-print cover: five staggered ivory and cyan piano-roll bars bend upward into a coral open angle; no keyboard, instrument, text, or character. Strong central silhouette at small size.",
+  "og_prompt": "Purpose-composed horizontal duohertz card with stepped chord bars on the right, lowercase duohertz and Chordline on the left. High-contrast dark editorial layout with subtle print dots."
+}

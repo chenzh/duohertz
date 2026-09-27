@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <pattern id="grain" width="26" height="26" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="2" fill="#f8efdf" opacity=".12"/></pattern>
+    <clipPath id="panel"><path d="M673 40h487l-31 548H627z"/></clipPath>
+  </defs>
+  <rect width="1200" height="630" fill="#111521"/>
+  <path d="M0 0h256L0 256z" fill="#ff675d"/>
+  <path d="M0 0h128L0 128z" fill="#f7efdf"/>
+  <path d="M1200 0v184l-170-184z" fill="#6de9e1"/>
+  <path d="M1200 500v130h-130z" fill="#ff675d"/>
+  <path d="M673 40h487l-31 548H627z" fill="#1b2330" stroke="#f7efdf" stroke-width="9"/>
+  <rect x="615" y="36" width="550" height="560" fill="url(#grain)" clip-path="url(#panel)"/>
+  <path d="M710 307c57-94 133-111 194-10s132 131 201 19" fill="none" stroke="#080e19" stroke-width="67" stroke-linecap="square"/>
+  <path d="M710 307c57-94 133-111 194-10s132 131 201 19" fill="none" stroke="#f7efdf" stroke-width="49" stroke-linecap="square"/>
+  <path d="M700 366c79 96 146 90 206-12s128-121 202-30" fill="none" stroke="#080e19" stroke-width="67" stroke-linecap="square"/>
+  <path d="M700 366c79 96 146 90 206-12s128-121 202-30" fill="none" stroke="#6de9e1" stroke-width="49" stroke-linecap="square"/>
+  <path d="M867 304l39-23 41 24-1 44-40 24-39-24z" fill="#ff675d" stroke="#080e19" stroke-width="10"/>
+  <path d="M881 327h51m-26-21v42" stroke="#f7efdf" stroke-width="10"/>
+  <circle cx="726" cy="459" r="11" fill="#ffdc69"/>
+  <circle cx="765" cy="459" r="7" fill="#ffdc69"/>
+  <circle cx="795" cy="459" r="4" fill="#ffdc69"/>
+  <path d="M92 104h422" stroke="#6de9e1" stroke-width="10"/>
+  <text x="92" y="180" fill="#6de9e1" font-family="Helvetica Neue, Arial, sans-serif" font-size="66" font-weight="900" letter-spacing="1">duohertz</text>
+  <path d="M93 223h431" stroke="#ff675d" stroke-width="18"/>
+  <text x="89" y="340" fill="#f7efdf" font-family="Helvetica Neue, Arial, sans-serif" font-size="75" font-weight="900">Braided</text>
+  <text x="89" y="425" fill="#f7efdf" font-family="Helvetica Neue, Arial, sans-serif" font-size="75" font-weight="900">Pulse</text>
+  <path d="M92 466h432" stroke="#f7efdf" stroke-width="7"/>
+  <path d="M92 493h199" stroke="#6de9e1" stroke-width="17"/>
+  <path d="M0 601h1200" stroke="#f7efdf" stroke-width="7"/>
+</svg>

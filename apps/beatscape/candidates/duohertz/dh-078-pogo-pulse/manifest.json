@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-078-pogo-pulse",
+  "title": "Pogo Pulse",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Future Bass",
+  "bpm": 110.0,
+  "target_bpm": 110,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -7.5 dB gain before AAC encoding. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -7.5,
+  "stream_limiter": null,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-078-pogo-pulse.json",
+  "source_recipe_sha256": "67bb36e36744af7bf666d84d58d4cdf6b8c1f27e594af9b8bd7a9bd598d92276",
+  "source_master_sha256": "a2960a4bce400e6890cfb46a4aded0035abdff723fdc164bc811f66bc50f9a98",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.18729,
+    "clipping_ratio": 3e-06,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "9390bcdb-ce76-45e8-9dbb-b8e4ab219f9e",
+  "source_generation_receipt_sha256": "c48436d25ca2b9ac2cf57dfa2c0c70c7bba7a649167b7ec4a57a5d64a9ae710c",
+  "generation_prompt": "This is a continuous excerpt from the MIDDLE of an already-playing full-volume chorus, not a song opening. The first beat and last beat both have complete drums, bass, chords and pitched hook at strong normal level. No gradual energy or volume ramp. Create one ORIGINAL 128-second stereo FUTURE BASS instrumental for an all-ages one-or-two-key rhythm game at STRICT constant 110 BPM in 4/4. Start with a complete stable dance groove: short kick on every quarter beat, dry snare on two and four, bright eighth hats, separate clipped mallet-synth attack on every quarter beat, bouncy bass and warm sidechained chords. Keep audible drum transients at constant strength across the entire track, especially first and last 16 seconds. Signature hook: a short low-high-low pitch hop followed by a sparkling higher two-note reply, playful without nursery-song imitation. At 64 seconds retain the full drum grid and level, shift chord roots, move the hop one register higher and answer with a new three-note phrase. No quiet intro, slow build, half-time switch, filtered outro, fade, silent tail, tempo drift, abrasive distortion, vocals, speech, samples, known melody or imitation of another song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create one original SQUARE 1:1 duohertz cover for Pogo Pulse, an all-ages future bass rhythm-game track. Original near-black editorial comic-print cut-paper style with warm ivory, electric cyan, coral red and sparse halftone. Keep every named motif element inside the central 55% width and y=25\u201368% of the square for a narrow 100px mobile crop, with dark lower fifth for the local title overlay. Flat graphic, no realistic scenery, people, text, letters, numbers, logo, watermark, strobe or copied game art. Main motif: ONE short warm-ivory springboard strip with exactly TWO rectangular supports, ONE rounded coral capsule in mid-bounce above it, exactly THREE cyan stepped motion dashes and a tiny yellow beat dot where the capsule will land. Compact and friendly, clearly musical motion rather than candy, toy weapon, ball, bubble or trampoline scenery.",
+    "og_prompt": "Edit the supplied Pogo Pulse square cover into a HORIZONTAL roughly 1.9:1 duohertz social card. Preserve one ivory springboard with two supports, one coral bouncing capsule, three cyan motion dashes and one yellow landing dot. Recompose the complete motif on the RIGHT half over near-black comic-print ink with sparse halftone, leaving calm dark space on the LEFT. Add exactly two crisp fully legible English lines at left: 'duohertz' lowercase electric cyan and 'Pogo Pulse' larger warm ivory. Spell both exactly, no truncation. Purpose-build the wide composition; do not stretch the square. No other text, scenery, people, logo, watermark or copied game art.",
+    "cover_source_sha256": "deabbfd39476c2d48066b19609950d4dd8bf38676fa1da87fac4d5ab6fd76620",
+    "og_source_sha256": "754ba719c6a350338d33b1a7ab1cf648b02b05afa757c57c99aa9d2d0c9d888e",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "0bcd0e276e421f4126ac7b486a708e4a12e345d05c879a7d762ed9bd8f1bb166",
+    "cover-art.png": "a0b9e323afaf9f8efb447f6f77272fba5c3f0e46cc6a11094e0f7f7440e9e313",
+    "cover.svg": "e3b771c947f8f0b598fc00a6ce78e4cb47d86859408c951dd5f60e2c08f41a55",
+    "easy.json": "36c53c1698987e17ff22140a75ffcc14c29a24f21ee0f3a28dbefba06d9f43a2",
+    "hard.json": "e0970992353b2c1a8bf604d2ff7fd2046a3deb8fe361b4e1c8a109e9793ffd83",
+    "og.png": "76536e92f0c64bfaa9cac21b9a2150df02443867c0a1fbc19194b32f7686fc7d",
+    "preview_48s.m4a": "05df8ad4df1cd2492aa643aa37f9b66e5ffe0f96ea5ac0542fd1cd0e3f8639ab",
+    "standard.json": "b858614d8d9330695abeeb32693330ceef7b876719397e804a0f5c07a36009bc",
+    "stream.m4a": "ad9e44373744497ba3f02bde44a6a75ae6a46ec2d27a913ff0dce5d6617a95b1"
+  }
+}

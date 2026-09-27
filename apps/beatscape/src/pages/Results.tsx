@@ -717,7 +717,32 @@ export function ResultsPage() {
   );
 
   return (
-    <section ref={resultsRootRef} className={`results${run.shiftStep ? " shift-results" : ""}`}>
+    <section ref={resultsRootRef} className={`dh-results-page results${run.shiftStep ? " shift-results" : ""}`}>
+      {/* duohertz · result hero overlay (does not replace existing result internals) */}
+      <header className="dh-results-head">
+        <div className="dh-results-title-block">
+          <div className="dh-results-cover" aria-hidden style={{
+            background: "linear-gradient(135deg, #312151, #0e3a55)",
+          }} />
+          <div>
+            <span className="dh-eyebrow">DUOHERTZ · RESULT</span>
+            <h1>{run.title}</h1>
+            <p className="dh-results-sub">{run.artist} · {run.tier} · {run.mode}</p>
+          </div>
+        </div>
+        <div className="dh-results-grade" aria-label={`Grade ${run.grade}`}>
+          <div className="dh-results-grade-letter">{run.grade}</div>
+          <div className="dh-results-grade-stars" aria-hidden>★ ★ ☆</div>
+          <div className="dh-results-grade-score">
+            <small>FINAL SCORE</small>
+            {shownScore.toLocaleString("en-US")}
+          </div>
+          {(run.fc || run.ap) && (
+            <span className="dh-results-full-combo">{run.ap ? "ALL PERFECT" : "FULL COMBO"}</span>
+          )}
+        </div>
+      </header>
+
       <div className={`results-hero-card grade-border-${run.grade}${run.fc || run.ap ? " moment" : ""}${run.failed ? " failed" : ""}`}>
         <div className={`grade-big grade-${run.grade}`}>{run.grade}</div>
         <div className="badges">

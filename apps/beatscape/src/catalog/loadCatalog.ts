@@ -6,6 +6,10 @@ let pendingCatalog: Promise<CatalogJSON> | null = null;
 const chartCache = new Map<string, ChartJSON>();
 const pendingCharts = new Map<string, Promise<ChartJSON>>();
 
+function record(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
 export async function loadCatalog(): Promise<CatalogJSON> {
   if (cache) return cache;
   if (!pendingCatalog) {
@@ -23,7 +27,12 @@ export async function loadCatalog(): Promise<CatalogJSON> {
         credentials: "include",
       });
       if (!res.ok) throw new Error("Failed to load catalog");
-      cache = (await res.json()) as CatalogJSON;
+      const payload: unknown = await res.json();
+      if (!record(payload) || payload.version !== 1 || !Array.isArray(payload.tracks)
+        || payload.tracks.some((track) => !record(track) || track.theme !== "beatscape")) {
+        throw new Error("Expected a BeatScape v1 catalog");
+      }
+      cache = payload as CatalogJSON;
       return cache;
     })().finally(() => { pendingCatalog = null; });
   }
@@ -47,7 +56,11 @@ export async function loadChart(track: CatalogTrack, tier: ChartTier): Promise<C
     pending = (async () => {
       const res = await fetch(url);
       if (!res.ok) throw new Error(`Chart ${tier} missing for ${track.track_id}`);
-      const chart = (await res.json()) as ChartJSON;
+      const payload: unknown = await res.json();
+      if (!record(payload) || payload.format !== 1 || payload.track_id !== track.track_id || payload.tier !== tier) {
+        throw new Error(`Expected a BeatScape format 1 chart for ${track.track_id}/${tier}`);
+      }
+      const chart = payload as ChartJSON;
       chartCache.set(url, chart);
       return chart;
     })().finally(() => { pendingCharts.delete(url); });

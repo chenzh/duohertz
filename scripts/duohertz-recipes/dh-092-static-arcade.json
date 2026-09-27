@@ -1,0 +1,16 @@
+{
+  "track_id": "dh-092-static-arcade",
+  "title": "Static Arcade",
+  "artist": "duohertz studio",
+  "subgenre": "Synthwave",
+  "bpm": 116,
+  "game_duration_sec": 64,
+  "stream_duration_sec": 128,
+  "model_variant": "small",
+  "generation_prompt": "Original 128-second stereo synthwave instrumental at fixed 116 BPM in 4/4. Start at full dance-chorus energy on the first beat with electronic kick on every beat, snare on two and four, eighth-note hats, pulsing octave bass, warm analog chords and a distinct short synth lead attack on each quarter beat. Signature melody: four descending clipped notes answered by two higher bell tones, with changing chord colors after 64 seconds. Keep the complete arrangement and similar loudness in every 8-second interval including the last; vary melody and bass rather than repeating an identical half. Bright retro-electronic timbres for an all-ages rhythm game. No intro, fade, breakdown, quiet bridge, tempo drift, vocals, speech, samples, known melodies or copying. Treat the very first second as the middle of an already-playing chorus at complete volume: drums, bass, chords and hook must all be present immediately; no filter sweep, slow opening, pad intro or build.",
+  "art_tool": "local-authored SVG",
+  "cover_source_svg": "scripts/duohertz-art-sources/dh-092-static-arcade-cover.svg",
+  "og_source_svg": "scripts/duohertz-art-sources/dh-092-static-arcade-og.svg",
+  "cover_prompt": "Three offset glitch slits form an angular frequency portal, warm ivory with cyan and coral static marks; no arcade cabinet, cassette, vehicle, text or character.",
+  "og_prompt": "Purpose-composed dark horizontal title card, static frequency slits on right, duohertz and Static Arcade on left."
+}

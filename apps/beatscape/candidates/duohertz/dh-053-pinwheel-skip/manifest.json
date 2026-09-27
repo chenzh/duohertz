@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-053-pinwheel-skip",
+  "title": "Pinwheel Skip",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Future Bass",
+  "bpm": 142.0,
+  "target_bpm": 142,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -6 dB gain before AAC encoding; stream-only limiter at 0.35 linear amplitude with no makeup gain. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -6.0,
+  "stream_limiter": 0.35,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-053-pinwheel-skip.json",
+  "source_recipe_sha256": "05ffc4b62e018e6f93048c572a5f607419e28a7db1881914b81bad0d4d878e77",
+  "source_master_sha256": "a3b79df519edcf8e17b9998ad70b2396fdda3cdf657bae982c9510851a516ebd",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.1805,
+    "clipping_ratio": 0.0,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "4f85e5a7-4888-4a11-9aa4-71137c6c5597",
+  "source_generation_receipt_sha256": "806935218cba7032a210e2564f462992172f3a4a9d930ada4cae4f6170544b9b",
+  "generation_prompt": "Original all-ages future-bass instrumental for a beginner-friendly one-or-two-key electronic rhythm game at a STRICT constant 142 BPM in 4/4 for 128 seconds. Keep a FULLY AUDIBLE quantized drum machine at final-mix level from the FIRST SECOND to the final bar: a short strong kick on EVERY quarter note, a dry snare on beats two and four, crisp closed eighth-note hats, and a short distinct midrange pluck or wooden-key attack on EVERY beat, including the opening 16 seconds and the midpoint. No fade-in, sparse ambient breakdown, drum dropout, half-time groove, swing, free-time passage or long smeared tails that hide attacks. Signature hook: four bright pinwheel-like chord plucks turn around a small rising contour, each separated and clearly heard, then one lower rubbery synth note skips forward as the answer after a brief gap. Keep the four-part call and the low answer as different timbres above a round offbeat bass and broad but restrained sidechained chord bed. At the midpoint preserve the unbroken drum grid, start with the low answer, reverse the order of the four chord plucks and move the bass through new roots; in the last quarter introduce a short high two-note counterline and resolve the motifs in a fresh ending instead of looping the first minute. One evolving 128-second stereo instrumental, buoyant and colorful, with controlled high frequencies and no abrasive distortion. No vocals, speech, sampled recordings, known melody or imitation of an existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a brand-new SQUARE 1:1 original album cover for duohertz future-bass rhythm-game track Pinwheel Skip. High-contrast original editorial comic-print collage in near-black ink, warm-ivory cut paper, coral red and electric cyan. Main motif: ONE oversized asymmetrical four-blade PAPER PINWHEEL viewed almost straight on; each broad blade has a different cutout notch so the turn reads as four separate beat steps. A small isolated cyan square answer sits just outside the pinwheel at lower right after a visible gap. Use thick tactile paper edges, strong flat silhouettes and sparse halftone; leave the lower fifth quiet and dark for a local title overlay. Playful motion without photorealism or a children's toy scene. No circles around the pinwheel, rings, records, gears, flowers, confetti, people, text, letters, numbers, logos, watermarks or copied game art.",
+    "og_prompt": "Edit the supplied original Pinwheel Skip square cover into a HORIZONTAL 1.9:1 duohertz social-sharing card. Preserve ONE oversized asymmetrical four-blade warm-ivory and coral paper pinwheel with separate beat-step notches and ONE isolated electric-cyan square answer after a visible gap, in near-black comic-print ink with sparse halftone. Recompose the pinwheel on the RIGHT two-thirds; leave the LEFT third calm and dark. Add exactly two crisp fully legible English text lines on the left: 'duohertz' in lowercase electric cyan and 'Pinwheel Skip' in larger warm ivory. Spell both exactly. Make a purpose-built wide card rather than stretching the square. No other text, letters, numbers, rings, records, gears, flowers, confetti, people, logos, watermark or copied game art.",
+    "cover_source_sha256": "e3d106c18e2d61028e859076b2b35097a027bf19d16329519ce1978b28492772",
+    "og_source_sha256": "c57d384cebc7a8871d07c43edc0fb30f71bedd1093d0aeb57f8ac552d3e17633",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "094ef1e470fc9c407cfe2367c20dacd7f9194dfa328ea169b3ac986d0d7b78b6",
+    "cover-art.png": "eccc0cc533e0c4fbb761c58ee08ec50fd506987f53592df79c68347323aecd15",
+    "cover.svg": "204f75cbdb92b2b698fe00aebb3d80d1e46b9299e18ffb875215b69eeefb3cdb",
+    "easy.json": "3b4c95c9e06ef97f782f4f79ff40f51c147b6840f0ecea818e78ffc076a7c8eb",
+    "hard.json": "156117511a66e2906ddd29aeea0b71a3de9831d8d65e9b3f84f7a2612cc85ba9",
+    "og.png": "87868d692a1f5fc445460710402dc05ad0bd173ba42d8cf1094da0b65952efd9",
+    "preview_48s.m4a": "01d91b3ee8ba1ec37bb63ae06c9893ebca0ac2b6acfb8e88893d3ade55f04be9",
+    "standard.json": "5fc198dd199939fce0990b5abf6dab98c68d4fdba541182999c36abdb2ea5b95",
+    "stream.m4a": "1b0b954b23bc62a3f71f2d952d516ea364fa4d504ee835da8d1a80b5a8fce79c"
+  }
+}

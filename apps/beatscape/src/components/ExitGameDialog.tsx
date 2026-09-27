@@ -77,7 +77,7 @@ export function ExitGameDialog({
   return (
     <dialog
       ref={dialogRef}
-      className="exit-game-dialog"
+      className="exit-game-dialog dh-pause-modal"
       aria-labelledby={titleId}
       aria-describedby={descriptionId}
       onCancel={(event) => {

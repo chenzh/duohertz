@@ -1,0 +1,57 @@
+{
+  "track_id": "dh-011-mica-bloomline",
+  "title": "Mica Bloomline",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Melodic House",
+  "bpm": 126,
+  "duration_sec": 64,
+  "stream_duration_sec": 128,
+  "creation_method": "Independent deterministic Fmaj7–Cadd9–Dm7–Bbmaj7 Melodic House game movement with FM mica mallets, rubber bass and seeded percussion; a new Gm7–Bbmaj7–Fadd9–C descending answer movement extends the stream master to 128 seconds without looping the first movement; no sampled source audio",
+  "source_script": "scripts/duohertz-compose-mica-bloomline.py",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "status": "visual_candidate_unreviewed",
+    "revision_reason": "Replace the early fantasy translucent-flower scene with duohertz comic print while preserving its large and answering soundline blooms",
+    "cover_prompt": "Edit Image 1 into a NEW original SQUARE 1:1 cover-art candidate for duohertz track Mica Bloomline. Image 1 is CONTENT reference only: preserve the idea of a SINGLE flowing soundline that opens into one large blooming fan of mica-like petals near the center-left, with a smaller answering bloom at the right. Remove the fantasy night landscape, realistic translucent flower glass, floating bubbles, glowing dust, water/horizon and photographic gradients entirely. Image 2 is STYLE reference only for duohertz near-black ink, warm-ivory cut paper, coral and electric-cyan accents, large halftone print texture and bold editorial graphic rhythm. Do not copy its circular frequency rings or radial composition. Compose a large cut-paper flower made of SIX broad angular warm-ivory and coral petals, each with a dark frequency-notch cutout, attached to ONE electric-cyan current flowing diagonally toward a smaller three-petal answer on the right. Give the main bloom a warm-yellow small center beat and a few controlled coral halftone wedges. Keep the shapes clearly floral, not paper airplanes or crystal diamonds; big legible silhouette at 100px, dark quiet lower fifth for a later local title overlay. All ages, gentle energy but no strobe. No realistic scenery, water, sky, glass, cosmic mist, floating bubbles, planes, rings, characters, text, letters, numbers, logos, watermark or copied game art.",
+    "og_prompt": "Edit this newly redrawn original Mica Bloomline square cover into a NEW HORIZONTAL roughly 1.9:1 duohertz social card. Preserve one large six-petal angular warm-ivory/coral bloom with dark frequency-notch cutouts, its small warm-yellow beat center, a smaller three-petal answering bloom to the right, and ONE electric-cyan current connecting both, in near-black ink with restrained halftone. Recompose the two-flower soundline on the RIGHT two-thirds at social-card scale; keep a calm near-black LEFT third. Add EXACTLY TWO crisp fully readable English text lines on the left: 'duohertz' all lowercase in electric cyan, and 'Mica Bloomline' in larger warm ivory. Spell both EXACTLY, do not truncate. Purpose-built wide composition, not stretched square. No other words, letters, numbers, realistic scenery, water, glass, bubbles, cosmic mist, paper planes, crystal diamonds, rings, characters, logos, watermark or copied game art.",
+    "cover_source": "data/duohertz-preview/art-sources/dh-011-mica-bloomline-comic/cover.png",
+    "og_source": "data/duohertz-preview/art-sources/dh-011-mica-bloomline-comic/og.png",
+    "cover_source_sha256": "5c856a8cd95f2321cb7416638d4fee085241fcd80a332c1d409ffc296aa47e0e",
+    "og_source_sha256": "813160e8a11d01fe6a0f0894293ffa725518e85c9f19142cafd1fd8015de913d",
+    "content_reference": "data/duohertz-preview/art-archive/dh-011-mica-bloomline/cover-art.png",
+    "content_reference_sha256": "7ebdba8e94b67770c8e19dda2f1782e026cf07ffb34b626520f7204c9d0c639a",
+    "style_reference": "apps/beatscape/candidates/duohertz/dh-001-first-frequency/cover-art.png",
+    "style_reference_sha256": "e3c55396eb2d4529ed065965460c2c8455939ea1a5169b58aaf1040d23633f33",
+    "cover_resize": "sips resize to 1024x1024 PNG",
+    "og_resize": "sips resize to 1200x630 PNG",
+    "cover_svg": "Local SVG brand/title overlay around cover-art.png; bitmap source has no text",
+    "previous_art_provenance": {
+      "tool": "built-in imagegen",
+      "cover_prompt": "Use case: stylized-concept\\nAsset type: original square, text-free album-cover background for an internal duohertz electronic rhythm-game candidate.\\nPrimary request: Create distinctive art for “Mica Bloomline”, a joyful all-ages Melodic House track. Imagine many thin iridescent mica-like petal wafers opening in a gentle wave along one fine glowing sound line, with tiny round frequency sparks drifting upward. It should evoke layered mineral color and springtime motion, without resembling a literal flower bouquet.\\nStyle/medium: polished contemporary editorial electronic album illustration, tactile translucent layers, clean shapes, restrained luminous detail, readable as a tiny music thumbnail.\\nComposition/framing: exact square composition; petal layers occupy upper and middle portions, with a calm deep dusk-blue lower third reserved for a separate title overlay.\\nColor palette: turquoise, warm coral, pale gold, soft lilac highlights and deep dusk blue.\\nConstraints: no text, letters, numbers, logos, people, characters, weapons, vehicles, food, red neon city, flashing/strobing patterns, copied game imagery, interlocking rings, glass horizon, aurora stones, racing sky ribbons, helix, vertical light columns, lantern network, paper fins, citrus tiles or faceted prism chains.",
+      "og_prompt": "Use case: ads-marketing\\nAsset type: wide companion sharing card for the supplied Mica Bloomline square cover, final target 1200x630.\\nPrimary request: Recompose the supplied iridescent mica-like petal wafers, gentle single sound line, tiny round frequency sparks and deep dusk-blue atmosphere into a wide 1.9:1 horizontal illustration. Place the main layered petals mainly in the right two-thirds; keep the left third calm deep dusk blue for typography. Make a new companion composition, not a stretched or simply cropped square.\\nText (verbatim): exactly two crisp, highly legible lines in the left third with generous margins, clean modern sans-serif: line 1 “duohertz” all lowercase, smaller, pale turquoise; line 2 “Mica Bloomline” title case, larger, white. Spell both exactly. No other text or logos.\\nStyle/mood: buoyant all-ages Melodic House music, polished contemporary editorial electronic album art, legible in a small social preview.\\nConstraints: preserve the reference’s turquoise, coral, pale gold, lilac and dusk-blue palette; no people, vehicles, weapons, red neon city, flashing stripes, copied game art or new unrelated objects.",
+      "og_reference": "cover-art.png supplied to built-in imagegen as the reference image",
+      "og_resize": "Built-in imagegen supplied a wide card; sips resized it to exactly 1200x630 without changing the composition",
+      "cover_svg": "Local SVG title overlay around the generated cover-art.png; bitmap source is unchanged"
+    },
+    "previous_assets_sha256": {
+      "cover-art.png": "7ebdba8e94b67770c8e19dda2f1782e026cf07ffb34b626520f7204c9d0c639a",
+      "og.png": "d0c99838985aa45e1c8d048094a3f8a9851b772b537ebfd674e3b0b6e5d91717",
+      "cover.svg": "9a19ffa48085607d19a2e90eed142f892d8dbe4f51e06ebb250dcb3f09fa9c13"
+    },
+    "previous_art_archive": "data/duohertz-preview/art-archive/dh-011-mica-bloomline"
+  },
+  "files_sha256": {
+    "audio.m4a": "61f146442f6e67cb535441a59f4a92529e670322db96b023aebd1ca18702c23d",
+    "cover-art.png": "1486e2cdd4f5fd7881d2cc4911ed0e338ce086d06a8d0d10960dcb3972298dc5",
+    "cover.svg": "9a19ffa48085607d19a2e90eed142f892d8dbe4f51e06ebb250dcb3f09fa9c13",
+    "easy.json": "fa623c26e518228468f1fa5a374f0f9da9a1dfe231da14c1b8b2dc44aeb0b848",
+    "hard.json": "86ff3fbd458f789cfc4040416f66ad2b04cbcef759fb9f801074da03066fec09",
+    "og.png": "28130ad5a5e2c634472950e7604eb50293f3782f3676ee571548697d947a3537",
+    "preview_48s.m4a": "6b9c4ff349c509f89e8117e28f7d87e53ee3b4fd17da05b99ae722a7268e3d7b",
+    "standard.json": "c06e0114464be78abb665e6516dd1c7a3f5262220d0944c57e4a4e0ab6bee760",
+    "stream.m4a": "392f13bcf222532d52800f990be1df8c486c46041c6af940df076dcd273b3db4"
+  }
+}

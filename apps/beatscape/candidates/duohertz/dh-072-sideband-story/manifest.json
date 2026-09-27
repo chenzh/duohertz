@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-072-sideband-story",
+  "title": "Sideband Story",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Synthwave",
+  "bpm": 114.0,
+  "target_bpm": 114,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -9 dB gain before AAC encoding. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -9.0,
+  "stream_limiter": null,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-072-sideband-story.json",
+  "source_recipe_sha256": "7335fd599d3eaad5a21503077b9f9c19ac7dd42e7e1b94edf2c71889ba24cdb6",
+  "source_master_sha256": "c0963b106db8942f5c7d95af0a7e70e2557e4eab9932aeca9b644b62d3bb4a11",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.21619,
+    "clipping_ratio": 6e-06,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "40ba4ef8-1f7d-401d-9808-ec14ad0bf5a9",
+  "source_generation_receipt_sha256": "925147ed09fe1e8ff75e6cc37cb379b7f3c4287f548b99108cd91b301d792d81",
+  "generation_prompt": "This is a continuous excerpt taken from the MIDDLE of an already-playing full-volume chorus, not a song opening: the first audible beat and the last beat both contain complete drums, bass, chords and pitched hook at strong normal playback level. No gradual energy or volume ramp. Create one ORIGINAL 128-second stereo SYNTHWAVE instrumental for an all-ages one-or-two-key rhythm game at STRICT constant 114 BPM in 4/4. The full audible groove begins at time zero: short clean kick on EVERY quarter beat, dry snare on two and four, eighth hats, separate bright analog-key attack on EVERY quarter beat, rounded bass and warm minor-seventh chord stabs. Maintain all layers at stable level for all 128 seconds, including the first and last 16 seconds; no fade, ambient intro, drumless break, half-time switch, quiet passage, filtered outro, silence or tempo drift. Signature hook: a clear central three-note synth call, answered by two quieter but still distinct sideband notes one octave apart, with clipped note releases. At 64 seconds retain the exact drum grid and volume, swap upper and lower answer registers, change bass roots and add a brief new syncopated bridge note while percussion continues. Warm, playful retro color without dark harshness, vocals, speech, samples, known melody or imitation of another song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create one original SQUARE 1:1 duohertz cover for Sideband Story, an all-ages synthwave rhythm-game track. Original high-contrast near-black editorial comic-print cut-paper style with warm ivory, electric cyan, coral red and sparse halftone. Main motif: ONE thick warm-ivory central horizontal SOUND BAND making three large right-angle bends; exactly TWO thinner parallel sidebands, one cyan above and one coral below, echo the same bends but offset by a beat. Connect the three bands at ONE tiny warm-yellow diamond on the center line. The complete compact band motif should fit in the central 55% of the square for a narrow 100px mobile card, leaving a dark lower fifth for local title overlay. Graphic and musical, distinct from cassette reels, railway tracks, city skyline, ribbon knots and circuit boards. No scenery, people, text, letters, numbers, logo, watermark, strobe or copied game art.",
+    "og_prompt": "Edit the supplied Sideband Story square cover into a HORIZONTAL roughly 1.9:1 duohertz social card. Preserve ONE thick ivory stepped central sound band, exactly TWO thinner offset parallel sidebands cyan above and coral below, and one tiny yellow beat diamond. Recompose the full compact motif on the RIGHT half against near-black comic-print ink with sparse halftone; calm dark space on the LEFT. Add exactly two crisp fully legible English lines: 'duohertz' lowercase electric cyan and 'Sideband Story' larger warm ivory. Spell both exactly, no truncation. Purpose-build wide composition, do not stretch square. No other text, numbers, scenery, people, logo, watermark or copied game art.",
+    "cover_source_sha256": "f946cd742a5812421bae84f281842613da447d65a65be0c8dc6e07a9c2eb05b7",
+    "og_source_sha256": "266fcd431108d0c667b6aebe0d997a0b66682e46357ee5b7e01434f0ee8b02f8",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "a9b83c5541d9d66365b993bcc01f8ec9db233ebdc6585b31dbc52d1af06d7b43",
+    "cover-art.png": "107f17988e49fab93e42e1dc04cbc2a4629f2cd1d674466941391eb87dedd53e",
+    "cover.svg": "f42462a0dc21faa86b18e74fdc3c5ecebf595f956ac0b94f7b39ef5a5a235d9f",
+    "easy.json": "23e8e06cedb7a93ef02211357ac54a14b1d1f8f3f13e2348b34ce1643897ecab",
+    "hard.json": "31ae054e1604ecbe8b429c8edc40262f57ad84be7ecc30ce8908aaa8c3c2ed5a",
+    "og.png": "b9251dac40b62309a3672fecf4d9e39e3f9117463641b766ba4ebfd0d3b55908",
+    "preview_48s.m4a": "aa1db20b633d3fb523a2c66cb98fc8ed63df8692754e66400723cc098c04ca45",
+    "standard.json": "a8cc89ae22b7e4024e7c250049a88cee8dc8c4aba32482164493839c216fd5a9",
+    "stream.m4a": "b59c118b1c3e173df7dd6fa43b92cfc88fd18bbc7209e0738dbdeb80dd680ce3"
+  }
+}

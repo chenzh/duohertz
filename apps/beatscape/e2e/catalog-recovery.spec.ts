@@ -64,6 +64,23 @@ test("Library explains a catalog outage and retries without a reload", async ({ 
   await expect(page.locator(".track-card").first()).toBeVisible();
 });
 
+test("legacy Library rejects a duohertz v2 catalog and recovers when v1 returns", async ({ page }) => {
+  let swapped = true;
+  await page.route("**/catalog.json*", (route) => swapped
+    ? route.fulfill({ json: { version: 2, brand: "duohertz", tracks: [] } })
+    : route.continue());
+  await page.goto("/library");
+
+  const alert = page.getByRole("alert");
+  await expect(alert).toContainText("Track list unavailable");
+  await expect(page.locator(".track-card")).toHaveCount(0);
+
+  swapped = false;
+  await alert.getByRole("button", { name: "Try again" }).click();
+  await expect(alert).toHaveCount(0);
+  await expect(page.locator(".track-card").first()).toBeVisible();
+});
+
 test("Track distinguishes an outage from a missing ID and recovers in place", async ({ page }, info) => {
   const restore = await makeCatalogRecoverable(page);
   await page.goto("/track/bs-s1-01");

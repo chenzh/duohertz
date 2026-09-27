@@ -43,6 +43,8 @@
 
 **自动性能记录（2026-09-06）**：[BEATSCAPE-PERFORMANCE.md](./BEATSCAPE-PERFORMANCE.md) — 同条件冷加载、完整 Hard / 最高特效 / 双人、连续重开及切歌的基线与优化证据；取消项先核对 [项目决策](BEATSCAPE-DECISIONS.md)。
 
+**duohertz 视觉交付入口（2026-09-25）**：[DUOHERTZ-VISUAL-DESIGN-BRIEF.md](./DUOHERTZ-VISUAL-DESIGN-BRIEF.md) — 纯视觉方向、设计系统、核心页面、组件／动效／响应式规范、交付物与验收清单；不包含迁移历史或发布结论。
+
 1. [apps/beatscape/PRD.md](../apps/beatscape/PRD.md) — duohertz v2.0 目标 PRD；下半部保留 BeatScape 旧版实现快照
 2. [docs/PRD-BEATSCAPE.md](./PRD-BEATSCAPE.md) — BeatScape v1.9 历史产品总纲
 3. [docs/PRD-WEB-RHYTHM-GAME.md](./PRD-WEB-RHYTHM-GAME.md) — NeonBeat 参考

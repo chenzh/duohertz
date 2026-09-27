@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
+    "build:duohertz:preview": "tsc --noEmit && VITE_DUOHERTZ_PREVIEW=1 vite build",
+    "build:duohertz:source": "tsc --noEmit && VITE_DUOHERTZ_RELEASE_SOURCE=1 vite build",
     "build:cf": "tsc --noEmit && VITE_STREAM_APP_URL=https://scapemusic.pages.dev VITE_BASE=/ vite build && node scripts/release.mjs prepare",
     "deploy:cf": "bash ../../scripts/deploy-beatscape-cf-pages.sh",
     "release:verify": "node scripts/release.mjs verify",
@@ -17,6 +19,9 @@
     "generate:og:site": "node scripts/generate-site-og.mjs",
     "release:check": "npm test && node --test scripts/release.test.mjs && npm run test:performance && npm run build:cf && npm run test:e2e && npm run release:verify",
     "test:e2e": "playwright test",
+    "test:lab": "playwright test --config playwright.duohertz.config.ts",
+    "test:duohertz:preview": "playwright test --config playwright.duohertz-preview.config.ts",
+    "test:duohertz:source": "playwright test --config playwright.duohertz-source.config.ts",
     "test:e2e:webkit:core": "playwright test --config playwright.webkit.config.ts e2e/input-ownership.spec.ts e2e/slide-scoring.spec.ts",
     "preview": "vite preview --host 127.0.0.1 --port 5175",
     "test": "vitest run",

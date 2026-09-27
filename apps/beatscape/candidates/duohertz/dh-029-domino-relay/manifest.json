@@ -1,0 +1,50 @@
+{
+  "track_id": "dh-029-domino-relay",
+  "title": "Domino Relay",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Drum & Bass",
+  "bpm": 171.429,
+  "target_bpm": 172,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -3 dB gain before AAC encoding. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-029-domino-relay.json",
+  "source_recipe_sha256": "3ac6017b5da5119600d125f53d1ec8633b08f83f5cd7e68c7876aac00f441bfe",
+  "source_master_sha256": "dfa4695c85dcc9a5b715cada886e9c8eec56c5e1025412dc41951f77fef1e4b2",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.10368,
+    "clipping_ratio": 0.0,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "5d5e020c-f606-463b-8f43-86c18ebcb120",
+  "source_generation_receipt_sha256": "4880f958485c8d5fa5c9ad168850cef9ece0cd01993e8a3a46900f99abb6c3c0",
+  "generation_prompt": "Original all-ages liquid drum-and-bass instrumental for a one-or-two-key electronic rhythm game at a STRICT constant 172 BPM in 4/4. From the first second to the final bar, maintain a dry quantized two-step drum grid: distinct short kick on beats one and three, crisp snare on beats two and four, closed hats in clear eighth notes, plus syncopated rim clicks between the main beats. At least eight separate audible midrange attacks every two-bar phrase, including quieter passages; never drop the drum grid or switch to half-time, free-time or ambient-only sections. Signature hook: a playful four-note clipped mallet-synth figure with a deliberately delayed final note, answered by a lower muted-electric-piano figure in the next bar like a chain of falling dominoes. Add a rounded rolling sub bass and brief ivory-bright chord stabs, but keep releases short so each attack stays countable. At the midpoint swap the register of the two hook instruments and move to a fresh chord sequence over the SAME drums; in the finale let the answer overlap the next call for a new cadence instead of repeating whole halves. One evolving 128-second stereo composition, melodic and energetic without harsh distortion. No vocals, speech, sampled recordings, known melody or imitation of an existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a brand-new SQUARE 1:1 original album cover for duohertz track Domino Relay, an all-ages drum-and-bass rhythm-game song. Bold high-contrast editorial screen-print collage with near-black ink, warm ivory paper, coral red and electric cyan, and a few yellow beat markers. Main motif: FIVE oversized domino-like rectangular paper slabs in a cascading diagonal sequence, each rotated a different amount and passing a small cyan square pulse to the next; the slabs have NO traditional domino dots. Use asymmetrical spacing, sharp shadows, torn cut-paper edges and selective halftone grain. Make a memorable connected silhouette with enough negative space to read at tiny music-library size. Different from rails, notched bars, overlapping fans, circles, rings, paths, city scenes or actual game pieces with pips. No text, letters, numbers, people, logos, watermark or imitation of any existing game.",
+    "og_prompt": "Edit the supplied original Domino Relay square artwork into a HORIZONTAL duohertz social card. Preserve the five oversized falling paper slabs passing a small cyan pulse along their diagonal cascade, with coral, cyan, ivory and near-black screen-print texture. Recompose the cascade on the RIGHT two-thirds, leave calm dark space on the LEFT, and add exactly two crisp fully legible English lines on the left: 'duohertz' all lowercase and 'Domino Relay'. No other text, letters, numbers, traditional domino dots, people, circles, rings, city, logos, watermarks or existing IP. Original all-ages electronic music poster.",
+    "cover_source_sha256": "e903d3ece347c10c54f4982e6b3da42434e557e95b6156ab8c3d3b853ab7c3c0",
+    "og_source_sha256": "5253c77bdd6ab9c4c389ec008c024404c65db96ff5e1d091b1590b1c2207ad55",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png",
+    "cover_revision_prompt": "Revise the generated square Domino Relay cover: keep the five cascading ivory slabs and cyan pulse; remove the large coral circular sun/disc and replace it with uneven near-black and warm-ivory cut-paper negative space plus small angular coral accents; avoid sunset or landscape imagery."
+  },
+  "files_sha256": {
+    "audio.m4a": "3598e7ef5cf1cd8be9de3b2fd28aa07aead42cd88ab13ddf52463890f29bfe56",
+    "cover-art.png": "25c501150e93302d726b1bc84dbe5b203a9b83961044eb74aeb282f3aaac87aa",
+    "cover.svg": "f7ac5b21d4f162d81e3983bbe09d6c90791597ef39da816c6555dee76a8ad15f",
+    "easy.json": "db222db5715098b1eecbe1c0d5623be9ba499fa4f8ee15d1e14726f4503663a0",
+    "hard.json": "3900527ee1901312fec178e241db429420769682bfe39f899d912ecdc85da233",
+    "og.png": "c5d23e0418769aa2245d49487e10122b3cf35eb9c6ee8f7ac672984874642806",
+    "preview_48s.m4a": "d23756098fc6727cdbc8e8bb4af6257df64025e66a166bd764e11253f9e2a8b1",
+    "standard.json": "816e96e37e8926c29473553e581b6d0d606d8590ed6349b3cf1ce3e60f1e2023",
+    "stream.m4a": "3bbe488aaa5605e7f1be8156ed1da358556c17cc890675947f71daf1976e6c67"
+  }
+}

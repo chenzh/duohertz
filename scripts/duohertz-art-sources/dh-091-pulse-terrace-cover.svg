@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+<defs><pattern id="dots" width="26" height="26" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="2" fill="#f7efdf" opacity=".12"/></pattern></defs>
+<rect width="1024" height="1024" fill="#111521"/><path d="M0 0h251L0 207z" fill="#6de9e1"/><path d="M1024 0v208L835 0z" fill="#ff675d"/><path d="M0 1024V829l183 195z" fill="#f7efdf"/><path d="M1024 825v199H831z" fill="#6de9e1"/>
+<path d="M167 166h690l-37 689H204z" fill="#1d2632" stroke="#f7efdf" stroke-width="13"/><path d="M167 166h690l-37 689H204z" fill="url(#dots)"/>
+<path d="M224 710h139V583h136V459h136V333h149" fill="none" stroke="#111521" stroke-width="91" stroke-linejoin="miter"/><path d="M224 710h139V583h136V459h136V333h149" fill="none" stroke="#f7efdf" stroke-width="68" stroke-linejoin="miter"/><path d="M224 759h188V633h136V509h136V383h100" fill="none" stroke="#6de9e1" stroke-width="18" stroke-linejoin="miter"/><path d="M236 263h159m-80 39h153m-86 40h143" stroke="#ffdc69" stroke-width="11"/><circle cx="781" cy="333" r="34" fill="#ff675d" stroke="#111521" stroke-width="13"/><path d="M222 825h552" stroke="#ff675d" stroke-width="19"/>
+<path d="M105 891h814" stroke="#f7efdf" stroke-width="9"/><path d="M105 915h260" stroke="#ff675d" stroke-width="18"/>
+</svg>

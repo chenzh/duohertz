@@ -1,0 +1,18 @@
+{
+  "track_id": "dh-096-softline-harbor",
+  "title": "Softline Harbor",
+  "artist": "duohertz studio",
+  "subgenre": "Melodic House",
+  "bpm": 124,
+  "game_duration_sec": 64,
+  "stream_duration_sec": 128,
+  "generation_duration_sec": 180,
+  "stream_start_sec": 32,
+  "model_variant": "small",
+  "generation_prompt": "Create one original 180-second stereo melodic house instrumental at strict 124 BPM in 4/4 for an all-ages one-or-two-key rhythm game. By 24 seconds the complete dance groove is playing: four-on-the-floor kick every quarter beat, clap on two and four, offbeat hats, round bass, wide warm chord stabs and one clean pitched pluck attack on every beat. The signature melody is a four-note rising soft synth line answered by two clipped lower notes. Keep the 32-to-160-second section fully arranged and near-uniform in loudness; after 96 seconds change chord inversion and the melodic answer without dropping drums, bass or hook. Bright but gentle electronic music, clearly different melodic phrasing from familiar songs. No vocals, speech, samples, tempo drift, harsh distortion, sparse bridge or low-energy break within 32 to 160 seconds.",
+  "art_tool": "local-authored SVG",
+  "cover_source_svg": "scripts/duohertz-art-sources/dh-096-softline-harbor-cover.svg",
+  "og_source_svg": "scripts/duohertz-art-sources/dh-096-softline-harbor-og.svg",
+  "cover_prompt": "Original high-contrast comic-print cover: nested soft-edged wave piers project from the left into a cyan channel, with one coral pulse marker; no literal coast, boat, sun, text or character.",
+  "og_prompt": "Dark horizontal duohertz card with layered wave piers on right and Softline Harbor title on left."
+}

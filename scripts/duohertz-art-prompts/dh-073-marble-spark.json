@@ -1,0 +1,26 @@
+{
+  "tool": "built-in imagegen",
+  "status": "visual_candidate_unreviewed",
+  "track_id": "dh-073-marble-spark",
+  "title": "Marble Spark",
+  "revision_reason": "Scale the three marbles, spark and beat trail into the central mobile-safe area.",
+  "source_recipe": "scripts/duohertz-recipes/dh-073-marble-spark.json",
+  "cover_edit": "Recompose the named motif into the center mobile-safe area while preserving the square print style and dark lower title space.",
+  "og_edit": "Edit the revised cover into a horizontal sharing card with exact lowercase duohertz and track title at left, full motif at right.",
+  "assets": {
+    "initial_cover": {
+      "path": "data/duohertz-preview/art-sources/dh-073-marble-spark/cover-initial.png",
+      "sha256": "e16a1f7e6259609bdc53022515ed97888a89aa8912b7a7c5d87db4bd8d06e203"
+    },
+    "revised_cover": {
+      "path": "data/duohertz-preview/art-sources/dh-073-marble-spark/cover.png",
+      "sha256": "c1a60fc13bdf25c62df833f0006428ea220d6f248cd5ee7ff49ceff96e78acd8"
+    },
+    "wide_og": {
+      "path": "data/duohertz-preview/art-sources/dh-073-marble-spark/og.png",
+      "sha256": "314bbef417c4d1585a12a0cb3dfd1d4e5e093283af1b1d728dfe309e9fbda3c6"
+    }
+  },
+  "mobile_card_screenshot": "data/duohertz-preview/rebuild-20260924/dh-073-marble-spark-320-card-centered.png",
+  "review_boundary": "Composition verified on the 320px development card; no human art, originality, rights or market approval."
+}

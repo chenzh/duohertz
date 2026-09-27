@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-056-postcard-wave",
+  "title": "Postcard Wave",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Melodic House",
+  "bpm": 124.0,
+  "target_bpm": 124,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -6 dB gain before AAC encoding; stream-only limiter at 0.35 linear amplitude with no makeup gain. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -6.0,
+  "stream_limiter": 0.35,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-056-postcard-wave.json",
+  "source_recipe_sha256": "d59227030bf52522db8672a66533d56084dfa45be07790bd35c84f7dcb4e8e18",
+  "source_master_sha256": "67eef2b6c75cfa4e6543d9d85d5610c664e04d1e1d1beb64fe1d263f291fb8d4",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.18854,
+    "clipping_ratio": 1.1e-05,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "c5e5b0be-e20a-4996-be86-2e97ddc5d69d",
+  "source_generation_receipt_sha256": "d66ac8201c97cf8abe31700dec3eb6d8a6b9e2d1ea75c9be94cc1770623d1eaf",
+  "generation_prompt": "Original all-ages melodic-house instrumental for a beginner-friendly one-or-two-key electronic rhythm game at a STRICT constant 124 BPM in 4/4 for 128 seconds. Keep a FULLY AUDIBLE quantized house drum machine at final level from the FIRST SECOND to the final bar: short strong kick on EVERY quarter beat, dry clear clap on beats two and four, crisp closed eighth-note hats, and one separate short midrange wooden-key or pluck attack on EVERY beat, including the first 16 seconds and the entire middle. No fade-in, ambient intro, sparse pad-only breakdown, drum dropout, half-time passage, swing, tempo drift or long smeared reverb hiding attacks. Signature hook: three warm wooden-key notes step downward in a simple contour, pause for one eighth-note, then a single higher glass chime answers from the opposite stereo side; make the answer a distinct timbre and rhythmic position. Support with round offbeat bass and restrained soft major-seventh chord fragments BEHIND the beat markers. At the midpoint keep the exact uninterrupted drum grid, start with the high chime answer, reverse the wooden-key contour and change bass roots; the final quarter adds a short second chime reply and resolves the motifs in a new cadence instead of copying the first minute. One evolving 128-second stereo instrumental, warm and easy to follow, with controlled highs and no abrasive distortion. No vocals, speech, sampled recordings, known melody or imitation of an existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a brand-new SQUARE 1:1 original duohertz album cover for Postcard Wave, an all-ages melodic-house rhythm-game track. High-contrast original editorial comic-print collage on near-black ink, warm-ivory paper, coral red and electric cyan. Main motif: ONE oversized blank warm-ivory POSTCARD-shaped rectangle tilted upward, its near corner folded back to reveal a broad cyan zigzag sound wave emerging from underneath; exactly three small separate coral paper bars sit above the card like three warm notes. The postcard must read as a simple flat cut-paper rectangle, not an envelope, screen or existing postal brand. Crisp tactile edges, sparse halftone, playful diagonal motion and quiet dark lower fifth for a local title overlay. At 100px the rectangle, cyan wave and three bars stay distinct. No stamp, address, writing, letters, numbers, logos, people, city, landscape, photograph, watermark or copied game art.",
+    "og_prompt": "Edit the supplied original Postcard Wave square cover into a HORIZONTAL 1.9:1 duohertz social-sharing card. Preserve ONE large blank warm-ivory tilted postcard rectangle with its near corner folded back, the broad electric-cyan zigzag wave emerging from underneath and exactly three separate small coral bars above it, in near-black comic-print ink and sparse halftone. Recompose the paper motif on the RIGHT two-thirds, leaving calm dark space on the LEFT. Add exactly two crisp fully legible English lines on the left: 'duohertz' in lowercase electric cyan and 'Postcard Wave' in larger warm ivory. Spell both exactly. Build a real wide composition rather than stretching the square. No other text, letters, numbers, stamp, address, screen, people, landscape, photograph, logos, watermark or copied game art.",
+    "cover_source_sha256": "c4864b50b4e315f62d11a4af37c087468cc387d66b276ae6f296f004d30f2b14",
+    "og_source_sha256": "2dc570b043e33f56443823a6df35e222ee4ab93cd1c46851b6ad41a7f6ebca5b",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "e3d2c4813e959124a062a493d09432fe3b03d2605d4fdc1c2b788d3af2b413b2",
+    "cover-art.png": "0956d0f4661c29bf544d6d69d3de5fbac0e17e6e458e4e70f0749845aae72251",
+    "cover.svg": "32b28967bf8a676795c22caa4a5b73c6c9ad1d8be11ca0f9f92b2e1582e64719",
+    "easy.json": "8644696c9a0a425b3c8a8f406c6f2d0f0b4773abe448a07f3fba6542a7929b37",
+    "hard.json": "ef403a2b68f830028b27d32737272123af0ada52b2b9a326ffa587b6468d5565",
+    "og.png": "fc2f39597aab0c8f8244e0548ad8ab80eab81bb9b2b8aa24069700a0f5987ce3",
+    "preview_48s.m4a": "8bb1d699e599b0151647a2dcc0249d22b90390d3c9a9d1d1e860b1a30f778781",
+    "standard.json": "652d0043bbf80f2b2439f83d8e86bab4bf169666348f6bd901ed23277606af19",
+    "stream.m4a": "223dbb829fbd567f85387dcbf01ea52244104eeeb1e78f2c232d6fe4b429eeff"
+  }
+}

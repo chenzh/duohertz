@@ -1,0 +1,26 @@
+{
+  "tool": "built-in imagegen",
+  "status": "visual_candidate_unreviewed",
+  "track_id": "dh-075-beacon-current",
+  "title": "Beacon Current",
+  "revision_reason": "Shorten the spire, reduce to two radiating arcs and clear the lower title area.",
+  "source_recipe": "scripts/duohertz-recipes/dh-075-beacon-current.json",
+  "cover_edit": "Recompose the named motif into the center mobile-safe area while preserving the square print style and dark lower title space.",
+  "og_edit": "Edit the revised cover into a horizontal sharing card with exact lowercase duohertz and track title at left, full motif at right.",
+  "assets": {
+    "initial_cover": {
+      "path": "data/duohertz-preview/art-sources/dh-075-beacon-current/cover-initial.png",
+      "sha256": "df3517de15ecefdd2a9e9f6aa2a4e9fec1139c74cfb5503948e0f0846a124a97"
+    },
+    "revised_cover": {
+      "path": "data/duohertz-preview/art-sources/dh-075-beacon-current/cover.png",
+      "sha256": "94bab7715968c4280e1f9bd7f5ab01ae06c413b51c008945425e9239cb8e29ee"
+    },
+    "wide_og": {
+      "path": "data/duohertz-preview/art-sources/dh-075-beacon-current/og.png",
+      "sha256": "9cb5c4902d789ab7fd7b981235b423de204e4b26e66a9224c0110a084f1c9920"
+    }
+  },
+  "mobile_card_screenshot": "data/duohertz-preview/rebuild-20260924/dh-075-beacon-current-320-card-centered.png",
+  "review_boundary": "Composition verified on the 320px development card; no human art, originality, rights or market approval."
+}

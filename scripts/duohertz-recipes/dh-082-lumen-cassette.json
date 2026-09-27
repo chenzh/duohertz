@@ -1,0 +1,16 @@
+{
+  "track_id": "dh-082-lumen-cassette",
+  "title": "Lumen Cassette",
+  "artist": "duohertz studio",
+  "subgenre": "Synthwave",
+  "bpm": 114,
+  "game_duration_sec": 64,
+  "stream_duration_sec": 128,
+  "model_variant": "small",
+  "generation_prompt": "This is a continuous excerpt from the MIDDLE of an already-playing full-volume song, not an intro. At time 0.0 a strong kick, full bass, complete hat-and-snare pattern and bright melodic hook are ALREADY playing at their normal chorus volume; the first 8 seconds must be as active and loud as every later 8-second span. Do not assemble or fade in the instruments one by one. The first and last beats both have complete drums, bass, chords and melody at stable level. Create one ORIGINAL 128-second stereo SYNTHWAVE instrumental for an all-ages one-or-two-key rhythm game at STRICT constant 114 BPM in 4/4. Put a tight kick on every quarter beat, a crisp snare on beats two and four, eighth-note hats and a separate short bright synth-pluck attack on each quarter beat; keep all of them distinct and audible throughout. Warm analog-style pads and a round pulsing bass support a clear hook: three descending glassy notes, a one-beat rest, then a six-note rising arpeggio answer in a different register. At 64 seconds keep the same drum grid and loudness, move the bass to new chord roots, shift the three-note call up an octave and answer with a newly contoured six-note phrase. Maintain musical activity and crisp attacks in every 8-second span without copying the first half exactly. No quiet intro, long build, breakdown, fade, silent tail, tempo drift, harsh distortion, vocals, speech, samples, known melody or imitation of another song.",
+  "art_tool": "local-authored SVG",
+  "cover_source_svg": "scripts/duohertz-art-sources/dh-082-lumen-cassette-cover.svg",
+  "og_source_svg": "scripts/duohertz-art-sources/dh-082-lumen-cassette-og.svg",
+  "cover_prompt": "Original square comic-print cover with one abstract blank cassette-shaped frame; its two spools are uneven electric-cyan concentric frequency rings connected by a short warm-ivory waveform, and one coral beat notch marks the tape path. Dark ink, warm ivory, electric cyan, coral, compact central motif, no brand text or copied icon.",
+  "og_prompt": "Purpose-composed horizontal duohertz card: the same abstract two-ring cassette-frequency motif on the right, lowercase duohertz and Lumen Cassette set clearly on the left. Original high-contrast print geometry, not a stretched square."
+}

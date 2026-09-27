@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <image href="cover-art.png" width="1024" height="1024" preserveAspectRatio="xMidYMid slice" />
+  <rect y="774" width="1024" height="250" fill="#111421" opacity="0.83" />
+  <text x="72" y="858" fill="#67eee0" font-family="sans-serif" font-size="35" font-weight="700" letter-spacing="3">duohertz</text>
+  <text x="72" y="935" fill="#fff9ef" font-family="sans-serif" font-size="63" font-weight="700">Kinetic Sundial</text>
+</svg>

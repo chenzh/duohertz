@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-073-marble-spark",
+  "title": "Marble Spark",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Future Bass",
+  "bpm": 107.143,
+  "target_bpm": 108,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -5 dB gain before AAC encoding. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -5.0,
+  "stream_limiter": null,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-073-marble-spark.json",
+  "source_recipe_sha256": "fd2c58ca80bb9d372ad6a88ade75223794625a3ebeccc7b14757dab10a5be45c",
+  "source_master_sha256": "b88d71cc7caaa0fa710d4022e263b7d4e6dbb7f3138b3effac17155f55cc782e",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.14928,
+    "clipping_ratio": 0.0,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "8ea3ec17-9ad6-4688-b6f4-344ead4a4414",
+  "source_generation_receipt_sha256": "eb6cbacbc797cf1690f3bbd648161790f4352e1cb440af417442aa375e24e76c",
+  "generation_prompt": "This is a continuous excerpt taken from the MIDDLE of an already-playing full-volume chorus, not a song opening: the first audible beat and the last beat both contain complete drums, bass, chords and pitched hook at strong normal playback level. No gradual energy or volume ramp. Create one ORIGINAL 128-second stereo FUTURE BASS instrumental for an all-ages one-or-two-key rhythm game at STRICT constant 108 BPM in 4/4. Start with the COMPLETE groove at time zero: short kick on every quarter beat, dry snare on two and four, crisp eighth hats, a separate short glassy mallet-synth attack on every quarter beat, soft bouncing bass and warm chord pulses, all at stable volume through the last beat. No quiet intro, slow build, drumless or half-time bridge, filtered outro, fade, silent tail or tempo drift. Signature hook: three clipped rounded notes hop upward in a triangle and land on a bright two-note spark; keep note edges precise and distinct from the chords for charting. At 64 seconds keep the same kick/snare grid and level, change bass roots, turn the triangle upside down and answer with a new syncopated three-note phrase until the final beat. Cheerful, clear, controlled highs, no abrasive distortion, vocals, speech, samples, known melody or imitation of another song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create one original SQUARE 1:1 duohertz cover for Marble Spark, a playful all-ages future-bass rhythm-game track. Original near-black editorial comic-print cut-paper style, warm ivory, electric cyan, coral red and sparse halftone. Main motif: exactly THREE solid warm-ivory MARBLES of visibly different sizes arranged in a rising triangular bounce, each with a simple cyan cut-paper crescent highlight rather than glossy realism. ONE coral angular spark with four sharp rays sits at their meeting point, and a short electric-cyan stepped beat trail joins the three marbles. Keep all three marbles and spark inside the central 55% of the square for a 100px mobile crop, with dark lower fifth for local title overlay. Flat bold graphic, distinct from soap bubbles, planets, vinyl discs and gears. No people, scenery, text, letters, numbers, logo, watermark, strobe or copied game art.",
+    "og_prompt": "Edit the supplied Marble Spark square cover into a HORIZONTAL roughly 1.9:1 duohertz social card. Preserve exactly THREE solid ivory marbles of different sizes in a rising triangle, cyan crescent highlights, ONE coral four-ray spark and one short cyan stepped beat trail. Recompose the complete motif on the RIGHT half over near-black comic-print ink with sparse halftone, leaving calm dark space on the LEFT. Add exactly two crisp fully legible English lines: 'duohertz' lowercase electric cyan and 'Marble Spark' larger warm ivory. Spell both exactly, no truncation. Purpose-build wide composition, do not stretch square. No other words, people, scenery, logo, watermark or copied game art.",
+    "cover_source_sha256": "c1a60fc13bdf25c62df833f0006428ea220d6f248cd5ee7ff49ceff96e78acd8",
+    "og_source_sha256": "314bbef417c4d1585a12a0cb3dfd1d4e5e093283af1b1d728dfe309e9fbda3c6",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "73b946271078de8ef873c4e7bff285aed87d9c56c1d90d8ebdc0238a9220373a",
+    "cover-art.png": "72101949f728d7e4275dbf9008ee6eb7c157c2a112f3aa4e502428cc293912f9",
+    "cover.svg": "6a9226c0f935944d7378375ce817ae07379949f438e48b490aab4ce91a0d645a",
+    "easy.json": "07381c1e0f0ec2519184466a9cec99589be0ef5edc916b52fe9fff88535d4934",
+    "hard.json": "26d6ae330187b686e63db3b7c56c86d20cb96a38babe86d8a3cb80489c5393d1",
+    "og.png": "82733009b1c982ca5e1db3b84ac3e4e004e11eb23ab91ca3fa6f4654eb2447b7",
+    "preview_48s.m4a": "a6959c0e8b63f978d9b13949c7afefb14d720e9231f255f79b857dfb3b9b87a9",
+    "standard.json": "f83ff18a489bb460e9d883940731ab956c033919c8186045b03678adcf37802b",
+    "stream.m4a": "664f3434dd91bd90e9b71e8448874bc8714d708e93a1c726f88204ebf7038d7d"
+  }
+}

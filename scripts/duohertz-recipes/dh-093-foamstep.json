@@ -1,0 +1,18 @@
+{
+  "track_id": "dh-093-foamstep",
+  "title": "Foamstep",
+  "artist": "duohertz studio",
+  "subgenre": "Future Bass",
+  "bpm": 140,
+  "game_duration_sec": 64,
+  "stream_duration_sec": 128,
+  "model_variant": "small",
+  "generation_prompt": "Create a 128-second stereo excerpt cut from the middle of an already-playing 140 BPM future bass dance chorus. A complete, loud kick, snare, hats, round bass, bright sidechained synth chords and bouncy pitched hook all sound on the first beat and continue at roughly even level through the last. Clear short attacks for a one-or-two-key rhythm game; playful three-low-two-high-note call and reply, with changed chord roots and answering octave in the second minute. Original, colorful, all-ages electronic instrumental. No beginning or ending of a song, no intro, riser, build, sparse bridge, breakdown, fade, silence, vocals, speech, samples, copying or tempo changes. Generate a full 180-second continuous performance so the 32-to-160-second section is a strong, stable, fully-arranged excerpt.",
+  "art_tool": "local-authored SVG",
+  "cover_source_svg": "scripts/duohertz-art-sources/dh-093-foamstep-cover.svg",
+  "og_source_svg": "scripts/duohertz-art-sources/dh-093-foamstep-og.svg",
+  "cover_prompt": "Overlapping asymmetric foam-like polygon cushions lift a coral zigzag signal; no round bubbles, character, text or literal instrument; crisp high-contrast comic-print cover.",
+  "og_prompt": "Wide duohertz title panel with angular foam layers on right and Foamstep on left.",
+  "generation_duration_sec": 180,
+  "stream_start_sec": 32
+}

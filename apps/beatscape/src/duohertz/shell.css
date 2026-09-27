@@ -1,0 +1,426 @@
+/* Neon-synthwave chrome over the v2 page hierarchy. Tokens live in base.css. */
+.dh-app-shell .site-header {
+  border-bottom: 1px solid #b0bffa66;
+  background: #0c1435d9;
+  backdrop-filter: blur(16px);
+}
+.dh-app-shell .logo {
+  color: var(--dh-paper);
+  font-family: Anton, Sora, sans-serif;
+  font-size: 1.45rem;
+  font-style: italic;
+  letter-spacing: .015em;
+}
+.dh-app-shell .dh-logo-tag { font: 700 13px/1.2 "IBM Plex Sans", sans-serif; font-style: normal; letter-spacing: 0; opacity: .88; text-transform: uppercase; }
+.dh-app-shell .logo-mark {
+  border: 2px solid var(--dh-aqua);
+  border-radius: 8px;
+  background: linear-gradient(135deg, #7387ea, #59d8ee);
+  color: var(--dh-ink);
+}
+.dh-app-shell .site-header nav a {
+  border-radius: 8px;
+  color: var(--dh-paper);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.dh-app-shell .site-header nav a:hover,
+.dh-app-shell .site-header nav a.active {
+  background: #596cc35c;
+  color: var(--dh-paper);
+  box-shadow: inset 0 -2px var(--dh-aqua);
+}
+.dh-app-shell .site-footer {
+  border-top: 2px solid var(--dh-paper);
+  padding-top: 16px;
+  color: var(--dh-paper);
+  font-family: "IBM Plex Mono", monospace;
+}
+.dh-app-shell .mobile-tabbar {
+  border-color: #8fbaf7a6;
+  background: #0b1232f5;
+  backdrop-filter: blur(16px);
+}
+.dh-app-shell .dh-home-hero .dh-hub__kicker { color: var(--dh-aqua); }
+.dh-app-shell .dh-home-hero h1 { font-family: Sora, sans-serif; font-style: normal; font-weight: 800; letter-spacing: -.065em; }
+.dh-app-shell .dh-home-hero h1 span { color: #b6aaff; }
+.dh-app-shell .dh-hub__section-title :is(h1, h2),
+.dh-app-shell .dh-hub__track h3,
+.dh-app-shell .dh-hub__people-copy h3 { font-family: Sora, sans-serif; font-style: normal; font-weight: 800; letter-spacing: -.045em; }
+.dh-app-shell .dh-hub__track,
+.dh-app-shell .dh-hub__people-grid article { overflow: hidden; border: 1px solid #9ab5f580; border-radius: 16px; background: linear-gradient(155deg, #273674, #172349 60%, #151e40); box-shadow: 0 12px 28px #04092391, inset 0 1px #c2d8ff2e; }
+.dh-app-shell .dh-hub__track-art { background: linear-gradient(135deg, #343a8d, #0a2a51); }
+.dh-app-shell .dh-hub__track-art::before,
+.dh-app-shell .dh-hub__track-art::after,
+.dh-app-shell .dh-hub__people-art::after { display: none; }
+.dh-app-shell .dh-hub__people-art { background: radial-gradient(circle at 50% 42%, #7374dca8, transparent 60%), linear-gradient(145deg, #273c81, #111632); }
+.dh-app-shell .dh-hub__track a { border: 1px solid #9fe8ff; border-radius: 8px; background: linear-gradient(100deg, #65d9f2, #9da9ff); }
+.dh-app-shell .dh-hub__track a.dh-hub__listen { border-color: #a9baff; border-radius: 8px; background: #25346a; }
+.dh-app-shell .dh-hub__filters button,
+.dh-app-shell .dh-hub__study-picker button { border: 1px solid #9ab5f580; border-radius: 9px; background: #202c60; }
+.dh-app-shell .dh-hub__filters button[aria-pressed="true"],
+.dh-app-shell .dh-hub__study-picker button[aria-pressed="true"] { border-color: #a7b6ff; background: #716ae8; color: #fff; }
+.dh-app-shell .dh-hub__radio-banner { border: 1px solid #9ab5f580; border-radius: 16px; background: linear-gradient(110deg, #283f82, #392c79 60%, #142d58); box-shadow: 0 14px 34px #04092391; }
+.dh-app-shell .dh-home-hero__links a,
+.dh-app-shell .dh-hub__radio-banner a { border-color: #9bdff5; border-radius: 8px; background: #24376e99; }
+.dh-app-shell .dh-home-hero__pads button { border-color: #c7f1ff; border-radius: 9px; background: linear-gradient(135deg, #6edbf5, #a0b7ff); }
+.dh-app-shell .dh-home-hero__pads button + button { background: linear-gradient(135deg, #a49aff, #d6a1e3); }
+.dh-app-shell .dh-hub__action--primary { border-color: #cbd2ff; border-radius: 9px; background: linear-gradient(110deg, #8882f1, #76d1f4); box-shadow: 0 8px 24px #8792f04a; }
+.dh-app-shell .dh-hub__search input { border-color: #9ab5f5; border-radius: 8px; background: #192854; }
+.dh-app-shell .dh-lab__header {
+  position: relative;
+  padding: 28px 32px 36px;
+  background: var(--dh-paper);
+  color: var(--dh-ink);
+  clip-path: polygon(0 0, 100% 0, 100% 83%, 93% 100%, 0 100%);
+  text-align: left;
+}
+.dh-app-shell .dh-lab__header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 12%;
+  width: 15%;
+  height: 9px;
+  background: var(--dh-coral);
+  transform: skew(-24deg);
+}
+.dh-app-shell .dh-lab__header h1 {
+  color: var(--dh-ink);
+  font-family: Anton, Sora, sans-serif;
+  font-style: italic;
+  line-height: 1;
+  overflow-wrap: anywhere;
+}
+.dh-app-shell .dh-lab__eyebrow { color: #433a91; }
+.dh-app-shell .dh-lab__header :is(p, small) { color: #303748; }
+.dh-app-shell :is(.dh-lab__tracks, .dh-lab__mode, .dh-lab__controls, .dh-radio-lab__styles) button,
+.dh-app-shell :is(.dh-lab__actions, .dh-radio-lab__transport) button {
+  border: 2px solid var(--dh-paper);
+  border-radius: 2px;
+  background: var(--dh-panel);
+  color: var(--dh-paper);
+  box-shadow: 4px 4px 0 #060b22;
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 700;
+}
+.dh-app-shell :is(.dh-lab__tracks, .dh-lab__mode, .dh-lab__controls, .dh-radio-lab__styles) button[aria-pressed="true"],
+.dh-app-shell .dh-lab__actions .dh-lab__start,
+.dh-app-shell .dh-radio-lab__transport .dh-radio-lab__play {
+  border-color: var(--dh-paper);
+  background: var(--dh-coral);
+  color: var(--dh-ink);
+}
+.dh-app-shell :is(.dh-lab__audio, .dh-lab__character, .dh-radio-lab__player, .dh-radio-lab__playlist li button) {
+  border: 2px solid var(--dh-paper);
+  border-radius: 3px;
+  background: var(--dh-panel);
+  box-shadow: 6px 6px 0 #060b22;
+}
+.dh-app-shell :is(.dh-lab__character h3, .dh-radio-lab__player-copy h2) {
+  color: var(--dh-paper);
+  font-family: Anton, Sora, sans-serif;
+  font-style: italic;
+}
+.dh-app-shell .dh-radio-lab__playlist li button[aria-current="true"] {
+  border-color: var(--dh-aqua);
+  background: #293248;
+}
+.dh-app-shell .dh-radio-lab__search { color: var(--dh-paper); }
+.dh-app-shell .dh-radio-lab__search input { border-color: var(--dh-paper); background: var(--dh-panel); color: var(--dh-paper); }
+.dh-app-shell .dh-radio-lab__search input::placeholder { color: #d5e2f7; }
+.dh-app-shell .dh-radio-lab__empty { border-color: var(--dh-aqua); color: var(--dh-paper); }
+@media (max-width: 640px) {
+  .dh-app-shell .dh-radio-lab__header { padding: 20px 20px 26px; }
+  .dh-app-shell .dh-radio-lab__styles { flex-wrap: nowrap; justify-content: flex-start; gap: 8px; overflow-x: auto; max-width: 100%; margin: 16px 0 18px; padding: 0 0 6px; scrollbar-width: thin; }
+  .dh-app-shell .dh-radio-lab__styles button { flex: none; }
+}
+.dh-app-shell .dh-lab__pad {
+  border: 3px solid var(--dh-paper);
+  border-radius: 3px;
+  background: #125569;
+  box-shadow: 4px 4px 0 #060b22;
+}
+.dh-app-shell .dh-lab__pad:active { background: var(--dh-coral); color: var(--dh-ink); }
+.dh-app-shell .dh-lab__tracks {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  max-width: 850px;
+  max-height: 340px;
+  margin-inline: auto;
+  padding: 8px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: 2px solid var(--dh-paper);
+  background: var(--dh-panel);
+  gap: 9px;
+  scrollbar-width: thin;
+}
+.dh-app-shell .dh-lab__track-search {
+  position: sticky;
+  z-index: 2;
+  top: 0;
+  grid-column: 1 / -1;
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 6px;
+  background: var(--dh-panel);
+  color: var(--dh-paper);
+  font: 700 12px/1.3 "IBM Plex Mono", monospace;
+  text-transform: uppercase;
+}
+.dh-app-shell .dh-lab__track-search input {
+  flex: 1;
+  min-width: 0;
+  min-height: 40px;
+  border: 2px solid var(--dh-paper);
+  border-radius: 0;
+  padding: 7px 10px;
+  background: var(--dh-ink);
+  color: var(--dh-paper);
+  font: 600 13px/1.3 "IBM Plex Sans", sans-serif;
+}
+.dh-app-shell .dh-lab__track-search input::placeholder { color: #cbd0dd; }
+.dh-app-shell :is(.dh-lab__track-count, .dh-lab__track-empty) {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--dh-aqua);
+  font: 700 12px/1.4 "IBM Plex Mono", monospace;
+}
+.dh-app-shell .dh-lab__tracks button {
+  min-width: 0;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+.dh-app-shell :is(.dh-lab__mode, .dh-lab__controls, .dh-lab__actions) { margin-block: 16px; }
+.dh-app-shell :is(.dh-lab__tracks, .dh-lab__mode, .dh-lab__controls, .dh-lab__actions, .dh-lab__character-views) button:focus-visible,
+.dh-app-shell .dh-lab__pad:focus-visible {
+  outline: 3px solid var(--dh-aqua);
+  outline-offset: 4px;
+}
+.dh-app-shell .dh-lab__audio {
+  border-left: 8px solid var(--dh-aqua);
+  border-radius: 2px;
+  justify-content: flex-start;
+  max-width: 720px;
+}
+.dh-app-shell .dh-lab__audio label { color: var(--dh-paper); }
+.dh-app-shell .dh-lab__audio input { accent-color: var(--dh-aqua); }
+.dh-app-shell .dh-lab__calibration {
+  border: 2px solid var(--dh-paper);
+  border-left: 8px solid var(--dh-aqua);
+  background: var(--dh-panel);
+  box-shadow: 5px 5px 0 #060b22;
+}
+.dh-app-shell .dh-lab__calibration-toggle {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--dh-paper);
+  font: 700 13px/1.3 "IBM Plex Mono", monospace;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.dh-app-shell .dh-lab__calibration-toggle > span:last-child {
+  padding: 5px 8px;
+  background: var(--dh-aqua);
+  color: var(--dh-ink);
+  white-space: nowrap;
+}
+.dh-app-shell .dh-lab__calibration-body { border-top: 2px solid var(--dh-paper); }
+.dh-app-shell .dh-lab__calibration-body h2 {
+  color: var(--dh-paper);
+  font: italic 26px/1 Anton, Sora, sans-serif;
+  text-transform: uppercase;
+}
+.dh-app-shell .dh-lab__calibration-body p { color: var(--dh-paper); }
+.dh-app-shell .dh-lab__calibration-body button {
+  border: 2px solid var(--dh-paper);
+  border-radius: 1px;
+  background: var(--dh-coral);
+  color: var(--dh-ink);
+  box-shadow: 3px 3px 0 #060b22;
+  font: 700 12px/1.3 "IBM Plex Mono", monospace;
+}
+.dh-app-shell .dh-lab__calibration-body .dh-lab__calibration-pad { background: var(--dh-aqua); }
+.dh-app-shell .dh-lab__stage {
+  position: relative;
+  max-width: 600px;
+  margin-block: 30px 18px;
+  padding: 16px 12px 12px;
+  background: var(--dh-paper);
+  box-shadow: 10px 10px 0 var(--dh-coral);
+  transform: skew(-1deg);
+}
+.dh-app-shell .dh-lab__stage::before {
+  content: "01 · FREQUENCY INPUT";
+  position: absolute;
+  z-index: 3;
+  top: -14px;
+  left: 12px;
+  padding: 3px 8px;
+  background: var(--dh-coral);
+  color: var(--dh-ink);
+  font: 700 11px/1.2 "IBM Plex Mono", monospace;
+  letter-spacing: .04em;
+}
+.dh-app-shell .dh-lab__stage[data-input-count="2"]::before { content: "02 · FREQUENCY INPUT"; }
+.dh-app-shell .dh-lab__lane { transform: skew(1deg); }
+.dh-app-shell .dh-lab__player-label {
+  margin-bottom: 5px;
+  color: var(--dh-ink);
+  text-transform: uppercase;
+}
+.dh-app-shell .dh-lab__lane:nth-child(2) .dh-lab__player-label { color: #922942; }
+.dh-app-shell .dh-lab__fall {
+  border: 3px solid var(--dh-ink);
+  border-radius: 0;
+  background: linear-gradient(180deg, #161c2d 0%, #203c49 100%);
+}
+.dh-app-shell .dh-lab__fall::before {
+  background-image:
+    repeating-linear-gradient(180deg, transparent 0 48px, #f3f7ff37 49px 50px),
+    repeating-radial-gradient(circle at 50% 100%, transparent 0 39px, #69dff521 40px 42px, transparent 43px 70px);
+}
+.dh-app-shell .dh-lab__line {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 8px;
+  background: var(--dh-paper);
+  box-shadow: 0 -6px 0 var(--dh-coral);
+}
+.dh-app-shell .dh-lab__lane:nth-child(2) .dh-lab__ripple {
+  border-color: #ffb3bf;
+  box-shadow: 0 0 12px var(--dh-coral);
+}
+.dh-app-shell .dh-lab__lane:nth-child(2) .dh-lab__spark {
+  background: var(--dh-paper);
+  box-shadow: 0 0 8px var(--dh-coral);
+}
+.dh-app-shell .dh-lab__note {
+  height: 18px;
+  border: 3px solid var(--dh-ink);
+  border-radius: 1px;
+  background: var(--dh-aqua);
+  box-shadow: 0 0 0 2px var(--dh-paper);
+  clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
+}
+.dh-app-shell .dh-lab__note--chord { background: var(--dh-coral); }
+.dh-app-shell .dh-lab__note--hold {
+  height: auto;
+  border: 2px solid var(--dh-paper);
+  background: repeating-linear-gradient(180deg, #69dff5 0 12px, #297d83 12px 16px);
+  box-shadow: none;
+  clip-path: none;
+}
+.dh-app-shell .dh-lab__note--hold::before,
+.dh-app-shell .dh-lab__note--hold::after {
+  border: 2px solid var(--dh-ink);
+  border-radius: 1px;
+  background: var(--dh-paper);
+  box-shadow: 0 0 0 2px var(--dh-aqua);
+}
+.dh-app-shell .dh-lab__note--hold::after { background: var(--dh-coral); }
+.dh-app-shell .dh-lab__pad {
+  position: relative;
+  border: 3px solid var(--dh-ink);
+  border-radius: 1px;
+  background: #bffcf3;
+  color: var(--dh-ink);
+  box-shadow: 4px 4px 0 #7b303f;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 26px;
+}
+.dh-app-shell .dh-lab__lane:nth-child(2) .dh-lab__pad { background: #ffb3bf; }
+.dh-app-shell .dh-lab__pad:active,
+.dh-app-shell .dh-lab__lane:nth-child(2) .dh-lab__pad:active {
+  background: var(--dh-paper);
+  box-shadow: 1px 1px 0 #7b303f;
+}
+.dh-app-shell .dh-lab__pad:disabled { opacity: .68; }
+.dh-app-shell .dh-lab__readout { align-items: center; }
+.dh-app-shell .dh-lab__readout span {
+  border: 2px solid var(--dh-paper);
+  border-radius: 1px;
+  background: var(--dh-panel);
+  color: var(--dh-paper);
+}
+.dh-app-shell .dh-lab__readout span:last-child {
+  border-color: var(--dh-aqua);
+  background: var(--dh-aqua);
+  color: var(--dh-ink);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.dh-app-shell .dh-lab__duo-results section {
+  align-items: flex-start;
+  border: 3px solid var(--dh-ink);
+  border-radius: 1px;
+  background: var(--dh-paper);
+  color: var(--dh-ink);
+  box-shadow: 5px 5px 0 var(--dh-coral);
+}
+.dh-app-shell .dh-lab__duo-results section:nth-child(2) {
+  border-color: var(--dh-ink);
+  box-shadow: 5px 5px 0 var(--dh-aqua);
+}
+.dh-app-shell .dh-lab__hint { color: var(--dh-paper); }
+.dh-app-shell .dh-lab__keymap { border: 3px solid var(--dh-paper); background: var(--dh-panel); color: var(--dh-paper); }
+.dh-app-shell .dh-lab__keymap-body { border-top: 2px solid var(--dh-paper); }
+.dh-app-shell .dh-lab__keymap-body button { border: 2px solid var(--dh-aqua); background: var(--dh-aqua); color: var(--dh-ink); }
+.dh-app-shell .dh-lab__keymap-body button[aria-pressed="true"] { border-color: var(--dh-coral); background: var(--dh-coral); color: var(--dh-ink); }
+.dh-app-shell .dh-lab__candidate-art { color: var(--dh-paper); }
+.dh-app-shell .dh-lab__candidate-art img { border: 3px solid var(--dh-paper); border-radius: 1px; }
+.dh-app-shell .dh-lab__characters > h2 {
+  color: var(--dh-paper);
+  font-family: Anton, Sora, sans-serif;
+  font-style: italic;
+  text-align: left;
+}
+.dh-app-shell .dh-lab__characters > p { color: var(--dh-paper); text-align: left; }
+.dh-app-shell .dh-lab__character-views { justify-content: flex-start; }
+.dh-app-shell .dh-lab__character-views button {
+  border: 2px solid var(--dh-paper);
+  border-radius: 1px;
+  background: var(--dh-panel);
+  color: var(--dh-paper);
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 700;
+}
+.dh-app-shell .dh-lab__character-views button[aria-pressed="true"] {
+  border-color: var(--dh-coral);
+  background: var(--dh-coral);
+  color: var(--dh-ink);
+}
+.dh-app-shell .dh-lab__character {
+  border: 3px solid var(--dh-paper);
+  border-radius: 2px;
+  background: var(--dh-panel);
+  box-shadow: 6px 6px 0 #060b22;
+}
+.dh-app-shell .dh-lab__character-meta,
+.dh-app-shell .dh-lab__character-identity,
+.dh-app-shell .dh-lab__character-traits,
+.dh-app-shell .dh-lab__character-story { color: var(--dh-paper); }
+.dh-app-shell .dh-lab__character-story summary { color: var(--dh-aqua); }
+@media (max-width: 600px) {
+  .dh-app-shell :is(.dh-lab__header, .dh-radio-lab__header) {
+    padding: 22px 18px 28px;
+    clip-path: polygon(0 0, 100% 0, 100% 90%, 88% 100%, 0 100%);
+  }
+  .dh-app-shell .dh-lab__tracks { grid-template-columns: repeat(2, minmax(0, 1fr)); max-height: 230px; }
+  .dh-app-shell .dh-lab__tracks button { font-size: 11px; }
+  .dh-app-shell .dh-lab__stage { padding: 14px 7px 8px; box-shadow: 5px 5px 0 var(--dh-coral); }
+  .dh-app-shell .dh-lab__stage::before { top: -12px; left: 7px; font-size: 9px; }
+  .dh-app-shell .dh-lab__pad { min-height: 72px; font-size: 22px; }
+  .dh-app-shell .dh-lab__character { box-shadow: 3px 3px 0 #060b22; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dh-app-shell :is(.dh-lab__audio, .dh-lab__character, .dh-radio-lab__player) { box-shadow: none; }
+}

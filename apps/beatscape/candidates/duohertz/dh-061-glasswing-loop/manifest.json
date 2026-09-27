@@ -1,0 +1,73 @@
+{
+  "track_id": "dh-061-glasswing-loop",
+  "title": "Glasswing Loop",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Melodic House",
+  "bpm": 127.0,
+  "target_bpm": 127,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -6.5 dB gain before AAC encoding. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -6.5,
+  "stream_limiter": null,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-061-glasswing-loop.json",
+  "source_recipe_sha256": "f656b73df207eab01441a95327d07236c63c6f60d5a8c4c3d3df2ba3d027d73f",
+  "source_master_sha256": "0a87e7379bc1ceb85bfdb829ba56d703312e105f45113b0d7a8b54879a663d4d",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.18448,
+    "clipping_ratio": 4e-06,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "a0765289-91e0-4c23-8cd6-85eecebc606c",
+  "source_generation_receipt_sha256": "218d754b032485b0d1f1d1673b16a44c176dc0a2f859e2e5c9340fd6e5597b89",
+  "generation_prompt": "Original all-ages melodic-house instrumental for a one-or-two-key rhythm game at STRICT constant 127 BPM in 4/4 for one continuous 128-second performance. Begin at the FIRST AUDIO SAMPLE with a full-strength, clearly audible four-on-the-floor kick on EVERY quarter beat, a dry clap on beats two and four, crisp closed eighth-note hats, and a short pitched glass-mallet pluck on EVERY beat. Maintain the kick, clap, hats and short pluck at stable foreground level across the entire performance, including the first 16 seconds, the 64-second game boundary, the complete 64-128-second music-station extension and the final beat. There is NO intro, fade, ramp, breakdown, silence, percussion dropout, half-time switch, tempo drift or washy ambient interlude. Over that continuous grid, introduce a memorable original three-note glass-mallet phrase that rises, skips one scale step, then answers with a lower two-note echo. Use a rounded offbeat bass, gentle sidechained warm chords and small syncopated woodblock replies, keeping the melody easy to follow and the highs controlled. After the midpoint, keep every drum and pluck in place while the answering echo moves to a higher register, the bass root changes and the chord voicing turns brighter; finish with a new descending cadence, still over the unchanged beat. Clear transients and distinct sections without removing the pulse. No vocals, speech, samples, known melody or imitation of an existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "status": "visual_candidate_unreviewed",
+    "revision_reason": "Recompose the original sideways figure-eight into an upright central safe-area silhouette readable in a 100px-wide mobile card",
+    "cover_prompt": "Edit this original duohertz Glasswing Loop square cover for a narrow mobile music-card crop. Keep its exact brand language: near-black ink, warm-ivory cut-paper wing fins, electric-cyan ONE continuous open figure-eight soundline, two coral underside cuts, one tiny warm-yellow diamond and restrained halftone. RECOMPOSE the figure-eight into a compact, slightly VERTICAL upright loop centered in the MIDDLE 55% of the square canvas; all FOUR warm-ivory wing fins, both cyan lobes and the yellow diamond must remain fully inside this middle 55% safe area and be clearly visible when the left and right 22.5% edges are cropped away. Make the loop tall and bold, not a tiny mark, with a distinct large silhouette at 100px wide. Leave the lower fifth dark for a separate local title overlay. Keep the cut-paper fins recognizably wing-like rather than butterflies, paper planes, crystals or rings. Do not add any new motifs, text, letters, numbers, logo, watermark, character, landscape or copied game art. Deliver square 1:1 artwork.",
+    "og_prompt": "Edit the revised original Glasswing Loop SQUARE cover into a NEW HORIZONTAL roughly 1.9:1 duohertz social card. Preserve its compact UPRIGHT electric-cyan single continuous figure-eight soundline (one lobe ABOVE the other), all FOUR angular warm-ivory paper wing fins with two coral underside cuts, the tiny warm-yellow center diamond, near-black ink and restrained halftone. Place the full upright loop and all four fins together in the RIGHT two-thirds, without returning to a wide sideways infinity symbol; leave a quiet near-black LEFT third. Add exactly TWO crisp fully readable English lines on the left: 'duohertz' all lowercase in electric cyan and 'Glasswing Loop' larger in warm ivory. Spell both EXACTLY. Purpose-built wide composition rather than stretching the square. No other words, letters, numbers, logo, watermark, character, realistic insect, landscape, crystal or copied game art.",
+    "cover_source": "data/duohertz-preview/art-sources/dh-061-glasswing-loop/cover-revised.png",
+    "og_source": "data/duohertz-preview/art-sources/dh-061-glasswing-loop/og-revised.png",
+    "cover_source_sha256": "86bb2a0664652e0c739b6bd93cf0fd124f7af6391e3e3f61c8588ce82791bd6f",
+    "og_source_sha256": "41e306f3eb6500297a24832775e21d5879f64f9e443238f194d5690386bbc029",
+    "content_reference": "data/duohertz-preview/art-sources/dh-061-glasswing-loop/cover.png",
+    "content_reference_sha256": "872a2d5feb794f6c05f61f9a86cb3650d1cf56f6ecb71587c850a8a8cb903194",
+    "cover_resize": "sips resize to 1024x1024 PNG",
+    "og_resize": "sips resize to 1200x630 PNG",
+    "cover_svg": "Local SVG brand/title overlay around cover-art.png; bitmap source has no text",
+    "previous_art_provenance": {
+      "tool": "built-in imagegen",
+      "cover_prompt": "Create a brand-new SQUARE 1:1 original duohertz album cover for Glasswing Loop, an all-ages melodic-house rhythm-game track. Use the brand's original high-contrast editorial comic-print collage: near-black ink, warm-ivory cut paper, coral red and electric cyan with sparse large halftone. Main motif: ONE broad continuous electric-cyan looping soundline forms an open tilted figure-eight, with exactly FOUR large angular warm-ivory glasswing-like paper fins attached at its turning points, two fins carrying coral underside cuts. The fins should suggest a light rhythmic glide, not a realistic insect or transparent crystal. Place one tiny warm-yellow beat diamond where the two lobes nearly meet. Bold, asymmetrical silhouette readable at 100px and distinct from duohertz frequency rings, paper planes, flowers and prism diamonds; quiet dark lower fifth for a separate local title overlay. No photorealism, insect body, character, landscape, sky, stars, water, text, numbers, letters, logo, watermark or copied game art.",
+      "og_prompt": "Edit the supplied original Glasswing Loop square cover into a HORIZONTAL roughly 1.9:1 duohertz social-sharing card. Preserve ONE broad electric-cyan open figure-eight soundline, exactly FOUR warm-ivory angular glasswing-like paper fins at its turns, two coral underside cuts and a tiny warm-yellow beat diamond. Recompose this distinct cut-paper loop on the RIGHT two-thirds against near-black editorial comic-print ink with restrained halftone; leave calm dark space on the LEFT. Add exactly two crisp fully legible English lines on the left: 'duohertz' all lowercase in electric cyan and 'Glasswing Loop' larger in warm ivory. Spell both exactly. Purpose-build the wide layout; do not stretch the square. No other text, letters, numbers, realistic insect, glass crystal, stars, landscape, people, logo, watermark or copied game art.",
+      "cover_source_sha256": "872a2d5feb794f6c05f61f9a86cb3650d1cf56f6ecb71587c850a8a8cb903194",
+      "og_source_sha256": "b1ca0cb16453666b9ca7b8f45cb62884ad56ee2259121a51ff7db21ea4b09a00",
+      "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+      "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+    },
+    "previous_assets_sha256": {
+      "cover-art.png": "8f13ac1a020fb88ad750c2704d7bcc44eaaff611302c6a4aa1262fbef6dfc089",
+      "og.png": "43afd363205950c780cdaa7229f5d6bfc3472c6b4448300d4ad35a79a9b164fa",
+      "cover.svg": "c43dcfc20710b96ad621ac585213117df2bcf0715b1a6ca6acc73baefedb19ca"
+    },
+    "previous_art_archive": "data/duohertz-preview/art-archive/dh-061-glasswing-loop"
+  },
+  "files_sha256": {
+    "audio.m4a": "5144f5a228d21f4f02039630c018da49b1522fb04220f1666a780577f782a8ab",
+    "cover-art.png": "106c83e55944d2890b250e65e5a95912aebfa17554ad21a960e53eaad37b31c5",
+    "cover.svg": "c43dcfc20710b96ad621ac585213117df2bcf0715b1a6ca6acc73baefedb19ca",
+    "easy.json": "dc137520c2dc635ec94c124aaf31e0a267f03888f385afef137701cd1c6fcd19",
+    "hard.json": "2e1d7bd3245cdcf031f646dcf12245a63d611bc9864e554e10840f7504320660",
+    "og.png": "0316b77dbbc2074b878bfe8f16b7561394a271b186bc1a5a3a81719d3f5596f0",
+    "preview_48s.m4a": "c8e5e4af3c77ff7057f87c777916687fef12243aacd942079de4cde2bfea8cf0",
+    "standard.json": "ced03258f247fe8a13cb2a86bebf5fd264cc578379afb602bbea8dd5cb09f2bb",
+    "stream.m4a": "8303d58f85141c0120b4f84275336201d07ca9fcaa86b184aa2d3926e1656955"
+  }
+}

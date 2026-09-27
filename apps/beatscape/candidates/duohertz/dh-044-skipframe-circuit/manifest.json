@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-044-skipframe-circuit",
+  "title": "Skipframe Circuit",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Drum & Bass",
+  "bpm": 170.0,
+  "target_bpm": 170,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -6 dB gain before AAC encoding; stream-only limiter at 0.35 linear amplitude with no makeup gain. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -6.0,
+  "stream_limiter": 0.35,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-044-skipframe-circuit.json",
+  "source_recipe_sha256": "c20a01b101c991647949f4da6343e5373c51f68b02a29a2c69c7a5967c694145",
+  "source_master_sha256": "3552af304ad1ef2fbb7c513772fa097132036e63a3e19aa1da7d06631edc3ab4",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.17858,
+    "clipping_ratio": 8.3e-05,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "aba64f6a-1d6b-4469-9cbd-8d6104355dd2",
+  "source_generation_receipt_sha256": "5cdf2fca46b19c715f0104a0b0ed427e6c3670e909bff61080a63e87cf1bcf30",
+  "generation_prompt": "Original upbeat all-ages liquid drum-and-bass instrumental for a one-or-two-key electronic rhythm game at a STRICT constant 170 BPM in 4/4. Start with the full drum grid on the FIRST SECOND and keep it audible through the final bar: crisp kick on beats one and three, short clear snare on two and four, closed eighth-note hats and small syncopated woodblock or muted-key taps between the snares. Every two-bar phrase needs at least eight distinct short midrange transients, including the quieter middle. No tempo drift, half-time section, beatless intro, drum dropout, free-time break or smeared pad-only bridge. Signature hook: two low plucked-synth notes a fifth apart, answered one eighth-note later by a quick three-note descending bell phrase with the last note cut short. Repeat the call-and-answer with changing chord roots; at the midpoint keep the same uninterrupted two-step beat, invert the bell phrase upward and pass its rhythm to a brighter marimba-like sound. The ending interleaves the low call with the inverted answer in a new cadence instead of duplicating the opening. Use a light rolling bass, airy chords kept behind the beat, stereo detail and clean transient separation. One evolving 128-second instrumental; playful momentum without abrasive distortion. No vocals, speech, sampled recordings, known melody or imitation of an existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a brand-new SQUARE 1:1 original album cover for duohertz track Skipframe Circuit, an all-ages drum-and-bass rhythm-game song. High-contrast original editorial comic-print collage on a near-black ink field with warm-ivory paper, electric-cyan light and one restrained coral accent. Main motif: three BIG independent warm-ivory rectangular paper frames floating diagonally upward, each offset a little from the previous one as though a moving image skipped forward; a single cyan zigzag pulse passes through their open centers without forming a road or a screen. A small coral square marks the final syncopated beat. Give the frames visibly different spacing, generous negative space and a bold silhouette readable at 100px. Reserve calm dark space along the lower fifth for a local title overlay. Sparse print halftone only. No characters, vehicles, computer monitor, film strip, arrows, stairs, domino pieces, rings, text, letters, numbers, logos, watermark or copied game art.",
+    "og_prompt": "Edit the supplied original Skipframe Circuit square cover into a HORIZONTAL 1.9:1 duohertz social-sharing card. Preserve the three separate warm-ivory open rectangular paper frames stepping diagonally upward, the single cyan zigzag pulse crossing their centers and one small coral square on a near-black comic-print background. Recompose the motif on the RIGHT two-thirds, with quiet dark space on the LEFT. Add exactly two crisp legible English lines on the left: 'duohertz' in lowercase electric cyan and 'Skipframe Circuit' in larger warm ivory. Spell both exactly. Make a purpose-built wide composition, not a stretched square crop. No other text, letters, numbers, characters, roads, vehicles, screens, film strips, logos, watermark or copied game art.",
+    "cover_source_sha256": "2cfb73ef78ee62368623ccb310de5d0c049b64e821026af6e7e5957497fbcced",
+    "og_source_sha256": "385a39aedeff9ef5fb6deae26712ee9c8937e1f36b9ddd03f9b37c55572d1004",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "f8538ab8e7c494fde80d8c87fdae2d17d9eed29b57d96449f820123f21b8d20c",
+    "cover-art.png": "5be7c00e179881a16aaf6753b260d6c68af53f0756182242291fb17426d95d86",
+    "cover.svg": "07076c8267a6aa860e0d5dc2988f43c8530f6388299c28d9d614e17cfccad5e1",
+    "easy.json": "bdabf26e3e9a3870ccb8d096d32138030493a45a9c9034d7f50b1bc8fd652367",
+    "hard.json": "36005e9b6b55bbe0eb390ab197e43ceb97d6c9a64334f0e20ee25cd189a0afa0",
+    "og.png": "437ccf074deacceed4770c6aedfa25e96af5b5f6dd087c51aafa03b52da8a316",
+    "preview_48s.m4a": "1b5cd4d62b1bac39f9344375c1a2222a4ebbeb48817993e93c9afcffe6a59e77",
+    "standard.json": "cc363af2380fedea408cb0c3eccb2055a67f7d3ac518919a828388313d684767",
+    "stream.m4a": "3697168eb2dcc3f3d9add9232a06a2035c8d98612060cdfb7220c311cc444e83"
+  }
+}

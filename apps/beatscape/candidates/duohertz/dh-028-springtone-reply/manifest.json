@@ -1,0 +1,50 @@
+{
+  "track_id": "dh-028-springtone-reply",
+  "title": "Springtone Reply",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Future Bass",
+  "bpm": 139.535,
+  "target_bpm": 140,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -5 dB gain before AAC encoding. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -5.0,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-028-springtone-reply.json",
+  "source_recipe_sha256": "eaf996311659cb12db4df2d3835f75c61159d771b4bb14b898c0175285e8f1b4",
+  "source_master_sha256": "7efe500030dd8379bd016e16a2172d05529b530df45383317dd8593d4e4de040",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.16414,
+    "clipping_ratio": 8.2e-05,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "d0969c20-268f-4f7c-a182-b94980f22c58",
+  "source_generation_receipt_sha256": "cfce8e8c48c7aa20d0b4c77fe0000e01bf4ccee252445da2e3f6cd2917b05aa4",
+  "generation_prompt": "Original all-ages future-bass instrumental for a one-or-two-key electronic rhythm game at a STRICT constant 140 BPM in 4/4. Keep a stable quantized kick on every quarter-note beat, crisp snare on beats two and four, and clear eighth-note hats audible throughout all 128 seconds, including every quieter passage. No tempo drift, half-time breakdown, long percussion-free intro or ambient-only section. The distinctive main hook is a three-plus-three-plus-two eighth-note rhythm on a short, bright marimba-like synth, answered two bars later by a warm elastic bass-pluck in a lower register; the answer changes pitch contour and leaves a small rest before the next call. Add buoyant major-seventh chord stabs, a tiny metallic counterline and controlled sidechain motion without masking the short midrange attacks. At the midpoint invert which instrument asks and which replies while the drum grid stays constant, then resolve the two hooks together in the final section rather than duplicating the first half. One evolving 128-second stereo arrangement, melodic and energetic but never harsh. No vocals, speech, sampled recordings, known melody or imitation of an existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a brand-new SQUARE 1:1 original album cover for duohertz track Springtone Reply, an all-ages future-bass rhythm-game song. High-contrast editorial comic-print collage with near-black ink and warm ivory paper, coral red and electric cyan, and restrained bright-yellow accents. Main motif: one broad VERTICAL paper spring made from alternating coral and cyan folded rectangular sound-ribbons, compressed at the bottom and opening toward the top; a separate small ivory folded strip answers from the right, so the shapes suggest musical call and response. Use visible paper edges, bold screen-print shadows and sparse halftone texture, with unusually generous calm negative space around the spring. Strong memorable silhouette at tiny thumbnail size. This is a graphic music poster, not a literal mechanical spring. No circles, rings, city, road, skyline, stars, characters, text, letters, numbers, logo, watermark or imitation of an existing game.",
+    "og_prompt": "Edit the supplied original Springtone Reply square artwork into a HORIZONTAL social card for duohertz. Preserve the distinctive vertical folded coral/cyan paper sound-spring and the small ivory answering fold, with near-black and warm-ivory high-contrast screen-print texture. Recompose the spring on the RIGHT two-thirds and leave calm dark space on the LEFT. Add exactly two crisp, fully legible English lines on the left: 'duohertz' all lowercase and 'Springtone Reply'. No other text, letters, numbers, people, circles, rings, city, road, skyline, logos, watermarks or existing IP. Original all-ages electronic music poster.",
+    "cover_source_sha256": "e22bc6552fb8b6446a6b3d90907202e854846c838436c3cf31c1a9225644e7d9",
+    "og_source_sha256": "ad625b20a8fe34973dfb92ec7877d916961720f6118f7b3638034aeb9adc186c",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "784735de1bf26f8d742eb0a5d68e8596a745ed3e78a55a26a1576fc2d3708231",
+    "cover-art.png": "d1e6076fb1ea3508703ebaee98425ffc1d27efedf203286afa5b27b472d788ac",
+    "cover.svg": "dd11857d93ce99efb64359c300d1bc7a105ee57aa1ee04d649a1ece8b0e18406",
+    "easy.json": "97142f2ca716f2966df493ab6ed85ed7c1cc4e77d175a359104e068c24a60d7a",
+    "hard.json": "3f20d9c5bb65f0f7f74e5caadedf7e785533d8f517eecf584bd2ee68f3f9b2d3",
+    "og.png": "6e1f29aa8e9a3aad23b6bb824fb7f66e1394fba719d1de0358bb259afb3ab2c8",
+    "preview_48s.m4a": "ba1c760e80d3d75d1ace1f84a33f3bd6060cbf673b342d6dc22a6d67a0a43a2f",
+    "standard.json": "b929e17091ad8a6d765e26697707b67ae102766c9d64fa949cdab893f2470810",
+    "stream.m4a": "5850a4ead552a871e3c8799376410d8fbcb8b209589a192ffd03b28fe01f9c32"
+  }
+}

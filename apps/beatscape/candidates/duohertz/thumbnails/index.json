@@ -1,0 +1,639 @@
+{
+  "schema": 1,
+  "brand": "duohertz",
+  "source": "cover-art.png",
+  "size_px": 240,
+  "quality": 76,
+  "tracks": [
+    {
+      "track_id": "dh-001-first-frequency",
+      "cover_sha256": "e3c55396eb2d4529ed065965460c2c8455939ea1a5169b58aaf1040d23633f33",
+      "thumbnail_sha256": "66fd420c68b8d3eb30e26a7b27563df9092394e3c4d0b005a338a4cd85b708fe",
+      "thumbnail_bytes": 23882
+    },
+    {
+      "track_id": "dh-002-amberwave-relay",
+      "cover_sha256": "53b288ad480bb177f9745bcf790f308deec04f9d830b062e808e0d0c788114eb",
+      "thumbnail_sha256": "38008c8053e1d2a2a3391cb10f20013c23af6b3bdab54f28b5eb26804061da43",
+      "thumbnail_bytes": 13388
+    },
+    {
+      "track_id": "dh-003-aurora-skipline",
+      "cover_sha256": "e0f5e898e4995cd7259605990d071be3ac962f7c1aeff5e2e4acbe174977e535",
+      "thumbnail_sha256": "cc67735b0ba36b284cea99a8aaa117716f47b06419bfcd9eabac4533e00e9627",
+      "thumbnail_bytes": 14838
+    },
+    {
+      "track_id": "dh-004-kitewire-sprint",
+      "cover_sha256": "71d4c763e6fff7b55cc2b3a8982988f12988d2a2a717caa4b1168e59de1668dd",
+      "thumbnail_sha256": "3ba258b88f90aa644d1e07d92bcc7cf3a7c3d96bd94bbd698b0bfe8093c32646",
+      "thumbnail_bytes": 12574
+    },
+    {
+      "track_id": "dh-005-dawnwave-helix",
+      "cover_sha256": "e5e19c1ab3a445ca20d8af203bc2005cb758344981ff41cd4808c5e0b0f7bb2d",
+      "thumbnail_sha256": "d65d25a008523d09a1d73cdc64187cc8f53ae0849fa6f2f8759f551d19eb316a",
+      "thumbnail_bytes": 13266
+    },
+    {
+      "track_id": "dh-006-signal-orchard",
+      "cover_sha256": "28bb108f18928e00652cb8d0c1599c7cd4a9747d672636def86b8f16eb5b80a8",
+      "thumbnail_sha256": "decc78e7f6c7e6224ffd318fbee23bb9a4046b39f2183dcfec6d73f58a4c952b",
+      "thumbnail_bytes": 12564
+    },
+    {
+      "track_id": "dh-007-lantern-circuit",
+      "cover_sha256": "4b121e3ff11e45cc1fd6d675093732c99920690852e7bd5dec71ac674a03fa75",
+      "thumbnail_sha256": "b96dacff275201abbb552dee02651e9502cae6464e4551011d4c0e3ff60ba7f0",
+      "thumbnail_bytes": 14106
+    },
+    {
+      "track_id": "dh-008-paperwave-lift",
+      "cover_sha256": "ea13fc6c7a48be47e7ff34c03548b2b81349cb6120b66bb4a2f9c4c2d9a39513",
+      "thumbnail_sha256": "46f47ed60ac842cbdf9360fa4f227500e1e3db710f9d203a344f12a19a64cdbc",
+      "thumbnail_bytes": 9452
+    },
+    {
+      "track_id": "dh-009-tangerine-breakline",
+      "cover_sha256": "1373b9b9d5613a09e2087b664bbae6ccd6af3ace2852c61eff1260e1aa973ee8",
+      "thumbnail_sha256": "279875957727bf9365914ffdb22d564191f991c18c1799d48b3d827b6a124af9",
+      "thumbnail_bytes": 16438
+    },
+    {
+      "track_id": "dh-010-prism-current",
+      "cover_sha256": "dc409dacb6e185c902e7677f11cfbeb2e4610758b70baa7855dde255447eb990",
+      "thumbnail_sha256": "dc3ba9abc6cbb1d5b4b826d93d6a7140299bd7ecfd6cb6abffdbe459fd9f7f09",
+      "thumbnail_bytes": 16374
+    },
+    {
+      "track_id": "dh-011-mica-bloomline",
+      "cover_sha256": "1486e2cdd4f5fd7881d2cc4911ed0e338ce086d06a8d0d10960dcb3972298dc5",
+      "thumbnail_sha256": "8dc9f778ae9d80e896411ee438dcfa224170d5b86222bd7002e2bc64b53f6fd3",
+      "thumbnail_bytes": 9846
+    },
+    {
+      "track_id": "dh-012-cobalt-switchback",
+      "cover_sha256": "f3f1d23aa132630e63b4a2f45c3e74670bd4514387fd25c49670092675cc2260",
+      "thumbnail_sha256": "a4e549e6f7a4309e6cfe3786b7ee13332fbf32a6a3a69d5ca3c47816f5167d30",
+      "thumbnail_bytes": 20772
+    },
+    {
+      "track_id": "dh-013-pulse-mosaic",
+      "cover_sha256": "4081f11f2af646d85908a8c38ed8d6de60968af2e4d21c33fab6ce0212d004de",
+      "thumbnail_sha256": "5d6dce2563efa4176501d77ad91cab0d2001781fd76a53b165e612f4d852edfc",
+      "thumbnail_bytes": 14466
+    },
+    {
+      "track_id": "dh-014-jetstream-fracture",
+      "cover_sha256": "e24654b6e570fa7a94e509e7ebb82689edd3edf6861eff69ac5de90cc678fa4a",
+      "thumbnail_sha256": "d83547389c37db8630293693a757920aa2f12b3e0563abde27b98eca71698ec4",
+      "thumbnail_bytes": 30994
+    },
+    {
+      "track_id": "dh-015-orbit-lattice",
+      "cover_sha256": "f9e2d6d0ddc5da836f31a2d64b4028ba8983fe572d576798c3abde899c2a9e5e",
+      "thumbnail_sha256": "33ae8dfe54e4c77fc0ec5823571020eb6889d881c880fae34f489908c9f214d7",
+      "thumbnail_bytes": 4402
+    },
+    {
+      "track_id": "dh-016-kinetic-sundial",
+      "cover_sha256": "962c2e3b83fcbdeed264848c22f5a7e2b4b28bc8916ce63610db3c8b224b2700",
+      "thumbnail_sha256": "42c25c149d1bfca6d592aa62ee73225c8f2d979298b1ec28ba02eb942245e318",
+      "thumbnail_bytes": 17718
+    },
+    {
+      "track_id": "dh-017-opaline-counterpulse",
+      "cover_sha256": "e1755e8bd36ed91907fbf685c1211c2afcec2f3eb661bc6df1f0ccc0aacd309e",
+      "thumbnail_sha256": "ee5f05e355e6edde04c353ef4b9a43e784ec6c6b8ce3ce62e0c89b31aa373a40",
+      "thumbnail_bytes": 19178
+    },
+    {
+      "track_id": "dh-018-arcwire-ascent",
+      "cover_sha256": "cbd3237a1e4b33d61bd1b79eaa846903c3211307c2f02789780200d8fdbf0971",
+      "thumbnail_sha256": "952ea7f65342abcba4e70c986dc8bfa6a5cad73da32d2c58b109fd4adb6aa454",
+      "thumbnail_bytes": 18106
+    },
+    {
+      "track_id": "dh-019-parallax-daybreak",
+      "cover_sha256": "61b8be3630743f6a3fcb6c82eafda3e542592b45a3e07748c7a9e39f8eac4ce4",
+      "thumbnail_sha256": "40f57786dadc70d1c322e785ddd34981dc3472b4187020fb616fbc4b77a8f159",
+      "thumbnail_bytes": 20054
+    },
+    {
+      "track_id": "dh-020-fractal-footwork",
+      "cover_sha256": "2cd9ddd59351687002fbb4c81bd15551315ba4f2fd50526350749b6132fb72c9",
+      "thumbnail_sha256": "5e59df570cf00ad3b62d2dd8749bcf0fc4da3a7bcc18549a1926afebc5cf27c0",
+      "thumbnail_bytes": 22224
+    },
+    {
+      "track_id": "dh-021-tideglass-transit",
+      "cover_sha256": "7d7486f92e634c11542cb52526aa2aadc48c3c13212963ce5870f0792129dcf1",
+      "thumbnail_sha256": "76a819080ce0aa4bd3c3f68dbd1916a09871e4fa3cbf9488cb98de3f0e8bd3d4",
+      "thumbnail_bytes": 25692
+    },
+    {
+      "track_id": "dh-022-duskline-memory",
+      "cover_sha256": "957b61b04a69524ab23d5ce74b1bba3bb59ae37f0efe546df3e4bebf91be66b5",
+      "thumbnail_sha256": "98b42fea82dfd9d15f3d55b2ba7d54f85ea30079a3f05095adb3a3e5d170130a",
+      "thumbnail_bytes": 9392
+    },
+    {
+      "track_id": "dh-023-answerlight-bounce",
+      "cover_sha256": "bdfde6fadb78db029fa23cc9d1f020ea86f6cffbec6cdaa1952eecc1fc111291",
+      "thumbnail_sha256": "a6c866906d572bb44f40d5a71eb04b8bedd4582880d9bd2f84a99c6473473a58",
+      "thumbnail_bytes": 15290
+    },
+    {
+      "track_id": "dh-024-notch-runner",
+      "cover_sha256": "a0eb37dbc18eaea7eb38c960920d7c9a8c099205da2b2e99cd31072fa9476c89",
+      "thumbnail_sha256": "5f9709087939d58f768ae549f6693ea6346d2c1212f59891e2218c6a3148b13f",
+      "thumbnail_bytes": 13824
+    },
+    {
+      "track_id": "dh-025-chromatic-fanout",
+      "cover_sha256": "34d0c0bfdb773ff7550d8295b1e33b1eda6ca941eaba1c2d6926b06e6c0c0858",
+      "thumbnail_sha256": "5dfc183d47e68611f7456761bfaaeba8a0d15dd94db0d10622d8c3ef3be66d24",
+      "thumbnail_bytes": 14810
+    },
+    {
+      "track_id": "dh-026-windowlight-sync",
+      "cover_sha256": "ba17fc9c6050e5a5f3d6b1f0c81c0d901c193d343f3f9435c22394509a03d98e",
+      "thumbnail_sha256": "eb990c9018898579391ee579f6539ad09fef062d346ba8aa0cfda1af45dcb3df",
+      "thumbnail_bytes": 3402
+    },
+    {
+      "track_id": "dh-027-afterimage-parade",
+      "cover_sha256": "4575bdcb17f2fe5fc0d32bf1ffb8ee63e0e7f032242d5f5004cee6a9398f2113",
+      "thumbnail_sha256": "29a0b7456869e985680ca41c9326661d9d4ae7ac3a0c8097ff2674ff78df5d7d",
+      "thumbnail_bytes": 9930
+    },
+    {
+      "track_id": "dh-028-springtone-reply",
+      "cover_sha256": "d1e6076fb1ea3508703ebaee98425ffc1d27efedf203286afa5b27b472d788ac",
+      "thumbnail_sha256": "85d4579a0082a19260129990938cdf1f4311932b008e4849c04a1750c04fb68b",
+      "thumbnail_bytes": 9306
+    },
+    {
+      "track_id": "dh-029-domino-relay",
+      "cover_sha256": "25c501150e93302d726b1bc84dbe5b203a9b83961044eb74aeb282f3aaac87aa",
+      "thumbnail_sha256": "fac11f041526ae32f0942e94b95ac5b7c3b85cbed0c0a01b6b5d045908ce7bd4",
+      "thumbnail_bytes": 8834
+    },
+    {
+      "track_id": "dh-030-crestlight-cadence",
+      "cover_sha256": "3252a3dac99e9d6cad6afa7be84015de21b9d35eb583f18ea2063d6b64304034",
+      "thumbnail_sha256": "2679371883c42f67101f82931c964b96b72422445b635b3a969fc34455a3a77f",
+      "thumbnail_bytes": 20360
+    },
+    {
+      "track_id": "dh-031-pocket-frequency",
+      "cover_sha256": "9f4473d17dcf8b84396ded307f9d776556a146086c1ff3765ef9dc89d84ec9b3",
+      "thumbnail_sha256": "5da3407b684d7c4f09d0b3fdc81dafd64116b330a3b10a577a1749f6c1c352eb",
+      "thumbnail_bytes": 4810
+    },
+    {
+      "track_id": "dh-032-velvet-signal",
+      "cover_sha256": "4aa74ff42abe5a3813b778fb7e4a9390c754b325d3b384148843697d5615b9d9",
+      "thumbnail_sha256": "eb926c9cb8f9e2bff637addd2ceb5b66b4587f3ae5976b88af0b286e600a31af",
+      "thumbnail_bytes": 4258
+    },
+    {
+      "track_id": "dh-033-confetti-switch",
+      "cover_sha256": "8008dc8f376c487fef0d6b318519447a302425b371207e640cef03563ab722bd",
+      "thumbnail_sha256": "06d59a7dc4d3afa7579277d0ea12e3b850eb0705c6c2d6ab4a159aa6ccb12f84",
+      "thumbnail_bytes": 7974
+    },
+    {
+      "track_id": "dh-034-angle-jump",
+      "cover_sha256": "0785712ac262e3158bc61f979b4c7a6ff790286ed298ac6daac3871617978bd9",
+      "thumbnail_sha256": "1350c29e2ba868a83c9deb4f67765b6e7883698f5f75549dcd1f540c37114597",
+      "thumbnail_bytes": 6002
+    },
+    {
+      "track_id": "dh-035-suspension-glow",
+      "cover_sha256": "fd0c8e8142863cee0041a6b7131f4edebd252fe0f0dadd56ab233a919e712163",
+      "thumbnail_sha256": "5c104291011698e238fca3367023d4a0dd42f3ac8f38f6b17baa2d05b0ca7137",
+      "thumbnail_bytes": 5494
+    },
+    {
+      "track_id": "dh-036-ribbon-junction",
+      "cover_sha256": "d80e68aebda6f2b4bc4b4c104c0b9489c779dcaea3ed5adee305ab70d9f78495",
+      "thumbnail_sha256": "6aa0c3da557e7caf2799318c55a04df8056dc2665726613a2772a00b9281b12b",
+      "thumbnail_bytes": 19348
+    },
+    {
+      "track_id": "dh-037-copper-answer",
+      "cover_sha256": "70dd9746f4fd74f4132c680a21996a9c413d2f974d3eb969088ba82b11a1fb87",
+      "thumbnail_sha256": "86988df00f11b6dbac46b660b76869491b89f2f188dcc76d3bd9a0011bed3944",
+      "thumbnail_bytes": 3776
+    },
+    {
+      "track_id": "dh-038-brightfall",
+      "cover_sha256": "97c27875281ad79b2b37315b036f58ab050338610bce8f641cfa5a4f36a9df7e",
+      "thumbnail_sha256": "4fc1c1ea968e79bff90b491b72adbc9bfcf33341aa20a5e23cdc107da95d73fa",
+      "thumbnail_bytes": 33632
+    },
+    {
+      "track_id": "dh-039-rivet-sprint",
+      "cover_sha256": "5d4f7c2d3cf76158f94577753f59706c97c77ebd4c6e305eef6d8b34a3319ee9",
+      "thumbnail_sha256": "0159dda20125635818ba5d950abb54bc448a1bf7757d967a48efb283ae53103e",
+      "thumbnail_bytes": 16644
+    },
+    {
+      "track_id": "dh-040-phase-aperture",
+      "cover_sha256": "1a583b58e5d96bbe992d2916e021eb3a795262e5f679379c84b623e420eca6fa",
+      "thumbnail_sha256": "d39a0d4158bc259eb73c8b3e4c8ad650c6b2d191ab8b148a712dfe3259a312eb",
+      "thumbnail_bytes": 6458
+    },
+    {
+      "track_id": "dh-041-hexa-swing",
+      "cover_sha256": "1160d407549d47169db25b264fbb1400b8173bf95b9f5ea12449b0b83c258907",
+      "thumbnail_sha256": "fe6aa9341b97e2d34054a4c42421cebf6cf658b61c3b9026acf703b38c4db322",
+      "thumbnail_bytes": 10024
+    },
+    {
+      "track_id": "dh-042-mirrorlight-meter",
+      "cover_sha256": "94f8ec03ea1608940de0fc2f89dfbb6637a3439fc468b7320993c1d6893b6187",
+      "thumbnail_sha256": "bfa4c15268d3174b4828d11db6895befe50c397fdb8e665c4c890605c36ee8be",
+      "thumbnail_bytes": 6250
+    },
+    {
+      "track_id": "dh-043-glowstack",
+      "cover_sha256": "c18cb28abb9baaacbeec5b6a980100222ea5e2c0a6a73c62b3e9f8aec1eb0309",
+      "thumbnail_sha256": "0cf0a917167adb69cfee9f3fd5de8094494386838f5663ebc10fde2f2c79dee4",
+      "thumbnail_bytes": 7254
+    },
+    {
+      "track_id": "dh-044-skipframe-circuit",
+      "cover_sha256": "5be7c00e179881a16aaf6753b260d6c68af53f0756182242291fb17426d95d86",
+      "thumbnail_sha256": "e81f3253b75cb879437046c0dfe620762cb60b2de25d15c802cc1ba9073c4b6d",
+      "thumbnail_bytes": 28308
+    },
+    {
+      "track_id": "dh-045-horizon-counterline",
+      "cover_sha256": "711023e32c1e492cf0e838ccc091aba84267fc0d74acaca0e5ff55ae483b674d",
+      "thumbnail_sha256": "e2bd19ef277ef70c3187a2d714948ef22369aedaf34c87fd58f747e6d99feea3",
+      "thumbnail_bytes": 4408
+    },
+    {
+      "track_id": "dh-046-sawtooth-lilt",
+      "cover_sha256": "1c5f2a40835163a3e7870bb83e4444600f7ee45a55e1c69b8d015bbb44246e67",
+      "thumbnail_sha256": "71be4058d019495983287610b80670a689325b5d5d5ffb59937d89eb0bcc61e7",
+      "thumbnail_bytes": 3518
+    },
+    {
+      "track_id": "dh-047-keycap-comet",
+      "cover_sha256": "a8cea9afc8aee1b446337f0c8f8fe6210053550818368385c90961dfaf44310c",
+      "thumbnail_sha256": "9a34012363918f7e8a1cc4268293044a02e35a9981989b903aff6de4355f245e",
+      "thumbnail_bytes": 8640
+    },
+    {
+      "track_id": "dh-048-latchlight",
+      "cover_sha256": "9804b2c54d7e985e893e64d267ae439aac90f2d97f9475bb430969aa53ee8d7c",
+      "thumbnail_sha256": "8c597b5517865bee91f2f8a0115e80bb02b0387dca23596d5346a62a1bc453cb",
+      "thumbnail_bytes": 5714
+    },
+    {
+      "track_id": "dh-049-ghostnote-dash",
+      "cover_sha256": "d4aca8cae22636ee8fb0c3fe9306095178e91678d06d4f9c2f8bfcffe2807ee3",
+      "thumbnail_sha256": "3bc944eae867bc4335b496e9a4ab1323cb854f19d572442f0652127994731077",
+      "thumbnail_bytes": 26492
+    },
+    {
+      "track_id": "dh-050-second-key",
+      "cover_sha256": "edef60ba55d3211e03ac805258bfdaa74add68c6061d3e83144247ceb9919cd9",
+      "thumbnail_sha256": "9b0789fb1b3513cc98492b9710afc55d6673980554d2bb5fadf1c0563bd08e33",
+      "thumbnail_bytes": 5174
+    },
+    {
+      "track_id": "dh-051-flipbook-beat",
+      "cover_sha256": "d5b891f2f44a968becc15aac7833a70744075dddcda447ebbd66bdb48a308e89",
+      "thumbnail_sha256": "24a38631a3a2e64e638c9c982be565e8b4c7ab0434b76fee8d361577badc398a",
+      "thumbnail_bytes": 21202
+    },
+    {
+      "track_id": "dh-052-dialspin",
+      "cover_sha256": "5284cd1c7eb717406a928756d6d3aec1d8b938c73b59e145f5a1d45d168500bd",
+      "thumbnail_sha256": "c1fac30242cfa4db9f75d399d3fc1007e4a4a3dea6ac0c50bce1fe349323c0e5",
+      "thumbnail_bytes": 21212
+    },
+    {
+      "track_id": "dh-053-pinwheel-skip",
+      "cover_sha256": "eccc0cc533e0c4fbb761c58ee08ec50fd506987f53592df79c68347323aecd15",
+      "thumbnail_sha256": "aa43424ebd908eb8e19c78044fb6e8b38f27af4db8ff81e92f96673dbfc99fe3",
+      "thumbnail_bytes": 26084
+    },
+    {
+      "track_id": "dh-054-staple-hop",
+      "cover_sha256": "ef8cb2216e6c35b1966b39bbbb9ecd9fe99a17f18c2cb498e6b9e21093e3c2ce",
+      "thumbnail_sha256": "e957bdb2ae059a1d0b3719789ef4b85517f43cdc2c5dc2c3a322a5f416691c80",
+      "thumbnail_bytes": 20210
+    },
+    {
+      "track_id": "dh-055-sailwake",
+      "cover_sha256": "f8340372389ac3d2779664f516b9e91ed0441c65bac66e42cce6775eba35bb88",
+      "thumbnail_sha256": "443ac343070df9d3940f16417183a10260dc1478c6121ef587553aeeede7dce9",
+      "thumbnail_bytes": 6644
+    },
+    {
+      "track_id": "dh-056-postcard-wave",
+      "cover_sha256": "0956d0f4661c29bf544d6d69d3de5fbac0e17e6e458e4e70f0749845aae72251",
+      "thumbnail_sha256": "c0f4a1fefabfeef4444651006f629b3edab97f7ea13bf3cec17b8b331d0cca21",
+      "thumbnail_bytes": 22178
+    },
+    {
+      "track_id": "dh-057-togglebeam",
+      "cover_sha256": "a7b170fe4bf5774f992bf052649ffaaa55ac934ea683c888031e3d7bc9bcbe93",
+      "thumbnail_sha256": "d44cc59ad70248dcc6833c8c49c4caa5112b80b916621db2006c28a3c432e634",
+      "thumbnail_bytes": 4686
+    },
+    {
+      "track_id": "dh-058-snapbubble",
+      "cover_sha256": "1aaa100be5577b7be9ab601c10715da5ab3706ca8337da4f1c0ff990e8156360",
+      "thumbnail_sha256": "146375000a65361f5ed4fd345cab2d32942f66200207511f4cab2597ca3cbd7c",
+      "thumbnail_bytes": 5704
+    },
+    {
+      "track_id": "dh-059-switchrail",
+      "cover_sha256": "ee6c94b92533b8a68c8663eeeefbecc32b76bc0edebb5575e1b93bb51f076e5a",
+      "thumbnail_sha256": "b6fd4dc4292d82f367739879ad401e0ee1407f0b048e6627f9bfb84aa8a6df52",
+      "thumbnail_bytes": 21398
+    },
+    {
+      "track_id": "dh-060-overtone-vault",
+      "cover_sha256": "fd73d6adf7e4d6cb7fb11f98723e275e4c1f651673a7a88e7bfeb2e039bfe8df",
+      "thumbnail_sha256": "5efdd251394d7a330633afef5db8baaabfaadd9fa577eab85a5686c21b93117c",
+      "thumbnail_bytes": 5078
+    },
+    {
+      "track_id": "dh-061-glasswing-loop",
+      "cover_sha256": "106c83e55944d2890b250e65e5a95912aebfa17554ad21a960e53eaad37b31c5",
+      "thumbnail_sha256": "9bec078927daedd3095cf3b522951e952dadd3b8b28c0cedbcf05a3390b49dd8",
+      "thumbnail_bytes": 4454
+    },
+    {
+      "track_id": "dh-062-nightgrid-shuffle",
+      "cover_sha256": "c1793376b9fe7d72f81c90a116428dedd459a21192d64440696dc09f9cbd91c9",
+      "thumbnail_sha256": "83ee18e53033f871f5eec2b4c5f03f9ac1e3f1e16e710091ac22ba21d874cdbf",
+      "thumbnail_bytes": 14988
+    },
+    {
+      "track_id": "dh-063-foldline-pop",
+      "cover_sha256": "61d0a085a2df4ae7a26a481c52fccc3855c2ec508e26fa08dc8fd62321fb6563",
+      "thumbnail_sha256": "3ad9668d31e2c9e6d3dbdfa6ad01f1e27f789b27c9555d7881c19b97349184fe",
+      "thumbnail_bytes": 27654
+    },
+    {
+      "track_id": "dh-064-forklight-break",
+      "cover_sha256": "b422047344bf39690d6b2e1441637c780365299e74bc55e1cf50caae1c9602b2",
+      "thumbnail_sha256": "2970133b3f0b3d8b092d67beb81c1b47cfa5ce66ea29bda1b326bf756d1a3373",
+      "thumbnail_bytes": 9892
+    },
+    {
+      "track_id": "dh-065-hourglass-echo",
+      "cover_sha256": "3fca919013fad4d2bcb9da2e837cb3654975aa24e79b67b7b1d4d3083a763350",
+      "thumbnail_sha256": "c83a30f841cbf1c83409f204f57fe6d8c97d8c072dd888f5605b7c0293bb595e",
+      "thumbnail_bytes": 7706
+    },
+    {
+      "track_id": "dh-066-twinleaf-tempo",
+      "cover_sha256": "37ac9778bd50ec5aaf07fc60132ce319ea0ed8af5dd7a7657ce1585f8150aaec",
+      "thumbnail_sha256": "b1b3a71a8b474ba19ee2ee5f58f969921522cdaafe983c38b3934169d48f65cf",
+      "thumbnail_bytes": 2750
+    },
+    {
+      "track_id": "dh-067-magnetic-shift",
+      "cover_sha256": "a540305badc541b3f327d2ec756b0597ea65acd7776544c101e49440e3e0955c",
+      "thumbnail_sha256": "7d4853a46067541da82ebede96b16260c1befdd25d50652999ecbe95974169e7",
+      "thumbnail_bytes": 3724
+    },
+    {
+      "track_id": "dh-068-softstep-burst",
+      "cover_sha256": "3496ec030087af4dc3bb291f419c7757faac7f168672bdbfaccce77666382499",
+      "thumbnail_sha256": "e39a5e33c16abd375dd196a51b1b42b9018c34940eb92fc0658bdb3326b78f2a",
+      "thumbnail_bytes": 15692
+    },
+    {
+      "track_id": "dh-069-crossbeat-clap",
+      "cover_sha256": "3e34108666edb8fe93b5c8934ed86cb2834a0b02f9804b656b8be13d5fddbe9f",
+      "thumbnail_sha256": "7e0b4b1d5c0d5fa680a4bc19f79126daa2725d174b731bdf2f71f9033e3f07f5",
+      "thumbnail_bytes": 3836
+    },
+    {
+      "track_id": "dh-070-compass-glow",
+      "cover_sha256": "3836c4abb43a252eba2e97d9d87038905ae4a9b12c74679fe180b7a647350d3f",
+      "thumbnail_sha256": "e7d63b72f527896db280dc30844466e9d37cf138890f6f05bf0d3d1e6f41814d",
+      "thumbnail_bytes": 5660
+    },
+    {
+      "track_id": "dh-071-chime-arc",
+      "cover_sha256": "a5b9ad92507c24acb1b39733ab2793726c285aaa676eecf517983183a062292b",
+      "thumbnail_sha256": "c7d4421cf091f3dd1c13e695f40d5051c1b9ab32b079dc0cca7c29001bbb1fb9",
+      "thumbnail_bytes": 20350
+    },
+    {
+      "track_id": "dh-072-sideband-story",
+      "cover_sha256": "107f17988e49fab93e42e1dc04cbc2a4629f2cd1d674466941391eb87dedd53e",
+      "thumbnail_sha256": "8d35a9df79e46190bac09cbc54729c3071c7d081a5da1e5e249b47f338d96233",
+      "thumbnail_bytes": 17216
+    },
+    {
+      "track_id": "dh-073-marble-spark",
+      "cover_sha256": "72101949f728d7e4275dbf9008ee6eb7c157c2a112f3aa4e502428cc293912f9",
+      "thumbnail_sha256": "bddeea02414c7100921017cbf9c86081764a331fe93bfac16d46ff6577937881",
+      "thumbnail_bytes": 1604
+    },
+    {
+      "track_id": "dh-074-gearshift-rush",
+      "cover_sha256": "c5c762ee8a262419ef6d4c07b6e3ba34750d3f3f7f6c0c151cca76ed407e90d7",
+      "thumbnail_sha256": "a29ae3b7fea44192d8cd05cc8ddbbb7bd6fd875d177867996d461e49cbdf3dea",
+      "thumbnail_bytes": 1826
+    },
+    {
+      "track_id": "dh-075-beacon-current",
+      "cover_sha256": "cbdea4e615aec652ba8093b4de2faee0603de55b2461e5d2ed7274ae0a643abd",
+      "thumbnail_sha256": "e0b11a45ee27bc07de1ac9331e506353d87ee207ace4141f70d3bee7c20b7eee",
+      "thumbnail_bytes": 15312
+    },
+    {
+      "track_id": "dh-076-tessera-steps",
+      "cover_sha256": "689ca3425e563d418198d0134155e8f369a4227058f22204e243140363d4901f",
+      "thumbnail_sha256": "9f64129fb3d012498777b81521608c99f47fea1573708750cc41a8a13c878efa",
+      "thumbnail_bytes": 1282
+    },
+    {
+      "track_id": "dh-077-velour-transit",
+      "cover_sha256": "8f39e22d2f7ce9f4e344e28534c4735f8e406641b8750628caaad89dc46e141b",
+      "thumbnail_sha256": "12e9eb75a3832536557cfacb8809e6dc89014fc3158a336c9c83c326474214cd",
+      "thumbnail_bytes": 1740
+    },
+    {
+      "track_id": "dh-078-pogo-pulse",
+      "cover_sha256": "a0b9e323afaf9f8efb447f6f77272fba5c3f0e46cc6a11094e0f7f7440e9e313",
+      "thumbnail_sha256": "3b9c47fd25fbedd346274eca09533305e28ef340cc6382ae2d2326fb76ec9668",
+      "thumbnail_bytes": 12374
+    },
+    {
+      "track_id": "dh-079-cutline-chase",
+      "cover_sha256": "47520ac338494133941daddbf45375b8a44d522b7eff702db166ba553f3503f3",
+      "thumbnail_sha256": "1d21126575a667e523486fc824579b675b5a157c8393736194dc76e9e813f4be",
+      "thumbnail_bytes": 12562
+    },
+    {
+      "track_id": "dh-080-astra-surge",
+      "cover_sha256": "2807060c33793dfd7238d611218941754e90bc5bc5d1d92adcd544ba00ae173e",
+      "thumbnail_sha256": "a87e3bc4078db9d7837c608e69339137c66bd5eca2438237efb6e492ee914106",
+      "thumbnail_bytes": 2066
+    },
+    {
+      "track_id": "dh-081-braided-pulse",
+      "cover_sha256": "f84aa6aee876a5ba343145f6aa78bd7ea4100cb5bcf967e4a2f019d82ad46862",
+      "thumbnail_sha256": "84b2ed7fdad7164e0931e034cbe70f1894879561b890bfe1758c675265e17042",
+      "thumbnail_bytes": 5184
+    },
+    {
+      "track_id": "dh-082-lumen-cassette",
+      "cover_sha256": "aa4e7946307eee6f6208fa757893830fb8886617e17b7ac5c8491431387cdb08",
+      "thumbnail_sha256": "0b505cf4c0098da759c0c7297d4ce0e3454d1c6986e5d75c113dde14528b374d",
+      "thumbnail_bytes": 4734
+    },
+    {
+      "track_id": "dh-083-bouncefold",
+      "cover_sha256": "20f154f8d21c4883ef1e524b1e55c9845ed20960278c4a1fcefcddd67b05990d",
+      "thumbnail_sha256": "1cdd31361cabce50f151d23a16e26e837aaa05052749805459cdb9dbab467cc9",
+      "thumbnail_bytes": 4032
+    },
+    {
+      "track_id": "dh-084-latchrun",
+      "cover_sha256": "6c6a0b806b7be846c66054bf683fdb1d0ad0f9aa9f647ea3ce27731242b3fb6e",
+      "thumbnail_sha256": "cb79dc1649f4d05e1e986a92ec9962256ee022e0cae3251b39f4fcd2d50a40dd",
+      "thumbnail_bytes": 3648
+    },
+    {
+      "track_id": "dh-085-halation-loop",
+      "cover_sha256": "f4131a5966b19ccdcf269b54bc9618b71a124f07533c3fa67cab2fc92b242884",
+      "thumbnail_sha256": "72f3068077dfc076e0acb0405941310d7cf99d123df6dcebce902bf0706234e3",
+      "thumbnail_bytes": 3994
+    },
+    {
+      "track_id": "dh-086-chordline",
+      "cover_sha256": "84dd6f496b3dff016eab1466a0eebfbbbeca0e7dcac16ee27dde0f0c89e3e469",
+      "thumbnail_sha256": "69602a28e04da8b0bbc51a5214fff53bdb0a6a31ceb10d8b3cb83c4d90353893",
+      "thumbnail_bytes": 3818
+    },
+    {
+      "track_id": "dh-087-nightglass-drive",
+      "cover_sha256": "a886def94d726225c4ca4081152f6f22dc6d509835931652df977c52dcc5658a",
+      "thumbnail_sha256": "1980d6407921a9de0119a435a406aced29690d021c193d83b1ca1788f22486bf",
+      "thumbnail_bytes": 4760
+    },
+    {
+      "track_id": "dh-088-springpad-pop",
+      "cover_sha256": "eac713d3bb35423c840f43ec712d78e18b194c7bd51cdfc813b23dc24d85b8b5",
+      "thumbnail_sha256": "9aa703acba667335fd39251904627eaa7eef490ce49f2053be0e6447ce61bcfd",
+      "thumbnail_bytes": 4436
+    },
+    {
+      "track_id": "dh-089-quickmark",
+      "cover_sha256": "f47fcda5d8418aface3e6e7f73e1deaafa1dc74b8b1d8f1ec4401c573bb174ce",
+      "thumbnail_sha256": "adb2ae745cec44ba94e2fc5c18674ae6e0cc8565af34a761110fecd5f6ca77f9",
+      "thumbnail_bytes": 3622
+    },
+    {
+      "track_id": "dh-090-open-horizon",
+      "cover_sha256": "987aac7bc6443c5eefaf4d2c8b1bb9c825794de47e3f7877b353c45882c8e8a6",
+      "thumbnail_sha256": "3e0c631e116635a3d67410ee56ab50a3c240432737d44402194f23a95d7a7cf3",
+      "thumbnail_bytes": 4464
+    },
+    {
+      "track_id": "dh-091-pulse-terrace",
+      "cover_sha256": "2c5e472e3b7d563b5fc27f85f6f057bac2939b86b62a1dcbd06404f468336e42",
+      "thumbnail_sha256": "da79f0ebe71728b136cb3f4a8a6af55692c9ea6731e9d2e6753a4632a2800a07",
+      "thumbnail_bytes": 2990
+    },
+    {
+      "track_id": "dh-092-static-arcade",
+      "cover_sha256": "5a04e30bb84c308f968fbb9d1fe8d3aadae9395970d8849b49a3c9247fe42385",
+      "thumbnail_sha256": "d6853a03ec6cfafa7a1b0fabd508075bb04eb2ace5c61ddff0c3bdb4bc18ed01",
+      "thumbnail_bytes": 4794
+    },
+    {
+      "track_id": "dh-093-foamstep",
+      "cover_sha256": "efce833ef6311d97f522d698a1a3e68697947bd362ff4f643a2931cd4ecd2f51",
+      "thumbnail_sha256": "d234c4a80d1a11f2f4dace726cdf710cd62365ba30bb69114fa84b109cb4a8c2",
+      "thumbnail_bytes": 5056
+    },
+    {
+      "track_id": "dh-094-railflash",
+      "cover_sha256": "78df8782f085d79497e265ffbbe9f93677978bc1fe0bd90f223f969c63179080",
+      "thumbnail_sha256": "c9b38fa99a57042143513532d29698c12a87cd4525ae26cf37820976b91e3097",
+      "thumbnail_bytes": 5242
+    },
+    {
+      "track_id": "dh-095-clearphase",
+      "cover_sha256": "8081186ed1fcc7acd5190c125c5fe6ac8f53b7f6f0b3d9e4d32d38dc97244f6d",
+      "thumbnail_sha256": "f7972681156cee93244d747bcf2a0ad084343951c72ed02bfafdb3aed5ec12db",
+      "thumbnail_bytes": 4302
+    },
+    {
+      "track_id": "dh-096-softline-harbor",
+      "cover_sha256": "918ae783c3144f0a45e05f42f8bf00148db2cebdb2e8addddeb6cf657dc3cbb3",
+      "thumbnail_sha256": "fd78c302e30973f94e399b1d92267028fc454da51664352d4798eabe32e43634",
+      "thumbnail_bytes": 3290
+    },
+    {
+      "track_id": "dh-097-analog-bloom",
+      "cover_sha256": "f243cc897f4d0fad04eb0adfb91d80d305fd55af5c966a9aef57728ebe22f997",
+      "thumbnail_sha256": "54f10f5c1da7bff869f54388fdc973e7f0b5d085c040981986cb6201002af28a",
+      "thumbnail_bytes": 4144
+    },
+    {
+      "track_id": "dh-098-patchwork-pop",
+      "cover_sha256": "113ee21f2baa2d2496c15247dc8d01c51d4ea78028cb51ad1846b200b0a99408",
+      "thumbnail_sha256": "f3a93c59c069eb8828dafc24459186c9f9e8f8f5a96baab27d286395a6f5af24",
+      "thumbnail_bytes": 4772
+    },
+    {
+      "track_id": "dh-099-ricochet-grid",
+      "cover_sha256": "9ecdd513578e9b3cfa2b0898e032d391a558213b461c84ba2230e0d172b0487f",
+      "thumbnail_sha256": "26a4f5b810cae48e94e43f713fe4ab40ad70ad0acfe9c3ff54357202a0c94c79",
+      "thumbnail_bytes": 4358
+    },
+    {
+      "track_id": "dh-100-lucent-passage",
+      "cover_sha256": "c43e1f4723581551cb90ac8214245c26085679baec89fe545f48b5dac1902536",
+      "thumbnail_sha256": "8472b47b6463839b69e044bae324bdebe54ecfa0f9cde80e98a683b10c3a0533",
+      "thumbnail_bytes": 4484
+    },
+    {
+      "track_id": "dh-101-glowline-garden",
+      "cover_sha256": "3630ce61264e4aac29a73e1f8d8ea28d00a5e59855c1e384c5a75f6eabde79c3",
+      "thumbnail_sha256": "900859cbe0e4e807e84f62d784d91266b77266570743ebe6f513a216103be50c",
+      "thumbnail_bytes": 3780
+    },
+    {
+      "track_id": "dh-102-spectrum-cruise",
+      "cover_sha256": "7307e9e4eadd7bc8f97f6a50db2edf0206aaf12ec080f5d2ad3248e9cbb88bb4",
+      "thumbnail_sha256": "8e606365dd396a62406274419d9ce9126951b06bd2971a3db2c51b676fbc3a47",
+      "thumbnail_bytes": 6080
+    },
+    {
+      "track_id": "dh-103-tileflip",
+      "cover_sha256": "f6e6fd9379bd1e86a38a9003aec602f037b25ed35132e5815bd8d9c4ee5d3ce5",
+      "thumbnail_sha256": "29feabdaf62be60f5d4d43f9791f7b81430f43e2a15ea2c4d99de9ee631239f1",
+      "thumbnail_bytes": 5002
+    },
+    {
+      "track_id": "dh-104-beat-pinball",
+      "cover_sha256": "b5f40b8aea7d707f14b603d7d01a032c899907cc8ffeea0c07a809cc2aeaf1cd",
+      "thumbnail_sha256": "a2fd805be879d886bb27582087ddc9cc1eb1c96b9b77e4bfd02e6477b796bbf4",
+      "thumbnail_bytes": 4120
+    },
+    {
+      "track_id": "dh-105-clarity-arc",
+      "cover_sha256": "ae468d4a526694944a1782c4676cfd32cc784b1fd43b82b4a370270e4a0c3226",
+      "thumbnail_sha256": "beb286edc5d23fb3db8e2ac69a731d99f3f64532919bffda7549b2d75379e236",
+      "thumbnail_bytes": 3566
+    }
+  ]
+}

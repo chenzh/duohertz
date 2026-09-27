@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-063-foldline-pop",
+  "title": "Foldline Pop",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Future Bass",
+  "bpm": 116.0,
+  "target_bpm": 116,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -5.5 dB gain before AAC encoding. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -5.5,
+  "stream_limiter": null,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-063-foldline-pop.json",
+  "source_recipe_sha256": "ddb953b21fa6b3a96807f763e61ef8f63d6a804c6d768fa510ba6936c788bf17",
+  "source_master_sha256": "63deea09a7e500cb49faa0dfd260d714c5a40e7c1dc0092a7c4e3b9288eaa1f5",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.17488,
+    "clipping_ratio": 3.1e-05,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "554d007c-1df0-4894-b4bc-674801b2f86f",
+  "source_generation_receipt_sha256": "eba36f5cfd855bdb0d2ce658f82f5d6e349f5818883abec00d197b4b70a3c44d",
+  "generation_prompt": "Create one ORIGINAL 128-second stereo FUTURE BASS instrumental for an all-ages one-or-two-key rhythm game at a STRICT constant 116 BPM in 4/4. Generate a continuous excerpt that starts IN THE MIDDLE OF THE MAIN CHORUS/DROP, not at the beginning of a song: beat one at timestamp zero has a loud clean kick, snare backbeat, eighth-note hats, bouncing bass, warm chord stab and bright plucked hook ALL PLAYING TOGETHER. This full arrangement continues at consistent volume for the first 32 seconds and through the rest of the excerpt. There is no composition intro or pickup. No quiet intro, drumless bridge, half-time switch, filtered breakdown, ambient-only passage, fade, silent last bars, or tempo drift. Distinct hook: four short notes that rise, fold down by a third, then answer with two higher clipped notes; place a playful soft bass bounce below the hook and warm major-seventh chord pulses around it. The lead must be rhythmic and clearly pitched, with brief releases and space between attacks. At 64 seconds keep the exact same drum level and beat grid, change the bass roots and chord voicings, invert the four-note hook and answer it with a fresh syncopated two-note figure. Continue variations to the final beat. Cheerful, springy and clean, with controlled high frequencies and no abrasive distortion. No vocals, speech, samples, known melody, or imitation of an existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a brand-new SQUARE 1:1 original duohertz album cover for Foldline Pop, a cheerful all-ages future-bass rhythm-game track. Use the brand's high-contrast editorial comic-print collage: near-black ink, warm-ivory cut paper, coral red and electric cyan, with sparse coarse halftone. Main motif: ONE broad warm-ivory ACCORDION-FOLDED PAPER STRIP standing upright in the middle like a zigzag letterless musical spring. Its four large alternating folds are obvious as a single connected object. A thin electric-cyan sound line enters at the lower left, runs along the creases, and springs off at the upper right as two short separate bars. Put exactly two small coral rectangular tabs on different folds and one tiny warm-yellow beat mark. Keep the connected folded silhouette within the central 60 percent of the square, with a calm near-black lower fifth for a local title overlay; it must read at 100px in a narrow mobile crop. Flat graphic shapes, visible print grain, dynamic diagonal rhythm, not glossy 3D. Distinct from piano keys, paper planes, ribbon, dominoes and city windows. No people, scenery, text, letters, numbers, logo, watermark, strobe or copied game art.",
+    "og_prompt": "Edit the supplied original Foldline Pop square art into a HORIZONTAL roughly 1.9:1 duohertz social card. Preserve ONE connected four-fold upright warm-ivory accordion paper strip, the cyan sound line following its creases and springing into two short bars, exactly two coral tabs and one tiny yellow beat mark. Recompose the motif on the RIGHT two-thirds against near-black editorial comic-print ink with sparse halftone; leave calm dark space on the LEFT. Add exactly two crisp, fully legible English text lines at left: 'duohertz' in lowercase electric cyan and 'Foldline Pop' larger in warm ivory. Spell both exactly; no truncation. Purpose-build the wide card, do not stretch the square. No other text, letters, numbers, people, scenery, logo, watermark or copied game art.",
+    "cover_source_sha256": "9986ab231a547180ee4d62f33d5d3f92da809217b653b305c1728c10be988850",
+    "og_source_sha256": "03eab96adcd68a1740fe348c7459522ee2dcc3464deffa6f85f95c0ca65b4434",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "fd916f9b644c3f6521c1d26767127d081b791951ed02a51d226db8ccda16492a",
+    "cover-art.png": "61d0a085a2df4ae7a26a481c52fccc3855c2ec508e26fa08dc8fd62321fb6563",
+    "cover.svg": "3e48bd28512ea8cc16588fe912dd8c5eef283e26cb48988e0055159bacaaf72f",
+    "easy.json": "82dbb4829047b121c34aa47a932df160ef296fd25c602da90747b9231e631e10",
+    "hard.json": "f2296ddf452f3aa7a9a707c38a578daec65b24120a00ee884ec467d1495dc5bd",
+    "og.png": "836b2e22203b1d9081b69fe9e876e65762cc61439ed42326fbb8afd5a2e71b84",
+    "preview_48s.m4a": "cd26b84155f3b79f53867fc16a0192fad5935cd3a9e59f8cf1a8893dc99403ff",
+    "standard.json": "255cb935c05a9b92ae6320a29eac262a24a33fd57b097d1b789c65fd9ed24ab6",
+    "stream.m4a": "4992cba973b20c97421b0a1b0f4caed471fc909b50d3fe2364e3e754b80834a6"
+  }
+}

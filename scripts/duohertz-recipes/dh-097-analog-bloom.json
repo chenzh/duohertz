@@ -1,0 +1,18 @@
+{
+  "track_id": "dh-097-analog-bloom",
+  "title": "Analog Bloom",
+  "artist": "duohertz studio",
+  "subgenre": "Synthwave",
+  "bpm": 118,
+  "game_duration_sec": 64,
+  "stream_duration_sec": 128,
+  "generation_duration_sec": 180,
+  "stream_start_sec": 32,
+  "model_variant": "small",
+  "generation_prompt": "Create one original 180-second stereo synthwave instrumental at strict 118 BPM in 4/4 for a family-friendly one-or-two-key rhythm game. By 24 seconds the full energetic groove is present: deep quarter-note kick, crisp backbeat snare, eighth hats, pulsing analog octave bass, warm vintage chords and a distinct short synthesizer lead attack on each quarter beat. Signature hook: three clipped descending notes answered by one long higher note and two short bell tones. Keep 32-to-160 seconds continuously active at stable loudness; change bass roots and lead answer after 96 seconds. Distinctly melodic and bright, with subtle analog texture but no recognizable song quotation. No vocals, speech, samples, tempo drift, quiet bridge, breakdown, fade or silent tail inside the selected section.",
+  "art_tool": "local-authored SVG",
+  "cover_source_svg": "scripts/duohertz-art-sources/dh-097-analog-bloom-cover.svg",
+  "og_source_svg": "scripts/duohertz-art-sources/dh-097-analog-bloom-og.svg",
+  "cover_prompt": "Original comic-print cover: asymmetrical analog wave petals unfold from a square oscillator node, ivory and cyan with coral phase ticks; no flowers, cassette, sun, instrument, text or person.",
+  "og_prompt": "Wide duohertz title card with wave-petal oscillator on right and Analog Bloom on left."
+}

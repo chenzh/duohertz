@@ -1,0 +1,18 @@
+{
+  "track_id": "dh-099-ricochet-grid",
+  "title": "Ricochet Grid",
+  "artist": "duohertz studio",
+  "subgenre": "Drum & Bass",
+  "bpm": 174,
+  "game_duration_sec": 64,
+  "stream_duration_sec": 128,
+  "generation_duration_sec": 180,
+  "stream_start_sec": 32,
+  "model_variant": "small",
+  "generation_prompt": "Create one original 180-second stereo melodic drum and bass instrumental at strict 174 BPM in 4/4 for a family-friendly one-or-two-key rhythm game. By 24 seconds the full two-step dance groove plays continuously: punchy kick, dry backbeat snare, crisp shuffled hats, warm rolling bass, bright chord accents and a separate short pitched lead attack each quarter beat. Signature hook: four quick alternating notes rebound into a rising two-note answer; vary the answer, bass roots and fills after 96 seconds. Keep 32-to-160 seconds strong and even with no sparse breakdown or fade. Clean playful energy, clear beat accents, original melodic contour. No vocals, speech, samples, harsh clipping, tempo drift or imitation.",
+  "art_tool": "local-authored SVG",
+  "cover_source_svg": "scripts/duohertz-art-sources/dh-099-ricochet-grid-cover.svg",
+  "og_source_svg": "scripts/duohertz-art-sources/dh-099-ricochet-grid-og.svg",
+  "cover_prompt": "Original high-contrast comic-print cover: one coral ricochet line zigzags across an offset ivory/cyan rhythm grid, four sharp rebound nodes, no score UI, text or character.",
+  "og_prompt": "Wide duohertz title card with ricochet rhythm grid on right and Ricochet Grid on left."
+}

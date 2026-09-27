@@ -1,0 +1,58 @@
+{
+  "track_id": "dh-007-lantern-circuit",
+  "title": "Lantern Circuit",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Synthwave",
+  "bpm": 108,
+  "duration_sec": 64,
+  "stream_duration_sec": 128,
+  "creation_method": "Independent deterministic B–G# minor–E–F# Synthwave game movement and new C# minor–A–E–B answer movement for a 128-second stream master; generated oscillators and seeded noise only, no sampled source audio or repeated first-minute loop; -2 dB linear gain before AAC encoding",
+  "audio_gain_db": -2.0,
+  "source_script": "scripts/duohertz-compose-lantern-circuit.py",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "status": "visual_candidate_unreviewed",
+    "revision_reason": "Replace the early mauve fantasy lantern scene with duohertz comic print while keeping its linked signal-node circuit",
+    "cover_prompt": "Edit Image 1 into a NEW original SQUARE 1:1 cover-art candidate for duohertz track Lantern Circuit. Image 1 is CONTENT reference only: preserve the recognizable idea of several hanging lantern-shaped signal nodes joined by a single continuous circuit line and one clearly dominant central lantern. Completely remove its mauve fantasy sky, real-looking lantern glass, 3D glow, reflective water, tiny lights and haze. Image 2 is STYLE reference only for near-black ink, warm-ivory paper cutouts, coral and electric-cyan accents, bold halftone print texture, angular high-contrast editorial rhythm-game design. Do not copy Image 2's interlocking circular rings or radial layout. Compose five large flattened geometric lantern icons in a zigzag arrangement: the central lantern largest and warm yellow, two coral and two warm ivory, all joined by ONE angular electric-cyan cable that visibly enters and exits each lantern. Give each lantern a unique horizontal frequency-bar cutout. Use a few crisp diagonal coral paper wedges and sparse halftone, with an uncluttered dark lower fifth for a later local title overlay. At 100px the five linked lights and central leader must remain clear. All ages, energetic, no strobe. No sky, landscape, water, photorealistic lanterns, rings, trees, platforms, character, text, letters, numbers, logos, watermark or copied game art.",
+    "og_prompt": "Edit this newly redrawn original Lantern Circuit square cover into a NEW HORIZONTAL roughly 1.9:1 duohertz social card. Preserve five flattened geometric lantern signal nodes, the largest warm-yellow center lantern, alternating coral and warm-ivory side lanterns, their black frequency-bar cutouts, and ONE angular electric-cyan cable linking them, plus near-black ink and halftone wedges. Recompose this lantern circuit on the RIGHT two-thirds so the distinct five-node silhouette remains legible; reserve a calm near-black LEFT third. Add EXACTLY TWO crisp fully readable English text lines on the left: 'duohertz' all lowercase in electric cyan, and 'Lantern Circuit' in larger warm ivory. Spell both EXACTLY, do not truncate. Designed horizontal composition, not stretched square. No other words, letters, numbers, sky, water, realistic glass, trees, rings, characters, logos, watermark or copied game art.",
+    "cover_source": "data/duohertz-preview/art-sources/dh-007-lantern-circuit-comic/cover.png",
+    "og_source": "data/duohertz-preview/art-sources/dh-007-lantern-circuit-comic/og.png",
+    "cover_source_sha256": "922c7ee08aae6b0e72377cd6af572fc36b80b7f73b06b31b688b349c2aa1cf86",
+    "og_source_sha256": "f134fdaf9f87f0f9a23bfbbc69d835e00920cffdfca1b3e5e957c16651cd197a",
+    "content_reference": "data/duohertz-preview/art-archive/dh-007-lantern-circuit/cover-art.png",
+    "content_reference_sha256": "b5fd412ae3c86b30fb63ab6a875cb9b8699b060a096d1500c1572db85793a5c6",
+    "style_reference": "apps/beatscape/candidates/duohertz/dh-001-first-frequency/cover-art.png",
+    "style_reference_sha256": "e3c55396eb2d4529ed065965460c2c8455939ea1a5169b58aaf1040d23633f33",
+    "cover_resize": "sips resize to 1024x1024 PNG",
+    "og_resize": "sips resize to 1200x630 PNG",
+    "cover_svg": "Local SVG brand/title overlay around cover-art.png; bitmap source has no text",
+    "previous_art_provenance": {
+      "tool": "built-in imagegen",
+      "cover_prompt": "Use case: stylized-concept\nAsset type: original square album cover background for an internal candidate electronic rhythm-game track\nPrimary request: Create a text-free cover illustration for “Lantern Circuit”, a bright all-ages Synthwave song in duohertz. Picture a suspended network of small frosted copper-and-cream lantern modules linked by thin luminous mint circuit paths; a clear central pulse lights one node while gentle polygonal frequency ripples travel outward. The visual metaphor is musical call-and-response, not a street or a vehicle.\nStyle/medium: polished contemporary editorial electronic album art, crisp geometric forms with tactile translucent glass and warm metallic edges; joyful, airy, detailed yet readable at thumbnail size.\nComposition/framing: square, main lantern network in upper two-thirds; quiet dark-plum lower third for a separate local title overlay.\nColor palette: warm copper, pale peach, mint green, soft lavender on deep plum.\nConstraints: no text, letters, numerals, logos, human characters, cars, weapons, red neon city, strobing stripes, copied game art, or resemblance to existing duohertz covers featuring interlocking rings, sunset glass horizon, stepping stones, racing sky ribbons, rising helix, or a light-column grove.",
+      "og_prompt": "Use case: ads-marketing\nAsset type: 1200x630-style wide sharing card companion to the supplied square album artwork (reference image)\nPrimary request: Recompose the supplied Lantern Circuit art into a polished wide social card for the all-ages duohertz electronic rhythm-game song. Preserve the frosted copper lantern network, luminous mint circuit lines, pale peach highlights, and gentle polygonal sound waves. Place the main luminous lantern network on the right two-thirds with a quiet, dark-plum left third for typography. This should be a new horizontal composition, not a stretch or crop of the square.\nText (verbatim): exactly two lines in the left third, generous margins, clean crisp modern sans-serif: line 1 “duohertz” (all lowercase, smaller, pale mint); line 2 “Lantern Circuit” (title case, larger, white). Spell them exactly with no other words.\nComposition/framing: approximately 1.9:1 wide horizontal, readable at thumbnail size; keep all typography inside the frame.\nConstraints: no other text, numbers, logos, characters, cars, weapons, red neon city, strobing stripes, or copied game art.",
+      "og_reference": "cover-art.png supplied to built-in imagegen as the reference image",
+      "og_resize": "Built-in imagegen supplied a 1729x910 wide card; sips resized it to exactly 1200x630 without changing the composition",
+      "cover_svg": "Local SVG title overlay around generated cover-art.png; bitmap source is unchanged"
+    },
+    "previous_assets_sha256": {
+      "cover-art.png": "b5fd412ae3c86b30fb63ab6a875cb9b8699b060a096d1500c1572db85793a5c6",
+      "og.png": "c2e5a0cbc98a7d60cf3d4700ff8c25a6222bd53a224320d861b88576ebbb98c8",
+      "cover.svg": "c7217bc6e87e05c640a5a08822967aac3220b67b88dddc6d3980f95c9787cb07"
+    },
+    "previous_art_archive": "data/duohertz-preview/art-archive/dh-007-lantern-circuit"
+  },
+  "files_sha256": {
+    "audio.m4a": "9d28d615a6f170529393be8fd71034bd2e2625242a188e9e7563dbd36ed14526",
+    "cover-art.png": "4b121e3ff11e45cc1fd6d675093732c99920690852e7bd5dec71ac674a03fa75",
+    "cover.svg": "c7217bc6e87e05c640a5a08822967aac3220b67b88dddc6d3980f95c9787cb07",
+    "easy.json": "f1e0dbef616c5e117c130612cfb3583930a1ea8a1925021f85157393dcfc634d",
+    "hard.json": "eb6b18eb47c4e0fa4a3f8f9eaf6c6360e6a9a7678b70e8cce102f6485db52724",
+    "og.png": "71f80f7b1096576a43b7aae07223c0f6c1423919d120eb3416366413d8c23514",
+    "preview_48s.m4a": "d8c77f2b1b159a87805776205b07c7569be580092f9b60083fe15d2acc2be0bd",
+    "standard.json": "0eb8a418de8ae73f9c7ca1d6b32a073eb641879df38eb1b1facd9f4603b1a17f",
+    "stream.m4a": "1c6076049e620220a73fc448e1f1856d849e56850176dbbbc4b2060e515cf5d1"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "track_id": "dh-104-beat-pinball",
+  "title": "Beat Pinball",
+  "artist": "duohertz studio",
+  "subgenre": "Drum & Bass",
+  "bpm": 172,
+  "game_duration_sec": 64,
+  "stream_duration_sec": 128,
+  "generation_duration_sec": 180,
+  "stream_start_sec": 32,
+  "model_variant": "small",
+  "generation_prompt": "Create one ORIGINAL 180-second stereo DRUM AND BASS instrumental at fixed 172 BPM in 4/4. Imagine the recording starts already in the middle of a loud, fully arranged dance chorus: from beat one through the last, keep a punchy two-step kick and snare, clear shuffled hats, rounded rolling bass, full bright chords and a short pitched lead attack every quarter beat. The hook is a two-note low launch bouncing into four high descending notes, with a changed answer and bass movement after 96 seconds. The 32-to-160-second passage must remain at full, nearly even energy in every eight-second interval, especially the first and final forty seconds. Clean, playful, melodic sound for an all-ages one-or-two-key rhythm game. No intro, breakdown, sparse bridge, filtered buildup, fade, silent tail, vocals, speech, samples, copying or tempo drift.",
+  "art_tool": "local-authored SVG",
+  "cover_source_svg": "scripts/duohertz-art-sources/dh-104-beat-pinball-cover.svg",
+  "og_source_svg": "scripts/duohertz-art-sources/dh-104-beat-pinball-og.svg",
+  "cover_prompt": "Original comic-print cover: one cyan beat sphere ricochets between two angular ivory bumpers leaving coral timing traces, abstract rather than literal arcade machine; no character or text.",
+  "og_prompt": "Horizontal duohertz card with beat sphere and angular bumpers on right, Beat Pinball on left."
+}

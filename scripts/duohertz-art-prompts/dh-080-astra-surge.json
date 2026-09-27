@@ -1,0 +1,26 @@
+{
+  "tool": "built-in imagegen",
+  "status": "visual_candidate_unreviewed",
+  "track_id": "dh-080-astra-surge",
+  "title": "Astra Surge",
+  "revision_reason": "Replace glowy noisy rendering with flat sharp paper cuts and stable black negative space.",
+  "source_recipe": "scripts/duohertz-recipes/dh-080-astra-surge.json",
+  "cover_edit": "Edit the original square cover so the full named motif remains clear in the center mobile-safe crop; retain flat near-black comic-print styling.",
+  "og_edit": "Edit the revised cover into a horizontal sharing card with exact lowercase duohertz and track title at left, full motif at right.",
+  "assets": {
+    "initial_cover": {
+      "path": "data/duohertz-preview/art-sources/dh-080-astra-surge/cover-initial.png",
+      "sha256": "692a183bc450bee3ba529739d1848a7440fb5f677a5dfb3db5471f70deb51a1a"
+    },
+    "revised_cover": {
+      "path": "data/duohertz-preview/art-sources/dh-080-astra-surge/cover.png",
+      "sha256": "eab217d2923e8df700992e0331044639d2273eacc31d256ebe201cf0882e0cd5"
+    },
+    "wide_og": {
+      "path": "data/duohertz-preview/art-sources/dh-080-astra-surge/og.png",
+      "sha256": "720c31e624dc9051366d1ef27b0cbe62dad1d3766e9f2116a1a2fba541680e82"
+    }
+  },
+  "mobile_card_screenshot": "data/duohertz-preview/rebuild-20260924/dh-080-astra-surge-320-card-centered.png",
+  "review_boundary": "Composition verified on the 320px development card; no human art, originality, rights or market approval."
+}

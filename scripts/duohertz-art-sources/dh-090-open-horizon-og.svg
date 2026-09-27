@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<defs><pattern id="dots" width="25" height="25" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="2" fill="#f7efdf" opacity=".13"/></pattern></defs>
+<rect width="1200" height="630" fill="#111521"/><path d="M0 0h220L0 178z" fill="#6de9e1"/><path d="M1200 0v178l-161-178z" fill="#ff675d"/>
+<path d="M643 55h500l-32 520H665z" fill="#1d2632" stroke="#f7efdf" stroke-width="11"/><path d="M643 55h500l-32 520H665z" fill="url(#dots)"/>
+<g transform="translate(625 45) scale(.52)"><path d="M183 267l633-105-203 259-432 35z" fill="#f7efdf"/><path d="M183 757l633 105-203-259-432-35z" fill="#6de9e1"/><path d="M197 363l441-28-102 87-346 28z" fill="#111521"/><path d="M197 660l441 28-102-87-346-28z" fill="#111521"/><path d="M264 506h459" stroke="#ff675d" stroke-width="28"/><path d="M699 473l45 33-45 33" fill="none" stroke="#ffdc69" stroke-width="15"/><path d="M680 267l89-44m-89 534l89 44" stroke="#ff675d" stroke-width="15"/><path d="M270 405l295-32M270 607l295 32" stroke="#ffdc69" stroke-width="9"/></g>
+<path d="M77 103h472" stroke="#6de9e1" stroke-width="10"/><text x="77" y="185" fill="#6de9e1" font-family="Helvetica Neue, Arial, sans-serif" font-size="65" font-weight="900">duohertz</text><path d="M77 228h472" stroke="#ff675d" stroke-width="18"/>
+<text x="77" y="350" fill="#f7efdf" font-family="Helvetica Neue, Arial, sans-serif" font-size="74" font-weight="900">Open</text><text x="77" y="433" fill="#f7efdf" font-family="Helvetica Neue, Arial, sans-serif" font-size="74" font-weight="900">Horizon</text>
+<path d="M77 490h472" stroke="#f7efdf" stroke-width="7"/><path d="M77 520h240" stroke="#6de9e1" stroke-width="17"/><path d="M0 601h1200" stroke="#f7efdf" stroke-width="7"/>
+</svg>

@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-058-snapbubble",
+  "title": "Snapbubble",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Future Bass",
+  "bpm": 139.535,
+  "target_bpm": 140,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -6.5 dB gain before AAC encoding. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -6.5,
+  "stream_limiter": null,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-058-snapbubble.json",
+  "source_recipe_sha256": "ded1736a7467fd05030ce4995cdb2550d2368ca6db393085b9d4e80a64d3caba",
+  "source_master_sha256": "115979a306e6bbff170f9504b09ca91abae07fe069ebf13437a3491e72a1eb2f",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.17525,
+    "clipping_ratio": 0.000104,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "ac9f1cbc-829c-4137-9b03-93217603b3d2",
+  "source_generation_receipt_sha256": "611137a33a22b6623635f099353e3199f4bad166300a4349612d428426052e11",
+  "generation_prompt": "Create one ORIGINAL 128-second stereo FUTURE BASS instrumental for an all-ages one-or-two-key rhythm game at STRICT constant 140 BPM in 4/4. The full audible rhythm starts immediately at time zero and stays present every second through 128 seconds: short firm kick on beats one and three, dry clap on beat three, clearly ticked eighth-note hats, and a separate bright midrange pluck attack on EVERY quarter beat. No fade-in, quiet intro, pad-only bar, breakdown, drop-out, half-time switch, tempo drift, long reverb wash or silent ending. The signature hook is a round bubbly synth pluck that jumps up a perfect fifth, followed one eighth beat later by a very short glassy snap note; repeat with changed pitch and stereo position, leaving each attack discrete and easy to tap. Under it use a bouncy sub bass and bright but soft major-seventh chord stabs; a restrained wide saw layer may swell behind the percussion but never mask the attacks. At 64 seconds keep the same full-volume drum grid, invert the bubbly two-note hook and let a higher three-note answer enter, change bass roots, then resolve at the end while drums remain audible. Cheerful, clean, spacious, child-friendly, controlled highs, no abrasive distortion. No vocals, speech, sampled recordings, existing melody or imitation of an existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Generate a brand-new SQUARE 1:1 original duohertz album cover for Snapbubble, a playful all-ages future-bass rhythm-game track. Original high-contrast editorial comic-print collage on near-black ink, warm-ivory cut paper, coral red and electric cyan. ONE oversized irregular CYAN SOAP-BUBBLE shape is caught at the instant it snaps open into two asymmetric curved shell pieces; exactly THREE small coral square beat sparks fly diagonally from the split. Put a single warm-ivory short zigzag under the bubble to imply a bounced musical note. Make the bubble an opaque graphic cut-paper silhouette with a crisp edge, not a photo or glossy 3D render. Sparse halftone, strong asymmetry and readable shapes at 100px, with a quiet dark lower fifth for a local title overlay. No ring stack, planet, balloon string, person, city, landscape, screen, letters, words, logo, watermark or copied game art.",
+    "og_prompt": "Edit the supplied original Snapbubble square cover into a HORIZONTAL 1.9:1 duohertz social-sharing card. Preserve the ONE oversized asymmetric cyan bubble split into two curved paper shells, exactly THREE small separate coral square sparks, and one short warm-ivory zigzag beneath. Recompose those original shapes on the RIGHT two-thirds against near-black editorial comic-print ink, sparse halftone and warm-ivory accents; leave calm dark space on the LEFT. Add exactly two crisp fully legible English lines on the left: 'duohertz' in lowercase electric cyan and 'Snapbubble' in larger warm ivory. Spell both exactly. Design a real wide composition rather than stretching the square. No other text, letters, numbers, planet, balloon string, people, city, landscape, photograph, logo, watermark or copied game art.",
+    "cover_source_sha256": "fdf922cfa4b9d4560d67679e6d7e37057ace92c45ea43a1c58f6fd9b8e7a5ca1",
+    "og_source_sha256": "22cd7bc4595472151e7ff5982e51db787efc5c3b53ccaebf063ed268c3f24052",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "9be880305af9f333b61527257d5127fd346b69c204db2e21d31cb0aadf409d00",
+    "cover-art.png": "1aaa100be5577b7be9ab601c10715da5ab3706ca8337da4f1c0ff990e8156360",
+    "cover.svg": "02c33e605f414ac9fb4a0d455bd228d108f66f1b601301e646c2dccb7c0c8699",
+    "easy.json": "e4998ebe8f35860ea1b5afa4d6dd555f72d9fd4f2e7ec5043a14fc3fd3c6ddfd",
+    "hard.json": "23f6d3e82a5b76fe49895af6801d7b1d47513506623d21eb6a7a7da96ec41987",
+    "og.png": "88e19d7fe9205b207afa65f6bfc624cadced5861d6085c02e61cfece3e8d6164",
+    "preview_48s.m4a": "640aecf1f1d87bdc027be867e9721bec12f20452384cdd88e08981e676bcab4e",
+    "standard.json": "9369038d27333a6e3a59732b121545f784e08929237f433934595c305106a800",
+    "stream.m4a": "b0f12e3e654a822b1abd1f7956bd112d10d1f1eaf869ba40d54695f4c6d298db"
+  }
+}

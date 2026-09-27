@@ -1,0 +1,58 @@
+{
+  "track_id": "dh-008-paperwave-lift",
+  "title": "Paperwave Lift",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Future Bass",
+  "bpm": 132,
+  "duration_sec": 60,
+  "stream_duration_sec": 120,
+  "creation_method": "Independent deterministic E–B–C# minor–A Future Bass game movement and new G# minor–E–B–F# answer movement for a 120-second stream master; generated oscillators and seeded noise only, no sampled source audio or repeated first-minute loop; stream-only 0.6 amplitude limiter without makeup gain before AAC",
+  "stream_limiter": 0.6,
+  "source_script": "scripts/duohertz-compose-paperwave-lift.py",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "status": "visual_candidate_unreviewed",
+    "revision_reason": "Replace the early blue fantasy sky with duohertz comic print while keeping four rising origami sound planes",
+    "cover_prompt": "Edit Image 1 into a NEW original SQUARE 1:1 cover-art candidate for duohertz track Paperwave Lift. Image 1 is CONTENT reference only: preserve its memorable ascending chain of folded paper aircraft driven upward by a flowing musical wave, with the aircraft growing as they rise. Remove its realistic cloudy night sky, translucent glass paper, fantasy light glow, photographic gradients, confetti, tiny notes and landscape. Image 2 is STYLE reference only for near-black ink, warm-ivory cut paper, coral and electric-cyan accents, bold halftone and sharp editorial comic-print energy. Do not copy its stepping platforms, exact ribbon shape or composition. Make exactly FOUR large warm-ivory origami sound planes clearly distinct from each other, arranged as a bold rising diagonal from lower left to upper right, with a SINGLE broad electric-cyan pulse ribbon lifting them from beneath; one coral folded underside on the largest plane distinguishes its leading edge. Strong, clean silhouettes readable at 100px. A few coral angled air-slice wedges and restrained print grain; quiet near-black lower fifth for later local title overlay. All ages, joyful but no strobe. No realistic sky, clouds, scenery, transparent 3D materials, platforms, rings, characters, text, letters, numbers, logos, watermark or copied game art.",
+    "og_prompt": "Edit this newly redrawn original Paperwave Lift square cover into a NEW HORIZONTAL roughly 1.9:1 duohertz social card. Preserve EXACTLY FOUR distinct warm-ivory origami sound planes growing along a rising diagonal from lower left to upper right, one broad electric-cyan pulse ribbon lifting them, the leading plane's coral folded underside, near-black ink and sparse halftone print wedges. Recompose the ascending aircraft action across the RIGHT two-thirds at social-card scale while keeping a quiet near-black LEFT third. Add EXACTLY TWO crisp fully readable English text lines on the left: 'duohertz' all lowercase in electric cyan, and 'Paperwave Lift' in larger warm ivory. Spell both EXACTLY, do not truncate. Designed wide composition, not stretching the square. No other words, letters, numbers, realistic sky, clouds, landscapes, platforms, rings, characters, logos, watermark or copied game art.",
+    "cover_source": "data/duohertz-preview/art-sources/dh-008-paperwave-lift-comic/cover.png",
+    "og_source": "data/duohertz-preview/art-sources/dh-008-paperwave-lift-comic/og.png",
+    "cover_source_sha256": "ac08f12021c7d6ce6641a7ed337539fcf1a602c12893d3ea7cea3928464f0eda",
+    "og_source_sha256": "ec6601a6183fa4cf8c3d1d96e5a7aa19adde307327cc2fdd7c8d110b30570a04",
+    "content_reference": "data/duohertz-preview/art-archive/dh-008-paperwave-lift/cover-art.png",
+    "content_reference_sha256": "af67c7ac14a656c709a8433ab49a90a3822f2ec817136ffa42991dd945947425",
+    "style_reference": "apps/beatscape/candidates/duohertz/dh-003-aurora-skipline/cover-art.png",
+    "style_reference_sha256": "e0f5e898e4995cd7259605990d071be3ac962f7c1aeff5e2e4acbe174977e535",
+    "cover_resize": "sips resize to 1024x1024 PNG",
+    "og_resize": "sips resize to 1200x630 PNG",
+    "cover_svg": "Local SVG brand/title overlay around cover-art.png; bitmap source has no text",
+    "previous_art_provenance": {
+      "tool": "built-in imagegen",
+      "cover_prompt": "Use case: stylized-concept\nAsset type: original square, text-free album-cover background for an internal duohertz electronic rhythm-game candidate\nPrimary request: Create distinctive cover art for “Paperwave Lift”, a buoyant all-ages Future Bass track. Show a diagonal ascent of translucent folded-paper sound fins, each fin lifting a tiny glowing note particle and releasing a soft angular wave into open air. The paper forms should feel musical and weightless, like a new rhythm unfolding upward; no literal book, person, or vehicle.\nStyle/medium: polished contemporary editorial electronic album illustration with softly textured paper edges, crisp layered geometry, rich but welcoming detail readable at thumbnail size.\nComposition/framing: square; the diagonal movement rises from lower-left toward upper-right; reserve a calm dark blue-violet lower band for a separate local title overlay.\nColor palette: coral, warm white, periwinkle, pale teal and soft gold over a deep blue-violet backdrop.\nConstraints: no text, letters, numbers, logos, characters, cars, weapons, red neon city, strobing stripes, copied game imagery, circular interlocking rings, glass sunset horizon, aurora stepping stones, racing sky ribbons, rising helix, light-column grove, or copper lantern network.",
+      "og_prompt": "Use case: ads-marketing\nAsset type: wide companion sharing card for the supplied Paperwave Lift square cover, final target 1200x630\nPrimary request: Recompose the translucent folded-paper sound fins, little glowing note particles, soft angular waves and blue-violet sky from the reference image into a new wide 1.9:1 landscape composition. Put the ascending paperwave forms mostly in the right two-thirds, rising toward upper-right. Keep the left third quiet deep blue-violet for two lines of copy. This must be a companion composition, not a stretched or simply cropped square.\nText (verbatim): exactly two crisp, legible lines in the left third with generous margins, clean modern sans-serif: line 1 “duohertz” all lowercase, smaller, pale teal; line 2 “Paperwave Lift” title case, larger, white. Spell both exactly. No other text or logos.\nStyle/mood: welcoming, buoyant, polished editorial electronic album art, readable as a small social preview.\nConstraints: preserve the cover's coral, periwinkle, pale teal and warm-white paper palette; no people, characters, cars, weapons, red neon city, strobing stripes, copied game art or new unrelated objects.",
+      "og_reference": "cover-art.png supplied to built-in imagegen as the reference image",
+      "og_resize": "Built-in imagegen supplied a 1730x909 wide card; sips resized it to exactly 1200x630 without changing the composition",
+      "cover_svg": "Local SVG title overlay around generated cover-art.png; bitmap source is unchanged"
+    },
+    "previous_assets_sha256": {
+      "cover-art.png": "af67c7ac14a656c709a8433ab49a90a3822f2ec817136ffa42991dd945947425",
+      "og.png": "291ea5352315b95eb83b27b8766e0b953c45596591841d5d49dd19ca6e9412a1",
+      "cover.svg": "7bb366084697a2f48b7cd92afd2dd3543fac5184e4d24c2d3d5bad1d7a681015"
+    },
+    "previous_art_archive": "data/duohertz-preview/art-archive/dh-008-paperwave-lift"
+  },
+  "files_sha256": {
+    "audio.m4a": "58de2ead6a5e3d9910bde78bd3d4a6a47c88931f98da1e25eb1365035128df48",
+    "cover-art.png": "ea13fc6c7a48be47e7ff34c03548b2b81349cb6120b66bb4a2f9c4c2d9a39513",
+    "cover.svg": "7bb366084697a2f48b7cd92afd2dd3543fac5184e4d24c2d3d5bad1d7a681015",
+    "easy.json": "e03319dd1f80b011b701ee7319f0f0de8969bad3f76d97bbec9b5044a0732536",
+    "hard.json": "8fb3c7a2c52b4622494755bf8be918bb6413578217780b326510cac4e2953822",
+    "og.png": "b4dedc3f0f3e0b41d2db315ddaa80a55db3a4d29e1df2c7779bd19cc7cf6b71f",
+    "preview_48s.m4a": "d4b7a4e84111a84e08640b56c5169eb84fb764571f8b78c499639972f955662b",
+    "standard.json": "69e091ea8717e8a49e93bcc7e627f47c9901cef48ef0da7b131658cc2a23d7f7",
+    "stream.m4a": "c1d06271baa15c5d0bd6fdf1a35cf4dbf0611821f2db0163db348d54366c3bb1"
+  }
+}

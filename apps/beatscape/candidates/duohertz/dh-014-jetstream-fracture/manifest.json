@@ -1,0 +1,34 @@
+{
+  "track_id": "dh-014-jetstream-fracture",
+  "title": "Jetstream Fracture",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Drum & Bass",
+  "bpm": 168,
+  "duration_sec": 60,
+  "stream_duration_sec": 120,
+  "creation_method": "Original deterministic Bm9\u2013Gmaj7\u2013Dadd9\u2013A6 syncopated cut-up game movement with reese bass and ascending glass calls; independent Em7\u2013Cmaj7\u2013Gadd9\u2013D6 half-time answer for 120-second stream; generated oscillators and seeded noise, no sampled source or repeated game movement",
+  "source_script": "scripts/duohertz-compose-jetstream-fracture.py",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a polished, original square 1:1 album-cover illustration for an INTERNAL, all-ages electronic rhythm game track candidate titled Jetstream Fracture in the duohertz brand. This Drum & Bass cover has one striking subject: a broad paper-like jetstream ribbon splitting into staggered rhythmic air currents, then rejoining into a clean forward spiral. Translate rapid syncopated beats into abstract airflow, frequency contours, small luminous particles and angled cut-paper layers. Editorial comic-collage energy with original near-black ink, warm-white paper, coral red accents and electric cyan light, subtle halftone, and a strong central silhouette readable as a tiny thumbnail. Dynamic but friendly to children and adults. No people, faces, masks, thief motifs, existing game logos, city skyline, text, letters, numerals, watermark, strobe patterns or copied album imagery. Avoid square mosaic tiles; this cover's identity is flowing split jetstream bands. High-resolution square PNG.",
+    "og_prompt": "Use the supplied Jetstream Fracture square album cover as the edit target. Recompose it into a polished wide social card for the SAME internal duohertz Drum & Bass track. Preserve the distinct split-and-rejoining warm-white jetstream ribbons, black ink field, coral strokes, cyan glow, scattered particles and paper-collage texture. Wide 1200:630 landscape composition: put the energetic spiral and flowing bands on the right two-thirds and reserve a quiet near-black panel at left with clear safe margins. On the left add exactly two crisp, correctly spelled, high-contrast sans-serif text lines: smaller lowercase 'duohertz' and below it larger title-case 'Jetstream Fracture'. No other words, numerals, letters, logo, character, mask, skyline, watermark or strobe pattern. Maintain all-ages appeal and legibility at thumbnail size.",
+    "cover_reference": "New cover-art.png supplied to built-in imagegen as the OG edit target",
+    "cover_resize": "Built-in imagegen supplied a 1254px square PNG; sips resized it to 1024px square",
+    "og_resize": "Built-in imagegen supplied a 1733x908 wide card; sips resized it to 1200x630",
+    "cover_svg": "Local SVG title overlay around generated cover-art.png; bitmap source is unchanged"
+  },
+  "files_sha256": {
+    "audio.m4a": "c0a5d6d2207afbccb068407369ec4b1d3200e4cd140cd2de9789db41ce6af573",
+    "cover-art.png": "e24654b6e570fa7a94e509e7ebb82689edd3edf6861eff69ac5de90cc678fa4a",
+    "cover.svg": "20abd0d1c551a3ac01e87bc0efb288f8e8b07b5e2e6db7f96a68a5fc6d1bda56",
+    "easy.json": "6210631f95c3da83da91c1160ecfc7d9ac113706a86d617996f174835806c8bf",
+    "hard.json": "63383a29adb89daef9a887eb096082f6a24e34a2e60f6dd84df126da5e53ba4f",
+    "og.png": "c3152871e227d35f2f513dc3ca8bf37ac5c9b818d3d754c80352ea43405eb035",
+    "preview_48s.m4a": "14a46f420d718f7b45a3ce614e3ea66e4a15a0f02fb43b3f749ebe98e77f73ee",
+    "standard.json": "7fad9c4886d73ce4977056761d72d08b018533a638d6d6d8ef87e4eb52aafd6e",
+    "stream.m4a": "df982e44c4d51d20c0e40e735c2eca8b55cab3552ab9881d8abd4e8b0b664e56"
+  }
+}

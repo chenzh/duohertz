@@ -1,0 +1,76 @@
+{
+  "theme": "duohertz",
+  "status": "visual_concepts_unreviewed",
+  "generation_tool": "built-in imagegen",
+  "scope": "Original front three-quarter and side full-body concepts; production sprites, name/visual similarity review and final art approval are pending.",
+  "characters": [
+    {
+      "name": "RHYVORI",
+      "title": "The First Pulse",
+      "role": "Attacker",
+      "file": "rhyvori-concept.png",
+      "sha256": "5c0c9cdf15db8d025e5b94d4588e96f81e82f8e6e9c2743aca3a85bcb85f9614",
+      "width": 1024,
+      "height": 1536,
+      "prompt": "Use case: stylized-concept. Asset type: original full-body transparent-background character concept PNG for the family-friendly electronic rhythm game duohertz. Character: AERI, 'The First Pulse', an adult androgynous rhythm guide from Pulse Dock, visually about helping anyone begin with one beat. Curious, decisive, welcoming expression; compact energetic silhouette, about 165 cm in proportion. Short textured dark hair with one cyan streak; coral-orange short utility jacket over a cream shirt, navy tapered trousers, comfortable sneakers. One small circular wrist pulse tuner emits two soft cyan concentric sound rings from an open hand; this is an audio tool, not a weapon. Style: cohesive contemporary editorial game illustration, painterly clean forms with subtle tactile fabric, rounded friendly proportions, polished character design for children and adults, clear readable silhouette at card size. Composition: single standing character, head-to-toe fully visible with margins, slight three-quarter front pose, genuinely transparent alpha background. Constraints: no text, names, labels, logos, scenery, stage, floor, extra people, fantasy armor, combat gear, weapons, crowns, capes, MOBA aesthetic, sexualization, or existing game-character resemblance.",
+      "prompt_name_at_generation": "AERI",
+      "naming_note": "Working name AERI was retired after public screening found an existing VARLET music-idol character. This image contains no text and is reused unchanged as a RHYVORI concept; the original AERI prompt is preserved verbatim. RHYVORI is not legally cleared.",
+      "side_view": {
+        "file": "rhyvori-side-concept.png",
+        "sha256": "6ac8527bca81aed3c19f693b67e33b9a3c5465aaac081ec710c85120b3db3c50",
+        "width": 1024,
+        "height": 1536,
+        "status": "concept_unreviewed",
+        "source_front_file": "rhyvori-concept.png",
+        "source_front_sha256": "5c0c9cdf15db8d025e5b94d4588e96f81e82f8e6e9c2743aca3a85bcb85f9614",
+        "prompt": "Use case: stylized-concept. Asset type: second-view character concept for the family-friendly electronic rhythm game duohertz. Edit target: the supplied transparent full-body concept of RHYVORI, The First Pulse. Primary request: redraw this SAME person as a clean full-body 90-degree left-facing side profile, head to shoes visible, in a relaxed standing pose with the wrist pulse tuner visible. Preserve the distinctive short dark hair with one cyan streak, warm skin tone, coral-orange short utility jacket, cream shirt, navy tapered trousers, white-and-cyan sneakers, rounded editorial illustration style, adult androgynous age, and proportions. Show only one side-view figure, no front view, no turntable panels. Make the background genuinely transparent alpha. Keep the silhouette readable at small card size. No text, labels, logo, scenery, floor, extra person, weapon, fantasy armor, sexualization, or resemblance to existing game characters."
+      }
+    },
+    {
+      "name": "NIVAREO",
+      "title": "The Reply Wave",
+      "role": "Support",
+      "file": "nivareo-concept.png",
+      "sha256": "e78e64822e81b6cad3429cf4cb7dc1aa035411b8ab0ba9518ce184e8a1c505ad",
+      "width": 1024,
+      "height": 1536,
+      "prompt": "Use case: stylized-concept. Asset type: original full-body transparent-background character concept PNG for the family-friendly electronic rhythm game duohertz. Character: NILO, 'Keeper of Echoes', an adult rhythm-listening guide from Echo Commons, visually about answering another player's beat rather than overpowering it. Patient, observant, gently humorous expression; taller relaxed silhouette, about 169 cm in proportion. Warm medium-brown skin, close-cropped curly hair, a soft lavender and mustard layered streetwear overshirt over dark relaxed trousers, practical low-top shoes. One hand holds a small open glass tuning ring beside the ear; a pair of quiet violet echo arcs appear near the ring, like sound waves, with no weapon-like shape. Style: cohesive contemporary editorial game illustration, clean painterly forms, subtle tactile fabric, rounded all-ages proportions and readable silhouette at card size. Composition: one standing character, full body head-to-toe visible with margin, slight three-quarter front pose, genuinely transparent alpha background. Constraints: no text, labels, logos, scenery, stage, floor, other people, fantasy armor, combat gear, weapons, crowns, capes, MOBA aesthetic, sexualization, or existing game-character resemblance. Distinct from an energetic coral-jacket character: NILO's pose and palette should feel calm and welcoming.",
+      "prompt_name_at_generation": "NILO",
+      "prompt_title_at_generation": "Keeper of Echoes",
+      "naming_note": "Working name NILO and title Keeper of Echoes were retired after public screening found game-adjacent Nilo usage and an existing Monster Train unit named Keeper of Echoes. This image contains no text and is reused unchanged as a NIVAREO concept; the original NILO/keeper prompt is preserved verbatim. NIVAREO and The Reply Wave are not legally cleared.",
+      "side_view": {
+        "file": "nivareo-side-concept.png",
+        "sha256": "04a6392a566b5fe7b87421e19d0c61f111ff9f38a6201d1adbf11971128c9459",
+        "width": 1024,
+        "height": 1536,
+        "status": "concept_unreviewed",
+        "source_front_file": "nivareo-concept.png",
+        "source_front_sha256": "e78e64822e81b6cad3429cf4cb7dc1aa035411b8ab0ba9518ce184e8a1c505ad",
+        "prompt": "Use case: stylized-concept. Asset type: second-view character concept for the family-friendly electronic rhythm game duohertz. Edit target: the supplied transparent full-body concept of NIVAREO, The Reply Wave. Primary request: redraw this SAME adult person as a single full-body 90-degree left-facing side profile, head to shoes visible, with a relaxed listening pose holding the small open glass tuning ring near the ear. Preserve the warm medium-brown skin, close-cropped curly dark hair, calm friendly expression, lavender oversized streetwear overshirt with mustard collar/cuffs and cream panels, white shirt, dark relaxed trousers, white-and-lavender sneakers, and small violet echo arcs. Match the painterly clean editorial game illustration and proportions of the supplied front concept. Show only one side-view figure, no front view or multiple panels. Genuinely transparent alpha background. No text, names, labels, logo, scenery, floor, extra person, weapon, fantasy armor, sexualization, or resemblance to existing game characters."
+      }
+    },
+    {
+      "name": "ZORYMELA",
+      "title": "Weaver of Waves",
+      "role": "Buffer",
+      "file": "zorymela-concept.png",
+      "prompt_name_at_generation": "VELA",
+      "naming_note": "Working name VELA was retired after public-name screening found an existing SOUND VOLTEX character. PRILUNE was then paused because it sounds close to a Toei Precure character. The text-free image is reused unchanged as a ZORYMELA concept. The front and side generation prompts remain verbatim and retain VELA and PRILUNE respectively. ZORYMELA is only a working name, not legal clearance.",
+      "sha256": "45235a5152f5414aeaa958c99c8be009ec7b6f24d13d7e523423c5cd92d5fa6e",
+      "width": 1024,
+      "height": 1536,
+      "prompt": "Use case: stylized-concept. Asset type: original full-body transparent-background character concept PNG for the family-friendly electronic rhythm game duohertz. Character: VELA, 'Weaver of Waves', an adult frequency designer from Prism Yard, visually about letting two different rhythms coexist and meet. Calm, meticulous, kind expression; tall lean silhouette, about 172 cm in proportion. Olive complexion, dark long hair tied into one practical braid, thin round glasses, indigo cropped workwear jacket with restrained lilac and mint panels, charcoal wide-leg trousers and simple high-top shoes. A small clear handheld prism in one palm refracts two separate soft sound-wave ribbons, one cyan and one lavender, meeting gently without forming a weapon. Style: cohesive contemporary editorial game illustration, clean painterly forms, tactile fabric, rounded all-ages proportions, polished design readable at card size. Composition: one standing character, full body head-to-toe visible with margins, slight three-quarter front pose, genuinely transparent alpha background. Constraints: no text, labels, logos, scenery, stage, floor, other people, fantasy armor, combat gear, weapons, crowns, capes, MOBA aesthetic, sexualization, or existing game-character resemblance. Distinct from a coral-jacket pulse leader and a mustard-lavender echo listener: VELA should read as thoughtful and inventive.",
+      "side_view": {
+        "file": "zorymela-side-concept.png",
+        "sha256": "672b3aa274ff4933712d73de32d46760ef9d569b66e9a8100f5fca43f7495005",
+        "width": 1024,
+        "height": 1536,
+        "status": "concept_unreviewed",
+        "source_front_file": "zorymela-concept.png",
+        "source_front_sha256": "45235a5152f5414aeaa958c99c8be009ec7b6f24d13d7e523423c5cd92d5fa6e",
+        "prompt_name_at_generation": "PRILUNE",
+        "prompt": "Use case: stylized-concept. Asset type: second-view character concept for the family-friendly electronic rhythm game duohertz. Edit target: the supplied transparent full-body concept of PRILUNE, Weaver of Waves. Primary request: redraw this SAME adult person as a single full-body 90-degree left-facing side profile, head to shoes visible, in a calm standing pose with the clear prism held near one palm. Preserve the olive complexion, thin round glasses, long dark hair in one practical thick braid, indigo cropped workwear jacket with restrained mint and lilac panels, black high-neck shirt, charcoal wide-leg trousers, white-and-lavender sneakers, and two separate soft cyan and lavender wave ribbons meeting near the prism. Match the painterly clean editorial game illustration, body proportions, and clothing construction of the supplied front concept. Show only one side-view figure, no front view or multi-panel turntable. Make the background genuinely transparent alpha. No text, names, labels, logo, scenery, floor, extra person, weapon, fantasy armor, sexualization, or resemblance to existing game characters."
+      }
+    }
+  ]
+}

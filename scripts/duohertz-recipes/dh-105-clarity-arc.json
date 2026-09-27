@@ -1,0 +1,18 @@
+{
+  "track_id": "dh-105-clarity-arc",
+  "title": "Clarity Arc",
+  "artist": "duohertz studio",
+  "subgenre": "Trance",
+  "bpm": 144,
+  "game_duration_sec": 64,
+  "stream_duration_sec": 128,
+  "generation_duration_sec": 180,
+  "stream_start_sec": 32,
+  "model_variant": "small",
+  "generation_prompt": "Create an original 180-second stereo melodic trance instrumental at steady 144 BPM in 4/4 for an all-ages one-or-two-key rhythm game. By 24 seconds a full uplifting groove plays: solid four-on-the-floor kick every quarter beat, clean clap on two and four, shimmering eighth hats, rolling bass, warm suspended chords and a distinct short plucked arpeggio attack on every quarter beat. Signature hook: seven short climbing notes arc back into a two-note low resolution; after 96 seconds change chord roots and invert the resolution while preserving full rhythmic energy. Keep 32-to-160 seconds continuously melodic and near-uniform in loudness, not an exact repeated half. Luminous and clear, with no vocals, speech, samples, copied melody, tempo drift, quiet bridge, breakdown, fade or silence in the selected passage.",
+  "art_tool": "local-authored SVG",
+  "cover_source_svg": "scripts/duohertz-art-sources/dh-105-clarity-arc-cover.svg",
+  "og_source_svg": "scripts/duohertz-art-sources/dh-105-clarity-arc-og.svg",
+  "cover_prompt": "Original high-contrast comic-print cover: a single open cyan frequency arc crosses two thin ivory guide lines and resolves into a coral square, no planet, ring, star, landscape, character or text.",
+  "og_prompt": "Wide duohertz card with open frequency arc on right and Clarity Arc title on left."
+}

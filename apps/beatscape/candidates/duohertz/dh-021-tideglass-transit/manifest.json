@@ -1,0 +1,48 @@
+{
+  "track_id": "dh-021-tideglass-transit",
+  "title": "Tideglass Transit",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Melodic House",
+  "bpm": 122,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -3 dB gain before AAC encoding. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-021-tideglass-transit.json",
+  "source_recipe_sha256": "baf4a5f32d21a4d34fef3be9cbd19296ef534989f4be4d91d0748202c011e86d",
+  "source_master_sha256": "d6802bf367adf6cb42787cdb200539e30e4d4e10902bdc6d46197d3e36343d4e",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.15289,
+    "clipping_ratio": 0.0,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "fdfe2acc-8c0f-4c79-8757-7d69e8115343",
+  "source_generation_receipt_sha256": "1a546031528776da581b71685e1f31096b08c5f347a7385bd119fc92b75bb0cf",
+  "generation_prompt": "Original all-ages melodic house instrumental for a one-or-two-key electronic rhythm game, around 122 BPM in clear four-beat bars. Begin with a short five-note glassy pluck phrase answered by warm, rounded bass and a steady soft four-on-the-floor kick; add crisp shaker subdivisions and a restrained offbeat chord pulse. Develop the phrase through changing chord inversions and a second syncopated bell-like counterline, with distinct kick, clap and pluck onsets suitable for rhythm charts. Near the midpoint open a quieter section with a new descending answer melody and sparse percussion, then rebuild into a brighter final section that transforms the first phrase rather than repeating an entire half. Keep one evolving 128-second stereo composition with dynamic breathing room, no harsh distortion, vocals, speech, sampled recordings or known melody.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Generate a brand-new SQUARE 1:1 original album cover for duohertz track Tideglass Transit, a family-friendly melodic-house rhythm-game song. Bold high-contrast editorial comic collage: near-black ink, warm ivory paper, coral red and electric cyan, with a restrained pale-yellow accent, angular cut paper, halftone print grain. Main motif: two staggered horizontal transparent-looking sound rails pass through a tall rectangular tide gauge, their evenly spaced pulses refracting into small stepped bars; calm forward motion and a legible five-beat-like pluck pattern, but no literal water scene. Strong thumbnail silhouette and open negative space, distinct from rings, discs, zigzag footpaths, sunbursts or cityscapes. No people, vehicles, water, text, letters, numbers, logo or imitation of any existing game.",
+    "og_prompt": "Edit the supplied original Tideglass Transit square cover into a HORIZONTAL social card for duohertz. Keep the same two staggered coral and cyan sound rails crossing a tall rectangular tide gauge, stepped pulse marks, angular near-black and warm-ivory halftone collage. Recompose the motif on the RIGHT two-thirds and leave calm dark space on the LEFT. Add exactly two crisp fully legible English lines at left: 'duohertz' in lowercase and 'Tideglass Transit'. No other text, letters, numbers, people, vehicles, water scene, logos or existing IP. Original all-ages electronic music poster.",
+    "cover_source_sha256": "cfc7a8442711a6c427ee68a5704e1c6207bbc4685fe5ba622f4072ab958787fa",
+    "og_source_sha256": "a4adf3e4c5921e6b9d96bf2f57cd6df961a902d6ebee5d1bf9ad9d83239db573",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "7ae5a6657fc621abc7c57881b69d85f54fc8b70b07bd293c49473347feb58cb2",
+    "cover-art.png": "7d7486f92e634c11542cb52526aa2aadc48c3c13212963ce5870f0792129dcf1",
+    "cover.svg": "abe569e51d5011d9c424bf0b4aba91bf240946e498da5b3abd25834098a36415",
+    "easy.json": "b4b29673903e7b369d45c3609382f07fbb84295c711039d6b9ecf760d5de8e75",
+    "hard.json": "4813a58dc66c447b02e03b0ca8b529976a26397b6e6f7ca61fa24388798141be",
+    "og.png": "c705f47c0899124d4f89f324dc6ddc4293c64b5ae356bab0f482a586e0df1930",
+    "preview_48s.m4a": "d4640d35a797dbc7e0a2006897a7ee464a1c99f342d36884c80381732c82b3b9",
+    "standard.json": "88c4d95cccf087878c0a2d9f644234c9bec909858a83c4cfd90f8b22a5aee008",
+    "stream.m4a": "00d9b5f4eae60b7f3e0ebc058470de4f1aa7954ac46aa63891d56f909313edf7"
+  }
+}

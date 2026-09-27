@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>duohertz · Character Style Comparison</title>
+  <style>
+    :root { color-scheme: dark; font-family: system-ui, sans-serif; background: #111421; color: #fff9ef; }
+    * { box-sizing: border-box; }
+    body { max-width: 1160px; margin: auto; padding: 24px 20px 64px; }
+    h1, h2 { margin: 0; line-height: 1; font-style: italic; text-transform: uppercase; }
+    h1 { font-size: clamp(36px, 7vw, 68px); }
+    h2 { font-size: 32px; }
+    p { max-width: 720px; line-height: 1.5; }
+    .eyebrow, figcaption, .status { font: 700 12px/1.4 ui-monospace, monospace; letter-spacing: .08em; text-transform: uppercase; }
+    .eyebrow { color: #67eee0; }
+    .status { display: inline-block; padding: 6px 9px; background: #f34d65; color: #111421; }
+    section { margin-top: 44px; border-top: 3px solid #fff9ef; padding-top: 20px; }
+    .comparison { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: 18px; }
+    figure { margin: 0; min-width: 0; border: 2px solid #fff9ef; background: #1b2031; }
+    figure.new { border-color: #67eee0; }
+    .art { display: grid; place-items: end center; height: 270px; overflow: hidden; background: linear-gradient(135deg, #f34d65 0 18%, transparent 18% 82%, #67eee0 82%), #111421; }
+    .art img { display: block; width: 100%; height: 100%; min-height: 0; object-fit: contain; object-position: bottom; }
+    figcaption { padding: 9px; }
+    .note { color: #d2d5e1; }
+    @media (max-width: 700px) { .comparison { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 400px) { body { padding-inline: 12px; } .comparison { gap: 8px; } .art { height: 170px; } }
+  </style>
+</head>
+<body>
+  <p class="eyebrow">duohertz / visual study / 2026-09-24</p>
+  <h1>Character style comparison</h1>
+  <p><span class="status">Unreviewed concepts</span></p>
+  <p class="note">Original concepts and editorial screen-print studies are shown at the development hub's 270px desktop and 170px phone card-art heights. New art is a visual direction test, not audience validation, originality clearance, production art approval, or a live-site change.</p>
+  <section aria-labelledby="rhyvori"><h2 id="rhyvori">01 / RHYVORI</h2><div class="comparison">
+    <figure><div class="art"><img src="../characters/rhyvori-concept.png" alt="Original RHYVORI front concept"></div><figcaption>Original · front</figcaption></figure>
+    <figure class="new"><div class="art"><img src="rhyvori-editorial/front.png" alt="Editorial RHYVORI front study"></div><figcaption>Study · front</figcaption></figure>
+    <figure><div class="art"><img src="../characters/rhyvori-side-concept.png" alt="Original RHYVORI side concept"></div><figcaption>Original · side</figcaption></figure>
+    <figure class="new"><div class="art"><img src="rhyvori-editorial/side.png" alt="Editorial RHYVORI side study"></div><figcaption>Study · side</figcaption></figure>
+  </div></section>
+  <section aria-labelledby="nivareo"><h2 id="nivareo">02 / NIVAREO</h2><div class="comparison">
+    <figure><div class="art"><img src="../characters/nivareo-concept.png" alt="Original NIVAREO front concept"></div><figcaption>Original · front</figcaption></figure>
+    <figure class="new"><div class="art"><img src="nivareo-editorial/front.png" alt="Editorial NIVAREO front study"></div><figcaption>Study · front</figcaption></figure>
+    <figure><div class="art"><img src="../characters/nivareo-side-concept.png" alt="Original NIVAREO side concept"></div><figcaption>Original · side</figcaption></figure>
+    <figure class="new"><div class="art"><img src="nivareo-editorial/side.png" alt="Editorial NIVAREO side study"></div><figcaption>Study · side</figcaption></figure>
+  </div></section>
+  <section aria-labelledby="zorymela"><h2 id="zorymela">03 / ZORYMELA</h2><div class="comparison">
+    <figure><div class="art"><img src="../characters/zorymela-concept.png" alt="Original ZORYMELA front concept"></div><figcaption>Original · front</figcaption></figure>
+    <figure class="new"><div class="art"><img src="zorymela-editorial/front.png" alt="Editorial ZORYMELA front study"></div><figcaption>Study · front</figcaption></figure>
+    <figure><div class="art"><img src="../characters/zorymela-side-concept.png" alt="Original ZORYMELA side concept"></div><figcaption>Original · side</figcaption></figure>
+    <figure class="new"><div class="art"><img src="zorymela-editorial/side.png" alt="Editorial ZORYMELA side study"></div><figcaption>Study · side</figcaption></figure>
+  </div><p class="note">Review focus: check whether the wide cyan/lavender wave ribbons leave enough room for the character silhouette at card size.</p></section>
+</body>
+</html>

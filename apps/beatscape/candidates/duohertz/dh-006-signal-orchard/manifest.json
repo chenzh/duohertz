@@ -1,0 +1,58 @@
+{
+  "track_id": "dh-006-signal-orchard",
+  "title": "Signal Orchard",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Melodic House",
+  "bpm": 124,
+  "duration_sec": 64,
+  "stream_duration_sec": 128,
+  "creation_method": "Independent deterministic D–B minor–G–A Melodic House game movement and new F# minor–D–A–E answer movement for a 128-second stream master; generated oscillators and seeded noise only, no sampled source audio or repeated first-minute loop; stream-only 0.7 amplitude limiter without makeup gain before AAC",
+  "stream_limiter": 0.7,
+  "source_script": "scripts/duohertz-compose-signal-orchard.py",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "status": "visual_candidate_unreviewed",
+    "revision_reason": "Unify the early crystal-water fantasy scene with duohertz comic print while preserving its signal orchard and central pulse",
+    "cover_prompt": "Edit Image 1 into a NEW original SQUARE 1:1 cover-art candidate for duohertz track Signal Orchard. Image 1 is the content reference: preserve ONLY its distinctive idea of an ORCHARD made of five tall frequency-tree pillars, with a central pulse node sending one cyan waveform through the pillars. Replace its realistic crystal, glowing fantasy forest, water, skyline, haze and tiny sparkles completely. Image 2 is STYLE REFERENCE ONLY for near-black ink, warm-ivory cut paper, coral and electric-cyan accents, large halftone print texture and dynamic angular graphic design; DO NOT copy its interlocking circular rings, waveform centerpiece or radial layout. Create five staggered vertical warm-ivory paper-cut frequency trees on a near-black field: a broad tall central trunk with alternating angular branches made of frequency bars, four simpler flanking trunks, one small coral diamond as the central pulse node, and a single cyan zigzag waveform visibly connecting all five trunks. The tree silhouettes must remain distinct from city buildings or piano keys. Strong graphic silhouette legible at 100px, sparse coral halftone in corners, restrained print grain, quiet near-black lower fifth for later local title overlay. All ages, energetic but no strobe. No realistic water, sky, crystal, vegetation, landscape, ring, platform, character, text, letters, numbers, logo, watermark or copied game art.",
+    "og_prompt": "Edit this newly redrawn original Signal Orchard square cover into a NEW HORIZONTAL roughly 1.9:1 duohertz social card. Preserve its five distinct warm-ivory angular frequency trees, one central coral diamond pulse node, one cyan zigzag waveform connecting the five trees, near-black ink and restrained coral halftone. Recompose the five-tree orchard action on the RIGHT two-thirds; leave a quiet near-black panel on the LEFT. Add EXACTLY TWO crisp, fully readable English text lines on the left: 'duohertz' all lowercase in electric cyan, and 'Signal Orchard' in larger warm ivory. Spell both EXACTLY, do not truncate. Make a designed wide composition rather than stretching the square. No other words, letters, numbers, realistic vegetation, water, sky, crystals, city skyline, rings, characters, logo, watermark or copied game art.",
+    "cover_source": "data/duohertz-preview/art-sources/dh-006-signal-orchard-comic/cover.png",
+    "og_source": "data/duohertz-preview/art-sources/dh-006-signal-orchard-comic/og.png",
+    "cover_source_sha256": "616d3d16e41edf617f13a469e3bc2d51cfc405e938f7d8c4bbdd06f91d140c79",
+    "og_source_sha256": "9d951554925936669b7a6dca0315767dbe64912687425b179e7276d90c0bc6a8",
+    "content_reference": "data/duohertz-preview/art-archive/dh-006-signal-orchard/cover-art.png",
+    "content_reference_sha256": "1efd9824edc61f5ec7393f5a2d18a0d39ac8237321c9d34d2d0d5f9ebd30e1c3",
+    "style_reference": "apps/beatscape/candidates/duohertz/dh-001-first-frequency/cover-art.png",
+    "style_reference_sha256": "e3c55396eb2d4529ed065965460c2c8455939ea1a5169b58aaf1040d23633f33",
+    "cover_resize": "sips resize to 1024x1024 PNG",
+    "og_resize": "sips resize to 1200x630 PNG",
+    "cover_svg": "Local SVG brand/title overlay around cover-art.png; bitmap source has no text",
+    "previous_art_provenance": {
+      "tool": "built-in imagegen",
+      "cover_prompt": "Use case: stylized-concept. Create one original square, text-free album-cover illustration for “Signal Orchard”, a bright all-ages Melodic House music candidate in the electronic rhythm game duohertz. A playful grove of small translucent geometric light columns, each column emitting a gentle circular sound wave when touched by a glowing note particle; interlaced cyan, citrus-yellow and soft coral frequency ribbons travel through the grove and meet at a warm central pulse. Contemporary editorial electronic album art, crisp rhythmic structure and a joyful airy atmosphere, readable at thumbnail size, rich detail without visual clutter. Leave calm deep teal negative space in the lower third for a separate local title overlay. Visually distinct from existing duohertz candidates: no twin interlocking rings, no indigo-glass sunset, no aurora stepping stones, no racing sky ribbons, no rising helix. No text, letters, logos, characters, vehicles, weapons, copied game art, strobing stripes or red neon city. Square composition.",
+      "og_base_prompt": "Use case: ads-marketing. Edit the supplied Signal Orchard square cover into an original companion wide, text-free social card for the family-friendly duohertz Melodic House song. Preserve the translucent cyan/citrus/coral light columns, glowing note particles and one warm central frequency pulse, but recompose for a horizontal 1200x630-style landscape. Place the glowing grove and crossing sound-wave ribbons in the right two-thirds, with calm deep teal negative space in the left third for later local typography. Keep the illustration crisp and readable at thumbnail size. No text, letters, logos, characters, vehicles, weapons, copied game art or strobing stripes. Do not simply stretch or crop the square image.",
+      "og_prompt": "Use case: ads-marketing. Edit the supplied wide, text-free Signal Orchard social card. Preserve the glowing cyan, citrus and coral frequency grove on the right, the calm deep-teal left third, and the wide landscape composition. In the dark left third add exactly two crisp, legible lines of modern sans-serif text with generous margins: line 1 “duohertz” all lowercase, smaller and pale cyan; line 2 “Signal Orchard” title case, larger and white. Spell both lines exactly. No other words, letters, icons, logos or marks. Keep 1200x630-style horizontal aspect ratio.",
+      "og_resize": "Built-in imagegen supplied a wide card; sips resized it to exactly 1200x630 without changing the composition",
+      "cover_svg": "Local SVG title overlay around generated cover-art.png; bitmap source is unchanged"
+    },
+    "previous_assets_sha256": {
+      "cover-art.png": "1efd9824edc61f5ec7393f5a2d18a0d39ac8237321c9d34d2d0d5f9ebd30e1c3",
+      "og.png": "b15138a638fc8b29bce405ad913a9a9a12f94cd592f4729f54607565f07cbe9d",
+      "cover.svg": "07f287e176dfa076db2980b43b2ea2aa145ca8f81ead33246eaae215bd3e76d3"
+    },
+    "previous_art_archive": "data/duohertz-preview/art-archive/dh-006-signal-orchard"
+  },
+  "files_sha256": {
+    "audio.m4a": "f0703f8aac7fa251e98c2a285bbcf7cc58475f8b65366f20f68a3c3c3422d3a9",
+    "cover-art.png": "28bb108f18928e00652cb8d0c1599c7cd4a9747d672636def86b8f16eb5b80a8",
+    "cover.svg": "07f287e176dfa076db2980b43b2ea2aa145ca8f81ead33246eaae215bd3e76d3",
+    "easy.json": "7d9bbaab4b01945840f40b92c2280e62c07021ccafba5f484e9b9302bd8b4daf",
+    "hard.json": "05c3b7a9fc1cc81614b8d94f6f64231539c8403420f81ab2d45fc3d8e9572d77",
+    "og.png": "7526da000da2b95bfce954974da140e794f8e806ca8d822713eff9dcb032d27a",
+    "preview_48s.m4a": "89131a62c302a64511a64da6286e9fc0ddf0ca1628febfbb1a96a769df4fe30c",
+    "standard.json": "e17d28dc08c9971115dbbe4e3da52487dc997117a21f1835f7e53bf1d401fc08",
+    "stream.m4a": "344524252f7d6d548e50fca067389ba7c7a444ff7881fa3f71927463d8e77c7e"
+  }
+}

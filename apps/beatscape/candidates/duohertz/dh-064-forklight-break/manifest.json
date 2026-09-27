@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-064-forklight-break",
+  "title": "Forklight Break",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Drum & Bass",
+  "bpm": 171.429,
+  "target_bpm": 172,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -6.5 dB gain before AAC encoding. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -6.5,
+  "stream_limiter": null,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-064-forklight-break.json",
+  "source_recipe_sha256": "41f7ad5ef9744efcbcc8eebe9fa0f876834d32a484c9115f4bb75de1df443e38",
+  "source_master_sha256": "86884338a21468958d3ee7dcdfd8f9585d25a52844e09684db1cffd6cd7ab31d",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.16759,
+    "clipping_ratio": 3.3e-05,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "0aa16999-ac6a-4bf4-9286-8dcf36d63e98",
+  "source_generation_receipt_sha256": "4592359e206a6cf9464a4e1f276c09adda2b459527367ae582a0076e3bc247b0",
+  "generation_prompt": "Generate one ORIGINAL 128-second stereo LIQUID DRUM AND BASS instrumental for an all-ages one-or-two-key rhythm game at STRICT constant 172 BPM in 4/4. This is a continuous excerpt beginning INSIDE THE FULL MAIN GROOVE, with clear audible drums and melody at timestamp zero. Keep the same sharp short kick on beats one and three, dry snare on beats two and four, eighth-note hats, a clipped offbeat rim attack and a clean short pitched mallet note on every quarter beat from the first bar to the last. No fade-in, weak intro, drumless break, half-time switch, ambient-only bridge, filtered outro, silence or tempo drift. Signature hook: a pair of high mallet notes that split outward in opposite directions, followed by a three-note descending answer; make the rhythm playful and immediately memorable. Add a round moving bassline and a soft luminous minor-ninth chord bed that never masks the short attacks. At 64 seconds retain the exact drum grid and volume, change the bass roots, reverse the hook's note direction and answer it with a new two-note syncopation. Evolve every 16 bars while maintaining strong beat anchors and distinct second-half phrasing. Crisp and kinetic without harsh noise or excessive distortion. No vocals, speech, samples, recognizable melody or imitation of another song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a new SQUARE 1:1 original duohertz album cover for Forklight Break, a fast but friendly drum-and-bass rhythm-game track. Original high-contrast editorial comic-print collage: near-black ink, warm-ivory cut paper, coral red and electric cyan, sparse coarse halftone. Main graphic: ONE oversized upright TUNING FORK silhouette in warm ivory, with TWO long prongs that curve slightly outward near the tips. A single electric-cyan zigzag beat line rises through the stem and visibly SPLITS into two short paths, one heading toward each prong; exactly three coral beat sparks interrupt the gap between the prongs at staggered heights. Strong central silhouette, all prongs and sparks inside the middle 60% of the square so it reads in a 100px mobile crop. Quiet dark lower fifth for local title overlay. Make it a flat cut-paper music object, not a weapon or electricity bolt. Avoid photorealistic scenery, people, headphones, piano keys, railways, rings, letters, numerals, logos, watermarks, strobe or copied game art.",
+    "og_prompt": "Edit the supplied square Forklight Break cover into a horizontal roughly 1.9:1 original duohertz social card. Keep exactly ONE recognizable warm-ivory upright tuning fork with two outward prongs, one cyan beat line splitting from the stem toward each prong, and three small coral beat sparks between the prongs. Recompose the fork on the RIGHT half, with calm near-black editorial comic-print ink and sparse halftone on the LEFT. Add exactly two fully legible English text lines on the left: 'duohertz' all lowercase in electric cyan and 'Forklight Break' larger in warm ivory. Spell both exactly, with no truncation. Purpose-build the wide composition without stretching the square. No other text, numbers, people, scenery, weapon, logo, watermark or copied game art.",
+    "cover_source_sha256": "9f7b1eea019dd1ab1dd5dac1c43ed20cd3824bde5ba274a140a747545e9768dd",
+    "og_source_sha256": "22290e19ed213b9b8aca196ffcf2d6df0de5d036f7575e17a94e299489ca9f3b",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "56738566be06284e53a6c033d62dcf52e462d193d8742c50ff107cb80250baea",
+    "cover-art.png": "b422047344bf39690d6b2e1441637c780365299e74bc55e1cf50caae1c9602b2",
+    "cover.svg": "e2052008bb8b894420660ca39e2b23ef35f6716d3fd79eeb91d50fbf9908cabb",
+    "easy.json": "3c13fada7e41887cde52951d3b85b84144ca107bedd8e98befb1c5f4af8077ac",
+    "hard.json": "1ecd3a34d36fc43c3c70676bc9b52e31a4f127eb0b1497b5b1af1bf06088557a",
+    "og.png": "f7864602f53840f525884844f9e7e004f73d50b5f043d6d3ff5d39d4e8b8d0e8",
+    "preview_48s.m4a": "7b6c631dc39885b99b728334ed396b0704d7381a82e499d32b8ee48322241f1a",
+    "standard.json": "ee1fa50d013730d1f5999f786169118fe6a4e9adac3984d51d07bbf357e37ee7",
+    "stream.m4a": "b73d12ea2fd9bd30cd54776083e4398ecbb1f7d87081bd59db8bcefb80ee3944"
+  }
+}

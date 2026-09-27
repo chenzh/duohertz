@@ -1,0 +1,56 @@
+{
+  "track_id": "dh-019-parallax-daybreak",
+  "title": "Parallax Daybreak",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Synthwave",
+  "bpm": 114,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -3 dB gain before AAC encoding. PCM preflight cannot independently prove inference mode or musical quality; human review remains required. Re-encoded from the same source WAV: stream gain -3 dB, stream limiter 0.7 amplitude without makeup gain.",
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-019-parallax-daybreak.json",
+  "source_recipe_sha256": "e12c55956505c4ad1c7ae478896163c53d7a071b1362c8771c687fc421c6d490",
+  "source_master_sha256": "317c2f8627ffef65b636ddce42f3469c24767ddb9b52332baf24261e53692ca8",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.16195,
+    "clipping_ratio": 1.4e-05,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "049a4e3c-96b6-4c41-9676-48f5618d2646",
+  "source_generation_receipt_sha256": "37a3291ed8078d612936345c5132c23db428c485070d287b4be56daf93cae1b6",
+  "generation_prompt": "Original bright synthwave instrumental for a family-friendly one-or-two-key rhythm game, around 114 BPM in clear 4/4. Begin with a compact rising five-note analog-style synth hook over a steady dry kick, crisp claps, warm pulsing bass and airy offbeat keys. Use a second contrasting glass-bell answer after the first phrase, restrained gated tom fills and playful syncopation; around the midpoint open into a thinner new harmonic movement with descending bell figures, then bring the hook back in a fuller final section. One evolving 128-second composition, clear transients for rhythm play, wide clean stereo, optimistic and fresh rather than dark retro horror. No vocals, speech, sampled recordings or known melody.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Generate a brand-new SQUARE 1:1 original album cover for duohertz track Parallax Daybreak, an all-ages synthwave rhythm-game song. Graphic editorial comic collage, near-black ink and warm ivory paper, coral red and electric cyan, tiny lemon-yellow highlights. Main abstract motif: two offset circular frequency discs sliding past one another like parallax layers, each disc cut into rhythmic wedges, with a rising five-step cyan pulse crossing them; energetic diagonal halftone rays and rough print texture. Make it a sharp geometric sound poster, high contrast and legible at thumbnail size, distinct from ring covers and landscape sunrise imagery. No person, no scenery, no city, no text, no letters, no numbers, no logo, no existing game IP.",
+    "og_prompt": "Edit the supplied original square Parallax Daybreak cover into a HORIZONTAL social card for duohertz. Preserve its distinctive two offset cut-paper frequency discs, rising five-step cyan pulse, coral/ivory/near-black palette, lemon accents and halftone comic print texture. Recompose the abstract discs on the RIGHT two-thirds; make clean near-black negative space on the LEFT. Add exactly two highly readable English text lines on the left: 'duohertz' (lowercase) and 'Parallax Daybreak'. No other text, letters, numbers, people, scenery, logos or existing game imagery. Family-friendly bold modern music poster.",
+    "cover_source_sha256": "6815e3b8fbaa84c1dcc5a83e274975bf66741fcd1d00a2460fad13de4c0b86e1",
+    "og_source_sha256": "58b6968f8078b676b44d58b23e8aa39e2d069f06aff6a38468f9f2112118c2ad",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "7f9951db34d3f806b7cd8c12e285ac3ac85fb806fe1662fce67eb80c5c9a57cd",
+    "cover-art.png": "61b8be3630743f6a3fcb6c82eafda3e542592b45a3e07748c7a9e39f8eac4ce4",
+    "cover.svg": "9dc878d68d960a0f6016e8a15f3ee1a06afd38a76dad757cb76ea6e268951b3f",
+    "easy.json": "4225d10c4131516d5110d3b45472e6fda94b4296626046774f07f34669ae8b62",
+    "hard.json": "a9e6f352bd73932a18df8c2444040bbbd11e1c2b27c448bbad5e464ab96b4e54",
+    "og.png": "bed14a1f88bb5db52baaf17c6f3a318ec47abe1b8edb3e358fffde4ddd2ef651",
+    "preview_48s.m4a": "0a93d4b8e8266521884ba57b2158ef600a62c2f783028f1c8ac52045bd7b5a23",
+    "standard.json": "800a7ae49e1352aec790d8647608f95623f0bcee95b1d308a2bc7a8774c4027e",
+    "stream.m4a": "bac683a91a1581c5f053aeed0d5289609aef11e7c388145e3ccdecc52eedd11d"
+  },
+  "audio_rework": {
+    "source_master_sha256": "317c2f8627ffef65b636ddce42f3469c24767ddb9b52332baf24261e53692ca8",
+    "stream_gain_db": -3.0,
+    "stream_limiter": 0.7,
+    "game_gain_db": null,
+    "source_script": "scripts/duohertz-reencode-sa3.py",
+    "reason": "Decoded AAC true-peak screen"
+  }
+}

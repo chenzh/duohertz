@@ -1,0 +1,13 @@
+{
+  "track_id": "dh-021-tideglass-transit",
+  "title": "Tideglass Transit",
+  "artist": "duohertz studio",
+  "subgenre": "Melodic House",
+  "bpm": 122,
+  "game_duration_sec": 64,
+  "stream_duration_sec": 128,
+  "model_variant": "small",
+  "generation_prompt": "Original all-ages melodic house instrumental for a one-or-two-key electronic rhythm game, around 122 BPM in clear four-beat bars. Begin with a short five-note glassy pluck phrase answered by warm, rounded bass and a steady soft four-on-the-floor kick; add crisp shaker subdivisions and a restrained offbeat chord pulse. Develop the phrase through changing chord inversions and a second syncopated bell-like counterline, with distinct kick, clap and pluck onsets suitable for rhythm charts. Near the midpoint open a quieter section with a new descending answer melody and sparse percussion, then rebuild into a brighter final section that transforms the first phrase rather than repeating an entire half. Keep one evolving 128-second stereo composition with dynamic breathing room, no harsh distortion, vocals, speech, sampled recordings or known melody.",
+  "cover_prompt": "Generate a brand-new SQUARE 1:1 original album cover for duohertz track Tideglass Transit, a family-friendly melodic-house rhythm-game song. Bold high-contrast editorial comic collage: near-black ink, warm ivory paper, coral red and electric cyan, with a restrained pale-yellow accent, angular cut paper, halftone print grain. Main motif: two staggered horizontal transparent-looking sound rails pass through a tall rectangular tide gauge, their evenly spaced pulses refracting into small stepped bars; calm forward motion and a legible five-beat-like pluck pattern, but no literal water scene. Strong thumbnail silhouette and open negative space, distinct from rings, discs, zigzag footpaths, sunbursts or cityscapes. No people, vehicles, water, text, letters, numbers, logo or imitation of any existing game.",
+  "og_prompt": "Edit the supplied original Tideglass Transit square cover into a HORIZONTAL social card for duohertz. Keep the same two staggered coral and cyan sound rails crossing a tall rectangular tide gauge, stepped pulse marks, angular near-black and warm-ivory halftone collage. Recompose the motif on the RIGHT two-thirds and leave calm dark space on the LEFT. Add exactly two crisp fully legible English lines at left: 'duohertz' in lowercase and 'Tideglass Transit'. No other text, letters, numbers, people, vehicles, water scene, logos or existing IP. Original all-ages electronic music poster."
+}

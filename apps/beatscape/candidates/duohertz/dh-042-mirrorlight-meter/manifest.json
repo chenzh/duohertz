@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-042-mirrorlight-meter",
+  "title": "Mirrorlight Meter",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Synthwave",
+  "bpm": 116.0,
+  "target_bpm": 116,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; 0 dB gain before AAC encoding; stream-only limiter at 0.5 linear amplitude with no makeup gain. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": 0.0,
+  "stream_limiter": 0.5,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-042-mirrorlight-meter.json",
+  "source_recipe_sha256": "fe75b8a7ca6a657d6d539a0a655683f9d2c17d988e97355f8321fcb95acd12d4",
+  "source_master_sha256": "e1c6d936f525530fd30e115bc4a26d17f7fd9352cc26c9e487d856113031c79a",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.10003,
+    "clipping_ratio": 0.0,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "dec024bf-d648-4349-9659-c82b21a5e956",
+  "source_generation_receipt_sha256": "7e947995ee1599da6e4d9d221ec39110390e0d26760ffafe718e73a5c4afa53d",
+  "generation_prompt": "Original all-ages synthwave instrumental for a beginner-friendly one-or-two-key rhythm game at a STRICT constant 116 BPM in 4/4 for 128 seconds. The main subject is a FULLY AUDIBLE, quantized drum machine at final-mix level from the FIRST SECOND: a strong SHORT kick on EVERY quarter note until the FINAL BAR, a dry sharp snare on EVERY beat two and four, crisp closed hi-hat on EVERY eighth note, and a distinct short midrange bell-key or woodblock attack on EVERY beat. Keep at least four exposed short pitched attacks in each bar, including the first 0\u20138 seconds, the 8\u201316 second phrase, all transitions and the entire middle. Do not fade in, mute, filter, swing, delay or half-time the kick, and never replace beat markers with soft pads. No silent intro, sparse ambient breakdown, tempo drift, free-time music or long reverberant tails that smear attacks. Over the stable grid, play a recognizable three-note clipped analog square-wave call ascending in small steps, pause for one eighth-note, then answer with a separate brighter three-note descending bell-key phrase in the opposite stereo side. Add rounded pulsing bass and restrained short minor-to-major chord stabs BEHIND the beat markers. At the midpoint keep the same drum machine and expose the bell-key answer as the lead in a higher register while the analog call moves lower; the final quarter combines both in a new four-bar cadence rather than repeating the opening. One evolving 128-second stereo composition with playful retro color, controlled high frequencies and no harsh distortion. No vocals, speech, sampled recordings, known melody or imitation of an existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a brand-new SQUARE 1:1 original album cover for duohertz track Mirrorlight Meter, an all-ages synthwave rhythm-game song. Original high-contrast editorial comic screen-print with near-black ink, warm-ivory paper, dominant coral-red and a narrow electric-cyan echo accent. Main motif: TWO very large opposing flat coral paper panels, one entering from the left and one from the right, each cut with three broad asymmetric rectangular beat notches. They nearly touch at a narrow vertical black gap; inside that negative-space gap a single cyan mirror pulse reflects the left three-notch rhythm upside down on the right. The forms should look like abstract sound shutters, not literal mirrors, windows, doors or buildings. Clear strong silhouette at 100px, tactile paper-cut edges, sparse halftone and a quiet dark lower fifth for local title overlay. No city, sunset, sun, cassette, car, circular ring, honeycomb, lightning bolt, person, text, letters, numbers, logos, watermarks or copied game art.",
+    "og_prompt": "Edit the supplied original Mirrorlight Meter square cover into a HORIZONTAL 1.9:1 duohertz social-sharing card. Preserve the two opposing large coral notched sound panels, their narrow vertical black gap, one electric-cyan reflected pulse, near-black comic-print field, warm-ivory small accents and sparse halftone. Recompose the panels on the RIGHT two-thirds and leave the LEFT third calm and near-black. Add exactly two large fully legible English text lines there: 'duohertz' in lowercase electric cyan and 'Mirrorlight Meter' in warm ivory. Spell both exactly and keep the whole title inside the left third. No other text, letters, numbers, cities, sunsets, cassettes, circles, people, logos, watermarks or copied game art. Build a proper wide card rather than stretching the square cover.",
+    "cover_source_sha256": "65369e00b85fff16b774ca7ac8d722048e078e88ee8bad56652fbecb54a76f48",
+    "og_source_sha256": "0ec7158209ced1d1d7c81ed43f210a955d3064ff6271993ca0d86242dbf5f217",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "f79569c15b352356e059513037afbb86728f85108244e7c12346c6b7c45a67ba",
+    "cover-art.png": "94f8ec03ea1608940de0fc2f89dfbb6637a3439fc468b7320993c1d6893b6187",
+    "cover.svg": "e1f31c18ef2e2620edde08c63ddee344888995197de8387b67702fdd0b3ba589",
+    "easy.json": "c1b04d64cec5f1609712313fdf3e454e2ffeae99db33d2805817432880209280",
+    "hard.json": "23da79bd1bc7cbf744331edc89a30cd61f721b870ddb501c0eb3221bc41d2041",
+    "og.png": "ed9b854f00162e69d45efd521aeac8ee51c94f60545b3df12648d3a498385479",
+    "preview_48s.m4a": "4eca6a73c835349e5f99a53c7a69e8065bae6929a7c3db70d0a8ac3c5995e169",
+    "standard.json": "348c58b165225290a59308968fcbf67a1318baa8220d1be8a4d08a4c3602bcd3",
+    "stream.m4a": "c3dd97dd7d177b2abe45a008bd6a6f7e30db6ca794c1414fe8f8fc0eba44b3e6"
+  }
+}

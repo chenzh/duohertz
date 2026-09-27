@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-075-beacon-current",
+  "title": "Beacon Current",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Trance",
+  "bpm": 137.0,
+  "target_bpm": 137,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -7.5 dB gain before AAC encoding. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -7.5,
+  "stream_limiter": null,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-075-beacon-current.json",
+  "source_recipe_sha256": "474147cd55e7d3aeec999f78839ca640d8657dc55575a6d1cf7b558199ba2701",
+  "source_master_sha256": "5680994f5caeb54cc9ebd6fc71e9ad500f85894337b774cc692c2dc4268a6fe6",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.18593,
+    "clipping_ratio": 6e-06,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "b801a291-560d-4977-bb67-103c9ff76d22",
+  "source_generation_receipt_sha256": "3e80015d6645b6546dcc42fa319b2784aaba6c15893f2af9343754af492ef2b0",
+  "generation_prompt": "This is a continuous excerpt taken from the MIDDLE of an already-playing full-volume chorus, not a song opening: the first audible beat and the last beat both contain complete drums, bass, chords and pitched hook at strong normal playback level. No gradual energy or volume ramp. Create one ORIGINAL 128-second stereo MELODIC TRANCE instrumental for an all-ages one-or-two-key rhythm game at STRICT constant 137 BPM in 4/4. The recording starts in the FULL chorus groove at time zero: clean strong kick on every quarter beat, crisp clap on two and four, eighth-note hats, short bright plucked arpeggio attack on each quarter beat, rounded bass and wide warm chord pads all clearly audible at steady level to the final beat. No ambient intro, slow build, drumless break, half-time switch, quiet passage, filtered outro, fade, silent tail or tempo drift. Signature hook: a five-note ascending phrase reaches a short sustained beacon note, then a two-note lower answer returns toward the root; retain crisp note beginnings for charting. At 64 seconds keep the exact drum grid and volume, change chord and bass roots, let the five-note phrase descend and answer from a higher register with new rhythmic variations until the last beat. Hopeful and luminous with controlled highs, no generic festival drop, vocals, speech, samples, known melody or imitation of another song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create one original SQUARE 1:1 duohertz cover for Beacon Current, an uplifting all-ages trance rhythm-game track. Original near-black editorial comic-print cut-paper style with warm ivory, electric cyan, coral red and restrained halftone. Main motif: ONE tall angular warm-ivory BEACON SPIRE shaped like a single tapered paper column with a small open notch at its top. Exactly TWO large electric-cyan sound arcs radiate from the notch to opposite sides, and ONE continuous coral pulse line climbs the column to a tiny warm-yellow beat diamond at the tip. Keep spire, both arcs and tip inside the central 55% of the square for a narrow 100px mobile crop; calm dark lower fifth for local title overlay. Flat graphic, clearly a sound beacon rather than a lighthouse, building, arrow or weapon. No sea, sky, scenery, people, text, letters, numbers, logo, watermark, strobe or copied game art.",
+    "og_prompt": "Edit the supplied Beacon Current square cover into a HORIZONTAL roughly 1.9:1 duohertz social card. Preserve ONE tapered warm-ivory sound-beacon spire with its open notch, exactly TWO cyan arcs radiating from the top, one coral pulse line climbing it and a tiny yellow beat diamond at the tip. Recompose complete motif on the RIGHT half against near-black comic-print ink with restrained halftone, leaving calm dark space on the LEFT. Add exactly two crisp fully legible English lines: 'duohertz' lowercase electric cyan and 'Beacon Current' larger warm ivory. Spell both exactly, no truncation. Purpose-build wide composition, do not stretch square. No other text, people, buildings, scenery, logo, watermark or copied game art.",
+    "cover_source_sha256": "94bab7715968c4280e1f9bd7f5ab01ae06c413b51c008945425e9239cb8e29ee",
+    "og_source_sha256": "9cb5c4902d789ab7fd7b981235b423de204e4b26e66a9224c0110a084f1c9920",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "9cca958b9a216cf6b5684ca776a9c8f6859726c163dac7521bdb6dc4eaafde8d",
+    "cover-art.png": "cbdea4e615aec652ba8093b4de2faee0603de55b2461e5d2ed7274ae0a643abd",
+    "cover.svg": "2458fe7622a8deb7a43da83643e43229c015f0bed8cce8c3c75630c286d57ac2",
+    "easy.json": "bda901e736585e695205b3ef437a4affe435448723895972285e24232749f7ca",
+    "hard.json": "013cd84d481dcf2d6a448d43001bdda45c14f5ff8657b4da2fea6242a8ff9b5c",
+    "og.png": "31eb17dd8e36e4c5bff83006ef1eec2e6bdae3d1fb1847ba2a2bf490b6d6c66b",
+    "preview_48s.m4a": "02df7d4059e0c3e183347a8773f66436806530293684e47b30c45f1a11bc78ac",
+    "standard.json": "d0c3a363f854071ec5ea00046f36d883769cc25deab22ce90716e58ec7d589c1",
+    "stream.m4a": "44a8f16b865b6f938fa1732fdcc16bb95b8a70a0f2d6f45d92510cfe0e26b132"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "status": "visual_study_unreviewed",
+  "date": "2026-09-24",
+  "purpose": "Test whether an original high-contrast editorial comic rendering can unify duohertz's character, cover and UI language for an electronic rhythm game. This is not an audience preference test or art approval.",
+  "front": {
+    "file": "front.png",
+    "sha256": "aa787258a3b0167035218ab088711892dbdf5a4c65aa0d9d0731bbdda57aea73",
+    "source_file": "../../characters/rhyvori-concept.png",
+    "source_sha256": "5c0c9cdf15db8d025e5b94d4588e96f81e82f8e6e9c2743aca3a85bcb85f9614",
+    "prompt": "Edit the referenced RHYVORI character concept into a distinctly original, premium high-contrast editorial comic / screen-print character illustration for an all-ages electronic rhythm game named duohertz. Preserve SAME recognizable adult androgynous person, face, short textured dark hair with a SINGLE cyan streak, coral-orange short utility jacket, cream shirt, navy tapered cargo trousers, sneakers, wrist pulse tuner and two concentric cyan sound rings. Keep a full-body head-to-toe 3/4 front standing dynamic pose, anatomy and both shoes complete with comfortable margin. Transform only the rendering language: bold clean dark ink outlines, angular paper-cut shadow shapes, limited warm ivory/coral/cyan/deep navy palette, sparse halftone and subtle imperfect screen-print grain inside the figure, crisp expressive face, strong silhouette that reads at thumbnail size. No direct imitation of any existing game, franchise, character, logo, or UI. No text, no letters, no background environment, no floor shadow, no black rectangle. Deliver an isolated figure on TRUE TRANSPARENT alpha background, all four corners alpha 0, body center fully opaque. Portrait 2:3 composition."
+  },
+  "side": {
+    "file": "side.png",
+    "sha256": "0885c4dfc5a3d7d6dc515a3282043aab9486caa472e93da2864a4fe8da8f427f",
+    "source_front_file": "front.png",
+    "source_front_sha256": "aa787258a3b0167035218ab088711892dbdf5a4c65aa0d9d0731bbdda57aea73",
+    "source_side_file": "../../characters/rhyvori-side-concept.png",
+    "source_side_sha256": "6ac8527bca81aed3c19f693b67e33b9a3c5465aaac081ec710c85120b3db3c50",
+    "prompt": "Create the MATCHING 90-degree left-facing side profile full-body character sheet illustration of RHYVORI. FIRST image is the new approved-for-study FRONT VISUAL STYLE to match exactly; SECOND image gives the original left-facing side pose and same character identity. Adult androgynous person, short textured dark hair with one single cyan streak, coral-orange short utility jacket over cream shirt, navy tapered cargo trousers, cream-and-navy sneakers, cyan wrist pulse tuner. Preserve all unique clothing details and proportions. Apply the FIRST image's crisp heavy dark ink linework, angular cut-paper shadows, limited ivory/coral/cyan/navy palette, subtle halftone screenprint texture; no soft painterly shading. Strictly full head-to-toe true left-facing 90-degree side profile with both shoes complete and margin, calm standing pose, readable silhouette. No background, no floor, no glow cloud, no words, no typography, no logo. Output isolated character on TRUE TRANSPARENT alpha background, all four corners fully transparent and center of character opaque, portrait 2:3 composition. Original design for duohertz, no direct imitation of existing intellectual property."
+  },
+  "review": {
+    "visual_consistency": "pending",
+    "character_similarity": "pending",
+    "audience_feedback": "pending",
+    "production_art": false
+  }
+}

@@ -28,6 +28,7 @@
 
 - 按 [music-verify](.agents/skills/music-verify/SKILL.md) 选择相关验收，完成任务 AC、必需 CI 和发布门禁；仅在新改动、失败或未解决风险需要时扩测/重跑。
 - `pnpm test` 仅 Gateway + Python unit，**不含 BeatScape**；`bash scripts/harness.sh all` 为 unit + workspace build + mock integration。
+- BeatScape／duohertz 续作按 [BS-D003](docs/BEATSCAPE-DECISIONS.md#bs-d003) 默认只做本机测试：本地 Vite、Playwright、脚本和已有本机模型服务；不得为验证而部署、访问线上站点或启动高流量云端图片／音频生成。需要外部服务时先明确说明用途和流量影响，取得用户新的明确指示。
 - agent-safe Issue 按需使用 [music-delivery](.agents/skills/music-delivery/SKILL.md)；普通开发不预读公司手册。
 - 不提交 `.env`、密钥、token；未经要求不 commit/push。部署、合并、外部消息须有对应授权；技术检查不替代人工耳检、真机验收或上线签审。
 - 有实质推进时更新 `SESSION.md` 的 `updated` 和本任务相关 `next`，追加 `worklog/YYYY-MM-DD.md`“已完成”；保留其他工作线。已有会话文件只更新本会话。里程碑可用现有工具沉淀第二大脑，工具不可用则本地记录。

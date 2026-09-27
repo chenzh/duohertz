@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-023-answerlight-bounce",
+  "title": "Answerlight Bounce",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Future Bass",
+  "bpm": 136.0,
+  "target_bpm": 136,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -3 dB gain before AAC encoding; stream-only limiter at 0.7 linear amplitude with no makeup gain. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -3.0,
+  "stream_limiter": 0.7,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-023-answerlight-bounce.json",
+  "source_recipe_sha256": "b91844ce75696fecfe5d59aa8b0db2c37aa779b6defb878892b598417b95826f",
+  "source_master_sha256": "c2411d892d5c5e8594e8050f80c0495abc2c087c0cb33235f660872fc2b0dd16",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.09406,
+    "clipping_ratio": 2e-06,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "178d2805-f90c-48f5-ae2a-138e7b3ddca9",
+  "source_generation_receipt_sha256": "0dcc4734a3be25ceb57324e9a97a0d017b3903bdbf156d70542397a1926c8914",
+  "generation_prompt": "Original all-ages future-bass instrumental for a one-or-two-key electronic rhythm game at a STRICT constant 136 BPM, 4/4, with a stable quantized drum-machine pulse from beginning to end: audible kick on every quarter-note beat and crisp snare on beats two and four of every bar, including quieter sections. No tempo drift, free-time breaks or long percussion-free gaps. Main hook: a short bright plucked-synth call answered by a distinctly lower rubbery synth phrase; trade countable two-bar phrases over the beat with eighth-note shaker subdivisions and small syncopated accents. In fuller sections add airy stacked chord stabs and controlled sidechain movement but preserve clean attack transients and rhythmic space. At the midpoint introduce a quieter descending bell-like counter-melody and bass response while the same kick/snare grid remains audible; build a final section where the call and answer swap registers and harmonize. One evolving 128-second stereo arrangement with no whole-half repetition, vocals, speech, sampled recordings, known melody or harsh distortion.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Generate a brand-new SQUARE 1:1 original album cover for duohertz track Answerlight Bounce, an all-ages future-bass rhythm-game song. High-contrast editorial comic collage with near-black ink, warm ivory, coral red and electric cyan plus a few warm-yellow sparks, angular paper shapes and tactile halftone grain. Main motif: TWO separate short waveform blocks approach a central floating square hinge from opposite sides, then rebound as offset stacked rectangular echoes; show playful call-and-response and buoyancy without literal speech bubbles, clouds, hands or a character. Make the center silhouette bold and readable at tiny thumbnail size. Distinct from circles, rings, zigzag footpaths, folded horizontal light strips, mosaics and city scenes. No text, letters, numbers, people, logo or imitation of any existing game.",
+    "og_prompt": "Edit the supplied original Answerlight Bounce square artwork into a HORIZONTAL social card for duohertz. Preserve the two coral/cyan waveform blocks that approach a central square hinge and rebound as staggered rectangular echoes, near-black and warm-ivory editorial halftone collage. Recompose this distinctive motif on the RIGHT two-thirds, with calm dark space on the LEFT. Add exactly two crisp fully legible English lines on the left: 'duohertz' all lowercase and 'Answerlight Bounce'. No other words, letters, numbers, people, hands, speech bubbles, circles, logos, city or existing IP. Original all-ages electronic music poster.",
+    "cover_source_sha256": "c9ae6764bf42be905edecbaf13ca613914b11e7803f589cf23ca48517ec9da95",
+    "og_source_sha256": "b13a2231dc121ebc3076ac557e16832440dd62619a63a5c93cb4d56abc3ce26e",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "590d6319504c675af89c9852bf4f4c5d83331368750fc627c4cfdd2d58aee4ca",
+    "cover-art.png": "bdfde6fadb78db029fa23cc9d1f020ea86f6cffbec6cdaa1952eecc1fc111291",
+    "cover.svg": "d6ec5967ba387e340502530e8abadbdc43240d30b9a21e1d2c7f2ea344178ddf",
+    "easy.json": "36fb20b8433c87e35c0cde8928297f52b9b0602b51bf01566f47325f1e8c2309",
+    "hard.json": "fa181857f0ec2dc4ed4e1e1d813009e458abbbbb032b1937de98028b8861adf7",
+    "og.png": "61d319ba41049f8241dba70b68a55e57581d9fabbb341dd7c913ee98efcc68c9",
+    "preview_48s.m4a": "5d2e22264164ec6bb9ee9e74ed7163a8566211d5019d8ff4b326f717f32f405c",
+    "standard.json": "8ddbda5bf711a0fa9eeb6504f4d2fbae35133382ffdac592eef42067825baa36",
+    "stream.m4a": "4ba679cc740a1f0938d890e1bc5fed8b9c1306efe18bbd163e8ff7125d3a5687"
+  }
+}

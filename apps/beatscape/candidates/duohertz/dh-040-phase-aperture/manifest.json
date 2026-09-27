@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-040-phase-aperture",
+  "title": "Phase Aperture",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Trance",
+  "bpm": 146.341,
+  "target_bpm": 148,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -6 dB gain before AAC encoding; stream-only limiter at 0.35 linear amplitude with no makeup gain. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -6.0,
+  "stream_limiter": 0.35,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-040-phase-aperture.json",
+  "source_recipe_sha256": "d254fffa0892ff445ca7314582583a71fe525d798a90d89bad5a68bec5c355a6",
+  "source_master_sha256": "3f925996ab5d5952b1d3bd3d080880fca62f7aeb3f56c0fd18912d80c3db6657",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.13646,
+    "clipping_ratio": 0.0,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "cbb63b36-3e75-4bfc-a011-00c929c27e06",
+  "source_generation_receipt_sha256": "cda1b096df51a94e1b1368c2dfbb22afa85284e58bc11408a3a1d5a3d575ee2e",
+  "generation_prompt": "Original all-ages uplifting-trance instrumental for a one-or-two-key electronic rhythm game at a STRICT constant 148 BPM in 4/4. Keep a clearly quantized four-on-the-floor kick on EVERY quarter beat from the first second through the last bar, a dry short clap on beats two and four, distinct eighth-note closed hats and short bright midrange pluck attacks in every bar. No tempo drift, half-time breakdown, free-time, drumless intro, long percussion gap or pad-only middle; preserve clear transients even when the chords swell. Signature hook: a six-note descending glass-sequencer line that leaves one eighth-note rest near the end, answered in the following bar by a three-note ascending warm-organ figure that opens into a held upper tone. Support with an offbeat rounded bass, soft suspended chord pulses and a few restrained sixteenth-note glints without obscuring the beat. At the midpoint maintain the SAME drum grid, invert the harmony and move the warm-organ answer ahead of the glass-sequencer call; the final quarter resolves the held tone through a new rising counterline instead of repeating the opening section. One evolving 128-second stereo instrumental, bright and spacious but non-harsh. No vocals, speech, sampled recordings, known melody or imitation of an existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a brand-new SQUARE 1:1 original album cover for duohertz track Phase Aperture, an all-ages uplifting-trance rhythm-game song. Original high-contrast editorial comic screen-print collage: near-black ink, warm-ivory paper, one strong electric-cyan frequency accent, tiny coral phase ticks and restrained yellow glints. Main motif: a GIANT thick warm-ivory folded paper plane fills much of the square, cut through by ONE dramatic acute V-shaped black aperture pointing upward; a single cyan sound beam enters the lower mouth of the V and exits near its tip as three clearly separated thin phase lines. Build a bold asymmetric shape, tactile cut-paper shadows and sparse halftone, legible at 100px; reserve the lower fifth in dark ink for a local title overlay. This is an abstract frequency opening, not a literal window, door, crystal, sun, sky or tunnel. No circles, rings, diamonds, fans, panels, characters, text, letters, numbers, logos, watermarks or copied game art.",
+    "og_prompt": "Edit the supplied original Phase Aperture square cover into a HORIZONTAL 1.9:1 duohertz social-sharing card. Preserve the giant warm-ivory folded plane, one acute V-shaped black aperture, the single cyan sound beam entering its lower mouth and three fine phase lines exiting near the tip, with near-black comic-print texture and tiny coral ticks. Recompose the graphic motif on the RIGHT two-thirds; leave calm near-black space on the LEFT. Add exactly two crisp fully legible English text lines there: 'duohertz' all lowercase in electric cyan and 'Phase Aperture' in larger warm ivory. Spell both exactly. No other words, letters, numbers, circular rings, literal windows, people, logos, watermarks or copied game art. Make a purpose-built wide composition rather than a stretched square crop.",
+    "cover_source_sha256": "6a6da0bf4d89c92f561fca42ccbc6018980aa4286a7ef440e842e9fcef3abf2f",
+    "og_source_sha256": "b429726533093308ce338ec5344a550555d553fccc27d1b87ea3b91716e0869d",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "853ab336685e9fc1919f0ade17a73856db73b64565ec4dda1f33bc6acb44cbd1",
+    "cover-art.png": "1a583b58e5d96bbe992d2916e021eb3a795262e5f679379c84b623e420eca6fa",
+    "cover.svg": "fa151718041ad9b2ba41a6e00c9e4209434d35b7051d9af9b90331f4277119bc",
+    "easy.json": "980ae9d5738498c18bc24527da3ff24d842f6cda3fbd138c2f2ccf47dfa1807e",
+    "hard.json": "1cd3bc2713276fa4b516ad16ff24f0084263668cb12649a75ea016e3922257b2",
+    "og.png": "022758e96155a1a258d5fdb8d11a1695b0526581272f911c770be678cce651ee",
+    "preview_48s.m4a": "585a05b7277575583c12482cff03d6d536c114dddd569ecb054c150cf7b2dc9b",
+    "standard.json": "19ee80c852ec726d369711ec7642bfda15633b1c0fd61f3605f943410e4c7bb4",
+    "stream.m4a": "b41f169496b915b72a9d35b778fb947eb4ef664032f37c38250391df65236bb7"
+  }
+}

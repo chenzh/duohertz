@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-074-gearshift-rush",
+  "title": "Gearshift Rush",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Drum & Bass",
+  "bpm": 171.429,
+  "target_bpm": 173,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -0.5 dB gain before AAC encoding. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -0.5,
+  "stream_limiter": null,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-074-gearshift-rush.json",
+  "source_recipe_sha256": "00876c12fa233376b99a504a932e4314e6c6bdbab12a50e6e34ce1b4c4eeef9c",
+  "source_master_sha256": "f17e03bac9d2822776d4d77b312e937823ea08b8abad2e015e329073a67d3243",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.07374,
+    "clipping_ratio": 0.0,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "0db1a2db-5515-406e-a242-52d5af543be3",
+  "source_generation_receipt_sha256": "b711885a72ecbe85cbb82f683202120e344fa0613ff6fea627abaeba0eb310bd",
+  "generation_prompt": "This is a continuous excerpt taken from the MIDDLE of an already-playing full-volume chorus, not a song opening: the first audible beat and the last beat both contain complete drums, bass, chords and pitched hook at strong normal playback level. No gradual energy or volume ramp. Create one ORIGINAL 128-second stereo LIQUID DRUM AND BASS instrumental for an all-ages one-or-two-key rhythm game at STRICT constant 173 BPM in 4/4. A full energetic beat is audible at time zero: short kick on one and three, sharp dry snare on two and four, crisp eighth hats, separate muted-key attack on each quarter beat and a syncopated rim hit between beats. Keep these attacks at the same clear level through all 128 seconds, including first and last 16 seconds; no ambient intro, drumless bridge, half-time switch, quiet passage, fade, filtered outro, silence or tempo drift. Signature hook: a four-note mechanical upward sequence clicks into place, pauses, then a lower three-note answer lands exactly on the next snare. Rounded moving bass and soft minor-ninth pads support but never mask the attacks. At 64 seconds keep the drum grid and volume, reverse the hook direction, shift bass roots and add a new syncopated response through the final beat. Kinetic but clean, no harsh distortion, vocals, speech, samples, known melody or imitation of another song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create one original SQUARE 1:1 duohertz cover for Gearshift Rush, a fast all-ages drum-and-bass rhythm-game track. Original near-black comic-print cut-paper style with warm ivory, electric cyan, coral red and sparse halftone. Main motif: ONE large warm-ivory GEAR with exactly EIGHT broad rectangular teeth and a square near-black central opening, tilted slightly as if shifting into a new beat. ONE electric-cyan stepped soundline passes through the center and exits upward; exactly two coral rectangular beat tabs attach to different teeth, plus one tiny yellow mark in the center opening. Keep the complete gear within the central 55% of the square to read in a narrow 100px mobile card, dark lower fifth for local title overlay. Bold flat mechanical graphic, distinct from dials, clocks, vinyl discs and cassette reels. No vehicle, scenery, people, words, letters, numbers, logo, watermark, strobe or copied game art.",
+    "og_prompt": "Edit the supplied Gearshift Rush square cover into a HORIZONTAL roughly 1.9:1 duohertz social card. Preserve ONE warm-ivory eight-tooth gear with square black center, ONE cyan stepped soundline through it, exactly two coral tooth tabs and one tiny yellow beat mark. Recompose the whole gear on the RIGHT half over near-black comic-print ink and sparse halftone, leaving quiet dark space on the LEFT. Add exactly two crisp fully legible English lines: 'duohertz' lowercase electric cyan and 'Gearshift Rush' larger warm ivory. Spell both exactly, no truncation. Purpose-build wide composition, do not stretch square. No other text, numbers, vehicles, people, scenery, logo, watermark or copied game art.",
+    "cover_source_sha256": "fb8c5197cd9db4eec9034523e2e74fce3b3fb40677a6b3a03271992e1358d6d5",
+    "og_source_sha256": "1b40be023b21c5f51a156fd1cb4463d881534defc3a837659fae4b7ffbe48844",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "7afb07a11d6df66865dea76addebc0afe079f1794257ee6af2085749ab6f0453",
+    "cover-art.png": "c5c762ee8a262419ef6d4c07b6e3ba34750d3f3f7f6c0c151cca76ed407e90d7",
+    "cover.svg": "25e2828cf9a432bcb387a41d45cfe45c29774adc3ca2e588aaa6ebfa2918f205",
+    "easy.json": "5847d2d917e74404e32480530fc5003698555702fccec28bf1c67b3537c3bf8d",
+    "hard.json": "533f3194c61878ebe6d109a0d13483f64d5f3c4d4b212310053a899b37f21680",
+    "og.png": "58f4c4483b6cb406b412fc54d72d3dcec551cd470e9f8c2b31b76db087a63a90",
+    "preview_48s.m4a": "f9b73569c294609db80ab936f036171dfb5bd4040931dcd60adc1ce45bf61a64",
+    "standard.json": "3291dac5328be90975c0d8758419f7892baf0f0c589135073d2ece39fe7f4ccb",
+    "stream.m4a": "d8aa23772881c4fa4dd9ce3cf0fb208b13975dcaa5ed8c593a478c9fe75b149b"
+  }
+}

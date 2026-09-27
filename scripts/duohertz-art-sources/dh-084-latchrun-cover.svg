@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs><pattern id="dots" width="27" height="27" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="2" fill="#f7efdf" opacity=".13"/></pattern></defs>
+  <rect width="1024" height="1024" fill="#111521"/>
+  <path d="M0 0h351L0 313z" fill="#ff675d"/>
+  <path d="M1024 0v330L761 0z" fill="#6de9e1"/>
+  <path d="M0 1024V728l236 296z" fill="#f7efdf"/>
+  <path d="M1024 741v283H760z" fill="#ff675d"/>
+  <path d="M181 153h665l-60 620H229z" fill="#1d2632" stroke="#f7efdf" stroke-width="12"/>
+  <path d="M181 153h665l-60 620H229z" fill="url(#dots)"/>
+  <path d="M291 246h395" stroke="#6de9e1" stroke-width="12"/>
+  <path d="M290 274h171" stroke="#ff675d" stroke-width="21"/>
+  <path d="M287 370h117v-42h106M287 370v245h117v-42h90" fill="none" stroke="#f7efdf" stroke-width="39" stroke-linecap="square" stroke-linejoin="miter"/>
+  <path d="M742 358H633v42h-85M742 358v245H633v-43h-87" fill="none" stroke="#6de9e1" stroke-width="39" stroke-linecap="square" stroke-linejoin="miter"/>
+  <path d="M361 507h91l44-71 43 115 56-96h77" fill="none" stroke="#111521" stroke-width="43" stroke-linecap="square" stroke-linejoin="miter"/>
+  <path d="M361 507h91l44-71 43 115 56-96h77" fill="none" stroke="#6de9e1" stroke-width="19" stroke-linecap="square" stroke-linejoin="miter"/>
+  <path d="M500 433l33 55-33 53-33-53z" fill="#ff675d" stroke="#111521" stroke-width="10"/>
+  <path d="M315 671h44m33 0h44m33 0h44" stroke="#f7efdf" stroke-width="18"/>
+  <circle cx="702" cy="674" r="15" fill="#ffdc69"/>
+  <path d="M126 835h768" stroke="#f7efdf" stroke-width="9"/>
+  <path d="M126 857h288" stroke="#ff675d" stroke-width="20"/>
+</svg>

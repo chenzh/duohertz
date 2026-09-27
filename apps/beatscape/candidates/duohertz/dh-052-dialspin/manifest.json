@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-052-dialspin",
+  "title": "Dialspin",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Synthwave",
+  "bpm": 120.0,
+  "target_bpm": 120,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -1 dB gain before AAC encoding; stream-only limiter at 0.35 linear amplitude with no makeup gain. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -1.0,
+  "stream_limiter": 0.35,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-052-dialspin.json",
+  "source_recipe_sha256": "f7aef69dae33e4820d509bc35c2e5da662b39c732342ae0586b56bee488978ee",
+  "source_master_sha256": "7cd9ab100660b6f3eb1a18ada33bb7c1ee89a9cf1830f9124039cb4b5e366a50",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.10721,
+    "clipping_ratio": 0.0,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "3e3aa4fd-0797-4b37-ba8d-4d79f575ce86",
+  "source_generation_receipt_sha256": "2f4050ad59f3663968a6fb4fb49c494d7d96b2a1ef62b43dd94f65a2a36b656a",
+  "generation_prompt": "Original all-ages synthwave instrumental for a beginner-friendly one-or-two-key electronic rhythm game at a STRICT constant 120 BPM in 4/4 for 128 seconds. Keep a FULLY AUDIBLE quantized retro drum machine at final-mix level from the FIRST SECOND to the final bar: a short strong kick on EVERY quarter note, a dry prominent snare on every beat two and four, crisp closed eighth-note hats, and one distinct short midrange bell-key or woodblock attack on EVERY beat including the first 16 seconds and the entire middle. Do not fade, filter, swing or half-time the main beat; no silent intro, sparse ambient breakdown, drum dropout, tempo drift, free-time passage or smeared reverb that hides attacks. Signature hook: four clipped analog-synth notes circle upward in narrow steps, pause for one eighth-note, then two brighter chime-key notes answer down an octave on the opposite stereo side. Keep the motif and beat markers clearly separate above round pulsing bass and restrained short minor-to-major chord stabs. At the midpoint maintain the same drum grid, lead with the lower chime answer and shift the analog call to a brighter register; the ending combines both motifs in a new cadence rather than copying the opening. One evolving 128-second stereo instrumental, colorful and buoyant with controlled high frequencies, no abrasive distortion. No vocals, speech, sampled recordings, known melody or imitation of an existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a brand-new SQUARE 1:1 original duohertz album cover for Dialspin, an all-ages synthwave rhythm-game track. High-contrast editorial comic-print collage: ONE oversized blank warm-ivory synthesizer control dial seen from a slightly tilted top-down view dominates the square, with a single electric-cyan pointer notch at its rim. Behind it, exactly three broad coral-red paper wedges radiate outward at unequal angles like successive beat positions, and one small cyan waveform fragment slips between two wedges. Near-black ink ground, thick tactile cut-paper shadows, restrained halftone, one tiny warm-yellow spark. The dial should be an original simple shape, not a branded device, record or turntable. Clear silhouette at 100px, calm dark lower fifth for local title overlay. No numbers, ticks that form a clock, letters, words, logos, screen, cassette, car, city, person, watermark or copied game art.",
+    "og_prompt": "Edit the supplied original Dialspin square cover into a HORIZONTAL 1.9:1 duohertz social-sharing card. Preserve one giant blank warm-ivory synthesizer control dial with a single electric-cyan pointer notch, exactly three unequal coral paper beat wedges behind it, one small cyan waveform fragment, near-black comic-print field and sparse halftone. Recompose the dial and wedges on the RIGHT two-thirds, leaving calm dark space on the LEFT. Add exactly two crisp fully legible English lines there: 'duohertz' in lowercase electric cyan and 'Dialspin' in larger warm ivory. Spell both exactly. Make a purpose-built wide card, not a stretched square crop. No other text, letters, numbers, clocks, records, turntables, people, logos, watermark or copied game art.",
+    "cover_source_sha256": "500e82c893e2c16ef756e467dd3372404ecc0d8e53d81870347bbd9cf3731337",
+    "og_source_sha256": "2825499728ebc60b8d1e13316548c740db0bac0722dfae89364e5403eae5bc89",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "185121a9430f8323e956daf3d182e294f9a68b8a8c2c278f2a1504a9e31a94ce",
+    "cover-art.png": "5284cd1c7eb717406a928756d6d3aec1d8b938c73b59e145f5a1d45d168500bd",
+    "cover.svg": "35af4cd9dd91b663b22e4e4c11e4b53ae66d262aee46cc9623dd868587b84078",
+    "easy.json": "30e9e2b37e30e6252b4aac8a413af7fceac16e96969f61e442054180fed02d28",
+    "hard.json": "5e6e34d8a0febc32b44f825abb88618cf78c35ba710b6bf3b466a0e25d76df36",
+    "og.png": "ecd62196d3960b1f5ec70b69df1cbc855d25a9c9e2e0b9fd95da6440b521475c",
+    "preview_48s.m4a": "58589505a2bd3ac7c4aee831c4ab55890ae659f66a1500c26f5cc5d92f3294e7",
+    "standard.json": "203360cd0ab05089bbebd845b7ae0b3bf36b82fd8e1f5d9d4ad44850e29b2045",
+    "stream.m4a": "ebe1ce58f55843b399215734ece7e4f285c7dc1feacea3824704f9937355947c"
+  }
+}

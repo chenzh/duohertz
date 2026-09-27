@@ -59,6 +59,10 @@ export function lazyRouteKey(to: string): LazyRouteKey | null {
  * actual route keeps the existing loading/error UI and gets a fresh retry.
  */
 export function preloadRoute(to: string): void {
+  // The isolated duohertz artifact has no BeatScape routes. This compile-time
+  // branch also keeps their lazy chunks out of that build entirely.
+  if (import.meta.env.VITE_DUOHERTZ_PREVIEW === "1"
+      || import.meta.env.VITE_DUOHERTZ_RELEASE_SOURCE === "1") return;
   const key = lazyRouteKey(to);
   if (!key) return;
   void lazyRouteLoaders[key]().catch(() => undefined);

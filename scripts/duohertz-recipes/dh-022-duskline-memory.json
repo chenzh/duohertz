@@ -1,0 +1,13 @@
+{
+  "track_id": "dh-022-duskline-memory",
+  "title": "Duskline Memory",
+  "artist": "duohertz studio",
+  "subgenre": "Synthwave",
+  "bpm": 112,
+  "game_duration_sec": 64,
+  "stream_duration_sec": 128,
+  "model_variant": "small",
+  "generation_prompt": "Original all-ages synthwave instrumental for a one-or-two-key electronic rhythm game, around 112 BPM with a clear four-beat pulse. Lead with a clipped three-note analog-synth ostinato, warm rounded electric bass and an unmistakable kick on each beat with crisp snare on beats two and four. Introduce a gently widening chorus-like chord bed, then a contrasting higher glassy lead that answers the ostinato in short countable phrases. Use restrained tom fills and tiny percussive accents to mark sections without harsh distortion or wall-of-sound compression. Around the midpoint let the bass and beat breathe under a new descending counter-melody, then rebuild into a brighter finale that combines changed versions of both themes instead of repeating the first half. One evolving 128-second stereo composition with clean onsets suited to rhythm charts. No vocals, speech, sampled recordings, known melody, or direct stylistic quotation of any existing song.",
+  "cover_prompt": "Generate a brand-new SQUARE 1:1 original album cover for duohertz track Duskline Memory, a family-friendly synthwave rhythm-game song. Original high-contrast editorial comic collage using near-black ink, warm ivory paper, coral red, electric cyan and a few muted yellow marks. Main motif: THREE long folded paper light-strips, like distinct audio memories, move horizontally across a diagonal dark frame; each leaves a short offset echo trail of rectangular ticks before the strips converge into one crisp corner. Strong readable silhouette at thumbnail size, angular cut-paper edges, tactile halftone and slight screen-print misregistration. A sense of dusk without a literal sun, skyline, road, vehicle, cassette, disc, circles, or familiar retro-neon cliché. No text, letters, numbers, logos, people or imitation of any existing game.",
+  "og_prompt": "Edit the supplied original Duskline Memory square cover into a HORIZONTAL social card for duohertz. Keep its distinct three folded coral, cyan and muted-yellow paper light-strips, short offset rectangular echo ticks, diagonal dark frame and warm-ivory halftone texture. Recompose the main motif on the RIGHT two-thirds with calm near-black space on the LEFT. Add exactly two crisp fully legible English lines on the left: 'duohertz' all lowercase and 'Duskline Memory'. No other text, letters, numbers, sun, skyline, road, vehicle, cassette, discs, people, logos or existing IP. Original all-ages electronic music poster."
+}

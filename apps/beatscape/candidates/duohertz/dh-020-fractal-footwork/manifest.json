@@ -1,0 +1,56 @@
+{
+  "track_id": "dh-020-fractal-footwork",
+  "title": "Fractal Footwork",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Drum & Bass",
+  "bpm": 171.429,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -3 dB gain before AAC encoding. PCM preflight cannot independently prove inference mode or musical quality; human review remains required. Re-encoded from the same source WAV: stream gain -4 dB, stream limiter 0.7 amplitude without makeup gain, game/preview gain -5 dB and regenerated charts.",
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-020-fractal-footwork.json",
+  "source_recipe_sha256": "a5cde03285a4e50ff5d51465c622db5a261892aa6fcb05703c58747ed40e4ef5",
+  "source_master_sha256": "1abcdbc45bcaf9887a94567c1c254662478ab2b8701f6bea0522ce862858f52a",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.14879,
+    "clipping_ratio": 2.7e-05,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "0b5ba87e-cab3-49f5-b187-213be6ce4101",
+  "source_generation_receipt_sha256": "2fb749ac2eb612e221b2756afadf70d665f181289b630cfa9968b3f84e830249",
+  "generation_prompt": "Original all-ages liquid drum-and-bass instrumental for a one-or-two-key rhythm game, around 172 BPM with a clearly countable four-beat bar. Start with a nimble three-note marimba-synth motif, a clean punchy two-step breakbeat, rolling sub bass and bright chord stabs. Use varied ghost-note snare answers and crisp hi-hat transients without harsh distortion; at the midpoint strip to a new descending plucked melody with a half-time-feeling bass response, then rebuild into a lively finale that transforms the opening motif. Make one evolving 128-second stereo composition with distinct sections and audible accents suitable for rhythm charts. No vocals, speech, sampled recordings or known melody.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Generate a brand-new SQUARE 1:1 original album cover for duohertz track Fractal Footwork, a family-friendly drum-and-bass rhythm-game song. Bold high-contrast comic collage using near-black ink, warm ivory paper, coral red and electric cyan with a few yellow sparks. Main motif: TWO interwoven zigzag footstep-like sound paths splitting into crisp smaller fractal fragments then snapping back into a shared diagonal rhythm; fast broken-beat energy, angular cut-paper shapes, rough halftone and ink texture. Distinct from discs, circles, sky, racing cars or city imagery. Readable as a tiny thumbnail, playful but not childish. No people, shoes, text, letters, numbers, logo, characters or imitation of any existing game.",
+    "og_prompt": "Edit the supplied original Fractal Footwork square artwork into a HORIZONTAL social card for duohertz. Retain its original pair of interwoven coral and cyan zigzag sound paths, smaller fractal rhythm fragments, near-black and warm-ivory halftone print texture. Recompose the energetic paths on the RIGHT two-thirds, with calm high-contrast dark space on the LEFT. Add exactly two crisp, fully legible English lines on the left: 'duohertz' all lowercase, and 'Fractal Footwork'. No other words, letters, numbers, people, shoes, logo, city, or existing IP. Original all-ages electronic music poster.",
+    "cover_source_sha256": "79fd701cd2693c7851b63a466a6fd6404c63ea77745ae99033cc7036865f0a0b",
+    "og_source_sha256": "9402c958c3e46bcfdec0b1b9544ff3316fef5e9f5e03ed5605bb6e78b312e38d",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "84c10e33555aaa4e1c97329ffcb1ba5c0ee6da198963b18ef3863ccfacf1c651",
+    "cover-art.png": "2cd9ddd59351687002fbb4c81bd15551315ba4f2fd50526350749b6132fb72c9",
+    "cover.svg": "fea0ab990365f65141fcb084429f89dccd57781a7c77fede35a99569a6c3ae49",
+    "easy.json": "1528e656ca32f18e98ba05accd136db731568e79379fb8fd9bfb409b10c95bbf",
+    "hard.json": "79b7235d7da522ec476462e8e654155dbb9fcc8eadba04df2d4918b47b7e77ea",
+    "og.png": "c2bc95cce17332056a56d2ae5fe1be00bd4356a4c22c85bda834107a0a1b4877",
+    "preview_48s.m4a": "8b79d73513725758be1b7e652f88807e1a72d28fe94066eb2838b8e6556384c5",
+    "standard.json": "72a01d94441079abba272d76fb66116071c3f0283f98d92698db532ac0d68c0d",
+    "stream.m4a": "9ce8878eb85b11741ca14a06bba9229ceb7c02f17e7deb399d1c5011bd587176"
+  },
+  "audio_rework": {
+    "source_master_sha256": "1abcdbc45bcaf9887a94567c1c254662478ab2b8701f6bea0522ce862858f52a",
+    "stream_gain_db": -4.0,
+    "stream_limiter": 0.7,
+    "game_gain_db": -5.0,
+    "source_script": "scripts/duohertz-reencode-sa3.py",
+    "reason": "Decoded AAC true-peak screen"
+  }
+}

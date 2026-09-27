@@ -1,0 +1,16 @@
+{
+  "track_id": "dh-088-springpad-pop",
+  "title": "Springpad Pop",
+  "artist": "duohertz studio",
+  "subgenre": "Future Bass",
+  "bpm": 142,
+  "game_duration_sec": 64,
+  "stream_duration_sec": 128,
+  "model_variant": "small",
+  "generation_prompt": "Original 128-second stereo future bass instrumental at a fixed 142 BPM in 4/4. Begin immediately with a full-energy dance chorus on beat one: syncopated kick, solid snare on two and four, bright hats, rounded sub bass, chopped synth chords and a five-note plucked hook. All elements play continuously for the full 128 seconds, with clear attacks in every bar and near-uniform loudness in every 8-second interval. In the second minute change chord roots and hook notes without ever thinning the texture. Colorful playful family-friendly sound. No intro, breakdown, sparse bridge, riser, outro, fade, silence, vocals, speech, samples, copying or tempo changes.",
+  "art_tool": "local-authored SVG",
+  "cover_source_svg": "scripts/duohertz-art-sources/dh-088-springpad-pop-cover.svg",
+  "og_source_svg": "scripts/duohertz-art-sources/dh-088-springpad-pop-og.svg",
+  "cover_prompt": "Original comic-print cover: three offset rounded square pads connected by a springlike coral zigzag and cyan bounce arcs; no controller, notes, face, character or text. Central graphic readable at thumbnail size.",
+  "og_prompt": "Horizontal duohertz card with offset spring pads on the right, lowercase title Springpad Pop on left, dark ink, ivory, coral and cyan."
+}

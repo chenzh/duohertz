@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-076-tessera-steps",
+  "title": "Tessera Steps",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Melodic House",
+  "bpm": 122.0,
+  "target_bpm": 122,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -4 dB gain before AAC encoding. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -4.0,
+  "stream_limiter": null,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-076-tessera-steps.json",
+  "source_recipe_sha256": "3ede9004ea3a032de9bd2b9f9a871e6b99950d2186fc76a0965c53e4e83dc533",
+  "source_master_sha256": "622663a93371bd730bb093242e965233ecc49049260d0c6e95687c043d78cbf0",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.13206,
+    "clipping_ratio": 0.0,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "1ffb0400-213b-4724-99be-7e07090243d4",
+  "source_generation_receipt_sha256": "d92182f7770a5de020997a22ce9273a0e60613964d204fb4ff4fb1601f35c377",
+  "generation_prompt": "This is a continuous excerpt from the MIDDLE of an already-playing full-volume chorus, not a song opening. The first beat and last beat both have complete drums, bass, chords and pitched hook at strong normal level. No gradual energy or volume ramp. Create one ORIGINAL 128-second stereo MELODIC HOUSE instrumental for an all-ages one-or-two-key rhythm game at STRICT constant 122 BPM in 4/4. A full four-on-the-floor kick on every quarter beat, crisp clap on two and four, eighth hats, separate short pitched pluck on each quarter beat, rounded bass and warm chord stabs remain distinct and audible through all 128 seconds. Signature hook: four cut-glass notes step upward one pitch at a time and a two-note answer drops back to the root. At 64 seconds keep the same drum grid and volume while changing bass roots, invert the four-note staircase and add a new syncopated reply. No quiet intro, slow build, half-time switch, filtered outro, fade, silent tail, tempo drift, abrasive distortion, vocals, speech, samples, known melody or imitation of another song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create one original SQUARE 1:1 duohertz cover for Tessera Steps, an all-ages melodic house rhythm-game track. Original near-black editorial comic-print cut-paper style with warm ivory, electric cyan, coral red and sparse halftone. Keep every named motif element inside the central 55% width and y=25\u201368% of the square for a narrow 100px mobile crop, with dark lower fifth for the local title overlay. Flat graphic, no realistic scenery, people, text, letters, numbers, logo, watermark, strobe or copied game art. Main motif: ONE compact staircase of exactly FOUR separate warm-ivory trapezoid tessera tiles rising left to right; ONE thin cyan sound thread traces their top edges, with a single coral beat notch on the second tile and one tiny yellow beat dot above the last tile. Distinct from piano keys, windows, city steps and chevrons.",
+    "og_prompt": "Edit the supplied Tessera Steps square cover into a HORIZONTAL roughly 1.9:1 duohertz social card. Preserve exactly four ivory rising tessera tiles, one cyan top-edge sound thread, one coral notch and one yellow dot. Recompose the complete motif on the RIGHT half over near-black comic-print ink with sparse halftone, leaving calm dark space on the LEFT. Add exactly two crisp fully legible English lines at left: 'duohertz' lowercase electric cyan and 'Tessera Steps' larger warm ivory. Spell both exactly, no truncation. Purpose-build the wide composition; do not stretch the square. No other text, scenery, people, logo, watermark or copied game art.",
+    "cover_source_sha256": "fbb76423b6ee383a78dd3a87fdcca94b3e1a6ad9af8d3fe865a126d9597f2829",
+    "og_source_sha256": "838befd2198a60c2761212b6ce567c1f4f85eaa1af567477b37af3c7ef4100e1",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "3d10c466c1bb2d0f13f2d375651edddd03152f8d2db38534b3affc48e5acf41f",
+    "cover-art.png": "689ca3425e563d418198d0134155e8f369a4227058f22204e243140363d4901f",
+    "cover.svg": "ef6cd4aacc19c64e8aa321acd31a80e21596e5d5d0bd6da956790012c52fbd5a",
+    "easy.json": "6b59cde14b7328d48e9519136fb6f1d32ebb2c7971a195daf711bdb59fafcdb8",
+    "hard.json": "a29066e868a26b4871c8b2910ab7a5190188355185fe465048964b3ae8770b57",
+    "og.png": "1c9d666e14646efa915871fd8c5177443a67adca578956a6610751f864f4515b",
+    "preview_48s.m4a": "a8d1af149efb568e82ca3405c5a147cc6b365a2ac2d7c12abf693e9cc1c734fd",
+    "standard.json": "482f29f9918e4c9e3e3ba9dbe82e9e696cda82e6c0205c937f61e73962421986",
+    "stream.m4a": "2d6e21923373bcc99c15c2c5c1bb1dfc8c0d118a5500f7a78c4430b84976563d"
+  }
+}

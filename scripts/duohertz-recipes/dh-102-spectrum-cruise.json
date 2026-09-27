@@ -1,0 +1,18 @@
+{
+  "track_id": "dh-102-spectrum-cruise",
+  "title": "Spectrum Cruise",
+  "artist": "duohertz studio",
+  "subgenre": "Synthwave",
+  "bpm": 114,
+  "game_duration_sec": 64,
+  "stream_duration_sec": 128,
+  "generation_duration_sec": 180,
+  "stream_start_sec": 32,
+  "model_variant": "small",
+  "generation_prompt": "Create an original 180-second stereo synthwave instrumental at a steady 114 BPM in 4/4 for a family-friendly one-or-two-key rhythm game. By 24 seconds the full driving chorus is active: punchy quarter-note electronic kick, dry backbeat snare, crisp eighth hats, rolling analog octave bass, warm wide vintage chords and a short lead-synth attack each quarter beat. Signature melody: a four-note ascending saw line followed by a three-note bell answer, with altered bass roots and the answer inverted after 96 seconds. Maintain a complete arrangement and stable dance loudness from 32 through 160 seconds. Bright retro-electronic atmosphere but no imitation of any known melody. No vocals, speech, samples, tempo drift, sparse bridge, fade, silent stretch or harsh clipping in the selected passage.",
+  "art_tool": "local-authored SVG",
+  "cover_source_svg": "scripts/duohertz-art-sources/dh-102-spectrum-cruise-cover.svg",
+  "og_source_svg": "scripts/duohertz-art-sources/dh-102-spectrum-cruise-og.svg",
+  "cover_prompt": "Original high-contrast comic-print cover: five parallel frequency bands curve around an open cyan prism channel with a small coral bearing marker; no vehicle, road, sun, character or text.",
+  "og_prompt": "Wide duohertz card with curved spectrum bands on right and Spectrum Cruise title left."
+}

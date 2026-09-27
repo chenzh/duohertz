@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-071-chime-arc",
+  "title": "Chime Arc",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Melodic House",
+  "bpm": 121.0,
+  "target_bpm": 121,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -7 dB gain before AAC encoding. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -7.0,
+  "stream_limiter": null,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-071-chime-arc.json",
+  "source_recipe_sha256": "394d8fdb130787c62ca4bacfb3ba849be3241f15beceffe26880ade52a141bb5",
+  "source_master_sha256": "932d0926dd60c14b2bc2cc40018bfe38ba413f27ec780786e6546d5001514c6d",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.16385,
+    "clipping_ratio": 1.3e-05,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "ac1f6027-a491-46a9-bfd2-265043fccb63",
+  "source_generation_receipt_sha256": "1d755f83fcf757a1b0d746c03aca70f9446c6f30bb8f4ac1e68d2f5692751e30",
+  "generation_prompt": "This is a continuous excerpt taken from the MIDDLE of an already-playing full-volume chorus, not a song opening: the first audible beat and the last beat both contain complete drums, bass, chords and pitched hook at strong normal playback level. No gradual energy or volume ramp. Create one ORIGINAL 128-second stereo MELODIC HOUSE instrumental for an all-ages one-or-two-key rhythm game at STRICT constant 121 BPM in 4/4. From timestamp zero, keep a full steady four-on-the-floor kick, snare on two and four, crisp eighth hats, a distinct short bell-like synth attack on each quarter beat, rounded bass and warm major-seventh chord pulses at the SAME audible level until the final beat. No ambient intro, fade, quiet bridge, drumless break, half-time switch, filtered outro, silent bars or tempo drift. Signature hook: three resonant plucks climb in a smooth arc, followed by a short low answer and a single high chime. Leave precise spaces between all pitched attacks for rhythm-game charting. At 64 seconds retain the exact drum groove and volume, shift bass roots and chord voicings, invert the three-note arc and replace the low answer with a syncopated two-note response; continue fresh variations to the end. Light, warm, optimistic, controlled highs, no vocals, speech, samples, known melody or imitation of another song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create one original SQUARE 1:1 duohertz cover for Chime Arc, an all-ages melodic-house rhythm-game track. Original near-black editorial comic-print collage with warm-ivory cut paper, electric cyan, coral red and sparse halftone. Main motif: exactly THREE large warm-ivory hanging CHIME BARS of different lengths suspended from ONE curved electric-cyan arc; they step upward left to right. One short coral beat mark appears below each bar, and one tiny warm-yellow dot sits at the arc peak. Keep all three bars and their suspension inside the central 55% of the square so they read in a narrow 100px mobile crop; calm dark lower fifth for local title overlay. Flat graphic, distinct from city windows, piano keys, lanterns and wind chimes in scenery. No realistic landscape, people, words, letters, numbers, logo, watermark, strobe or copied game art.",
+    "og_prompt": "Edit the supplied Chime Arc square cover into a HORIZONTAL roughly 1.9:1 duohertz social card. Preserve exactly THREE ivory hanging chime bars of different lengths from ONE cyan curved arc, three coral marks below them and one tiny yellow dot at the apex. Recompose the complete motif on the RIGHT half over near-black comic-print ink with sparse halftone, leaving calm dark space on the LEFT. Add exactly two crisp fully legible English lines at left: 'duohertz' lowercase electric cyan and 'Chime Arc' larger warm ivory. Spell both exactly, no truncation. Purpose-build wide composition, do not stretch square. No other text, numbers, scenery, people, logo, watermark or copied game art.",
+    "cover_source_sha256": "a5c575fd0c7bade9fc77d1171ee9469d9b9c129d8ce0fdf43f915e6e1690f21e",
+    "og_source_sha256": "33652b5d269ad814f76184bc3fce2c5331232317a9cfb27fd313d337386dec28",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "c0f1d26bb88b88278d0ac4bbd237552da9d139a1cf1c74e95bfc3ccad1565954",
+    "cover-art.png": "a5b9ad92507c24acb1b39733ab2793726c285aaa676eecf517983183a062292b",
+    "cover.svg": "c44b8f91fe9865402214ca737d0dc0c638b5ebffa05dd2d04c6504b3d079a587",
+    "easy.json": "fd01bf4e7e89b7e031066065dd34bc00e723d409929f78dd0098b428c99f6115",
+    "hard.json": "2e137c0040a689589302e582c42dd1e18b9d6e8a20bcaa45ead2839197f42b9a",
+    "og.png": "dcdb933cd604a7412812c69a32bdfdbe2887bc6edf1e5fb1c81e30ad7a636801",
+    "preview_48s.m4a": "49a57da7645e516dbbd197e1b2279cd867d091bc81db0a20b54053e3aebc831a",
+    "standard.json": "1063de595e7c40ab28dedf9d878deaa959d10929beee8e70e9259104d1a1f7cd",
+    "stream.m4a": "3e63d122d07d0cea6f46ee7e8a4052684857d1915b821fe1daaac8e2aecd1969"
+  }
+}

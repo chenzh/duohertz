@@ -54,6 +54,8 @@ _tmp_*
 # AI-tool local backups (memory stays tracked)
 .workbuddy-ai/backups/
 apps/beatscape/dist-deploy/
+apps/beatscape/dist-duohertz/
+apps/beatscape/dist-duohertz-source/
 dist-deploy/
 # 对照构建的输出目录（用来比哈希判断线上产物是否落后于源码）
 dist-check/

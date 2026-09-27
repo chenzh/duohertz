@@ -1,0 +1,2744 @@
+{
+  "schema": 1,
+  "scope": "duohertz_loudness_review",
+  "releaseApproval": false,
+  "method": "ffmpeg loudnorm input_i/input_tp on decoded AAC; priority=max(|game-median|, |stream-game|)",
+  "summary": {
+    "tracks": 105,
+    "game_median_lufs": -20.94,
+    "game_min_lufs": -22.86,
+    "game_max_lufs": -15.36
+  },
+  "tracks": [
+    {
+      "track_id": "dh-025-chromatic-fanout",
+      "title": "Chromatic Fanout",
+      "subgenre": "Trance",
+      "manifest_sha256": "73b3135bb1afc18f1c4272f47c5f9186997dcf9e6e5fac69e1280a1bcff8acc4",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -15.36,
+          "true_peak_dbtp": -2.55,
+          "sha256": "313105e88915dccdd92028e73c136e81ce8b8054be1ad6338e023d38ee29eccf"
+        },
+        "stream.m4a": {
+          "lufs": -16.36,
+          "true_peak_dbtp": -2.51,
+          "sha256": "b44477d30f54b8c34d23559412bffcbef76b7770a5b66dd8684415e7588da29c"
+        },
+        "preview_48s.m4a": {
+          "lufs": -15.33,
+          "true_peak_dbtp": -2.55,
+          "sha256": "622363d893894bedfd4cc3a7c888dd29d3344f7ca839e2dde1f7299b469a589e"
+        }
+      },
+      "game_from_median_lu": 5.58,
+      "stream_from_game_lu": -1.0,
+      "review_priority_lu": 5.58
+    },
+    {
+      "track_id": "dh-017-opaline-counterpulse",
+      "title": "Opaline Counterpulse",
+      "subgenre": "Future Bass",
+      "manifest_sha256": "1677b3435d9915232740c5d8404768f261d793bb3966aaa065a97ce1b0978c90",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -16.29,
+          "true_peak_dbtp": -1.21,
+          "sha256": "c0beb263239657015a43f558b17cfeacbc00fa32d6b23ab9928cfdbfe08b368b"
+        },
+        "stream.m4a": {
+          "lufs": -17.23,
+          "true_peak_dbtp": -2.07,
+          "sha256": "594cd43936b431a118354a4431fe7449018e0c3e35e02b089bad374b6dc8bb77"
+        },
+        "preview_48s.m4a": {
+          "lufs": -16.31,
+          "true_peak_dbtp": -1.21,
+          "sha256": "6ed294148b540581a2f2bc4cb4ffa2ac5ca474f52e48dbfd3121d0851d0e2b7b"
+        }
+      },
+      "game_from_median_lu": 4.65,
+      "stream_from_game_lu": -0.94,
+      "review_priority_lu": 4.65
+    },
+    {
+      "track_id": "dh-034-angle-jump",
+      "title": "Angle Jump",
+      "subgenre": "Drum & Bass",
+      "manifest_sha256": "82ac7c13529a43afb69d5714ecbc797b56661a949fe638a4d20902dde70940fa",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -17.22,
+          "true_peak_dbtp": -2.81,
+          "sha256": "aca7f34d72ca2cd5242cfed57244099f05862aa5ff5b68f67fb01c89ff3a0df5"
+        },
+        "stream.m4a": {
+          "lufs": -17.5,
+          "true_peak_dbtp": -2.81,
+          "sha256": "041488556f2387160885f6aa89d641cbfd9486ff9829a73b557ec52128459571"
+        },
+        "preview_48s.m4a": {
+          "lufs": -17.3,
+          "true_peak_dbtp": -2.91,
+          "sha256": "d98860d17d56ccef23e3ef3ef17a0e5ea460cba829492aaac30835b38e47c505"
+        }
+      },
+      "game_from_median_lu": 3.72,
+      "stream_from_game_lu": -0.28,
+      "review_priority_lu": 3.72
+    },
+    {
+      "track_id": "dh-039-rivet-sprint",
+      "title": "Rivet Sprint",
+      "subgenre": "Drum & Bass",
+      "manifest_sha256": "a72bb7a271cf5261304e0ac531fd9ac393a85a6d8c4b47cdca065240c67ab3eb",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -17.31,
+          "true_peak_dbtp": -5.27,
+          "sha256": "837e3349cbddb5dbc074770792a8d8365fb1f4f0219432fc87149e69735da625"
+        },
+        "stream.m4a": {
+          "lufs": -18.2,
+          "true_peak_dbtp": -6.13,
+          "sha256": "bd05ccbc100757ac59aa1ba308503225229c4826d94162190f78866724dc358c"
+        },
+        "preview_48s.m4a": {
+          "lufs": -17.37,
+          "true_peak_dbtp": -5.27,
+          "sha256": "e0da771147686bf4b2744b6e999365d66f6320f60eaedeccb99660549e7ad1dd"
+        }
+      },
+      "game_from_median_lu": 3.63,
+      "stream_from_game_lu": -0.89,
+      "review_priority_lu": 3.63
+    },
+    {
+      "track_id": "dh-001-first-frequency",
+      "title": "First Frequency",
+      "subgenre": "Melodic House",
+      "manifest_sha256": "8056ede6e5cb3b9353051b5a3fe122c21d27a2c2c4bf984ab702dab43bd3b4ab",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -17.41,
+          "true_peak_dbtp": -1.43,
+          "sha256": "282cd4fe408b56736d909acd5d309a00b3832f3288688531536095f532736507"
+        },
+        "stream.m4a": {
+          "lufs": -18.02,
+          "true_peak_dbtp": -4.66,
+          "sha256": "935d6731ee38e4494f2e06fee646a6a3e388951d30d0781e198802b87c13c94f"
+        },
+        "preview_48s.m4a": {
+          "lufs": -17.54,
+          "true_peak_dbtp": -1.43,
+          "sha256": "55a9726de4c73ea9ecbaf02d026ea55ebbefa702c8532e5d6b196f3a5986e3ac"
+        }
+      },
+      "game_from_median_lu": 3.53,
+      "stream_from_game_lu": -0.61,
+      "review_priority_lu": 3.53
+    },
+    {
+      "track_id": "dh-019-parallax-daybreak",
+      "title": "Parallax Daybreak",
+      "subgenre": "Synthwave",
+      "manifest_sha256": "8328297ff8ed9d918dce3c0bf051eb05f81bb5e28eb9403baea71fc44fb4995b",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -18.08,
+          "true_peak_dbtp": -2.06,
+          "sha256": "7f9951db34d3f806b7cd8c12e285ac3ac85fb806fe1662fce67eb80c5c9a57cd"
+        },
+        "stream.m4a": {
+          "lufs": -17.79,
+          "true_peak_dbtp": -2.21,
+          "sha256": "bac683a91a1581c5f053aeed0d5289609aef11e7c388145e3ccdecc52eedd11d"
+        },
+        "preview_48s.m4a": {
+          "lufs": -18.18,
+          "true_peak_dbtp": -2.06,
+          "sha256": "0a93d4b8e8266521884ba57b2158ef600a62c2f783028f1c8ac52045bd7b5a23"
+        }
+      },
+      "game_from_median_lu": 2.86,
+      "stream_from_game_lu": 0.29,
+      "review_priority_lu": 2.86
+    },
+    {
+      "track_id": "dh-021-tideglass-transit",
+      "title": "Tideglass Transit",
+      "subgenre": "Melodic House",
+      "manifest_sha256": "28bac07f7995ba76962f52f4be63b7e7221ea9645af8e0f39f7b146ff7695279",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -18.15,
+          "true_peak_dbtp": -2.51,
+          "sha256": "7ae5a6657fc621abc7c57881b69d85f54fc8b70b07bd293c49473347feb58cb2"
+        },
+        "stream.m4a": {
+          "lufs": -18.34,
+          "true_peak_dbtp": -2.51,
+          "sha256": "00d9b5f4eae60b7f3e0ebc058470de4f1aa7954ac46aa63891d56f909313edf7"
+        },
+        "preview_48s.m4a": {
+          "lufs": -18.56,
+          "true_peak_dbtp": -2.51,
+          "sha256": "d4640d35a797dbc7e0a2006897a7ee464a1c99f342d36884c80381732c82b3b9"
+        }
+      },
+      "game_from_median_lu": 2.79,
+      "stream_from_game_lu": -0.19,
+      "review_priority_lu": 2.79
+    },
+    {
+      "track_id": "dh-014-jetstream-fracture",
+      "title": "Jetstream Fracture",
+      "subgenre": "Drum & Bass",
+      "manifest_sha256": "3a666410546e161d2a23dd051cb663bb29a6586dcc5325ed272d0e9711486247",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -18.37,
+          "true_peak_dbtp": -1.79,
+          "sha256": "c0a5d6d2207afbccb068407369ec4b1d3200e4cd140cd2de9789db41ce6af573"
+        },
+        "stream.m4a": {
+          "lufs": -18.2,
+          "true_peak_dbtp": -1.79,
+          "sha256": "df982e44c4d51d20c0e40e735c2eca8b55cab3552ab9881d8abd4e8b0b664e56"
+        },
+        "preview_48s.m4a": {
+          "lufs": -18.33,
+          "true_peak_dbtp": -1.79,
+          "sha256": "14a46f420d718f7b45a3ce614e3ea66e4a15a0f02fb43b3f749ebe98e77f73ee"
+        }
+      },
+      "game_from_median_lu": 2.57,
+      "stream_from_game_lu": 0.17,
+      "review_priority_lu": 2.57
+    },
+    {
+      "track_id": "dh-018-arcwire-ascent",
+      "title": "Arcwire Ascent",
+      "subgenre": "Trance",
+      "manifest_sha256": "89e87a7f5b073d7a9bb3035bd234dea225dd833e4abc0fad2630f28b61e71f8d",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -18.42,
+          "true_peak_dbtp": -3.26,
+          "sha256": "5c103799272a217adf71c2733604508efc8e0ccd1568585d545aa862de0032f3"
+        },
+        "stream.m4a": {
+          "lufs": -18.01,
+          "true_peak_dbtp": -3.0,
+          "sha256": "91798ed46efc64d6dbe9691c999402dda95050877123fab3176ffd5cb70178f7"
+        },
+        "preview_48s.m4a": {
+          "lufs": -18.7,
+          "true_peak_dbtp": -4.08,
+          "sha256": "96cd3af1a0e194f0cb4a7b8abd2c454b5e5466e319bf8652d02f30589c507081"
+        }
+      },
+      "game_from_median_lu": 2.52,
+      "stream_from_game_lu": 0.41,
+      "review_priority_lu": 2.52
+    },
+    {
+      "track_id": "dh-022-duskline-memory",
+      "title": "Duskline Memory",
+      "subgenre": "Synthwave",
+      "manifest_sha256": "b5288466997f3603612aa4887d3503c2893122a39311852552a6b9a911df6544",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -18.52,
+          "true_peak_dbtp": -2.64,
+          "sha256": "1f4030a44d27954d7ec7ce63380c94095230a8da644825ab4b932ba8387d5bac"
+        },
+        "stream.m4a": {
+          "lufs": -17.96,
+          "true_peak_dbtp": -1.88,
+          "sha256": "f5e417ac3ad69d57766036cf2f760e893c8fb9a5604001d87b6753c4527f2aa0"
+        },
+        "preview_48s.m4a": {
+          "lufs": -18.76,
+          "true_peak_dbtp": -2.64,
+          "sha256": "abb3722b4fa9ca25dcf2be129c644c8c57fa3c95e35d5969f320ca3a955f41e8"
+        }
+      },
+      "game_from_median_lu": 2.42,
+      "stream_from_game_lu": 0.56,
+      "review_priority_lu": 2.42
+    },
+    {
+      "track_id": "dh-030-crestlight-cadence",
+      "title": "Crestlight Cadence",
+      "subgenre": "Trance",
+      "manifest_sha256": "1cd8fe17552d030a6a422c5998d194c4771177c317a3f59071fc1ebd6f84620b",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -18.55,
+          "true_peak_dbtp": -2.8,
+          "sha256": "76d6e27a34b846fe9e962b8d59e54d4c37613116f0218f273d7787aebdd42f72"
+        },
+        "stream.m4a": {
+          "lufs": -18.54,
+          "true_peak_dbtp": -2.8,
+          "sha256": "3f37f76992a12b8ca13613dd0f84e2c4697bfa78bf004350d3b88bc66eafa4a5"
+        },
+        "preview_48s.m4a": {
+          "lufs": -18.5,
+          "true_peak_dbtp": -2.8,
+          "sha256": "24abe2a738e6837c9c2f4d9c568efeb38a5e5cedf20cf2a262dcb423be4eee7d"
+        }
+      },
+      "game_from_median_lu": 2.39,
+      "stream_from_game_lu": 0.01,
+      "review_priority_lu": 2.39
+    },
+    {
+      "track_id": "dh-050-second-key",
+      "title": "Second Key",
+      "subgenre": "Trance",
+      "manifest_sha256": "8b4c966e4704c13c8fa69d400e3999b230af3e15f5eb8798a0e20cfc17bfc3e6",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -18.55,
+          "true_peak_dbtp": -1.83,
+          "sha256": "ab44b627c835e4c8bb22bcbb0738b778994950a9dae681d734883d1f53457c2a"
+        },
+        "stream.m4a": {
+          "lufs": -19.28,
+          "true_peak_dbtp": -8.11,
+          "sha256": "c9dbae43e1764a6de80f15f3947e4e981f2289988cbae98778c4433b8a8fd38d"
+        },
+        "preview_48s.m4a": {
+          "lufs": -18.65,
+          "true_peak_dbtp": -2.61,
+          "sha256": "aab17eefca1eeb50595008669701fa6830eb4a2740db34e9de02233426850318"
+        }
+      },
+      "game_from_median_lu": 2.39,
+      "stream_from_game_lu": -0.73,
+      "review_priority_lu": 2.39
+    },
+    {
+      "track_id": "dh-026-windowlight-sync",
+      "title": "Windowlight Sync",
+      "subgenre": "Melodic House",
+      "manifest_sha256": "63544227587f007380130ead633f2e51bce92992fb2f62ef78ecd641e6bf314b",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -18.6,
+          "true_peak_dbtp": -2.55,
+          "sha256": "2fb05b5568ba9393d66233c7852a87a7cb99c25b6cbd393e7c4ca72da97f254e"
+        },
+        "stream.m4a": {
+          "lufs": -18.29,
+          "true_peak_dbtp": -2.55,
+          "sha256": "4b16e89d7146455a703a9eca80b7d00ed0626fe18f52f03d339d087de4600868"
+        },
+        "preview_48s.m4a": {
+          "lufs": -19.19,
+          "true_peak_dbtp": -2.55,
+          "sha256": "8f64a7f090d6dfddbf5d45b3728f1a0a16745499542a358ab405d57915bab118"
+        }
+      },
+      "game_from_median_lu": 2.34,
+      "stream_from_game_lu": 0.31,
+      "review_priority_lu": 2.34
+    },
+    {
+      "track_id": "dh-046-sawtooth-lilt",
+      "title": "Sawtooth Lilt",
+      "subgenre": "Melodic House",
+      "manifest_sha256": "ff0fb4b5fd700f9a988c14c63e3ac5596cfbcff5859809da36f5d3d25f02f149",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -18.81,
+          "true_peak_dbtp": -4.74,
+          "sha256": "9a5c0bc7ff9238cd4ae9a40d24bd3499ff3e5e7d0592fb081647464b7eaf904e"
+        },
+        "stream.m4a": {
+          "lufs": -19.36,
+          "true_peak_dbtp": -5.16,
+          "sha256": "051a6d728831c36458cb15e634bbd7ab1f28aec39ca3a51999f0aff68d7e09f7"
+        },
+        "preview_48s.m4a": {
+          "lufs": -18.67,
+          "true_peak_dbtp": -4.74,
+          "sha256": "db448df623e353d455b69c7670899843e7c8f8bfeb974bdcdb88bf7450ebb055"
+        }
+      },
+      "game_from_median_lu": 2.13,
+      "stream_from_game_lu": -0.55,
+      "review_priority_lu": 2.13
+    },
+    {
+      "track_id": "dh-035-suspension-glow",
+      "title": "Suspension Glow",
+      "subgenre": "Trance",
+      "manifest_sha256": "e2af48d2778b7dc13dbb8c998914ed0f9fdd239517b048e78043bd21be33a143",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -18.96,
+          "true_peak_dbtp": -2.87,
+          "sha256": "595398877dc304b0370aa9e5efbf94b7297fc2a0a5436ce383ef6d22cfd61c81"
+        },
+        "stream.m4a": {
+          "lufs": -18.86,
+          "true_peak_dbtp": -2.87,
+          "sha256": "a819e72ae97aa0ac38f4083ac3b609122db09c12a0ac603f92f5a5dc801c806c"
+        },
+        "preview_48s.m4a": {
+          "lufs": -18.51,
+          "true_peak_dbtp": -2.87,
+          "sha256": "1adaa4ecc1c0c30e6d8d8290c5624bccd84d28bd917b15e142365ca68f1cfd2e"
+        }
+      },
+      "game_from_median_lu": 1.98,
+      "stream_from_game_lu": 0.1,
+      "review_priority_lu": 1.98
+    },
+    {
+      "track_id": "dh-042-mirrorlight-meter",
+      "title": "Mirrorlight Meter",
+      "subgenre": "Synthwave",
+      "manifest_sha256": "82347507ede6c3248897078e28c4a2c34c32e90aa557a3b44991b4e288ed0f7a",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -18.98,
+          "true_peak_dbtp": -1.23,
+          "sha256": "f79569c15b352356e059513037afbb86728f85108244e7c12346c6b7c45a67ba"
+        },
+        "stream.m4a": {
+          "lufs": -19.41,
+          "true_peak_dbtp": -4.09,
+          "sha256": "c3dd97dd7d177b2abe45a008bd6a6f7e30db6ca794c1414fe8f8fc0eba44b3e6"
+        },
+        "preview_48s.m4a": {
+          "lufs": -19.22,
+          "true_peak_dbtp": -1.23,
+          "sha256": "4eca6a73c835349e5f99a53c7a69e8065bae6929a7c3db70d0a8ac3c5995e169"
+        }
+      },
+      "game_from_median_lu": 1.96,
+      "stream_from_game_lu": -0.43,
+      "review_priority_lu": 1.96
+    },
+    {
+      "track_id": "dh-010-prism-current",
+      "title": "Prism Current",
+      "subgenre": "Trance",
+      "manifest_sha256": "84af66a4218ca4ad7d6a9149ccd80230eec89aa8140f7c8b4e7f1cb9dd5fd925",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -22.86,
+          "true_peak_dbtp": -2.55,
+          "sha256": "a17ac8aa39eaf71ce630d5b1153b0b8cc2c5fa3b48c6db709dd0e828ab7bcc4d"
+        },
+        "stream.m4a": {
+          "lufs": -22.46,
+          "true_peak_dbtp": -1.95,
+          "sha256": "ada0a13a661b02e45ea251b17cb8bf6c503ca51a3ea893cb67c7b02d880ae28d"
+        },
+        "preview_48s.m4a": {
+          "lufs": -22.9,
+          "true_peak_dbtp": -2.55,
+          "sha256": "4e72b5193f7cafeea540895a9d2672378a0e5f594ac2f9a2fba3b72535f98d85"
+        }
+      },
+      "game_from_median_lu": -1.92,
+      "stream_from_game_lu": 0.4,
+      "review_priority_lu": 1.92
+    },
+    {
+      "track_id": "dh-024-notch-runner",
+      "title": "Notch Runner",
+      "subgenre": "Drum & Bass",
+      "manifest_sha256": "1e912bae9945b1b5701c8dd1d19192ce61999bcd887277903163b38fc01d4c01",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -19.07,
+          "true_peak_dbtp": -3.4,
+          "sha256": "d925c10ef9f4d7461a890d6ed482da8b941f7d5182a87e735b3a3415cc427259"
+        },
+        "stream.m4a": {
+          "lufs": -18.96,
+          "true_peak_dbtp": -3.4,
+          "sha256": "5bf459b3471a8eab2431cc9cb935634bb7a34f18a2274c3aba3a165dc95f5e8b"
+        },
+        "preview_48s.m4a": {
+          "lufs": -19.24,
+          "true_peak_dbtp": -3.86,
+          "sha256": "219dac7b0b0183d4e66516101ae8d0acc18d4bebce79e62ed8d04c1f3cf0e8be"
+        }
+      },
+      "game_from_median_lu": 1.87,
+      "stream_from_game_lu": 0.11,
+      "review_priority_lu": 1.87
+    },
+    {
+      "track_id": "dh-033-confetti-switch",
+      "title": "Confetti Switch",
+      "subgenre": "Future Bass",
+      "manifest_sha256": "c81ac3a3d35997b8b2ccaf9f6573c98a1163b3c815ace4fb68d3ab2f0f444b96",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -22.74,
+          "true_peak_dbtp": -1.86,
+          "sha256": "1687aaec344262dba4b45f18327c695bdf23f94b5ec2914ab295aaee71fca3f1"
+        },
+        "stream.m4a": {
+          "lufs": -22.68,
+          "true_peak_dbtp": -1.86,
+          "sha256": "0d78c8c8d709d1a31d9b3a23bc1f3cb600e20b0d89c1ec31edf960c1110150fa"
+        },
+        "preview_48s.m4a": {
+          "lufs": -22.9,
+          "true_peak_dbtp": -1.86,
+          "sha256": "8fb3bac9360524b620ad1fbe338f3e731963423bfb37f19ad6830c3d4b20c69b"
+        }
+      },
+      "game_from_median_lu": -1.8,
+      "stream_from_game_lu": 0.06,
+      "review_priority_lu": 1.8
+    },
+    {
+      "track_id": "dh-036-ribbon-junction",
+      "title": "Ribbon Junction",
+      "subgenre": "Melodic House",
+      "manifest_sha256": "9271a797171c2274a51e88336cf178f45b2afc012b6876fca2dd015af0b3b43e",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -19.2,
+          "true_peak_dbtp": -3.72,
+          "sha256": "0033bf8a09c37cdf3c328c704417b24f1ffe3a621d8e5118922728acd8f33723"
+        },
+        "stream.m4a": {
+          "lufs": -20.03,
+          "true_peak_dbtp": -1.84,
+          "sha256": "e3e338a230989d22c55daaec7be2e2db9785555a3ef91201898a7699443a0df7"
+        },
+        "preview_48s.m4a": {
+          "lufs": -18.89,
+          "true_peak_dbtp": -5.19,
+          "sha256": "521c1179a8458d73f69104aa49b0e980d7550d11acd4e17b217abe72592e57a9"
+        }
+      },
+      "game_from_median_lu": 1.74,
+      "stream_from_game_lu": -0.83,
+      "review_priority_lu": 1.74
+    },
+    {
+      "track_id": "dh-045-horizon-counterline",
+      "title": "Horizon Counterline",
+      "subgenre": "Trance",
+      "manifest_sha256": "13163b1b43b7b99f0526bd77b6ba2d697524a78c0d42b4e2afb8fd4f302342e9",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -22.62,
+          "true_peak_dbtp": -5.88,
+          "sha256": "4c1697a641257003fc704c385ead1c2b37aafbfb711a4564c29e0d067df1b747"
+        },
+        "stream.m4a": {
+          "lufs": -22.9,
+          "true_peak_dbtp": -8.32,
+          "sha256": "6ed5d86abfc5f4c43e982e37ad3ca22ebcd77d0052d25e15098bbdd81e97c057"
+        },
+        "preview_48s.m4a": {
+          "lufs": -22.12,
+          "true_peak_dbtp": -5.88,
+          "sha256": "f82dd51efa5ebd321ae0b40e602ad54ef320cd453712fd6c9f37f2b023e1c04d"
+        }
+      },
+      "game_from_median_lu": -1.68,
+      "stream_from_game_lu": -0.28,
+      "review_priority_lu": 1.68
+    },
+    {
+      "track_id": "dh-007-lantern-circuit",
+      "title": "Lantern Circuit",
+      "subgenre": "Synthwave",
+      "manifest_sha256": "cb271ef8e24ac759dba3872197180dafdfc978ca8f141e17c0b771dbc67bf172",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -22.53,
+          "true_peak_dbtp": -2.94,
+          "sha256": "9d28d615a6f170529393be8fd71034bd2e2625242a188e9e7563dbd36ed14526"
+        },
+        "stream.m4a": {
+          "lufs": -22.37,
+          "true_peak_dbtp": -1.92,
+          "sha256": "1c6076049e620220a73fc448e1f1856d849e56850176dbbbc4b2060e515cf5d1"
+        },
+        "preview_48s.m4a": {
+          "lufs": -22.35,
+          "true_peak_dbtp": -2.94,
+          "sha256": "d8c77f2b1b159a87805776205b07c7569be580092f9b60083fe15d2acc2be0bd"
+        }
+      },
+      "game_from_median_lu": -1.59,
+      "stream_from_game_lu": 0.16,
+      "review_priority_lu": 1.59
+    },
+    {
+      "track_id": "dh-043-glowstack",
+      "title": "Glowstack",
+      "subgenre": "Future Bass",
+      "manifest_sha256": "b0b3e52cd3447f1415dbd7d48ed99ea23e19c39eccbf344a44ade7cf1c583d77",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -22.49,
+          "true_peak_dbtp": -5.82,
+          "sha256": "48c0da24033c18364f414600648539c20ee5fd8d3fddf0d7f03556e76d3f45c5"
+        },
+        "stream.m4a": {
+          "lufs": -22.81,
+          "true_peak_dbtp": -8.22,
+          "sha256": "d2b81256299d25024b7a5a6aff1aaf3a4e5a67eae15024e0b4ab8f955c7a4b58"
+        },
+        "preview_48s.m4a": {
+          "lufs": -22.54,
+          "true_peak_dbtp": -5.82,
+          "sha256": "0abc968b82b6bde3caf58355d3d0a1fbece00fe9f77d1648bb5d5eedfeba599b"
+        }
+      },
+      "game_from_median_lu": -1.55,
+      "stream_from_game_lu": -0.32,
+      "review_priority_lu": 1.55
+    },
+    {
+      "track_id": "dh-012-cobalt-switchback",
+      "title": "Cobalt Switchback",
+      "subgenre": "Synthwave",
+      "manifest_sha256": "68a1df0f08e70bfdb22d0dd4d3f2a6d12d928f1f4579c5b10e52a4a01b3fece7",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -22.47,
+          "true_peak_dbtp": -2.0,
+          "sha256": "5091dda81ed0be1550b3113cc606482df109bd7a26d431b8edbb892e9f01c8c7"
+        },
+        "stream.m4a": {
+          "lufs": -22.44,
+          "true_peak_dbtp": -2.0,
+          "sha256": "d2dc781ddbebfb33df13137e40a2927d1d51d9c84b6f68c802dd5d1a81623c5e"
+        },
+        "preview_48s.m4a": {
+          "lufs": -22.62,
+          "true_peak_dbtp": -2.57,
+          "sha256": "d17ae04412a68f6714f0ecbdf54bf0a4a4780ab76b58b8353db51be09e6bd5a6"
+        }
+      },
+      "game_from_median_lu": -1.53,
+      "stream_from_game_lu": 0.03,
+      "review_priority_lu": 1.53
+    },
+    {
+      "track_id": "dh-028-springtone-reply",
+      "title": "Springtone Reply",
+      "subgenre": "Future Bass",
+      "manifest_sha256": "b6fcfae237a9e78c01a6e3db127e8d1275562e8c9eb541f62e262b4e7ec4b4d6",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -19.52,
+          "true_peak_dbtp": -2.83,
+          "sha256": "784735de1bf26f8d742eb0a5d68e8596a745ed3e78a55a26a1576fc2d3708231"
+        },
+        "stream.m4a": {
+          "lufs": -19.61,
+          "true_peak_dbtp": -2.83,
+          "sha256": "5850a4ead552a871e3c8799376410d8fbcb8b209589a192ffd03b28fe01f9c32"
+        },
+        "preview_48s.m4a": {
+          "lufs": -19.64,
+          "true_peak_dbtp": -2.95,
+          "sha256": "ba1c760e80d3d75d1ace1f84a33f3bd6060cbf673b342d6dc22a6d67a0a43a2f"
+        }
+      },
+      "game_from_median_lu": 1.42,
+      "stream_from_game_lu": -0.09,
+      "review_priority_lu": 1.42
+    },
+    {
+      "track_id": "dh-015-orbit-lattice",
+      "title": "Orbit Lattice",
+      "subgenre": "Trance",
+      "manifest_sha256": "a499e0005e6ddd2f11de406259f246fab2c3b541747dfdd46a66c26e667a0284",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -22.35,
+          "true_peak_dbtp": -2.51,
+          "sha256": "601822bf35a4d8107a6b0c90c73ba98467757c6bfc09331cf70d628718ead2fb"
+        },
+        "stream.m4a": {
+          "lufs": -21.84,
+          "true_peak_dbtp": -1.37,
+          "sha256": "353873a82fd2020408294b9323d3dafcc107dc485f9d6f7d146c1ef1c7ffb82d"
+        },
+        "preview_48s.m4a": {
+          "lufs": -22.31,
+          "true_peak_dbtp": -2.51,
+          "sha256": "1327d8f4e04535fe58b7c5ada8a3b50eb20bdb77da46d0bdeee3f5c1877fe40e"
+        }
+      },
+      "game_from_median_lu": -1.41,
+      "stream_from_game_lu": 0.51,
+      "review_priority_lu": 1.41
+    },
+    {
+      "track_id": "dh-027-afterimage-parade",
+      "title": "Afterimage Parade",
+      "subgenre": "Synthwave",
+      "manifest_sha256": "ad30be5aa1cdc65f7e308214c1f8c128ddf70a8e670a2fffac42d3a04c94fe4e",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -22.34,
+          "true_peak_dbtp": -2.17,
+          "sha256": "cfa6421f9904eb067ca5d578dd003c479efb314694eba07537a3c4f2ace970e6"
+        },
+        "stream.m4a": {
+          "lufs": -22.04,
+          "true_peak_dbtp": -2.58,
+          "sha256": "9ebe2e9b5be01472b459c52d4835b2656c1e0ad2c83448265d4f66dabfca12db"
+        },
+        "preview_48s.m4a": {
+          "lufs": -22.54,
+          "true_peak_dbtp": -2.95,
+          "sha256": "ee3270d6635ea25ab3024220be7a3b48be8476c0d56b3b50fe3f4551bf65dac6"
+        }
+      },
+      "game_from_median_lu": -1.4,
+      "stream_from_game_lu": 0.3,
+      "review_priority_lu": 1.4
+    },
+    {
+      "track_id": "dh-092-static-arcade",
+      "title": "Static Arcade",
+      "subgenre": "Synthwave",
+      "manifest_sha256": "1f28906274a8bc5044810ce5a6456f8bd1de2a30f2e6078a7f93bad4fc9e2a47",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -22.29,
+          "true_peak_dbtp": -5.79,
+          "sha256": "e7c3674bc44ec9a9eb56837d49c1498a538eef0788dbf78b16fa173fdf8242e6"
+        },
+        "stream.m4a": {
+          "lufs": -21.45,
+          "true_peak_dbtp": -5.79,
+          "sha256": "b1cd862492990e5f4ca93f0e31ef693a77d43bf8f57849c3addfdf2aebea0956"
+        },
+        "preview_48s.m4a": {
+          "lufs": -22.47,
+          "true_peak_dbtp": -5.79,
+          "sha256": "d915ab5495cecf2e71a1d880e52968c46c350841fd279e53c2a30cbdaa0a604b"
+        }
+      },
+      "game_from_median_lu": -1.35,
+      "stream_from_game_lu": 0.84,
+      "review_priority_lu": 1.35
+    },
+    {
+      "track_id": "dh-031-pocket-frequency",
+      "title": "Pocket Frequency",
+      "subgenre": "Melodic House",
+      "manifest_sha256": "5eade44180b0241351cbac27f2306ac0480e0dccf28e067dba671aaf8155da6f",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -19.62,
+          "true_peak_dbtp": -2.91,
+          "sha256": "ebd797f088477e48b667afcaeaf9e381c60e51f47733d607326fa2959eed95c9"
+        },
+        "stream.m4a": {
+          "lufs": -19.77,
+          "true_peak_dbtp": -2.9,
+          "sha256": "b8e01c05c1f6c19e623764aaa85d2a12a9b99adb1b666746c4b946f9f5a3b35a"
+        },
+        "preview_48s.m4a": {
+          "lufs": -19.59,
+          "true_peak_dbtp": -2.91,
+          "sha256": "93fa5e69065ec62b46246931b19abfb39538f4d9f54c1daec078ebbcda20d023"
+        }
+      },
+      "game_from_median_lu": 1.32,
+      "stream_from_game_lu": -0.15,
+      "review_priority_lu": 1.32
+    },
+    {
+      "track_id": "dh-066-twinleaf-tempo",
+      "title": "Twinleaf Tempo",
+      "subgenre": "Melodic House",
+      "manifest_sha256": "454bd1c04e4e3f64efc27062d98ab073cdfc835f6e9bee74df23f4606fd44fdf",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -22.24,
+          "true_peak_dbtp": -3.97,
+          "sha256": "f91410db86f4080a5f05935ef8435545cbd75bafe790b6bf3b7e094fb9404090"
+        },
+        "stream.m4a": {
+          "lufs": -21.73,
+          "true_peak_dbtp": -3.83,
+          "sha256": "9ddafe6d6357eef9e9af29c29b9cc1264add921d023f8a219c015728bd4189d1"
+        },
+        "preview_48s.m4a": {
+          "lufs": -22.07,
+          "true_peak_dbtp": -3.97,
+          "sha256": "0ea6259bfa47e4d6475e7abf6518573d0be207d423c2222d9936d168fbf1772a"
+        }
+      },
+      "game_from_median_lu": -1.3,
+      "stream_from_game_lu": 0.51,
+      "review_priority_lu": 1.3
+    },
+    {
+      "track_id": "dh-008-paperwave-lift",
+      "title": "Paperwave Lift",
+      "subgenre": "Future Bass",
+      "manifest_sha256": "f3387be46e6d870ad20b1c6f787402c7b472776a37bf88cdc67df6912523ab50",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -22.16,
+          "true_peak_dbtp": -1.39,
+          "sha256": "58de2ead6a5e3d9910bde78bd3d4a6a47c88931f98da1e25eb1365035128df48"
+        },
+        "stream.m4a": {
+          "lufs": -21.76,
+          "true_peak_dbtp": -2.08,
+          "sha256": "c1d06271baa15c5d0bd6fdf1a35cf4dbf0611821f2db0163db348d54366c3bb1"
+        },
+        "preview_48s.m4a": {
+          "lufs": -22.08,
+          "true_peak_dbtp": -1.39,
+          "sha256": "d4b7a4e84111a84e08640b56c5169eb84fb764571f8b78c499639972f955662b"
+        }
+      },
+      "game_from_median_lu": -1.22,
+      "stream_from_game_lu": 0.4,
+      "review_priority_lu": 1.22
+    },
+    {
+      "track_id": "dh-051-flipbook-beat",
+      "title": "Flipbook Beat",
+      "subgenre": "Melodic House",
+      "manifest_sha256": "26cc2e88fa812adae5c9ccbc7560bde1fb31a3279c37cbd8a644bf42643c15f3",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -19.75,
+          "true_peak_dbtp": -4.49,
+          "sha256": "6c0fbad915c9c5bf3e8f0e0cc9b211f24e1045e7222b8993c50aad1c4e55e7a0"
+        },
+        "stream.m4a": {
+          "lufs": -19.95,
+          "true_peak_dbtp": -5.26,
+          "sha256": "a26054bc714bd310e99066550d544d51516ffba0054dff717834e8abf340b3b0"
+        },
+        "preview_48s.m4a": {
+          "lufs": -19.25,
+          "true_peak_dbtp": -4.49,
+          "sha256": "83e1a34c40454df21f89066647d83404dda02694327e083549b095e2c0587a38"
+        }
+      },
+      "game_from_median_lu": 1.19,
+      "stream_from_game_lu": -0.2,
+      "review_priority_lu": 1.19
+    },
+    {
+      "track_id": "dh-060-overtone-vault",
+      "title": "Overtone Vault",
+      "subgenre": "Trance",
+      "manifest_sha256": "037f36a8bb3ac74e0727e13d1d31aad34a3847398e6d6c8a7186e893bd598bb0",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -19.77,
+          "true_peak_dbtp": -4.58,
+          "sha256": "51a2c87b154024472be215e29e2e66585ddd43a58dbe2d4a3bc7a79c1cff0bd1"
+        },
+        "stream.m4a": {
+          "lufs": -20.0,
+          "true_peak_dbtp": -4.48,
+          "sha256": "8b3a74eb67f60a5fdd7e83b4c9402977d8f7d159eff28c7a8e9c599f8342ec65"
+        },
+        "preview_48s.m4a": {
+          "lufs": -19.9,
+          "true_peak_dbtp": -4.58,
+          "sha256": "2497a5f371bdbdda7e55abd061ad9f4a969efe8fe0aad1e934a10b7fb2d2ecaf"
+        }
+      },
+      "game_from_median_lu": 1.17,
+      "stream_from_game_lu": -0.23,
+      "review_priority_lu": 1.17
+    },
+    {
+      "track_id": "dh-061-glasswing-loop",
+      "title": "Glasswing Loop",
+      "subgenre": "Melodic House",
+      "manifest_sha256": "17e8150d1011ea4ad5bd4d732e1e2b01d83b3f926cbf74078c81de20120d5358",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -21.83,
+          "true_peak_dbtp": -5.94,
+          "sha256": "5144f5a228d21f4f02039630c018da49b1522fb04220f1666a780577f782a8ab"
+        },
+        "stream.m4a": {
+          "lufs": -20.67,
+          "true_peak_dbtp": -5.83,
+          "sha256": "8303d58f85141c0120b4f84275336201d07ca9fcaa86b184aa2d3926e1656955"
+        },
+        "preview_48s.m4a": {
+          "lufs": -22.22,
+          "true_peak_dbtp": -5.94,
+          "sha256": "c8e5e4af3c77ff7057f87c777916687fef12243aacd942079de4cde2bfea8cf0"
+        }
+      },
+      "game_from_median_lu": -0.89,
+      "stream_from_game_lu": 1.16,
+      "review_priority_lu": 1.16
+    },
+    {
+      "track_id": "dh-079-cutline-chase",
+      "title": "Cutline Chase",
+      "subgenre": "Drum & Bass",
+      "manifest_sha256": "3e4cd2fbe3e0825cf687ba83e958d5c4ab4fd767e96a60bb56f8c706795725d7",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -22.1,
+          "true_peak_dbtp": -4.9,
+          "sha256": "9a8a3b263bec1dd01ecba196adae43fac357dcb6417cb4fc0ca0d7c2f6ba44c3"
+        },
+        "stream.m4a": {
+          "lufs": -21.18,
+          "true_peak_dbtp": -4.55,
+          "sha256": "ab2a1ea75a5d88b2f7c36995897016f0911ee0fc2b5a013da3a8b09b55d8ea76"
+        },
+        "preview_48s.m4a": {
+          "lufs": -21.64,
+          "true_peak_dbtp": -6.11,
+          "sha256": "2a54bfc60d7e8e09b1fd3522778fc2e04fec2e8e79a197e177e908b2a449637d"
+        }
+      },
+      "game_from_median_lu": -1.16,
+      "stream_from_game_lu": 0.92,
+      "review_priority_lu": 1.16
+    },
+    {
+      "track_id": "dh-020-fractal-footwork",
+      "title": "Fractal Footwork",
+      "subgenre": "Drum & Bass",
+      "manifest_sha256": "115a77f4bf6216bb2c9c383b0777fe1ed072f9088cc6045aa3e8ede38384f2f7",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -19.79,
+          "true_peak_dbtp": -2.66,
+          "sha256": "84c10e33555aaa4e1c97329ffcb1ba5c0ee6da198963b18ef3863ccfacf1c651"
+        },
+        "stream.m4a": {
+          "lufs": -18.92,
+          "true_peak_dbtp": -1.83,
+          "sha256": "9ce8878eb85b11741ca14a06bba9229ceb7c02f17e7deb399d1c5011bd587176"
+        },
+        "preview_48s.m4a": {
+          "lufs": -19.49,
+          "true_peak_dbtp": -2.66,
+          "sha256": "8b79d73513725758be1b7e652f88807e1a72d28fe94066eb2838b8e6556384c5"
+        }
+      },
+      "game_from_median_lu": 1.15,
+      "stream_from_game_lu": 0.87,
+      "review_priority_lu": 1.15
+    },
+    {
+      "track_id": "dh-058-snapbubble",
+      "title": "Snapbubble",
+      "subgenre": "Future Bass",
+      "manifest_sha256": "eeec3b997f38a05bdda5b2c3baf4e97efa84cddff62a78c6fbeaf9fab13eef8c",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -19.79,
+          "true_peak_dbtp": -3.41,
+          "sha256": "9be880305af9f333b61527257d5127fd346b69c204db2e21d31cb0aadf409d00"
+        },
+        "stream.m4a": {
+          "lufs": -19.85,
+          "true_peak_dbtp": -3.41,
+          "sha256": "b0f12e3e654a822b1abd1f7956bd112d10d1f1eaf869ba40d54695f4c6d298db"
+        },
+        "preview_48s.m4a": {
+          "lufs": -20.14,
+          "true_peak_dbtp": -3.41,
+          "sha256": "640aecf1f1d87bdc027be867e9721bec12f20452384cdd88e08981e676bcab4e"
+        }
+      },
+      "game_from_median_lu": 1.15,
+      "stream_from_game_lu": -0.06,
+      "review_priority_lu": 1.15
+    },
+    {
+      "track_id": "dh-072-sideband-story",
+      "title": "Sideband Story",
+      "subgenre": "Synthwave",
+      "manifest_sha256": "d7c860a75a3f9998e8e8e7bb057793f49ddb15f630ff74e3a2a10048bf143e7d",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -22.02,
+          "true_peak_dbtp": -7.69,
+          "sha256": "a9b83c5541d9d66365b993bcc01f8ec9db233ebdc6585b31dbc52d1af06d7b43"
+        },
+        "stream.m4a": {
+          "lufs": -22.19,
+          "true_peak_dbtp": -7.69,
+          "sha256": "b59c118b1c3e173df7dd6fa43b92cfc88fd18bbc7209e0738dbdeb80dd680ce3"
+        },
+        "preview_48s.m4a": {
+          "lufs": -21.74,
+          "true_peak_dbtp": -7.69,
+          "sha256": "aa1db20b633d3fb523a2c66cb98fc8ed63df8692754e66400723cc098c04ca45"
+        }
+      },
+      "game_from_median_lu": -1.08,
+      "stream_from_game_lu": -0.17,
+      "review_priority_lu": 1.08
+    },
+    {
+      "track_id": "dh-009-tangerine-breakline",
+      "title": "Tangerine Breakline",
+      "subgenre": "Drum & Bass",
+      "manifest_sha256": "02ec80f3c7cf2c1565c0bc75141ae0b5fa2170774c325fc71d9129cee0e4f44a",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -21.39,
+          "true_peak_dbtp": -1.65,
+          "sha256": "ecf70d468ef6d8e60620cf277231fc38c1e87a0497c6074bf17be7dc20fae72c"
+        },
+        "stream.m4a": {
+          "lufs": -22.46,
+          "true_peak_dbtp": -1.65,
+          "sha256": "d19dd1e6c9aa317818e0b077dd72dbf4b5129b3702528daa12d51e113232cf7f"
+        },
+        "preview_48s.m4a": {
+          "lufs": -21.39,
+          "true_peak_dbtp": -1.65,
+          "sha256": "5cc4d77d35d175e9c223d391a40eb35fc776d7a2470b5cb2539c54edd806363d"
+        }
+      },
+      "game_from_median_lu": -0.45,
+      "stream_from_game_lu": -1.07,
+      "review_priority_lu": 1.07
+    },
+    {
+      "track_id": "dh-052-dialspin",
+      "title": "Dialspin",
+      "subgenre": "Synthwave",
+      "manifest_sha256": "d847da3271ef9a75c4b48e99c268e09c00c6facf60b9ae53e5904dd79d0bd44e",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -19.89,
+          "true_peak_dbtp": -2.62,
+          "sha256": "185121a9430f8323e956daf3d182e294f9a68b8a8c2c278f2a1504a9e31a94ce"
+        },
+        "stream.m4a": {
+          "lufs": -19.91,
+          "true_peak_dbtp": -8.3,
+          "sha256": "ebe1ce58f55843b399215734ece7e4f285c7dc1feacea3824704f9937355947c"
+        },
+        "preview_48s.m4a": {
+          "lufs": -21.64,
+          "true_peak_dbtp": -2.62,
+          "sha256": "58589505a2bd3ac7c4aee831c4ab55890ae659f66a1500c26f5cc5d92f3294e7"
+        }
+      },
+      "game_from_median_lu": 1.05,
+      "stream_from_game_lu": -0.02,
+      "review_priority_lu": 1.05
+    },
+    {
+      "track_id": "dh-011-mica-bloomline",
+      "title": "Mica Bloomline",
+      "subgenre": "Melodic House",
+      "manifest_sha256": "1f13f85f1dcccfc56cf309ad1e389c186d44265d76b9b43f5836ca77c43eb7ea",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -21.96,
+          "true_peak_dbtp": -2.46,
+          "sha256": "61f146442f6e67cb535441a59f4a92529e670322db96b023aebd1ca18702c23d"
+        },
+        "stream.m4a": {
+          "lufs": -21.43,
+          "true_peak_dbtp": -1.92,
+          "sha256": "392f13bcf222532d52800f990be1df8c486c46041c6af940df076dcd273b3db4"
+        },
+        "preview_48s.m4a": {
+          "lufs": -22.06,
+          "true_peak_dbtp": -2.74,
+          "sha256": "6b9c4ff349c509f89e8117e28f7d87e53ee3b4fd17da05b99ae722a7268e3d7b"
+        }
+      },
+      "game_from_median_lu": -1.02,
+      "stream_from_game_lu": 0.53,
+      "review_priority_lu": 1.02
+    },
+    {
+      "track_id": "dh-070-compass-glow",
+      "title": "Compass Glow",
+      "subgenre": "Trance",
+      "manifest_sha256": "7b46ed951eb298fd68de66e44d6f96b7dda8de51629c74c9036947c84795cd7f",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -21.84,
+          "true_peak_dbtp": -4.22,
+          "sha256": "4b2fad8fa24bbec4048b3af8566bd305cd890576f94467c7a94834dfac16a594"
+        },
+        "stream.m4a": {
+          "lufs": -21.56,
+          "true_peak_dbtp": -4.22,
+          "sha256": "303bbc5a85d692ecd7b796266cef79a75d3acfec7e3aaf5f08da40012984fca0"
+        },
+        "preview_48s.m4a": {
+          "lufs": -21.77,
+          "true_peak_dbtp": -4.22,
+          "sha256": "e0ef6daf7b4ef8819e2dd5c6ac302583c4a84ebc6e6786faee4941929b34128c"
+        }
+      },
+      "game_from_median_lu": -0.9,
+      "stream_from_game_lu": 0.28,
+      "review_priority_lu": 0.9
+    },
+    {
+      "track_id": "dh-029-domino-relay",
+      "title": "Domino Relay",
+      "subgenre": "Drum & Bass",
+      "manifest_sha256": "709f5f0bb7f9ce7e647e7ca11bc53c961b8797a634658ecf2557e709c44302fa",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -21.83,
+          "true_peak_dbtp": -3.1,
+          "sha256": "3598e7ef5cf1cd8be9de3b2fd28aa07aead42cd88ab13ddf52463890f29bfe56"
+        },
+        "stream.m4a": {
+          "lufs": -21.66,
+          "true_peak_dbtp": -2.59,
+          "sha256": "3bbe488aaa5605e7f1be8156ed1da358556c17cc890675947f71daf1976e6c67"
+        },
+        "preview_48s.m4a": {
+          "lufs": -22.47,
+          "true_peak_dbtp": -3.38,
+          "sha256": "d23756098fc6727cdbc8e8bb4af6257df64025e66a166bd764e11253f9e2a8b1"
+        }
+      },
+      "game_from_median_lu": -0.89,
+      "stream_from_game_lu": 0.17,
+      "review_priority_lu": 0.89
+    },
+    {
+      "track_id": "dh-063-foldline-pop",
+      "title": "Foldline Pop",
+      "subgenre": "Future Bass",
+      "manifest_sha256": "70f30173b9a0edd44cb66372ee9f724bc261ca4dacf5e1e3eb6ce445ce1792a1",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -20.08,
+          "true_peak_dbtp": -4.52,
+          "sha256": "fd916f9b644c3f6521c1d26767127d081b791951ed02a51d226db8ccda16492a"
+        },
+        "stream.m4a": {
+          "lufs": -20.13,
+          "true_peak_dbtp": -4.05,
+          "sha256": "4992cba973b20c97421b0a1b0f4caed471fc909b50d3fe2364e3e754b80834a6"
+        },
+        "preview_48s.m4a": {
+          "lufs": -20.42,
+          "true_peak_dbtp": -4.92,
+          "sha256": "cd26b84155f3b79f53867fc16a0192fad5935cd3a9e59f8cf1a8893dc99403ff"
+        }
+      },
+      "game_from_median_lu": 0.86,
+      "stream_from_game_lu": -0.05,
+      "review_priority_lu": 0.86
+    },
+    {
+      "track_id": "dh-055-sailwake",
+      "title": "Sailwake",
+      "subgenre": "Trance",
+      "manifest_sha256": "5e0b5ce814a8da91ea11380e63fe983db10aa3b262616e4c7e50e683c4f9c7f2",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -21.08,
+          "true_peak_dbtp": -1.35,
+          "sha256": "fa7a820c8be012c9c80179c1f71818401b07db82aeb9f2367c0d230e21fb3a08"
+        },
+        "stream.m4a": {
+          "lufs": -21.92,
+          "true_peak_dbtp": -1.35,
+          "sha256": "e89570bbe786c61febf5ee2988a5386dad1b6971a95a05862eef890026e5a8f9"
+        },
+        "preview_48s.m4a": {
+          "lufs": -21.18,
+          "true_peak_dbtp": -1.98,
+          "sha256": "5941961c26e742886a75af45c99efcbc84973a53177e2e2e73e827c337bc2d93"
+        }
+      },
+      "game_from_median_lu": -0.14,
+      "stream_from_game_lu": -0.84,
+      "review_priority_lu": 0.84
+    },
+    {
+      "track_id": "dh-032-velvet-signal",
+      "title": "Velvet Signal",
+      "subgenre": "Synthwave",
+      "manifest_sha256": "7f17c4f0f618bd59e73e62fd0f01e594703bc8e17b12df8708e2c919e64ff142",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -20.12,
+          "true_peak_dbtp": -2.45,
+          "sha256": "177f9a179bbfe2ebcfc8faa2280bf3cff46ec97753e4aea653acf04300533933"
+        },
+        "stream.m4a": {
+          "lufs": -19.6,
+          "true_peak_dbtp": -2.42,
+          "sha256": "3625c31b925af62722e19f84592e5058595fd9988baee78b1c322e795cb51a86"
+        },
+        "preview_48s.m4a": {
+          "lufs": -20.58,
+          "true_peak_dbtp": -2.49,
+          "sha256": "fc9f7fe6489d9ac776e6afb1b69e26b58aff2ab1ade1b9a63cd91a1f73e3f6dd"
+        }
+      },
+      "game_from_median_lu": 0.82,
+      "stream_from_game_lu": 0.52,
+      "review_priority_lu": 0.82
+    },
+    {
+      "track_id": "dh-080-astra-surge",
+      "title": "Astra Surge",
+      "subgenre": "Trance",
+      "manifest_sha256": "ea961029adc5a1eeb5d368e9109f77093fe7c9caf900cc24fff62091f63ff7e2",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -21.73,
+          "true_peak_dbtp": -7.96,
+          "sha256": "b4e89dfc4e40980a06aa80c9e88821965d997f28ab0c1eaa1c8e9190fe0dd68d"
+        },
+        "stream.m4a": {
+          "lufs": -21.31,
+          "true_peak_dbtp": -4.07,
+          "sha256": "c0e04224b525a0ae01c523370a034c05daba0fe5d431c1a2fa4075eaeb456138"
+        },
+        "preview_48s.m4a": {
+          "lufs": -22.01,
+          "true_peak_dbtp": -7.96,
+          "sha256": "fe78b7f0eb930e215da7dc13dab255a2ed7d0824eb8107b2efff1f5b1d17ee7f"
+        }
+      },
+      "game_from_median_lu": -0.79,
+      "stream_from_game_lu": 0.42,
+      "review_priority_lu": 0.79
+    },
+    {
+      "track_id": "dh-084-latchrun",
+      "title": "Latchrun",
+      "subgenre": "Drum & Bass",
+      "manifest_sha256": "085c656240d2104d629c91578de01500db9e89872b2c6e85c42b5e829bf16383",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -20.86,
+          "true_peak_dbtp": -7.15,
+          "sha256": "920a7ccb8a7892853ddd95eeeac896b9df5792e55fff5dc377387adbe41b385c"
+        },
+        "stream.m4a": {
+          "lufs": -20.08,
+          "true_peak_dbtp": -7.15,
+          "sha256": "217e4e0cb323574ffdf556267c836ea541631684cf3eafc7fdc9ee4a2c6f54a7"
+        },
+        "preview_48s.m4a": {
+          "lufs": -20.46,
+          "true_peak_dbtp": -7.15,
+          "sha256": "c5e335b268f1ebab3b2ee95a4a06fb13eb7cf0bc5915c31896a88336fd2602b8"
+        }
+      },
+      "game_from_median_lu": 0.08,
+      "stream_from_game_lu": 0.78,
+      "review_priority_lu": 0.78
+    },
+    {
+      "track_id": "dh-053-pinwheel-skip",
+      "title": "Pinwheel Skip",
+      "subgenre": "Future Bass",
+      "manifest_sha256": "f8f7e8dd25da0023bd682337997f68f80c938572b84a9d8da7d94c02db6216df",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -20.18,
+          "true_peak_dbtp": -5.9,
+          "sha256": "094ef1e470fc9c407cfe2367c20dacd7f9194dfa328ea169b3ac986d0d7b78b6"
+        },
+        "stream.m4a": {
+          "lufs": -20.42,
+          "true_peak_dbtp": -8.04,
+          "sha256": "1b0b954b23bc62a3f71f2d952d516ea364fa4d504ee835da8d1a80b5a8fce79c"
+        },
+        "preview_48s.m4a": {
+          "lufs": -20.12,
+          "true_peak_dbtp": -5.9,
+          "sha256": "01d91b3ee8ba1ec37bb63ae06c9893ebca0ac2b6acfb8e88893d3ade55f04be9"
+        }
+      },
+      "game_from_median_lu": 0.76,
+      "stream_from_game_lu": -0.24,
+      "review_priority_lu": 0.76
+    },
+    {
+      "track_id": "dh-023-answerlight-bounce",
+      "title": "Answerlight Bounce",
+      "subgenre": "Future Bass",
+      "manifest_sha256": "9b8c9622794c2192dd67a0c6ff9b6a0464e861c3176c36b7c8fc0418bfc9ef5d",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -21.69,
+          "true_peak_dbtp": -1.95,
+          "sha256": "590d6319504c675af89c9852bf4f4c5d83331368750fc627c4cfdd2d58aee4ca"
+        },
+        "stream.m4a": {
+          "lufs": -21.84,
+          "true_peak_dbtp": -2.5,
+          "sha256": "4ba679cc740a1f0938d890e1bc5fed8b9c1306efe18bbd163e8ff7125d3a5687"
+        },
+        "preview_48s.m4a": {
+          "lufs": -21.61,
+          "true_peak_dbtp": -2.26,
+          "sha256": "5d2e22264164ec6bb9ee9e74ed7163a8566211d5019d8ff4b326f717f32f405c"
+        }
+      },
+      "game_from_median_lu": -0.75,
+      "stream_from_game_lu": -0.15,
+      "review_priority_lu": 0.75
+    },
+    {
+      "track_id": "dh-049-ghostnote-dash",
+      "title": "Ghostnote Dash",
+      "subgenre": "Drum & Bass",
+      "manifest_sha256": "45245373c709e664da93e81d6639d1999a6af824e9d6027a8335480bb4adf40c",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -20.21,
+          "true_peak_dbtp": -6.06,
+          "sha256": "f5cde51028d3638895a6b66d378d59f6d4538056cf1499fa288b0ac127e77c86"
+        },
+        "stream.m4a": {
+          "lufs": -19.94,
+          "true_peak_dbtp": -8.7,
+          "sha256": "211ec903d88d94c15d9385369ffd3cc4b7f28af295f5cd733ea1bc7a4ec439c1"
+        },
+        "preview_48s.m4a": {
+          "lufs": -21.45,
+          "true_peak_dbtp": -7.35,
+          "sha256": "3696a3223647eef6895b4acb27b2c42beed7d3ab83e638782c62c594c9a60d41"
+        }
+      },
+      "game_from_median_lu": 0.73,
+      "stream_from_game_lu": 0.27,
+      "review_priority_lu": 0.73
+    },
+    {
+      "track_id": "dh-090-open-horizon",
+      "title": "Open Horizon",
+      "subgenre": "Trance",
+      "manifest_sha256": "969a9cc6d4700efb1eb21e0deaf5fedd3fea95cc41f8b62447530fbe83a1bfab",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -21.53,
+          "true_peak_dbtp": -6.4,
+          "sha256": "0bb26d234c11a50d4044faa2b2cbd801925e6bb76797ebaefe0b3737948b21f0"
+        },
+        "stream.m4a": {
+          "lufs": -20.8,
+          "true_peak_dbtp": -4.43,
+          "sha256": "c8458bfa307bfcf6f01b1317123390bdf471081feb5436095f52bcebdbe3845f"
+        },
+        "preview_48s.m4a": {
+          "lufs": -21.16,
+          "true_peak_dbtp": -6.4,
+          "sha256": "ae4c15b4c4130c80a0696fe27987e827114a940d04c4ef26644ef322e2252d9a"
+        }
+      },
+      "game_from_median_lu": -0.59,
+      "stream_from_game_lu": 0.73,
+      "review_priority_lu": 0.73
+    },
+    {
+      "track_id": "dh-054-staple-hop",
+      "title": "Staple Hop",
+      "subgenre": "Drum & Bass",
+      "manifest_sha256": "fab860c8931fcee8c7bdbeb9781c0f3599e90952a6fe342e34b1a8e8e01e45e8",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -20.24,
+          "true_peak_dbtp": -4.5,
+          "sha256": "d2c7f79d54e87c094867768ae2e10a49f4fee51e688cdb7e26cffcd74c8dd780"
+        },
+        "stream.m4a": {
+          "lufs": -20.96,
+          "true_peak_dbtp": -6.9,
+          "sha256": "c165545e663c7e31be445e22144c7a8f25e7cea59abc7bbb02d1f63af2595fa7"
+        },
+        "preview_48s.m4a": {
+          "lufs": -20.7,
+          "true_peak_dbtp": -4.5,
+          "sha256": "29ce3889de4b142759038fed236db42f83f45c1639f27eaa207d4262fe823f71"
+        }
+      },
+      "game_from_median_lu": 0.7,
+      "stream_from_game_lu": -0.72,
+      "review_priority_lu": 0.72
+    },
+    {
+      "track_id": "dh-003-aurora-skipline",
+      "title": "Aurora Skipline",
+      "subgenre": "Future Bass",
+      "manifest_sha256": "d504b7e4f569663889e01edb6203e565b6da5078a1ebf41005872ad6278838c6",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -20.72,
+          "true_peak_dbtp": -2.02,
+          "sha256": "bb5523581c6f177b6c75f8f4c24c713c0c32059be214c3fc8b74aa9c6417116f"
+        },
+        "stream.m4a": {
+          "lufs": -21.36,
+          "true_peak_dbtp": -2.0,
+          "sha256": "20eb1e49d3536fca27131ea39cc0ce5002ddd550e00ff53dcb49976e74090660"
+        },
+        "preview_48s.m4a": {
+          "lufs": -20.57,
+          "true_peak_dbtp": -2.02,
+          "sha256": "a703568e71c0f2ae02aad36ca4bb55f1f196e49141dbed87e382a48337d7e777"
+        }
+      },
+      "game_from_median_lu": 0.22,
+      "stream_from_game_lu": -0.64,
+      "review_priority_lu": 0.64
+    },
+    {
+      "track_id": "dh-013-pulse-mosaic",
+      "title": "Pulse Mosaic",
+      "subgenre": "Future Bass",
+      "manifest_sha256": "e5e716f911aef8d2be1b9827c21c4a7c2e784fc30582b72e52ecfdf6cdb3c617",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -21.55,
+          "true_peak_dbtp": -1.44,
+          "sha256": "3b59f13cdb7f8223fd53019896c6ac5944e24883a6ebe846b1ec62d2c73742ea"
+        },
+        "stream.m4a": {
+          "lufs": -21.12,
+          "true_peak_dbtp": -1.44,
+          "sha256": "db9882f8e7d1d858f20e8b979e2f3cc7de969ab7e12e12dc049eb237a68eb39a"
+        },
+        "preview_48s.m4a": {
+          "lufs": -21.6,
+          "true_peak_dbtp": -2.34,
+          "sha256": "36cb67299ca7394595a23cab96184e4128e6553abd283812bfb953fb8844ad27"
+        }
+      },
+      "game_from_median_lu": -0.61,
+      "stream_from_game_lu": 0.43,
+      "review_priority_lu": 0.61
+    },
+    {
+      "track_id": "dh-044-skipframe-circuit",
+      "title": "Skipframe Circuit",
+      "subgenre": "Drum & Bass",
+      "manifest_sha256": "6fb5b0584d42a317427f2274a191473faa2606790cae650c148e70ac744003d2",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -20.5,
+          "true_peak_dbtp": -4.92,
+          "sha256": "f8538ab8e7c494fde80d8c87fdae2d17d9eed29b57d96449f820123f21b8d20c"
+        },
+        "stream.m4a": {
+          "lufs": -21.11,
+          "true_peak_dbtp": -6.68,
+          "sha256": "3697168eb2dcc3f3d9add9232a06a2035c8d98612060cdfb7220c311cc444e83"
+        },
+        "preview_48s.m4a": {
+          "lufs": -20.41,
+          "true_peak_dbtp": -4.92,
+          "sha256": "1b5cd4d62b1bac39f9344375c1a2222a4ebbeb48817993e93c9afcffe6a59e77"
+        }
+      },
+      "game_from_median_lu": 0.44,
+      "stream_from_game_lu": -0.61,
+      "review_priority_lu": 0.61
+    },
+    {
+      "track_id": "dh-071-chime-arc",
+      "title": "Chime Arc",
+      "subgenre": "Melodic House",
+      "manifest_sha256": "979853b407bd779778f126043d2996fd326dd1358e074fd49d2ccd3e2c767612",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -21.54,
+          "true_peak_dbtp": -6.64,
+          "sha256": "c0f1d26bb88b88278d0ac4bbd237552da9d139a1cf1c74e95bfc3ccad1565954"
+        },
+        "stream.m4a": {
+          "lufs": -21.54,
+          "true_peak_dbtp": -6.35,
+          "sha256": "3e63d122d07d0cea6f46ee7e8a4052684857d1915b821fe1daaac8e2aecd1969"
+        },
+        "preview_48s.m4a": {
+          "lufs": -21.67,
+          "true_peak_dbtp": -6.64,
+          "sha256": "49a57da7645e516dbbd197e1b2279cd867d091bc81db0a20b54053e3aebc831a"
+        }
+      },
+      "game_from_median_lu": -0.6,
+      "stream_from_game_lu": 0.0,
+      "review_priority_lu": 0.6
+    },
+    {
+      "track_id": "dh-074-gearshift-rush",
+      "title": "Gearshift Rush",
+      "subgenre": "Drum & Bass",
+      "manifest_sha256": "1c699bb76cb3760520534db34eee232e5c1932214649d189cc336733f2f7e305",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -21.54,
+          "true_peak_dbtp": -2.78,
+          "sha256": "7afb07a11d6df66865dea76addebc0afe079f1794257ee6af2085749ab6f0453"
+        },
+        "stream.m4a": {
+          "lufs": -21.31,
+          "true_peak_dbtp": -1.99,
+          "sha256": "d8aa23772881c4fa4dd9ce3cf0fb208b13975dcaa5ed8c593a478c9fe75b149b"
+        },
+        "preview_48s.m4a": {
+          "lufs": -22.09,
+          "true_peak_dbtp": -2.87,
+          "sha256": "f9b73569c294609db80ab936f036171dfb5bd4040931dcd60adc1ce45bf61a64"
+        }
+      },
+      "game_from_median_lu": -0.6,
+      "stream_from_game_lu": 0.23,
+      "review_priority_lu": 0.6
+    },
+    {
+      "track_id": "dh-082-lumen-cassette",
+      "title": "Lumen Cassette",
+      "subgenre": "Synthwave",
+      "manifest_sha256": "7cbb78d53be0fee4ca28375dfc366b0419019b61e3b43e76eb6946aa61b58211",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -20.38,
+          "true_peak_dbtp": -4.67,
+          "sha256": "62ca5593f15b2e05564a8a8daaa9ac68621add4734ca89f6cbaa78ef48f08679"
+        },
+        "stream.m4a": {
+          "lufs": -20.35,
+          "true_peak_dbtp": -3.63,
+          "sha256": "5e2d7565a04e0203273f4dbf597a7f469db2561c398844080043a3122d03d6e5"
+        },
+        "preview_48s.m4a": {
+          "lufs": -20.57,
+          "true_peak_dbtp": -5.18,
+          "sha256": "a8df31ca50968aace78a947123bf1d6469997df8a85950098c76e90d74f0db35"
+        }
+      },
+      "game_from_median_lu": 0.56,
+      "stream_from_game_lu": 0.03,
+      "review_priority_lu": 0.56
+    },
+    {
+      "track_id": "dh-016-kinetic-sundial",
+      "title": "Kinetic Sundial",
+      "subgenre": "Melodic House",
+      "manifest_sha256": "1ebccf448d9390ae7a5189978d19e80038e27a9533134156e0f588734f3cb95d",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -21.48,
+          "true_peak_dbtp": -1.54,
+          "sha256": "6125cd2ebb5d8099dc7c6b07c8e2201efaa4a95057ec606e59cf753a4a2ca8f2"
+        },
+        "stream.m4a": {
+          "lufs": -21.49,
+          "true_peak_dbtp": -1.42,
+          "sha256": "a344152462ae0038173040cb9ddf50d2826a4a4e89305b4fdb52f5e172938cea"
+        },
+        "preview_48s.m4a": {
+          "lufs": -21.6,
+          "true_peak_dbtp": -1.92,
+          "sha256": "47787069fb473cb5db1c7fa22888922b7bc1ba903b128573a5b5ac0deda25620"
+        }
+      },
+      "game_from_median_lu": -0.54,
+      "stream_from_game_lu": -0.01,
+      "review_priority_lu": 0.54
+    },
+    {
+      "track_id": "dh-059-switchrail",
+      "title": "Switchrail",
+      "subgenre": "Drum & Bass",
+      "manifest_sha256": "f5daaef92b365eb0e4afedb662d9480c9aac869b998422793019c6f60a1c8011",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -21.47,
+          "true_peak_dbtp": -5.54,
+          "sha256": "56a957abc8a8a0b25fe1344cc39dd0dd14ad85975dfb3cad8afad37ea2f32432"
+        },
+        "stream.m4a": {
+          "lufs": -21.31,
+          "true_peak_dbtp": -5.54,
+          "sha256": "80d9836cb2fe44976e950fe0d1bbad64dd847c4e5a2b9026d6f2118ce6beecf7"
+        },
+        "preview_48s.m4a": {
+          "lufs": -21.59,
+          "true_peak_dbtp": -5.54,
+          "sha256": "0f4e6c479c30334ea02ad3310723e73edda03980701895af98d97d306b49018d"
+        }
+      },
+      "game_from_median_lu": -0.53,
+      "stream_from_game_lu": 0.16,
+      "review_priority_lu": 0.53
+    },
+    {
+      "track_id": "dh-064-forklight-break",
+      "title": "Forklight Break",
+      "subgenre": "Drum & Bass",
+      "manifest_sha256": "dfd94c027cecb6413712d024bff32c270490559dad14043bd618f5e680042238",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -21.44,
+          "true_peak_dbtp": -5.43,
+          "sha256": "56738566be06284e53a6c033d62dcf52e462d193d8742c50ff107cb80250baea"
+        },
+        "stream.m4a": {
+          "lufs": -21.28,
+          "true_peak_dbtp": -5.43,
+          "sha256": "b73d12ea2fd9bd30cd54776083e4398ecbb1f7d87081bd59db8bcefb80ee3944"
+        },
+        "preview_48s.m4a": {
+          "lufs": -20.95,
+          "true_peak_dbtp": -5.43,
+          "sha256": "7b6c631dc39885b99b728334ed396b0704d7381a82e499d32b8ee48322241f1a"
+        }
+      },
+      "game_from_median_lu": -0.5,
+      "stream_from_game_lu": 0.16,
+      "review_priority_lu": 0.5
+    },
+    {
+      "track_id": "dh-005-dawnwave-helix",
+      "title": "Dawnwave Helix",
+      "subgenre": "Trance",
+      "manifest_sha256": "313f737a1d09a2e04be5fd4fd64cab16c5fed890c6dd2f5367e0c1b344534569",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -20.91,
+          "true_peak_dbtp": -1.34,
+          "sha256": "00f2b43cae94b47aee8932b13e6e64776cd3837c9e91823b6c39aeec5ca1cd8a"
+        },
+        "stream.m4a": {
+          "lufs": -20.42,
+          "true_peak_dbtp": -1.77,
+          "sha256": "468e5c8bb2d7dada0b1290882709203cf340714046659ffa51d737c353e09d0e"
+        },
+        "preview_48s.m4a": {
+          "lufs": -20.99,
+          "true_peak_dbtp": -1.35,
+          "sha256": "61b5861aeb4231a3edbaeb91374e5d2c1b3c67bfffcff90effed426d87050673"
+        }
+      },
+      "game_from_median_lu": 0.03,
+      "stream_from_game_lu": 0.49,
+      "review_priority_lu": 0.49
+    },
+    {
+      "track_id": "dh-047-keycap-comet",
+      "title": "Keycap Comet",
+      "subgenre": "Synthwave",
+      "manifest_sha256": "6cd1f321a3e83e45f368171aab998e5efcc6256e6261d624a5b9d6aa04559b4c",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -20.91,
+          "true_peak_dbtp": -5.2,
+          "sha256": "3d0105e972ec9ee10cd25a09e6bd0fbf2c1d5121e72a6136f6e5a68c265157bd"
+        },
+        "stream.m4a": {
+          "lufs": -21.39,
+          "true_peak_dbtp": -7.34,
+          "sha256": "1cea20cbf01641c62179548d2e8d4eafc3e3a3599fe77467ed85c49e03bb2119"
+        },
+        "preview_48s.m4a": {
+          "lufs": -21.15,
+          "true_peak_dbtp": -5.54,
+          "sha256": "eedb5b2669db0054556d7f114eb8da324fa96428b7bff3c04833ef325d4de9a9"
+        }
+      },
+      "game_from_median_lu": 0.03,
+      "stream_from_game_lu": -0.48,
+      "review_priority_lu": 0.48
+    },
+    {
+      "track_id": "dh-099-ricochet-grid",
+      "title": "Ricochet Grid",
+      "subgenre": "Drum & Bass",
+      "manifest_sha256": "b065f1418f8b72b00499fbd94272b4b24082a9c09344a08a02fab9104ad4f1f8",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -20.6,
+          "true_peak_dbtp": -7.29,
+          "sha256": "c2f38eb9b3ef5bec044bd331cf81d0e86a5b144c12d80180ee902b56d80ed6d6"
+        },
+        "stream.m4a": {
+          "lufs": -21.08,
+          "true_peak_dbtp": -7.29,
+          "sha256": "440f92714d7ec9db3e29e8f012d54c1cf4d613b3a9a95156410fdfc8f149c5fd"
+        },
+        "preview_48s.m4a": {
+          "lufs": -20.54,
+          "true_peak_dbtp": -7.29,
+          "sha256": "ca763beb9179a057cceac5c9acd79756390341180d09fe14fe1e0d7e89da08fc"
+        }
+      },
+      "game_from_median_lu": 0.34,
+      "stream_from_game_lu": -0.48,
+      "review_priority_lu": 0.48
+    },
+    {
+      "track_id": "dh-040-phase-aperture",
+      "title": "Phase Aperture",
+      "subgenre": "Trance",
+      "manifest_sha256": "f3a3c8b45e3d3ef01bddde5704b6cfd7de77cc3127a6dae6db974acdb18504bb",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -21.28,
+          "true_peak_dbtp": -6.75,
+          "sha256": "853ab336685e9fc1919f0ade17a73856db73b64565ec4dda1f33bc6acb44cbd1"
+        },
+        "stream.m4a": {
+          "lufs": -21.75,
+          "true_peak_dbtp": -8.03,
+          "sha256": "b41f169496b915b72a9d35b778fb947eb4ef664032f37c38250391df65236bb7"
+        },
+        "preview_48s.m4a": {
+          "lufs": -21.41,
+          "true_peak_dbtp": -6.75,
+          "sha256": "585a05b7277575583c12482cff03d6d536c114dddd569ecb054c150cf7b2dc9b"
+        }
+      },
+      "game_from_median_lu": -0.34,
+      "stream_from_game_lu": -0.47,
+      "review_priority_lu": 0.47
+    },
+    {
+      "track_id": "dh-004-kitewire-sprint",
+      "title": "Kitewire Sprint",
+      "subgenre": "Drum & Bass",
+      "manifest_sha256": "cfdae9302c1794ded95c6e1b58601c2b935b8254f6ffc3debb7f37f7d1b6ff36",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -21.4,
+          "true_peak_dbtp": -2.66,
+          "sha256": "ea15c820eede048e4fc6ad7d94c4c2b0cb5832dfb842ebd04bceb9907c0cd9fd"
+        },
+        "stream.m4a": {
+          "lufs": -21.59,
+          "true_peak_dbtp": -2.66,
+          "sha256": "4ed6673350cef7ce6fd13dfb095e3336cb325f1775c009b3be5bafeedac0f204"
+        },
+        "preview_48s.m4a": {
+          "lufs": -21.43,
+          "true_peak_dbtp": -2.66,
+          "sha256": "0b771cff1b56681243708c4e518f39006dba014587b55346a0b0fb128b81b807"
+        }
+      },
+      "game_from_median_lu": -0.46,
+      "stream_from_game_lu": -0.19,
+      "review_priority_lu": 0.46
+    },
+    {
+      "track_id": "dh-085-halation-loop",
+      "title": "Halation Loop",
+      "subgenre": "Trance",
+      "manifest_sha256": "9e513e91461788a101920b931a233b60bd020e7a45de1402bf2516f1e0574336",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -20.62,
+          "true_peak_dbtp": -5.25,
+          "sha256": "113b3af3fb91bf201a3ecdea1b4d28025cca465c33186f8e1b67025566c41d7f"
+        },
+        "stream.m4a": {
+          "lufs": -20.16,
+          "true_peak_dbtp": -4.37,
+          "sha256": "d6516d173096e31af46917742db3392398971db4336a1d43786b0f936a8936a6"
+        },
+        "preview_48s.m4a": {
+          "lufs": -20.83,
+          "true_peak_dbtp": -6.38,
+          "sha256": "ce8fa613e665001be3e023ec26b6820d61044c836560ecd9d715fd771cbd1391"
+        }
+      },
+      "game_from_median_lu": 0.32,
+      "stream_from_game_lu": 0.46,
+      "review_priority_lu": 0.46
+    },
+    {
+      "track_id": "dh-048-latchlight",
+      "title": "Latchlight",
+      "subgenre": "Future Bass",
+      "manifest_sha256": "cf98a49ee38284c5944368f20965a14bba737d4ae3221a75e4749f9c2defca72",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -20.56,
+          "true_peak_dbtp": -4.39,
+          "sha256": "0492b501bef4d941e6da449b3200377e4e3cf524eeeca65537e1968239aa9083"
+        },
+        "stream.m4a": {
+          "lufs": -20.12,
+          "true_peak_dbtp": -7.56,
+          "sha256": "938e8bc8a82bbed31d66ffc5f5d25f66cf6b598149286009c1c272f436ee4755"
+        },
+        "preview_48s.m4a": {
+          "lufs": -21.45,
+          "true_peak_dbtp": -5.8,
+          "sha256": "07f0a36ac0c16967231978e5154677f8cb65ee65abba1d995174c25fe15313d7"
+        }
+      },
+      "game_from_median_lu": 0.38,
+      "stream_from_game_lu": 0.44,
+      "review_priority_lu": 0.44
+    },
+    {
+      "track_id": "dh-100-lucent-passage",
+      "title": "Lucent Passage",
+      "subgenre": "Trance",
+      "manifest_sha256": "f342cb0ede5fec4c723d0d307e32552752594ffb5230d9481161d7cb1a7061ee",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -21.3,
+          "true_peak_dbtp": -8.09,
+          "sha256": "fcb772051c65af50fee3b5a03937dc3e98a3380c059ac8e38b052be304c7a734"
+        },
+        "stream.m4a": {
+          "lufs": -20.87,
+          "true_peak_dbtp": -8.09,
+          "sha256": "f83bb82fd33195d490fb08bedad369894027b8ec2508028908babbaa4a80f2be"
+        },
+        "preview_48s.m4a": {
+          "lufs": -21.6,
+          "true_peak_dbtp": -8.09,
+          "sha256": "eed7373e6811b6c20a63cb60ae1b72e820529bc55b9059ecb2b47c1d20d24176"
+        }
+      },
+      "game_from_median_lu": -0.36,
+      "stream_from_game_lu": 0.43,
+      "review_priority_lu": 0.43
+    },
+    {
+      "track_id": "dh-097-analog-bloom",
+      "title": "Analog Bloom",
+      "subgenre": "Synthwave",
+      "manifest_sha256": "ea5684a346b5e04592f957982bec70de980ed94cb97e12256455944c14665454",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -20.68,
+          "true_peak_dbtp": -5.29,
+          "sha256": "b0de7cffe43f88e65b8f052342c2f610ffbd538c4f19e429c7c974508577c73b"
+        },
+        "stream.m4a": {
+          "lufs": -21.1,
+          "true_peak_dbtp": -4.76,
+          "sha256": "4b779001cb4703c1db1be2fe8242e896ee5277f6e8398d80d29084e634fc2789"
+        },
+        "preview_48s.m4a": {
+          "lufs": -20.69,
+          "true_peak_dbtp": -5.29,
+          "sha256": "170e0be09c8febda29d32d914d7c06156f124c616c8c524b01bdade758c810e6"
+        }
+      },
+      "game_from_median_lu": 0.26,
+      "stream_from_game_lu": -0.42,
+      "review_priority_lu": 0.42
+    },
+    {
+      "track_id": "dh-038-brightfall",
+      "title": "Brightfall",
+      "subgenre": "Future Bass",
+      "manifest_sha256": "6db4c4d2a60e8916aad48f170e3691ff7c0bf692176069119e693452b2adfc83",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -21.21,
+          "true_peak_dbtp": -5.37,
+          "sha256": "4c51dd65d786fa23745dee4369a92343f4fe8e669ce12ddb0df84770bc94890a"
+        },
+        "stream.m4a": {
+          "lufs": -21.62,
+          "true_peak_dbtp": -7.77,
+          "sha256": "8daf196171cbf22b6097c1eeffa2b3e8a89ce44401db66e91bb6d3cbd8bc972e"
+        },
+        "preview_48s.m4a": {
+          "lufs": -21.34,
+          "true_peak_dbtp": -5.99,
+          "sha256": "90e00d156778151a1e99620826b9b3337b1806268d8cbbeea20de3a3992e838f"
+        }
+      },
+      "game_from_median_lu": -0.27,
+      "stream_from_game_lu": -0.41,
+      "review_priority_lu": 0.41
+    },
+    {
+      "track_id": "dh-083-bouncefold",
+      "title": "Bouncefold",
+      "subgenre": "Future Bass",
+      "manifest_sha256": "e7db263630ac5f6d2ae6f32a6bd2b13ea595723d722ba3c129046c7804b23b9c",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -20.54,
+          "true_peak_dbtp": -3.9,
+          "sha256": "0807750d97f877d20f64e08579a89ccd9dfb80dca3ef4f22a0f6e503c97ed355"
+        },
+        "stream.m4a": {
+          "lufs": -20.34,
+          "true_peak_dbtp": -3.9,
+          "sha256": "5bf75a751c5251408255a62ab370846b8ded2a25aebd4088ddd2c90789229f16"
+        },
+        "preview_48s.m4a": {
+          "lufs": -20.11,
+          "true_peak_dbtp": -3.9,
+          "sha256": "7ac6829232cb6158cb977200242f57f1085eaf540e9a6b870472e1d7256acc0c"
+        }
+      },
+      "game_from_median_lu": 0.4,
+      "stream_from_game_lu": 0.2,
+      "review_priority_lu": 0.4
+    },
+    {
+      "track_id": "dh-077-velour-transit",
+      "title": "Velour Transit",
+      "subgenre": "Synthwave",
+      "manifest_sha256": "1f8c28543ea6c9fdc7397c0584b12e016f40ce4431c12bbb7c1074a09d037b79",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -21.31,
+          "true_peak_dbtp": -5.95,
+          "sha256": "ac35750af1d10bd6233dfab1afb8fd9017f899239eb404dc4e288334def848e8"
+        },
+        "stream.m4a": {
+          "lufs": -21.25,
+          "true_peak_dbtp": -4.67,
+          "sha256": "09e53c955d1fcfbaceb73eb534787e1b299de93b673421cd0532e2c0d16360ad"
+        },
+        "preview_48s.m4a": {
+          "lufs": -21.33,
+          "true_peak_dbtp": -5.98,
+          "sha256": "8087e818ccec4ad413b082e74ef9db855bab61782d775e941df41076b552cc1a"
+        }
+      },
+      "game_from_median_lu": -0.37,
+      "stream_from_game_lu": 0.06,
+      "review_priority_lu": 0.37
+    },
+    {
+      "track_id": "dh-041-hexa-swing",
+      "title": "Hexa Swing",
+      "subgenre": "Melodic House",
+      "manifest_sha256": "46b4b9624d9ec950c92cd79f6fdcc9014e81d3bc7109efc4630acc9ee898f8c8",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -20.59,
+          "true_peak_dbtp": -5.73,
+          "sha256": "a92ef4cac47dd68f28f65fa5f3a57cce599f0830aae1bbb86bf1ab91d508d3e0"
+        },
+        "stream.m4a": {
+          "lufs": -20.93,
+          "true_peak_dbtp": -7.63,
+          "sha256": "52a6d58526ccdb51dbcd6887374cb0956360df48eeb4cd05cafc2348f41b9569"
+        },
+        "preview_48s.m4a": {
+          "lufs": -19.62,
+          "true_peak_dbtp": -5.73,
+          "sha256": "ef191d5145d91bdb2042166b86c17c67c438796e5a14312aa785f64d08d3dcfa"
+        }
+      },
+      "game_from_median_lu": 0.35,
+      "stream_from_game_lu": -0.34,
+      "review_priority_lu": 0.35
+    },
+    {
+      "track_id": "dh-062-nightgrid-shuffle",
+      "title": "Nightgrid Shuffle",
+      "subgenre": "Synthwave",
+      "manifest_sha256": "ba9b01554365fe0d670ff32e3080c303ed61af91ac9fad7ff10ac6a4d4c8ca66",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -21.29,
+          "true_peak_dbtp": -3.26,
+          "sha256": "1aa8e764e414e887a970fb7ee09cfdcf8e14355783ff1c6962262262fdb72f95"
+        },
+        "stream.m4a": {
+          "lufs": -21.28,
+          "true_peak_dbtp": -3.26,
+          "sha256": "66bf38f523cff1a6483387b1b4bdc8983a6c82cbc52dbfebbc70211150412392"
+        },
+        "preview_48s.m4a": {
+          "lufs": -21.63,
+          "true_peak_dbtp": -3.68,
+          "sha256": "48a7282216070fe5be0812a61ae3350501c719aa6d76d7402e07fb73ef8ad824"
+        }
+      },
+      "game_from_median_lu": -0.35,
+      "stream_from_game_lu": 0.01,
+      "review_priority_lu": 0.35
+    },
+    {
+      "track_id": "dh-098-patchwork-pop",
+      "title": "Patchwork Pop",
+      "subgenre": "Future Bass",
+      "manifest_sha256": "70fc371f0881af117662f05c25504c537ad4de3eb899564361b32f44e8f724d0",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -20.59,
+          "true_peak_dbtp": -3.88,
+          "sha256": "4eafd411dfa226053957637ec6c079f4b9898e9c4fafab6978395009961a103e"
+        },
+        "stream.m4a": {
+          "lufs": -20.83,
+          "true_peak_dbtp": -3.31,
+          "sha256": "11b6252d49b0746a67cfedeefa4f993160c16532078d44403f52fb100dab8ad5"
+        },
+        "preview_48s.m4a": {
+          "lufs": -20.92,
+          "true_peak_dbtp": -4.05,
+          "sha256": "90d8be0fa6c64e66906ed474c92a08833ee23120510db22f826b9970d4dedbdb"
+        }
+      },
+      "game_from_median_lu": 0.35,
+      "stream_from_game_lu": -0.24,
+      "review_priority_lu": 0.35
+    },
+    {
+      "track_id": "dh-006-signal-orchard",
+      "title": "Signal Orchard",
+      "subgenre": "Melodic House",
+      "manifest_sha256": "6465f694aa8529cec85508e1137e6b922b6837f1620c0736987d5e1394d9728e",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -20.89,
+          "true_peak_dbtp": -1.07,
+          "sha256": "f0703f8aac7fa251e98c2a285bbcf7cc58475f8b65366f20f68a3c3c3422d3a9"
+        },
+        "stream.m4a": {
+          "lufs": -20.55,
+          "true_peak_dbtp": -1.35,
+          "sha256": "344524252f7d6d548e50fca067389ba7c7a444ff7881fa3f71927463d8e77c7e"
+        },
+        "preview_48s.m4a": {
+          "lufs": -20.93,
+          "true_peak_dbtp": -1.07,
+          "sha256": "89131a62c302a64511a64da6286e9fc0ddf0ca1628febfbb1a96a769df4fe30c"
+        }
+      },
+      "game_from_median_lu": 0.05,
+      "stream_from_game_lu": 0.34,
+      "review_priority_lu": 0.34
+    },
+    {
+      "track_id": "dh-067-magnetic-shift",
+      "title": "Magnetic Shift",
+      "subgenre": "Synthwave",
+      "manifest_sha256": "cb9ea5d42157ac4e8a47983162bac4442c9fb23a2df7cbee95d65703a77e6863",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -21.06,
+          "true_peak_dbtp": -3.66,
+          "sha256": "e7579628b711e7a9e1ac3b45f3450916607e751d76a315e0fbcc2229b718afff"
+        },
+        "stream.m4a": {
+          "lufs": -21.37,
+          "true_peak_dbtp": -3.23,
+          "sha256": "bc11b52a9593aedb913c6605e1429b89a5c3afbc43ef2946d4031f1031da1898"
+        },
+        "preview_48s.m4a": {
+          "lufs": -20.73,
+          "true_peak_dbtp": -3.66,
+          "sha256": "38a01f6ebbd266c2107832a9634425a0452e04e6b17e278ec27779c61c092e9c"
+        }
+      },
+      "game_from_median_lu": -0.12,
+      "stream_from_game_lu": -0.31,
+      "review_priority_lu": 0.31
+    },
+    {
+      "track_id": "dh-093-foamstep",
+      "title": "Foamstep",
+      "subgenre": "Future Bass",
+      "manifest_sha256": "185fae1b3d34c76cd469befdf1738949988beb9a3ce4c9c3b535d7090bfe8a5a",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -21.16,
+          "true_peak_dbtp": -7.53,
+          "sha256": "db1722c27cad0c54eba0b387bcb54c7dd8301638847a6a2dbd0176a9ed773515"
+        },
+        "stream.m4a": {
+          "lufs": -20.85,
+          "true_peak_dbtp": -7.53,
+          "sha256": "e5f21979611b4fbbf5d4b7fa7d0dffbfbee5875b38fd8e517083d9d8a2fda284"
+        },
+        "preview_48s.m4a": {
+          "lufs": -21.54,
+          "true_peak_dbtp": -7.77,
+          "sha256": "607fb9044059e9ea36f3a0baeff168f9826277e2b953022b28cefa253145e90a"
+        }
+      },
+      "game_from_median_lu": -0.22,
+      "stream_from_game_lu": 0.31,
+      "review_priority_lu": 0.31
+    },
+    {
+      "track_id": "dh-103-tileflip",
+      "title": "Tileflip",
+      "subgenre": "Future Bass",
+      "manifest_sha256": "b16ef94def4060ca89d5ada2fe2d9b0383ce03395e4b8d324a287132a2f95f36",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -20.63,
+          "true_peak_dbtp": -7.04,
+          "sha256": "41964fdc1488e1389338a7d8bbc2fa1054a111663b0f43307310a9ff92194eb8"
+        },
+        "stream.m4a": {
+          "lufs": -20.78,
+          "true_peak_dbtp": -7.04,
+          "sha256": "2b79a928a67b798e5383c1d48b298224d55ef7892ce341294797790c02ad0cec"
+        },
+        "preview_48s.m4a": {
+          "lufs": -20.42,
+          "true_peak_dbtp": -8.86,
+          "sha256": "11a9d20d52f8e06de8ebd41655e331d5edb0392c7f0b8c66bdb14067344e0733"
+        }
+      },
+      "game_from_median_lu": 0.31,
+      "stream_from_game_lu": -0.15,
+      "review_priority_lu": 0.31
+    },
+    {
+      "track_id": "dh-094-railflash",
+      "title": "Railflash",
+      "subgenre": "Drum & Bass",
+      "manifest_sha256": "c82f4c027efdf06005c2e27ebe1f56f24771b574b1f8961d9660276b06128402",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -21.24,
+          "true_peak_dbtp": -4.91,
+          "sha256": "3a041f842f465db303e192187e6cce9963d194d188866c6c02067f23d5aa75d7"
+        },
+        "stream.m4a": {
+          "lufs": -21.3,
+          "true_peak_dbtp": -4.16,
+          "sha256": "28523caae3769005d9ae789c34b0634f0ca7e4567355ebb803ff87a16bea72ba"
+        },
+        "preview_48s.m4a": {
+          "lufs": -21.4,
+          "true_peak_dbtp": -6.16,
+          "sha256": "7fd07aa8fb72be5826d0bb6d261e0b1a90747301116d350a7f7ec72fe2b56654"
+        }
+      },
+      "game_from_median_lu": -0.3,
+      "stream_from_game_lu": -0.06,
+      "review_priority_lu": 0.3
+    },
+    {
+      "track_id": "dh-095-clearphase",
+      "title": "Clearphase",
+      "subgenre": "Trance",
+      "manifest_sha256": "b2a0f8a48207e6d1efb8ace27a40e2598124f825db347a09a4e660e83f7c8f42",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -21.23,
+          "true_peak_dbtp": -6.91,
+          "sha256": "b94f0a512a0304ca505eda2110f051e9ec0566c08f3cff0d799da2d3351b9b44"
+        },
+        "stream.m4a": {
+          "lufs": -21.36,
+          "true_peak_dbtp": -6.86,
+          "sha256": "0379e9fc17cbc3c929d8eeb7919b2a0b612884891ec5f0a72e41538d4b034244"
+        },
+        "preview_48s.m4a": {
+          "lufs": -21.18,
+          "true_peak_dbtp": -6.91,
+          "sha256": "10f67f3d399d8da9ee59181c4b8e416e63d2ad295b2fa2bd037cca6379967c70"
+        }
+      },
+      "game_from_median_lu": -0.29,
+      "stream_from_game_lu": -0.13,
+      "review_priority_lu": 0.29
+    },
+    {
+      "track_id": "dh-069-crossbeat-clap",
+      "title": "Crossbeat Clap",
+      "subgenre": "Drum & Bass",
+      "manifest_sha256": "b231dabd54392ab518718c30a13f69e8e2f8ee66c35d070b66717343d52cdffd",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -21.22,
+          "true_peak_dbtp": -7.38,
+          "sha256": "ed8416161a20da7182cdc2d4e551086b9d1575a55e6012a3902d3ff9aa808e1c"
+        },
+        "stream.m4a": {
+          "lufs": -21.21,
+          "true_peak_dbtp": -7.38,
+          "sha256": "436512238d99cb0e330783adae86a99a57d447b4a07d19e5c1edf3068cc27138"
+        },
+        "preview_48s.m4a": {
+          "lufs": -21.23,
+          "true_peak_dbtp": -7.38,
+          "sha256": "ab06b60f57934f4f4a347ca9c9e23afdaa7969a8569433342c8e52c1047d3265"
+        }
+      },
+      "game_from_median_lu": -0.28,
+      "stream_from_game_lu": 0.01,
+      "review_priority_lu": 0.28
+    },
+    {
+      "track_id": "dh-081-braided-pulse",
+      "title": "Braided Pulse",
+      "subgenre": "Melodic House",
+      "manifest_sha256": "f516dafbc1cc12bd9891e4cc94e2be6968588090805a71561d33efd9cc9e2db1",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -20.66,
+          "true_peak_dbtp": -5.61,
+          "sha256": "d73b3b791b5cd753a8f9fb797ba6456043bfa2d81003f1d3fe6b97f9c6888efb"
+        },
+        "stream.m4a": {
+          "lufs": -20.88,
+          "true_peak_dbtp": -4.97,
+          "sha256": "100ac551ebf68311024504f4e687cd86d133a8d8131bc49387c9aa24ba174b10"
+        },
+        "preview_48s.m4a": {
+          "lufs": -20.65,
+          "true_peak_dbtp": -5.61,
+          "sha256": "4f0520b981605f832baca9b290bad78a6ae59716b11310456a3c4c36d0dac790"
+        }
+      },
+      "game_from_median_lu": 0.28,
+      "stream_from_game_lu": -0.22,
+      "review_priority_lu": 0.28
+    },
+    {
+      "track_id": "dh-088-springpad-pop",
+      "title": "Springpad Pop",
+      "subgenre": "Future Bass",
+      "manifest_sha256": "63efcf81c53f895560915d516be74b5bdf20f4a41d29d1d948f0d9abf47fcbd2",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -21.18,
+          "true_peak_dbtp": -5.23,
+          "sha256": "e64281c536c1f9eb122d7a950a3507bd9ee05acf4aa0eb0dcca0fb6d3c6dbd84"
+        },
+        "stream.m4a": {
+          "lufs": -20.9,
+          "true_peak_dbtp": -5.23,
+          "sha256": "4dc68ab8ef19b7aedbbababe57c3a1d91a77a2a14f43cbe362313b7e3810d9cb"
+        },
+        "preview_48s.m4a": {
+          "lufs": -20.6,
+          "true_peak_dbtp": -5.23,
+          "sha256": "7b8a2eceaf5bff7c4d0e1ae41def68b48182d097b9014aff53944dc4a8ab74e1"
+        }
+      },
+      "game_from_median_lu": -0.24,
+      "stream_from_game_lu": 0.28,
+      "review_priority_lu": 0.28
+    },
+    {
+      "track_id": "dh-037-copper-answer",
+      "title": "Copper Answer",
+      "subgenre": "Synthwave",
+      "manifest_sha256": "93ba02c9ff498e22cd93caff0db019694a0d6744dcd76a9d23eb373ce3de8a22",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -20.79,
+          "true_peak_dbtp": -5.3,
+          "sha256": "c0d91f313cbdbd3cb08a43b2954fa3b1292059d6b8e130df1d57e04212695166"
+        },
+        "stream.m4a": {
+          "lufs": -20.54,
+          "true_peak_dbtp": -7.98,
+          "sha256": "eca9ee8044e8f6ef950ec79b064f71b4bb3e5c3e27c5e9996200ba12058ebacd"
+        },
+        "preview_48s.m4a": {
+          "lufs": -20.95,
+          "true_peak_dbtp": -5.3,
+          "sha256": "6c7bc02005acdec7bcb4c0c963c8aee414d401af35c458c2b8dad830787b38e1"
+        }
+      },
+      "game_from_median_lu": 0.15,
+      "stream_from_game_lu": 0.25,
+      "review_priority_lu": 0.25
+    },
+    {
+      "track_id": "dh-056-postcard-wave",
+      "title": "Postcard Wave",
+      "subgenre": "Melodic House",
+      "manifest_sha256": "9d706c79b364addd2a656ccb74f72516a9e11087ab45dcf12e5d9ae4c0ff4f85",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -20.7,
+          "true_peak_dbtp": -6.0,
+          "sha256": "e3d2c4813e959124a062a493d09432fe3b03d2605d4fdc1c2b788d3af2b413b2"
+        },
+        "stream.m4a": {
+          "lufs": -20.82,
+          "true_peak_dbtp": -8.51,
+          "sha256": "223dbb829fbd567f85387dcbf01ea52244104eeeb1e78f2c232d6fe4b429eeff"
+        },
+        "preview_48s.m4a": {
+          "lufs": -20.37,
+          "true_peak_dbtp": -6.0,
+          "sha256": "8bb1d699e599b0151647a2dcc0249d22b90390d3c9a9d1d1e860b1a30f778781"
+        }
+      },
+      "game_from_median_lu": 0.24,
+      "stream_from_game_lu": -0.12,
+      "review_priority_lu": 0.24
+    },
+    {
+      "track_id": "dh-078-pogo-pulse",
+      "title": "Pogo Pulse",
+      "subgenre": "Future Bass",
+      "manifest_sha256": "c172538c55f5c86a8cd0a95bbb8ceb6a5a45ea7dda6f4d3c27d208697c711ea0",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -21.18,
+          "true_peak_dbtp": -6.61,
+          "sha256": "0bcd0e276e421f4126ac7b486a708e4a12e345d05c879a7d762ed9bd8f1bb166"
+        },
+        "stream.m4a": {
+          "lufs": -21.01,
+          "true_peak_dbtp": -3.41,
+          "sha256": "ad9e44373744497ba3f02bde44a6a75ae6a46ec2d27a913ff0dce5d6617a95b1"
+        },
+        "preview_48s.m4a": {
+          "lufs": -21.05,
+          "true_peak_dbtp": -7.0,
+          "sha256": "05df8ad4df1cd2492aa643aa37f9b66e5ffe0f96ea5ac0542fd1cd0e3f8639ab"
+        }
+      },
+      "game_from_median_lu": -0.24,
+      "stream_from_game_lu": 0.17,
+      "review_priority_lu": 0.24
+    },
+    {
+      "track_id": "dh-089-quickmark",
+      "title": "Quickmark",
+      "subgenre": "Drum & Bass",
+      "manifest_sha256": "4681cc10f12a1d470f203f285294a970dd87d413c75b803fa040c56db250527a",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -21.16,
+          "true_peak_dbtp": -6.69,
+          "sha256": "7762aa0060a2e13d67b4bc76baa0674ca2344dbe56fabae1bb00421721c17c84"
+        },
+        "stream.m4a": {
+          "lufs": -21.0,
+          "true_peak_dbtp": -5.67,
+          "sha256": "1e780ae571dc452ab130edf46e2afb50edc13285e6c6ae77ec2810453d363ca5"
+        },
+        "preview_48s.m4a": {
+          "lufs": -21.17,
+          "true_peak_dbtp": -6.87,
+          "sha256": "6b247b044ec37a584913ea8542b359248af285e35a64518eeae2c7035e8c5bdd"
+        }
+      },
+      "game_from_median_lu": -0.22,
+      "stream_from_game_lu": 0.16,
+      "review_priority_lu": 0.22
+    },
+    {
+      "track_id": "dh-101-glowline-garden",
+      "title": "Glowline Garden",
+      "subgenre": "Melodic House",
+      "manifest_sha256": "6534c46e6ea7c56187540bd06816fbbf0a430ab8ef2e6b2c4b4e6ba3692bf5ea",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -20.72,
+          "true_peak_dbtp": -6.38,
+          "sha256": "57c729bcf323b173b3ae651911e4ced0dcf47808ab1c74c0d248ac6a3c1f30a6"
+        },
+        "stream.m4a": {
+          "lufs": -20.73,
+          "true_peak_dbtp": -6.37,
+          "sha256": "32189a9ce5e824a9223b8b9a53663079c2904031db2c34a6b60fa59a49ee4ce4"
+        },
+        "preview_48s.m4a": {
+          "lufs": -20.79,
+          "true_peak_dbtp": -6.38,
+          "sha256": "2a90faa974deb8060f8f3a7136545e68e7b6b34dc14afa917b2d5fd1804c7110"
+        }
+      },
+      "game_from_median_lu": 0.22,
+      "stream_from_game_lu": -0.01,
+      "review_priority_lu": 0.22
+    },
+    {
+      "track_id": "dh-065-hourglass-echo",
+      "title": "Hourglass Echo",
+      "subgenre": "Trance",
+      "manifest_sha256": "f4cfa1aa9de6592db969082b49466c19bc24312653cbeb7c8e59f5177f7e3f17",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -21.15,
+          "true_peak_dbtp": -5.36,
+          "sha256": "e0ec609052374134f0a3101b2c6094da63862f5dbea6bdccdc7959f756aecf89"
+        },
+        "stream.m4a": {
+          "lufs": -21.08,
+          "true_peak_dbtp": -5.36,
+          "sha256": "798f2fa4977077a9be08cb709e207899d220f269896dfa93f2dc5a614bf738d3"
+        },
+        "preview_48s.m4a": {
+          "lufs": -21.23,
+          "true_peak_dbtp": -5.36,
+          "sha256": "2b2d060d94067b3fa878fcdf0ec0e3cad22c6ce0dc2731aa979ef09cf64e487e"
+        }
+      },
+      "game_from_median_lu": -0.21,
+      "stream_from_game_lu": 0.07,
+      "review_priority_lu": 0.21
+    },
+    {
+      "track_id": "dh-073-marble-spark",
+      "title": "Marble Spark",
+      "subgenre": "Future Bass",
+      "manifest_sha256": "c84e8a22eff7c7f85de247bd859300cfc425a0b56b4d8db49af68cb8397d6bca",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -21.15,
+          "true_peak_dbtp": -4.92,
+          "sha256": "73b946271078de8ef873c4e7bff285aed87d9c56c1d90d8ebdc0238a9220373a"
+        },
+        "stream.m4a": {
+          "lufs": -21.14,
+          "true_peak_dbtp": -4.92,
+          "sha256": "664f3434dd91bd90e9b71e8448874bc8714d708e93a1c726f88204ebf7038d7d"
+        },
+        "preview_48s.m4a": {
+          "lufs": -21.25,
+          "true_peak_dbtp": -5.38,
+          "sha256": "a6959c0e8b63f978d9b13949c7afefb14d720e9231f255f79b857dfb3b9b87a9"
+        }
+      },
+      "game_from_median_lu": -0.21,
+      "stream_from_game_lu": 0.01,
+      "review_priority_lu": 0.21
+    },
+    {
+      "track_id": "dh-075-beacon-current",
+      "title": "Beacon Current",
+      "subgenre": "Trance",
+      "manifest_sha256": "2d9046f879c563ed4b42bae0da3bb90c6590367db0634e98506cacaaa0ed7d74",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -21.15,
+          "true_peak_dbtp": -7.31,
+          "sha256": "9cca958b9a216cf6b5684ca776a9c8f6859726c163dac7521bdb6dc4eaafde8d"
+        },
+        "stream.m4a": {
+          "lufs": -21.0,
+          "true_peak_dbtp": -7.02,
+          "sha256": "44a8f16b865b6f938fa1732fdcc16bb95b8a70a0f2d6f45d92510cfe0e26b132"
+        },
+        "preview_48s.m4a": {
+          "lufs": -21.07,
+          "true_peak_dbtp": -7.31,
+          "sha256": "02df7d4059e0c3e183347a8773f66436806530293684e47b30c45f1a11bc78ac"
+        }
+      },
+      "game_from_median_lu": -0.21,
+      "stream_from_game_lu": 0.15,
+      "review_priority_lu": 0.21
+    },
+    {
+      "track_id": "dh-076-tessera-steps",
+      "title": "Tessera Steps",
+      "subgenre": "Melodic House",
+      "manifest_sha256": "834d2373716836b3c18492e0e6526c7ec068d737987e30e6ca6bf9da49a52442",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -21.15,
+          "true_peak_dbtp": -4.3,
+          "sha256": "3d10c466c1bb2d0f13f2d375651edddd03152f8d2db38534b3affc48e5acf41f"
+        },
+        "stream.m4a": {
+          "lufs": -21.12,
+          "true_peak_dbtp": -4.3,
+          "sha256": "2d6e21923373bcc99c15c2c5c1bb1dfc8c0d118a5500f7a78c4430b84976563d"
+        },
+        "preview_48s.m4a": {
+          "lufs": -21.37,
+          "true_peak_dbtp": -4.89,
+          "sha256": "a8d1af149efb568e82ca3405c5a147cc6b365a2ac2d7c12abf693e9cc1c734fd"
+        }
+      },
+      "game_from_median_lu": -0.21,
+      "stream_from_game_lu": 0.03,
+      "review_priority_lu": 0.21
+    },
+    {
+      "track_id": "dh-096-softline-harbor",
+      "title": "Softline Harbor",
+      "subgenre": "Melodic House",
+      "manifest_sha256": "6f4926d42caa14d49b950b58aad9122711f9c09eed59b1ea0826f3cc727f3e62",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -21.15,
+          "true_peak_dbtp": -7.14,
+          "sha256": "afd14ffb36c71d856104d403c2d5ec7e76108373519546d96bee32d5bc297ed2"
+        },
+        "stream.m4a": {
+          "lufs": -21.28,
+          "true_peak_dbtp": -7.14,
+          "sha256": "8c213d163abe9b6b1fd6bea4dcc55d15a74d382dbfec4c5a2e553c2ead3a7ce0"
+        },
+        "preview_48s.m4a": {
+          "lufs": -20.84,
+          "true_peak_dbtp": -7.14,
+          "sha256": "6f096f80ef3b67da4318af200612890490fabab1ca2eab6c1c2bc3c61533d9c2"
+        }
+      },
+      "game_from_median_lu": -0.21,
+      "stream_from_game_lu": -0.13,
+      "review_priority_lu": 0.21
+    },
+    {
+      "track_id": "dh-104-beat-pinball",
+      "title": "Beat Pinball",
+      "subgenre": "Drum & Bass",
+      "manifest_sha256": "770c23175688c4e36be9df17bb2f845970ccb20e57571aec2cb1d31ad0e8368c",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -20.92,
+          "true_peak_dbtp": -5.14,
+          "sha256": "adb59372fe22aa1080ae64d0d4c5ee5fcd3f16df2bc88236a13747a37a3dd5ae"
+        },
+        "stream.m4a": {
+          "lufs": -20.71,
+          "true_peak_dbtp": -5.14,
+          "sha256": "e22ed10e8ac85c41d68aac5bb1b3d0fad2d0722dfea838f732b677833f034b0b"
+        },
+        "preview_48s.m4a": {
+          "lufs": -20.66,
+          "true_peak_dbtp": -5.14,
+          "sha256": "2b298233d55735479f5f0fedf7ad77e0fc9e8bedd001eb7dd002b415aff3f002"
+        }
+      },
+      "game_from_median_lu": 0.02,
+      "stream_from_game_lu": 0.21,
+      "review_priority_lu": 0.21
+    },
+    {
+      "track_id": "dh-002-amberwave-relay",
+      "title": "Amberwave Relay",
+      "subgenre": "Synthwave",
+      "manifest_sha256": "af2d8ddadbf26307a3a5f3c4c0c89f96843cf14a30641d7f1649104abf52f468",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -21.14,
+          "true_peak_dbtp": -1.23,
+          "sha256": "7b7d50af4f6a712408ac9911c96bc4b95f0527a4a01f48be5c8a2f666962674f"
+        },
+        "stream.m4a": {
+          "lufs": -21.26,
+          "true_peak_dbtp": -1.77,
+          "sha256": "bec841a24621c0478d4bee639f213709eaa9aae9487dab40209842156fa16104"
+        },
+        "preview_48s.m4a": {
+          "lufs": -21.36,
+          "true_peak_dbtp": -1.45,
+          "sha256": "047edfe9fc86faca54adb78411de80d8de13b329b92ac5af87678856f4e65889"
+        }
+      },
+      "game_from_median_lu": -0.2,
+      "stream_from_game_lu": -0.12,
+      "review_priority_lu": 0.2
+    },
+    {
+      "track_id": "dh-068-softstep-burst",
+      "title": "Softstep Burst",
+      "subgenre": "Future Bass",
+      "manifest_sha256": "acf32187c3e66a946e9e58cf3a6bef56cb72898e81d003ac6fab15dac7647b29",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -20.74,
+          "true_peak_dbtp": -5.45,
+          "sha256": "af5df1135ca0f66cb0633a5b09bedcdc7d95f05f0179bdc6b286c4e811b25800"
+        },
+        "stream.m4a": {
+          "lufs": -20.89,
+          "true_peak_dbtp": -5.45,
+          "sha256": "4cddcdbdf863504acd4d1dab63d72e44a5a562b0d955cf85923a1cd9b0898a92"
+        },
+        "preview_48s.m4a": {
+          "lufs": -20.78,
+          "true_peak_dbtp": -5.45,
+          "sha256": "b3e41e7ac5757674a89194f5c23c518666c1f3ccce3e68b4221c4cb675c2c6ac"
+        }
+      },
+      "game_from_median_lu": 0.2,
+      "stream_from_game_lu": -0.15,
+      "review_priority_lu": 0.2
+    },
+    {
+      "track_id": "dh-091-pulse-terrace",
+      "title": "Pulse Terrace",
+      "subgenre": "Melodic House",
+      "manifest_sha256": "1877de77ea3e4b9bd85794b94c429709e8a633af1566ea88ecd90520fc0743d3",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -20.94,
+          "true_peak_dbtp": -5.58,
+          "sha256": "f4053474cf069d0debaa93d0b81dc462683b77a3fd246383fac3d440c60c5ce6"
+        },
+        "stream.m4a": {
+          "lufs": -21.12,
+          "true_peak_dbtp": -3.78,
+          "sha256": "273bee22705390092ac4ca20ed99a7a3d70500fcbc140dd6e669e13b3d1130e1"
+        },
+        "preview_48s.m4a": {
+          "lufs": -20.85,
+          "true_peak_dbtp": -5.58,
+          "sha256": "f1a35879c76e6bf25ae7628609809888a9bf3f53122e2b0a3ea223e4a838887a"
+        }
+      },
+      "game_from_median_lu": 0.0,
+      "stream_from_game_lu": -0.18,
+      "review_priority_lu": 0.18
+    },
+    {
+      "track_id": "dh-086-chordline",
+      "title": "Chordline",
+      "subgenre": "Melodic House",
+      "manifest_sha256": "3deaa55cd75eedf70c9a479e5b48ffc10956dab689e350da4b4ce11820f091e9",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -21.08,
+          "true_peak_dbtp": -6.66,
+          "sha256": "cb087c368d644dfd76386a6713234430dbb58b93f65c4b3f8f849130b7704b43"
+        },
+        "stream.m4a": {
+          "lufs": -20.96,
+          "true_peak_dbtp": -6.66,
+          "sha256": "c78142af107d9f3407fa3a1fa24c56ebc7a786f73c5d9018d2b8a83c948b370a"
+        },
+        "preview_48s.m4a": {
+          "lufs": -21.28,
+          "true_peak_dbtp": -6.66,
+          "sha256": "3e482813b2c5b5c5283ebbf8611f212bbd1445a825c0b5e9b3c45912732cab41"
+        }
+      },
+      "game_from_median_lu": -0.14,
+      "stream_from_game_lu": 0.12,
+      "review_priority_lu": 0.14
+    },
+    {
+      "track_id": "dh-102-spectrum-cruise",
+      "title": "Spectrum Cruise",
+      "subgenre": "Synthwave",
+      "manifest_sha256": "d5e92c8bb1000774258369a3bf3662f8fa81d47a9e8ae5dc55ef4d3cb3e842a6",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -20.96,
+          "true_peak_dbtp": -7.3,
+          "sha256": "f55b4c3f2a24c9c40a37029c31ef36bad34d1893b58561d03dbf0854e55bf13d"
+        },
+        "stream.m4a": {
+          "lufs": -20.83,
+          "true_peak_dbtp": -6.95,
+          "sha256": "8b6744c1dee1af6dcc70c4d2de3163b25a9b2efbf71c5be4351ff47672a50da0"
+        },
+        "preview_48s.m4a": {
+          "lufs": -21.04,
+          "true_peak_dbtp": -7.3,
+          "sha256": "3d5c550e6a8ba8ebd5b3afb9d2b2431c7295ce890595de9bc4f3e565f2d6ec3f"
+        }
+      },
+      "game_from_median_lu": -0.02,
+      "stream_from_game_lu": 0.13,
+      "review_priority_lu": 0.13
+    },
+    {
+      "track_id": "dh-105-clarity-arc",
+      "title": "Clarity Arc",
+      "subgenre": "Trance",
+      "manifest_sha256": "ef97577eb3f42b0d4537d63ecea5b39b37808a92de96903e23c6685c82be02aa",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -20.97,
+          "true_peak_dbtp": -8.41,
+          "sha256": "96447a2920e55d7ca9a5721438a84d1a6e5cbcddc9f3e37808d92a4082d9747c"
+        },
+        "stream.m4a": {
+          "lufs": -21.08,
+          "true_peak_dbtp": -8.2,
+          "sha256": "a3919a030a976e703cdef2e18cc9f83eae2bde024a2df1aef52cb230dbbbd0ae"
+        },
+        "preview_48s.m4a": {
+          "lufs": -21.22,
+          "true_peak_dbtp": -8.41,
+          "sha256": "b87480411da248142e9c54cd9f3c28052e6799df0b5870e2900a84bad5678a86"
+        }
+      },
+      "game_from_median_lu": -0.03,
+      "stream_from_game_lu": -0.11,
+      "review_priority_lu": 0.11
+    },
+    {
+      "track_id": "dh-057-togglebeam",
+      "title": "Togglebeam",
+      "subgenre": "Synthwave",
+      "manifest_sha256": "b4a39e81fb3d9c31ed61c1f68376884dd3744bddf087944cf0aa4107eff798a0",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -20.97,
+          "true_peak_dbtp": -3.14,
+          "sha256": "862e5446172e2625f13323d4d83ee3cdc6d6b10af121e8688cae9ab1ca376cb5"
+        },
+        "stream.m4a": {
+          "lufs": -21.03,
+          "true_peak_dbtp": -2.53,
+          "sha256": "f566a2943a3c545deac05add175a3a4f8fce29471dfaf998df3ce099d2579b01"
+        },
+        "preview_48s.m4a": {
+          "lufs": -21.02,
+          "true_peak_dbtp": -3.23,
+          "sha256": "2cc6a4c3fa64ff9de92ea394fe79d5806cb9d3a157326e99c1ceb6b3bdcd2608"
+        }
+      },
+      "game_from_median_lu": -0.03,
+      "stream_from_game_lu": -0.06,
+      "review_priority_lu": 0.06
+    },
+    {
+      "track_id": "dh-087-nightglass-drive",
+      "title": "Nightglass Drive",
+      "subgenre": "Synthwave",
+      "manifest_sha256": "62c3c31e37f4f9e60368bfc17c18a970b734fce34cf3667af339e9e2752a3fda",
+      "audio": {
+        "audio.m4a": {
+          "lufs": -20.88,
+          "true_peak_dbtp": -2.07,
+          "sha256": "8dacd704ade52ce3edddc1515c50f025f3171b3ebd779b3dc08263cce45ceb40"
+        },
+        "stream.m4a": {
+          "lufs": -20.91,
+          "true_peak_dbtp": -2.07,
+          "sha256": "a0f765d5920f1f5396ebf31b270b691712e5b2493bf6963c794be7bc80c25304"
+        },
+        "preview_48s.m4a": {
+          "lufs": -20.8,
+          "true_peak_dbtp": -2.07,
+          "sha256": "d788bd633457aece77d1869e122529a857b923343744095efe84b3d67b9329ee"
+        }
+      },
+      "game_from_median_lu": 0.06,
+      "stream_from_game_lu": -0.03,
+      "review_priority_lu": 0.06
+    }
+  ]
+}

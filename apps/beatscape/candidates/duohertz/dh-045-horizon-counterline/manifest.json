@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-045-horizon-counterline",
+  "title": "Horizon Counterline",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Trance",
+  "bpm": 150.0,
+  "target_bpm": 150,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -6 dB gain before AAC encoding; stream-only limiter at 0.35 linear amplitude with no makeup gain. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -6.0,
+  "stream_limiter": 0.35,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-045-horizon-counterline.json",
+  "source_recipe_sha256": "0a576d88cc8a2e78b5f6d6cbdcb99507e210d98a256e155fd8518f1a3c9fac43",
+  "source_master_sha256": "21048aaa04cd4d51233dc6f8fa7694dfb23a8298c5cf0475d5a128a135da7f10",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.12099,
+    "clipping_ratio": 4e-06,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "5e8cb774-3319-4844-8ffb-8570eafb7bf8",
+  "source_generation_receipt_sha256": "a170363016166744c6a234b8eebe3a0a30c75ad60ad8d3d5763104b7bc98c5f4",
+  "generation_prompt": "Original uplifting all-ages trance instrumental for a one-or-two-key electronic rhythm game at a STRICT constant 150 BPM in 4/4. A clear four-on-the-floor kick must land on EVERY quarter beat from the FIRST SECOND until the ending; keep short dry claps on two and four, clearly separated eighth-note closed hats and at least one bright short midrange pluck on every bar. Maintain the same quantized rhythmic grid through the quieter middle, with no tempo drift, half-time breakdown, beatless intro, drum dropout, free-time passage or pad-only bridge. Signature hook: four staccato crystalline synth notes climbing one scale step at a time, then a brief rest before a two-note lower-register reply moving in the opposite direction. Make the two lines audible as a playful exchange above rounded offbeat bass and warm suspended chord pulses. At the midpoint keep the kick and hats unchanged while the lower reply leads and the crystal line descends; the final quarter brings both lines together in a new upward resolution rather than copying the first phrase. One evolving 128-second stereo instrumental with clear note attacks, open space and an uplifting but gentle tone. No vocals, speech, sampled recordings, known melody or imitation of an existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a brand-new SQUARE 1:1 original duohertz album cover for Horizon Counterline, an all-ages uplifting-trance rhythm-game track. Use original high-contrast editorial comic-print collage: near-black ink field, warm-ivory cut paper, one electric-cyan frequency line and a restrained coral timing accent. Main motif: TWO large opposing jagged paper wave-bands cross exactly once near the center of the square. The upper ivory band descends from left to right in three broad steps while the lower cyan band rises in four clear steps; their one intersection glows coral like a shared beat. The shapes are abstract sound counterlines, not mountains, a city skyline, a road or a graph. Strong distinct silhouette at 100px, balanced negative space and calm near-black lower fifth for a local title overlay. Sparse halftone and tactile paper shadows only. No circles, rings, ribbons, windows, characters, landscapes, text, letters, numbers, logos, watermark or copied game art.",
+    "og_prompt": "Edit the supplied original Horizon Counterline square cover into a HORIZONTAL 1.9:1 duohertz social-sharing card. Preserve the two separate opposing jagged wave-bands, upper warm-ivory descending in three broad steps and lower electric-cyan rising in four steps, crossing exactly once with a small coral glow. Recompose this abstract comic-print motif on the RIGHT two-thirds, and leave calm near-black space on the LEFT. Add exactly two crisp fully legible English lines on the left: 'duohertz' in lowercase electric cyan and 'Horizon Counterline' in larger warm ivory. Spell both exactly. Make a purpose-built wide composition, not a stretched square crop. No other text, letters, numbers, landscapes, mountains, roads, characters, logos, watermarks or copied game art.",
+    "cover_source_sha256": "29a0942050e2d00b13cd0a628141b5815eddf5cdd61e7ee4c104e31de0707265",
+    "og_source_sha256": "d7eb3e607a45d7e4c210b9b8ee010a35fb2bb55f718a202e3b552cbe4d4ba8cd",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "4c1697a641257003fc704c385ead1c2b37aafbfb711a4564c29e0d067df1b747",
+    "cover-art.png": "711023e32c1e492cf0e838ccc091aba84267fc0d74acaca0e5ff55ae483b674d",
+    "cover.svg": "d01627f0a716ea19a0ff09e5e55c699e2e859f312354427eff9cf88785c14c74",
+    "easy.json": "0fbd0eee271045a039323c73d5deda75e3f541303bda9f170757221d337f3235",
+    "hard.json": "fc05fc4b01e0bc9f72b9427fdcd4b10cda2a318f53f0f606874a214bc026b74f",
+    "og.png": "d50fd28da390ca733eee1961d20642a12fc202d699bc1af6a94a06521a4c8ff1",
+    "preview_48s.m4a": "f82dd51efa5ebd321ae0b40e602ad54ef320cd453712fd6c9f37f2b023e1c04d",
+    "standard.json": "250035a25821001aeef41a7695f3cf1e85e4e1fd35b3a61da85a8464d9210915",
+    "stream.m4a": "6ed5d86abfc5f4c43e982e37ad3ca22ebcd77d0052d25e15098bbdd81e97c057"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "track_id": "dh-024-notch-runner",
+  "title": "Notch Runner",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Drum & Bass",
+  "bpm": 166,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -3 dB gain before AAC encoding. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-024-notch-runner.json",
+  "source_recipe_sha256": "7ce202a4a8eaab006a40454e4bb8b464691c0ba196fc4856812464f345ddd40c",
+  "source_master_sha256": "abaf2f926f3c6d0e19390427ac7f1581e6923c60dc172ed5e85bcb1f0aa7d218",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.15195,
+    "clipping_ratio": 0.0,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "76f845e9-c228-4b30-a7f9-d93647ed8c1c",
+  "source_generation_receipt_sha256": "55b4f7b0606fefe815fa314cbc15ab8c73a8b64970444e042c91e9b700137390",
+  "generation_prompt": "Original all-ages liquid drum-and-bass instrumental for a one-or-two-key electronic rhythm game at a STRICT constant 166 BPM, 4/4. From the FIRST SECOND to the end, make a strong, dry, quantized two-step drum grid clearly countable in every bar: distinct short kick on beats one and three, crisp forward snare on beats two and four, sharp closed-hat eighth notes, and a clearly audible syncopated percussion or piano attack between main beats. Keep at least eight separate clean midrange transients in every two-bar phrase, including the quieter bridge; no smeared sustained-pad-only passages. Never drop the kick and snare grid, change tempo, switch to half-time, use free-time or leave percussion-free gaps. Give the song a distinctive rising six-note short muted-electric-piano hook answered by a short downward sine-synth figure, plus dry woodblock notches. Add warm rolling sub bass and compact bright chord stabs but keep their releases short so the attacks remain separated. Midway, move the piano motif into a new minor-to-major response over the SAME DRUM GRID; finish with both motifs interlocking over steady drums. One evolving 128-second stereo composition, not duplicated halves. No vocals, speech, sampled recordings, known melody or harsh distortion.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Generate a brand-new SQUARE 1:1 original album cover for duohertz track Notch Runner, an all-ages drum-and-bass rhythm-game song. High-contrast editorial comic collage in near-black ink, warm ivory paper, coral red and electric cyan, with a few warm-yellow sparks and tactile halftone print grain. Main visual: TWO offset angular rails made from chunky rectangular notches climb diagonally, then cross through a single sharp central cut to create a surprising rhythmic zig-and-zag; make the notched silhouette bold and legible at tiny thumbnail size. Show fast broken-beat momentum through paper-cut diagonals and asymmetric spacing, not speed lines everywhere. Distinct from concentric rings, circles, ordinary waveform blocks, tile paths, feet, shoes or city imagery. No people, text, letters, numbers, logo or imitation of any existing game.",
+    "og_prompt": "Edit the supplied original Notch Runner square artwork into a HORIZONTAL social card for duohertz. Preserve its two offset coral and cyan notched angular rails crossing at one sharp center cut, near-black and warm-ivory editorial halftone collage. Recompose the energetic rails on the RIGHT two-thirds, with calm dark space on the LEFT. Add exactly two crisp fully legible English lines on the left: 'duohertz' all lowercase and 'Notch Runner'. No other words, letters, numbers, people, shoes, circles, logos, city or existing IP. Original all-ages electronic music poster.",
+    "cover_source_sha256": "cfbb2621c5ecdcd276d3adbeb020bca80da28a13330e744d2ae0e2f05ba8188d",
+    "og_source_sha256": "e41e77a40982325217ea3d04c218024ea979701a8550e8f316bc88be5fb42e79",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "d925c10ef9f4d7461a890d6ed482da8b941f7d5182a87e735b3a3415cc427259",
+    "cover-art.png": "a0eb37dbc18eaea7eb38c960920d7c9a8c099205da2b2e99cd31072fa9476c89",
+    "cover.svg": "1964af660e6bd2559c6e11a0f584b63edac01775251f653ec8e722d7c57cbd34",
+    "easy.json": "6c5867f10fe72917631e0a96b20d27ffd4c9698c49f48a00b1c9c49ed83ac085",
+    "hard.json": "5cc155f0f045ad6d394caa600318476496583359e4c13774e30eedea215f0222",
+    "og.png": "b26026545a8cc79f9f08203138af58adc54b435fa170671d249205d62bad0dd4",
+    "preview_48s.m4a": "219dac7b0b0183d4e66516101ae8d0acc18d4bebce79e62ed8d04c1f3cf0e8be",
+    "standard.json": "c6b9880930cb89a4acca7767db2234e02a5604005844c668c0982f2940fc3c0d",
+    "stream.m4a": "5bf459b3471a8eab2431cc9cb935634bb7a34f18a2274c3aba3a165dc95f5e8b"
+  }
+}

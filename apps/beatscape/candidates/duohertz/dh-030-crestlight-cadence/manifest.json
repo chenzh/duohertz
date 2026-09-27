@@ -1,0 +1,49 @@
+{
+  "track_id": "dh-030-crestlight-cadence",
+  "title": "Crestlight Cadence",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Trance",
+  "bpm": 144.0,
+  "target_bpm": 144,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -3 dB gain before AAC encoding. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-030-crestlight-cadence.json",
+  "source_recipe_sha256": "2660b9386fb98d3b0b03155bcab5674b2b64b3d31869301cf68fa4fa4ecc94f9",
+  "source_master_sha256": "11e508a1830fe99b390097d986da620f6ec0801e0e6afd940cd8a04c7dd3688c",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.156,
+    "clipping_ratio": 1e-06,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "8ad02be0-eae0-4a61-b247-38d352646225",
+  "source_generation_receipt_sha256": "0c74f8f7339473c210215361e3277d350d5ae9e566dc10ef0cc259b723491c37",
+  "generation_prompt": "Original all-ages uplifting-trance instrumental for a one-or-two-key electronic rhythm game at a STRICT constant 144 BPM in 4/4. Keep a countable quantized four-on-the-floor kick on every quarter beat, a crisp short clap on beats two and four, bright closed hats in eighth notes, and separate short midrange pluck attacks in every two-bar phrase from beginning to end, including the quieter middle. No tempo drift, half-time breakdown, free-time, long drum-free gaps or smeared ambient-only section. Signature hook: a four-note ascending syncopated bell-pluck figure that leaps up at the end, answered by a lower two-note suspended synth phrase with a clean rest between them. Beneath it use soft rolling bass, luminous offbeat chord stabs, small sixteenth-note glints and gentle stereo width without masking attacks. At the midpoint alter the chord inversion and turn the bell hook downward while the SAME kick, clap and hat grid remains audible; build a final section where both contours interleave for a new cadence instead of duplicating the first half. One evolving 128-second stereo composition with clear transients, optimistic and non-harsh. No vocals, speech, sampled recordings, known melody or imitation of an existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a brand-new SQUARE 1:1 original album cover for duohertz track Crestlight Cadence, an all-ages uplifting-trance rhythm-game song. High-contrast editorial comic-print collage with near-black ink and warm ivory paper; use electric cyan as the dominant accent, coral red as a small counterbeat, and tiny yellow light marks. Main motif: ONE broad asymmetric folded WAVE CREST cut from translucent-looking cyan paper, lifting upward from the lower edge and splitting at its peak into three narrow ivory light facets. A small separate coral crease below acts as the answering beat. Give the crest an unmistakable silhouette and calm dark negative space, with sharp cut-paper borders, print shadows and selective halftone grain. It must look like graphic sound energy, not ocean surf or a sky landscape. Distinct from circles, rings, radial fans, folded springs, domino slabs, rails and existing covers. No text, letters, numbers, people, characters, logo, watermark or imitation of any existing game.",
+    "og_prompt": "Edit the supplied original Crestlight Cadence square artwork into a HORIZONTAL duohertz social card. Preserve the single broad asymmetric cyan folded sound-wave crest that splits into three narrow ivory light facets, with its small coral answering crease; keep near-black and warm-ivory editorial screen-print texture. Recompose the crest on the RIGHT two-thirds and leave calm near-black space on the LEFT. Add exactly two crisp fully legible English lines on the left: 'duohertz' all lowercase and 'Crestlight Cadence'. No other text, letters, numbers, ocean, sky, people, rings, circles, logos, watermarks or existing IP. Original all-ages electronic music poster.",
+    "cover_source_sha256": "2b040f4f2836d7c09f8bf79070364e69e2f35ebce1c48a5c77695e5fa10d79a0",
+    "og_source_sha256": "6f1c330684bdddace93f9a7c0b12e7ed9752eef3f674372b632835ed3b3157ab",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "76d6e27a34b846fe9e962b8d59e54d4c37613116f0218f273d7787aebdd42f72",
+    "cover-art.png": "3252a3dac99e9d6cad6afa7be84015de21b9d35eb583f18ea2063d6b64304034",
+    "cover.svg": "c68bd05c82424e190047fe8b3da3677891863ae616675d1ddc95ab488b89a991",
+    "easy.json": "9015867d995e1f2af53c9d513d4fa994cfb4afc15b4a88458532578260528f89",
+    "hard.json": "e47b704b3196e9aef96914dea01734edb41780430a71ffb4269b63f59d29fafc",
+    "og.png": "e8ff90a5542928692b9bbff1045f5a217d99356b933dd379379822405fe691af",
+    "preview_48s.m4a": "24abe2a738e6837c9c2f4d9c568efeb38a5e5cedf20cf2a262dcb423be4eee7d",
+    "standard.json": "ea5170ebbe68fb9874118620dec35c032bceef418fa15273ae2683f3d9199151",
+    "stream.m4a": "3f37f76992a12b8ca13613dd0f84e2c4697bfa78bf004350d3b88bc66eafa4a5"
+  }
+}

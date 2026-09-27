@@ -1,0 +1,51 @@
+{
+  "track_id": "dh-051-flipbook-beat",
+  "title": "Flipbook Beat",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Melodic House",
+  "bpm": 125.0,
+  "target_bpm": 126,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -6 dB gain before AAC encoding; stream-only limiter at 0.35 linear amplitude with no makeup gain. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "audio_gain_db": -6.0,
+  "stream_limiter": 0.35,
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-051-flipbook-beat.json",
+  "source_recipe_sha256": "631cc64e99ffb7ff7ab367fe9bc3457b91c11ae77f6a628c6626aff2e2fdfcbc",
+  "source_master_sha256": "7c388348c200096b17301e51e5c6253dc6baaf39bf76a88625c6c47b504ddad3",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.18684,
+    "clipping_ratio": 7e-06,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "ec14f8a0-8534-482c-b018-e9cec1241bfd",
+  "source_generation_receipt_sha256": "692554aed7c8b099efaf51f4fdc9950b07fa1b8beca0c10b493444174f32cd28",
+  "generation_prompt": "Original all-ages melodic-house instrumental for a one-or-two-key electronic rhythm game at a STRICT constant 126 BPM in 4/4. From the FIRST SECOND through the final bar keep an audible quantized four-on-the-floor kick on EVERY quarter beat, dry short clap on beats two and four, separate closed eighth-note hats, and at least one exposed short pitched midrange pluck or muted-key attack between main beats in every bar including the middle. No fade-in, beatless intro, drum dropout, half-time break, tempo drift, ambient-only bridge or long reverb smear. Signature hook: two warm wooden-key notes hop upward, leave one crisp eighth-note rest, then three small glass-bell notes turn downward like a quick page flip; keep the call and response clearly separated. Rounded syncopated bass and brief bright major-seventh chord stabs support the groove without covering kick, clap or note starts. At the midpoint retain the SAME unbroken drum grid, let the glass answer appear first in a higher register and change the bass roots; the ending combines both figures in a new playful cadence rather than copying the opening. One evolving 128-second stereo instrumental, buoyant, friendly and cleanly separated, with no abrasive distortion. No vocals, speech, sampled recordings, known melody or imitation of an existing song.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a brand-new SQUARE 1:1 original duohertz album cover for Flipbook Beat, an all-ages melodic-house rhythm-game track. Dynamic high-contrast editorial comic-print collage on near-black ink. Main motif: one large UNBRANDED blank flipbook with EXACTLY THREE oversized warm-ivory pages visibly fanning upward and to the right from a short coral-red binding at lower left; each page has one electric-cyan thick pulse mark in a different position, so the three marks form a clear rising beat sequence across the turning pages. Use bold simplified page silhouettes, tactile paper-cut shadows, sparse halftone and one tiny yellow timing spark. Readable as a flipping sequence at 100px, with calm dark space in the lower fifth for a local title overlay. No writing, pictures or symbols on the pages except the three cyan pulse marks; no hands, people, city, road, window, computer screen, text, letters, numbers, logos, watermark or copied game art.",
+    "og_prompt": "Edit the supplied original Flipbook Beat square cover into a HORIZONTAL 1.9:1 duohertz social-sharing card. Preserve one unbranded blank flipbook with exactly three oversized warm-ivory pages fanning upward from a short coral binding and one thick electric-cyan pulse mark on each page in a rising sequence, near-black comic-print background and sparse halftone. Recompose the flipbook motif on the RIGHT two-thirds, leaving calm dark space on the LEFT. Add exactly two crisp fully legible English lines there: 'duohertz' in lowercase electric cyan and 'Flipbook Beat' in larger warm ivory. Spell both exactly. Make a purpose-built wide card, not a stretched square crop. No other text, letters, numbers, hands, people, logos, watermark or copied game art.",
+    "cover_source_sha256": "ccb878f3a470a8c71cb4d1cf45023a571a0e966fc4e0492ccdcc34296ad29ffb",
+    "og_source_sha256": "ab8616589beabd35ae13dfbb9cda89a158ad954e228360e15de4126d58b9e079",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "6c0fbad915c9c5bf3e8f0e0cc9b211f24e1045e7222b8993c50aad1c4e55e7a0",
+    "cover-art.png": "d5b891f2f44a968becc15aac7833a70744075dddcda447ebbd66bdb48a308e89",
+    "cover.svg": "8af2a1cf0b0a7e4b1cb27da6781f7dfb226b3dca9867d7d1d52a74f0e827c9fe",
+    "easy.json": "3690522e319505d1ee24d87a7c481b3fb3a6abad16285bc0d8d1979dd516d12a",
+    "hard.json": "1da16527cfdb87f16d0f5ecc264d36f3c5def446df5122710cf727f11ad6def5",
+    "og.png": "9c391a12358a255720d745f27fb8e7c10f1daa7e7fcf9f2fe9571c5e267287ba",
+    "preview_48s.m4a": "83e1a34c40454df21f89066647d83404dda02694327e083549b095e2c0587a38",
+    "standard.json": "b16002a82a551ae47faeb03e808b5133fed454f70069cddae66a8468b8274b3b",
+    "stream.m4a": "a26054bc714bd310e99066550d544d51516ffba0054dff717834e8abf340b3b0"
+  }
+}

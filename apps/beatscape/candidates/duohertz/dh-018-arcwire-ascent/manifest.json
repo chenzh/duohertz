@@ -1,0 +1,48 @@
+{
+  "track_id": "dh-018-arcwire-ascent",
+  "title": "Arcwire Ascent",
+  "artist": "duohertz studio",
+  "theme": "duohertz",
+  "subgenre": "Trance",
+  "bpm": 138,
+  "duration_sec": 64.0,
+  "stream_duration_sec": 128.0,
+  "creation_method": "MusicSaas Gateway game_bgm / SA3 small stereo master; first 64 seconds form the game mix, full single-pass 128-second master forms the station mix; -3 dB gain before AAC encoding. PCM preflight cannot independently prove inference mode or musical quality; human review remains required.",
+  "source_script": "scripts/duohertz-stage-sa3.py",
+  "source_recipe": "scripts/duohertz-recipes/dh-018-arcwire-ascent.json",
+  "source_recipe_sha256": "f16eac50ec7a94ef6d37947a9673d5811e704d85338f66e8f3c07fb239eff692",
+  "source_master_sha256": "7329ce5f6643529fde830cfdd6bf522a2c00301eb391b2567ac875d082f53adb",
+  "source_master_preflight": {
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_sec": 128.0,
+    "sampled_rms": 0.1496,
+    "clipping_ratio": 0.0,
+    "silent_8s_windows": 0
+  },
+  "source_generation_job_id": "f6d20452-9001-4f27-bf8c-771a789ea898",
+  "source_generation_receipt_sha256": "976c780c3ebd00df06e3b2529f641e3e0d958bfbe45caedf9fea33c97a4ca2f8",
+  "generation_prompt": "Original uplifting trance instrumental for an all-ages one-or-two-key rhythm game, around 138 BPM with a steady countable 4/4 kick and clear transients. An ascending three-note electric-glass arpeggio opens the piece; warm rolling bass, bright offbeat chords, precise claps and airy synth harmonies build around it. At the midpoint, thin the drums and answer the hook with a new descending melody, then return to a fuller rhythmic finale. Distinct musical development across a single 128-second composition, spacious stereo, energetic but not harsh, no vocals, no speech, no samples, no known melody.",
+  "rights_status": "internal_candidate_unreviewed",
+  "review_status": "requires_earcheck_content_rights_art_review_and_signoff",
+  "art_provenance": {
+    "tool": "built-in imagegen",
+    "cover_prompt": "Create a brand-new original SQUARE 1:1 album-cover illustration for an internal duohertz electronic rhythm-game track named Arcwire Ascent. Original high-contrast editorial comic collage: near-black ink, warm ivory paper, coral red, electric cyan, and a tiny warm yellow accent. Central motif: three ascending luminous zigzag arcwires rising diagonally through layered concentric frequency rings, with sharp paper-cut silhouettes, energetic halftone texture, precise geometry and a playful uplifting trance pulse. Make it bold and legible as a tiny album thumbnail; dynamic but with clear visual hierarchy. All-ages friendly. No humans, no city, no text, no letters, no numbers, no logo, no existing game characters, no imitation of a specific game screen.",
+    "og_prompt": "Edit the supplied original square Arcwire Ascent artwork into a HORIZONTAL 1200x630-style social card for duohertz. Preserve the same three ascending coral/cyan arcwires, frequency rings, near-black ink, warm ivory and halftone comic collage. Recompose into a wide card with the arcwire motif on the RIGHT two-thirds and clean high-contrast dark/ivory space on the LEFT. Add exactly two highly legible English lines on the left, spelled exactly: line 1 'duohertz' (all lowercase), line 2 'Arcwire Ascent'. Bold original display typography, plenty of contrast, no other words, letters, numbers, logos, people or existing IP. Family-friendly electronic rhythm-game art.",
+    "cover_source_sha256": "5761abc72c21a805b8c8645f3c08c487ccaf0d89b8bdeda86510eaa9ca89d9eb",
+    "og_source_sha256": "48f2cc1a4b338a9a9c0cccf79ddc319412d6d9268d62b2b098e6e93cc248bf1a",
+    "og_reference": "cover-art source supplied to built-in imagegen for the wide card",
+    "cover_svg": "Local SVG title overlay around the generated cover-art.png"
+  },
+  "files_sha256": {
+    "audio.m4a": "5c103799272a217adf71c2733604508efc8e0ccd1568585d545aa862de0032f3",
+    "cover-art.png": "cbd3237a1e4b33d61bd1b79eaa846903c3211307c2f02789780200d8fdbf0971",
+    "cover.svg": "5de59c6f8dd0f8e582879410b77384c05d2e38cb19a3c59e6b1a32fecb61dfbd",
+    "easy.json": "31a3715befd76ea57790935d4c69c091f9f14c57c3f9170dbdcb7f69298a0add",
+    "hard.json": "1838ee50be5802a4f0cf3fec5e0435debfd73083d828dfe57dec88564ee6ba1f",
+    "og.png": "d73b9b386233a174ee0c70598def27077c8285a6522f52518bcd05f77700ebe0",
+    "preview_48s.m4a": "96cd3af1a0e194f0cb4a7b8abd2c454b5e5466e319bf8652d02f30589c507081",
+    "standard.json": "5e47cfdda2bb77e1c7e79f0cb2cf7df26a29ae0ad5e39affa464281818678080",
+    "stream.m4a": "91798ed46efc64d6dbe9691c999402dda95050877123fab3176ffd5cb70178f7"
+  }
+}
